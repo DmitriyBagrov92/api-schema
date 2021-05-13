@@ -6534,6 +6534,7 @@ Modern text message
 | text | [google.protobuf.StringValue](#google.protobuf.StringValue) |  |  |
 | sender_name_override | [google.protobuf.StringValue](#google.protobuf.StringValue) |  |  |
 | sender_photo_override | [Avatar](#dialog.Avatar) |  |  |
+| sender_photo_url_override | [google.protobuf.StringValue](#google.protobuf.StringValue) |  |  |
 | style | [ParagraphStyle](#dialog.ParagraphStyle) |  |  |
 | attaches | [TextModernAttach](#dialog.TextModernAttach) | repeated |  |
 
