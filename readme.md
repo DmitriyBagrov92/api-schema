@@ -360,6 +360,7 @@
     - [ServiceExChangedTopic](#dialog.ServiceExChangedTopic)
     - [ServiceExChatArchived](#dialog.ServiceExChatArchived)
     - [ServiceExChatRestored](#dialog.ServiceExChatRestored)
+    - [ServiceExConferenceStatus](#dialog.ServiceExConferenceStatus)
     - [ServiceExContactRegistered](#dialog.ServiceExContactRegistered)
     - [ServiceExGroupCreated](#dialog.ServiceExGroupCreated)
     - [ServiceExPhoneCall](#dialog.ServiceExPhoneCall)
@@ -6159,6 +6160,7 @@ Predicate for searching in custom profile
 | phoneRejected | [ServiceExPhoneRejected](#dialog.ServiceExPhoneRejected) |  |  |
 | chatArchived | [ServiceExChatArchived](#dialog.ServiceExChatArchived) |  |  |
 | chatRestored | [ServiceExChatRestored](#dialog.ServiceExChatRestored) |  |  |
+| conferenceStatus | [ServiceExConferenceStatus](#dialog.ServiceExConferenceStatus) |  |  |
 
 
 
@@ -6254,6 +6256,22 @@ Message about chat archived
 
 ### ServiceExChatRestored
 Message about chat restored
+
+
+
+
+
+
+<a name="dialog.ServiceExConferenceStatus"></a>
+
+### ServiceExConferenceStatus
+Message about conference call state
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| conference_id | [string](#string) |  |  |
+| conference_status | [string](#string) |  |  |
 
 
 

@@ -1606,6 +1606,10 @@ drawDiagram("title%20%D0%90%D1%83%D1%82%D0%B5%D0%BD%D1%82%D0%B8%D1%84%D0%B8%D0%B
                 </li>
               
                 <li>
+                  <a href="#dialog.ServiceExConferenceStatus"><span class="badge">M</span>ServiceExConferenceStatus</a>
+                </li>
+              
+                <li>
                   <a href="#dialog.ServiceExContactRegistered"><span class="badge">M</span>ServiceExContactRegistered</a>
                 </li>
               
@@ -15020,6 +15024,13 @@ Can be empty if messageId is present and message is in current peer. </p></td>
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>conferenceStatus</td>
+                  <td><a href="#dialog.ServiceExConferenceStatus">ServiceExConferenceStatus</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
             </tbody>
           </table>
         
@@ -15151,6 +15162,36 @@ Can be empty if messageId is present and message is in current peer. </p></td>
         <h3 id="dialog.ServiceExChatRestored">ServiceExChatRestored</h3>
         <p>Message about chat restored</p>
 
+        
+
+        
+      
+        <h3 id="dialog.ServiceExConferenceStatus">ServiceExConferenceStatus</h3>
+        <p>Message about conference call state</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>conference_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>conference_status</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
         
 
         
