@@ -6,6 +6,7 @@ target 'DialogGRPC' do
 
   pod 'gRPC-ProtoRPC'
   pod 'Protobuf'
+  pod 'Sodium'
 
 end
 
