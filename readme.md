@@ -4658,6 +4658,7 @@ historyMessage Optional last messages
 | last_read | [int64](#int64) |  |  |
 | last_reaction_at | [int64](#int64) |  |  |
 | read_later | [bool](#bool) |  |  |
+| dialogType | [string](#string) |  |  |
 
 
 
