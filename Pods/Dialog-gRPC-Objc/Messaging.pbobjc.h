@@ -89,6 +89,7 @@ CF_EXTERN_C_BEGIN
 @class ServiceExChangedTopic;
 @class ServiceExChatArchived;
 @class ServiceExChatRestored;
+@class ServiceExConferenceStatus;
 @class ServiceExContactRegistered;
 @class ServiceExGroupCreated;
 @class ServiceExPhoneCall;
@@ -884,6 +885,7 @@ typedef GPB_ENUM(TextModernMessage_FieldNumber) {
   TextModernMessage_FieldNumber_SenderPhotoOverride = 3,
   TextModernMessage_FieldNumber_Style = 4,
   TextModernMessage_FieldNumber_AttachesArray = 5,
+  TextModernMessage_FieldNumber_SenderPhotoURLOverride = 6,
 };
 
 /**
@@ -902,6 +904,10 @@ GPB_FINAL @interface TextModernMessage : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) Avatar *senderPhotoOverride;
 /** Test to see if @c senderPhotoOverride has been set. */
 @property(nonatomic, readwrite) BOOL hasSenderPhotoOverride;
+
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *senderPhotoURLOverride;
+/** Test to see if @c senderPhotoURLOverride has been set. */
+@property(nonatomic, readwrite) BOOL hasSenderPhotoURLOverride;
 
 @property(nonatomic, readwrite, strong, null_resettable) ParagraphStyle *style;
 /** Test to see if @c style has been set. */
@@ -1067,6 +1073,7 @@ typedef GPB_ENUM(ServiceEx_FieldNumber) {
   ServiceEx_FieldNumber_ChatArchived = 14,
   ServiceEx_FieldNumber_ChatRestored = 15,
   ServiceEx_FieldNumber_ChangedShortname = 16,
+  ServiceEx_FieldNumber_ConferenceStatus = 17,
 };
 
 typedef GPB_ENUM(ServiceEx_Body_OneOfCase) {
@@ -1087,6 +1094,7 @@ typedef GPB_ENUM(ServiceEx_Body_OneOfCase) {
   ServiceEx_Body_OneOfCase_PhoneRejected = 13,
   ServiceEx_Body_OneOfCase_ChatArchived = 14,
   ServiceEx_Body_OneOfCase_ChatRestored = 15,
+  ServiceEx_Body_OneOfCase_ConferenceStatus = 17,
 };
 
 GPB_FINAL @interface ServiceEx : GPBMessage
@@ -1124,6 +1132,8 @@ GPB_FINAL @interface ServiceEx : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) ServiceExChatArchived *chatArchived;
 
 @property(nonatomic, readwrite, strong, null_resettable) ServiceExChatRestored *chatRestored;
+
+@property(nonatomic, readwrite, strong, null_resettable) ServiceExConferenceStatus *conferenceStatus;
 
 @end
 
@@ -1353,6 +1363,24 @@ GPB_FINAL @interface ServiceExChatArchived : GPBMessage
  * Message about chat restored
  **/
 GPB_FINAL @interface ServiceExChatRestored : GPBMessage
+
+@end
+
+#pragma mark - ServiceExConferenceStatus
+
+typedef GPB_ENUM(ServiceExConferenceStatus_FieldNumber) {
+  ServiceExConferenceStatus_FieldNumber_ConferenceId = 1,
+  ServiceExConferenceStatus_FieldNumber_ConferenceStatus = 2,
+};
+
+/**
+ * Message about conference call state
+ **/
+GPB_FINAL @interface ServiceExConferenceStatus : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *conferenceId;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *conferenceStatus;
 
 @end
 
@@ -2970,6 +2998,7 @@ typedef GPB_ENUM(Dialog_FieldNumber) {
   Dialog_FieldNumber_LastRead = 17,
   Dialog_FieldNumber_LastReactionAt = 18,
   Dialog_FieldNumber_ReadLater = 19,
+  Dialog_FieldNumber_DialogType = 20,
 };
 
 /**
@@ -3044,6 +3073,8 @@ GPB_FINAL @interface Dialog : GPBMessage
 @property(nonatomic, readwrite) int64_t lastReactionAt;
 
 @property(nonatomic, readwrite) BOOL readLater;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *dialogType;
 
 @end
 
@@ -3182,6 +3213,7 @@ typedef GPB_ENUM(DialogListEntry_FieldNumber) {
   DialogListEntry_FieldNumber_LastReactionDate = 10,
   DialogListEntry_FieldNumber_ReadLater = 11,
   DialogListEntry_FieldNumber_UnreadCounterClock = 12,
+  DialogListEntry_FieldNumber_DialogType = 13,
 };
 
 /**
@@ -3222,6 +3254,8 @@ GPB_FINAL @interface DialogListEntry : GPBMessage
 @property(nonatomic, readwrite) int64_t lastReactionDate;
 
 @property(nonatomic, readwrite) BOOL readLater;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *dialogType;
 
 @property(nonatomic, readwrite, strong, null_resettable) DialogData *data_p;
 /** Test to see if @c data_p has been set. */
