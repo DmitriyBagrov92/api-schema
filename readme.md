@@ -12032,6 +12032,7 @@ Loading Full User information
 | group_member | [Peer](#dialog.Peer) |  | load data about group member by group peer if requested user and client are both group members |
 | contact | [bool](#bool) |  | load data about user if this user is in the client&#39;s contacts |
 | message_sender | [UUIDValue](#dialog.UUIDValue) |  | load data about group message sender by messageId if this message is accessible for the client |
+| bot | [bool](#bool) |  | load data about bot |
 
 
 
