@@ -15,11 +15,11 @@ option java_package = "im.dlg.grpc.services";
 message Space {
     message General {}
     message Public {
-        int32 owner_user_id = 1;
+        string owner_user_id = 1;
         string shortname = 2;
     }
     message Private {
-      int32 owner_user_id = 1;
+      string owner_user_id = 1;
     }
 
     UUIDValue id = 1;
@@ -41,7 +41,7 @@ message Space {
 
 message SpaceMember {
     UUIDValue space_id = 1;
-    int32 user_id = 2;
+    string user_id = 2;
     google.protobuf.Timestamp invited_at = 3;
     google.protobuf.Timestamp joined_at = 4;
     google.protobuf.Timestamp deleted_at = 5;
@@ -135,21 +135,21 @@ message RequestSetAvatar {
 message RequestSpaceInvite {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     UUIDValue id = 1;
-    int32 user_id = 2;
+    string user_id = 2;
     DataClock clock = 3;
 }
 
 message RequestSpaceKick {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     UUIDValue id = 1;
-    int32 user_id = 2;
+    string user_id = 2;
     DataClock clock = 3;
 }
 
 message RequestSpaceLeave {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     UUIDValue id = 1;
-    int32 user_id = 2;
+    string user_id = 2;
     DataClock clock = 3;
 }
 

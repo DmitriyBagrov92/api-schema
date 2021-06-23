@@ -3,6 +3,7 @@ syntax = "proto3";
 package dialog;
 
 import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
 import "definitions.proto";
 import "miscellaneous.proto";
@@ -23,26 +24,7 @@ message MessageAttributes {
     google.protobuf.BoolValue is_notified = 3 [(dlg).log="visible"];
     /// If this message is only for you. Default is false
     google.protobuf.BoolValue is_only_for_you = 4 [(dlg).log="visible"];
-}
-
-// Quoted Message
-// messageId
-// publicGroupId
-// senderUserId
-// messageDate
-// quotedMessageContent
-message QuotedMessage {
-    /// Message Id if present
-    int64 message_id = 1 [(dlg).log="visible"];
-    /// Public Group id if present
-    int32 public_group_id = 2 [(dlg).log="visible"];
-    int32 sender_user_id = 3 [(dlg).log="visible"]; /// Sender of message
-    int64 message_date = 4 [(dlg).log="visible"]; /// Date of message
-    /**
-     * Optional Quoted Message Content.
-     * Can be empty if messageId is present and message is in current peer.
-     */
-    MessageContent quoted_message_content = 5 [(dlg).log="visible"];
+    map<string, string> unclassified = 5 [(dlg).log="visible"]; 
 }
 
 // Message media
@@ -73,16 +55,16 @@ message AudioMedia {
 }
 
 enum InteractiveMediaStyle {
-    INTERACTIVEMEDIASTYLE_UNKNOWN = 0;
-    INTERACTIVEMEDIASTYLE_DEFAULT = 1;
-    INTERACTIVEMEDIASTYLE_PRIMARY = 2;
-    INTERACTIVEMEDIASTYLE_DANGER = 3;
+    INTERACTIVE_MEDIA_STYLE_UNKNOWN = 0;
+    INTERACTIVE_MEDIA_STYLE_DEFAULT = 1;
+    INTERACTIVE_MEDIA_STYLE_PRIMARY = 2;
+    INTERACTIVE_MEDIA_STYLE_DANGER = 3;
 }
 /// Some interactive element inside a message
 message InteractiveMediaWidget {
     oneof body {
-        InteractiveMediaButton interactiveMediaButton = 1;
-        InteractiveMediaSelect interactiveMediaSelect = 2;
+        InteractiveMediaButton interactive_media_button = 1;
+        InteractiveMediaSelect interactive_media_select = 2;
     }
 }
 
@@ -169,7 +151,7 @@ message UpdateInteractiveMediaEvent {
     /// selected value of that action
     string value = 3 [(dlg).log="visible"];
     /// who interacted with that media
-    int32 uid = 4 [(dlg).log="visible"];
+    string user_id = 4 [(dlg).log="visible"];
 }
 
 // Sends a request to do interactive media message
@@ -181,31 +163,37 @@ message RequestDoInteractiveMediaAction {
     string value = 3 [(dlg).log="visible"]; /// selected value
 }
 
+message MessageOverrides {
+    google.protobuf.StringValue sender_name_override = 1 [(dlg).log="visible"];
+    Avatar sender_photo_override = 2 [(dlg).log="visible"];
+    google.protobuf.StringValue sender_photo_url_override = 3;
+}
+
 message MessageContent {
     oneof body {
-        TextMessage textMessage = 1;
-        ServiceMessage serviceMessage = 2;
-        DocumentMessage documentMessage = 3;
-        JsonMessage jsonMessage = 4;
-        UnsupportedMessage unsupportedMessage = 5;
-        StickerMessage stickerMessage = 6;
-        BinaryMessage binaryMessage = 7;
-        EmptyMessage emptyMessage = 8;
-        DeletedMessage deletedMessage = 9;
+        TextMessage text_message = 1;
+        ServiceMessage service_message = 2;
+        DocumentMessage document_message = 3;
+        JsonMessage json_message = 4;
+        UnsupportedMessage unsupported_message = 5;
+        StickerMessage sticker_message = 6;
+        BinaryMessage binary_message = 7;
+        EmptyMessage empty_message = 8;
+        DeletedMessage deleted_message = 9;
     }
+
+    MessageOverrides overides = 10;
 }
 
 // Text message
 message TextMessage {
     string text = 1 [(dlg).log="hidden"];
-    /// Field is deprecated since server 2.6 version.
-    repeated int32 obsolete_mentions = 2 [(dlg).log="visible"];
     /// Optional bytes of extension
-    TextMessageEx ext = 3 [(dlg).log="visible"];
-    repeated MessageMedia media = 4 [(dlg).log="visible"];
-    repeated Any extensions = 5 [(dlg).log="visible"];
+    TextMessageEx ext = 2 [(dlg).log="visible"];
+    repeated MessageMedia media = 3 [(dlg).log="visible"];
+    repeated Any extensions = 4 [(dlg).log="visible"];
     /// Mentions in message
-    repeated Mention mentions = 6 [(dlg).log="visible"];
+    repeated Mention mentions = 5 [(dlg).log="visible"];
 }
 
 message Mention {
@@ -215,25 +203,22 @@ message Mention {
 
 message TextMessageEx {
     oneof body {
-        TextExMarkdown textExMarkdown = 1;
-        TextModernMessage textModernMessage = 2;
-        TextCommand textCommand = 3;
+        TextExMarkdown text_ex_markdown = 1;
+        TextModernMessage text_modern_message = 2;
+        TextCommand text_command = 3;
     }
 }
 
 // Markdown extension
 message TextExMarkdown {
-    string markdown = 2 [(dlg).log="hidden"]; /// Markdown text
+    string markdown = 1 [(dlg).log="hidden"]; /// Markdown text
 }
 
 // Modern text message
 message TextModernMessage {
     google.protobuf.StringValue text = 1 [(dlg).log="hidden"];
-    google.protobuf.StringValue sender_name_override = 2 [(dlg).log="visible"];
-    Avatar sender_photo_override = 3 [(dlg).log="visible"];
-    google.protobuf.StringValue sender_photo_url_override = 6;
-    ParagraphStyle style = 4 [(dlg).log="visible"];
-    repeated TextModernAttach attaches = 5 [(dlg).log="visible"];
+    ParagraphStyle style = 2 [(dlg).log="visible"];
+    repeated TextModernAttach attaches = 3 [(dlg).log="visible"];
 }
 
 // Paragraph style
@@ -274,49 +259,49 @@ message TextCommand {
 // Service message
 message ServiceMessage {
     string text = 1 [(dlg).log="hidden"];
-    ServiceEx ext = 3 [(dlg).log="compact"];
+    ServiceEx ext = 2 [(dlg).log="compact"];
 }
 
 message ServiceEx {
     oneof body {
-        ServiceExUserInvited userInvited = 1;
-        ServiceExUserJoined userJoined = 2;
-        ServiceExUserKicked userKicked = 3;
-        ServiceExUserLeft userLeft = 4;
-        ServiceExGroupCreated groupCreated = 5;
-        ServiceExChangedShortname changedShortname = 16;
-        ServiceExChangedTitle changedTitle = 6;
-        ServiceExChangedTopic changedTopic = 7;
-        ServiceExChangedAbout changedAbout = 8;
-        ServiceExChangedAvatar changedAvatar = 9;
-        ServiceExContactRegistered contactRegistered = 10;
-        ServiceExPhoneMissed phoneMissed = 11;
-        ServiceExPhoneCall phoneCall = 12;
-        ServiceExPhoneRejected phoneRejected = 13;
-        ServiceExChatArchived chatArchived = 14;
-        ServiceExChatRestored chatRestored = 15;
-        ServiceExConferenceStatus conferenceStatus = 17;
+        ServiceExUserInvited user_invited = 1;
+        ServiceExUserJoined user_joined = 2;
+        ServiceExUserKicked user_kicked = 3;
+        ServiceExUserLeft user_left = 4;
+        ServiceExGroupCreated group_created = 5;
+        ServiceExChangedShortname changed_shortname = 6;
+        ServiceExChangedTitle changed_title = 7;
+        ServiceExChangedTopic changed_topic = 8;
+        ServiceExChangedAbout changed_about = 9;
+        ServiceExChangedAvatar changed_avatar = 10;
+        ServiceExContactRegistered contact_registered = 11;
+        ServiceExPhoneMissed phone_missed = 12;
+        ServiceExPhoneCall phone_call = 13;
+        ServiceExPhoneRejected phone_rejected = 14;
+        ServiceExChatArchived chat_archived = 15;
+        ServiceExChatRestored chat_restored = 16;
+        ServiceExConferenceStatus conference_status = 17;
     }
 }
 
 // Service message about adding user to group
 message ServiceExUserInvited {
-    int32 invited_uid = 1 [(dlg).log="visible"]; /// added user id
+    string invited_user_id = 1 [(dlg).log="visible"]; /// added user id
 }
 
 // Service message about user join to group
 message ServiceExUserJoined {
-    int32 joined_user_id = 1;
+    string joined_user_id = 1;
 }
 
 // Service message about kicking user from group
 message ServiceExUserKicked {
-    int32 kicked_uid = 1 [(dlg).log="visible"];
+    string kicked_user_id = 1 [(dlg).log="visible"];
 }
 
 // Service message about user left group
 message ServiceExUserLeft {
-    int32 left_user_id = 1;
+    string left_user_id = 1;
 }
 
 // Service message about group creating
@@ -352,7 +337,7 @@ message ServiceExChangedAvatar {
 
 // Service message about user registration
 message ServiceExContactRegistered {
-    int32 uid = 1 [(dlg).log="visible"]; /// User Id
+    string user_id = 1 [(dlg).log="visible"]; /// User Id
 }
 
 // Update about missing phone call
@@ -361,7 +346,7 @@ message ServiceExPhoneMissed {
 
 // Update about phone call
 message ServiceExPhoneCall {
-    int32 duration = 1 [(dlg).log="visible"]; /// Duration of a phone call
+    int32 duration_seconds = 1 [(dlg).log="visible"]; /// Duration of a phone call
 }
 
 // Update about phone call rejected
@@ -384,16 +369,16 @@ message ServiceExConferenceStatus {
 
 // File message
 message DocumentMessage {
-    int64 file_id = 1 [(dlg).log="visible"];
+    string file_id = 1 [(dlg).log="visible"];
     int64 access_hash = 2 [(dlg).log="danger"];
     int32 file_size = 3 [(dlg).log="visible"];
     string name = 4 [(dlg).log="hidden"];
     string mime_type = 5 [(dlg).log="visible"];
     /// optional thumb of file. JPEG less that 90x90 with 60-70 quality.
     FastThumb thumb = 6 [(dlg).log="compact"];
-    DocumentEx ext = 8 [(dlg).log="compact"];
-    google.protobuf.StringValue caption = 9 [(dlg).log="hidden"];
-    repeated Mention mentions = 10 [(dlg).log="visible"];
+    DocumentEx ext = 7 [(dlg).log="compact"];
+    google.protobuf.StringValue caption = 8 [(dlg).log="hidden"];
+    repeated Mention mentions = 9 [(dlg).log="visible"];
 }
 
 message DocumentEx {
@@ -434,7 +419,7 @@ message UnsupportedMessage {
 // Sticker message
 message StickerMessage {
     /// Optional Unique ID of sticker
-    google.protobuf.Int32Value sticker_id = 1 [(dlg).log="visible"];
+    google.protobuf.StringValue sticker_id = 1 [(dlg).log="visible"];
     /// Optional Fast preview of sticker in webp format
     google.protobuf.BytesValue fast_preview = 2 [(dlg).log="visible"];
     /// Optional 512x512 sticker image in webp format
@@ -442,13 +427,13 @@ message StickerMessage {
     /// Optional 256x256 sticker image in webp format
     ImageLocation image_256 = 4 [(dlg).log="visible"];
     /// Optional Collection ID
-    google.protobuf.Int32Value sticker_collection_id = 5 [(dlg).log="visible"];
+    google.protobuf.StringValue sticker_collection_id = 5 [(dlg).log="visible"];
     /// Optional Collection Access Hash
     google.protobuf.Int64Value sticker_collection_access_hash = 6 [(dlg).log="visible"];
     /// Sticker emoji
     google.protobuf.StringValue emoji = 7 [(dlg).log="hidden"];
     /// Animated sticker json payload
-    google.protobuf.StringValue animatedStickerJson = 8 [(dlg).log="hidden"];
+    google.protobuf.StringValue animated_sticker_json = 8 [(dlg).log="hidden"];
 }
 
 // Binary Message. Useful for implementing your own content types
@@ -471,7 +456,7 @@ message DeletedMessage {
 message DialogShort {
     Peer peer = 1 [(dlg).log="visible"]; /// Peer of conversation
     int32 counter = 2 [(dlg).log="visible"]; /// Conversation unread count
-    int64 date = 4 [(dlg).log="visible"]; /// Conversation top message date
+    int64 date = 3 [(dlg).log="visible"]; /// Conversation top message date
 }
 
 // Grouped dialog list
@@ -483,7 +468,7 @@ message DialogGroup {
 
 // Reaction to message
 message MessageReaction {
-    repeated int32 users = 1 [(dlg).log="visible"]; /// User's reaction
+    repeated string users = 1 [(dlg).log="visible"]; /// User's reaction
     string code = 2 [(dlg).log="visible"]; /// Reaction EMOJI code
 }
 
@@ -497,46 +482,40 @@ message SearchPredicate {
 message RequestSendMessage {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     OutPeer peer = 1 [(dlg).log="visible"];
-    int64 deduplication_id = 3 [(dlg).log="visible"]; /// Id for message deduplication
-    MessageContent message = 4 [(dlg).log="visible"];
+    int64 deduplication_id = 2 [(dlg).log="visible"]; /// Id for message deduplication
+    MessageContent message = 3 [(dlg).log="visible"];
     /// if not empty, then message will be send to this user only
-    int32 is_only_for_user = 5 [(dlg).log="visible"];
+    string is_only_for_user = 4 [(dlg).log="visible"];
     /// If current message forwards some other
-    ReferencedMessages forward = 8 [(dlg).log="visible"];
+    ReferencedMessages forward = 5 [(dlg).log="visible"];
     /// If current message is a reply on some other
-    ReferencedMessages reply = 9 [(dlg).log="visible"];
-    repeated SearchPredicate predicates = 10 [(dlg).log = "visible"];
-    repeated int32 white_list = 11 [(dlg).log = "visible"];
-    repeated int32 black_list = 12 [(dlg).log = "visible"];
+    ReferencedMessages reply = 6 [(dlg).log="visible"];
+    repeated SearchPredicate predicates = 7 [(dlg).log = "visible"];
+    repeated string white_list = 8 [(dlg).log = "visible"];
+    repeated string black_list = 9 [(dlg).log = "visible"];
 }
 
 // Changing Message content
 message RequestUpdateMessage {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    UUIDValue mid = 2 [(dlg).log="visible"]; /// Message id
-    MessageContent updated_message = 3 [(dlg).log="visible"];
+    UUIDValue mid = 1 [(dlg).log="visible"]; /// Message id
+    MessageContent updated_message = 2 [(dlg).log="visible"];
     /// Date from this message when it was changed last time
-    int64 last_edited_at = 4 [(dlg).log="visible"];
+    int64 last_edited_at = 3 [(dlg).log="visible"];
 }
 
 // Confirmation of plain message receive by device
 message RequestMessageReceived {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     OutPeer peer = 1 [(dlg).log="visible"];
-    int64 date = 3 [(dlg).log="visible"];
+    int64 date = 2 [(dlg).log="visible"];
 }
 
 // Marking plain messages as read
 message RequestMessageRead {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     OutPeer peer = 1 [(dlg).log="visible"];
-    int64 date = 3 [(dlg).log="visible"];
-}
-
-// Deleting messages
-message RequestDeleteMessageObsolete {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    repeated UUIDValue mids = 3 [(dlg).log="visible"]; /// Message ids
+    int64 date = 2 [(dlg).log="visible"];
 }
 
 // Deleting message
@@ -571,7 +550,7 @@ message RequestArchiveChat {
 message RequestMessageSetReaction {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     OutPeer peer = 1 [(dlg).log="visible"];
-    UUIDValue mid = 4 [(dlg).log="visible"]; /// Message id
+    UUIDValue mid = 2 [(dlg).log="visible"]; /// Message id
     string code = 3 [(dlg).log="visible"]; /// EMOJI code
 }
 
@@ -579,16 +558,14 @@ message RequestMessageSetReaction {
 message RequestMessageRemoveReaction {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     OutPeer peer = 1 [(dlg).log="visible"];
-    UUIDValue mid = 4 [(dlg).log="visible"]; /// Message id
+    UUIDValue mid = 2 [(dlg).log="visible"]; /// Message id
     string code = 3 [(dlg).log="visible"]; /// EMOJI code
 }
 
 // Response for reactions change
 message ResponseReactionsResponse {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    int32 seq = 1; /// deprecated
-    bytes state = 2;
-    repeated MessageReaction reactions = 3;
+    repeated MessageReaction reactions = 1;
 }
 
 message ResponseSendMessage {
@@ -596,48 +573,48 @@ message ResponseSendMessage {
     UUIDValue message_id = 1 [(dlg).log="visible"]; /// Message id
     int64 message_date = 2 [(dlg).log="visible"]; /// Message creation date from server
     UUIDValue previous_message_id = 3 [(dlg).log="visible"]; /// Previous message id
-    int64 creator_user_id = 4 [(dlg).log="visible"]; // Message creator
+    string creator_user_id = 4 [(dlg).log="visible"]; // Message creator
     int64 clock = 5 [(dlg).log="visible"]; // Clock of this message (initially equals the message_date field)
 }
 
 // Update about plain message
 message UpdateMessage {
      Peer peer = 1 [(dlg).log="visible"];
-     int32 sender_uid = 2 [(dlg).log="visible"];
+     string sender_user_id = 2 [(dlg).log="visible"];
      int64 date = 3 [(dlg).log="visible"]; // message creation date (interval end)
-     UUIDValue mid = 8 [(dlg).log="visible"]; /// Message id
+     UUIDValue mid = 4 [(dlg).log="visible"]; /// Message id
      MessageContent message = 5 [(dlg).log="visible"];
      /// attributes to help reasoning about message
      MessageAttributes attributes = 6 [(dlg).log="visible"];
      oneof attach {
-         ReferencedMessages forward = 9 [(dlg).log="visible"];
-         ReferencedMessages reply = 10 [(dlg).log="visible"];
+         ReferencedMessages forward = 7 [(dlg).log="visible"];
+         ReferencedMessages reply = 8 [(dlg).log="visible"];
      }
      /// Message id of previos message from current conversation
-     UUIDValue previous_mid = 11 [(dlg).log="visible"];
-     google.protobuf.Int64Value prev_message_date = 15; // interval start
+     UUIDValue previous_mid = 9 [(dlg).log="visible"];
+     google.protobuf.Int64Value prev_message_date = 10; // interval start
      /// counter clock of the unread messages
-     int64 unread_counter_clock = 18 [(dlg).log="visible"];
+     int64 unread_counter_clock = 11 [(dlg).log="visible"];
      /// counter of the unread messages
      google.protobuf.Int32Value counter = 12 [(dlg).log="visible"];
      /// date of my own read
      google.protobuf.Int64Value my_read_date = 13 [(dlg).log="visible"];
      int64 random_id = 14 [(dlg).log="visible"];
      // when greater than date, then message is edited
-     int64 modified_at = 16 [(dlg).log="visible"];
+     int64 modified_at = 15 [(dlg).log="visible"];
      // make sense for edited message only (modified_at > date)
-     google.protobuf.Int64Value prev_edit_in_peer_at = 17 [(dlg).log="visible"];
+     google.protobuf.Int64Value prev_edit_in_peer_at = 16 [(dlg).log="visible"];
 }
 
 // Update about message change
 message UpdateMessageContentChanged {
     Peer peer = 1 [(dlg).log="visible"];
-    UUIDValue mid = 4 [(dlg).log="visible"]; /// Message id
+    UUIDValue mid = 2 [(dlg).log="visible"]; /// Message id
     MessageContent message = 3 [(dlg).log="visible"];
-    int64 edited_at = 5 [(dlg).log="visible"];
-    int64 prev_edit_in_peer_at = 6;
+    int64 edited_at = 4 [(dlg).log="visible"];
+    int64 prev_edit_in_peer_at = 5;
     // Update on behalf of a system, should not be displayed as edited.
-    google.protobuf.BoolValue is_silent = 7;
+    google.protobuf.BoolValue is_silent = 6;
 }
 
 // Update about message sent
@@ -650,12 +627,12 @@ message UpdateMessageSent {
     /// Previous message id in current conversation
     UUIDValue prev_mid = 5 [(dlg).log="visible"];
     /// counter of unread messages
-    int64 unread_counter_clock = 10 [(dlg).log="visible"];
-    google.protobuf.Int32Value unread_counter = 6 [(dlg).log="visible"];
-    google.protobuf.Int64Value myReadDate = 7 [(dlg).log="visible"];
+    int64 unread_counter_clock = 6 [(dlg).log="visible"];
+    google.protobuf.Int32Value unread_counter = 7 [(dlg).log="visible"];
+    google.protobuf.Int64Value my_read_date = 8 [(dlg).log="visible"];
     oneof attach {
-        ReferencedMessages forward = 8 [(dlg).log="visible"];
-        ReferencedMessages reply = 9 [(dlg).log="visible"];
+        ReferencedMessages forward = 9 [(dlg).log="visible"];
+        ReferencedMessages reply = 10 [(dlg).log="visible"];
     }
 }
 
@@ -682,19 +659,19 @@ message UpdateMessageReadByMe {
     int64 start_date = 2 [(dlg).log="visible"];
 
     /// when message was read
-    int64 unread_counter_clock = 4 [(dlg).log="visible"];
+    int64 unread_counter_clock = 3 [(dlg).log="visible"];
     /// counter of unread messages
-    google.protobuf.Int32Value unread_counter = 3 [(dlg).log="visible"];
+    google.protobuf.Int32Value unread_counter = 4 [(dlg).log="visible"];
 }
 
 // Update about message delete
 message UpdateMessageDelete {
     Peer peer = 1 [(dlg).log="visible"];
-    repeated UUIDValue mids = 3 [(dlg).log="visible"]; /// Deleted messages
+    repeated UUIDValue mids = 2 [(dlg).log="visible"]; /// Deleted messages
     /// counter of unread messages
-    google.protobuf.Int32Value counter = 4 [(dlg).log="visible"];
+    google.protobuf.Int32Value counter = 3 [(dlg).log="visible"];
     /// date? related for this unread counter
-    int64 action_date = 5 [(dlg).log="visible"];
+    int64 action_date = 4 [(dlg).log="visible"];
 }
 
 // Update about chat clear
@@ -722,7 +699,7 @@ message UpdateChatGroupsChanged {
 // Update about reactions change
 message UpdateReactionsUpdate {
     Peer peer = 1 [(dlg).log="visible"];
-    UUIDValue mid = 4 [(dlg).log="visible"]; /// related message id
+    UUIDValue mid = 2 [(dlg).log="visible"]; /// related message id
     repeated MessageReaction reactions = 3 [(dlg).log="visible"];
 }
 
@@ -731,7 +708,7 @@ message UpdateMessageRejectedByHook {
     Peer peer = 1 [(dlg).log="visible"];
     int64 rid = 2 [(dlg).log="visible"];
     int64 date = 3 [(dlg).log="visible"];
-    string hookId = 4 [(dlg).log="visible"];
+    string hook_id = 4 [(dlg).log="visible"];
     google.protobuf.StringValue reason = 5 [(dlg).log="visible"];
 }
 
@@ -740,7 +717,7 @@ message UpdateMessageEditRejectedByHook {
     Peer peer = 1 [(dlg).log="visible"];
     UUIDValue mid = 2 [(dlg).log="visible"]; // related message id
     int64 date = 3 [(dlg).log="visible"];
-    string hookId = 4 [(dlg).log="visible"];
+    string hook_id = 4 [(dlg).log="visible"];
     google.protobuf.StringValue reason = 5 [(dlg).log="visible"];
 }
 
@@ -756,10 +733,10 @@ message UpdateThreadLifted {
 }
 
 enum MessageState {
-    MESSAGESTATE_UNKNOWN = 0;
-    MESSAGESTATE_SENT = 1;
-    MESSAGESTATE_RECEIVED = 2;
-    MESSAGESTATE_READ = 3;
+    MESSAGE_STATE_UNKNOWN = 0;
+    MESSAGE_STATE_SENT = 1;
+    MESSAGE_STATE_RECEIVED = 2;
+    MESSAGE_STATE_READ = 3;
 }
 
 // mids Referenced message ids
@@ -769,59 +746,56 @@ message ReferencedMessages {
 
 // Message from history
 message HistoryMessage {
-    int32 sender_uid = 1 [(dlg).log="visible"];
-    OutPeer sender_peer = 15;
-    OutPeer host_peer = 12 [(dlg).log="visible"];
+    string sender_uid = 1 [(dlg).log="visible"];
+    OutPeer sender_peer = 2;
+    OutPeer host_peer = 3 [(dlg).log="visible"];
     /// Message id generated by server
-    UUIDValue mid = 10 [(dlg).log="visible"];
-    UUIDValue prev_mid = 17;
-    int64 date = 3 [(dlg).log="visible"];
-    MessageContent message = 5 [(dlg).log="hidden"];
-    MessageState state = 6 [(dlg).log="visible"];
-    repeated MessageReaction reactions = 7 [(dlg).log="visible"];
-    MessageAttributes attribute = 8 [(dlg).log="visible"];
+    UUIDValue mid = 4 [(dlg).log="visible"];
+    UUIDValue prev_mid = 5;
+    int64 date = 6 [(dlg).log="visible"];
+    MessageContent message = 7 [(dlg).log="hidden"];
+    MessageState state = 8 [(dlg).log="visible"];
+    repeated MessageReaction reactions = 9 [(dlg).log="visible"];
+    MessageAttributes attribute = 10 [(dlg).log="visible"];
     oneof attach {
-        ReferencedMessages forward = 13;
-        ReferencedMessages reply = 14;
+        ReferencedMessages forward = 11;
+        ReferencedMessages reply = 12;
     }
-    google.protobuf.Int64Value edited_at = 16 [(dlg).log="visible"];
-    int64 random_id = 18 [(dlg).log="visible"];
+    google.protobuf.Int64Value edited_at = 13 [(dlg).log="visible"];
+    int64 random_id = 14 [(dlg).log="visible"];
 }
 
 enum ListLoadMode {
-    LISTLOADMODE_UNKNOWN = 0;
-    LISTLOADMODE_FORWARD = 1;
-    LISTLOADMODE_BACKWARD = 2;
-    LISTLOADMODE_BOTH = 3;
+    LIST_LOAD_MODE_UNKNOWN = 0;
+    LIST_LOAD_MODE_FORWARD = 1;
+    LIST_LOAD_MODE_BACKWARD = 2;
+    LIST_LOAD_MODE_BOTH = 3;
 }
 
 // Loading history of chat
 message RequestLoadHistory {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     OutPeer peer = 1 [(dlg).log="visible", (dlg).required=true];
-    int64 date = 3 [(dlg).log="visible"];
+    int64 date = 2 [(dlg).log="visible"];
     /// forward, backward or both
-    ListLoadMode load_mode = 5 [(dlg).log="visible"];
+    ListLoadMode load_mode = 3 [(dlg).log="visible"];
     int32 limit = 4 [(dlg).log="visible"];
-    repeated UpdateOptimization optimizations = 6 [(dlg).log="visible"];
 }
 
 message ResponseLoadHistory {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    reserved 2, 5;
-
     repeated HistoryMessage history = 1;
-    repeated UserOutPeer user_peers = 4;
-    repeated GroupOutPeer group_peers = 6;
+    repeated UserOutPeer user_peers = 2;
+    repeated GroupOutPeer group_peers = 3;
     /// counter of unread messages
-    google.protobuf.Int32Value counter = 7;
+    google.protobuf.Int32Value counter = 4;
     /// date, related to this unread counter
-    int64 counter_date = 8;
+    int64 counter_date = 5;
 
     /// last conversation message date
-    google.protobuf.Int64Value last_conversation_message_date = 9;
+    google.protobuf.Int64Value last_conversation_message_date = 6;
     /// counter of the messages between last conversation message (including it) and last returned in this response
-    int32 count_foreign_after_last_returned = 10;
+    int32 count_foreign_after_last_returned = 7;
 }
 
 message RequestHistoryDifference {
@@ -837,7 +811,7 @@ message ResponseHistoryDifference {
 }
 
 message HistoryMessageLight {
-    int32 sender_uid = 1 [(dlg).log="visible"];
+    string sender_uid = 1 [(dlg).log="visible"];
     /// Message id generated by server
     UUIDValue message_id = 2 [(dlg).log="visible"];
     int64 date = 3 [(dlg).log="visible"];
@@ -853,9 +827,9 @@ message HistoryMessageLight {
 message RequestLoadHistoryLight {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     Peer peer = 1 [(dlg).log="visible", (dlg).required=true];
-    int64 date = 3 [(dlg).log="visible"];
+    int64 date = 2 [(dlg).log="visible"];
     /// forward, backward or both
-    ListLoadMode load_mode = 5 [(dlg).log="visible"];
+    ListLoadMode load_mode = 3 [(dlg).log="visible"];
     int32 limit = 4 [(dlg).log="visible"];
 }
 
@@ -894,12 +868,12 @@ message ResponseCountForeignMessages {
 // historyMessage Optional last messages
 message Dialog {
     Peer peer = 1 [(dlg).log="visible"]; /// Peer of conversation
-    int32 unread_count = 3 [(dlg).log="visible"]; /// counter of unread messages
-    int64 sort_date = 4 [(dlg).log="visible"]; /// deprecated
-    int32 sender_uid = 5 [(dlg).log="visible"];
-    google.protobuf.BoolValue is_favourite = 13 [(dlg).log="visible"];
+    int32 unread_count = 2 [(dlg).log="visible"]; /// counter of unread messages
+    int64 sort_date = 3 [(dlg).log="visible"]; /// deprecated
+    int32 sender_uid = 4 [(dlg).log="visible"];
+    google.protobuf.BoolValue is_favourite = 5 [(dlg).log="visible"];
     /// Message id
-    UUIDValue mid = 12 [(dlg).log="visible"];
+    UUIDValue mid = 6 [(dlg).log="visible"];
     /// last action date
     int64 date = 7 [(dlg).log="visible"];
     /// last message content
@@ -907,20 +881,20 @@ message Dialog {
     MessageState state = 9;
     int64 first_unread_date = 10 [(dlg).log="visible"];
     MessageAttributes attributes = 11 [(dlg).log="visible"];
-    PinnedMessages pinned_messages = 14 [(dlg).log="visible"];
+    PinnedMessages pinned_messages = 12 [(dlg).log="visible"];
     /// last message in this dialog
-    HistoryMessage history_message = 15 [(dlg).log="visible"];
-    int64 last_receive = 16 [(dlg).log="visible"];
-    int64 last_read = 17 [(dlg).log="visible"];
-    int64 last_reaction_at = 18;
-    bool read_later = 19;
-    string dialogType = 20;
+    HistoryMessage history_message = 13 [(dlg).log="visible"];
+    int64 last_receive = 14 [(dlg).log="visible"];
+    int64 last_read = 15 [(dlg).log="visible"];
+    int64 last_reaction_at = 16;
+    bool read_later = 17;
+    string dialog_type = 18;
 }
 
 enum DialogsFilter {
-    DIALOGSFILTER_UNKNOWN = 0;
-    DIALOGSFILTER_EXCLUDEFAVOURITES = 1;
-    DIALOGSFILTER_EXCLUDEARCHIVED = 2;
+    DIALOGS_FILTER_UNKNOWN = 0;
+    DIALOGS_FILTER_EXCLUDEFAVOURITES = 1;
+    DIALOGS_FILTER_EXCLUDEARCHIVED = 2;
 }
 
 // Loading conversation history
@@ -928,27 +902,24 @@ message RequestLoadDialogs {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     int64 min_date = 1 [(dlg).log="visible"];
     int32 limit = 2 [(dlg).log="visible"];
-    repeated UpdateOptimization optimizations = 3 [(dlg).log="visible"];
-    repeated DialogsFilter filters = 4 [(dlg).log="visible"];
-    repeated Peer peers_to_load = 5 [(dlg).log="visible"];
+    repeated DialogsFilter filters = 3 [(dlg).log="visible"];
+    repeated Peer peers_to_load = 4 [(dlg).log="visible"];
 }
 
 /// Contains dialogs and related peers and entities
 message ResponseLoadDialogs {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    reserved 1, 2;
-
-    repeated Dialog dialogs = 3;
-    repeated UserOutPeer user_peers = 4;
-    repeated GroupOutPeer group_peers = 5;
+    repeated Dialog dialogs = 1;
+    repeated UserOutPeer user_peers = 2;
+    repeated GroupOutPeer group_peers = 3;
 }
 
 // Data related to dialog entity
 message DialogData {
-    bool is_favourite = 2 [(dlg).log="visible"];
-    int64 created_at = 3 [(dlg).log="visible"];
+    bool is_favourite = 1 [(dlg).log="visible"];
+    int64 created_at = 2 [(dlg).log="visible"];
     /// When dialog was changed last time
-    int64 clock = 4 [(dlg).log="visible"];
+    int64 clock = 3 [(dlg).log="visible"];
 }
 
 message DialogIndex {
@@ -971,19 +942,19 @@ message DialogIndex {
 // data data related to dialog itself
 message DialogListEntry {
     Peer peer = 1 [(dlg).log="visible"]; /// Peer of conversation
-    int64 unread_counter_clock = 12 [(dlg).log="visible"];
-    int32 unread_count = 2 [(dlg).log="visible"];
-    int64 my_read_date = 3 [(dlg).log="visible"];
-    int64 last_message_date = 4 [(dlg).log="visible"];
-    int64 receive_date = 5 [(dlg).log="visible"];
-    int64 read_date = 6 [(dlg).log="visible"];
-    int64 entry_clock = 7 [(dlg).log="visible"];
+    int64 unread_counter_clock = 2 [(dlg).log="visible"];
+    int32 unread_count = 3 [(dlg).log="visible"];
+    int64 my_read_date = 4 [(dlg).log="visible"];
+    int64 last_message_date = 5 [(dlg).log="visible"];
+    int64 receive_date = 6 [(dlg).log="visible"];
+    int64 read_date = 7 [(dlg).log="visible"];
+    int64 entry_clock = 8 [(dlg).log="visible"];
     int64 last_update_of_message_date = 9;
     int64 last_reaction_date = 10;
     bool read_later = 11;
-    string dialogType = 13;
+    string dialog_type = 12;
 
-    DialogData data = 8 [(dlg).log="visible"];
+    DialogData data = 13 [(dlg).log="visible"];
 }
 
 /**
@@ -1033,50 +1004,6 @@ message ResponseGetLastConversationMessages {
     }
 
     repeated Pair messages = 1 [(dlg).log="visible"];
-}
-
-// Loading archived messages - deprecated
-message RequestLoadArchived {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    google.protobuf.BytesValue next_offset = 1 [(dlg).log="compact"];
-    int32 limit = 2 [(dlg).log="visible"];
-    repeated UpdateOptimization optimizations = 3 [(dlg).log="visible"];
-}
-/// deprecated
-message ResponseLoadArchived {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    reserved 1, 2;
-
-    repeated Dialog dialogs = 3;
-    repeated UserOutPeer user_peers = 5;
-    repeated GroupOutPeer group_peers = 6;
-    google.protobuf.BytesValue next_offset = 4;
-}
-
-// Load all dialogs from grouped list - deprecated
-message RequestLoadGroupedDialogs {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    repeated UpdateOptimization optimizations = 1;
-}
-
-/// deprecated
-message ResponseLoadGroupedDialogs {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    reserved 2, 3;
-
-    repeated DialogGroup dialogs = 1;
-    google.protobuf.BoolValue show_archived = 4;
-    google.protobuf.BoolValue show_invite = 5;
-    repeated UserOutPeer user_peers = 6;
-    repeated GroupOutPeer group_peers = 7;
-}
-
-// Dialogs order response - deprecated
-message ResponseDialogsOrder {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    int32 seq = 1 [(dlg).log="visible"];
-    bytes state = 2 [(dlg).log="visible"];
-    repeated DialogGroup groups = 3 [(dlg).log="visible"];
 }
 
 // Hide Dialog from grouped list
@@ -1184,10 +1111,12 @@ message RequestMessageReceives {
 }
 
 // Response with the list of message statuses reads
-message ResponseMessageReads{
+message ResponseMessageReads {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     repeated MessageStatus status = 1;
     int64 timestamp_till = 2 [(dlg).log="visible"]; // max time of returned entries, or requested time if empty
+    int64 last_read_date = 3 [(dlg).log="visible"];
+    int32 counter = 4 [(dlg).log="visible"];; 
 }
 
 // Response with the list of message statuses receives
@@ -1212,7 +1141,7 @@ message UpdateDialogReadLaterChanged {
 
 service Messaging {
     /// Interact with a message media (click on button for example)
-    rpc DoInteractiveMediaAction (RequestDoInteractiveMediaAction) returns (ResponseVoid) {
+    rpc DoInteractiveMediaAction (RequestDoInteractiveMediaAction) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/DoInteractiveMediaAction"
             body: "*"
@@ -1224,57 +1153,43 @@ service Messaging {
             body: "*"
         };
     }
-    rpc UpdateMessage (RequestUpdateMessage) returns (ResponseSeqDate) {
+    rpc UpdateMessage (RequestUpdateMessage) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/UpdateMessage"
             body: "*"
         };
     }
     /// Mark message as received by self
-    rpc MessageReceived (RequestMessageReceived) returns (ResponseVoid) {
+    rpc MessageReceived (RequestMessageReceived) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/MessageReceived"
             body: "*"
         };
     }
     /// Mark message as read by self
-    rpc MessageRead (RequestMessageRead) returns (ResponseVoid) {
+    rpc MessageRead (RequestMessageRead) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/MessageRead"
             body: "*"
         };
     }
-    /// deprecated
-    rpc DeleteMessageObsolete (RequestDeleteMessageObsolete) returns (ResponseSeq) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Messaging/DeleteMessageObsolete"
-            body: "*"
-        };
-    }
 
-    rpc DeleteMessage (RequestDeleteMessage) returns (ResponseVoid) {
+    rpc DeleteMessage (RequestDeleteMessage) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/DeleteMessage"
             body: "*"
         };
     }
     /// Clear chat history
-    rpc ClearChat (RequestClearChat) returns (ResponseSeq) {
+    rpc ClearChat (RequestClearChat) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/ClearChat"
             body: "*"
         };
     }
-    rpc DeleteChat (RequestDeleteChat) returns (ResponseSeq) {
+    rpc DeleteChat (RequestDeleteChat) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/DeleteChat"
-            body: "*"
-        };
-    }
-    /// deprecated
-    rpc ArchiveChat (RequestArchiveChat) returns (ResponseSeq) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Messaging/ArchiveChat"
             body: "*"
         };
     }
@@ -1347,60 +1262,31 @@ service Messaging {
             body: "*"
         };
     }
-
-    /// deprecated
-    rpc LoadArchived (RequestLoadArchived) returns (ResponseLoadArchived) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Messaging/LoadArchived"
-            body: "*"
-        };
-    }
-    /// deprecated
-    rpc LoadGroupedDialogs (RequestLoadGroupedDialogs) returns (ResponseLoadGroupedDialogs) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Messaging/LoadGroupedDialogs"
-            body: "*"
-        };
-    }
-    /// deprecated
-    rpc HideDialog (RequestHideDialog) returns (ResponseDialogsOrder) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Messaging/HideDialog"
-            body: "*"
-        };
-    }
-    /// deprecated
-    rpc ShowDialog (RequestShowDialog) returns (ResponseDialogsOrder) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Messaging/ShowDialog"
-            body: "*"
-        };
-    }
-    rpc FavouriteDialog (RequestFavouriteDialog) returns (ResponseDialogsOrder) {
+    rpc FavouriteDialog (RequestFavouriteDialog) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/FavouriteDialog"
             body: "*"
         };
     }
-    rpc UnfavouriteDialog (RequestUnfavouriteDialog) returns (ResponseDialogsOrder) {
+    rpc UnfavouriteDialog (RequestUnfavouriteDialog) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/UnfavouriteDialog"
             body: "*"
         };
     }
-    rpc NotifyDialogOpened (RequestNotifyDialogOpened) returns (ResponseVoid) {
+    rpc NotifyDialogOpened (RequestNotifyDialogOpened) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/NotifyDialogOpened"
             body: "*"
         };
     }
-    rpc PinMessage (RequestPinMessage) returns (ResponseSeqDate) {
+    rpc PinMessage (RequestPinMessage) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/PinMessage"
             body: "*"
         };
     }
-    rpc UnpinMessage (RequestUnpinMessage) returns (ResponseSeqDate) {
+    rpc UnpinMessage (RequestUnpinMessage) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/UnpinMessage"
             body: "*"
@@ -1429,7 +1315,7 @@ service Messaging {
         };
     }
 
-    rpc ReadDialogLater (RequestReadDialogLater) returns (ResponseVoid) {
+    rpc ReadDialogLater (RequestReadDialogLater) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/ReadDialogLater"
             body: "*"

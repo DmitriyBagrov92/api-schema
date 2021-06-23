@@ -7,7 +7,6 @@ import "google/protobuf/wrappers.proto";
 import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
 import "definitions.proto";
-import "miscellaneous.proto";
 import "peers.proto";
 import "media_and_files.proto";
 import "scalapb/scalapb.proto";
@@ -17,64 +16,37 @@ option java_package = "im.dlg.grpc.services";
 
 // Member information
 message Member {
-    int32 uid = 1 [(dlg).log="visible"];
-    reserved 2, 4; // inviter_uid, is_admin
-    int64 invited_at = 3 [(dlg).log="visible"];
-    repeated GroupAdminPermission permissions = 5 [(dlg).log="visible"]; // List of member permissions
-    int64 clock = 6 [(dlg).log="visible"];
-    google.protobuf.Timestamp deleted_at = 7 [(dlg).log="visible"];
+    string user_id = 1 [(dlg).log="visible"];
+    int64 invited_at = 2 [(dlg).log="visible"];
+    repeated GroupAdminPermission permissions = 3 [(dlg).log="visible"]; // List of member permissions
+    int64 clock = 4 [(dlg).log="visible"];
+    google.protobuf.Timestamp deleted_at = 5 [(dlg).log="visible"];
 }
 
 enum GroupType {
-    GROUPTYPE_UNKNOWN = 0;
-    GROUPTYPE_GROUP = 1;
-    GROUPTYPE_CHANNEL = 2;
-    GROUPTYPE_THREAD = 4;
+    GROUP_TYPE_UNKNOWN = 0;
+    GROUP_TYPE_GROUP = 1;
+    GROUP_TYPE_CHANNEL = 2;
+    GROUP_TYPE_THREAD = 3;
 }
 
 // Group information
 message Group {
-    int32 id = 1 [(dlg).log="visible"]; /// group id
+    string id = 1 [(dlg).log="visible"]; /// group id
     int64 access_hash = 2 [(dlg).log="danger"]; /// Access hash of group
     GroupData data = 29;
     Member self_member = 30;
-
-    // For old bot sdk compatibility
-    string title = 3 [(dlg).log="hidden"]; /// Title of group
-    reserved 4;
-    /// Number of members
-    reserved 24;
-    /// Is current user a member of a group. Default is true.
-    reserved 6;
-    /// Is group hidden (not showing it in recent list). Default is false.
-    reserved 20;
-    /// Group Type. Used only for displaying information. Default is GROUP.
-    GroupType group_type = 25 [(dlg).log="visible"];
-    /// Can user send messages. Default is equals isMember for Group and false for channels.
-    reserved 26;
-    reserved 16;
-    reserved 8;
-    reserved 9;
-    reserved 10;
-    /// Theme of group
-    reserved 17;
-    /// About of group
-    reserved 18;
-    /// Group short name
-    google.protobuf.StringValue shortname = 19 [(dlg).log="visible"];
-    /// Base permissions for invited members
-    reserved 28;
 }
 
 message GroupData {
-    UUIDValue space_id = 1;
+    string space_id = 1;
     string title = 2 [(dlg).log="hidden"]; /// Title of group
     Avatar avatar = 3 [(dlg).log="compact"]; /// Avatar of group
     /// Number of members
     int32 members_amount = 4 [(dlg).log="visible"];
     /// Group Type. Used only for displaying information. Default is GROUP.
     GroupType group_type = 5 [(dlg).log="visible"];
-    int32 owner_user_id = 6 [(dlg).log="visible"]; /// Group creator
+    string owner_user_id = 6 [(dlg).log="visible"]; /// Group creator
     google.protobuf.Timestamp created_at = 7 [(dlg).log="visible"]; /// Date of creation
     /// About of group
     google.protobuf.StringValue about = 8 [(dlg).log="hidden"];
@@ -89,7 +61,7 @@ message GroupData {
 }
 
 message GroupPartialInfo {
-    int32 id = 1 [(dlg).log = "visible"];
+    string id = 1 [(dlg).log = "visible"];
     int64 access_hash = 2 [(dlg).log="danger"];
     int64 clock = 3 [(dlg).log="visible"];
     GroupType type = 4 [(dlg).log="visible"];
@@ -102,7 +74,7 @@ message GroupPartialInfo {
 
 // Update about group data changed
 message UpdateGroup {
-    int32 id = 1;
+    string id = 1;
     GroupData data = 2;
 }
 
@@ -116,57 +88,57 @@ message RequestLoadMembers {
 
 message ResponseLoadMembers {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    google.protobuf.BytesValue cursor = 2 [(dlg).log="compact"];
-    repeated Member members = 3 [(dlg).log="visible"];
+    google.protobuf.BytesValue cursor = 1 [(dlg).log="compact"];
+    repeated Member members = 2 [(dlg).log="visible"];
 }
 
 // Update about title changed
 message UpdateGroupTitleChanged {
-    int32 group_id = 1 [(dlg).log="visible"];
+    string group_id = 1 [(dlg).log="visible"];
     string title = 2 [(dlg).log="hidden"];
 }
 
 // Update about avatar changed
 message UpdateGroupAvatarChanged {
-    int32 group_id = 1 [(dlg).log="visible"];
+    string group_id = 1 [(dlg).log="visible"];
     Avatar avatar = 2 [(dlg).log="visible"];
 }
 
 // Update about about changed
 message UpdateGroupAboutChanged {
-    int32 group_id = 1 [(dlg).log="visible"];
+    string group_id = 1 [(dlg).log="visible"];
     google.protobuf.StringValue about = 2 [(dlg).log="hidden"];
 }
 
 // Update about owner changed
 message UpdateGroupOwnerChanged {
-    int32 group_id = 1 [(dlg).log="visible"];
-    int32 user_id = 2 [(dlg).log="visible"]; /// new owner
+    string group_id = 1 [(dlg).log="visible"];
+    string user_id = 2 [(dlg).log="visible"]; /// new owner
 }
 
 // Update about base group permissions changed
 message UpdateGroupBasePermissionsChanged {
-    int32 group_id = 1 [(dlg).log="visible"];
+    string group_id = 1 [(dlg).log="visible"];
     /// new base permissions
     repeated GroupAdminPermission base_permissions = 2 [(dlg).log="visible"];
 }
 
 // Update about members updated
 message UpdateGroupMembersUpdated {
-    int32 group_id = 1 [(dlg).log="visible"];
+    string group_id = 1 [(dlg).log="visible"];
     repeated Member members = 2 [(dlg).log="visible"];
 }
 
 // Update about members changed
 message UpdateGroupMemberDiff {
-    repeated int32 removed_users = 1 [(dlg).log="visible"];
+    repeated string removed_users = 1 [(dlg).log="visible"];
     repeated Member added_members = 2 [(dlg).log="visible"];
     int32 members_count = 3 [(dlg).log="visible"];
 }
 
 // Update about members count changed
 message UpdateGroupMembersCountChanged {
-    int32 group_id = 1 [(dlg).log="visible"];
+    string group_id = 1 [(dlg).log="visible"];
     int32 members_count = 2 [(dlg).log="visible"];
 }
 
@@ -174,39 +146,30 @@ message UpdateGroupMembersCountChanged {
 message RequestCreateGroup {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     int64 rid = 1 [(dlg).log="visible"]; /// Id for query deduplication
-    UUIDValue space_id = 9;
-    string title = 2 [(dlg).log="hidden"];
-    repeated UserOutPeer users = 3 [(dlg).log="visible"]; /// members
-    GroupType group_type = 6 [(dlg).log="visible"]; /// group or channel
+    google.protobuf.StringValue space_id = 2;
+    string title = 3 [(dlg).log="hidden"];
+    repeated UserOutPeer users = 4 [(dlg).log="visible"]; /// members
+    GroupType group_type = 5 [(dlg).log="visible"]; /// group or channel
 
     /// optional shortname of a group, group will be public if set
-    google.protobuf.StringValue username = 8 [(dlg).log="visible"];
-
-    /// Optimizations drops some info from response to decrease traffic and latency
-    repeated UpdateOptimization optimizations = 7 [(dlg).log="visible"];
+    google.protobuf.StringValue username = 6 [(dlg).log="visible"];
 
     /// Base permissions for invited members
-    repeated GroupAdminPermission base_permissions = 10 [(dlg).log="visible"];
+    repeated GroupAdminPermission base_permissions = 7 [(dlg).log="visible"];
 }
 
 message ResponseCreateGroup {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    reserved 4;
-
-    int32 seq = 1; /// deprecated
-    bytes state = 2;
-    Group group = 3; /// created group
-    repeated UserOutPeer user_peers = 5; /// empty if dropped by optimizations
+    Group group = 1; /// created group
+    repeated UserOutPeer user_peers = 2; /// empty if dropped by optimizations
 }
 
 // Changing group title
 message RequestEditGroupTitle {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     GroupOutPeer group_peer = 1 [(dlg).log="visible"];
-    int64 rid = 4 [(dlg).log="visible"]; /// Id for query deduplication
+    int64 rid = 2 [(dlg).log="visible"]; /// Id for query deduplication
     string title = 3 [(dlg).log="hidden"];
-    /// Optimizations drops some info from response to decrease traffic and latency
-    repeated UpdateOptimization optimizations = 5 [(dlg).log="visible"];
 }
 
 // Sets group short name
@@ -221,28 +184,15 @@ message RequestSetGroupShortname {
 message RequestEditGroupAvatar {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     GroupOutPeer group_peer = 1 [(dlg).log="visible"];
-    int64 rid = 4 [(dlg).log="visible"]; /// Id for query deduplication
+    int64 rid = 2 [(dlg).log="visible"]; /// Id for query deduplication
     FileLocation file_location = 3 [(dlg).log="compact"];
-    /// Optimizations drops some info from response to decrease traffic and latency
-    repeated UpdateOptimization optimizations = 5 [(dlg).log="visible"];
-}
-
-message ResponseEditGroupAvatar {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    Avatar avatar = 1;
-    int32 seq = 2; /// deprecated
-    bytes state = 3;
-    int64 date = 4;
-    UUIDValue mid = 5;
 }
 
 // Removing group avatar
 message RequestRemoveGroupAvatar {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     GroupOutPeer group_peer = 1 [(dlg).log="visible"];
-    int64 rid = 4 [(dlg).log="visible"]; /// Id for query deduplication
-    /// Optimizations drops some info from response to decrease traffic and latency
-    repeated UpdateOptimization optimizations = 5 [(dlg).log="visible"];
+    int64 rid = 2 [(dlg).log="visible"]; /// Id for query deduplication
 }
 
 // Edit Group About
@@ -251,8 +201,6 @@ message RequestEditGroupAbout {
     GroupOutPeer group_peer = 1 [(dlg).log="visible"];
     int64 rid = 2 [(dlg).log="visible"]; /// Id for query deduplication
     google.protobuf.StringValue about = 3 [(dlg).log="hidden"];
-    /// Optimizations drops some info from response to decrease traffic and latency
-    repeated UpdateOptimization optimizations = 5 [(dlg).log="visible"];
 }
 
 message RequestEditGroupBasePermissions {
@@ -280,10 +228,8 @@ message ResponseMember {
 message RequestInviteUser {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     GroupOutPeer group_peer = 1 [(dlg).log="visible"];
-    int64 rid = 4 [(dlg).log="visible"]; /// Id for query deduplication
+    int64 rid = 2 [(dlg).log="visible"]; /// Id for query deduplication
     UserOutPeer user = 3 [(dlg).log="visible"];
-    /// Optimizations drops some info from response to decrease traffic and latency
-    repeated UpdateOptimization optimizations = 5 [(dlg).log="visible"];
 }
 
 // Leaving group
@@ -291,38 +237,34 @@ message RequestLeaveGroup {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     GroupOutPeer group_peer = 1 [(dlg).log="visible"];
     int64 rid = 2 [(dlg).log="visible"]; /// Id for query deduplication
-    /// Optimizations drops some info from response to decrease traffic and latency
-    repeated UpdateOptimization optimizations = 3 [(dlg).log="visible"];
 }
 
 // Kicking user from group
 message RequestKickUser {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     GroupOutPeer group_peer = 1 [(dlg).log="visible"];
-    int64 rid = 4 [(dlg).log="visible"]; /// Id for query deduplication
+    int64 rid = 2 [(dlg).log="visible"]; /// Id for query deduplication
     UserOutPeer user = 3 [(dlg).log="visible"];
-    /// Optimizations drops some info from response to decrease traffic and latency
-    repeated UpdateOptimization optimizations = 5 [(dlg).log="visible"];
 }
 
 /// Possible permissions on a group
 enum GroupAdminPermission {
-    GROUPADMINPERMISSION_UNKNOWN = 0;
-    GROUPADMINPERMISSION_EDITSHORTNAME = 1;
-    GROUPADMINPERMISSION_INVITE = 2;
-    GROUPADMINPERMISSION_KICK = 3;
-    GROUPADMINPERMISSION_UPDATEINFO = 4;
-    GROUPADMINPERMISSION_SETPERMISSIONS = 5;
-    GROUPADMINPERMISSION_EDITMESSAGE = 6;
-    GROUPADMINPERMISSION_DELETEMESSAGE = 7;
-    GROUPADMINPERMISSION_GETINTEGRATIONTOKEN = 8;
-    GROUPADMINPERMISSION_SENDMESSAGE = 9;
-    GROUPADMINPERMISSION_PINMESSAGE = 10;
-    GROUPADMINPERMISSION_VIEWMEMBERS = 11;
-    GROUPADMINPERMISSION_LEAVE = 12; /// read only permission
-    GROUPADMINPERMISSION_TARGETING = 13;
-    GROUPADMINPERMISSION_DELETE = 14;
-    GROUPADMINPERMISSION_MANAGE_CONFERENCE = 15;
+    GROUP_ADMIN_PERMISSION_UNKNOWN = 0;
+    GROUP_ADMIN_PERMISSION_EDITSHORTNAME = 1;
+    GROUP_ADMIN_PERMISSION_INVITE = 2;
+    GROUP_ADMIN_PERMISSION_KICK = 3;
+    GROUP_ADMIN_PERMISSION_UPDATEINFO = 4;
+    GROUP_ADMIN_PERMISSION_SETPERMISSIONS = 5;
+    GROUP_ADMIN_PERMISSION_EDITMESSAGE = 6;
+    GROUP_ADMIN_PERMISSION_DELETEMESSAGE = 7;
+    GROUP_ADMIN_PERMISSION_GETINTEGRATIONTOKEN = 8;
+    GROUP_ADMIN_PERMISSION_SENDMESSAGE = 9;
+    GROUP_ADMIN_PERMISSION_PINMESSAGE = 10;
+    GROUP_ADMIN_PERMISSION_VIEWMEMBERS = 11;
+    GROUP_ADMIN_PERMISSION_LEAVE = 12; /// read only permission
+    GROUP_ADMIN_PERMISSION_TARGETING = 13;
+    GROUP_ADMIN_PERMISSION_DELETE = 14;
+    GROUP_ADMIN_PERMISSION_MANAGE_CONFERENCE = 15;
 }
 
 // Make user admin
@@ -337,15 +279,15 @@ message RequestMakeUserAdmin {
 // userId the id of the group member
 // permissions a list of permissions that user has
 message GroupMemberPermission {
-    int32 user_id = 1 [(dlg).log="visible"];
+    string user_id = 1 [(dlg).log="visible"];
     repeated GroupAdminPermission permissions = 2 [(dlg).log="hidden"];
 }
 
 // Fetches the group administration permissions for each of the users from the list
 message RequestGetGroupMemberPermissions {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    int32 group_id = 1 [(dlg).log="visible"];
-    repeated int32 user_ids = 2 [(dlg).log="visible"];
+    string group_id = 1 [(dlg).log="visible"];
+    repeated string user_ids = 2 [(dlg).log="visible"];
 }
 
 message ResponseGetGroupMemberPermissions {
@@ -355,8 +297,8 @@ message ResponseGetGroupMemberPermissions {
 
 // Update about the user's permissions
 message UpdateGroupMemberPermissionsChanged {
-    int32 group_id = 1 [(dlg).log="visible"];
-    int32 user_id = 2 [(dlg).log="visible"];
+    string group_id = 1 [(dlg).log="visible"];
+    string user_id = 2 [(dlg).log="visible"];
     repeated GroupAdminPermission permissions = 3 [(dlg).log="visible"];
 }
 
@@ -364,7 +306,7 @@ message UpdateGroupMemberPermissionsChanged {
 message RequestTransferOwnership {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     GroupOutPeer group_peer = 1 [(dlg).log="visible"];
-    int32 new_owner = 2 [(dlg).log="visible"];
+    string new_owner = 2 [(dlg).log="visible"];
 }
 
 // Response for invite url methods
@@ -399,19 +341,13 @@ message RequestRevokeInviteUrl {
 message RequestJoinGroup {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     string token = 1 [(dlg).log="visible"];
-    repeated UpdateOptimization optimizations = 2 [(dlg).log="hidden"];
 }
 
 message ResponseJoinGroup {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    reserved 5;
 
     Group group = 1;
-    repeated UserOutPeer user_peers = 7; /// empty if dropped by optimizations
-    UUIDValue mid = 8; /// deprecated
-    int32 seq = 2; /// deprecated
-    bytes state = 3;
-    int64 date = 4;
+    repeated UserOutPeer user_peers = 2; /// empty if dropped by optimizations
 }
 
 // Join group by peer
@@ -422,7 +358,7 @@ message RequestJoinGroupByPeer {
 
 message RequestDeleteGroup {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    int32 group_id = 1 [(dlg).log="visible"];
+    string group_id = 1 [(dlg).log="visible"];
 }
 
 // get group info by invite token
@@ -435,87 +371,15 @@ message RequestGetGroupPartialInfo {
  * Update notifies that some user got invited to the group
  */
  message UpdateGroupMemberInvited {
-    int32 group_id = 1 [(dlg).log="visible"];
+    string group_id = 1 [(dlg).log="visible"];
     Member member = 2;
-}
-
-/**
- * Update notifies that current user got invited to the group
- * @deprecated
- */
-message UpdateGroupInviteObsolete {
-    int32 group_id = 1 [(dlg).log="visible"];
-    int64 rid = 9 [(dlg).log="visible"]; /// deprecated
-    UUIDValue mid = 10; /// deprecated
-    int32 invite_uid = 5 [(dlg).log="visible"];
-    int64 date = 8 [(dlg).log="visible"];
-}
-
-/**
- * Update notifies that some user got invited to the group
- * @deprecated
- */
-message UpdateGroupUserInvitedObsolete {
-    int32 group_id = 1 [(dlg).log="visible"];
-    int64 rid = 5 [(dlg).log="visible"]; // / Id for deduplication
-    UUIDValue mid = 6 [(dlg).log="visible"]; /// deprecated
-    int32 uid = 2 [(dlg).log="visible"];
-    int32 inviter_uid = 3 [(dlg).log="visible"];
-    int64 date = 4 [(dlg).log="visible"];
-}
-
-// Update about leaving user
-message UpdateGroupUserLeaveObsolete {
-    int32 group_id = 1 [(dlg).log="visible"];
-    UUIDValue mid = 5; /// deprecated
-    int32 uid = 2 [(dlg).log="visible"];
-    int64 date = 3 [(dlg).log="visible"];
-}
-
-// Update about kicking user
-message UpdateGroupUserKickObsolete {
-    int32 group_id = 1 [(dlg).log="visible"];
-    UUIDValue mid = 6; /// deprecated
-    int32 uid = 2 [(dlg).log="visible"];
-    int32 kicker_uid = 3 [(dlg).log="visible"];
-    int64 date = 4 [(dlg).log="visible"];
-}
-
-// Silent group members update
-message UpdateGroupMembersUpdateObsolete {
-    int32 group_id = 1 [(dlg).log="visible"];
-    repeated Member members = 2 [(dlg).log="visible"];
-}
-
-// Update about group title change
-message UpdateGroupTitleChangedObsolete {
-    int32 group_id = 1 [(dlg).log="visible"];
-    UUIDValue mid = 6; /// deprecated
-    int32 uid = 2 [(dlg).log="visible"];
-    string title = 3 [(dlg).log="hidden"];
-    int64 date = 4 [(dlg).log="visible"];
-}
-
-// Update about group about change
-message UpdateGroupAboutChangedObsolete {
-    int32 group_id = 1 [(dlg).log="visible"];
-    google.protobuf.StringValue about = 2 [(dlg).log="hidden"];
-}
-
-// Update about group avatar change
-message UpdateGroupAvatarChangedObsolete {
-    int32 group_id = 1 [(dlg).log="visible"];
-    UUIDValue mid = 6; /// deprecated
-    int32 uid = 2 [(dlg).log="visible"];
-    Avatar avatar = 3 [(dlg).log="compact"];
-    int64 date = 4 [(dlg).log="visible"];
 }
 
 // Update group short name
 message UpdateGroupShortnameChanged {
-    int32 group_id = 1 [(dlg).log="visible"];
+    string group_id = 1 [(dlg).log="visible"];
     string shortname = 2 [(dlg).log="visible"];
-    int32 uid = 3 [(dlg).log="visible"];
+    string user_id = 3 [(dlg).log="visible"];
 }
 
 service Groups {
@@ -531,31 +395,31 @@ service Groups {
             body: "*"
         };
     }
-    rpc EditGroupTitle (RequestEditGroupTitle) returns (ResponseSeqDateMid) {
+    rpc EditGroupTitle (RequestEditGroupTitle) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/EditGroupTitle"
             body: "*"
         };
     }
-    rpc SetGroupShortname (RequestSetGroupShortname) returns (ResponseSeq) {
+    rpc SetGroupShortname (RequestSetGroupShortname) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/SetGroupShortname"
             body: "*"
         };
     }
-    rpc EditGroupAvatar (RequestEditGroupAvatar) returns (ResponseEditGroupAvatar) {
+    rpc EditGroupAvatar (RequestEditGroupAvatar) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/EditGroupAvatar"
             body: "*"
         };
     }
-    rpc RemoveGroupAvatar (RequestRemoveGroupAvatar) returns (ResponseSeqDateMid) {
+    rpc RemoveGroupAvatar (RequestRemoveGroupAvatar) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/RemoveGroupAvatar"
             body: "*"
         };
     }
-    rpc EditGroupAbout (RequestEditGroupAbout) returns (ResponseSeqDate) {
+    rpc EditGroupAbout (RequestEditGroupAbout) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/EditGroupAbout"
             body: "*"
@@ -567,25 +431,25 @@ service Groups {
             body: "*"
         };
     }
-    rpc InviteUser (RequestInviteUser) returns (ResponseSeqDateMid) {
+    rpc InviteUser (RequestInviteUser) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/InviteUser"
             body: "*"
         };
     }
-    rpc LeaveGroup (RequestLeaveGroup) returns (ResponseSeqDateMid) {
+    rpc LeaveGroup (RequestLeaveGroup) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/LeaveGroup"
             body: "*"
         };
     }
-    rpc KickUser (RequestKickUser) returns (ResponseSeqDateMid) {
+    rpc KickUser (RequestKickUser) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/KickUser"
             body: "*"
         };
     }
-    rpc MakeUserAdmin (RequestMakeUserAdmin) returns (ResponseSeqDate) {
+    rpc MakeUserAdmin (RequestMakeUserAdmin) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/MakeUserAdmin"
             body: "*"
@@ -603,7 +467,7 @@ service Groups {
             body: "*"
         };
     }
-    rpc TransferOwnership (RequestTransferOwnership) returns (ResponseSeqDate) {
+    rpc TransferOwnership (RequestTransferOwnership) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/TransferOwnership"
             body: "*"
@@ -633,7 +497,7 @@ service Groups {
             body: "*"
         };
     }
-    rpc JoinGroupByPeer (RequestJoinGroupByPeer) returns (ResponseVoid) {
+    rpc JoinGroupByPeer (RequestJoinGroupByPeer) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/JoinGroupByPeer"
             body: "*"

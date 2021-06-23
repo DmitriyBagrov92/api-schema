@@ -2,18 +2,17 @@ syntax = "proto3";
 
 package dialog.reactions;
 
+import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
 import "peers.proto";
 import "definitions.proto";
-import "scalapb/scalapb.proto";
-import "google/protobuf/empty.proto";
 
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
 
 message Reaction {
     string code = 1;
-    repeated int32 users = 2;
+    repeated string users = 2;
     int32 users_amount = 3;
 }
 
@@ -24,7 +23,7 @@ message MessageReactions {
 
 message MessageReactionsUpdate {
     Peer peer = 1;
-    MessageReactions messageReaction = 2;
+    MessageReactions message_reaction = 2;
     int64 peer_clock = 3;
     int64 prev_peer_clock = 4;
 }
@@ -35,7 +34,7 @@ message GetReactionsRequest {
 }
 
 message GetReactionsResponse {
-    repeated MessageReactions messageReactions = 1;
+    repeated MessageReactions message_reactions = 1;
     int64 peer_clock = 2;
     bool next_available = 3;
 }
@@ -46,7 +45,7 @@ message GetMessageReactionsRequest {
 }
 
 message GetMessageReactionsResponse {
-    repeated MessageReactions messageReactions = 1;
+    repeated MessageReactions message_reactions = 1;
 }
 
 message RequestSetMessageReaction {

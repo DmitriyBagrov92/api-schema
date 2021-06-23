@@ -5,9 +5,9 @@ package dialog;
 // Support for threads inside group chats.
 
 import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
 import "definitions.proto";
-import "miscellaneous.proto";
 import "scalapb/scalapb.proto";
 import "peers.proto";
 import "groups.proto";
@@ -23,8 +23,8 @@ message ThreadReference {
 // Create a threaded conversation inside a group
 message RequestCreateThread {
     enum JoinPolicy {
-        INVITE_ONLY = 0;
-        THREAD_MEMBERS = 1;
+        JOIN_POLICY_INVITE_ONLY = 0;
+        JOIN_POLICY_THREAD_MEMBERS = 1;
     }
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     int64 random_id = 1 [(dlg).log="visible"]; // random request id for query deduplication
@@ -38,9 +38,8 @@ message RequestCreateThread {
 // Thread creation response
 message ResponseCreateThread {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    reserved 2;
     Group thread_group = 1; // group, representing thread internally
-    repeated UserOutPeer user_peers = 3; // corresponding user peers. empty if dropped by optimizations
+    repeated UserOutPeer user_peers = 2; // corresponding user peers. empty if dropped by optimizations
 }
 
 // Converts thread into a group
@@ -55,8 +54,6 @@ message RequestLiftThread {
 // Thread lift response
 message ResponseLiftThread {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    reserved 2;
-
     Group group = 1; // group, representing lifted group
 }
 
@@ -74,8 +71,8 @@ message ResponseLoadGroupThreads {
 // Join public thread
 message RequestJoinThread {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    GroupOutPeer parent_group_peer = 2 [(dlg).log="visible"]; // parent group where thread is created
-    GroupOutPeer thread_group_peer = 3 [(dlg).log="visible"]; // group representing thread about to be joined
+    GroupOutPeer parent_group_peer = 1 [(dlg).log="visible"]; // parent group where thread is created
+    GroupOutPeer thread_group_peer = 2 [(dlg).log="visible"]; // group representing thread about to be joined
 }
 
 service Threads {
@@ -97,7 +94,7 @@ service Threads {
             body: "*"
         };
     }
-    rpc JoinThread (RequestJoinThread) returns (ResponseVoid) {
+    rpc JoinThread (RequestJoinThread) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Threads/JoinThread"
             body: "*"

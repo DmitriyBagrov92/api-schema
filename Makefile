@@ -61,7 +61,7 @@ swagger:
 	-v "$(shell pwd):/go/src/github.com/dialogs/api-schema" \
 	-v "$(SWAGGER_PATH):/out" \
 	-w "/go/src/github.com/dialogs/api-schema" \
-	dialogs/go-tools-protoc:1.0.1 \
+	dialogs/go-tools-protoc:latest \
 	sh -c '\
 	rm -rf /go/src/github.com/grpc-ecosystem/grpc-gateway && \
 	mkdir -p /go/src/github.com/grpc-ecosystem/grpc-gateway && \
@@ -82,7 +82,7 @@ golang:
 	docker run -it --rm \
 	-v "$(shell pwd):/go/src/github.com/dialogs/api-schema" \
 	-w "/go/src/github.com/dialogs/api-schema" \
-	dialogs/go-tools-protoc:1.0.4 \
+	dialogs/go-tools-protoc:latest \
 	protoc \
 	-I=proto \
 	-I=include/ \

@@ -12,6 +12,7 @@ package dialog;
 // any time by calling EditUserLocalName method.
 
 import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
 import "definitions.proto";
 import "miscellaneous.proto";
@@ -24,16 +25,16 @@ option java_package = "im.dlg.grpc.services";
 
 enum Sex {
     SEX_UNKNOWN = 0;
-    SEX_MALE = 2;
-    SEX_FEMALE = 3;
+    SEX_MALE = 1;
+    SEX_FEMALE = 2;
 }
 
 enum ContactType {
-    CONTACTTYPE_UNKNOWN = 0;
-    CONTACTTYPE_PHONE = 1;
-    CONTACTTYPE_EMAIL = 2;
-    CONTACTTYPE_WEB = 3;
-    CONTACTTYPE_SOCIAL = 4;
+    CONTACT_TYPE_UNKNOWN = 0;
+    CONTACT_TYPE_PHONE = 1;
+    CONTACT_TYPE_EMAIL = 2;
+    CONTACT_TYPE_WEB = 3;
+    CONTACT_TYPE_SOCIAL = 4;
 }
 
 // Contact information record
@@ -52,12 +53,12 @@ message ContactRecord {
 }
 
 enum UserStatusType {
-    USERSTATUSTYPE_UNKNOWN = 0;
-    USERSTATUSTYPE_UNSET = 1;
-    USERSTATUSTYPE_AWAY = 2;
-    USERSTATUSTYPE_DONOTDISTURB = 3;
-    USERSTATUSTYPE_INVISIBLE = 4;
-    USERSTATUSTYPE_BUSY = 5;
+    USER_STATUS_TYPE_UNKNOWN = 0;
+    USER_STATUS_TYPE_UNSET = 1;
+    USER_STATUS_TYPE_AWAY = 2;
+    USER_STATUS_TYPE_DONOTDISTURB = 3;
+    USER_STATUS_TYPE_INVISIBLE = 4;
+    USER_STATUS_TYPE_BUSY = 5;
 }
 
 // User's status
@@ -83,39 +84,38 @@ message UserData {
     Avatar avatar = 4 [(dlg).log="compact"];
     google.protobuf.BoolValue is_bot = 5 [(dlg).log="visible"];
     enum Lifecycle {
-        MISSED = 0;
-        ACTIVE = 1;
-        DELETED = 2;
-        BLOCKED = 3;
-        BLOCKED_AND_DELETED = 4;
+        LIFECYCLE_MISSED = 0;
+        LIFECYCLE_ACTIVE = 1;
+        LIFECYCLE_DELETED = 2;
+        LIFECYCLE_BLOCKED = 3;
+        LIFECYCLE_BLOCKED_AND_DELETED = 4;
     }
     Lifecycle status = 6 [(dlg).log="visible"];
     UserStatus user_status = 7 [(dlg).log="visible"];
     string time_zone = 8 [(dlg).log="visible"];
     repeated Ext exts = 9 [(dlg).log="hidden"];
-    DataClock obsoleteClock = 10 [(dlg).log="visible"]; // deprecated
-    repeated string locales = 11;
-    google.protobuf.StringValue about = 12 [(dlg).log="compact"];
-    repeated ContactRecord contact_info = 13 [(dlg).log="compact"];
-    repeated BotCommand bot_commands = 14 [(dlg).log="visible"];
-    google.protobuf.StringValue custom_profile = 15;
+    repeated string locales = 10;
+    google.protobuf.StringValue about = 11 [(dlg).log="compact"];
+    repeated ContactRecord contact_info = 12 [(dlg).log="compact"];
+    repeated BotCommand bot_commands = 13 [(dlg).log="visible"];
+    google.protobuf.StringValue custom_profile = 14;
     enum Hint {
-        user_hint_regular = 0;
-        user_hint_guest = 1;
+        HINT_USER_REGULAR = 0;
+        HINT_USER_GUEST = 1;
     }
     /// This parameter intended just to show in UI (client shouldn't base any logic on that)
-    Hint hint = 17;
-    bool was_authorized = 18;
-    int64 clock = 16;
+    Hint hint = 15;
+    bool was_authorized = 16;
+    int64 clock = 17;
 }
 message User {
-    int32 id = 1 [(dlg).log = "visible"]; /// User's id
+    string id = 1 [(dlg).log = "visible"]; /// User's id
     int64 access_hash = 2 [(dlg).log="danger"];
     UserData data = 3; // required
 }
 
 message UserPartialInfo {
-    int32 id = 1 [(dlg).log = "visible"];
+    string id = 1 [(dlg).log = "visible"];
     int64 access_hash = 2 [(dlg).log="danger"];
     int64 clock = 3 [(dlg).log="visible"];
     string name = 4 [(dlg).log="compact"];
@@ -132,24 +132,8 @@ message UserProfile {
     google.protobuf.StringValue time_zone = 5 [(dlg).log="visible"];
     repeated BotCommand bot_commands = 6 [(dlg).log="visible"];
     /// custom user profile info in JSON format
-    string custom_profile = 9;
-    google.protobuf.StringValue integration_token = 10;
-}
-
-// Full User representation - deprecated
-message FullUser {
-    int32 id = 1 [(dlg).log="visible"]; /// User's id
-    repeated ContactRecord contact_info = 2 [(dlg).log="compact"];
-    google.protobuf.StringValue about = 3 [(dlg).log="hidden"];
-    repeated string preferred_languages = 4 [(dlg).log="visible"];
-    /// Time Zone of user in TZ format
-    google.protobuf.StringValue time_zone = 5 [(dlg).log="visible"];
-    repeated BotCommand bot_commands = 6 [(dlg).log="visible"];
-    google.protobuf.BoolValue is_blocked = 8 [(dlg).log="visible"];
-    /// custom user profile info in JSON format
-    string custom_profile = 9;
-    google.protobuf.StringValue integration_token = 10;
-    UserStatus status = 11 [(dlg).log="visible"];
+    string custom_profile = 7;
+    google.protobuf.StringValue integration_token = 8;
 }
 
 // Available bot commands
@@ -165,7 +149,7 @@ message BotCommand {
 // Renaming of user's visible name
 message RequestEditUserLocalName {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    int32 uid = 1 [(dlg).log="visible"];
+    string uid = 1 [(dlg).log="visible"];
     int64 access_hash = 2 [(dlg).log="danger"];
     string name = 3 [(dlg).log="hidden"];
 }
@@ -195,49 +179,49 @@ message ResponseLoadUserData {
 }
 
 message UpdateUser {
-    int32 id = 1;
+    string id = 1;
     UserData data = 2;
 }
 
 // Update about avatar changed
 message UpdateUserAvatarChanged {
-    int32 uid = 1 [(dlg).log="visible"];
+    string user_id = 1 [(dlg).log="visible"];
     Avatar avatar = 2 [(dlg).log="compact"];
 }
 
 // Update about name changed
 message UpdateUserNameChanged {
-    int32 uid = 1 [(dlg).log="visible"];
+    string user_id = 1 [(dlg).log="visible"];
     string name = 2 [(dlg).log="hidden"];
 }
 
 // Update about local name changed
 message UpdateUserLocalNameChanged {
-    int32 uid = 1 [(dlg).log="visible"];
+    string user_id = 1 [(dlg).log="visible"];
     google.protobuf.StringValue local_name = 2 [(dlg).log="hidden"];
 }
 
 // Update about contact information change
 message UpdateUserContactsChanged {
-    int32 uid = 1 [(dlg).log="visible"];
-    repeated ContactRecord contact_records = 4 [(dlg).log="compact"];
+    string user_id = 1 [(dlg).log="visible"];
+    repeated ContactRecord contact_records = 2 [(dlg).log="compact"];
 }
 
 // Update about nick changed
 message UpdateUserNickChanged {
-    int32 uid = 1 [(dlg).log="visible"];
+    string user_id = 1 [(dlg).log="visible"];
     google.protobuf.StringValue nickname = 2 [(dlg).log="visible"];
 }
 
 // Update about user's about changed
 message UpdateUserAboutChanged {
-    int32 uid = 1 [(dlg).log="visible"];
+    string user_id = 1 [(dlg).log="visible"];
     google.protobuf.StringValue about = 2 [(dlg).log="hidden"];
 }
 
 // Update about user's preferred languages
 message UpdateUserPreferredLanguagesChanged {
-    int32 uid = 1 [(dlg).log="visible"];
+    string user_id = 1 [(dlg).log="visible"];
     repeated string preferred_languages = 2 [(dlg).log="visible"];
 }
 
@@ -249,61 +233,43 @@ message UpdateUserTimeZoneChanged {
 
 // Update about bot commands changed
 message UpdateUserBotCommandsChanged {
-    int32 uid = 1 [(dlg).log="visible"];
+    string user_id = 1 [(dlg).log="visible"];
     repeated BotCommand commands = 2 [(dlg).log="visible"];
 }
 
 // Update about user sex changed
 message UpdateUserSexChanged {
-    int32 uid = 1 [(dlg).log="visible"];
+    string user_id = 1 [(dlg).log="visible"];
     Sex sex = 2 [(dlg).log="hidden"];
 }
 
 // Update about user custom profile changed
 message UpdateUserCustomProfileChanged {
-    int32 uid = 1 [(dlg).log="visible"];
+    string user_id = 1 [(dlg).log="visible"];
     /// custom user profile info in JSON format
     string custom_profile = 2 [(dlg).log="visible"];
 }
 
 // Update about user status change
 message UpdateUserStatusChanged {
-    int32 uid = 1 [(dlg).log="visible"];
+    string user_id = 1 [(dlg).log="visible"];
     UserStatus status = 2 [(dlg).log="visible"];
 }
 
 message UpdateUserExtChanged {
-    int32 uid = 1 [(dlg).log="visible"];
+    string user_id = 1 [(dlg).log="visible"];
     RecursiveMapValue ext = 2 [(dlg).log="visible"];
 }
 
 message UpdateUserFullExtChanged {
-    int32 uid = 1 [(dlg).log="visible"];
+    string user_id = 1 [(dlg).log="visible"];
     RecursiveMapValue ext = 2 [(dlg).log="visible"];
 }
 
-// Loading Full User information
-message RequestLoadFullUsers {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    repeated UserOutPeer user_peers = 1 [(dlg).log="compact"];
-}
-
-message ResponseLoadFullUsers {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    repeated FullUser full_users = 1;
-}
-
 service Users {
-    rpc EditUserLocalName (RequestEditUserLocalName) returns (ResponseSeq) {
+    rpc EditUserLocalName (RequestEditUserLocalName) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Users/EditUserLocalName"
-            body: "*"
-        };
-    }
-    /// Deprecated
-    rpc LoadFullUsers (RequestLoadFullUsers) returns (ResponseLoadFullUsers) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Users/LoadFullUsers"
             body: "*"
         };
     }

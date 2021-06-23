@@ -11,37 +11,6 @@ import "scalapb/scalapb.proto";
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
 
-// Empty response
-message ResponseVoid {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-}
-
-// Sequence response. Methods that return this value must process response in particular order
-message ResponseSeq {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    int32 seq = 1 [(dlg).log="visible"];
-    bytes state = 2 [(dlg).log="visible"];
-    int64 date = 3 [(dlg).log="visible"];
-}
-
-// Sequence response with date. Methods that return this value must process response in particular order
-message ResponseSeqDate {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    int32 seq = 1 [(dlg).log="visible"];
-    bytes state = 2 [(dlg).log="visible"];
-    int64 date = 3 [(dlg).log="visible"];
-    UUIDValue mid = 4 [(dlg).log="visible"];
-}
-
-// Response with seq, date and messageId
-message ResponseSeqDateMid {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    int32 seq = 1 [(dlg).log="visible"];
-    bytes state = 2 [(dlg).log="visible"];
-    int64 date = 3 [(dlg).log="visible"];
-    UUIDValue mid = 4 [(dlg).log="visible"];
-}
-
 // Boolean response
 message ResponseBool {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
@@ -50,8 +19,8 @@ message ResponseBool {
 
 
 enum SupportedServerMethodsType {
-    NONE_SUPPORTED_METHODS = 0;
-    CHANGE_PASSWORD = 1;
+    SUPPORTED_SERVER_METHODS_TYPE_NONE = 0;
+    SUPPORTED_SERVER_METHODS_TYPE_CHANGE_PASSWORD = 1;
 }
 
 // Configuration of system
@@ -94,9 +63,9 @@ message ServerMetaInfo {
 }
 
 enum RtcpMuxPolicy {
-    RTCPMUXPOLICY_UNKNOWN = 0;
-    RTCPMUXPOLICY_NEGOTIATE = 1;
-    RTCPMUXPOLICY_REQUIRE = 2;
+    RTCP_MUX_POLICY_UNKNOWN = 0;
+    RTCP_MUX_POLICY_NEGOTIATE = 1;
+    RTCP_MUX_POLICY_REQUIRE = 2;
 }
 
 // Calls configuration
@@ -155,13 +124,6 @@ message Any {
 message UpdateConfig {
     Config config = 1 [(dlg).log="visible"];
     google.protobuf.Int64Value config_hash = 2 [(dlg).log="visible"];
-}
-
-enum UpdateOptimization {
-    UPDATEOPTIMIZATION_UNKNOWN = 0;
-
-    // For old bot sdk compatibility
-    UPDATEOPTIMIZATION_STRIP_ENTITIES = 2;
 }
 
 message RecursiveMapValue {

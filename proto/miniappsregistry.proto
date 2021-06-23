@@ -1,7 +1,6 @@
 syntax = "proto3";
 
 import "google/protobuf/empty.proto";
-import "google/protobuf/wrappers.proto";
 import "definitions.proto";
 
 package dialog;
@@ -11,14 +10,12 @@ option java_package = "im.dlg.grpc.services";
 
 // Defines the type of the app. Currently only WebView supported, but more types can be added in future.
 enum AppType {
-    UNKNOWN = 0;
+    APP_TYPE_UNKNOWN = 0;
     // Url which can be opened inside WebView in dialog app
-    WEB_VIEW = 1;
+    APP_TYPE_WEB_VIEW = 1;
 }
 
 message MiniApp {
-    reserved 8, 9;
-
     // unique identifier of the app
     UUIDValue id = 1;
     // type of the app
@@ -34,23 +31,23 @@ message MiniApp {
     // link to this app
     string link = 7;
     // update date/time in millis
-    int64 modified_at_ts = 10;
+    int64 modified_at_ts = 8;
     // specifies if this app enabled and user can use it, ot not
-    bool is_enabled = 11;
+    bool is_enabled = 9;
     // supported locales
-    map <string, string> locales = 12;
+    map <string, string> locales = 10;
     // application-level permissions
-    repeated string permissions = 13;
+    repeated string permissions = 11;
 }
 
 // App update
 message UpdateMiniApp {
     enum AppLifecycle {
-        APPLIFECYCLE_CREATED  = 0;
-        APPLIFECYCLE_UPDATED  = 1;
-        APPLIFECYCLE_ENABLED  = 2;
-        APPLIFECYCLE_DISABLED = 3;
-        APPLIFECYCLE_DELETED  = 4;
+        APP_LIFECYCLE_CREATED  = 0;
+        APP_LIFECYCLE_UPDATED  = 1;
+        APP_LIFECYCLE_ENABLED  = 2;
+        APP_LIFECYCLE_DISABLED = 3;
+        APP_LIFECYCLE_DELETED  = 4;
     }
     AppLifecycle app_lifecycle = 1;
     dialog.MiniApp app_data = 2;
