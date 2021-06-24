@@ -160,7 +160,7 @@ message GroupMembersSubset {
 }
 
 // Loading referenced entities
-message RequestGetReferencedEntitites {
+message RequestGetReferencedEntities {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     /// users needed
     repeated UserOutPeer users = 1 [(dlg).log="compact"];
@@ -175,7 +175,7 @@ message RequestGetReferencedEntitites {
     repeated GroupOutPeer groups = 4 [(dlg).log="visible"];
 }
 
-message ResponseGetReferencedEntitites {
+message ResponseGetReferencedEntities {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     repeated User users = 1;
     repeated Group groups = 2;
@@ -290,7 +290,7 @@ service SequenceAndUpdates {
         };
     }
     /// Load some required entities
-    rpc GetReferencedEntitites (RequestGetReferencedEntitites) returns (ResponseGetReferencedEntitites) {
+    rpc GetReferencedEntities (RequestGetReferencedEntities) returns (ResponseGetReferencedEntities) {
         option (google.api.http) = {
             post: "/v1/grpc/SequenceAndUpdates/GetReferencedEntitites"
             body: "*"
