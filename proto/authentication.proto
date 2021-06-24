@@ -303,11 +303,6 @@ message ForceReloadHistory {
     Peer peer = 1 [(dlg).log="visible"];
 }
 
-// This update is sent by the server to force a client to reload its data
-message UpdateForceReloadState {
-    repeated ForceReloadField fields = 1 [(dlg).log="visible"];
-}
-
 message RequestChangePassword {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     string old_password = 1 [(dlg).log = "danger"];

@@ -43,7 +43,6 @@ message SeqUpdate {
     int32 seq = 1 [(dlg).log="visible"];
 
     oneof update {
-      UpdateForceReloadState update_force_reload_state = 2;
       UpdateUserAvatarChanged update_user_avatar_changed = 3;
       UpdateUserNameChanged update_user_name_changed = 4;
       UpdateUserLocalNameChanged update_user_local_name_changed = 5;
@@ -248,22 +247,26 @@ message WeakUpdate {
     }
 
     oneof updatebox {
-        UpdateTyping typing                                      = 1;
-        UpdateTypingStop typing_stop                             = 2;
-        UpdateUserLastSeen user_last_seen                        = 3;
-        UpdateGroupOnline group_online                           = 4;
-        UpdateForceReloadState force_reload                      = 5;
-        UpdatePermissionsChange permissions_change               = 6;
-        UpdateUserStatusChanged user_status_change               = 7;
-        UpdateMessageReactions message_reaction_update = 8;
-        UpdateMessage message                                    = 9;
-        UpdateMessageContentChanged message_content_change       = 10;
-        UpdateMessageRead message_read                           = 11;
-        UpdateMessageReceived message_received                   = 12;
-        UpdateMessageReadByMe message_read_by_me                 = 13;
-        UpdateGroupTyping group_typing                           = 15;
-        UpdateMiniApp mini_app                                   = 16;
-        UpdateEvent event                                 = 17;
+        UpdateTyping typing                                               = 1;
+        UpdateTypingStop typing_stop                                      = 2;
+        UpdateUserLastSeen user_last_seen                                 = 3;
+        UpdateGroupOnline group_online                                    = 4;
+        UpdateForceReloadState force_reload                               = 5;
+        UpdatePermissionsChange permissions_change                        = 6;
+        UpdateUserStatusChanged user_status_change                        = 7;
+        UpdateMessageReactions message_reaction_update                    = 8;
+        UpdateMessage message                                             = 9;
+        UpdateMessageContentChanged message_content_change                = 10;
+        UpdateMessageRead message_read                                    = 11;
+        UpdateMessageReceived message_received                            = 12;
+        UpdateMessageReadByMe message_read_by_me                          = 13;
+        UpdateGroupTyping group_typing                                    = 15;
+        UpdateMiniApp mini_app                                            = 16;
+        UpdateEvent event                                                 = 17;
+        UpdateContactRegistered update_contact_registered                 = 18;
+        UpdateContactsAdded update_contacts_added                         = 19;
+        UpdateContactsAddTaskSuspended update_contacts_add_task_suspended = 20;
+        UpdateContactsRemoved update_contacts_removed                     = 21;
     }
 }
 
