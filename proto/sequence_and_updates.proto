@@ -105,7 +105,7 @@ message SeqUpdate {
       UpdateThreadLifted update_thread_lifted = 61;
       UpdateGroup update_group = 62;
       UpdateGroupMemberInvited update_group_member_invited = 63;
-      reactions.MessageReactionsUpdate message_reactions_update = 64;
+      UpdateMessageReactions message_reactions_update = 64;
       UpdatePermissionsChange update_permissions_change = 65;
       UpdateGroupTyping update_group_typing = 66;
       UpdateDialogReadLaterChanged update_dialog_read_later_changed = 67;
@@ -255,7 +255,7 @@ message WeakUpdate {
         UpdateForceReloadState force_reload                      = 5;
         UpdatePermissionsChange permissions_change               = 6;
         UpdateUserStatusChanged user_status_change               = 7;
-        reactions.MessageReactionsUpdate message_reaction_update = 8;
+        UpdateMessageReactions message_reaction_update = 8;
         UpdateMessage message                                    = 9;
         UpdateMessageContentChanged message_content_change       = 10;
         UpdateMessageRead message_read                           = 11;
@@ -263,7 +263,7 @@ message WeakUpdate {
         UpdateMessageReadByMe message_read_by_me                 = 13;
         UpdateGroupTyping group_typing                           = 15;
         UpdateMiniApp mini_app                                   = 16;
-        events.UpdateEvent event                                 = 17;
+        UpdateEvent event                                 = 17;
     }
 }
 

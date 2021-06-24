@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package dialog.reactions;
+package dialog;
 
 import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
@@ -21,7 +21,7 @@ message MessageReactions {
     repeated Reaction reactions = 2;
 }
 
-message MessageReactionsUpdate {
+message UpdateMessageReactions {
     Peer peer = 1;
     MessageReactions message_reaction = 2;
     int64 peer_clock = 3;

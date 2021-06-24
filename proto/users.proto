@@ -149,7 +149,7 @@ message BotCommand {
 // Renaming of user's visible name
 message RequestEditUserLocalName {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string uid = 1 [(dlg).log="visible"];
+    string user_id = 1 [(dlg).log="visible"];
     int64 access_hash = 2 [(dlg).log="danger"];
     string name = 3 [(dlg).log="hidden"];
 }
@@ -227,7 +227,7 @@ message UpdateUserPreferredLanguagesChanged {
 
 // User TimeZone changed
 message UpdateUserTimeZoneChanged {
-    int32 uid = 1 [(dlg).log="visible"];
+    string user_id = 1 [(dlg).log="visible"];
     google.protobuf.StringValue time_zone = 2 [(dlg).log="visible"];
 }
 

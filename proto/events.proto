@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package dialog.events;
+package dialog;
 
 import "google/api/annotations.proto";
 import "peers.proto";
