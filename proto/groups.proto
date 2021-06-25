@@ -131,9 +131,10 @@ message UpdateGroupMembersUpdated {
 
 // Update about members changed
 message UpdateGroupMemberDiff {
-    repeated string removed_users = 1 [(dlg).log="visible"];
-    repeated Member added_members = 2 [(dlg).log="visible"];
-    int32 members_count = 3 [(dlg).log="visible"];
+    string group_id = 1 [(dlg).log="visible"];
+    repeated string removed_users = 2 [(dlg).log="visible"];
+    repeated Member added_members = 3 [(dlg).log="visible"];
+    int32 members_count = 4 [(dlg).log="visible"];
 }
 
 // Update about members count changed
