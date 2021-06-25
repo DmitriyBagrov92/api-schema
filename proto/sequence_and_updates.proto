@@ -38,77 +38,80 @@ import "miniappsregistry.proto";
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
 
+message SeqUpdateBody {
+    oneof update {
+        UpdateUserAvatarChanged update_user_avatar_changed = 1;
+        UpdateUserNameChanged update_user_name_changed = 2;
+        UpdateUserLocalNameChanged update_user_local_name_changed = 3;
+        UpdateUserContactsChanged update_user_contacts_changed = 4;
+        UpdateUserNickChanged update_user_nick_changed = 5;
+        UpdateUserAboutChanged update_user_about_changed = 6;
+        UpdateUserPreferredLanguagesChanged update_user_preferred_languages_changed = 7;
+        UpdateUserTimeZoneChanged update_user_time_zone_changed = 8;
+        UpdateUserBotCommandsChanged update_user_bot_commands_changed = 9;
+        UpdateUserExtChanged update_user_ext_changed = 10;
+        UpdateUserFullExtChanged update_user_full_ext_changed = 11;
+        UpdateUserSexChanged update_user_sex_changed = 12;
+        UpdateUserCustomProfileChanged update_user_custom_profile_changed = 13;
+        UpdateUserStatusChanged update_user_status_changed = 14;
+        UpdateContactRegistered update_contact_registered = 15;
+        UpdateContactsAdded update_contacts_added = 16;
+        UpdateContactsAddTaskSuspended update_contacts_add_task_suspended = 17;
+        UpdateContactsRemoved update_contacts_removed = 18;
+        UpdateUserBlocked update_user_blocked = 19;
+        UpdateUserUnblocked update_user_unblocked = 20;
+        UpdateInteractiveMediaEvent update_interactive_media_event = 21;
+        UpdateMessage update_message = 22;
+        UpdateMessageContentChanged update_message_content_changed = 23;
+        UpdateMessageSent update_message_sent = 24;
+        UpdateMessageReceived update_message_received = 25;
+        UpdateMessageRead update_message_read = 26;
+        UpdateMessageReadByMe update_message_read_by_me = 27;
+        UpdateMessageDelete update_message_delete = 28;
+        UpdateChatClear update_chat_clear = 29;
+        UpdateChatDelete update_chat_delete = 30;
+        UpdateChatArchive update_chat_archive = 31;
+        UpdateChatGroupsChanged update_chat_groups_changed = 32;
+        UpdateReactionsUpdate update_reactions_update = 33;
+        UpdateDialogFavouriteChanged update_dialog_favourite_changed = 34;
+        UpdatePinnedMessagesChanged update_pinned_messages_changed = 35;
+        UpdateGroupTitleChanged update_group_title_changed = 36;
+        UpdateGroupAvatarChanged update_group_avatar_changed = 37;
+        UpdateGroupAboutChanged update_group_about_changed = 38;
+        UpdateGroupOwnerChanged update_group_owner_changed = 39;
+        UpdateGroupMembersUpdated update_group_members_updated = 40;
+        UpdateGroupMemberDiff update_group_member_diff = 41;
+        UpdateGroupMembersCountChanged update_group_members_count_changed = 42;
+        UpdateGroupMemberPermissionsChanged update_group_member_permissions_changed = 43;
+        UpdateGroupShortnameChanged update_group_shortname_changed = 44;
+        UpdateStickerCollectionsChanged update_sticker_collections_changed = 45;
+        UpdateStickerPackRemoved update_sticker_pack_removed = 46;
+        UpdateStickerPackAdded update_sticker_pack_added = 47;
+        UpdateParameterChanged update_parameter_changed = 48;
+        UpdateRawUpdate update_raw_update = 49;
+        UpdateCountersChanged update_counters_changed = 50;
+        UpdateConfig update_config = 51;
+        UpdateSpaceModified update_space_modified = 52;
+        UpdateSpaceMemberModified update_space_member_modified = 53;
+        UpdateMessageRejectedByHook update_message_rejected_by_hook = 54;
+        UpdateMessageEditRejectedByHook update_message_edit_rejected_by_hook = 55;
+        UpdateUser update_user = 56;
+        UpdateFeatureFlagChanged update_feature_flag_changed = 57;
+        UpdateThreadCreated update_thread_created = 58;
+        UpdateThreadLifted update_thread_lifted = 59;
+        UpdateGroup update_group = 60;
+        UpdateGroupMemberInvited update_group_member_invited = 61;
+        UpdateMessageReactions message_reactions_update = 62;
+        UpdatePermissionsChange update_permissions_change = 63;
+        UpdateGroupTyping update_group_typing = 64;
+        UpdateDialogReadLaterChanged update_dialog_read_later_changed = 65;
+    }
+}
+
 // Sequence update
 message SeqUpdate {
     int32 seq = 1 [(dlg).log="visible"];
-
-    oneof update {
-      UpdateUserAvatarChanged update_user_avatar_changed = 3;
-      UpdateUserNameChanged update_user_name_changed = 4;
-      UpdateUserLocalNameChanged update_user_local_name_changed = 5;
-      UpdateUserContactsChanged update_user_contacts_changed = 6;
-      UpdateUserNickChanged update_user_nick_changed = 7;
-      UpdateUserAboutChanged update_user_about_changed = 8;
-      UpdateUserPreferredLanguagesChanged update_user_preferred_languages_changed = 9;
-      UpdateUserTimeZoneChanged update_user_time_zone_changed = 10;
-      UpdateUserBotCommandsChanged update_user_bot_commands_changed = 11;
-      UpdateUserExtChanged update_user_ext_changed = 12;
-      UpdateUserFullExtChanged update_user_full_ext_changed = 13;
-      UpdateUserSexChanged update_user_sex_changed = 14;
-      UpdateUserCustomProfileChanged update_user_custom_profile_changed = 15;
-      UpdateUserStatusChanged update_user_status_changed = 16;
-      UpdateContactRegistered update_contact_registered = 17;
-      UpdateContactsAdded update_contacts_added = 18;
-      UpdateContactsAddTaskSuspended update_contacts_add_task_suspended = 19;
-      UpdateContactsRemoved update_contacts_removed = 20;
-      UpdateUserBlocked update_user_blocked = 21;
-      UpdateUserUnblocked update_user_unblocked = 22;
-      UpdateInteractiveMediaEvent update_interactive_media_event = 23;
-      UpdateMessage update_message = 24;
-      UpdateMessageContentChanged update_message_content_changed = 25;
-      UpdateMessageSent update_message_sent = 26;
-      UpdateMessageReceived update_message_received = 27;
-      UpdateMessageRead update_message_read = 28;
-      UpdateMessageReadByMe update_message_read_by_me = 29;
-      UpdateMessageDelete update_message_delete = 30;
-      UpdateChatClear update_chat_clear = 31;
-      UpdateChatDelete update_chat_delete = 32;
-      UpdateChatArchive update_chat_archive = 33;
-      UpdateChatGroupsChanged update_chat_groups_changed = 34;
-      UpdateReactionsUpdate update_reactions_update = 35;
-      UpdateDialogFavouriteChanged update_dialog_favourite_changed = 36;
-      UpdatePinnedMessagesChanged update_pinned_messages_changed = 37;
-      UpdateGroupTitleChanged update_group_title_changed = 38;
-      UpdateGroupAvatarChanged update_group_avatar_changed = 39;
-      UpdateGroupAboutChanged update_group_about_changed = 40;
-      UpdateGroupOwnerChanged update_group_owner_changed = 41;
-      UpdateGroupMembersUpdated update_group_members_updated = 42;
-      UpdateGroupMemberDiff update_group_member_diff = 43;
-      UpdateGroupMembersCountChanged update_group_members_count_changed = 44;
-      UpdateGroupMemberPermissionsChanged update_group_member_permissions_changed = 45;
-      UpdateGroupShortnameChanged update_group_shortname_changed = 46;
-      UpdateStickerCollectionsChanged update_sticker_collections_changed = 47;
-      UpdateStickerPackRemoved update_sticker_pack_removed = 48;
-      UpdateStickerPackAdded update_sticker_pack_added = 49;
-      UpdateParameterChanged update_parameter_changed = 50;
-      UpdateRawUpdate update_raw_update = 51;
-      UpdateCountersChanged update_counters_changed = 52;
-      UpdateConfig update_config = 53;
-      UpdateSpaceModified update_space_modified = 54;
-      UpdateSpaceMemberModified update_space_member_modified = 55;
-      UpdateMessageRejectedByHook update_message_rejected_by_hook = 56;
-      UpdateMessageEditRejectedByHook update_message_edit_rejected_by_hook = 57;
-      UpdateUser update_user = 58;
-      UpdateFeatureFlagChanged update_feature_flag_changed = 59;
-      UpdateThreadCreated update_thread_created = 60;
-      UpdateThreadLifted update_thread_lifted = 61;
-      UpdateGroup update_group = 62;
-      UpdateGroupMemberInvited update_group_member_invited = 63;
-      UpdateMessageReactions message_reactions_update = 64;
-      UpdatePermissionsChange update_permissions_change = 65;
-      UpdateGroupTyping update_group_typing = 66;
-      UpdateDialogReadLaterChanged update_dialog_read_later_changed = 67;
-    }
+    SeqUpdateBody body = 2 [(dlg).log="visible"];
 }
 
 // Get main sequence state
