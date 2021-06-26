@@ -485,7 +485,7 @@ message RequestSendMessage {
     int64 deduplication_id = 2 [(dlg).log="visible"]; /// Id for message deduplication
     MessageContent message = 3 [(dlg).log="visible"];
     /// if not empty, then message will be send to this user only
-    string is_only_for_user = 4 [(dlg).log="visible"];
+    google.protobuf.StringValue is_only_for_user = 4 [(dlg).log="visible"];
     /// If current message forwards some other
     ReferencedMessages forward = 5 [(dlg).log="visible"];
     /// If current message is a reply on some other
