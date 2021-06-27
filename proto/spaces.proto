@@ -120,7 +120,7 @@ message RequestSetShortname {
 
 message RequestSetAbout {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    UUIDValue id = 1;
+    string space_id = 1;
     google.protobuf.StringValue about = 2;
     DataClock clock = 3;
 }
@@ -134,7 +134,7 @@ message RequestSetAvatar {
 
 message RequestSpaceInvite {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    UUIDValue id = 1;
+    string space_id = 1;
     string user_id = 2;
     DataClock clock = 3;
 }
@@ -155,7 +155,7 @@ message RequestSpaceLeave {
 
 message RequestGetSpaceInviteUrl {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    UUIDValue id = 1;
+    string space_id = 1;
 }
 
 message ResponseSpaceInviteUrl {

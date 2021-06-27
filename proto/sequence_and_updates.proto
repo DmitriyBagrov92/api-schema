@@ -114,11 +114,6 @@ message SeqUpdate {
     SeqUpdateBody body = 2 [(dlg).log="visible"];
 }
 
-// Get main sequence state
-message RequestGetState {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-}
-
 // Getting difference of sequence
 message RequestGetDifference {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
@@ -273,9 +268,15 @@ message WeakUpdate {
     }
 }
 
+message RequestGetState {}
+message ResponseGetState {
+    int32 seq = 1 [(dlg).log="visible"];
+    int64 date = 2 [(dlg).log="visible"];
+}
+
 service SequenceAndUpdates {
-    /// Get last seq number
-    rpc GetState (RequestGetState) returns (google.protobuf.Empty) {
+    /// Get last sequence number
+    rpc GetState(RequestGetState) returns (ResponseGetState) {
         option (google.api.http) = {
             post: "/v1/grpc/SequenceAndUpdates/GetState"
             body: "*"

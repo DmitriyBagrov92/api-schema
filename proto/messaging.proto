@@ -1006,17 +1006,6 @@ message ResponseGetLastConversationMessages {
     repeated Pair messages = 1 [(dlg).log="visible"];
 }
 
-// Hide Dialog from grouped list
-message RequestHideDialog {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    OutPeer peer = 1 [(dlg).log="visible"];
-}
-
-// Show Dialog in grouped list
-message RequestShowDialog {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    OutPeer peer = 1;
-}
 
 // Marking dialog as favourite
 message RequestFavouriteDialog {
