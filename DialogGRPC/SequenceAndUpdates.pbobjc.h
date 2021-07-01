@@ -1280,6 +1280,10 @@ typedef GPB_ENUM(WeakUpdateBox_FieldNumber) {
   WeakUpdateBox_FieldNumber_GroupTyping = 15,
   WeakUpdateBox_FieldNumber_MiniApp = 16,
   WeakUpdateBox_FieldNumber_Event = 17,
+  WeakUpdateBox_FieldNumber_UpdateContactRegistered = 18,
+  WeakUpdateBox_FieldNumber_UpdateContactsAdded = 19,
+  WeakUpdateBox_FieldNumber_UpdateContactsAddTaskSuspended = 20,
+  WeakUpdateBox_FieldNumber_UpdateContactsRemoved = 21,
 };
 
 typedef GPB_ENUM(WeakUpdateBox_Updatebox_OneOfCase) {
@@ -1301,6 +1305,10 @@ typedef GPB_ENUM(WeakUpdateBox_Updatebox_OneOfCase) {
   WeakUpdateBox_Updatebox_OneOfCase_GroupTyping = 15,
   WeakUpdateBox_Updatebox_OneOfCase_MiniApp = 16,
   WeakUpdateBox_Updatebox_OneOfCase_Event = 17,
+  WeakUpdateBox_Updatebox_OneOfCase_UpdateContactRegistered = 18,
+  WeakUpdateBox_Updatebox_OneOfCase_UpdateContactsAdded = 19,
+  WeakUpdateBox_Updatebox_OneOfCase_UpdateContactsAddTaskSuspended = 20,
+  WeakUpdateBox_Updatebox_OneOfCase_UpdateContactsRemoved = 21,
 };
 
 GPB_FINAL @interface WeakUpdateBox : GPBMessage
@@ -1340,6 +1348,14 @@ GPB_FINAL @interface WeakUpdateBox : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UpdateMiniApp *miniApp;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateEvent *event;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateContactRegistered *updateContactRegistered;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateContactsAdded *updateContactsAdded;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateContactsAddTaskSuspended *updateContactsAddTaskSuspended;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateContactsRemoved *updateContactsRemoved;
 
 @end
 

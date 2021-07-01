@@ -1456,6 +1456,7 @@ typedef struct RequestLoadUserData__storage_ {
 @dynamic groupMember;
 @dynamic contact;
 @dynamic messageSender;
+@dynamic bot;
 
 typedef struct RequestLoadUserData_Claim__storage_ {
   uint32_t _has_storage_[2];
@@ -1514,6 +1515,15 @@ typedef struct RequestLoadUserData_Claim__storage_ {
         .offset = (uint32_t)offsetof(RequestLoadUserData_Claim__storage_, messageSender),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "bot",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestLoadUserData_Claim_FieldNumber_Bot,
+        .hasIndex = -1,
+        .offset = 3,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
       },
     };
     GPBDescriptor *localDescriptor =

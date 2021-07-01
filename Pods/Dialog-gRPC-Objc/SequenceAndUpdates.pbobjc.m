@@ -3187,6 +3187,10 @@ void SetWeakUpdateCommand_ChangeMyTyping_Type_RawValue(WeakUpdateCommand_ChangeM
 @dynamic groupTyping;
 @dynamic miniApp;
 @dynamic event;
+@dynamic updateContactRegistered;
+@dynamic updateContactsAdded;
+@dynamic updateContactsAddTaskSuspended;
+@dynamic updateContactsRemoved;
 
 typedef struct WeakUpdateBox__storage_ {
   uint32_t _has_storage_[2];
@@ -3207,6 +3211,10 @@ typedef struct WeakUpdateBox__storage_ {
   UpdateGroupTyping *groupTyping;
   UpdateMiniApp *miniApp;
   UpdateEvent *event;
+  UpdateContactRegistered *updateContactRegistered;
+  UpdateContactsAdded *updateContactsAdded;
+  UpdateContactsAddTaskSuspended *updateContactsAddTaskSuspended;
+  UpdateContactsRemoved *updateContactsRemoved;
 } WeakUpdateBox__storage_;
 
 // This method is threadsafe because it is initially called
@@ -3365,6 +3373,42 @@ typedef struct WeakUpdateBox__storage_ {
         .number = WeakUpdateBox_FieldNumber_Event,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, event),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateContactRegistered",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateContactRegistered),
+        .number = WeakUpdateBox_FieldNumber_UpdateContactRegistered,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, updateContactRegistered),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateContactsAdded",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateContactsAdded),
+        .number = WeakUpdateBox_FieldNumber_UpdateContactsAdded,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, updateContactsAdded),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateContactsAddTaskSuspended",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateContactsAddTaskSuspended),
+        .number = WeakUpdateBox_FieldNumber_UpdateContactsAddTaskSuspended,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, updateContactsAddTaskSuspended),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateContactsRemoved",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateContactsRemoved),
+        .number = WeakUpdateBox_FieldNumber_UpdateContactsRemoved,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, updateContactsRemoved),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

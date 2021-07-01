@@ -661,6 +661,7 @@ typedef GPB_ENUM(RequestLoadUserData_Claim_FieldNumber) {
   RequestLoadUserData_Claim_FieldNumber_GroupMember = 3,
   RequestLoadUserData_Claim_FieldNumber_Contact = 4,
   RequestLoadUserData_Claim_FieldNumber_MessageSender = 5,
+  RequestLoadUserData_Claim_FieldNumber_Bot = 6,
 };
 
 typedef GPB_ENUM(RequestLoadUserData_Claim_Kind_OneOfCase) {
@@ -669,6 +670,7 @@ typedef GPB_ENUM(RequestLoadUserData_Claim_Kind_OneOfCase) {
   RequestLoadUserData_Claim_Kind_OneOfCase_GroupMember = 3,
   RequestLoadUserData_Claim_Kind_OneOfCase_Contact = 4,
   RequestLoadUserData_Claim_Kind_OneOfCase_MessageSender = 5,
+  RequestLoadUserData_Claim_Kind_OneOfCase_Bot = 6,
 };
 
 GPB_FINAL @interface RequestLoadUserData_Claim : GPBMessage
@@ -696,6 +698,9 @@ GPB_FINAL @interface RequestLoadUserData_Claim : GPBMessage
  * if this message is accessible for the client
  **/
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *messageSender;
+
+/** load data about bot */
+@property(nonatomic, readwrite) BOOL bot;
 
 @end
 
