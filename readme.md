@@ -10860,6 +10860,10 @@ Out of sequence update (for typing and online statuses)
 | group_typing | [UpdateGroupTyping](#dialog.UpdateGroupTyping) |  |  |
 | mini_app | [UpdateMiniApp](#dialog.UpdateMiniApp) |  |  |
 | event | [events.UpdateEvent](#dialog.events.UpdateEvent) |  |  |
+| update_contact_registered | [UpdateContactRegistered](#dialog.UpdateContactRegistered) |  |  |
+| update_contacts_added | [UpdateContactsAdded](#dialog.UpdateContactsAdded) |  |  |
+| update_contacts_add_task_suspended | [UpdateContactsAddTaskSuspended](#dialog.UpdateContactsAddTaskSuspended) |  |  |
+| update_contacts_removed | [UpdateContactsRemoved](#dialog.UpdateContactsRemoved) |  |  |
 
 
 
