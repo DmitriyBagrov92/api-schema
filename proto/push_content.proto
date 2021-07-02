@@ -20,15 +20,15 @@ enum PushPeerType {
 
 message PushPeer {
     PushPeerType type = 1;
-    int32 id = 2;
+    string id = 2;
     string str_id = 3;
 }
 
 
 enum PushEventType {
-    CREATE = 0;
-    UPDATE = 1;
-    DELETE = 2;
+    PUSH_EVENT_TYPE_CREATE = 0;
+    PUSH_EVENT_TYPE_UPDATE = 1;
+    PUSH_EVENT_TYPE_DELETE = 2;
 }
 
 // The structure of encrypted push content
@@ -46,10 +46,9 @@ message EncryptedPushContent {
     string sound = 5;
     int32 unread_message_counter = 6;
     PushPeer peer = 7;
-    reserved 8, 9; // mid, category
-    UUIDValue message_id = 10 [(dlg).log="visible"];
-    bool isRespondable = 11; // if true, user can respond to this push
-    int32 sender_user_id = 12; // if sender is channel so value eq 0
-    int64 date = 13; // date of the event (usually message)
-    PushEventType event_type = 14; // type of the event
+    UUIDValue message_id = 8 [(dlg).log="visible"];
+    bool is_respondable = 9; // if true, user can respond to this push
+    string sender_user_id = 10; // if sender is channel so value eq 0
+    int64 date = 11; // date of the event (usually message)
+    PushEventType event_type = 12; // type of the event
 }

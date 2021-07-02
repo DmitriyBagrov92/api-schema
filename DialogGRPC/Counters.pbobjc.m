@@ -17,7 +17,6 @@
 #import "Wrappers.pbobjc.h"
 #import "Definitions.pbobjc.h"
 #import "Peers.pbobjc.h"
-#import "Scalapb.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push

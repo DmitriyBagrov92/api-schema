@@ -12,6 +12,7 @@
 #import <RxLibrary/GRXWriter.h>
 #endif
 
+@class GPBEmpty;
 @class RequestCreateThread;
 @class RequestJoinThread;
 @class RequestLiftThread;
@@ -19,13 +20,12 @@
 @class ResponseCreateThread;
 @class ResponseLiftThread;
 @class ResponseLoadGroupThreads;
-@class ResponseVoid;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Wrappers.pbobjc.h"
+  #import "Empty.pbobjc.h"
   #import "Annotations.pbobjc.h"
   #import "Definitions.pbobjc.h"
-  #import "Miscellaneous.pbobjc.h"
   #import "Scalapb.pbobjc.h"
   #import "Peers.pbobjc.h"
   #import "Groups.pbobjc.h"
@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (GRPCUnaryProtoCall *)loadGroupThreadsWithMessage:(RequestLoadGroupThreads *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark JoinThread(RequestJoinThread) returns (ResponseVoid)
+#pragma mark JoinThread(RequestJoinThread) returns (Empty)
 
 - (GRPCUnaryProtoCall *)joinThreadWithMessage:(RequestJoinThread *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
@@ -87,11 +87,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToLoadGroupThreadsWithRequest:(RequestLoadGroupThreads *)request handler:(void(^)(ResponseLoadGroupThreads *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark JoinThread(RequestJoinThread) returns (ResponseVoid)
+#pragma mark JoinThread(RequestJoinThread) returns (Empty)
 
-- (void)joinThreadWithRequest:(RequestJoinThread *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (void)joinThreadWithRequest:(RequestJoinThread *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToJoinThreadWithRequest:(RequestJoinThread *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToJoinThreadWithRequest:(RequestJoinThread *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end

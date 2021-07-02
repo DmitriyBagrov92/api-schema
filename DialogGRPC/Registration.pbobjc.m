@@ -187,7 +187,6 @@ typedef struct RequestRegisterDevice__storage_ {
 @implementation ResponseDeviceRequest
 
 @dynamic serverPk;
-@dynamic authId;
 @dynamic token;
 @dynamic authMethodSeqArray, authMethodSeqArray_Count;
 
@@ -196,7 +195,6 @@ typedef struct ResponseDeviceRequest__storage_ {
   NSData *serverPk;
   NSString *token;
   GPBEnumArray *authMethodSeqArray;
-  int64_t authId;
 } ResponseDeviceRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -215,19 +213,10 @@ typedef struct ResponseDeviceRequest__storage_ {
         .dataType = GPBDataTypeBytes,
       },
       {
-        .name = "authId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseDeviceRequest_FieldNumber_AuthId,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(ResponseDeviceRequest__storage_, authId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
         .name = "token",
         .dataTypeSpecific.clazz = Nil,
         .number = ResponseDeviceRequest_FieldNumber_Token,
-        .hasIndex = 2,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(ResponseDeviceRequest__storage_, token),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
@@ -249,94 +238,6 @@ typedef struct ResponseDeviceRequest__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(ResponseDeviceRequest__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - RegisterDeprecatedDeviceRequest
-
-@implementation RegisterDeprecatedDeviceRequest
-
-
-typedef struct RegisterDeprecatedDeviceRequest__storage_ {
-  uint32_t _has_storage_[1];
-} RegisterDeprecatedDeviceRequest__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RegisterDeprecatedDeviceRequest class]
-                                     rootClass:[RegistrationRoot class]
-                                          file:RegistrationRoot_FileDescriptor()
-                                        fields:NULL
-                                    fieldCount:0
-                                   storageSize:sizeof(RegisterDeprecatedDeviceRequest__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - RequestExchangeAuthIdForToken
-
-@implementation RequestExchangeAuthIdForToken
-
-@dynamic authId;
-@dynamic signature;
-
-typedef struct RequestExchangeAuthIdForToken__storage_ {
-  uint32_t _has_storage_[1];
-  NSData *signature;
-  int64_t authId;
-} RequestExchangeAuthIdForToken__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "authId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestExchangeAuthIdForToken_FieldNumber_AuthId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestExchangeAuthIdForToken__storage_, authId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "signature",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestExchangeAuthIdForToken_FieldNumber_Signature,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestExchangeAuthIdForToken__storage_, signature),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestExchangeAuthIdForToken class]
-                                     rootClass:[RegistrationRoot class]
-                                          file:RegistrationRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestExchangeAuthIdForToken__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");

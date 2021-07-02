@@ -42,7 +42,6 @@ GPBObjCClassDeclaration(SpaceMember);
 GPBObjCClassDeclaration(Space_General);
 GPBObjCClassDeclaration(Space_Private);
 GPBObjCClassDeclaration(Space_Public);
-GPBObjCClassDeclaration(UUIDValue);
 GPBObjCClassDeclaration(UserOutPeer);
 
 #pragma mark - SpacesRoot
@@ -59,6 +58,7 @@ GPBObjCClassDeclaration(UserOutPeer);
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[DefinitionsRoot extensionRegistry]];
     [registry addExtensions:[GAPIAnnotationsRoot extensionRegistry]];
+    [registry addExtensions:[ScalapbRoot extensionRegistry]];
   }
   return registry;
 }
@@ -84,7 +84,7 @@ static GPBFileDescriptor *SpacesRoot_FileDescriptor(void) {
 @implementation Space
 
 @dynamic spaceTypeOneOfCase;
-@dynamic hasId_p, id_p;
+@dynamic id_p;
 @dynamic hasCreatedAt, createdAt;
 @dynamic general;
 @dynamic public_p;
@@ -97,7 +97,7 @@ static GPBFileDescriptor *SpacesRoot_FileDescriptor(void) {
 
 typedef struct Space__storage_ {
   uint32_t _has_storage_[2];
-  UUIDValue *id_p;
+  NSString *id_p;
   GPBTimestamp *createdAt;
   Space_General *general;
   Space_Public *public_p;
@@ -117,12 +117,12 @@ typedef struct Space__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "id_p",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
+        .dataTypeSpecific.clazz = Nil,
         .number = Space_FieldNumber_Id_p,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Space__storage_, id_p),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "createdAt",
@@ -277,7 +277,7 @@ typedef struct Space_General__storage_ {
 
 typedef struct Space_Public__storage_ {
   uint32_t _has_storage_[1];
-  int32_t ownerUserId;
+  NSString *ownerUserId;
   NSString *shortname;
 } Space_Public__storage_;
 
@@ -294,7 +294,7 @@ typedef struct Space_Public__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Space_Public__storage_, ownerUserId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "shortname",
@@ -333,7 +333,7 @@ typedef struct Space_Public__storage_ {
 
 typedef struct Space_Private__storage_ {
   uint32_t _has_storage_[1];
-  int32_t ownerUserId;
+  NSString *ownerUserId;
 } Space_Private__storage_;
 
 // This method is threadsafe because it is initially called
@@ -349,7 +349,7 @@ typedef struct Space_Private__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Space_Private__storage_, ownerUserId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -375,7 +375,7 @@ typedef struct Space_Private__storage_ {
 
 @implementation SpaceMember
 
-@dynamic hasSpaceId, spaceId;
+@dynamic spaceId;
 @dynamic userId;
 @dynamic hasInvitedAt, invitedAt;
 @dynamic hasJoinedAt, joinedAt;
@@ -384,8 +384,8 @@ typedef struct Space_Private__storage_ {
 
 typedef struct SpaceMember__storage_ {
   uint32_t _has_storage_[1];
-  int32_t userId;
-  UUIDValue *spaceId;
+  NSString *spaceId;
+  NSString *userId;
   GPBTimestamp *invitedAt;
   GPBTimestamp *joinedAt;
   GPBTimestamp *deletedAt;
@@ -400,12 +400,12 @@ typedef struct SpaceMember__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "spaceId",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
+        .dataTypeSpecific.clazz = Nil,
         .number = SpaceMember_FieldNumber_SpaceId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(SpaceMember__storage_, spaceId),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "userId",
@@ -414,7 +414,7 @@ typedef struct SpaceMember__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(SpaceMember__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "invitedAt",
@@ -699,12 +699,12 @@ typedef struct ResponseSpace__storage_ {
 
 @implementation ResponseSpaceMember
 
-@dynamic hasSpaceId, spaceId;
+@dynamic spaceId;
 @dynamic hasMember, member;
 
 typedef struct ResponseSpaceMember__storage_ {
   uint32_t _has_storage_[1];
-  UUIDValue *spaceId;
+  NSString *spaceId;
   SpaceMember *member;
 } ResponseSpaceMember__storage_;
 
@@ -716,12 +716,12 @@ typedef struct ResponseSpaceMember__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "spaceId",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
+        .dataTypeSpecific.clazz = Nil,
         .number = ResponseSpaceMember_FieldNumber_SpaceId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(ResponseSpaceMember__storage_, spaceId),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "member",
@@ -755,12 +755,12 @@ typedef struct ResponseSpaceMember__storage_ {
 
 @implementation RequestDeleteSpace
 
-@dynamic hasId_p, id_p;
+@dynamic spaceId;
 @dynamic hasClock, clock;
 
 typedef struct RequestDeleteSpace__storage_ {
   uint32_t _has_storage_[1];
-  UUIDValue *id_p;
+  NSString *spaceId;
   DataClock *clock;
 } RequestDeleteSpace__storage_;
 
@@ -771,13 +771,13 @@ typedef struct RequestDeleteSpace__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "id_p",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestDeleteSpace_FieldNumber_Id_p,
+        .name = "spaceId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestDeleteSpace_FieldNumber_SpaceId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestDeleteSpace__storage_, id_p),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
+        .offset = (uint32_t)offsetof(RequestDeleteSpace__storage_, spaceId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "clock",
@@ -899,12 +899,12 @@ typedef struct ResponseLoadSpaces__storage_ {
 
 @implementation RequestStreamSpaceMembers
 
-@dynamic hasSpaceId, spaceId;
+@dynamic spaceId;
 @dynamic hasClock, clock;
 
 typedef struct RequestStreamSpaceMembers__storage_ {
   uint32_t _has_storage_[1];
-  UUIDValue *spaceId;
+  NSString *spaceId;
   DataClock *clock;
 } RequestStreamSpaceMembers__storage_;
 
@@ -916,12 +916,12 @@ typedef struct RequestStreamSpaceMembers__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "spaceId",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
+        .dataTypeSpecific.clazz = Nil,
         .number = RequestStreamSpaceMembers_FieldNumber_SpaceId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestStreamSpaceMembers__storage_, spaceId),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "clock",
@@ -1011,13 +1011,13 @@ typedef struct SpaceMemberWithPeer__storage_ {
 
 @implementation RequestSetTitle
 
-@dynamic hasId_p, id_p;
+@dynamic spaceId;
 @dynamic title;
 @dynamic hasClock, clock;
 
 typedef struct RequestSetTitle__storage_ {
   uint32_t _has_storage_[1];
-  UUIDValue *id_p;
+  NSString *spaceId;
   NSString *title;
   DataClock *clock;
 } RequestSetTitle__storage_;
@@ -1029,13 +1029,13 @@ typedef struct RequestSetTitle__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "id_p",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestSetTitle_FieldNumber_Id_p,
+        .name = "spaceId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestSetTitle_FieldNumber_SpaceId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestSetTitle__storage_, id_p),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
+        .offset = (uint32_t)offsetof(RequestSetTitle__storage_, spaceId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "title",
@@ -1078,13 +1078,13 @@ typedef struct RequestSetTitle__storage_ {
 
 @implementation RequestSetShortname
 
-@dynamic hasId_p, id_p;
+@dynamic spaceId;
 @dynamic hasShortname, shortname;
 @dynamic hasClock, clock;
 
 typedef struct RequestSetShortname__storage_ {
   uint32_t _has_storage_[1];
-  UUIDValue *id_p;
+  NSString *spaceId;
   GPBStringValue *shortname;
   DataClock *clock;
 } RequestSetShortname__storage_;
@@ -1096,13 +1096,13 @@ typedef struct RequestSetShortname__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "id_p",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestSetShortname_FieldNumber_Id_p,
+        .name = "spaceId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestSetShortname_FieldNumber_SpaceId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestSetShortname__storage_, id_p),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
+        .offset = (uint32_t)offsetof(RequestSetShortname__storage_, spaceId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "shortname",
@@ -1145,13 +1145,13 @@ typedef struct RequestSetShortname__storage_ {
 
 @implementation RequestSetAbout
 
-@dynamic hasId_p, id_p;
+@dynamic spaceId;
 @dynamic hasAbout, about;
 @dynamic hasClock, clock;
 
 typedef struct RequestSetAbout__storage_ {
   uint32_t _has_storage_[1];
-  UUIDValue *id_p;
+  NSString *spaceId;
   GPBStringValue *about;
   DataClock *clock;
 } RequestSetAbout__storage_;
@@ -1163,13 +1163,13 @@ typedef struct RequestSetAbout__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "id_p",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestSetAbout_FieldNumber_Id_p,
+        .name = "spaceId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestSetAbout_FieldNumber_SpaceId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestSetAbout__storage_, id_p),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
+        .offset = (uint32_t)offsetof(RequestSetAbout__storage_, spaceId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "about",
@@ -1212,13 +1212,13 @@ typedef struct RequestSetAbout__storage_ {
 
 @implementation RequestSetAvatar
 
-@dynamic hasId_p, id_p;
+@dynamic spaceId;
 @dynamic hasFileLocation, fileLocation;
 @dynamic hasClock, clock;
 
 typedef struct RequestSetAvatar__storage_ {
   uint32_t _has_storage_[1];
-  UUIDValue *id_p;
+  NSString *spaceId;
   FileLocation *fileLocation;
   DataClock *clock;
 } RequestSetAvatar__storage_;
@@ -1230,13 +1230,13 @@ typedef struct RequestSetAvatar__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "id_p",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestSetAvatar_FieldNumber_Id_p,
+        .name = "spaceId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestSetAvatar_FieldNumber_SpaceId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestSetAvatar__storage_, id_p),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
+        .offset = (uint32_t)offsetof(RequestSetAvatar__storage_, spaceId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "fileLocation",
@@ -1279,14 +1279,14 @@ typedef struct RequestSetAvatar__storage_ {
 
 @implementation RequestSpaceInvite
 
-@dynamic hasId_p, id_p;
+@dynamic spaceId;
 @dynamic userId;
 @dynamic hasClock, clock;
 
 typedef struct RequestSpaceInvite__storage_ {
   uint32_t _has_storage_[1];
-  int32_t userId;
-  UUIDValue *id_p;
+  NSString *spaceId;
+  NSString *userId;
   DataClock *clock;
 } RequestSpaceInvite__storage_;
 
@@ -1297,13 +1297,13 @@ typedef struct RequestSpaceInvite__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "id_p",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestSpaceInvite_FieldNumber_Id_p,
+        .name = "spaceId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestSpaceInvite_FieldNumber_SpaceId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestSpaceInvite__storage_, id_p),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
+        .offset = (uint32_t)offsetof(RequestSpaceInvite__storage_, spaceId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "userId",
@@ -1312,7 +1312,7 @@ typedef struct RequestSpaceInvite__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(RequestSpaceInvite__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "clock",
@@ -1346,14 +1346,14 @@ typedef struct RequestSpaceInvite__storage_ {
 
 @implementation RequestSpaceKick
 
-@dynamic hasId_p, id_p;
+@dynamic spaceId;
 @dynamic userId;
 @dynamic hasClock, clock;
 
 typedef struct RequestSpaceKick__storage_ {
   uint32_t _has_storage_[1];
-  int32_t userId;
-  UUIDValue *id_p;
+  NSString *spaceId;
+  NSString *userId;
   DataClock *clock;
 } RequestSpaceKick__storage_;
 
@@ -1364,13 +1364,13 @@ typedef struct RequestSpaceKick__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "id_p",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestSpaceKick_FieldNumber_Id_p,
+        .name = "spaceId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestSpaceKick_FieldNumber_SpaceId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestSpaceKick__storage_, id_p),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
+        .offset = (uint32_t)offsetof(RequestSpaceKick__storage_, spaceId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "userId",
@@ -1379,7 +1379,7 @@ typedef struct RequestSpaceKick__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(RequestSpaceKick__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "clock",
@@ -1413,14 +1413,14 @@ typedef struct RequestSpaceKick__storage_ {
 
 @implementation RequestSpaceLeave
 
-@dynamic hasId_p, id_p;
+@dynamic spaceId;
 @dynamic userId;
 @dynamic hasClock, clock;
 
 typedef struct RequestSpaceLeave__storage_ {
   uint32_t _has_storage_[1];
-  int32_t userId;
-  UUIDValue *id_p;
+  NSString *spaceId;
+  NSString *userId;
   DataClock *clock;
 } RequestSpaceLeave__storage_;
 
@@ -1431,13 +1431,13 @@ typedef struct RequestSpaceLeave__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "id_p",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestSpaceLeave_FieldNumber_Id_p,
+        .name = "spaceId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestSpaceLeave_FieldNumber_SpaceId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestSpaceLeave__storage_, id_p),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
+        .offset = (uint32_t)offsetof(RequestSpaceLeave__storage_, spaceId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "userId",
@@ -1446,7 +1446,7 @@ typedef struct RequestSpaceLeave__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(RequestSpaceLeave__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "clock",
@@ -1480,11 +1480,11 @@ typedef struct RequestSpaceLeave__storage_ {
 
 @implementation RequestGetSpaceInviteUrl
 
-@dynamic hasId_p, id_p;
+@dynamic spaceId;
 
 typedef struct RequestGetSpaceInviteUrl__storage_ {
   uint32_t _has_storage_[1];
-  UUIDValue *id_p;
+  NSString *spaceId;
 } RequestGetSpaceInviteUrl__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1494,13 +1494,13 @@ typedef struct RequestGetSpaceInviteUrl__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "id_p",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestGetSpaceInviteUrl_FieldNumber_Id_p,
+        .name = "spaceId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestGetSpaceInviteUrl_FieldNumber_SpaceId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestGetSpaceInviteUrl__storage_, id_p),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
+        .offset = (uint32_t)offsetof(RequestGetSpaceInviteUrl__storage_, spaceId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1575,11 +1575,11 @@ typedef struct ResponseSpaceInviteUrl__storage_ {
 
 @implementation RequestRevokeSpaceInviteUrl
 
-@dynamic hasId_p, id_p;
+@dynamic spaceId;
 
 typedef struct RequestRevokeSpaceInviteUrl__storage_ {
   uint32_t _has_storage_[1];
-  UUIDValue *id_p;
+  NSString *spaceId;
 } RequestRevokeSpaceInviteUrl__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1589,13 +1589,13 @@ typedef struct RequestRevokeSpaceInviteUrl__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "id_p",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestRevokeSpaceInviteUrl_FieldNumber_Id_p,
+        .name = "spaceId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestRevokeSpaceInviteUrl_FieldNumber_SpaceId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestRevokeSpaceInviteUrl__storage_, id_p),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
+        .offset = (uint32_t)offsetof(RequestRevokeSpaceInviteUrl__storage_, spaceId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

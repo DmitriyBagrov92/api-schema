@@ -16,20 +16,15 @@
 @class RequestGetDialogsDifference;
 @class RequestGetDifference;
 @class RequestGetPartialPeerInfo;
-@class RequestGetReferencedEntitites;
+@class RequestGetReferencedEntities;
 @class RequestGetState;
-@class RequestSubscribeFromGroupOnline;
-@class RequestSubscribeFromOnline;
-@class RequestSubscribeToGroupOnline;
-@class RequestSubscribeToOnline;
 @class ResponseGetDialogsDifference;
 @class ResponseGetDifference;
 @class ResponseGetPartialPeerInfo;
-@class ResponseGetReferencedEntitites;
-@class ResponseSeq;
-@class ResponseVoid;
-@class SeqUpdateBox;
-@class WeakUpdateBox;
+@class ResponseGetReferencedEntities;
+@class ResponseGetState;
+@class SeqUpdate;
+@class WeakUpdate;
 @class WeakUpdateCommand;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
@@ -42,8 +37,6 @@
   #import "Groups.pbobjc.h"
   #import "Stickers.pbobjc.h"
   #import "Presence.pbobjc.h"
-  #import "EventBus.pbobjc.h"
-  #import "WebRtc.pbobjc.h"
   #import "ConfigSync.pbobjc.h"
   #import "Counters.pbobjc.h"
   #import "Contacts.pbobjc.h"
@@ -70,10 +63,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol SequenceAndUpdates2 <NSObject>
 
-#pragma mark GetState(RequestGetState) returns (ResponseSeq)
+#pragma mark GetState(RequestGetState) returns (ResponseGetState)
 
 /**
- * / Get last seq number
+ * / Get last sequence number
  */
 - (GRPCUnaryProtoCall *)getStateWithMessage:(RequestGetState *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
@@ -91,41 +84,25 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (GRPCUnaryProtoCall *)getDialogsDifferenceWithMessage:(RequestGetDialogsDifference *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark GetReferencedEntitites(RequestGetReferencedEntitites) returns (ResponseGetReferencedEntitites)
+#pragma mark GetReferencedEntities(RequestGetReferencedEntities) returns (ResponseGetReferencedEntities)
 
 /**
  * / Load some required entities
  */
-- (GRPCUnaryProtoCall *)getReferencedEntititesWithMessage:(RequestGetReferencedEntitites *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)getReferencedEntitiesWithMessage:(RequestGetReferencedEntities *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetPartialPeerInfo(RequestGetPartialPeerInfo) returns (ResponseGetPartialPeerInfo)
 
 - (GRPCUnaryProtoCall *)getPartialPeerInfoWithMessage:(RequestGetPartialPeerInfo *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark SubscribeToOnline(RequestSubscribeToOnline) returns (ResponseVoid)
-
-- (GRPCUnaryProtoCall *)subscribeToOnlineWithMessage:(RequestSubscribeToOnline *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark SubscribeFromOnline(RequestSubscribeFromOnline) returns (ResponseVoid)
-
-- (GRPCUnaryProtoCall *)subscribeFromOnlineWithMessage:(RequestSubscribeFromOnline *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark SubscribeToGroupOnline(RequestSubscribeToGroupOnline) returns (ResponseVoid)
-
-- (GRPCUnaryProtoCall *)subscribeToGroupOnlineWithMessage:(RequestSubscribeToGroupOnline *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark SubscribeFromGroupOnline(RequestSubscribeFromGroupOnline) returns (ResponseVoid)
-
-- (GRPCUnaryProtoCall *)subscribeFromGroupOnlineWithMessage:(RequestSubscribeFromGroupOnline *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark SeqUpdates(Empty) returns (stream SeqUpdateBox)
+#pragma mark SeqUpdates(Empty) returns (stream SeqUpdate)
 
 /**
  * / Get stream of the user's updates
  */
 - (GRPCUnaryProtoCall *)seqUpdatesWithMessage:(GPBEmpty *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark WeakUpdates(stream WeakUpdateCommand) returns (stream WeakUpdateBox)
+#pragma mark WeakUpdates(stream WeakUpdateCommand) returns (stream WeakUpdate)
 
 - (GRPCStreamingProtoCall *)weakUpdatesWithResponseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
@@ -137,21 +114,21 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @protocol SequenceAndUpdates <NSObject>
 
-#pragma mark GetState(RequestGetState) returns (ResponseSeq)
+#pragma mark GetState(RequestGetState) returns (ResponseGetState)
 
 /**
- * / Get last seq number
+ * / Get last sequence number
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)getStateWithRequest:(RequestGetState *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
+- (void)getStateWithRequest:(RequestGetState *)request handler:(void(^)(ResponseGetState *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Get last seq number
+ * / Get last sequence number
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToGetStateWithRequest:(RequestGetState *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToGetStateWithRequest:(RequestGetState *)request handler:(void(^)(ResponseGetState *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetDifference(RequestGetDifference) returns (ResponseGetDifference)
@@ -188,21 +165,21 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetDialogsDifferenceWithRequest:(RequestGetDialogsDifference *)request handler:(void(^)(ResponseGetDialogsDifference *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark GetReferencedEntitites(RequestGetReferencedEntitites) returns (ResponseGetReferencedEntitites)
+#pragma mark GetReferencedEntities(RequestGetReferencedEntities) returns (ResponseGetReferencedEntities)
 
 /**
  * / Load some required entities
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)getReferencedEntititesWithRequest:(RequestGetReferencedEntitites *)request handler:(void(^)(ResponseGetReferencedEntitites *_Nullable response, NSError *_Nullable error))handler;
+- (void)getReferencedEntitiesWithRequest:(RequestGetReferencedEntities *)request handler:(void(^)(ResponseGetReferencedEntities *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * / Load some required entities
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToGetReferencedEntititesWithRequest:(RequestGetReferencedEntitites *)request handler:(void(^)(ResponseGetReferencedEntitites *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToGetReferencedEntitiesWithRequest:(RequestGetReferencedEntities *)request handler:(void(^)(ResponseGetReferencedEntities *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetPartialPeerInfo(RequestGetPartialPeerInfo) returns (ResponseGetPartialPeerInfo)
@@ -212,56 +189,28 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetPartialPeerInfoWithRequest:(RequestGetPartialPeerInfo *)request handler:(void(^)(ResponseGetPartialPeerInfo *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark SubscribeToOnline(RequestSubscribeToOnline) returns (ResponseVoid)
-
-- (void)subscribeToOnlineWithRequest:(RequestSubscribeToOnline *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToSubscribeToOnlineWithRequest:(RequestSubscribeToOnline *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark SubscribeFromOnline(RequestSubscribeFromOnline) returns (ResponseVoid)
-
-- (void)subscribeFromOnlineWithRequest:(RequestSubscribeFromOnline *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToSubscribeFromOnlineWithRequest:(RequestSubscribeFromOnline *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark SubscribeToGroupOnline(RequestSubscribeToGroupOnline) returns (ResponseVoid)
-
-- (void)subscribeToGroupOnlineWithRequest:(RequestSubscribeToGroupOnline *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToSubscribeToGroupOnlineWithRequest:(RequestSubscribeToGroupOnline *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark SubscribeFromGroupOnline(RequestSubscribeFromGroupOnline) returns (ResponseVoid)
-
-- (void)subscribeFromGroupOnlineWithRequest:(RequestSubscribeFromGroupOnline *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToSubscribeFromGroupOnlineWithRequest:(RequestSubscribeFromGroupOnline *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark SeqUpdates(Empty) returns (stream SeqUpdateBox)
+#pragma mark SeqUpdates(Empty) returns (stream SeqUpdate)
 
 /**
  * / Get stream of the user's updates
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)seqUpdatesWithRequest:(GPBEmpty *)request eventHandler:(void(^)(BOOL done, SeqUpdateBox *_Nullable response, NSError *_Nullable error))eventHandler;
+- (void)seqUpdatesWithRequest:(GPBEmpty *)request eventHandler:(void(^)(BOOL done, SeqUpdate *_Nullable response, NSError *_Nullable error))eventHandler;
 
 /**
  * / Get stream of the user's updates
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToSeqUpdatesWithRequest:(GPBEmpty *)request eventHandler:(void(^)(BOOL done, SeqUpdateBox *_Nullable response, NSError *_Nullable error))eventHandler;
+- (GRPCProtoCall *)RPCToSeqUpdatesWithRequest:(GPBEmpty *)request eventHandler:(void(^)(BOOL done, SeqUpdate *_Nullable response, NSError *_Nullable error))eventHandler;
 
 
-#pragma mark WeakUpdates(stream WeakUpdateCommand) returns (stream WeakUpdateBox)
+#pragma mark WeakUpdates(stream WeakUpdateCommand) returns (stream WeakUpdate)
 
-- (void)weakUpdatesWithRequestsWriter:(GRXWriter *)requestWriter eventHandler:(void(^)(BOOL done, WeakUpdateBox *_Nullable response, NSError *_Nullable error))eventHandler;
+- (void)weakUpdatesWithRequestsWriter:(GRXWriter *)requestWriter eventHandler:(void(^)(BOOL done, WeakUpdate *_Nullable response, NSError *_Nullable error))eventHandler;
 
-- (GRPCProtoCall *)RPCToWeakUpdatesWithRequestsWriter:(GRXWriter *)requestWriter eventHandler:(void(^)(BOOL done, WeakUpdateBox *_Nullable response, NSError *_Nullable error))eventHandler;
+- (GRPCProtoCall *)RPCToWeakUpdatesWithRequestsWriter:(GRXWriter *)requestWriter eventHandler:(void(^)(BOOL done, WeakUpdate *_Nullable response, NSError *_Nullable error))eventHandler;
 
 
 @end

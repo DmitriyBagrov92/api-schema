@@ -12,6 +12,7 @@
 #import <RxLibrary/GRXWriter.h>
 #endif
 
+@class GPBEmpty;
 @class RequestAddStickerCollection;
 @class RequestAddStickerPackReference;
 @class RequestLoadAcesssibleStickers;
@@ -22,13 +23,12 @@
 @class ResponseLoadAcesssibleStickers;
 @class ResponseLoadOwnStickers;
 @class ResponseLoadStickerCollection;
-@class ResponseSeq;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Wrappers.pbobjc.h"
+  #import "Empty.pbobjc.h"
   #import "Annotations.pbobjc.h"
   #import "Definitions.pbobjc.h"
-  #import "Miscellaneous.pbobjc.h"
   #import "MediaAndFiles.pbobjc.h"
   #import "Scalapb.pbobjc.h"
 #endif
@@ -52,19 +52,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (GRPCUnaryProtoCall *)loadAcesssibleStickersWithMessage:(RequestLoadAcesssibleStickers *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark AddStickerPackReference(RequestAddStickerPackReference) returns (ResponseSeq)
+#pragma mark AddStickerPackReference(RequestAddStickerPackReference) returns (Empty)
 
 - (GRPCUnaryProtoCall *)addStickerPackReferenceWithMessage:(RequestAddStickerPackReference *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark RemoveStickerPackReference(RequestRemoveStickerPackReference) returns (ResponseSeq)
+#pragma mark RemoveStickerPackReference(RequestRemoveStickerPackReference) returns (Empty)
 
 - (GRPCUnaryProtoCall *)removeStickerPackReferenceWithMessage:(RequestRemoveStickerPackReference *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark AddStickerCollection(RequestAddStickerCollection) returns (ResponseSeq)
+#pragma mark AddStickerCollection(RequestAddStickerCollection) returns (Empty)
 
 - (GRPCUnaryProtoCall *)addStickerCollectionWithMessage:(RequestAddStickerCollection *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark RemoveStickerCollection(RequestRemoveStickerCollection) returns (ResponseSeq)
+#pragma mark RemoveStickerCollection(RequestRemoveStickerCollection) returns (Empty)
 
 - (GRPCUnaryProtoCall *)removeStickerCollectionWithMessage:(RequestRemoveStickerCollection *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
@@ -94,32 +94,32 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToLoadAcesssibleStickersWithRequest:(RequestLoadAcesssibleStickers *)request handler:(void(^)(ResponseLoadAcesssibleStickers *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark AddStickerPackReference(RequestAddStickerPackReference) returns (ResponseSeq)
+#pragma mark AddStickerPackReference(RequestAddStickerPackReference) returns (Empty)
 
-- (void)addStickerPackReferenceWithRequest:(RequestAddStickerPackReference *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
+- (void)addStickerPackReferenceWithRequest:(RequestAddStickerPackReference *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToAddStickerPackReferenceWithRequest:(RequestAddStickerPackReference *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark RemoveStickerPackReference(RequestRemoveStickerPackReference) returns (ResponseSeq)
-
-- (void)removeStickerPackReferenceWithRequest:(RequestRemoveStickerPackReference *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToRemoveStickerPackReferenceWithRequest:(RequestRemoveStickerPackReference *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToAddStickerPackReferenceWithRequest:(RequestAddStickerPackReference *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark AddStickerCollection(RequestAddStickerCollection) returns (ResponseSeq)
+#pragma mark RemoveStickerPackReference(RequestRemoveStickerPackReference) returns (Empty)
 
-- (void)addStickerCollectionWithRequest:(RequestAddStickerCollection *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
+- (void)removeStickerPackReferenceWithRequest:(RequestRemoveStickerPackReference *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToAddStickerCollectionWithRequest:(RequestAddStickerCollection *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToRemoveStickerPackReferenceWithRequest:(RequestRemoveStickerPackReference *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark RemoveStickerCollection(RequestRemoveStickerCollection) returns (ResponseSeq)
+#pragma mark AddStickerCollection(RequestAddStickerCollection) returns (Empty)
 
-- (void)removeStickerCollectionWithRequest:(RequestRemoveStickerCollection *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
+- (void)addStickerCollectionWithRequest:(RequestAddStickerCollection *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToRemoveStickerCollectionWithRequest:(RequestRemoveStickerCollection *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToAddStickerCollectionWithRequest:(RequestAddStickerCollection *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark RemoveStickerCollection(RequestRemoveStickerCollection) returns (Empty)
+
+- (void)removeStickerCollectionWithRequest:(RequestRemoveStickerCollection *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToRemoveStickerCollectionWithRequest:(RequestRemoveStickerCollection *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark LoadStickerCollection(RequestLoadStickerCollection) returns (ResponseLoadStickerCollection)

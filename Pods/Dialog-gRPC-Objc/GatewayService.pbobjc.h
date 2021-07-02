@@ -27,7 +27,6 @@
 
 CF_EXTERN_C_BEGIN
 
-@class GPBBytesValue;
 @class GPBInt32Value;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -66,30 +65,6 @@ GPB_FINAL @interface APIGetDifferenceCommand : GPBMessage
 @property(nonatomic, readwrite) int64_t configHash;
 
 @end
-
-#pragma mark - APIServiceUpdate
-
-typedef GPB_ENUM(APIServiceUpdate_FieldNumber) {
-  APIServiceUpdate_FieldNumber_ObsoleteUpdate = 1,
-};
-
-typedef GPB_ENUM(APIServiceUpdate_Update_OneOfCase) {
-  APIServiceUpdate_Update_OneOfCase_GPBUnsetOneOfCase = 0,
-  APIServiceUpdate_Update_OneOfCase_ObsoleteUpdate = 1,
-};
-
-GPB_FINAL @interface APIServiceUpdate : GPBMessage
-
-@property(nonatomic, readonly) APIServiceUpdate_Update_OneOfCase updateOneOfCase;
-
-@property(nonatomic, readwrite, strong, null_resettable) GPBBytesValue *obsoleteUpdate;
-
-@end
-
-/**
- * Clears whatever value was set for the oneof 'update'.
- **/
-void APIServiceUpdate_ClearUpdateOneOfCase(APIServiceUpdate *message);
 
 NS_ASSUME_NONNULL_END
 

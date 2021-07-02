@@ -8,11 +8,10 @@
 #import <RxLibrary/GRXWriter+Immediate.h>
 
 #import "Wrappers.pbobjc.h"
+#import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Miscellaneous.pbobjc.h"
 #import "Peers.pbobjc.h"
-#import "Users.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 
 @implementation Contacts
@@ -148,16 +147,16 @@
              responseClass:[ResponseGetContacts class]];
 }
 
-#pragma mark RemoveContact(RequestRemoveContact) returns (ResponseSeq)
+#pragma mark RemoveContact(RequestRemoveContact) returns (Empty)
 
-- (void)removeContactWithRequest:(RequestRemoveContact *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (void)removeContactWithRequest:(RequestRemoveContact *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToRemoveContactWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToRemoveContactWithRequest:(RequestRemoveContact *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToRemoveContactWithRequest:(RequestRemoveContact *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"RemoveContact"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeq class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)removeContactWithMessage:(RequestRemoveContact *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -165,19 +164,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeq class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark AddContact(RequestAddContact) returns (ResponseSeq)
+#pragma mark AddContact(RequestAddContact) returns (Empty)
 
-- (void)addContactWithRequest:(RequestAddContact *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (void)addContactWithRequest:(RequestAddContact *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToAddContactWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToAddContactWithRequest:(RequestAddContact *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToAddContactWithRequest:(RequestAddContact *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"AddContact"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeq class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)addContactWithMessage:(RequestAddContact *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -185,7 +184,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeq class]];
+             responseClass:[GPBEmpty class]];
 }
 
 #pragma mark SearchContacts(RequestSearchContacts) returns (ResponseSearchContacts)

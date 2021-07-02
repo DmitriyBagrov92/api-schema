@@ -3,8 +3,8 @@ syntax = "proto3";
 package dialog;
 
 import "annotations.proto";
+import "empty.proto";
 import "definitions.proto";
-import "miscellaneous.proto";
 import "peers.proto";
 import "scalapb.proto";
 
@@ -36,22 +36,22 @@ message ResponseLoadBlockedUsers {
 
 // Update about User Blocked
 message UpdateUserBlocked {
-    int32 uid = 1 [(dlg).log="visible"];
+    string user_id = 1 [(dlg).log="visible"];
 }
 
 // Update about User Unblocked
 message UpdateUserUnblocked {
-    int32 uid = 1 [(dlg).log="visible"];
+    string user_id = 1 [(dlg).log="visible"];
 }
 
 service Privacy {
-    rpc BlockUser (RequestBlockUser) returns (ResponseSeq) {
+    rpc BlockUser (RequestBlockUser) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Privacy/BlockUser"
             body: "*"
         };
     }
-    rpc UnblockUser (RequestUnblockUser) returns (ResponseSeq) {
+    rpc UnblockUser (RequestUnblockUser) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Privacy/UnblockUser"
             body: "*"

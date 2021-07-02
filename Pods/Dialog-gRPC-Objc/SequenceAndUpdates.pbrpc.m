@@ -16,8 +16,6 @@
 #import "Groups.pbobjc.h"
 #import "Stickers.pbobjc.h"
 #import "Presence.pbobjc.h"
-#import "EventBus.pbobjc.h"
-#import "WebRtc.pbobjc.h"
 #import "ConfigSync.pbobjc.h"
 #import "Counters.pbobjc.h"
 #import "Contacts.pbobjc.h"
@@ -79,37 +77,37 @@
 
 #pragma mark - Method Implementations
 
-#pragma mark GetState(RequestGetState) returns (ResponseSeq)
+#pragma mark GetState(RequestGetState) returns (ResponseGetState)
 
 /**
- * / Get last seq number
+ * / Get last sequence number
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)getStateWithRequest:(RequestGetState *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (void)getStateWithRequest:(RequestGetState *)request handler:(void(^)(ResponseGetState *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetStateWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Get last seq number
+ * / Get last sequence number
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToGetStateWithRequest:(RequestGetState *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToGetStateWithRequest:(RequestGetState *)request handler:(void(^)(ResponseGetState *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetState"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeq class]
+             responseClass:[ResponseGetState class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Get last seq number
+ * / Get last sequence number
  */
 - (GRPCUnaryProtoCall *)getStateWithMessage:(RequestGetState *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetState"
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeq class]];
+             responseClass:[ResponseGetState class]];
 }
 
 #pragma mark GetDifference(RequestGetDifference) returns (ResponseGetDifference)
@@ -178,15 +176,15 @@
              responseClass:[ResponseGetDialogsDifference class]];
 }
 
-#pragma mark GetReferencedEntitites(RequestGetReferencedEntitites) returns (ResponseGetReferencedEntitites)
+#pragma mark GetReferencedEntities(RequestGetReferencedEntities) returns (ResponseGetReferencedEntities)
 
 /**
  * / Load some required entities
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)getReferencedEntititesWithRequest:(RequestGetReferencedEntitites *)request handler:(void(^)(ResponseGetReferencedEntitites *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToGetReferencedEntititesWithRequest:request handler:handler] start];
+- (void)getReferencedEntitiesWithRequest:(RequestGetReferencedEntities *)request handler:(void(^)(ResponseGetReferencedEntities *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetReferencedEntitiesWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
 /**
@@ -194,21 +192,21 @@
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToGetReferencedEntititesWithRequest:(RequestGetReferencedEntitites *)request handler:(void(^)(ResponseGetReferencedEntitites *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"GetReferencedEntitites"
+- (GRPCProtoCall *)RPCToGetReferencedEntitiesWithRequest:(RequestGetReferencedEntities *)request handler:(void(^)(ResponseGetReferencedEntities *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetReferencedEntities"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseGetReferencedEntitites class]
+             responseClass:[ResponseGetReferencedEntities class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
  * / Load some required entities
  */
-- (GRPCUnaryProtoCall *)getReferencedEntititesWithMessage:(RequestGetReferencedEntitites *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"GetReferencedEntitites"
+- (GRPCUnaryProtoCall *)getReferencedEntitiesWithMessage:(RequestGetReferencedEntities *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"GetReferencedEntities"
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseGetReferencedEntitites class]];
+             responseClass:[ResponseGetReferencedEntities class]];
 }
 
 #pragma mark GetPartialPeerInfo(RequestGetPartialPeerInfo) returns (ResponseGetPartialPeerInfo)
@@ -231,94 +229,14 @@
              responseClass:[ResponseGetPartialPeerInfo class]];
 }
 
-#pragma mark SubscribeToOnline(RequestSubscribeToOnline) returns (ResponseVoid)
-
-- (void)subscribeToOnlineWithRequest:(RequestSubscribeToOnline *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToSubscribeToOnlineWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToSubscribeToOnlineWithRequest:(RequestSubscribeToOnline *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"SubscribeToOnline"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-- (GRPCUnaryProtoCall *)subscribeToOnlineWithMessage:(RequestSubscribeToOnline *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"SubscribeToOnline"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseVoid class]];
-}
-
-#pragma mark SubscribeFromOnline(RequestSubscribeFromOnline) returns (ResponseVoid)
-
-- (void)subscribeFromOnlineWithRequest:(RequestSubscribeFromOnline *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToSubscribeFromOnlineWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToSubscribeFromOnlineWithRequest:(RequestSubscribeFromOnline *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"SubscribeFromOnline"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-- (GRPCUnaryProtoCall *)subscribeFromOnlineWithMessage:(RequestSubscribeFromOnline *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"SubscribeFromOnline"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseVoid class]];
-}
-
-#pragma mark SubscribeToGroupOnline(RequestSubscribeToGroupOnline) returns (ResponseVoid)
-
-- (void)subscribeToGroupOnlineWithRequest:(RequestSubscribeToGroupOnline *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToSubscribeToGroupOnlineWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToSubscribeToGroupOnlineWithRequest:(RequestSubscribeToGroupOnline *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"SubscribeToGroupOnline"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-- (GRPCUnaryProtoCall *)subscribeToGroupOnlineWithMessage:(RequestSubscribeToGroupOnline *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"SubscribeToGroupOnline"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseVoid class]];
-}
-
-#pragma mark SubscribeFromGroupOnline(RequestSubscribeFromGroupOnline) returns (ResponseVoid)
-
-- (void)subscribeFromGroupOnlineWithRequest:(RequestSubscribeFromGroupOnline *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToSubscribeFromGroupOnlineWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToSubscribeFromGroupOnlineWithRequest:(RequestSubscribeFromGroupOnline *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"SubscribeFromGroupOnline"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-- (GRPCUnaryProtoCall *)subscribeFromGroupOnlineWithMessage:(RequestSubscribeFromGroupOnline *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"SubscribeFromGroupOnline"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseVoid class]];
-}
-
-#pragma mark SeqUpdates(Empty) returns (stream SeqUpdateBox)
+#pragma mark SeqUpdates(Empty) returns (stream SeqUpdate)
 
 /**
  * / Get stream of the user's updates
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)seqUpdatesWithRequest:(GPBEmpty *)request eventHandler:(void(^)(BOOL done, SeqUpdateBox *_Nullable response, NSError *_Nullable error))eventHandler{
+- (void)seqUpdatesWithRequest:(GPBEmpty *)request eventHandler:(void(^)(BOOL done, SeqUpdate *_Nullable response, NSError *_Nullable error))eventHandler{
   [[self RPCToSeqUpdatesWithRequest:request eventHandler:eventHandler] start];
 }
 // Returns a not-yet-started RPC object.
@@ -327,10 +245,10 @@
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToSeqUpdatesWithRequest:(GPBEmpty *)request eventHandler:(void(^)(BOOL done, SeqUpdateBox *_Nullable response, NSError *_Nullable error))eventHandler{
+- (GRPCProtoCall *)RPCToSeqUpdatesWithRequest:(GPBEmpty *)request eventHandler:(void(^)(BOOL done, SeqUpdate *_Nullable response, NSError *_Nullable error))eventHandler{
   return [self RPCToMethod:@"SeqUpdates"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[SeqUpdateBox class]
+             responseClass:[SeqUpdate class]
         responsesWriteable:[GRXWriteable writeableWithEventHandler:eventHandler]];
 }
 /**
@@ -341,26 +259,26 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[SeqUpdateBox class]];
+             responseClass:[SeqUpdate class]];
 }
 
-#pragma mark WeakUpdates(stream WeakUpdateCommand) returns (stream WeakUpdateBox)
+#pragma mark WeakUpdates(stream WeakUpdateCommand) returns (stream WeakUpdate)
 
-- (void)weakUpdatesWithRequestsWriter:(GRXWriter *)requestWriter eventHandler:(void(^)(BOOL done, WeakUpdateBox *_Nullable response, NSError *_Nullable error))eventHandler{
+- (void)weakUpdatesWithRequestsWriter:(GRXWriter *)requestWriter eventHandler:(void(^)(BOOL done, WeakUpdate *_Nullable response, NSError *_Nullable error))eventHandler{
   [[self RPCToWeakUpdatesWithRequestsWriter:requestWriter eventHandler:eventHandler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToWeakUpdatesWithRequestsWriter:(GRXWriter *)requestWriter eventHandler:(void(^)(BOOL done, WeakUpdateBox *_Nullable response, NSError *_Nullable error))eventHandler{
+- (GRPCProtoCall *)RPCToWeakUpdatesWithRequestsWriter:(GRXWriter *)requestWriter eventHandler:(void(^)(BOOL done, WeakUpdate *_Nullable response, NSError *_Nullable error))eventHandler{
   return [self RPCToMethod:@"WeakUpdates"
             requestsWriter:requestWriter
-             responseClass:[WeakUpdateBox class]
+             responseClass:[WeakUpdate class]
         responsesWriteable:[GRXWriteable writeableWithEventHandler:eventHandler]];
 }
 - (GRPCStreamingProtoCall *)weakUpdatesWithResponseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"WeakUpdates"
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[WeakUpdateBox class]];
+             responseClass:[WeakUpdate class]];
 }
 
 @end

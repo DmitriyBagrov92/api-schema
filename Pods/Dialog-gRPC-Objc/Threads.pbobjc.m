@@ -17,9 +17,9 @@
 
 #import "Threads.pbobjc.h"
 #import "Wrappers.pbobjc.h"
+#import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Miscellaneous.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 #import "Peers.pbobjc.h"
 #import "Groups.pbobjc.h"
@@ -55,6 +55,7 @@ GPBObjCClassDeclaration(UserOutPeer);
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[GAPIAnnotationsRoot extensionRegistry]];
     [registry addExtensions:[DefinitionsRoot extensionRegistry]];
+    [registry addExtensions:[ScalapbRoot extensionRegistry]];
   }
   return registry;
 }
@@ -249,10 +250,11 @@ GPBEnumDescriptor *RequestCreateThread_JoinPolicy_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "InviteOnly\000ThreadMembers\000";
+        "JoinPolicyInviteOnly\000JoinPolicyThreadMem"
+        "bers\000";
     static const int32_t values[] = {
-        RequestCreateThread_JoinPolicy_InviteOnly,
-        RequestCreateThread_JoinPolicy_ThreadMembers,
+        RequestCreateThread_JoinPolicy_JoinPolicyInviteOnly,
+        RequestCreateThread_JoinPolicy_JoinPolicyThreadMembers,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(RequestCreateThread_JoinPolicy)
@@ -270,8 +272,8 @@ GPBEnumDescriptor *RequestCreateThread_JoinPolicy_EnumDescriptor(void) {
 
 BOOL RequestCreateThread_JoinPolicy_IsValidValue(int32_t value__) {
   switch (value__) {
-    case RequestCreateThread_JoinPolicy_InviteOnly:
-    case RequestCreateThread_JoinPolicy_ThreadMembers:
+    case RequestCreateThread_JoinPolicy_JoinPolicyInviteOnly:
+    case RequestCreateThread_JoinPolicy_JoinPolicyThreadMembers:
       return YES;
     default:
       return NO;

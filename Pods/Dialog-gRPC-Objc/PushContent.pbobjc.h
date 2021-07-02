@@ -64,9 +64,9 @@ typedef GPB_ENUM(PushEventType) {
    * of the field.
    **/
   PushEventType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  PushEventType_Create = 0,
-  PushEventType_Update = 1,
-  PushEventType_Delete = 2,
+  PushEventType_PushEventTypeCreate = 0,
+  PushEventType_PushEventTypeUpdate = 1,
+  PushEventType_PushEventTypeDelete = 2,
 };
 
 GPBEnumDescriptor *PushEventType_EnumDescriptor(void);
@@ -121,7 +121,7 @@ GPB_FINAL @interface PushPeer : GPBMessage
 
 @property(nonatomic, readwrite) PushPeerType type;
 
-@property(nonatomic, readwrite) int32_t id_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *strId;
 
@@ -149,11 +149,11 @@ typedef GPB_ENUM(EncryptedPushContent_FieldNumber) {
   EncryptedPushContent_FieldNumber_Sound = 5,
   EncryptedPushContent_FieldNumber_UnreadMessageCounter = 6,
   EncryptedPushContent_FieldNumber_Peer = 7,
-  EncryptedPushContent_FieldNumber_MessageId = 10,
-  EncryptedPushContent_FieldNumber_IsRespondable = 11,
-  EncryptedPushContent_FieldNumber_SenderUserId = 12,
-  EncryptedPushContent_FieldNumber_Date = 13,
-  EncryptedPushContent_FieldNumber_EventType = 14,
+  EncryptedPushContent_FieldNumber_MessageId = 8,
+  EncryptedPushContent_FieldNumber_IsRespondable = 9,
+  EncryptedPushContent_FieldNumber_SenderUserId = 10,
+  EncryptedPushContent_FieldNumber_Date = 11,
+  EncryptedPushContent_FieldNumber_EventType = 12,
 };
 
 typedef GPB_ENUM(EncryptedPushContent_AlertBody_OneOfCase) {
@@ -203,7 +203,7 @@ GPB_FINAL @interface EncryptedPushContent : GPBMessage
 @property(nonatomic, readwrite) BOOL isRespondable;
 
 /** if sender is channel so value eq 0 */
-@property(nonatomic, readwrite) int32_t senderUserId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *senderUserId;
 
 /** date of the event (usually message) */
 @property(nonatomic, readwrite) int64_t date;

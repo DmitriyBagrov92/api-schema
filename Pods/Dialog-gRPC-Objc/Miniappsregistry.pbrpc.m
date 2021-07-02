@@ -8,7 +8,6 @@
 #import <RxLibrary/GRXWriter+Immediate.h>
 
 #import "Empty.pbobjc.h"
-#import "Wrappers.pbobjc.h"
 #import "Definitions.pbobjc.h"
 
 @implementation ClientsMiniAppsRegistry

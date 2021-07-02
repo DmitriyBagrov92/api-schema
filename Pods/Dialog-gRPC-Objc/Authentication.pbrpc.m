@@ -96,14 +96,14 @@
              responseClass:[ResponseStartPhoneAuth class]];
 }
 
-#pragma mark SendCodeByPhoneCall(RequestSendCodeByPhoneCall) returns (ResponseVoid)
+#pragma mark SendCodeByPhoneCall(RequestSendCodeByPhoneCall) returns (Empty)
 
 /**
  * / Resend code by transaction hash
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)sendCodeByPhoneCallWithRequest:(RequestSendCodeByPhoneCall *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)sendCodeByPhoneCallWithRequest:(RequestSendCodeByPhoneCall *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToSendCodeByPhoneCallWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
@@ -112,10 +112,10 @@
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToSendCodeByPhoneCallWithRequest:(RequestSendCodeByPhoneCall *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToSendCodeByPhoneCallWithRequest:(RequestSendCodeByPhoneCall *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"SendCodeByPhoneCall"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
@@ -126,7 +126,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
 #pragma mark StartEmailAuth(RequestStartEmailAuth) returns (ResponseStartEmailAuth)
@@ -160,39 +160,6 @@
            responseHandler:handler
                callOptions:callOptions
              responseClass:[ResponseStartEmailAuth class]];
-}
-
-#pragma mark StartAnonymousAuth(RequestStartAnonymousAuth) returns (ResponseAuth)
-
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)startAnonymousAuthWithRequest:(RequestStartAnonymousAuth *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToStartAnonymousAuthWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToStartAnonymousAuthWithRequest:(RequestStartAnonymousAuth *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"StartAnonymousAuth"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseAuth class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * / Deprecated
- */
-- (GRPCUnaryProtoCall *)startAnonymousAuthWithMessage:(RequestStartAnonymousAuth *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"StartAnonymousAuth"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseAuth class]];
 }
 
 #pragma mark StartCertificateAuth(RequestStartCertificateAuth) returns (ResponseAuth)
@@ -390,14 +357,14 @@
              responseClass:[ResponseAuth class]];
 }
 
-#pragma mark ResendCode(RequestResendCode) returns (ResponseVoid)
+#pragma mark ResendCode(RequestResendCode) returns (Empty)
 
 /**
  * / Resend code if you don't receive it with first attempt
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)resendCodeWithRequest:(RequestResendCode *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)resendCodeWithRequest:(RequestResendCode *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToResendCodeWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
@@ -406,10 +373,10 @@
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToResendCodeWithRequest:(RequestResendCode *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToResendCodeWithRequest:(RequestResendCode *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"ResendCode"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
@@ -420,7 +387,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
 #pragma mark ValidatePassword(RequestValidatePassword) returns (ResponseAuth)
@@ -588,47 +555,34 @@
              responseClass:[ResponseGetAuthSessions class]];
 }
 
-#pragma mark TerminateSession(RequestTerminateSession) returns (ResponseVoid)
+#pragma mark TerminateSession(RequestTerminateSession) returns (Empty)
 
-/**
- * / Deprecated. Does not produce any effect.
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)terminateSessionWithRequest:(RequestTerminateSession *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)terminateSessionWithRequest:(RequestTerminateSession *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToTerminateSessionWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-/**
- * / Deprecated. Does not produce any effect.
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToTerminateSessionWithRequest:(RequestTerminateSession *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToTerminateSessionWithRequest:(RequestTerminateSession *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"TerminateSession"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-/**
- * / Deprecated. Does not produce any effect.
- */
 - (GRPCUnaryProtoCall *)terminateSessionWithMessage:(RequestTerminateSession *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"TerminateSession"
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark TerminateAllSessions(RequestTerminateAllSessions) returns (ResponseVoid)
+#pragma mark TerminateAllSessions(RequestTerminateAllSessions) returns (Empty)
 
 /**
  * / Log out user
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)terminateAllSessionsWithRequest:(RequestTerminateAllSessions *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)terminateAllSessionsWithRequest:(RequestTerminateAllSessions *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToTerminateAllSessionsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
@@ -637,10 +591,10 @@
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToTerminateAllSessionsWithRequest:(RequestTerminateAllSessions *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToTerminateAllSessionsWithRequest:(RequestTerminateAllSessions *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"TerminateAllSessions"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
@@ -651,17 +605,17 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark SignOut(RequestSignOut) returns (ResponseVoid)
+#pragma mark SignOut(RequestSignOut) returns (Empty)
 
 /**
  * / Log out current session
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)signOutWithRequest:(RequestSignOut *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)signOutWithRequest:(RequestSignOut *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToSignOutWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
@@ -670,10 +624,10 @@
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToSignOutWithRequest:(RequestSignOut *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToSignOutWithRequest:(RequestSignOut *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"SignOut"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
@@ -684,151 +638,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark SignInObsolete(RequestSignInObsolete) returns (ResponseAuth)
+#pragma mark ChangePassword(RequestChangePassword) returns (Empty)
 
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)signInObsoleteWithRequest:(RequestSignInObsolete *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToSignInObsoleteWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToSignInObsoleteWithRequest:(RequestSignInObsolete *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"SignInObsolete"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseAuth class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * / Deprecated
- */
-- (GRPCUnaryProtoCall *)signInObsoleteWithMessage:(RequestSignInObsolete *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"SignInObsolete"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseAuth class]];
-}
-
-#pragma mark SignUpObsolete(RequestSignUpObsolete) returns (ResponseAuth)
-
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)signUpObsoleteWithRequest:(RequestSignUpObsolete *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToSignUpObsoleteWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToSignUpObsoleteWithRequest:(RequestSignUpObsolete *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"SignUpObsolete"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseAuth class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * / Deprecated
- */
-- (GRPCUnaryProtoCall *)signUpObsoleteWithMessage:(RequestSignUpObsolete *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"SignUpObsolete"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseAuth class]];
-}
-
-#pragma mark SendAuthCodeObsolete(RequestSendAuthCodeObsolete) returns (ResponseSendAuthCodeObsolete)
-
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)sendAuthCodeObsoleteWithRequest:(RequestSendAuthCodeObsolete *)request handler:(void(^)(ResponseSendAuthCodeObsolete *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToSendAuthCodeObsoleteWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToSendAuthCodeObsoleteWithRequest:(RequestSendAuthCodeObsolete *)request handler:(void(^)(ResponseSendAuthCodeObsolete *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"SendAuthCodeObsolete"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSendAuthCodeObsolete class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * / Deprecated
- */
-- (GRPCUnaryProtoCall *)sendAuthCodeObsoleteWithMessage:(RequestSendAuthCodeObsolete *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"SendAuthCodeObsolete"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseSendAuthCodeObsolete class]];
-}
-
-#pragma mark SendAuthCallObsolete(RequestSendAuthCallObsolete) returns (ResponseVoid)
-
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)sendAuthCallObsoleteWithRequest:(RequestSendAuthCallObsolete *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToSendAuthCallObsoleteWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToSendAuthCallObsoleteWithRequest:(RequestSendAuthCallObsolete *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"SendAuthCallObsolete"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * / Deprecated
- */
-- (GRPCUnaryProtoCall *)sendAuthCallObsoleteWithMessage:(RequestSendAuthCallObsolete *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"SendAuthCallObsolete"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseVoid class]];
-}
-
-#pragma mark ChangePassword(RequestChangePassword) returns (ResponseVoid)
-
-- (void)changePasswordWithRequest:(RequestChangePassword *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)changePasswordWithRequest:(RequestChangePassword *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToChangePasswordWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToChangePasswordWithRequest:(RequestChangePassword *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToChangePasswordWithRequest:(RequestChangePassword *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"ChangePassword"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)changePasswordWithMessage:(RequestChangePassword *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -836,7 +658,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
 #pragma mark GetSelf(Empty) returns (ResponseGetSelf)

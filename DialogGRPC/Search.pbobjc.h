@@ -32,7 +32,6 @@ CF_EXTERN_C_BEGIN
 @class GPBInt32Value;
 @class GPBInt64Value;
 @class GPBStringValue;
-@class Group;
 @class GroupOutPeer;
 @class MessageContent;
 @class MessageSearchItem;
@@ -56,7 +55,6 @@ CF_EXTERN_C_BEGIN
 @class SimpleSearchCondition;
 @class SimpleUserProfileSearchCondition;
 @class UUIDValue;
-@class User;
 @class UserMatch;
 @class UserOutPeer;
 
@@ -71,10 +69,10 @@ typedef GPB_ENUM(SearchPeerType) {
    * of the field.
    **/
   SearchPeerType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  SearchPeerType_SearchpeertypeUnknown = 0,
-  SearchPeerType_SearchpeertypeGroups = 1,
-  SearchPeerType_SearchpeertypeContacts = 2,
-  SearchPeerType_SearchpeertypePublic = 3,
+  SearchPeerType_SearchPeerTypeUnknown = 0,
+  SearchPeerType_SearchPeerTypeGroups = 1,
+  SearchPeerType_SearchPeerTypeContacts = 2,
+  SearchPeerType_SearchPeerTypePublic = 3,
 };
 
 GPBEnumDescriptor *SearchPeerType_EnumDescriptor(void);
@@ -94,17 +92,17 @@ typedef GPB_ENUM(SearchContentType) {
    * of the field.
    **/
   SearchContentType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  SearchContentType_SearchcontenttypeUnknown = 0,
-  SearchContentType_SearchcontenttypeAny = 1,
-  SearchContentType_SearchcontenttypeText = 2,
-  SearchContentType_SearchcontenttypeLinks = 3,
-  SearchContentType_SearchcontenttypeDocuments = 4,
+  SearchContentType_SearchContentTypeUnknown = 0,
+  SearchContentType_SearchContentTypeAny = 1,
+  SearchContentType_SearchContentTypeText = 2,
+  SearchContentType_SearchContentTypeLinks = 3,
+  SearchContentType_SearchContentTypeDocuments = 4,
 
   /** photo and video */
-  SearchContentType_SearchcontenttypeMedia = 5,
+  SearchContentType_SearchContentTypeMedia = 5,
 
   /** voice */
-  SearchContentType_SearchcontenttypeAudio = 6,
+  SearchContentType_SearchContentTypeAudio = 6,
 };
 
 GPBEnumDescriptor *SearchContentType_EnumDescriptor(void);
@@ -124,13 +122,13 @@ typedef GPB_ENUM(SearchDirection) {
    * of the field.
    **/
   SearchDirection_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  SearchDirection_SearchdirectionUnknown = 0,
+  SearchDirection_SearchDirectionUnknown = 0,
 
   /** gt */
-  SearchDirection_SearchdirectionForward = 1,
+  SearchDirection_SearchDirectionForward = 1,
 
   /** lt */
-  SearchDirection_SearchdirectionBackward = 2,
+  SearchDirection_SearchDirectionBackward = 2,
 };
 
 GPBEnumDescriptor *SearchDirection_EnumDescriptor(void);
@@ -444,7 +442,7 @@ GPB_FINAL @interface SearchAndCondition : GPBMessage
 #pragma mark - SearchOrCondition
 
 typedef GPB_ENUM(SearchOrCondition_FieldNumber) {
-  SearchOrCondition_FieldNumber_OrQueryArray = 2,
+  SearchOrCondition_FieldNumber_OrQueryArray = 1,
 };
 
 /**
@@ -514,7 +512,7 @@ typedef GPB_ENUM(SearchSenderIdConfition_FieldNumber) {
  **/
 GPB_FINAL @interface SearchSenderIdConfition : GPBMessage
 
-@property(nonatomic, readwrite) int32_t senderId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *senderId;
 
 @end
 
@@ -523,13 +521,13 @@ GPB_FINAL @interface SearchSenderIdConfition : GPBMessage
 typedef GPB_ENUM(PeerSearchResult_FieldNumber) {
   PeerSearchResult_FieldNumber_Peer = 1,
   PeerSearchResult_FieldNumber_Title = 2,
-  PeerSearchResult_FieldNumber_Description_p = 3,
-  PeerSearchResult_FieldNumber_MembersCount = 4,
-  PeerSearchResult_FieldNumber_DateCreated = 5,
-  PeerSearchResult_FieldNumber_Creator = 6,
-  PeerSearchResult_FieldNumber_IsPublic = 7,
-  PeerSearchResult_FieldNumber_IsJoined = 8,
-  PeerSearchResult_FieldNumber_Shortname = 9,
+  PeerSearchResult_FieldNumber_Shortname = 3,
+  PeerSearchResult_FieldNumber_Description_p = 4,
+  PeerSearchResult_FieldNumber_MembersCount = 5,
+  PeerSearchResult_FieldNumber_DateCreated = 6,
+  PeerSearchResult_FieldNumber_Creator = 7,
+  PeerSearchResult_FieldNumber_IsPublic = 8,
+  PeerSearchResult_FieldNumber_IsJoined = 9,
 };
 
 /**
@@ -558,7 +556,7 @@ GPB_FINAL @interface PeerSearchResult : GPBMessage
 /** / Group Creation Date */
 @property(nonatomic, readwrite) int64_t dateCreated;
 
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *creator;
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *creator;
 /** Test to see if @c creator has been set. */
 @property(nonatomic, readwrite) BOOL hasCreator;
 
@@ -577,7 +575,6 @@ GPB_FINAL @interface PeerSearchResult : GPBMessage
 
 typedef GPB_ENUM(RequestPeerSearch_FieldNumber) {
   RequestPeerSearch_FieldNumber_QueryArray = 1,
-  RequestPeerSearch_FieldNumber_OptimizationsArray = 2,
 };
 
 /**
@@ -589,37 +586,20 @@ GPB_FINAL @interface RequestPeerSearch : GPBMessage
 /** The number of items in @c queryArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger queryArray_Count;
 
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
-
 @end
 
 #pragma mark - ResponsePeerSearch
 
 typedef GPB_ENUM(ResponsePeerSearch_FieldNumber) {
   ResponsePeerSearch_FieldNumber_SearchResultsArray = 1,
-  ResponsePeerSearch_FieldNumber_UsersArray = 2,
-  ResponsePeerSearch_FieldNumber_GroupsArray = 3,
-  ResponsePeerSearch_FieldNumber_UserPeersArray = 4,
-  ResponsePeerSearch_FieldNumber_GroupPeersArray = 5,
+  ResponsePeerSearch_FieldNumber_UserPeersArray = 2,
+  ResponsePeerSearch_FieldNumber_GroupPeersArray = 3,
 };
 
 /**
  * / Response with related peers and entities
  **/
 GPB_FINAL @interface ResponsePeerSearch : GPBMessage
-
-/** For old bot sdk compatibility */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<User*> *usersArray;
-/** The number of items in @c usersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger usersArray_Count;
-
-/** ----------------------------- */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Group*> *groupsArray;
-/** The number of items in @c groupsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger groupsArray_Count;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<PeerSearchResult*> *searchResultsArray;
 /** The number of items in @c searchResultsArray without causing the array to be created. */
@@ -690,7 +670,7 @@ GPB_FINAL @interface MessageSearchResult : GPBMessage
 
 @property(nonatomic, readwrite) int64_t date;
 
-@property(nonatomic, readwrite) int32_t senderId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *senderId;
 
 @property(nonatomic, readwrite, strong, null_resettable) MessageContent *content;
 /** Test to see if @c content has been set. */
@@ -727,10 +707,10 @@ GPB_FINAL @interface MessageSearchItem : GPBMessage
 
 typedef GPB_ENUM(ResponseMessageSearchResponse_FieldNumber) {
   ResponseMessageSearchResponse_FieldNumber_SearchResultsArray = 1,
-  ResponseMessageSearchResponse_FieldNumber_LoadMoreState = 4,
-  ResponseMessageSearchResponse_FieldNumber_UserOutPeersArray = 5,
-  ResponseMessageSearchResponse_FieldNumber_GroupOutPeersArray = 6,
-  ResponseMessageSearchResponse_FieldNumber_TotalCount = 7,
+  ResponseMessageSearchResponse_FieldNumber_LoadMoreState = 2,
+  ResponseMessageSearchResponse_FieldNumber_UserOutPeersArray = 3,
+  ResponseMessageSearchResponse_FieldNumber_GroupOutPeersArray = 4,
+  ResponseMessageSearchResponse_FieldNumber_TotalCount = 5,
 };
 
 /**
@@ -762,7 +742,6 @@ GPB_FINAL @interface ResponseMessageSearchResponse : GPBMessage
 
 typedef GPB_ENUM(RequestMessageSearch_FieldNumber) {
   RequestMessageSearch_FieldNumber_Query = 1,
-  RequestMessageSearch_FieldNumber_OptimizationsArray = 2,
 };
 
 /**
@@ -774,18 +753,12 @@ GPB_FINAL @interface RequestMessageSearch : GPBMessage
 /** Test to see if @c query has been set. */
 @property(nonatomic, readwrite) BOOL hasQuery;
 
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
-
 @end
 
 #pragma mark - RequestMessageSearchMore
 
 typedef GPB_ENUM(RequestMessageSearchMore_FieldNumber) {
   RequestMessageSearchMore_FieldNumber_LoadMoreState = 1,
-  RequestMessageSearchMore_FieldNumber_OptimizationsArray = 2,
 };
 
 /**
@@ -796,18 +769,12 @@ GPB_FINAL @interface RequestMessageSearchMore : GPBMessage
 /** / Cursor */
 @property(nonatomic, readwrite, copy, null_resettable) NSData *loadMoreState;
 
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
-
 @end
 
 #pragma mark - RequestSimpleSearch
 
 typedef GPB_ENUM(RequestSimpleSearch_FieldNumber) {
   RequestSimpleSearch_FieldNumber_CriteriaArray = 1,
-  RequestSimpleSearch_FieldNumber_OptimizationsArray = 2,
 };
 
 GPB_FINAL @interface RequestSimpleSearch : GPBMessage
@@ -816,29 +783,18 @@ GPB_FINAL @interface RequestSimpleSearch : GPBMessage
 /** The number of items in @c criteriaArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger criteriaArray_Count;
 
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
-
 @end
 
 #pragma mark - RequestSimpleSearchMore
 
 typedef GPB_ENUM(RequestSimpleSearchMore_FieldNumber) {
   RequestSimpleSearchMore_FieldNumber_LoadMoreState = 1,
-  RequestSimpleSearchMore_FieldNumber_OptimizationsArray = 2,
 };
 
 GPB_FINAL @interface RequestSimpleSearchMore : GPBMessage
 
 /** / Cursor */
 @property(nonatomic, readwrite, copy, null_resettable) NSData *loadMoreState;
-
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
 
 @end
 
@@ -890,7 +846,7 @@ GPB_FINAL @interface RequestLoadUserSearchByPredicatesResults : GPBMessage
 /** The number of items in @c predicatesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger predicatesArray_Count;
 
-@property(nonatomic, readwrite) int32_t groupId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *query;
 /** Test to see if @c query has been set. */
@@ -913,7 +869,7 @@ typedef GPB_ENUM(UserMatch_FieldNumber) {
 
 GPB_FINAL @interface UserMatch : GPBMessage
 
-@property(nonatomic, readwrite) int32_t userId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite) BOOL matchPredicates;
 
@@ -949,7 +905,7 @@ GPB_FINAL @interface RequestLoadUserSearchByPredicatesCount : GPBMessage
 /** The number of items in @c predicatesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger predicatesArray_Count;
 
-@property(nonatomic, readwrite) int32_t groupId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @end
 

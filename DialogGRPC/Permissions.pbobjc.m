@@ -18,7 +18,6 @@
 #import "Permissions.pbobjc.h"
 #import "Definitions.pbobjc.h"
 #import "Annotations.pbobjc.h"
-#import "Scalapb.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push

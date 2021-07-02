@@ -4,6 +4,7 @@ package dialog;
 
 
 import "wrappers.proto";
+import "empty.proto";
 import "annotations.proto";
 import "definitions.proto";
 import "miscellaneous.proto";
@@ -47,8 +48,6 @@ message RequestEditAvatar {
 message ResponseEditAvatar {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     Avatar avatar = 1;
-    int32 seq = 2;
-    bytes state = 3;
 }
 
 // Removing account's avatar
@@ -87,13 +86,13 @@ message RequestChangeUserStatus {
 }
 
 service Profile {
-    rpc EditName (RequestEditName) returns (ResponseSeq) {
+    rpc EditName (RequestEditName) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Profile/EditName"
             body: "*"
         };
     }
-    rpc EditNickName (RequestEditNickName) returns (ResponseSeq) {
+    rpc EditNickName (RequestEditNickName) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Profile/EditNickName"
             body: "*"
@@ -105,7 +104,7 @@ service Profile {
             body: "*"
         };
     }
-    rpc EditAbout (RequestEditAbout) returns (ResponseSeq) {
+    rpc EditAbout (RequestEditAbout) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Profile/EditAbout"
             body: "*"
@@ -117,37 +116,37 @@ service Profile {
             body: "*"
         };
     }
-    rpc RemoveAvatar (RequestRemoveAvatar) returns (ResponseSeq) {
+    rpc RemoveAvatar (RequestRemoveAvatar) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Profile/RemoveAvatar"
             body: "*"
         };
     }
-    rpc EditMyTimeZone (RequestEditMyTimeZone) returns (ResponseSeq) {
+    rpc EditMyTimeZone (RequestEditMyTimeZone) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Profile/EditMyTimeZone"
             body: "*"
         };
     }
-    rpc EditMyPreferredLanguages (RequestEditMyPreferredLanguages) returns (ResponseSeq) {
+    rpc EditMyPreferredLanguages (RequestEditMyPreferredLanguages) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Profile/EditMyPreferredLanguages"
             body: "*"
         };
     }
-    rpc EditSex (RequestEditSex) returns (ResponseSeq) {
+    rpc EditSex (RequestEditSex) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Profile/EditSex"
             body: "*"
         };
     }
-    rpc EditCustomProfile (RequestEditCustomProfile) returns (ResponseSeq) {
+    rpc EditCustomProfile (RequestEditCustomProfile) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Profile/EditCustomProfile"
             body: "*"
         };
     }
-    rpc ChangeUserStatus (RequestChangeUserStatus) returns (ResponseSeq) {
+    rpc ChangeUserStatus (RequestChangeUserStatus) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Profile/ChangeUserStatus"
             body: "*"

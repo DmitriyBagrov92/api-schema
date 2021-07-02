@@ -46,8 +46,8 @@ typedef GPB_ENUM(RequestCreateThread_JoinPolicy) {
    * of the field.
    **/
   RequestCreateThread_JoinPolicy_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  RequestCreateThread_JoinPolicy_InviteOnly = 0,
-  RequestCreateThread_JoinPolicy_ThreadMembers = 1,
+  RequestCreateThread_JoinPolicy_JoinPolicyInviteOnly = 0,
+  RequestCreateThread_JoinPolicy_JoinPolicyThreadMembers = 1,
 };
 
 GPBEnumDescriptor *RequestCreateThread_JoinPolicy_EnumDescriptor(void);
@@ -150,7 +150,7 @@ void SetRequestCreateThread_JoinPolicy_RawValue(RequestCreateThread *message, in
 
 typedef GPB_ENUM(ResponseCreateThread_FieldNumber) {
   ResponseCreateThread_FieldNumber_ThreadGroup = 1,
-  ResponseCreateThread_FieldNumber_UserPeersArray = 3,
+  ResponseCreateThread_FieldNumber_UserPeersArray = 2,
 };
 
 /**
@@ -256,8 +256,8 @@ GPB_FINAL @interface ResponseLoadGroupThreads : GPBMessage
 #pragma mark - RequestJoinThread
 
 typedef GPB_ENUM(RequestJoinThread_FieldNumber) {
-  RequestJoinThread_FieldNumber_ParentGroupPeer = 2,
-  RequestJoinThread_FieldNumber_ThreadGroupPeer = 3,
+  RequestJoinThread_FieldNumber_ParentGroupPeer = 1,
+  RequestJoinThread_FieldNumber_ThreadGroupPeer = 2,
 };
 
 /**

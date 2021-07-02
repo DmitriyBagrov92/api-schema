@@ -55,7 +55,7 @@ static GPBFileDescriptor *ClickroadRoot_FileDescriptor(void) {
   static GPBFileDescriptor *descriptor = NULL;
   if (!descriptor) {
     GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
-    descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"clickroad"
+    descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"dialog"
                                                      syntax:GPBFileSyntaxProto3];
   }
   return descriptor;

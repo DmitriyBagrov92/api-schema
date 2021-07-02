@@ -94,16 +94,13 @@ GPB_FINAL @interface RequestRegisterDevice : GPBMessage
 
 typedef GPB_ENUM(ResponseDeviceRequest_FieldNumber) {
   ResponseDeviceRequest_FieldNumber_ServerPk = 1,
-  ResponseDeviceRequest_FieldNumber_AuthId = 2,
-  ResponseDeviceRequest_FieldNumber_Token = 3,
-  ResponseDeviceRequest_FieldNumber_AuthMethodSeqArray = 4,
+  ResponseDeviceRequest_FieldNumber_Token = 2,
+  ResponseDeviceRequest_FieldNumber_AuthMethodSeqArray = 3,
 };
 
 GPB_FINAL @interface ResponseDeviceRequest : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSData *serverPk;
-
-@property(nonatomic, readwrite) int64_t authId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *token;
 
@@ -112,27 +109,6 @@ GPB_FINAL @interface ResponseDeviceRequest : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *authMethodSeqArray;
 /** The number of items in @c authMethodSeqArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger authMethodSeqArray_Count;
-
-@end
-
-#pragma mark - RegisterDeprecatedDeviceRequest
-
-GPB_FINAL @interface RegisterDeprecatedDeviceRequest : GPBMessage
-
-@end
-
-#pragma mark - RequestExchangeAuthIdForToken
-
-typedef GPB_ENUM(RequestExchangeAuthIdForToken_FieldNumber) {
-  RequestExchangeAuthIdForToken_FieldNumber_AuthId = 1,
-  RequestExchangeAuthIdForToken_FieldNumber_Signature = 2,
-};
-
-GPB_FINAL @interface RequestExchangeAuthIdForToken : GPBMessage
-
-@property(nonatomic, readwrite) int64_t authId;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *signature;
 
 @end
 

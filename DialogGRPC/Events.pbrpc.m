@@ -10,6 +10,7 @@
 #import "Annotations.pbobjc.h"
 #import "Peers.pbobjc.h"
 #import "Definitions.pbobjc.h"
+#import "Messaging.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 
 @implementation Events
@@ -20,14 +21,14 @@
 // Designated initializer
 - (instancetype)initWithHost:(NSString *)host callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [super initWithHost:host
-                 packageName:@"dialog.events"
+                 packageName:@"dialog"
                  serviceName:@"Events"
                  callOptions:callOptions];
 }
 
 - (instancetype)initWithHost:(NSString *)host {
   return [super initWithHost:host
-                 packageName:@"dialog.events"
+                 packageName:@"dialog"
                  serviceName:@"Events"];
 }
 

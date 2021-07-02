@@ -12,19 +12,18 @@
 #import <RxLibrary/GRXWriter.h>
 #endif
 
+@class GPBEmpty;
 @class RequestGetUserLastPresence;
 @class RequestSetOnline;
 @class RequestStartTyping;
 @class RequestStopTyping;
 @class ResponseUserLastPresence;
-@class ResponseVoid;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Timestamp.pbobjc.h"
-  #import "Wrappers.pbobjc.h"
+  #import "Empty.pbobjc.h"
   #import "Annotations.pbobjc.h"
   #import "Definitions.pbobjc.h"
-  #import "Miscellaneous.pbobjc.h"
   #import "Peers.pbobjc.h"
   #import "Scalapb.pbobjc.h"
 #endif
@@ -40,15 +39,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol Presence2 <NSObject>
 
-#pragma mark StartTyping(RequestStartTyping) returns (ResponseVoid)
+#pragma mark StartTyping(RequestStartTyping) returns (Empty)
 
 - (GRPCUnaryProtoCall *)startTypingWithMessage:(RequestStartTyping *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark StopTyping(RequestStopTyping) returns (ResponseVoid)
+#pragma mark StopTyping(RequestStopTyping) returns (Empty)
 
 - (GRPCUnaryProtoCall *)stopTypingWithMessage:(RequestStopTyping *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark SetOnline(RequestSetOnline) returns (ResponseVoid)
+#pragma mark SetOnline(RequestSetOnline) returns (Empty)
 
 - (GRPCUnaryProtoCall *)setOnlineWithMessage:(RequestSetOnline *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
@@ -64,25 +63,25 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @protocol Presence <NSObject>
 
-#pragma mark StartTyping(RequestStartTyping) returns (ResponseVoid)
+#pragma mark StartTyping(RequestStartTyping) returns (Empty)
 
-- (void)startTypingWithRequest:(RequestStartTyping *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (void)startTypingWithRequest:(RequestStartTyping *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToStartTypingWithRequest:(RequestStartTyping *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark StopTyping(RequestStopTyping) returns (ResponseVoid)
-
-- (void)stopTypingWithRequest:(RequestStopTyping *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToStopTypingWithRequest:(RequestStopTyping *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToStartTypingWithRequest:(RequestStartTyping *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark SetOnline(RequestSetOnline) returns (ResponseVoid)
+#pragma mark StopTyping(RequestStopTyping) returns (Empty)
 
-- (void)setOnlineWithRequest:(RequestSetOnline *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (void)stopTypingWithRequest:(RequestStopTyping *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToSetOnlineWithRequest:(RequestSetOnline *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToStopTypingWithRequest:(RequestStopTyping *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark SetOnline(RequestSetOnline) returns (Empty)
+
+- (void)setOnlineWithRequest:(RequestSetOnline *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToSetOnlineWithRequest:(RequestSetOnline *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetUserLastPresence(RequestGetUserLastPresence) returns (ResponseUserLastPresence)

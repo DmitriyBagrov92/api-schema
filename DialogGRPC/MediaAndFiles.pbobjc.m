@@ -54,6 +54,7 @@ GPBObjCClassDeclaration(RgbColor);
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[GAPIAnnotationsRoot extensionRegistry]];
     [registry addExtensions:[DefinitionsRoot extensionRegistry]];
+    [registry addExtensions:[ScalapbRoot extensionRegistry]];
   }
   return registry;
 }
@@ -114,6 +115,47 @@ BOOL Colors_IsValidValue(int32_t value__) {
   }
 }
 
+#pragma mark - Enum FileUrlErrorTag
+
+GPBEnumDescriptor *FileUrlErrorTag_EnumDescriptor(void) {
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
+  if (!descriptor) {
+    static const char *valueNames =
+        "FileURLErrorTagUnknown\000FileURLErrorTagSt"
+        "orageError\000FileURLErrorTagStorageForbidd"
+        "enError\000";
+    static const int32_t values[] = {
+        FileUrlErrorTag_FileURLErrorTagUnknown,
+        FileUrlErrorTag_FileURLErrorTagStorageError,
+        FileUrlErrorTag_FileURLErrorTagStorageForbiddenError,
+    };
+    static const char *extraTextFormatInfo = "\003\000d\203\345\343\347\000\001d\203\345\343\347\345\000\002d\203\345\343\347\351\345\000";
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(FileUrlErrorTag)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:FileUrlErrorTag_IsValidValue
+                              extraTextFormatInfo:extraTextFormatInfo];
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL FileUrlErrorTag_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case FileUrlErrorTag_FileURLErrorTagUnknown:
+    case FileUrlErrorTag_FileURLErrorTagStorageError:
+    case FileUrlErrorTag_FileURLErrorTagStorageForbiddenError:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
 #pragma mark - FileLocation
 
 @implementation FileLocation
@@ -123,7 +165,7 @@ BOOL Colors_IsValidValue(int32_t value__) {
 
 typedef struct FileLocation__storage_ {
   uint32_t _has_storage_[1];
-  int64_t fileId;
+  NSString *fileId;
   int64_t accessHash;
 } FileLocation__storage_;
 
@@ -140,7 +182,7 @@ typedef struct FileLocation__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FileLocation__storage_, fileId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "accessHash",
@@ -253,14 +295,14 @@ typedef struct ImageLocation__storage_ {
 @implementation AudioLocation
 
 @dynamic hasFileLocation, fileLocation;
-@dynamic duration;
+@dynamic durationSeconds;
 @dynamic mimeType;
-@dynamic fileSize;
+@dynamic fileSizeBytes;
 
 typedef struct AudioLocation__storage_ {
   uint32_t _has_storage_[1];
-  int32_t duration;
-  int32_t fileSize;
+  int32_t durationSeconds;
+  int32_t fileSizeBytes;
   FileLocation *fileLocation;
   NSString *mimeType;
 } AudioLocation__storage_;
@@ -281,11 +323,11 @@ typedef struct AudioLocation__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "duration",
+        .name = "durationSeconds",
         .dataTypeSpecific.clazz = Nil,
-        .number = AudioLocation_FieldNumber_Duration,
+        .number = AudioLocation_FieldNumber_DurationSeconds,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(AudioLocation__storage_, duration),
+        .offset = (uint32_t)offsetof(AudioLocation__storage_, durationSeconds),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
@@ -299,11 +341,11 @@ typedef struct AudioLocation__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "fileSize",
+        .name = "fileSizeBytes",
         .dataTypeSpecific.clazz = Nil,
-        .number = AudioLocation_FieldNumber_FileSize,
+        .number = AudioLocation_FieldNumber_FileSizeBytes,
         .hasIndex = 3,
-        .offset = (uint32_t)offsetof(AudioLocation__storage_, fileSize),
+        .offset = (uint32_t)offsetof(AudioLocation__storage_, fileSizeBytes),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
@@ -333,13 +375,13 @@ typedef struct AudioLocation__storage_ {
 @dynamic hasFileLocation, fileLocation;
 @dynamic width;
 @dynamic height;
-@dynamic fileSize;
+@dynamic fileSizeBytes;
 
 typedef struct AvatarImage__storage_ {
   uint32_t _has_storage_[1];
   int32_t width;
   int32_t height;
-  int32_t fileSize;
+  int32_t fileSizeBytes;
   FileLocation *fileLocation;
 } AvatarImage__storage_;
 
@@ -377,11 +419,11 @@ typedef struct AvatarImage__storage_ {
         .dataType = GPBDataTypeInt32,
       },
       {
-        .name = "fileSize",
+        .name = "fileSizeBytes",
         .dataTypeSpecific.clazz = Nil,
-        .number = AvatarImage_FieldNumber_FileSize,
+        .number = AvatarImage_FieldNumber_FileSizeBytes,
         .hasIndex = 3,
-        .offset = (uint32_t)offsetof(AvatarImage__storage_, fileSize),
+        .offset = (uint32_t)offsetof(AvatarImage__storage_, fileSizeBytes),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
@@ -778,11 +820,11 @@ typedef struct HTTPHeader__storage_ {
 typedef struct FileUrlDescription__storage_ {
   uint32_t _has_storage_[1];
   int32_t timeout;
+  NSString *fileId;
   NSString *URL;
   GPBStringValue *unsignedURL;
   NSMutableArray *unsignedURLHeadersArray;
   NSData *md5Hash;
-  int64_t fileId;
 } FileUrlDescription__storage_;
 
 // This method is threadsafe because it is initially called
@@ -798,7 +840,7 @@ typedef struct FileUrlDescription__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(FileUrlDescription__storage_, fileId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "URL",
@@ -880,7 +922,7 @@ typedef struct FileUrlDescription__storage_ {
 
 typedef struct FileUrlError__storage_ {
   uint32_t _has_storage_[1];
-  FileUrlError_ErrorTag tag;
+  FileUrlErrorTag tag;
   NSString *reason;
   int64_t fileId;
 } FileUrlError__storage_;
@@ -902,7 +944,7 @@ typedef struct FileUrlError__storage_ {
       },
       {
         .name = "tag",
-        .dataTypeSpecific.enumDescFunc = FileUrlError_ErrorTag_EnumDescriptor,
+        .dataTypeSpecific.enumDescFunc = FileUrlErrorTag_EnumDescriptor,
         .number = FileUrlError_FieldNumber_Tag,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(FileUrlError__storage_, tag),
@@ -958,44 +1000,6 @@ void SetFileUrlError_Tag_RawValue(FileUrlError *message, int32_t value) {
   GPBSetMessageRawEnumField(message, field, value);
 }
 
-#pragma mark - Enum FileUrlError_ErrorTag
-
-GPBEnumDescriptor *FileUrlError_ErrorTag_EnumDescriptor(void) {
-  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
-  if (!descriptor) {
-    static const char *valueNames =
-        "FileurlerrorUnknown\000FileurlerrorStorageE"
-        "rror\000FileurlerrorStorageForbiddenError\000";
-    static const int32_t values[] = {
-        FileUrlError_ErrorTag_FileurlerrorUnknown,
-        FileUrlError_ErrorTag_FileurlerrorStorageError,
-        FileUrlError_ErrorTag_FileurlerrorStorageForbiddenError,
-    };
-    GPBEnumDescriptor *worker =
-        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(FileUrlError_ErrorTag)
-                                       valueNames:valueNames
-                                           values:values
-                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
-                                     enumVerifier:FileUrlError_ErrorTag_IsValidValue];
-    GPBEnumDescriptor *expected = nil;
-    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
-      [worker release];
-    }
-  }
-  return descriptor;
-}
-
-BOOL FileUrlError_ErrorTag_IsValidValue(int32_t value__) {
-  switch (value__) {
-    case FileUrlError_ErrorTag_FileurlerrorUnknown:
-    case FileUrlError_ErrorTag_FileurlerrorStorageError:
-    case FileUrlError_ErrorTag_FileurlerrorStorageForbiddenError:
-      return YES;
-    default:
-      return NO;
-  }
-}
-
 #pragma mark - RequestGetFileUrl
 
 @implementation RequestGetFileUrl
@@ -1046,14 +1050,14 @@ typedef struct RequestGetFileUrl__storage_ {
 @implementation ResponseGetFileUrl
 
 @dynamic URL;
-@dynamic timeout;
+@dynamic timeoutSeconds;
 @dynamic hasUnsignedURL, unsignedURL;
 @dynamic unsignedURLHeadersArray, unsignedURLHeadersArray_Count;
 @dynamic md5Hash;
 
 typedef struct ResponseGetFileUrl__storage_ {
   uint32_t _has_storage_[1];
-  int32_t timeout;
+  int32_t timeoutSeconds;
   NSString *URL;
   GPBStringValue *unsignedURL;
   NSMutableArray *unsignedURLHeadersArray;
@@ -1076,11 +1080,11 @@ typedef struct ResponseGetFileUrl__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "timeout",
+        .name = "timeoutSeconds",
         .dataTypeSpecific.clazz = Nil,
-        .number = ResponseGetFileUrl_FieldNumber_Timeout,
+        .number = ResponseGetFileUrl_FieldNumber_TimeoutSeconds,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(ResponseGetFileUrl__storage_, timeout),
+        .offset = (uint32_t)offsetof(ResponseGetFileUrl__storage_, timeoutSeconds),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
@@ -1424,12 +1428,10 @@ typedef struct RequestGetFileUploadUrl__storage_ {
 
 @implementation ResponseGetFileUploadUrl
 
-@dynamic URL;
 @dynamic uploadKey;
 
 typedef struct ResponseGetFileUploadUrl__storage_ {
   uint32_t _has_storage_[1];
-  NSString *URL;
   NSData *uploadKey;
 } ResponseGetFileUploadUrl__storage_;
 
@@ -1440,19 +1442,10 @@ typedef struct ResponseGetFileUploadUrl__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "URL",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseGetFileUploadUrl_FieldNumber_URL,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(ResponseGetFileUploadUrl__storage_, URL),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
         .name = "uploadKey",
         .dataTypeSpecific.clazz = Nil,
         .number = ResponseGetFileUploadUrl_FieldNumber_UploadKey,
-        .hasIndex = 1,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(ResponseGetFileUploadUrl__storage_, uploadKey),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBytes,
@@ -1466,11 +1459,6 @@ typedef struct ResponseGetFileUploadUrl__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(ResponseGetFileUploadUrl__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\001\001!!!\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

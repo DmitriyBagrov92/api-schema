@@ -21,7 +21,6 @@
 #import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Miscellaneous.pbobjc.h"
 #import "Peers.pbobjc.h"
 #import "MediaAndFiles.pbobjc.h"
 #import "Scalapb.pbobjc.h"
@@ -47,7 +46,6 @@ GPBObjCClassDeclaration(GroupData);
 GPBObjCClassDeclaration(GroupMemberPermission);
 GPBObjCClassDeclaration(GroupOutPeer);
 GPBObjCClassDeclaration(Member);
-GPBObjCClassDeclaration(UUIDValue);
 GPBObjCClassDeclaration(UserOutPeer);
 
 #pragma mark - GroupsRoot
@@ -64,6 +62,7 @@ GPBObjCClassDeclaration(UserOutPeer);
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[GAPIAnnotationsRoot extensionRegistry]];
     [registry addExtensions:[DefinitionsRoot extensionRegistry]];
+    [registry addExtensions:[ScalapbRoot extensionRegistry]];
   }
   return registry;
 }
@@ -90,13 +89,13 @@ GPBEnumDescriptor *GroupType_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "GrouptypeUnknown\000GrouptypeGroup\000Grouptyp"
-        "eChannel\000GrouptypeThread\000";
+        "GroupTypeUnknown\000GroupTypeGroup\000GroupTyp"
+        "eChannel\000GroupTypeThread\000";
     static const int32_t values[] = {
-        GroupType_GrouptypeUnknown,
-        GroupType_GrouptypeGroup,
-        GroupType_GrouptypeChannel,
-        GroupType_GrouptypeThread,
+        GroupType_GroupTypeUnknown,
+        GroupType_GroupTypeGroup,
+        GroupType_GroupTypeChannel,
+        GroupType_GroupTypeThread,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(GroupType)
@@ -114,10 +113,10 @@ GPBEnumDescriptor *GroupType_EnumDescriptor(void) {
 
 BOOL GroupType_IsValidValue(int32_t value__) {
   switch (value__) {
-    case GroupType_GrouptypeUnknown:
-    case GroupType_GrouptypeGroup:
-    case GroupType_GrouptypeChannel:
-    case GroupType_GrouptypeThread:
+    case GroupType_GroupTypeUnknown:
+    case GroupType_GroupTypeGroup:
+    case GroupType_GroupTypeChannel:
+    case GroupType_GroupTypeThread:
       return YES;
     default:
       return NO;
@@ -130,36 +129,36 @@ GPBEnumDescriptor *GroupAdminPermission_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "GroupadminpermissionUnknown\000Groupadminpe"
-        "rmissionEditshortname\000Groupadminpermissi"
-        "onInvite\000GroupadminpermissionKick\000Groupa"
-        "dminpermissionUpdateinfo\000Groupadminpermi"
-        "ssionSetpermissions\000Groupadminpermission"
-        "Editmessage\000GroupadminpermissionDeleteme"
-        "ssage\000GroupadminpermissionGetintegration"
-        "token\000GroupadminpermissionSendmessage\000Gr"
-        "oupadminpermissionPinmessage\000Groupadminp"
-        "ermissionViewmembers\000Groupadminpermissio"
-        "nLeave\000GroupadminpermissionTargeting\000Gro"
-        "upadminpermissionDelete\000Groupadminpermis"
+        "GroupAdminPermissionUnknown\000GroupAdminPe"
+        "rmissionEditshortname\000GroupAdminPermissi"
+        "onInvite\000GroupAdminPermissionKick\000GroupA"
+        "dminPermissionUpdateinfo\000GroupAdminPermi"
+        "ssionSetpermissions\000GroupAdminPermission"
+        "Editmessage\000GroupAdminPermissionDeleteme"
+        "ssage\000GroupAdminPermissionGetintegration"
+        "token\000GroupAdminPermissionSendmessage\000Gr"
+        "oupAdminPermissionPinmessage\000GroupAdminP"
+        "ermissionViewmembers\000GroupAdminPermissio"
+        "nLeave\000GroupAdminPermissionTargeting\000Gro"
+        "upAdminPermissionDelete\000GroupAdminPermis"
         "sionManageConference\000";
     static const int32_t values[] = {
-        GroupAdminPermission_GroupadminpermissionUnknown,
-        GroupAdminPermission_GroupadminpermissionEditshortname,
-        GroupAdminPermission_GroupadminpermissionInvite,
-        GroupAdminPermission_GroupadminpermissionKick,
-        GroupAdminPermission_GroupadminpermissionUpdateinfo,
-        GroupAdminPermission_GroupadminpermissionSetpermissions,
-        GroupAdminPermission_GroupadminpermissionEditmessage,
-        GroupAdminPermission_GroupadminpermissionDeletemessage,
-        GroupAdminPermission_GroupadminpermissionGetintegrationtoken,
-        GroupAdminPermission_GroupadminpermissionSendmessage,
-        GroupAdminPermission_GroupadminpermissionPinmessage,
-        GroupAdminPermission_GroupadminpermissionViewmembers,
-        GroupAdminPermission_GroupadminpermissionLeave,
-        GroupAdminPermission_GroupadminpermissionTargeting,
-        GroupAdminPermission_GroupadminpermissionDelete,
-        GroupAdminPermission_GroupadminpermissionManageConference,
+        GroupAdminPermission_GroupAdminPermissionUnknown,
+        GroupAdminPermission_GroupAdminPermissionEditshortname,
+        GroupAdminPermission_GroupAdminPermissionInvite,
+        GroupAdminPermission_GroupAdminPermissionKick,
+        GroupAdminPermission_GroupAdminPermissionUpdateinfo,
+        GroupAdminPermission_GroupAdminPermissionSetpermissions,
+        GroupAdminPermission_GroupAdminPermissionEditmessage,
+        GroupAdminPermission_GroupAdminPermissionDeletemessage,
+        GroupAdminPermission_GroupAdminPermissionGetintegrationtoken,
+        GroupAdminPermission_GroupAdminPermissionSendmessage,
+        GroupAdminPermission_GroupAdminPermissionPinmessage,
+        GroupAdminPermission_GroupAdminPermissionViewmembers,
+        GroupAdminPermission_GroupAdminPermissionLeave,
+        GroupAdminPermission_GroupAdminPermissionTargeting,
+        GroupAdminPermission_GroupAdminPermissionDelete,
+        GroupAdminPermission_GroupAdminPermissionManageConference,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(GroupAdminPermission)
@@ -177,22 +176,22 @@ GPBEnumDescriptor *GroupAdminPermission_EnumDescriptor(void) {
 
 BOOL GroupAdminPermission_IsValidValue(int32_t value__) {
   switch (value__) {
-    case GroupAdminPermission_GroupadminpermissionUnknown:
-    case GroupAdminPermission_GroupadminpermissionEditshortname:
-    case GroupAdminPermission_GroupadminpermissionInvite:
-    case GroupAdminPermission_GroupadminpermissionKick:
-    case GroupAdminPermission_GroupadminpermissionUpdateinfo:
-    case GroupAdminPermission_GroupadminpermissionSetpermissions:
-    case GroupAdminPermission_GroupadminpermissionEditmessage:
-    case GroupAdminPermission_GroupadminpermissionDeletemessage:
-    case GroupAdminPermission_GroupadminpermissionGetintegrationtoken:
-    case GroupAdminPermission_GroupadminpermissionSendmessage:
-    case GroupAdminPermission_GroupadminpermissionPinmessage:
-    case GroupAdminPermission_GroupadminpermissionViewmembers:
-    case GroupAdminPermission_GroupadminpermissionLeave:
-    case GroupAdminPermission_GroupadminpermissionTargeting:
-    case GroupAdminPermission_GroupadminpermissionDelete:
-    case GroupAdminPermission_GroupadminpermissionManageConference:
+    case GroupAdminPermission_GroupAdminPermissionUnknown:
+    case GroupAdminPermission_GroupAdminPermissionEditshortname:
+    case GroupAdminPermission_GroupAdminPermissionInvite:
+    case GroupAdminPermission_GroupAdminPermissionKick:
+    case GroupAdminPermission_GroupAdminPermissionUpdateinfo:
+    case GroupAdminPermission_GroupAdminPermissionSetpermissions:
+    case GroupAdminPermission_GroupAdminPermissionEditmessage:
+    case GroupAdminPermission_GroupAdminPermissionDeletemessage:
+    case GroupAdminPermission_GroupAdminPermissionGetintegrationtoken:
+    case GroupAdminPermission_GroupAdminPermissionSendmessage:
+    case GroupAdminPermission_GroupAdminPermissionPinmessage:
+    case GroupAdminPermission_GroupAdminPermissionViewmembers:
+    case GroupAdminPermission_GroupAdminPermissionLeave:
+    case GroupAdminPermission_GroupAdminPermissionTargeting:
+    case GroupAdminPermission_GroupAdminPermissionDelete:
+    case GroupAdminPermission_GroupAdminPermissionManageConference:
       return YES;
     default:
       return NO;
@@ -203,7 +202,7 @@ BOOL GroupAdminPermission_IsValidValue(int32_t value__) {
 
 @implementation Member
 
-@dynamic uid;
+@dynamic userId;
 @dynamic invitedAt;
 @dynamic permissionsArray, permissionsArray_Count;
 @dynamic clock;
@@ -211,7 +210,7 @@ BOOL GroupAdminPermission_IsValidValue(int32_t value__) {
 
 typedef struct Member__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
+  NSString *userId;
   GPBEnumArray *permissionsArray;
   GPBTimestamp *deletedAt;
   int64_t invitedAt;
@@ -225,13 +224,13 @@ typedef struct Member__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = Member_FieldNumber_Uid,
+        .number = Member_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(Member__storage_, uid),
+        .offset = (uint32_t)offsetof(Member__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "invitedAt",
@@ -296,16 +295,10 @@ typedef struct Member__storage_ {
 @dynamic accessHash;
 @dynamic hasData_p, data_p;
 @dynamic hasSelfMember, selfMember;
-@dynamic title;
-@dynamic groupType;
-@dynamic hasShortname, shortname;
 
 typedef struct Group__storage_ {
   uint32_t _has_storage_[1];
-  int32_t id_p;
-  GroupType groupType;
-  NSString *title;
-  GPBStringValue *shortname;
+  NSString *id_p;
   GroupData *data_p;
   Member *selfMember;
   int64_t accessHash;
@@ -324,7 +317,7 @@ typedef struct Group__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(Group__storage_, id_p),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "accessHash",
@@ -334,33 +327,6 @@ typedef struct Group__storage_ {
         .offset = (uint32_t)offsetof(Group__storage_, accessHash),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "title",
-        .dataTypeSpecific.clazz = Nil,
-        .number = Group_FieldNumber_Title,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(Group__storage_, title),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "shortname",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
-        .number = Group_FieldNumber_Shortname,
-        .hasIndex = 6,
-        .offset = (uint32_t)offsetof(Group__storage_, shortname),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "groupType",
-        .dataTypeSpecific.enumDescFunc = GroupType_EnumDescriptor,
-        .number = Group_FieldNumber_GroupType,
-        .hasIndex = 5,
-        .offset = (uint32_t)offsetof(Group__storage_, groupType),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeEnum,
       },
       {
         .name = "data_p",
@@ -399,23 +365,11 @@ typedef struct Group__storage_ {
 
 @end
 
-int32_t Group_GroupType_RawValue(Group *message) {
-  GPBDescriptor *descriptor = [Group descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Group_FieldNumber_GroupType];
-  return GPBGetMessageRawEnumField(message, field);
-}
-
-void SetGroup_GroupType_RawValue(Group *message, int32_t value) {
-  GPBDescriptor *descriptor = [Group descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:Group_FieldNumber_GroupType];
-  GPBSetMessageRawEnumField(message, field, value);
-}
-
 #pragma mark - GroupData
 
 @implementation GroupData
 
-@dynamic hasSpaceId, spaceId;
+@dynamic spaceId;
 @dynamic title;
 @dynamic hasAvatar, avatar;
 @dynamic membersAmount;
@@ -435,10 +389,10 @@ typedef struct GroupData__storage_ {
   uint32_t _has_storage_[1];
   int32_t membersAmount;
   GroupType groupType;
-  int32_t ownerUserId;
-  UUIDValue *spaceId;
+  NSString *spaceId;
   NSString *title;
   Avatar *avatar;
+  NSString *ownerUserId;
   GPBTimestamp *createdAt;
   GPBStringValue *about;
   GPBStringValue *shortname;
@@ -458,12 +412,12 @@ typedef struct GroupData__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "spaceId",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
+        .dataTypeSpecific.clazz = Nil,
         .number = GroupData_FieldNumber_SpaceId,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(GroupData__storage_, spaceId),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "title",
@@ -508,7 +462,7 @@ typedef struct GroupData__storage_ {
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(GroupData__storage_, ownerUserId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "createdAt",
@@ -638,8 +592,8 @@ void SetGroupData_GroupType_RawValue(GroupData *message, int32_t value) {
 
 typedef struct GroupPartialInfo__storage_ {
   uint32_t _has_storage_[1];
-  int32_t id_p;
   GroupType type;
+  NSString *id_p;
   NSString *title;
   GPBStringValue *shortname;
   Avatar *avatar;
@@ -662,7 +616,7 @@ typedef struct GroupPartialInfo__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(GroupPartialInfo__storage_, id_p),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "accessHash",
@@ -776,7 +730,7 @@ void SetGroupPartialInfo_Type_RawValue(GroupPartialInfo *message, int32_t value)
 
 typedef struct UpdateGroup__storage_ {
   uint32_t _has_storage_[1];
-  int32_t id_p;
+  NSString *id_p;
   GroupData *data_p;
 } UpdateGroup__storage_;
 
@@ -793,7 +747,7 @@ typedef struct UpdateGroup__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(UpdateGroup__storage_, id_p),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "data_p",
@@ -955,7 +909,7 @@ typedef struct ResponseLoadMembers__storage_ {
 
 typedef struct UpdateGroupTitleChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t groupId;
+  NSString *groupId;
   NSString *title;
 } UpdateGroupTitleChanged__storage_;
 
@@ -972,7 +926,7 @@ typedef struct UpdateGroupTitleChanged__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(UpdateGroupTitleChanged__storage_, groupId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "title",
@@ -1011,7 +965,7 @@ typedef struct UpdateGroupTitleChanged__storage_ {
 
 typedef struct UpdateGroupAvatarChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t groupId;
+  NSString *groupId;
   Avatar *avatar;
 } UpdateGroupAvatarChanged__storage_;
 
@@ -1028,7 +982,7 @@ typedef struct UpdateGroupAvatarChanged__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(UpdateGroupAvatarChanged__storage_, groupId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "avatar",
@@ -1067,7 +1021,7 @@ typedef struct UpdateGroupAvatarChanged__storage_ {
 
 typedef struct UpdateGroupAboutChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t groupId;
+  NSString *groupId;
   GPBStringValue *about;
 } UpdateGroupAboutChanged__storage_;
 
@@ -1084,7 +1038,7 @@ typedef struct UpdateGroupAboutChanged__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(UpdateGroupAboutChanged__storage_, groupId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "about",
@@ -1123,8 +1077,8 @@ typedef struct UpdateGroupAboutChanged__storage_ {
 
 typedef struct UpdateGroupOwnerChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t groupId;
-  int32_t userId;
+  NSString *groupId;
+  NSString *userId;
 } UpdateGroupOwnerChanged__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1140,7 +1094,7 @@ typedef struct UpdateGroupOwnerChanged__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(UpdateGroupOwnerChanged__storage_, groupId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "userId",
@@ -1149,7 +1103,7 @@ typedef struct UpdateGroupOwnerChanged__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(UpdateGroupOwnerChanged__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1179,7 +1133,7 @@ typedef struct UpdateGroupOwnerChanged__storage_ {
 
 typedef struct UpdateGroupBasePermissionsChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t groupId;
+  NSString *groupId;
   GPBEnumArray *basePermissionsArray;
 } UpdateGroupBasePermissionsChanged__storage_;
 
@@ -1196,7 +1150,7 @@ typedef struct UpdateGroupBasePermissionsChanged__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(UpdateGroupBasePermissionsChanged__storage_, groupId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "basePermissionsArray",
@@ -1235,7 +1189,7 @@ typedef struct UpdateGroupBasePermissionsChanged__storage_ {
 
 typedef struct UpdateGroupMembersUpdated__storage_ {
   uint32_t _has_storage_[1];
-  int32_t groupId;
+  NSString *groupId;
   NSMutableArray *membersArray;
 } UpdateGroupMembersUpdated__storage_;
 
@@ -1252,7 +1206,7 @@ typedef struct UpdateGroupMembersUpdated__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(UpdateGroupMembersUpdated__storage_, groupId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "membersArray",
@@ -1286,6 +1240,7 @@ typedef struct UpdateGroupMembersUpdated__storage_ {
 
 @implementation UpdateGroupMemberDiff
 
+@dynamic groupId;
 @dynamic removedUsersArray, removedUsersArray_Count;
 @dynamic addedMembersArray, addedMembersArray_Count;
 @dynamic membersCount;
@@ -1293,7 +1248,8 @@ typedef struct UpdateGroupMembersUpdated__storage_ {
 typedef struct UpdateGroupMemberDiff__storage_ {
   uint32_t _has_storage_[1];
   int32_t membersCount;
-  GPBInt32Array *removedUsersArray;
+  NSString *groupId;
+  NSMutableArray *removedUsersArray;
   NSMutableArray *addedMembersArray;
 } UpdateGroupMemberDiff__storage_;
 
@@ -1304,13 +1260,22 @@ typedef struct UpdateGroupMemberDiff__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
+        .name = "groupId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = UpdateGroupMemberDiff_FieldNumber_GroupId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(UpdateGroupMemberDiff__storage_, groupId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
         .name = "removedUsersArray",
         .dataTypeSpecific.clazz = Nil,
         .number = UpdateGroupMemberDiff_FieldNumber_RemovedUsersArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(UpdateGroupMemberDiff__storage_, removedUsersArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked),
-        .dataType = GPBDataTypeInt32,
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "addedMembersArray",
@@ -1325,7 +1290,7 @@ typedef struct UpdateGroupMemberDiff__storage_ {
         .name = "membersCount",
         .dataTypeSpecific.clazz = Nil,
         .number = UpdateGroupMemberDiff_FieldNumber_MembersCount,
-        .hasIndex = 0,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(UpdateGroupMemberDiff__storage_, membersCount),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
@@ -1358,8 +1323,8 @@ typedef struct UpdateGroupMemberDiff__storage_ {
 
 typedef struct UpdateGroupMembersCountChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t groupId;
   int32_t membersCount;
+  NSString *groupId;
 } UpdateGroupMembersCountChanged__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1375,7 +1340,7 @@ typedef struct UpdateGroupMembersCountChanged__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(UpdateGroupMembersCountChanged__storage_, groupId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "membersCount",
@@ -1415,17 +1380,15 @@ typedef struct UpdateGroupMembersCountChanged__storage_ {
 @dynamic usersArray, usersArray_Count;
 @dynamic groupType;
 @dynamic hasUsername, username;
-@dynamic optimizationsArray, optimizationsArray_Count;
 @dynamic basePermissionsArray, basePermissionsArray_Count;
 
 typedef struct RequestCreateGroup__storage_ {
   uint32_t _has_storage_[1];
   GroupType groupType;
+  GPBStringValue *spaceId;
   NSString *title;
   NSMutableArray *usersArray;
-  GPBEnumArray *optimizationsArray;
   GPBStringValue *username;
-  UUIDValue *spaceId;
   GPBEnumArray *basePermissionsArray;
   int64_t rid;
 } RequestCreateGroup__storage_;
@@ -1444,6 +1407,15 @@ typedef struct RequestCreateGroup__storage_ {
         .offset = (uint32_t)offsetof(RequestCreateGroup__storage_, rid),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "spaceId",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
+        .number = RequestCreateGroup_FieldNumber_SpaceId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(RequestCreateGroup__storage_, spaceId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
       {
         .name = "title",
@@ -1473,29 +1445,11 @@ typedef struct RequestCreateGroup__storage_ {
         .dataType = GPBDataTypeEnum,
       },
       {
-        .name = "optimizationsArray",
-        .dataTypeSpecific.enumDescFunc = UpdateOptimization_EnumDescriptor,
-        .number = RequestCreateGroup_FieldNumber_OptimizationsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestCreateGroup__storage_, optimizationsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
-      },
-      {
         .name = "username",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
         .number = RequestCreateGroup_FieldNumber_Username,
         .hasIndex = 4,
         .offset = (uint32_t)offsetof(RequestCreateGroup__storage_, username),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "spaceId",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestCreateGroup_FieldNumber_SpaceId,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestCreateGroup__storage_, spaceId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -1543,15 +1497,11 @@ void SetRequestCreateGroup_GroupType_RawValue(RequestCreateGroup *message, int32
 
 @implementation ResponseCreateGroup
 
-@dynamic seq;
-@dynamic state;
 @dynamic hasGroup, group;
 @dynamic userPeersArray, userPeersArray_Count;
 
 typedef struct ResponseCreateGroup__storage_ {
   uint32_t _has_storage_[1];
-  int32_t seq;
-  NSData *state;
   Group *group;
   NSMutableArray *userPeersArray;
 } ResponseCreateGroup__storage_;
@@ -1563,28 +1513,10 @@ typedef struct ResponseCreateGroup__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "seq",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseCreateGroup_FieldNumber_Seq,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(ResponseCreateGroup__storage_, seq),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "state",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseCreateGroup_FieldNumber_State,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(ResponseCreateGroup__storage_, state),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
-      {
         .name = "group",
         .dataTypeSpecific.clazz = GPBObjCClass(Group),
         .number = ResponseCreateGroup_FieldNumber_Group,
-        .hasIndex = 2,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(ResponseCreateGroup__storage_, group),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -1624,13 +1556,11 @@ typedef struct ResponseCreateGroup__storage_ {
 @dynamic hasGroupPeer, groupPeer;
 @dynamic rid;
 @dynamic title;
-@dynamic optimizationsArray, optimizationsArray_Count;
 
 typedef struct RequestEditGroupTitle__storage_ {
   uint32_t _has_storage_[1];
   GroupOutPeer *groupPeer;
   NSString *title;
-  GPBEnumArray *optimizationsArray;
   int64_t rid;
 } RequestEditGroupTitle__storage_;
 
@@ -1650,15 +1580,6 @@ typedef struct RequestEditGroupTitle__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "title",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestEditGroupTitle_FieldNumber_Title,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(RequestEditGroupTitle__storage_, title),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
         .name = "rid",
         .dataTypeSpecific.clazz = Nil,
         .number = RequestEditGroupTitle_FieldNumber_Rid,
@@ -1668,13 +1589,13 @@ typedef struct RequestEditGroupTitle__storage_ {
         .dataType = GPBDataTypeInt64,
       },
       {
-        .name = "optimizationsArray",
-        .dataTypeSpecific.enumDescFunc = UpdateOptimization_EnumDescriptor,
-        .number = RequestEditGroupTitle_FieldNumber_OptimizationsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestEditGroupTitle__storage_, optimizationsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
+        .name = "title",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestEditGroupTitle_FieldNumber_Title,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(RequestEditGroupTitle__storage_, title),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1758,13 +1679,11 @@ typedef struct RequestSetGroupShortname__storage_ {
 @dynamic hasGroupPeer, groupPeer;
 @dynamic rid;
 @dynamic hasFileLocation, fileLocation;
-@dynamic optimizationsArray, optimizationsArray_Count;
 
 typedef struct RequestEditGroupAvatar__storage_ {
   uint32_t _has_storage_[1];
   GroupOutPeer *groupPeer;
   FileLocation *fileLocation;
-  GPBEnumArray *optimizationsArray;
   int64_t rid;
 } RequestEditGroupAvatar__storage_;
 
@@ -1784,15 +1703,6 @@ typedef struct RequestEditGroupAvatar__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "fileLocation",
-        .dataTypeSpecific.clazz = GPBObjCClass(FileLocation),
-        .number = RequestEditGroupAvatar_FieldNumber_FileLocation,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(RequestEditGroupAvatar__storage_, fileLocation),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "rid",
         .dataTypeSpecific.clazz = Nil,
         .number = RequestEditGroupAvatar_FieldNumber_Rid,
@@ -1802,13 +1712,13 @@ typedef struct RequestEditGroupAvatar__storage_ {
         .dataType = GPBDataTypeInt64,
       },
       {
-        .name = "optimizationsArray",
-        .dataTypeSpecific.enumDescFunc = UpdateOptimization_EnumDescriptor,
-        .number = RequestEditGroupAvatar_FieldNumber_OptimizationsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestEditGroupAvatar__storage_, optimizationsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
+        .name = "fileLocation",
+        .dataTypeSpecific.clazz = GPBObjCClass(FileLocation),
+        .number = RequestEditGroupAvatar_FieldNumber_FileLocation,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(RequestEditGroupAvatar__storage_, fileLocation),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1829,107 +1739,16 @@ typedef struct RequestEditGroupAvatar__storage_ {
 
 @end
 
-#pragma mark - ResponseEditGroupAvatar
-
-@implementation ResponseEditGroupAvatar
-
-@dynamic hasAvatar, avatar;
-@dynamic seq;
-@dynamic state;
-@dynamic date;
-@dynamic hasMid, mid;
-
-typedef struct ResponseEditGroupAvatar__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t seq;
-  Avatar *avatar;
-  NSData *state;
-  UUIDValue *mid;
-  int64_t date;
-} ResponseEditGroupAvatar__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "avatar",
-        .dataTypeSpecific.clazz = GPBObjCClass(Avatar),
-        .number = ResponseEditGroupAvatar_FieldNumber_Avatar,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(ResponseEditGroupAvatar__storage_, avatar),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "seq",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseEditGroupAvatar_FieldNumber_Seq,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(ResponseEditGroupAvatar__storage_, seq),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "state",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseEditGroupAvatar_FieldNumber_State,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(ResponseEditGroupAvatar__storage_, state),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
-      {
-        .name = "date",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseEditGroupAvatar_FieldNumber_Date,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(ResponseEditGroupAvatar__storage_, date),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "mid",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = ResponseEditGroupAvatar_FieldNumber_Mid,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(ResponseEditGroupAvatar__storage_, mid),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[ResponseEditGroupAvatar class]
-                                     rootClass:[GroupsRoot class]
-                                          file:GroupsRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(ResponseEditGroupAvatar__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
 #pragma mark - RequestRemoveGroupAvatar
 
 @implementation RequestRemoveGroupAvatar
 
 @dynamic hasGroupPeer, groupPeer;
 @dynamic rid;
-@dynamic optimizationsArray, optimizationsArray_Count;
 
 typedef struct RequestRemoveGroupAvatar__storage_ {
   uint32_t _has_storage_[1];
   GroupOutPeer *groupPeer;
-  GPBEnumArray *optimizationsArray;
   int64_t rid;
 } RequestRemoveGroupAvatar__storage_;
 
@@ -1957,15 +1776,6 @@ typedef struct RequestRemoveGroupAvatar__storage_ {
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
-      {
-        .name = "optimizationsArray",
-        .dataTypeSpecific.enumDescFunc = UpdateOptimization_EnumDescriptor,
-        .number = RequestRemoveGroupAvatar_FieldNumber_OptimizationsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestRemoveGroupAvatar__storage_, optimizationsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
-      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[RequestRemoveGroupAvatar class]
@@ -1992,13 +1802,11 @@ typedef struct RequestRemoveGroupAvatar__storage_ {
 @dynamic hasGroupPeer, groupPeer;
 @dynamic rid;
 @dynamic hasAbout, about;
-@dynamic optimizationsArray, optimizationsArray_Count;
 
 typedef struct RequestEditGroupAbout__storage_ {
   uint32_t _has_storage_[1];
   GroupOutPeer *groupPeer;
   GPBStringValue *about;
-  GPBEnumArray *optimizationsArray;
   int64_t rid;
 } RequestEditGroupAbout__storage_;
 
@@ -2034,15 +1842,6 @@ typedef struct RequestEditGroupAbout__storage_ {
         .offset = (uint32_t)offsetof(RequestEditGroupAbout__storage_, about),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "optimizationsArray",
-        .dataTypeSpecific.enumDescFunc = UpdateOptimization_EnumDescriptor,
-        .number = RequestEditGroupAbout_FieldNumber_OptimizationsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestEditGroupAbout__storage_, optimizationsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -2271,13 +2070,11 @@ typedef struct ResponseMember__storage_ {
 @dynamic hasGroupPeer, groupPeer;
 @dynamic rid;
 @dynamic hasUser, user;
-@dynamic optimizationsArray, optimizationsArray_Count;
 
 typedef struct RequestInviteUser__storage_ {
   uint32_t _has_storage_[1];
   GroupOutPeer *groupPeer;
   UserOutPeer *user;
-  GPBEnumArray *optimizationsArray;
   int64_t rid;
 } RequestInviteUser__storage_;
 
@@ -2297,15 +2094,6 @@ typedef struct RequestInviteUser__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "user",
-        .dataTypeSpecific.clazz = GPBObjCClass(UserOutPeer),
-        .number = RequestInviteUser_FieldNumber_User,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(RequestInviteUser__storage_, user),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "rid",
         .dataTypeSpecific.clazz = Nil,
         .number = RequestInviteUser_FieldNumber_Rid,
@@ -2315,13 +2103,13 @@ typedef struct RequestInviteUser__storage_ {
         .dataType = GPBDataTypeInt64,
       },
       {
-        .name = "optimizationsArray",
-        .dataTypeSpecific.enumDescFunc = UpdateOptimization_EnumDescriptor,
-        .number = RequestInviteUser_FieldNumber_OptimizationsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestInviteUser__storage_, optimizationsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
+        .name = "user",
+        .dataTypeSpecific.clazz = GPBObjCClass(UserOutPeer),
+        .number = RequestInviteUser_FieldNumber_User,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(RequestInviteUser__storage_, user),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -2348,12 +2136,10 @@ typedef struct RequestInviteUser__storage_ {
 
 @dynamic hasGroupPeer, groupPeer;
 @dynamic rid;
-@dynamic optimizationsArray, optimizationsArray_Count;
 
 typedef struct RequestLeaveGroup__storage_ {
   uint32_t _has_storage_[1];
   GroupOutPeer *groupPeer;
-  GPBEnumArray *optimizationsArray;
   int64_t rid;
 } RequestLeaveGroup__storage_;
 
@@ -2381,15 +2167,6 @@ typedef struct RequestLeaveGroup__storage_ {
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
-      {
-        .name = "optimizationsArray",
-        .dataTypeSpecific.enumDescFunc = UpdateOptimization_EnumDescriptor,
-        .number = RequestLeaveGroup_FieldNumber_OptimizationsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestLeaveGroup__storage_, optimizationsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
-      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[RequestLeaveGroup class]
@@ -2416,13 +2193,11 @@ typedef struct RequestLeaveGroup__storage_ {
 @dynamic hasGroupPeer, groupPeer;
 @dynamic rid;
 @dynamic hasUser, user;
-@dynamic optimizationsArray, optimizationsArray_Count;
 
 typedef struct RequestKickUser__storage_ {
   uint32_t _has_storage_[1];
   GroupOutPeer *groupPeer;
   UserOutPeer *user;
-  GPBEnumArray *optimizationsArray;
   int64_t rid;
 } RequestKickUser__storage_;
 
@@ -2442,15 +2217,6 @@ typedef struct RequestKickUser__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "user",
-        .dataTypeSpecific.clazz = GPBObjCClass(UserOutPeer),
-        .number = RequestKickUser_FieldNumber_User,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(RequestKickUser__storage_, user),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "rid",
         .dataTypeSpecific.clazz = Nil,
         .number = RequestKickUser_FieldNumber_Rid,
@@ -2460,13 +2226,13 @@ typedef struct RequestKickUser__storage_ {
         .dataType = GPBDataTypeInt64,
       },
       {
-        .name = "optimizationsArray",
-        .dataTypeSpecific.enumDescFunc = UpdateOptimization_EnumDescriptor,
-        .number = RequestKickUser_FieldNumber_OptimizationsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestKickUser__storage_, optimizationsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
+        .name = "user",
+        .dataTypeSpecific.clazz = GPBObjCClass(UserOutPeer),
+        .number = RequestKickUser_FieldNumber_User,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(RequestKickUser__storage_, user),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -2563,7 +2329,7 @@ typedef struct RequestMakeUserAdmin__storage_ {
 
 typedef struct GroupMemberPermission__storage_ {
   uint32_t _has_storage_[1];
-  int32_t userId;
+  NSString *userId;
   GPBEnumArray *permissionsArray;
 } GroupMemberPermission__storage_;
 
@@ -2580,7 +2346,7 @@ typedef struct GroupMemberPermission__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(GroupMemberPermission__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "permissionsArray",
@@ -2619,8 +2385,8 @@ typedef struct GroupMemberPermission__storage_ {
 
 typedef struct RequestGetGroupMemberPermissions__storage_ {
   uint32_t _has_storage_[1];
-  int32_t groupId;
-  GPBInt32Array *userIdsArray;
+  NSString *groupId;
+  NSMutableArray *userIdsArray;
 } RequestGetGroupMemberPermissions__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2636,7 +2402,7 @@ typedef struct RequestGetGroupMemberPermissions__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestGetGroupMemberPermissions__storage_, groupId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "userIdsArray",
@@ -2644,8 +2410,8 @@ typedef struct RequestGetGroupMemberPermissions__storage_ {
         .number = RequestGetGroupMemberPermissions_FieldNumber_UserIdsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(RequestGetGroupMemberPermissions__storage_, userIdsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked),
-        .dataType = GPBDataTypeInt32,
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -2721,8 +2487,8 @@ typedef struct ResponseGetGroupMemberPermissions__storage_ {
 
 typedef struct UpdateGroupMemberPermissionsChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t groupId;
-  int32_t userId;
+  NSString *groupId;
+  NSString *userId;
   GPBEnumArray *permissionsArray;
 } UpdateGroupMemberPermissionsChanged__storage_;
 
@@ -2739,7 +2505,7 @@ typedef struct UpdateGroupMemberPermissionsChanged__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(UpdateGroupMemberPermissionsChanged__storage_, groupId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "userId",
@@ -2748,7 +2514,7 @@ typedef struct UpdateGroupMemberPermissionsChanged__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(UpdateGroupMemberPermissionsChanged__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "permissionsArray",
@@ -2787,8 +2553,8 @@ typedef struct UpdateGroupMemberPermissionsChanged__storage_ {
 
 typedef struct RequestTransferOwnership__storage_ {
   uint32_t _has_storage_[1];
-  int32_t newOwner;
   GroupOutPeer *groupPeer;
+  NSString *newOwner;
 } RequestTransferOwnership__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2813,7 +2579,7 @@ typedef struct RequestTransferOwnership__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(RequestTransferOwnership__storage_, newOwner),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -3061,12 +2827,10 @@ typedef struct RequestRevokeInviteUrl__storage_ {
 @implementation RequestJoinGroup
 
 @dynamic token;
-@dynamic optimizationsArray, optimizationsArray_Count;
 
 typedef struct RequestJoinGroup__storage_ {
   uint32_t _has_storage_[1];
   NSString *token;
-  GPBEnumArray *optimizationsArray;
 } RequestJoinGroup__storage_;
 
 // This method is threadsafe because it is initially called
@@ -3083,15 +2847,6 @@ typedef struct RequestJoinGroup__storage_ {
         .offset = (uint32_t)offsetof(RequestJoinGroup__storage_, token),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "optimizationsArray",
-        .dataTypeSpecific.enumDescFunc = UpdateOptimization_EnumDescriptor,
-        .number = RequestJoinGroup_FieldNumber_OptimizationsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestJoinGroup__storage_, optimizationsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -3118,19 +2873,11 @@ typedef struct RequestJoinGroup__storage_ {
 
 @dynamic hasGroup, group;
 @dynamic userPeersArray, userPeersArray_Count;
-@dynamic hasMid, mid;
-@dynamic seq;
-@dynamic state;
-@dynamic date;
 
 typedef struct ResponseJoinGroup__storage_ {
   uint32_t _has_storage_[1];
-  int32_t seq;
   Group *group;
-  NSData *state;
   NSMutableArray *userPeersArray;
-  UUIDValue *mid;
-  int64_t date;
 } ResponseJoinGroup__storage_;
 
 // This method is threadsafe because it is initially called
@@ -3149,48 +2896,12 @@ typedef struct ResponseJoinGroup__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "seq",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseJoinGroup_FieldNumber_Seq,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(ResponseJoinGroup__storage_, seq),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "state",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseJoinGroup_FieldNumber_State,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(ResponseJoinGroup__storage_, state),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
-      {
-        .name = "date",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseJoinGroup_FieldNumber_Date,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(ResponseJoinGroup__storage_, date),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
         .name = "userPeersArray",
         .dataTypeSpecific.clazz = GPBObjCClass(UserOutPeer),
         .number = ResponseJoinGroup_FieldNumber_UserPeersArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(ResponseJoinGroup__storage_, userPeersArray),
         .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "mid",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = ResponseJoinGroup_FieldNumber_Mid,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(ResponseJoinGroup__storage_, mid),
-        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
@@ -3265,7 +2976,7 @@ typedef struct RequestJoinGroupByPeer__storage_ {
 
 typedef struct RequestDeleteGroup__storage_ {
   uint32_t _has_storage_[1];
-  int32_t groupId;
+  NSString *groupId;
 } RequestDeleteGroup__storage_;
 
 // This method is threadsafe because it is initially called
@@ -3281,7 +2992,7 @@ typedef struct RequestDeleteGroup__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestDeleteGroup__storage_, groupId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -3356,7 +3067,7 @@ typedef struct RequestGetGroupPartialInfo__storage_ {
 
 typedef struct UpdateGroupMemberInvited__storage_ {
   uint32_t _has_storage_[1];
-  int32_t groupId;
+  NSString *groupId;
   Member *member;
 } UpdateGroupMemberInvited__storage_;
 
@@ -3373,7 +3084,7 @@ typedef struct UpdateGroupMemberInvited__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(UpdateGroupMemberInvited__storage_, groupId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "member",
@@ -3403,665 +3114,19 @@ typedef struct UpdateGroupMemberInvited__storage_ {
 
 @end
 
-#pragma mark - UpdateGroupInviteObsolete
-
-@implementation UpdateGroupInviteObsolete
-
-@dynamic groupId;
-@dynamic rid;
-@dynamic hasMid, mid;
-@dynamic inviteUid;
-@dynamic date;
-
-typedef struct UpdateGroupInviteObsolete__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t groupId;
-  int32_t inviteUid;
-  UUIDValue *mid;
-  int64_t date;
-  int64_t rid;
-} UpdateGroupInviteObsolete__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "groupId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupInviteObsolete_FieldNumber_GroupId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateGroupInviteObsolete__storage_, groupId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "inviteUid",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupInviteObsolete_FieldNumber_InviteUid,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(UpdateGroupInviteObsolete__storage_, inviteUid),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "date",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupInviteObsolete_FieldNumber_Date,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(UpdateGroupInviteObsolete__storage_, date),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "rid",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupInviteObsolete_FieldNumber_Rid,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateGroupInviteObsolete__storage_, rid),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "mid",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = UpdateGroupInviteObsolete_FieldNumber_Mid,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(UpdateGroupInviteObsolete__storage_, mid),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateGroupInviteObsolete class]
-                                     rootClass:[GroupsRoot class]
-                                          file:GroupsRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateGroupInviteObsolete__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - UpdateGroupUserInvitedObsolete
-
-@implementation UpdateGroupUserInvitedObsolete
-
-@dynamic groupId;
-@dynamic rid;
-@dynamic hasMid, mid;
-@dynamic uid;
-@dynamic inviterUid;
-@dynamic date;
-
-typedef struct UpdateGroupUserInvitedObsolete__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t groupId;
-  int32_t uid;
-  int32_t inviterUid;
-  UUIDValue *mid;
-  int64_t date;
-  int64_t rid;
-} UpdateGroupUserInvitedObsolete__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "groupId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupUserInvitedObsolete_FieldNumber_GroupId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateGroupUserInvitedObsolete__storage_, groupId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "uid",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupUserInvitedObsolete_FieldNumber_Uid,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(UpdateGroupUserInvitedObsolete__storage_, uid),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "inviterUid",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupUserInvitedObsolete_FieldNumber_InviterUid,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(UpdateGroupUserInvitedObsolete__storage_, inviterUid),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "date",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupUserInvitedObsolete_FieldNumber_Date,
-        .hasIndex = 5,
-        .offset = (uint32_t)offsetof(UpdateGroupUserInvitedObsolete__storage_, date),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "rid",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupUserInvitedObsolete_FieldNumber_Rid,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateGroupUserInvitedObsolete__storage_, rid),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "mid",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = UpdateGroupUserInvitedObsolete_FieldNumber_Mid,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(UpdateGroupUserInvitedObsolete__storage_, mid),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateGroupUserInvitedObsolete class]
-                                     rootClass:[GroupsRoot class]
-                                          file:GroupsRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateGroupUserInvitedObsolete__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - UpdateGroupUserLeaveObsolete
-
-@implementation UpdateGroupUserLeaveObsolete
-
-@dynamic groupId;
-@dynamic hasMid, mid;
-@dynamic uid;
-@dynamic date;
-
-typedef struct UpdateGroupUserLeaveObsolete__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t groupId;
-  int32_t uid;
-  UUIDValue *mid;
-  int64_t date;
-} UpdateGroupUserLeaveObsolete__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "groupId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupUserLeaveObsolete_FieldNumber_GroupId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateGroupUserLeaveObsolete__storage_, groupId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "uid",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupUserLeaveObsolete_FieldNumber_Uid,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(UpdateGroupUserLeaveObsolete__storage_, uid),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "date",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupUserLeaveObsolete_FieldNumber_Date,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(UpdateGroupUserLeaveObsolete__storage_, date),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "mid",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = UpdateGroupUserLeaveObsolete_FieldNumber_Mid,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateGroupUserLeaveObsolete__storage_, mid),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateGroupUserLeaveObsolete class]
-                                     rootClass:[GroupsRoot class]
-                                          file:GroupsRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateGroupUserLeaveObsolete__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - UpdateGroupUserKickObsolete
-
-@implementation UpdateGroupUserKickObsolete
-
-@dynamic groupId;
-@dynamic hasMid, mid;
-@dynamic uid;
-@dynamic kickerUid;
-@dynamic date;
-
-typedef struct UpdateGroupUserKickObsolete__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t groupId;
-  int32_t uid;
-  int32_t kickerUid;
-  UUIDValue *mid;
-  int64_t date;
-} UpdateGroupUserKickObsolete__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "groupId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupUserKickObsolete_FieldNumber_GroupId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateGroupUserKickObsolete__storage_, groupId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "uid",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupUserKickObsolete_FieldNumber_Uid,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(UpdateGroupUserKickObsolete__storage_, uid),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "kickerUid",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupUserKickObsolete_FieldNumber_KickerUid,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(UpdateGroupUserKickObsolete__storage_, kickerUid),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "date",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupUserKickObsolete_FieldNumber_Date,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(UpdateGroupUserKickObsolete__storage_, date),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "mid",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = UpdateGroupUserKickObsolete_FieldNumber_Mid,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateGroupUserKickObsolete__storage_, mid),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateGroupUserKickObsolete class]
-                                     rootClass:[GroupsRoot class]
-                                          file:GroupsRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateGroupUserKickObsolete__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - UpdateGroupMembersUpdateObsolete
-
-@implementation UpdateGroupMembersUpdateObsolete
-
-@dynamic groupId;
-@dynamic membersArray, membersArray_Count;
-
-typedef struct UpdateGroupMembersUpdateObsolete__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t groupId;
-  NSMutableArray *membersArray;
-} UpdateGroupMembersUpdateObsolete__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "groupId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupMembersUpdateObsolete_FieldNumber_GroupId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateGroupMembersUpdateObsolete__storage_, groupId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "membersArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(Member),
-        .number = UpdateGroupMembersUpdateObsolete_FieldNumber_MembersArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(UpdateGroupMembersUpdateObsolete__storage_, membersArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateGroupMembersUpdateObsolete class]
-                                     rootClass:[GroupsRoot class]
-                                          file:GroupsRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateGroupMembersUpdateObsolete__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - UpdateGroupTitleChangedObsolete
-
-@implementation UpdateGroupTitleChangedObsolete
-
-@dynamic groupId;
-@dynamic hasMid, mid;
-@dynamic uid;
-@dynamic title;
-@dynamic date;
-
-typedef struct UpdateGroupTitleChangedObsolete__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t groupId;
-  int32_t uid;
-  NSString *title;
-  UUIDValue *mid;
-  int64_t date;
-} UpdateGroupTitleChangedObsolete__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "groupId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupTitleChangedObsolete_FieldNumber_GroupId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateGroupTitleChangedObsolete__storage_, groupId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "uid",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupTitleChangedObsolete_FieldNumber_Uid,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(UpdateGroupTitleChangedObsolete__storage_, uid),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "title",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupTitleChangedObsolete_FieldNumber_Title,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(UpdateGroupTitleChangedObsolete__storage_, title),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "date",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupTitleChangedObsolete_FieldNumber_Date,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(UpdateGroupTitleChangedObsolete__storage_, date),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "mid",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = UpdateGroupTitleChangedObsolete_FieldNumber_Mid,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateGroupTitleChangedObsolete__storage_, mid),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateGroupTitleChangedObsolete class]
-                                     rootClass:[GroupsRoot class]
-                                          file:GroupsRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateGroupTitleChangedObsolete__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - UpdateGroupAboutChangedObsolete
-
-@implementation UpdateGroupAboutChangedObsolete
-
-@dynamic groupId;
-@dynamic hasAbout, about;
-
-typedef struct UpdateGroupAboutChangedObsolete__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t groupId;
-  GPBStringValue *about;
-} UpdateGroupAboutChangedObsolete__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "groupId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupAboutChangedObsolete_FieldNumber_GroupId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateGroupAboutChangedObsolete__storage_, groupId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "about",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
-        .number = UpdateGroupAboutChangedObsolete_FieldNumber_About,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateGroupAboutChangedObsolete__storage_, about),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateGroupAboutChangedObsolete class]
-                                     rootClass:[GroupsRoot class]
-                                          file:GroupsRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateGroupAboutChangedObsolete__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - UpdateGroupAvatarChangedObsolete
-
-@implementation UpdateGroupAvatarChangedObsolete
-
-@dynamic groupId;
-@dynamic hasMid, mid;
-@dynamic uid;
-@dynamic hasAvatar, avatar;
-@dynamic date;
-
-typedef struct UpdateGroupAvatarChangedObsolete__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t groupId;
-  int32_t uid;
-  Avatar *avatar;
-  UUIDValue *mid;
-  int64_t date;
-} UpdateGroupAvatarChangedObsolete__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "groupId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupAvatarChangedObsolete_FieldNumber_GroupId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateGroupAvatarChangedObsolete__storage_, groupId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "uid",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupAvatarChangedObsolete_FieldNumber_Uid,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(UpdateGroupAvatarChangedObsolete__storage_, uid),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "avatar",
-        .dataTypeSpecific.clazz = GPBObjCClass(Avatar),
-        .number = UpdateGroupAvatarChangedObsolete_FieldNumber_Avatar,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(UpdateGroupAvatarChangedObsolete__storage_, avatar),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "date",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupAvatarChangedObsolete_FieldNumber_Date,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(UpdateGroupAvatarChangedObsolete__storage_, date),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "mid",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = UpdateGroupAvatarChangedObsolete_FieldNumber_Mid,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateGroupAvatarChangedObsolete__storage_, mid),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateGroupAvatarChangedObsolete class]
-                                     rootClass:[GroupsRoot class]
-                                          file:GroupsRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateGroupAvatarChangedObsolete__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
 #pragma mark - UpdateGroupShortnameChanged
 
 @implementation UpdateGroupShortnameChanged
 
 @dynamic groupId;
 @dynamic shortname;
-@dynamic uid;
+@dynamic userId;
 
 typedef struct UpdateGroupShortnameChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t groupId;
-  int32_t uid;
+  NSString *groupId;
   NSString *shortname;
+  NSString *userId;
 } UpdateGroupShortnameChanged__storage_;
 
 // This method is threadsafe because it is initially called
@@ -4077,7 +3142,7 @@ typedef struct UpdateGroupShortnameChanged__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(UpdateGroupShortnameChanged__storage_, groupId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "shortname",
@@ -4089,13 +3154,13 @@ typedef struct UpdateGroupShortnameChanged__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupShortnameChanged_FieldNumber_Uid,
+        .number = UpdateGroupShortnameChanged_FieldNumber_UserId,
         .hasIndex = 2,
-        .offset = (uint32_t)offsetof(UpdateGroupShortnameChanged__storage_, uid),
+        .offset = (uint32_t)offsetof(UpdateGroupShortnameChanged__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

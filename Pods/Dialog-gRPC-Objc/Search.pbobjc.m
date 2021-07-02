@@ -18,13 +18,9 @@
 #import "Search.pbobjc.h"
 #import "Wrappers.pbobjc.h"
 #import "Annotations.pbobjc.h"
-#import "Timestamp.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Groups.pbobjc.h"
 #import "Peers.pbobjc.h"
 #import "Messaging.pbobjc.h"
-#import "Users.pbobjc.h"
-#import "Miscellaneous.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
@@ -42,7 +38,6 @@ GPBObjCClassDeclaration(GPBBytesValue);
 GPBObjCClassDeclaration(GPBInt32Value);
 GPBObjCClassDeclaration(GPBInt64Value);
 GPBObjCClassDeclaration(GPBStringValue);
-GPBObjCClassDeclaration(Group);
 GPBObjCClassDeclaration(GroupOutPeer);
 GPBObjCClassDeclaration(MessageContent);
 GPBObjCClassDeclaration(MessageSearchItem);
@@ -66,7 +61,6 @@ GPBObjCClassDeclaration(SimplePeerSearchCondition);
 GPBObjCClassDeclaration(SimpleSearchCondition);
 GPBObjCClassDeclaration(SimpleUserProfileSearchCondition);
 GPBObjCClassDeclaration(UUIDValue);
-GPBObjCClassDeclaration(User);
 GPBObjCClassDeclaration(UserMatch);
 GPBObjCClassDeclaration(UserOutPeer);
 
@@ -84,6 +78,7 @@ GPBObjCClassDeclaration(UserOutPeer);
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[GAPIAnnotationsRoot extensionRegistry]];
     [registry addExtensions:[DefinitionsRoot extensionRegistry]];
+    [registry addExtensions:[ScalapbRoot extensionRegistry]];
   }
   return registry;
 }
@@ -110,14 +105,14 @@ GPBEnumDescriptor *SearchPeerType_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "SearchpeertypeUnknown\000SearchpeertypeGrou"
-        "ps\000SearchpeertypeContacts\000Searchpeertype"
+        "SearchPeerTypeUnknown\000SearchPeerTypeGrou"
+        "ps\000SearchPeerTypeContacts\000SearchPeerType"
         "Public\000";
     static const int32_t values[] = {
-        SearchPeerType_SearchpeertypeUnknown,
-        SearchPeerType_SearchpeertypeGroups,
-        SearchPeerType_SearchpeertypeContacts,
-        SearchPeerType_SearchpeertypePublic,
+        SearchPeerType_SearchPeerTypeUnknown,
+        SearchPeerType_SearchPeerTypeGroups,
+        SearchPeerType_SearchPeerTypeContacts,
+        SearchPeerType_SearchPeerTypePublic,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(SearchPeerType)
@@ -135,10 +130,10 @@ GPBEnumDescriptor *SearchPeerType_EnumDescriptor(void) {
 
 BOOL SearchPeerType_IsValidValue(int32_t value__) {
   switch (value__) {
-    case SearchPeerType_SearchpeertypeUnknown:
-    case SearchPeerType_SearchpeertypeGroups:
-    case SearchPeerType_SearchpeertypeContacts:
-    case SearchPeerType_SearchpeertypePublic:
+    case SearchPeerType_SearchPeerTypeUnknown:
+    case SearchPeerType_SearchPeerTypeGroups:
+    case SearchPeerType_SearchPeerTypeContacts:
+    case SearchPeerType_SearchPeerTypePublic:
       return YES;
     default:
       return NO;
@@ -151,19 +146,19 @@ GPBEnumDescriptor *SearchContentType_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "SearchcontenttypeUnknown\000Searchcontentty"
-        "peAny\000SearchcontenttypeText\000Searchconten"
-        "ttypeLinks\000SearchcontenttypeDocuments\000Se"
-        "archcontenttypeMedia\000SearchcontenttypeAu"
+        "SearchContentTypeUnknown\000SearchContentTy"
+        "peAny\000SearchContentTypeText\000SearchConten"
+        "tTypeLinks\000SearchContentTypeDocuments\000Se"
+        "archContentTypeMedia\000SearchContentTypeAu"
         "dio\000";
     static const int32_t values[] = {
-        SearchContentType_SearchcontenttypeUnknown,
-        SearchContentType_SearchcontenttypeAny,
-        SearchContentType_SearchcontenttypeText,
-        SearchContentType_SearchcontenttypeLinks,
-        SearchContentType_SearchcontenttypeDocuments,
-        SearchContentType_SearchcontenttypeMedia,
-        SearchContentType_SearchcontenttypeAudio,
+        SearchContentType_SearchContentTypeUnknown,
+        SearchContentType_SearchContentTypeAny,
+        SearchContentType_SearchContentTypeText,
+        SearchContentType_SearchContentTypeLinks,
+        SearchContentType_SearchContentTypeDocuments,
+        SearchContentType_SearchContentTypeMedia,
+        SearchContentType_SearchContentTypeAudio,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(SearchContentType)
@@ -181,13 +176,13 @@ GPBEnumDescriptor *SearchContentType_EnumDescriptor(void) {
 
 BOOL SearchContentType_IsValidValue(int32_t value__) {
   switch (value__) {
-    case SearchContentType_SearchcontenttypeUnknown:
-    case SearchContentType_SearchcontenttypeAny:
-    case SearchContentType_SearchcontenttypeText:
-    case SearchContentType_SearchcontenttypeLinks:
-    case SearchContentType_SearchcontenttypeDocuments:
-    case SearchContentType_SearchcontenttypeMedia:
-    case SearchContentType_SearchcontenttypeAudio:
+    case SearchContentType_SearchContentTypeUnknown:
+    case SearchContentType_SearchContentTypeAny:
+    case SearchContentType_SearchContentTypeText:
+    case SearchContentType_SearchContentTypeLinks:
+    case SearchContentType_SearchContentTypeDocuments:
+    case SearchContentType_SearchContentTypeMedia:
+    case SearchContentType_SearchContentTypeAudio:
       return YES;
     default:
       return NO;
@@ -200,12 +195,12 @@ GPBEnumDescriptor *SearchDirection_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "SearchdirectionUnknown\000SearchdirectionFo"
-        "rward\000SearchdirectionBackward\000";
+        "SearchDirectionUnknown\000SearchDirectionFo"
+        "rward\000SearchDirectionBackward\000";
     static const int32_t values[] = {
-        SearchDirection_SearchdirectionUnknown,
-        SearchDirection_SearchdirectionForward,
-        SearchDirection_SearchdirectionBackward,
+        SearchDirection_SearchDirectionUnknown,
+        SearchDirection_SearchDirectionForward,
+        SearchDirection_SearchDirectionBackward,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(SearchDirection)
@@ -223,9 +218,9 @@ GPBEnumDescriptor *SearchDirection_EnumDescriptor(void) {
 
 BOOL SearchDirection_IsValidValue(int32_t value__) {
   switch (value__) {
-    case SearchDirection_SearchdirectionUnknown:
-    case SearchDirection_SearchdirectionForward:
-    case SearchDirection_SearchdirectionBackward:
+    case SearchDirection_SearchDirectionUnknown:
+    case SearchDirection_SearchDirectionForward:
+    case SearchDirection_SearchDirectionBackward:
       return YES;
     default:
       return NO;
@@ -650,7 +645,7 @@ typedef struct SimpleSearchCondition__storage_ {
         .number = SimpleSearchCondition_FieldNumber_UserProfile,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SimpleSearchCondition__storage_, userProfile),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
@@ -677,11 +672,6 @@ typedef struct SimpleSearchCondition__storage_ {
     [localDescriptor setupOneofs:oneofs
                            count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
                    firstHasIndex:-1];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\001\004\013\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -733,7 +723,7 @@ typedef struct SearchCondition__storage_ {
         .number = SearchCondition_FieldNumber_SearchPeerTypeCondition,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SearchCondition__storage_, searchPeerTypeCondition),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
@@ -742,7 +732,7 @@ typedef struct SearchCondition__storage_ {
         .number = SearchCondition_FieldNumber_SearchPieceText,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SearchCondition__storage_, searchPieceText),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
@@ -751,7 +741,7 @@ typedef struct SearchCondition__storage_ {
         .number = SearchCondition_FieldNumber_SearchAndCondition,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SearchCondition__storage_, searchAndCondition),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
@@ -760,7 +750,7 @@ typedef struct SearchCondition__storage_ {
         .number = SearchCondition_FieldNumber_SearchOrCondition,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SearchCondition__storage_, searchOrCondition),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
@@ -769,7 +759,7 @@ typedef struct SearchCondition__storage_ {
         .number = SearchCondition_FieldNumber_SearchPeerCondition,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SearchCondition__storage_, searchPeerCondition),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
@@ -778,7 +768,7 @@ typedef struct SearchCondition__storage_ {
         .number = SearchCondition_FieldNumber_SearchPeerContentType,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SearchCondition__storage_, searchPeerContentType),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
@@ -787,7 +777,7 @@ typedef struct SearchCondition__storage_ {
         .number = SearchCondition_FieldNumber_SearchSenderIdConfition,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SearchCondition__storage_, searchSenderIdConfition),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
@@ -805,11 +795,6 @@ typedef struct SearchCondition__storage_ {
     [localDescriptor setupOneofs:oneofs
                            count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
                    firstHasIndex:-1];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\007\001\027\000\002\017\000\003\022\000\004\021\000\005\023\000\006\025\000\007\027\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1127,7 +1112,7 @@ void SetSearchPeerContentType_ContentType_RawValue(SearchPeerContentType *messag
 
 typedef struct SearchSenderIdConfition__storage_ {
   uint32_t _has_storage_[1];
-  int32_t senderId;
+  NSString *senderId;
 } SearchSenderIdConfition__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1143,7 +1128,7 @@ typedef struct SearchSenderIdConfition__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(SearchSenderIdConfition__storage_, senderId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1182,12 +1167,12 @@ typedef struct PeerSearchResult__storage_ {
   uint32_t _has_storage_[1];
   Peer *peer;
   NSString *title;
+  GPBStringValue *shortname;
   GPBStringValue *description_p;
   GPBInt32Value *membersCount;
-  GPBInt32Value *creator;
+  GPBStringValue *creator;
   GPBBoolValue *isPublic;
   GPBBoolValue *isJoined;
-  GPBStringValue *shortname;
   int64_t dateCreated;
 } PeerSearchResult__storage_;
 
@@ -1214,6 +1199,15 @@ typedef struct PeerSearchResult__storage_ {
         .offset = (uint32_t)offsetof(PeerSearchResult__storage_, title),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "shortname",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
+        .number = PeerSearchResult_FieldNumber_Shortname,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(PeerSearchResult__storage_, shortname),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
       {
         .name = "description_p",
@@ -1244,7 +1238,7 @@ typedef struct PeerSearchResult__storage_ {
       },
       {
         .name = "creator",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBInt32Value),
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
         .number = PeerSearchResult_FieldNumber_Creator,
         .hasIndex = 6,
         .offset = (uint32_t)offsetof(PeerSearchResult__storage_, creator),
@@ -1266,15 +1260,6 @@ typedef struct PeerSearchResult__storage_ {
         .number = PeerSearchResult_FieldNumber_IsJoined,
         .hasIndex = 8,
         .offset = (uint32_t)offsetof(PeerSearchResult__storage_, isJoined),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "shortname",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
-        .number = PeerSearchResult_FieldNumber_Shortname,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(PeerSearchResult__storage_, shortname),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -1302,12 +1287,10 @@ typedef struct PeerSearchResult__storage_ {
 @implementation RequestPeerSearch
 
 @dynamic queryArray, queryArray_Count;
-@dynamic optimizationsArray, optimizationsArray_Count;
 
 typedef struct RequestPeerSearch__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *queryArray;
-  GPBEnumArray *optimizationsArray;
 } RequestPeerSearch__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1324,15 +1307,6 @@ typedef struct RequestPeerSearch__storage_ {
         .offset = (uint32_t)offsetof(RequestPeerSearch__storage_, queryArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "optimizationsArray",
-        .dataTypeSpecific.enumDescFunc = UpdateOptimization_EnumDescriptor,
-        .number = RequestPeerSearch_FieldNumber_OptimizationsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestPeerSearch__storage_, optimizationsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1357,8 +1331,6 @@ typedef struct RequestPeerSearch__storage_ {
 
 @implementation ResponsePeerSearch
 
-@dynamic usersArray, usersArray_Count;
-@dynamic groupsArray, groupsArray_Count;
 @dynamic searchResultsArray, searchResultsArray_Count;
 @dynamic userPeersArray, userPeersArray_Count;
 @dynamic groupPeersArray, groupPeersArray_Count;
@@ -1366,8 +1338,6 @@ typedef struct RequestPeerSearch__storage_ {
 typedef struct ResponsePeerSearch__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *searchResultsArray;
-  NSMutableArray *usersArray;
-  NSMutableArray *groupsArray;
   NSMutableArray *userPeersArray;
   NSMutableArray *groupPeersArray;
 } ResponsePeerSearch__storage_;
@@ -1384,24 +1354,6 @@ typedef struct ResponsePeerSearch__storage_ {
         .number = ResponsePeerSearch_FieldNumber_SearchResultsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(ResponsePeerSearch__storage_, searchResultsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "usersArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(User),
-        .number = ResponsePeerSearch_FieldNumber_UsersArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponsePeerSearch__storage_, usersArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "groupsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(Group),
-        .number = ResponsePeerSearch_FieldNumber_GroupsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponsePeerSearch__storage_, groupsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
@@ -1546,8 +1498,8 @@ typedef struct ResponseResolvePeer__storage_ {
 
 typedef struct MessageSearchResult__storage_ {
   uint32_t _has_storage_[1];
-  int32_t senderId;
   Peer *peer;
+  NSString *senderId;
   MessageContent *content;
   UUIDValue *mid;
   NSMutableArray *highlightTokensArray;
@@ -1595,7 +1547,7 @@ typedef struct MessageSearchResult__storage_ {
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(MessageSearchResult__storage_, senderId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "content",
@@ -1782,12 +1734,10 @@ typedef struct ResponseMessageSearchResponse__storage_ {
 @implementation RequestMessageSearch
 
 @dynamic hasQuery, query;
-@dynamic optimizationsArray, optimizationsArray_Count;
 
 typedef struct RequestMessageSearch__storage_ {
   uint32_t _has_storage_[1];
   SearchCondition *query;
-  GPBEnumArray *optimizationsArray;
 } RequestMessageSearch__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1804,15 +1754,6 @@ typedef struct RequestMessageSearch__storage_ {
         .offset = (uint32_t)offsetof(RequestMessageSearch__storage_, query),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "optimizationsArray",
-        .dataTypeSpecific.enumDescFunc = UpdateOptimization_EnumDescriptor,
-        .number = RequestMessageSearch_FieldNumber_OptimizationsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestMessageSearch__storage_, optimizationsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1838,12 +1779,10 @@ typedef struct RequestMessageSearch__storage_ {
 @implementation RequestMessageSearchMore
 
 @dynamic loadMoreState;
-@dynamic optimizationsArray, optimizationsArray_Count;
 
 typedef struct RequestMessageSearchMore__storage_ {
   uint32_t _has_storage_[1];
   NSData *loadMoreState;
-  GPBEnumArray *optimizationsArray;
 } RequestMessageSearchMore__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1860,15 +1799,6 @@ typedef struct RequestMessageSearchMore__storage_ {
         .offset = (uint32_t)offsetof(RequestMessageSearchMore__storage_, loadMoreState),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBytes,
-      },
-      {
-        .name = "optimizationsArray",
-        .dataTypeSpecific.enumDescFunc = UpdateOptimization_EnumDescriptor,
-        .number = RequestMessageSearchMore_FieldNumber_OptimizationsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestMessageSearchMore__storage_, optimizationsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1894,12 +1824,10 @@ typedef struct RequestMessageSearchMore__storage_ {
 @implementation RequestSimpleSearch
 
 @dynamic criteriaArray, criteriaArray_Count;
-@dynamic optimizationsArray, optimizationsArray_Count;
 
 typedef struct RequestSimpleSearch__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *criteriaArray;
-  GPBEnumArray *optimizationsArray;
 } RequestSimpleSearch__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1916,15 +1844,6 @@ typedef struct RequestSimpleSearch__storage_ {
         .offset = (uint32_t)offsetof(RequestSimpleSearch__storage_, criteriaArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "optimizationsArray",
-        .dataTypeSpecific.enumDescFunc = UpdateOptimization_EnumDescriptor,
-        .number = RequestSimpleSearch_FieldNumber_OptimizationsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestSimpleSearch__storage_, optimizationsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1950,12 +1869,10 @@ typedef struct RequestSimpleSearch__storage_ {
 @implementation RequestSimpleSearchMore
 
 @dynamic loadMoreState;
-@dynamic optimizationsArray, optimizationsArray_Count;
 
 typedef struct RequestSimpleSearchMore__storage_ {
   uint32_t _has_storage_[1];
   NSData *loadMoreState;
-  GPBEnumArray *optimizationsArray;
 } RequestSimpleSearchMore__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1972,15 +1889,6 @@ typedef struct RequestSimpleSearchMore__storage_ {
         .offset = (uint32_t)offsetof(RequestSimpleSearchMore__storage_, loadMoreState),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBytes,
-      },
-      {
-        .name = "optimizationsArray",
-        .dataTypeSpecific.enumDescFunc = UpdateOptimization_EnumDescriptor,
-        .number = RequestSimpleSearchMore_FieldNumber_OptimizationsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestSimpleSearchMore__storage_, optimizationsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -2125,9 +2033,9 @@ typedef struct ResponseFieldAutocomplete__storage_ {
 
 typedef struct RequestLoadUserSearchByPredicatesResults__storage_ {
   uint32_t _has_storage_[1];
-  int32_t groupId;
   int32_t limit;
   NSMutableArray *predicatesArray;
+  NSString *groupId;
   GPBStringValue *query;
   NSMutableArray *requiredFieldsArray;
 } RequestLoadUserSearchByPredicatesResults__storage_;
@@ -2154,7 +2062,7 @@ typedef struct RequestLoadUserSearchByPredicatesResults__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestLoadUserSearchByPredicatesResults__storage_, groupId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "query",
@@ -2211,7 +2119,7 @@ typedef struct RequestLoadUserSearchByPredicatesResults__storage_ {
 
 typedef struct UserMatch__storage_ {
   uint32_t _has_storage_[1];
-  int32_t userId;
+  NSString *userId;
 } UserMatch__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2227,7 +2135,7 @@ typedef struct UserMatch__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(UserMatch__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "matchPredicates",
@@ -2322,8 +2230,8 @@ typedef struct ResponseLoadUserSearchByPredicatesResults__storage_ {
 
 typedef struct RequestLoadUserSearchByPredicatesCount__storage_ {
   uint32_t _has_storage_[1];
-  int32_t groupId;
   NSMutableArray *predicatesArray;
+  NSString *groupId;
 } RequestLoadUserSearchByPredicatesCount__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2348,7 +2256,7 @@ typedef struct RequestLoadUserSearchByPredicatesCount__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestLoadUserSearchByPredicatesCount__storage_, groupId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

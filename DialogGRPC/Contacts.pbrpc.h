@@ -12,6 +12,7 @@
 #import <RxLibrary/GRXWriter.h>
 #endif
 
+@class GPBEmpty;
 @class RequestAddContact;
 @class RequestDeferredImportContacts;
 @class RequestGetContacts;
@@ -22,15 +23,13 @@
 @class ResponseGetContacts;
 @class ResponseImportContacts;
 @class ResponseSearchContacts;
-@class ResponseSeq;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Wrappers.pbobjc.h"
+  #import "Empty.pbobjc.h"
   #import "Annotations.pbobjc.h"
   #import "Definitions.pbobjc.h"
-  #import "Miscellaneous.pbobjc.h"
   #import "Peers.pbobjc.h"
-  #import "Users.pbobjc.h"
   #import "Scalapb.pbobjc.h"
 #endif
 
@@ -63,11 +62,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (GRPCUnaryProtoCall *)getContactsWithMessage:(RequestGetContacts *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark RemoveContact(RequestRemoveContact) returns (ResponseSeq)
+#pragma mark RemoveContact(RequestRemoveContact) returns (Empty)
 
 - (GRPCUnaryProtoCall *)removeContactWithMessage:(RequestRemoveContact *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark AddContact(RequestAddContact) returns (ResponseSeq)
+#pragma mark AddContact(RequestAddContact) returns (Empty)
 
 - (GRPCUnaryProtoCall *)addContactWithMessage:(RequestAddContact *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
@@ -127,18 +126,18 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetContactsWithRequest:(RequestGetContacts *)request handler:(void(^)(ResponseGetContacts *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark RemoveContact(RequestRemoveContact) returns (ResponseSeq)
+#pragma mark RemoveContact(RequestRemoveContact) returns (Empty)
 
-- (void)removeContactWithRequest:(RequestRemoveContact *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
+- (void)removeContactWithRequest:(RequestRemoveContact *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToRemoveContactWithRequest:(RequestRemoveContact *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToRemoveContactWithRequest:(RequestRemoveContact *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark AddContact(RequestAddContact) returns (ResponseSeq)
+#pragma mark AddContact(RequestAddContact) returns (Empty)
 
-- (void)addContactWithRequest:(RequestAddContact *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
+- (void)addContactWithRequest:(RequestAddContact *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToAddContactWithRequest:(RequestAddContact *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToAddContactWithRequest:(RequestAddContact *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark SearchContacts(RequestSearchContacts) returns (ResponseSearchContacts)

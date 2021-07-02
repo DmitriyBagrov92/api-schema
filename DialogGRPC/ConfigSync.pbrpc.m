@@ -8,9 +8,9 @@
 #import <RxLibrary/GRXWriter+Immediate.h>
 
 #import "Wrappers.pbobjc.h"
+#import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Miscellaneous.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 
 @implementation ConfigSync
@@ -80,16 +80,16 @@
              responseClass:[ResponseGetParameters class]];
 }
 
-#pragma mark EditParameter(RequestEditParameter) returns (ResponseSeq)
+#pragma mark EditParameter(RequestEditParameter) returns (Empty)
 
-- (void)editParameterWithRequest:(RequestEditParameter *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (void)editParameterWithRequest:(RequestEditParameter *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToEditParameterWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToEditParameterWithRequest:(RequestEditParameter *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToEditParameterWithRequest:(RequestEditParameter *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"EditParameter"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeq class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)editParameterWithMessage:(RequestEditParameter *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -97,7 +97,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeq class]];
+             responseClass:[GPBEmpty class]];
 }
 
 #pragma mark FeatureFlags(RequestFeatureFlags) returns (ResponseFeatureFlags)

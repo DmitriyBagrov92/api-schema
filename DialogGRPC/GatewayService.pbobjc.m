@@ -19,14 +19,12 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-#pragma clang diagnostic ignored "-Wdirect-ivar-access"
 #pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
 
 #pragma mark - Objective C Class declarations
 // Forward declarations of Objective C classes that we can use as
 // static values in struct initializers.
 // We don't use [Foo class] because it is not a static value.
-GPBObjCClassDeclaration(GPBBytesValue);
 GPBObjCClassDeclaration(GPBInt32Value);
 
 #pragma mark - APIGatewayServiceRoot
@@ -98,7 +96,7 @@ typedef struct APIGetDifferenceCommand__storage_ {
         .number = APIGetDifferenceCommand_FieldNumber_ConfigHash,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(APIGetDifferenceCommand__storage_, configHash),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
     };
@@ -110,11 +108,6 @@ typedef struct APIGetDifferenceCommand__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(APIGetDifferenceCommand__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\001\003\n\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -125,68 +118,6 @@ typedef struct APIGetDifferenceCommand__storage_ {
 
 @end
 
-#pragma mark - APIServiceUpdate
-
-@implementation APIServiceUpdate
-
-@dynamic updateOneOfCase;
-@dynamic obsoleteUpdate;
-
-typedef struct APIServiceUpdate__storage_ {
-  uint32_t _has_storage_[2];
-  GPBBytesValue *obsoleteUpdate;
-} APIServiceUpdate__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "obsoleteUpdate",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBBytesValue),
-        .number = APIServiceUpdate_FieldNumber_ObsoleteUpdate,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(APIServiceUpdate__storage_, obsoleteUpdate),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[APIServiceUpdate class]
-                                     rootClass:[APIGatewayServiceRoot class]
-                                          file:APIGatewayServiceRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(APIServiceUpdate__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    static const char *oneofs[] = {
-      "update",
-    };
-    [localDescriptor setupOneofs:oneofs
-                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
-                   firstHasIndex:-1];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\001\001\016\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-void APIServiceUpdate_ClearUpdateOneOfCase(APIServiceUpdate *message) {
-  GPBDescriptor *descriptor = [APIServiceUpdate descriptor];
-  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
-  GPBClearOneof(message, oneof);
-}
 
 #pragma clang diagnostic pop
 

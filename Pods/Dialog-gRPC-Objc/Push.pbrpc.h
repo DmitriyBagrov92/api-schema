@@ -12,6 +12,7 @@
 #import <RxLibrary/GRXWriter.h>
 #endif
 
+@class GPBEmpty;
 @class RequestRegisterApplePush;
 @class RequestRegisterApplePushKit;
 @class RequestRegisterApplePushToken;
@@ -22,12 +23,11 @@
 @class RequestUnregisterApplePushToken;
 @class RequestUnregisterAvroraPushToken;
 @class RequestUnregisterGooglePush;
-@class ResponseVoid;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
+  #import "Empty.pbobjc.h"
   #import "Annotations.pbobjc.h"
   #import "Definitions.pbobjc.h"
-  #import "Miscellaneous.pbobjc.h"
   #import "Scalapb.pbobjc.h"
 #endif
 
@@ -42,43 +42,43 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol Push2 <NSObject>
 
-#pragma mark RegisterGooglePush(RequestRegisterGooglePush) returns (ResponseVoid)
+#pragma mark RegisterGooglePush(RequestRegisterGooglePush) returns (Empty)
 
 - (GRPCUnaryProtoCall *)registerGooglePushWithMessage:(RequestRegisterGooglePush *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark UnregisterGooglePush(RequestUnregisterGooglePush) returns (ResponseVoid)
+#pragma mark UnregisterGooglePush(RequestUnregisterGooglePush) returns (Empty)
 
 - (GRPCUnaryProtoCall *)unregisterGooglePushWithMessage:(RequestUnregisterGooglePush *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark RegisterApplePush(RequestRegisterApplePush) returns (ResponseVoid)
+#pragma mark RegisterApplePush(RequestRegisterApplePush) returns (Empty)
 
 - (GRPCUnaryProtoCall *)registerApplePushWithMessage:(RequestRegisterApplePush *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark UnregisterApplePush(RequestUnregisterApplePush) returns (ResponseVoid)
+#pragma mark UnregisterApplePush(RequestUnregisterApplePush) returns (Empty)
 
 - (GRPCUnaryProtoCall *)unregisterApplePushWithMessage:(RequestUnregisterApplePush *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark RegisterApplePushKit(RequestRegisterApplePushKit) returns (ResponseVoid)
+#pragma mark RegisterApplePushKit(RequestRegisterApplePushKit) returns (Empty)
 
 - (GRPCUnaryProtoCall *)registerApplePushKitWithMessage:(RequestRegisterApplePushKit *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark UnregisterApplePushKit(RequestUnregisterApplePushKit) returns (ResponseVoid)
+#pragma mark UnregisterApplePushKit(RequestUnregisterApplePushKit) returns (Empty)
 
 - (GRPCUnaryProtoCall *)unregisterApplePushKitWithMessage:(RequestUnregisterApplePushKit *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark RegisterApplePushToken(RequestRegisterApplePushToken) returns (ResponseVoid)
+#pragma mark RegisterApplePushToken(RequestRegisterApplePushToken) returns (Empty)
 
 - (GRPCUnaryProtoCall *)registerApplePushTokenWithMessage:(RequestRegisterApplePushToken *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark UnregisterApplePushToken(RequestUnregisterApplePushToken) returns (ResponseVoid)
+#pragma mark UnregisterApplePushToken(RequestUnregisterApplePushToken) returns (Empty)
 
 - (GRPCUnaryProtoCall *)unregisterApplePushTokenWithMessage:(RequestUnregisterApplePushToken *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark RegisterAvroraPushToken(RequestRegisterAvroraPushToken) returns (ResponseVoid)
+#pragma mark RegisterAvroraPushToken(RequestRegisterAvroraPushToken) returns (Empty)
 
 - (GRPCUnaryProtoCall *)registerAvroraPushTokenWithMessage:(RequestRegisterAvroraPushToken *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark UnregisterAvroraPushToken(RequestUnregisterAvroraPushToken) returns (ResponseVoid)
+#pragma mark UnregisterAvroraPushToken(RequestUnregisterAvroraPushToken) returns (Empty)
 
 - (GRPCUnaryProtoCall *)unregisterAvroraPushTokenWithMessage:(RequestUnregisterAvroraPushToken *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
@@ -90,74 +90,74 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @protocol Push <NSObject>
 
-#pragma mark RegisterGooglePush(RequestRegisterGooglePush) returns (ResponseVoid)
+#pragma mark RegisterGooglePush(RequestRegisterGooglePush) returns (Empty)
 
-- (void)registerGooglePushWithRequest:(RequestRegisterGooglePush *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (void)registerGooglePushWithRequest:(RequestRegisterGooglePush *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToRegisterGooglePushWithRequest:(RequestRegisterGooglePush *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark UnregisterGooglePush(RequestUnregisterGooglePush) returns (ResponseVoid)
-
-- (void)unregisterGooglePushWithRequest:(RequestUnregisterGooglePush *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToUnregisterGooglePushWithRequest:(RequestUnregisterGooglePush *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToRegisterGooglePushWithRequest:(RequestRegisterGooglePush *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark RegisterApplePush(RequestRegisterApplePush) returns (ResponseVoid)
+#pragma mark UnregisterGooglePush(RequestUnregisterGooglePush) returns (Empty)
 
-- (void)registerApplePushWithRequest:(RequestRegisterApplePush *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (void)unregisterGooglePushWithRequest:(RequestUnregisterGooglePush *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToRegisterApplePushWithRequest:(RequestRegisterApplePush *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark UnregisterApplePush(RequestUnregisterApplePush) returns (ResponseVoid)
-
-- (void)unregisterApplePushWithRequest:(RequestUnregisterApplePush *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToUnregisterApplePushWithRequest:(RequestUnregisterApplePush *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToUnregisterGooglePushWithRequest:(RequestUnregisterGooglePush *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark RegisterApplePushKit(RequestRegisterApplePushKit) returns (ResponseVoid)
+#pragma mark RegisterApplePush(RequestRegisterApplePush) returns (Empty)
 
-- (void)registerApplePushKitWithRequest:(RequestRegisterApplePushKit *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (void)registerApplePushWithRequest:(RequestRegisterApplePush *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToRegisterApplePushKitWithRequest:(RequestRegisterApplePushKit *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark UnregisterApplePushKit(RequestUnregisterApplePushKit) returns (ResponseVoid)
-
-- (void)unregisterApplePushKitWithRequest:(RequestUnregisterApplePushKit *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToUnregisterApplePushKitWithRequest:(RequestUnregisterApplePushKit *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToRegisterApplePushWithRequest:(RequestRegisterApplePush *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark RegisterApplePushToken(RequestRegisterApplePushToken) returns (ResponseVoid)
+#pragma mark UnregisterApplePush(RequestUnregisterApplePush) returns (Empty)
 
-- (void)registerApplePushTokenWithRequest:(RequestRegisterApplePushToken *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (void)unregisterApplePushWithRequest:(RequestUnregisterApplePush *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToRegisterApplePushTokenWithRequest:(RequestRegisterApplePushToken *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark UnregisterApplePushToken(RequestUnregisterApplePushToken) returns (ResponseVoid)
-
-- (void)unregisterApplePushTokenWithRequest:(RequestUnregisterApplePushToken *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToUnregisterApplePushTokenWithRequest:(RequestUnregisterApplePushToken *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToUnregisterApplePushWithRequest:(RequestUnregisterApplePush *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark RegisterAvroraPushToken(RequestRegisterAvroraPushToken) returns (ResponseVoid)
+#pragma mark RegisterApplePushKit(RequestRegisterApplePushKit) returns (Empty)
 
-- (void)registerAvroraPushTokenWithRequest:(RequestRegisterAvroraPushToken *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (void)registerApplePushKitWithRequest:(RequestRegisterApplePushKit *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToRegisterAvroraPushTokenWithRequest:(RequestRegisterAvroraPushToken *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToRegisterApplePushKitWithRequest:(RequestRegisterApplePushKit *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark UnregisterAvroraPushToken(RequestUnregisterAvroraPushToken) returns (ResponseVoid)
+#pragma mark UnregisterApplePushKit(RequestUnregisterApplePushKit) returns (Empty)
 
-- (void)unregisterAvroraPushTokenWithRequest:(RequestUnregisterAvroraPushToken *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (void)unregisterApplePushKitWithRequest:(RequestUnregisterApplePushKit *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToUnregisterAvroraPushTokenWithRequest:(RequestUnregisterAvroraPushToken *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToUnregisterApplePushKitWithRequest:(RequestUnregisterApplePushKit *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark RegisterApplePushToken(RequestRegisterApplePushToken) returns (Empty)
+
+- (void)registerApplePushTokenWithRequest:(RequestRegisterApplePushToken *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToRegisterApplePushTokenWithRequest:(RequestRegisterApplePushToken *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark UnregisterApplePushToken(RequestUnregisterApplePushToken) returns (Empty)
+
+- (void)unregisterApplePushTokenWithRequest:(RequestUnregisterApplePushToken *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToUnregisterApplePushTokenWithRequest:(RequestUnregisterApplePushToken *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark RegisterAvroraPushToken(RequestRegisterAvroraPushToken) returns (Empty)
+
+- (void)registerAvroraPushTokenWithRequest:(RequestRegisterAvroraPushToken *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToRegisterAvroraPushTokenWithRequest:(RequestRegisterAvroraPushToken *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark UnregisterAvroraPushToken(RequestUnregisterAvroraPushToken) returns (Empty)
+
+- (void)unregisterAvroraPushTokenWithRequest:(RequestUnregisterAvroraPushToken *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToUnregisterAvroraPushTokenWithRequest:(RequestUnregisterAvroraPushToken *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end

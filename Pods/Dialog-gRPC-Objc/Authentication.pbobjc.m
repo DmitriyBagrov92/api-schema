@@ -39,7 +39,6 @@ GPBObjCClassDeclaration(AuthSession);
 GPBObjCClassDeclaration(Config);
 GPBObjCClassDeclaration(ForceReloadContacts);
 GPBObjCClassDeclaration(ForceReloadDialogs);
-GPBObjCClassDeclaration(ForceReloadField);
 GPBObjCClassDeclaration(ForceReloadHistory);
 GPBObjCClassDeclaration(GPBDoubleValue);
 GPBObjCClassDeclaration(GPBInt64Value);
@@ -61,6 +60,7 @@ GPBObjCClassDeclaration(User);
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[GAPIAnnotationsRoot extensionRegistry]];
     [registry addExtensions:[DefinitionsRoot extensionRegistry]];
+    [registry addExtensions:[ScalapbRoot extensionRegistry]];
   }
   return registry;
 }
@@ -87,12 +87,12 @@ GPBEnumDescriptor *PhoneActivationType_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "PhoneactivationtypeUnknown\000Phoneactivati"
-        "ontypeCode\000PhoneactivationtypePassword\000";
+        "PhoneActivationTypeUnknown\000PhoneActivati"
+        "onTypeCode\000PhoneActivationTypePassword\000";
     static const int32_t values[] = {
-        PhoneActivationType_PhoneactivationtypeUnknown,
-        PhoneActivationType_PhoneactivationtypeCode,
-        PhoneActivationType_PhoneactivationtypePassword,
+        PhoneActivationType_PhoneActivationTypeUnknown,
+        PhoneActivationType_PhoneActivationTypeCode,
+        PhoneActivationType_PhoneActivationTypePassword,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(PhoneActivationType)
@@ -110,9 +110,9 @@ GPBEnumDescriptor *PhoneActivationType_EnumDescriptor(void) {
 
 BOOL PhoneActivationType_IsValidValue(int32_t value__) {
   switch (value__) {
-    case PhoneActivationType_PhoneactivationtypeUnknown:
-    case PhoneActivationType_PhoneactivationtypeCode:
-    case PhoneActivationType_PhoneactivationtypePassword:
+    case PhoneActivationType_PhoneActivationTypeUnknown:
+    case PhoneActivationType_PhoneActivationTypeCode:
+    case PhoneActivationType_PhoneActivationTypePassword:
       return YES;
     default:
       return NO;
@@ -125,14 +125,14 @@ GPBEnumDescriptor *EmailActivationType_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "EmailactivationtypeUnknown\000Emailactivati"
-        "ontypeCode\000EmailactivationtypeOauth2\000Ema"
-        "ilactivationtypePassword\000";
+        "EmailActivationTypeUnknown\000EmailActivati"
+        "onTypeCode\000EmailActivationTypeOauth2\000Ema"
+        "ilActivationTypePassword\000";
     static const int32_t values[] = {
-        EmailActivationType_EmailactivationtypeUnknown,
-        EmailActivationType_EmailactivationtypeCode,
-        EmailActivationType_EmailactivationtypeOauth2,
-        EmailActivationType_EmailactivationtypePassword,
+        EmailActivationType_EmailActivationTypeUnknown,
+        EmailActivationType_EmailActivationTypeCode,
+        EmailActivationType_EmailActivationTypeOauth2,
+        EmailActivationType_EmailActivationTypePassword,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(EmailActivationType)
@@ -150,10 +150,10 @@ GPBEnumDescriptor *EmailActivationType_EnumDescriptor(void) {
 
 BOOL EmailActivationType_IsValidValue(int32_t value__) {
   switch (value__) {
-    case EmailActivationType_EmailactivationtypeUnknown:
-    case EmailActivationType_EmailactivationtypeCode:
-    case EmailActivationType_EmailactivationtypeOauth2:
-    case EmailActivationType_EmailactivationtypePassword:
+    case EmailActivationType_EmailActivationTypeUnknown:
+    case EmailActivationType_EmailActivationTypeCode:
+    case EmailActivationType_EmailActivationTypeOauth2:
+    case EmailActivationType_EmailActivationTypePassword:
       return YES;
     default:
       return NO;
@@ -166,10 +166,11 @@ GPBEnumDescriptor *AuthExtraInfoType_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "NoneExtraInfo\000NeedChangePassword\000";
+        "AuthExtraInfoTypeNone\000AuthExtraInfoTypeN"
+        "eedChangePassword\000";
     static const int32_t values[] = {
-        AuthExtraInfoType_NoneExtraInfo,
-        AuthExtraInfoType_NeedChangePassword,
+        AuthExtraInfoType_AuthExtraInfoTypeNone,
+        AuthExtraInfoType_AuthExtraInfoTypeNeedChangePassword,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(AuthExtraInfoType)
@@ -187,8 +188,8 @@ GPBEnumDescriptor *AuthExtraInfoType_EnumDescriptor(void) {
 
 BOOL AuthExtraInfoType_IsValidValue(int32_t value__) {
   switch (value__) {
-    case AuthExtraInfoType_NoneExtraInfo:
-    case AuthExtraInfoType_NeedChangePassword:
+    case AuthExtraInfoType_AuthExtraInfoTypeNone:
+    case AuthExtraInfoType_AuthExtraInfoTypeNeedChangePassword:
       return YES;
     default:
       return NO;
@@ -201,12 +202,12 @@ GPBEnumDescriptor *AuthHolder_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "AuthholderUnknown\000AuthholderThisdevice\000A"
-        "uthholderOtherdevice\000";
+        "AuthHolderUnknown\000AuthHolderThisdevice\000A"
+        "uthHolderOtherdevice\000";
     static const int32_t values[] = {
-        AuthHolder_AuthholderUnknown,
-        AuthHolder_AuthholderThisdevice,
-        AuthHolder_AuthholderOtherdevice,
+        AuthHolder_AuthHolderUnknown,
+        AuthHolder_AuthHolderThisdevice,
+        AuthHolder_AuthHolderOtherdevice,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(AuthHolder)
@@ -224,9 +225,9 @@ GPBEnumDescriptor *AuthHolder_EnumDescriptor(void) {
 
 BOOL AuthHolder_IsValidValue(int32_t value__) {
   switch (value__) {
-    case AuthHolder_AuthholderUnknown:
-    case AuthHolder_AuthholderThisdevice:
-    case AuthHolder_AuthholderOtherdevice:
+    case AuthHolder_AuthHolderUnknown:
+    case AuthHolder_AuthHolderThisdevice:
+    case AuthHolder_AuthHolderOtherdevice:
       return YES;
     default:
       return NO;
@@ -567,73 +568,6 @@ void SetResponseStartEmailAuth_ActivationType_RawValue(ResponseStartEmailAuth *m
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:ResponseStartEmailAuth_FieldNumber_ActivationType];
   GPBSetMessageRawEnumField(message, field, value);
 }
-
-#pragma mark - RequestStartAnonymousAuth
-
-@implementation RequestStartAnonymousAuth
-
-@dynamic name;
-@dynamic hasTimeZone, timeZone;
-@dynamic preferredLanguagesArray, preferredLanguagesArray_Count;
-
-typedef struct RequestStartAnonymousAuth__storage_ {
-  uint32_t _has_storage_[1];
-  NSString *name;
-  GPBStringValue *timeZone;
-  NSMutableArray *preferredLanguagesArray;
-} RequestStartAnonymousAuth__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "name",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestStartAnonymousAuth_FieldNumber_Name,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestStartAnonymousAuth__storage_, name),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "timeZone",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
-        .number = RequestStartAnonymousAuth_FieldNumber_TimeZone,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestStartAnonymousAuth__storage_, timeZone),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "preferredLanguagesArray",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestStartAnonymousAuth_FieldNumber_PreferredLanguagesArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestStartAnonymousAuth__storage_, preferredLanguagesArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeString,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestStartAnonymousAuth class]
-                                     rootClass:[AuthenticationRoot class]
-                                          file:AuthenticationRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestStartAnonymousAuth__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
 
 #pragma mark - RequestStartCertificateAuth
 
@@ -1646,10 +1580,10 @@ typedef struct ResponseAuth__storage_ {
 
 typedef struct AuthSession__storage_ {
   uint32_t _has_storage_[1];
-  int32_t id_p;
   AuthHolder authHolder;
   int32_t appId;
   int32_t authTime;
+  NSString *id_p;
   NSString *appTitle;
   NSString *deviceTitle;
   NSString *authLocation;
@@ -1670,7 +1604,7 @@ typedef struct AuthSession__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(AuthSession__storage_, id_p),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "authHolder",
@@ -1860,7 +1794,7 @@ typedef struct ResponseGetAuthSessions__storage_ {
 
 typedef struct RequestTerminateSession__storage_ {
   uint32_t _has_storage_[1];
-  int32_t id_p;
+  NSString *id_p;
 } RequestTerminateSession__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1876,7 +1810,7 @@ typedef struct RequestTerminateSession__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestTerminateSession__storage_, id_p),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1989,7 +1923,7 @@ typedef struct ForceReloadField__storage_ {
         .number = ForceReloadField_FieldNumber_ForceReloadDialogs,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(ForceReloadField__storage_, forceReloadDialogs),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
@@ -1998,7 +1932,7 @@ typedef struct ForceReloadField__storage_ {
         .number = ForceReloadField_FieldNumber_ForceReloadContacts,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(ForceReloadField__storage_, forceReloadContacts),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
@@ -2007,7 +1941,7 @@ typedef struct ForceReloadField__storage_ {
         .number = ForceReloadField_FieldNumber_ForceReloadHistory,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(ForceReloadField__storage_, forceReloadHistory),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
@@ -2025,11 +1959,6 @@ typedef struct ForceReloadField__storage_ {
     [localDescriptor setupOneofs:oneofs
                            count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
                    firstHasIndex:-1];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\003\001\022\000\002\023\000\003\022\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -2143,494 +2072,6 @@ typedef struct ForceReloadHistory__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(ForceReloadHistory__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - UpdateForceReloadState
-
-@implementation UpdateForceReloadState
-
-@dynamic fieldsArray, fieldsArray_Count;
-
-typedef struct UpdateForceReloadState__storage_ {
-  uint32_t _has_storage_[1];
-  NSMutableArray *fieldsArray;
-} UpdateForceReloadState__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "fieldsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(ForceReloadField),
-        .number = UpdateForceReloadState_FieldNumber_FieldsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(UpdateForceReloadState__storage_, fieldsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateForceReloadState class]
-                                     rootClass:[AuthenticationRoot class]
-                                          file:AuthenticationRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateForceReloadState__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - RequestSignInObsolete
-
-@implementation RequestSignInObsolete
-
-@dynamic phoneNumber;
-@dynamic smsHash;
-@dynamic smsCode;
-@dynamic deviceHash;
-@dynamic deviceTitle;
-@dynamic appId;
-@dynamic appKey;
-
-typedef struct RequestSignInObsolete__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t appId;
-  NSString *smsHash;
-  NSString *smsCode;
-  NSData *deviceHash;
-  NSString *deviceTitle;
-  NSString *appKey;
-  int64_t phoneNumber;
-} RequestSignInObsolete__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "phoneNumber",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSignInObsolete_FieldNumber_PhoneNumber,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestSignInObsolete__storage_, phoneNumber),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "smsHash",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSignInObsolete_FieldNumber_SmsHash,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestSignInObsolete__storage_, smsHash),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "smsCode",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSignInObsolete_FieldNumber_SmsCode,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(RequestSignInObsolete__storage_, smsCode),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "deviceHash",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSignInObsolete_FieldNumber_DeviceHash,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(RequestSignInObsolete__storage_, deviceHash),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
-      {
-        .name = "deviceTitle",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSignInObsolete_FieldNumber_DeviceTitle,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(RequestSignInObsolete__storage_, deviceTitle),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "appId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSignInObsolete_FieldNumber_AppId,
-        .hasIndex = 5,
-        .offset = (uint32_t)offsetof(RequestSignInObsolete__storage_, appId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "appKey",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSignInObsolete_FieldNumber_AppKey,
-        .hasIndex = 6,
-        .offset = (uint32_t)offsetof(RequestSignInObsolete__storage_, appKey),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestSignInObsolete class]
-                                     rootClass:[AuthenticationRoot class]
-                                          file:AuthenticationRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestSignInObsolete__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - RequestSignUpObsolete
-
-@implementation RequestSignUpObsolete
-
-@dynamic phoneNumber;
-@dynamic smsHash;
-@dynamic smsCode;
-@dynamic name;
-@dynamic deviceHash;
-@dynamic deviceTitle;
-@dynamic appId;
-@dynamic appKey;
-@dynamic isSilent;
-
-typedef struct RequestSignUpObsolete__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t appId;
-  NSString *smsHash;
-  NSString *smsCode;
-  NSString *name;
-  NSData *deviceHash;
-  NSString *deviceTitle;
-  NSString *appKey;
-  int64_t phoneNumber;
-} RequestSignUpObsolete__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "phoneNumber",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSignUpObsolete_FieldNumber_PhoneNumber,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestSignUpObsolete__storage_, phoneNumber),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "smsHash",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSignUpObsolete_FieldNumber_SmsHash,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestSignUpObsolete__storage_, smsHash),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "smsCode",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSignUpObsolete_FieldNumber_SmsCode,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(RequestSignUpObsolete__storage_, smsCode),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "name",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSignUpObsolete_FieldNumber_Name,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(RequestSignUpObsolete__storage_, name),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "deviceHash",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSignUpObsolete_FieldNumber_DeviceHash,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(RequestSignUpObsolete__storage_, deviceHash),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
-      {
-        .name = "deviceTitle",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSignUpObsolete_FieldNumber_DeviceTitle,
-        .hasIndex = 5,
-        .offset = (uint32_t)offsetof(RequestSignUpObsolete__storage_, deviceTitle),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "appId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSignUpObsolete_FieldNumber_AppId,
-        .hasIndex = 6,
-        .offset = (uint32_t)offsetof(RequestSignUpObsolete__storage_, appId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "appKey",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSignUpObsolete_FieldNumber_AppKey,
-        .hasIndex = 7,
-        .offset = (uint32_t)offsetof(RequestSignUpObsolete__storage_, appKey),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "isSilent",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSignUpObsolete_FieldNumber_IsSilent,
-        .hasIndex = 8,
-        .offset = 9,  // Stored in _has_storage_ to save space.
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBool,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestSignUpObsolete class]
-                                     rootClass:[AuthenticationRoot class]
-                                          file:AuthenticationRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestSignUpObsolete__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - RequestSendAuthCodeObsolete
-
-@implementation RequestSendAuthCodeObsolete
-
-@dynamic phoneNumber;
-@dynamic appId;
-@dynamic apiKey;
-
-typedef struct RequestSendAuthCodeObsolete__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t appId;
-  NSString *apiKey;
-  int64_t phoneNumber;
-} RequestSendAuthCodeObsolete__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "phoneNumber",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSendAuthCodeObsolete_FieldNumber_PhoneNumber,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestSendAuthCodeObsolete__storage_, phoneNumber),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "appId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSendAuthCodeObsolete_FieldNumber_AppId,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestSendAuthCodeObsolete__storage_, appId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "apiKey",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSendAuthCodeObsolete_FieldNumber_ApiKey,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(RequestSendAuthCodeObsolete__storage_, apiKey),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestSendAuthCodeObsolete class]
-                                     rootClass:[AuthenticationRoot class]
-                                          file:AuthenticationRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestSendAuthCodeObsolete__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - ResponseSendAuthCodeObsolete
-
-@implementation ResponseSendAuthCodeObsolete
-
-@dynamic smsHash;
-@dynamic isRegistered;
-
-typedef struct ResponseSendAuthCodeObsolete__storage_ {
-  uint32_t _has_storage_[1];
-  NSString *smsHash;
-} ResponseSendAuthCodeObsolete__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "smsHash",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseSendAuthCodeObsolete_FieldNumber_SmsHash,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(ResponseSendAuthCodeObsolete__storage_, smsHash),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "isRegistered",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseSendAuthCodeObsolete_FieldNumber_IsRegistered,
-        .hasIndex = 1,
-        .offset = 2,  // Stored in _has_storage_ to save space.
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBool,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[ResponseSendAuthCodeObsolete class]
-                                     rootClass:[AuthenticationRoot class]
-                                          file:AuthenticationRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(ResponseSendAuthCodeObsolete__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - RequestSendAuthCallObsolete
-
-@implementation RequestSendAuthCallObsolete
-
-@dynamic phoneNumber;
-@dynamic smsHash;
-@dynamic appId;
-@dynamic apiKey;
-
-typedef struct RequestSendAuthCallObsolete__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t appId;
-  NSString *smsHash;
-  NSString *apiKey;
-  int64_t phoneNumber;
-} RequestSendAuthCallObsolete__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "phoneNumber",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSendAuthCallObsolete_FieldNumber_PhoneNumber,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestSendAuthCallObsolete__storage_, phoneNumber),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "smsHash",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSendAuthCallObsolete_FieldNumber_SmsHash,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestSendAuthCallObsolete__storage_, smsHash),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "appId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSendAuthCallObsolete_FieldNumber_AppId,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(RequestSendAuthCallObsolete__storage_, appId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "apiKey",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSendAuthCallObsolete_FieldNumber_ApiKey,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(RequestSendAuthCallObsolete__storage_, apiKey),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestSendAuthCallObsolete class]
-                                     rootClass:[AuthenticationRoot class]
-                                          file:AuthenticationRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestSendAuthCallObsolete__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");

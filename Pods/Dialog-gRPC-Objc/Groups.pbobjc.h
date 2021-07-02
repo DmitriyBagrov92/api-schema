@@ -39,7 +39,6 @@ CF_EXTERN_C_BEGIN
 @class GroupMemberPermission;
 @class GroupOutPeer;
 @class Member;
-@class UUIDValue;
 @class UserOutPeer;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -53,10 +52,10 @@ typedef GPB_ENUM(GroupType) {
    * of the field.
    **/
   GroupType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  GroupType_GrouptypeUnknown = 0,
-  GroupType_GrouptypeGroup = 1,
-  GroupType_GrouptypeChannel = 2,
-  GroupType_GrouptypeThread = 4,
+  GroupType_GroupTypeUnknown = 0,
+  GroupType_GroupTypeGroup = 1,
+  GroupType_GroupTypeChannel = 2,
+  GroupType_GroupTypeThread = 3,
 };
 
 GPBEnumDescriptor *GroupType_EnumDescriptor(void);
@@ -77,24 +76,24 @@ typedef GPB_ENUM(GroupAdminPermission) {
    * of the field.
    **/
   GroupAdminPermission_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  GroupAdminPermission_GroupadminpermissionUnknown = 0,
-  GroupAdminPermission_GroupadminpermissionEditshortname = 1,
-  GroupAdminPermission_GroupadminpermissionInvite = 2,
-  GroupAdminPermission_GroupadminpermissionKick = 3,
-  GroupAdminPermission_GroupadminpermissionUpdateinfo = 4,
-  GroupAdminPermission_GroupadminpermissionSetpermissions = 5,
-  GroupAdminPermission_GroupadminpermissionEditmessage = 6,
-  GroupAdminPermission_GroupadminpermissionDeletemessage = 7,
-  GroupAdminPermission_GroupadminpermissionGetintegrationtoken = 8,
-  GroupAdminPermission_GroupadminpermissionSendmessage = 9,
-  GroupAdminPermission_GroupadminpermissionPinmessage = 10,
-  GroupAdminPermission_GroupadminpermissionViewmembers = 11,
+  GroupAdminPermission_GroupAdminPermissionUnknown = 0,
+  GroupAdminPermission_GroupAdminPermissionEditshortname = 1,
+  GroupAdminPermission_GroupAdminPermissionInvite = 2,
+  GroupAdminPermission_GroupAdminPermissionKick = 3,
+  GroupAdminPermission_GroupAdminPermissionUpdateinfo = 4,
+  GroupAdminPermission_GroupAdminPermissionSetpermissions = 5,
+  GroupAdminPermission_GroupAdminPermissionEditmessage = 6,
+  GroupAdminPermission_GroupAdminPermissionDeletemessage = 7,
+  GroupAdminPermission_GroupAdminPermissionGetintegrationtoken = 8,
+  GroupAdminPermission_GroupAdminPermissionSendmessage = 9,
+  GroupAdminPermission_GroupAdminPermissionPinmessage = 10,
+  GroupAdminPermission_GroupAdminPermissionViewmembers = 11,
 
   /** / read only permission */
-  GroupAdminPermission_GroupadminpermissionLeave = 12,
-  GroupAdminPermission_GroupadminpermissionTargeting = 13,
-  GroupAdminPermission_GroupadminpermissionDelete = 14,
-  GroupAdminPermission_GroupadminpermissionManageConference = 15,
+  GroupAdminPermission_GroupAdminPermissionLeave = 12,
+  GroupAdminPermission_GroupAdminPermissionTargeting = 13,
+  GroupAdminPermission_GroupAdminPermissionDelete = 14,
+  GroupAdminPermission_GroupAdminPermissionManageConference = 15,
 };
 
 GPBEnumDescriptor *GroupAdminPermission_EnumDescriptor(void);
@@ -123,11 +122,11 @@ GPB_FINAL @interface GroupsRoot : GPBRootObject
 #pragma mark - Member
 
 typedef GPB_ENUM(Member_FieldNumber) {
-  Member_FieldNumber_Uid = 1,
-  Member_FieldNumber_InvitedAt = 3,
-  Member_FieldNumber_PermissionsArray = 5,
-  Member_FieldNumber_Clock = 6,
-  Member_FieldNumber_DeletedAt = 7,
+  Member_FieldNumber_UserId = 1,
+  Member_FieldNumber_InvitedAt = 2,
+  Member_FieldNumber_PermissionsArray = 3,
+  Member_FieldNumber_Clock = 4,
+  Member_FieldNumber_DeletedAt = 5,
 };
 
 /**
@@ -135,7 +134,7 @@ typedef GPB_ENUM(Member_FieldNumber) {
  **/
 GPB_FINAL @interface Member : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite) int64_t invitedAt;
 
@@ -158,9 +157,6 @@ GPB_FINAL @interface Member : GPBMessage
 typedef GPB_ENUM(Group_FieldNumber) {
   Group_FieldNumber_Id_p = 1,
   Group_FieldNumber_AccessHash = 2,
-  Group_FieldNumber_Title = 3,
-  Group_FieldNumber_Shortname = 19,
-  Group_FieldNumber_GroupType = 25,
   Group_FieldNumber_Data_p = 29,
   Group_FieldNumber_SelfMember = 30,
 };
@@ -171,7 +167,7 @@ typedef GPB_ENUM(Group_FieldNumber) {
 GPB_FINAL @interface Group : GPBMessage
 
 /** / group id */
-@property(nonatomic, readwrite) int32_t id_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 /** / Access hash of group */
 @property(nonatomic, readwrite) int64_t accessHash;
@@ -184,30 +180,7 @@ GPB_FINAL @interface Group : GPBMessage
 /** Test to see if @c selfMember has been set. */
 @property(nonatomic, readwrite) BOOL hasSelfMember;
 
-/** For old bot sdk compatibility */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *title;
-
-/** / Group Type. Used only for displaying information. Default is GROUP. */
-@property(nonatomic, readwrite) GroupType groupType;
-
-/** / Group short name */
-@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *shortname;
-/** Test to see if @c shortname has been set. */
-@property(nonatomic, readwrite) BOOL hasShortname;
-
 @end
-
-/**
- * Fetches the raw value of a @c Group's @c groupType property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
-int32_t Group_GroupType_RawValue(Group *message);
-/**
- * Sets the raw value of an @c Group's @c groupType property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
-void SetGroup_GroupType_RawValue(Group *message, int32_t value);
 
 #pragma mark - GroupData
 
@@ -231,9 +204,7 @@ typedef GPB_ENUM(GroupData_FieldNumber) {
 
 GPB_FINAL @interface GroupData : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *spaceId;
-/** Test to see if @c spaceId has been set. */
-@property(nonatomic, readwrite) BOOL hasSpaceId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *spaceId;
 
 /** / Title of group */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *title;
@@ -250,7 +221,7 @@ GPB_FINAL @interface GroupData : GPBMessage
 @property(nonatomic, readwrite) GroupType groupType;
 
 /** / Group creator */
-@property(nonatomic, readwrite) int32_t ownerUserId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *ownerUserId;
 
 /** / Date of creation */
 @property(nonatomic, readwrite, strong, null_resettable) GPBTimestamp *createdAt;
@@ -320,7 +291,7 @@ typedef GPB_ENUM(GroupPartialInfo_FieldNumber) {
 
 GPB_FINAL @interface GroupPartialInfo : GPBMessage
 
-@property(nonatomic, readwrite) int32_t id_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 @property(nonatomic, readwrite) int64_t accessHash;
 
@@ -372,7 +343,7 @@ typedef GPB_ENUM(UpdateGroup_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateGroup : GPBMessage
 
-@property(nonatomic, readwrite) int32_t id_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 @property(nonatomic, readwrite, strong, null_resettable) GroupData *data_p;
 /** Test to see if @c data_p has been set. */
@@ -409,8 +380,8 @@ GPB_FINAL @interface RequestLoadMembers : GPBMessage
 #pragma mark - ResponseLoadMembers
 
 typedef GPB_ENUM(ResponseLoadMembers_FieldNumber) {
-  ResponseLoadMembers_FieldNumber_Cursor = 2,
-  ResponseLoadMembers_FieldNumber_MembersArray = 3,
+  ResponseLoadMembers_FieldNumber_Cursor = 1,
+  ResponseLoadMembers_FieldNumber_MembersArray = 2,
 };
 
 GPB_FINAL @interface ResponseLoadMembers : GPBMessage
@@ -437,7 +408,7 @@ typedef GPB_ENUM(UpdateGroupTitleChanged_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateGroupTitleChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t groupId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *title;
 
@@ -455,7 +426,7 @@ typedef GPB_ENUM(UpdateGroupAvatarChanged_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateGroupAvatarChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t groupId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @property(nonatomic, readwrite, strong, null_resettable) Avatar *avatar;
 /** Test to see if @c avatar has been set. */
@@ -475,7 +446,7 @@ typedef GPB_ENUM(UpdateGroupAboutChanged_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateGroupAboutChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t groupId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *about;
 /** Test to see if @c about has been set. */
@@ -495,10 +466,10 @@ typedef GPB_ENUM(UpdateGroupOwnerChanged_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateGroupOwnerChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t groupId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 /** / new owner */
-@property(nonatomic, readwrite) int32_t userId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @end
 
@@ -514,7 +485,7 @@ typedef GPB_ENUM(UpdateGroupBasePermissionsChanged_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateGroupBasePermissionsChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t groupId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 /** / new base permissions */
 // |basePermissionsArray| contains |GroupAdminPermission|
@@ -536,7 +507,7 @@ typedef GPB_ENUM(UpdateGroupMembersUpdated_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateGroupMembersUpdated : GPBMessage
 
-@property(nonatomic, readwrite) int32_t groupId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Member*> *membersArray;
 /** The number of items in @c membersArray without causing the array to be created. */
@@ -547,9 +518,10 @@ GPB_FINAL @interface UpdateGroupMembersUpdated : GPBMessage
 #pragma mark - UpdateGroupMemberDiff
 
 typedef GPB_ENUM(UpdateGroupMemberDiff_FieldNumber) {
-  UpdateGroupMemberDiff_FieldNumber_RemovedUsersArray = 1,
-  UpdateGroupMemberDiff_FieldNumber_AddedMembersArray = 2,
-  UpdateGroupMemberDiff_FieldNumber_MembersCount = 3,
+  UpdateGroupMemberDiff_FieldNumber_GroupId = 1,
+  UpdateGroupMemberDiff_FieldNumber_RemovedUsersArray = 2,
+  UpdateGroupMemberDiff_FieldNumber_AddedMembersArray = 3,
+  UpdateGroupMemberDiff_FieldNumber_MembersCount = 4,
 };
 
 /**
@@ -557,7 +529,9 @@ typedef GPB_ENUM(UpdateGroupMemberDiff_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateGroupMemberDiff : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Array *removedUsersArray;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *removedUsersArray;
 /** The number of items in @c removedUsersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger removedUsersArray_Count;
 
@@ -581,7 +555,7 @@ typedef GPB_ENUM(UpdateGroupMembersCountChanged_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateGroupMembersCountChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t groupId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @property(nonatomic, readwrite) int32_t membersCount;
 
@@ -591,13 +565,12 @@ GPB_FINAL @interface UpdateGroupMembersCountChanged : GPBMessage
 
 typedef GPB_ENUM(RequestCreateGroup_FieldNumber) {
   RequestCreateGroup_FieldNumber_Rid = 1,
-  RequestCreateGroup_FieldNumber_Title = 2,
-  RequestCreateGroup_FieldNumber_UsersArray = 3,
-  RequestCreateGroup_FieldNumber_GroupType = 6,
-  RequestCreateGroup_FieldNumber_OptimizationsArray = 7,
-  RequestCreateGroup_FieldNumber_Username = 8,
-  RequestCreateGroup_FieldNumber_SpaceId = 9,
-  RequestCreateGroup_FieldNumber_BasePermissionsArray = 10,
+  RequestCreateGroup_FieldNumber_SpaceId = 2,
+  RequestCreateGroup_FieldNumber_Title = 3,
+  RequestCreateGroup_FieldNumber_UsersArray = 4,
+  RequestCreateGroup_FieldNumber_GroupType = 5,
+  RequestCreateGroup_FieldNumber_Username = 6,
+  RequestCreateGroup_FieldNumber_BasePermissionsArray = 7,
 };
 
 /**
@@ -608,7 +581,7 @@ GPB_FINAL @interface RequestCreateGroup : GPBMessage
 /** / Id for query deduplication */
 @property(nonatomic, readwrite) int64_t rid;
 
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *spaceId;
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *spaceId;
 /** Test to see if @c spaceId has been set. */
 @property(nonatomic, readwrite) BOOL hasSpaceId;
 
@@ -626,12 +599,6 @@ GPB_FINAL @interface RequestCreateGroup : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *username;
 /** Test to see if @c username has been set. */
 @property(nonatomic, readwrite) BOOL hasUsername;
-
-/** / Optimizations drops some info from response to decrease traffic and latency */
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
 
 /** / Base permissions for invited members */
 // |basePermissionsArray| contains |GroupAdminPermission|
@@ -656,18 +623,11 @@ void SetRequestCreateGroup_GroupType_RawValue(RequestCreateGroup *message, int32
 #pragma mark - ResponseCreateGroup
 
 typedef GPB_ENUM(ResponseCreateGroup_FieldNumber) {
-  ResponseCreateGroup_FieldNumber_Seq = 1,
-  ResponseCreateGroup_FieldNumber_State = 2,
-  ResponseCreateGroup_FieldNumber_Group = 3,
-  ResponseCreateGroup_FieldNumber_UserPeersArray = 5,
+  ResponseCreateGroup_FieldNumber_Group = 1,
+  ResponseCreateGroup_FieldNumber_UserPeersArray = 2,
 };
 
 GPB_FINAL @interface ResponseCreateGroup : GPBMessage
-
-/** / deprecated */
-@property(nonatomic, readwrite) int32_t seq;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *state;
 
 /** / created group */
 @property(nonatomic, readwrite, strong, null_resettable) Group *group;
@@ -685,9 +645,8 @@ GPB_FINAL @interface ResponseCreateGroup : GPBMessage
 
 typedef GPB_ENUM(RequestEditGroupTitle_FieldNumber) {
   RequestEditGroupTitle_FieldNumber_GroupPeer = 1,
+  RequestEditGroupTitle_FieldNumber_Rid = 2,
   RequestEditGroupTitle_FieldNumber_Title = 3,
-  RequestEditGroupTitle_FieldNumber_Rid = 4,
-  RequestEditGroupTitle_FieldNumber_OptimizationsArray = 5,
 };
 
 /**
@@ -703,12 +662,6 @@ GPB_FINAL @interface RequestEditGroupTitle : GPBMessage
 @property(nonatomic, readwrite) int64_t rid;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *title;
-
-/** / Optimizations drops some info from response to decrease traffic and latency */
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
 
 @end
 
@@ -737,9 +690,8 @@ GPB_FINAL @interface RequestSetGroupShortname : GPBMessage
 
 typedef GPB_ENUM(RequestEditGroupAvatar_FieldNumber) {
   RequestEditGroupAvatar_FieldNumber_GroupPeer = 1,
+  RequestEditGroupAvatar_FieldNumber_Rid = 2,
   RequestEditGroupAvatar_FieldNumber_FileLocation = 3,
-  RequestEditGroupAvatar_FieldNumber_Rid = 4,
-  RequestEditGroupAvatar_FieldNumber_OptimizationsArray = 5,
 };
 
 /**
@@ -758,49 +710,13 @@ GPB_FINAL @interface RequestEditGroupAvatar : GPBMessage
 /** Test to see if @c fileLocation has been set. */
 @property(nonatomic, readwrite) BOOL hasFileLocation;
 
-/** / Optimizations drops some info from response to decrease traffic and latency */
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
-
-@end
-
-#pragma mark - ResponseEditGroupAvatar
-
-typedef GPB_ENUM(ResponseEditGroupAvatar_FieldNumber) {
-  ResponseEditGroupAvatar_FieldNumber_Avatar = 1,
-  ResponseEditGroupAvatar_FieldNumber_Seq = 2,
-  ResponseEditGroupAvatar_FieldNumber_State = 3,
-  ResponseEditGroupAvatar_FieldNumber_Date = 4,
-  ResponseEditGroupAvatar_FieldNumber_Mid = 5,
-};
-
-GPB_FINAL @interface ResponseEditGroupAvatar : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) Avatar *avatar;
-/** Test to see if @c avatar has been set. */
-@property(nonatomic, readwrite) BOOL hasAvatar;
-
-/** / deprecated */
-@property(nonatomic, readwrite) int32_t seq;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *state;
-
-@property(nonatomic, readwrite) int64_t date;
-
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
-
 @end
 
 #pragma mark - RequestRemoveGroupAvatar
 
 typedef GPB_ENUM(RequestRemoveGroupAvatar_FieldNumber) {
   RequestRemoveGroupAvatar_FieldNumber_GroupPeer = 1,
-  RequestRemoveGroupAvatar_FieldNumber_Rid = 4,
-  RequestRemoveGroupAvatar_FieldNumber_OptimizationsArray = 5,
+  RequestRemoveGroupAvatar_FieldNumber_Rid = 2,
 };
 
 /**
@@ -815,12 +731,6 @@ GPB_FINAL @interface RequestRemoveGroupAvatar : GPBMessage
 /** / Id for query deduplication */
 @property(nonatomic, readwrite) int64_t rid;
 
-/** / Optimizations drops some info from response to decrease traffic and latency */
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
-
 @end
 
 #pragma mark - RequestEditGroupAbout
@@ -829,7 +739,6 @@ typedef GPB_ENUM(RequestEditGroupAbout_FieldNumber) {
   RequestEditGroupAbout_FieldNumber_GroupPeer = 1,
   RequestEditGroupAbout_FieldNumber_Rid = 2,
   RequestEditGroupAbout_FieldNumber_About = 3,
-  RequestEditGroupAbout_FieldNumber_OptimizationsArray = 5,
 };
 
 /**
@@ -847,12 +756,6 @@ GPB_FINAL @interface RequestEditGroupAbout : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *about;
 /** Test to see if @c about has been set. */
 @property(nonatomic, readwrite) BOOL hasAbout;
-
-/** / Optimizations drops some info from response to decrease traffic and latency */
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
 
 @end
 
@@ -935,9 +838,8 @@ GPB_FINAL @interface ResponseMember : GPBMessage
 
 typedef GPB_ENUM(RequestInviteUser_FieldNumber) {
   RequestInviteUser_FieldNumber_GroupPeer = 1,
+  RequestInviteUser_FieldNumber_Rid = 2,
   RequestInviteUser_FieldNumber_User = 3,
-  RequestInviteUser_FieldNumber_Rid = 4,
-  RequestInviteUser_FieldNumber_OptimizationsArray = 5,
 };
 
 /**
@@ -956,12 +858,6 @@ GPB_FINAL @interface RequestInviteUser : GPBMessage
 /** Test to see if @c user has been set. */
 @property(nonatomic, readwrite) BOOL hasUser;
 
-/** / Optimizations drops some info from response to decrease traffic and latency */
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
-
 @end
 
 #pragma mark - RequestLeaveGroup
@@ -969,7 +865,6 @@ GPB_FINAL @interface RequestInviteUser : GPBMessage
 typedef GPB_ENUM(RequestLeaveGroup_FieldNumber) {
   RequestLeaveGroup_FieldNumber_GroupPeer = 1,
   RequestLeaveGroup_FieldNumber_Rid = 2,
-  RequestLeaveGroup_FieldNumber_OptimizationsArray = 3,
 };
 
 /**
@@ -984,21 +879,14 @@ GPB_FINAL @interface RequestLeaveGroup : GPBMessage
 /** / Id for query deduplication */
 @property(nonatomic, readwrite) int64_t rid;
 
-/** / Optimizations drops some info from response to decrease traffic and latency */
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
-
 @end
 
 #pragma mark - RequestKickUser
 
 typedef GPB_ENUM(RequestKickUser_FieldNumber) {
   RequestKickUser_FieldNumber_GroupPeer = 1,
+  RequestKickUser_FieldNumber_Rid = 2,
   RequestKickUser_FieldNumber_User = 3,
-  RequestKickUser_FieldNumber_Rid = 4,
-  RequestKickUser_FieldNumber_OptimizationsArray = 5,
 };
 
 /**
@@ -1016,12 +904,6 @@ GPB_FINAL @interface RequestKickUser : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UserOutPeer *user;
 /** Test to see if @c user has been set. */
 @property(nonatomic, readwrite) BOOL hasUser;
-
-/** / Optimizations drops some info from response to decrease traffic and latency */
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
 
 @end
 
@@ -1067,7 +949,7 @@ typedef GPB_ENUM(GroupMemberPermission_FieldNumber) {
  **/
 GPB_FINAL @interface GroupMemberPermission : GPBMessage
 
-@property(nonatomic, readwrite) int32_t userId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 // |permissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *permissionsArray;
@@ -1088,9 +970,9 @@ typedef GPB_ENUM(RequestGetGroupMemberPermissions_FieldNumber) {
  **/
 GPB_FINAL @interface RequestGetGroupMemberPermissions : GPBMessage
 
-@property(nonatomic, readwrite) int32_t groupId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Array *userIdsArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *userIdsArray;
 /** The number of items in @c userIdsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userIdsArray_Count;
 
@@ -1123,9 +1005,9 @@ typedef GPB_ENUM(UpdateGroupMemberPermissionsChanged_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateGroupMemberPermissionsChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t groupId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
-@property(nonatomic, readwrite) int32_t userId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 // |permissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *permissionsArray;
@@ -1150,7 +1032,7 @@ GPB_FINAL @interface RequestTransferOwnership : GPBMessage
 /** Test to see if @c groupPeer has been set. */
 @property(nonatomic, readwrite) BOOL hasGroupPeer;
 
-@property(nonatomic, readwrite) int32_t newOwner;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *newOwner NS_RETURNS_NOT_RETAINED;
 
 @end
 
@@ -1228,7 +1110,6 @@ GPB_FINAL @interface RequestRevokeInviteUrl : GPBMessage
 
 typedef GPB_ENUM(RequestJoinGroup_FieldNumber) {
   RequestJoinGroup_FieldNumber_Token = 1,
-  RequestJoinGroup_FieldNumber_OptimizationsArray = 2,
 };
 
 /**
@@ -1238,22 +1119,13 @@ GPB_FINAL @interface RequestJoinGroup : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *token;
 
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
-
 @end
 
 #pragma mark - ResponseJoinGroup
 
 typedef GPB_ENUM(ResponseJoinGroup_FieldNumber) {
   ResponseJoinGroup_FieldNumber_Group = 1,
-  ResponseJoinGroup_FieldNumber_Seq = 2,
-  ResponseJoinGroup_FieldNumber_State = 3,
-  ResponseJoinGroup_FieldNumber_Date = 4,
-  ResponseJoinGroup_FieldNumber_UserPeersArray = 7,
-  ResponseJoinGroup_FieldNumber_Mid = 8,
+  ResponseJoinGroup_FieldNumber_UserPeersArray = 2,
 };
 
 GPB_FINAL @interface ResponseJoinGroup : GPBMessage
@@ -1266,18 +1138,6 @@ GPB_FINAL @interface ResponseJoinGroup : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *userPeersArray;
 /** The number of items in @c userPeersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userPeersArray_Count;
-
-/** / deprecated */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
-
-/** / deprecated */
-@property(nonatomic, readwrite) int32_t seq;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *state;
-
-@property(nonatomic, readwrite) int64_t date;
 
 @end
 
@@ -1306,7 +1166,7 @@ typedef GPB_ENUM(RequestDeleteGroup_FieldNumber) {
 
 GPB_FINAL @interface RequestDeleteGroup : GPBMessage
 
-@property(nonatomic, readwrite) int32_t groupId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @end
 
@@ -1338,239 +1198,11 @@ typedef GPB_ENUM(UpdateGroupMemberInvited_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateGroupMemberInvited : GPBMessage
 
-@property(nonatomic, readwrite) int32_t groupId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @property(nonatomic, readwrite, strong, null_resettable) Member *member;
 /** Test to see if @c member has been set. */
 @property(nonatomic, readwrite) BOOL hasMember;
-
-@end
-
-#pragma mark - UpdateGroupInviteObsolete
-
-typedef GPB_ENUM(UpdateGroupInviteObsolete_FieldNumber) {
-  UpdateGroupInviteObsolete_FieldNumber_GroupId = 1,
-  UpdateGroupInviteObsolete_FieldNumber_InviteUid = 5,
-  UpdateGroupInviteObsolete_FieldNumber_Date = 8,
-  UpdateGroupInviteObsolete_FieldNumber_Rid = 9,
-  UpdateGroupInviteObsolete_FieldNumber_Mid = 10,
-};
-
-/**
- * *
- * Update notifies that current user got invited to the group
- * \@deprecated
- **/
-GPB_FINAL @interface UpdateGroupInviteObsolete : GPBMessage
-
-@property(nonatomic, readwrite) int32_t groupId;
-
-/** / deprecated */
-@property(nonatomic, readwrite) int64_t rid;
-
-/** / deprecated */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
-
-@property(nonatomic, readwrite) int32_t inviteUid;
-
-@property(nonatomic, readwrite) int64_t date;
-
-@end
-
-#pragma mark - UpdateGroupUserInvitedObsolete
-
-typedef GPB_ENUM(UpdateGroupUserInvitedObsolete_FieldNumber) {
-  UpdateGroupUserInvitedObsolete_FieldNumber_GroupId = 1,
-  UpdateGroupUserInvitedObsolete_FieldNumber_Uid = 2,
-  UpdateGroupUserInvitedObsolete_FieldNumber_InviterUid = 3,
-  UpdateGroupUserInvitedObsolete_FieldNumber_Date = 4,
-  UpdateGroupUserInvitedObsolete_FieldNumber_Rid = 5,
-  UpdateGroupUserInvitedObsolete_FieldNumber_Mid = 6,
-};
-
-/**
- * *
- * Update notifies that some user got invited to the group
- * \@deprecated
- **/
-GPB_FINAL @interface UpdateGroupUserInvitedObsolete : GPBMessage
-
-@property(nonatomic, readwrite) int32_t groupId;
-
-/** / Id for deduplication */
-@property(nonatomic, readwrite) int64_t rid;
-
-/** / deprecated */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
-
-@property(nonatomic, readwrite) int32_t uid;
-
-@property(nonatomic, readwrite) int32_t inviterUid;
-
-@property(nonatomic, readwrite) int64_t date;
-
-@end
-
-#pragma mark - UpdateGroupUserLeaveObsolete
-
-typedef GPB_ENUM(UpdateGroupUserLeaveObsolete_FieldNumber) {
-  UpdateGroupUserLeaveObsolete_FieldNumber_GroupId = 1,
-  UpdateGroupUserLeaveObsolete_FieldNumber_Uid = 2,
-  UpdateGroupUserLeaveObsolete_FieldNumber_Date = 3,
-  UpdateGroupUserLeaveObsolete_FieldNumber_Mid = 5,
-};
-
-/**
- * Update about leaving user
- **/
-GPB_FINAL @interface UpdateGroupUserLeaveObsolete : GPBMessage
-
-@property(nonatomic, readwrite) int32_t groupId;
-
-/** / deprecated */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
-
-@property(nonatomic, readwrite) int32_t uid;
-
-@property(nonatomic, readwrite) int64_t date;
-
-@end
-
-#pragma mark - UpdateGroupUserKickObsolete
-
-typedef GPB_ENUM(UpdateGroupUserKickObsolete_FieldNumber) {
-  UpdateGroupUserKickObsolete_FieldNumber_GroupId = 1,
-  UpdateGroupUserKickObsolete_FieldNumber_Uid = 2,
-  UpdateGroupUserKickObsolete_FieldNumber_KickerUid = 3,
-  UpdateGroupUserKickObsolete_FieldNumber_Date = 4,
-  UpdateGroupUserKickObsolete_FieldNumber_Mid = 6,
-};
-
-/**
- * Update about kicking user
- **/
-GPB_FINAL @interface UpdateGroupUserKickObsolete : GPBMessage
-
-@property(nonatomic, readwrite) int32_t groupId;
-
-/** / deprecated */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
-
-@property(nonatomic, readwrite) int32_t uid;
-
-@property(nonatomic, readwrite) int32_t kickerUid;
-
-@property(nonatomic, readwrite) int64_t date;
-
-@end
-
-#pragma mark - UpdateGroupMembersUpdateObsolete
-
-typedef GPB_ENUM(UpdateGroupMembersUpdateObsolete_FieldNumber) {
-  UpdateGroupMembersUpdateObsolete_FieldNumber_GroupId = 1,
-  UpdateGroupMembersUpdateObsolete_FieldNumber_MembersArray = 2,
-};
-
-/**
- * Silent group members update
- **/
-GPB_FINAL @interface UpdateGroupMembersUpdateObsolete : GPBMessage
-
-@property(nonatomic, readwrite) int32_t groupId;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Member*> *membersArray;
-/** The number of items in @c membersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger membersArray_Count;
-
-@end
-
-#pragma mark - UpdateGroupTitleChangedObsolete
-
-typedef GPB_ENUM(UpdateGroupTitleChangedObsolete_FieldNumber) {
-  UpdateGroupTitleChangedObsolete_FieldNumber_GroupId = 1,
-  UpdateGroupTitleChangedObsolete_FieldNumber_Uid = 2,
-  UpdateGroupTitleChangedObsolete_FieldNumber_Title = 3,
-  UpdateGroupTitleChangedObsolete_FieldNumber_Date = 4,
-  UpdateGroupTitleChangedObsolete_FieldNumber_Mid = 6,
-};
-
-/**
- * Update about group title change
- **/
-GPB_FINAL @interface UpdateGroupTitleChangedObsolete : GPBMessage
-
-@property(nonatomic, readwrite) int32_t groupId;
-
-/** / deprecated */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
-
-@property(nonatomic, readwrite) int32_t uid;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *title;
-
-@property(nonatomic, readwrite) int64_t date;
-
-@end
-
-#pragma mark - UpdateGroupAboutChangedObsolete
-
-typedef GPB_ENUM(UpdateGroupAboutChangedObsolete_FieldNumber) {
-  UpdateGroupAboutChangedObsolete_FieldNumber_GroupId = 1,
-  UpdateGroupAboutChangedObsolete_FieldNumber_About = 2,
-};
-
-/**
- * Update about group about change
- **/
-GPB_FINAL @interface UpdateGroupAboutChangedObsolete : GPBMessage
-
-@property(nonatomic, readwrite) int32_t groupId;
-
-@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *about;
-/** Test to see if @c about has been set. */
-@property(nonatomic, readwrite) BOOL hasAbout;
-
-@end
-
-#pragma mark - UpdateGroupAvatarChangedObsolete
-
-typedef GPB_ENUM(UpdateGroupAvatarChangedObsolete_FieldNumber) {
-  UpdateGroupAvatarChangedObsolete_FieldNumber_GroupId = 1,
-  UpdateGroupAvatarChangedObsolete_FieldNumber_Uid = 2,
-  UpdateGroupAvatarChangedObsolete_FieldNumber_Avatar = 3,
-  UpdateGroupAvatarChangedObsolete_FieldNumber_Date = 4,
-  UpdateGroupAvatarChangedObsolete_FieldNumber_Mid = 6,
-};
-
-/**
- * Update about group avatar change
- **/
-GPB_FINAL @interface UpdateGroupAvatarChangedObsolete : GPBMessage
-
-@property(nonatomic, readwrite) int32_t groupId;
-
-/** / deprecated */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
-
-@property(nonatomic, readwrite) int32_t uid;
-
-@property(nonatomic, readwrite, strong, null_resettable) Avatar *avatar;
-/** Test to see if @c avatar has been set. */
-@property(nonatomic, readwrite) BOOL hasAvatar;
-
-@property(nonatomic, readwrite) int64_t date;
 
 @end
 
@@ -1579,7 +1211,7 @@ GPB_FINAL @interface UpdateGroupAvatarChangedObsolete : GPBMessage
 typedef GPB_ENUM(UpdateGroupShortnameChanged_FieldNumber) {
   UpdateGroupShortnameChanged_FieldNumber_GroupId = 1,
   UpdateGroupShortnameChanged_FieldNumber_Shortname = 2,
-  UpdateGroupShortnameChanged_FieldNumber_Uid = 3,
+  UpdateGroupShortnameChanged_FieldNumber_UserId = 3,
 };
 
 /**
@@ -1587,11 +1219,11 @@ typedef GPB_ENUM(UpdateGroupShortnameChanged_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateGroupShortnameChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t groupId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *shortname;
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @end
 

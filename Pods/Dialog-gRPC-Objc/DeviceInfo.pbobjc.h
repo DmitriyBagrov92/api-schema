@@ -40,12 +40,12 @@ typedef GPB_ENUM(PlatformType) {
    * of the field.
    **/
   PlatformType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  PlatformType_PlatformtypeUnknown = 0,
-  PlatformType_PlatformtypeAndroid = 1,
-  PlatformType_PlatformtypeIos = 2,
-  PlatformType_PlatformtypeWeb = 3,
-  PlatformType_PlatformtypeClc = 4,
-  PlatformType_PlatformtypeTests = 42,
+  PlatformType_PlatformTypeUnknown = 0,
+  PlatformType_PlatformTypeAndroid = 1,
+  PlatformType_PlatformTypeIos = 2,
+  PlatformType_PlatformTypeWeb = 3,
+  PlatformType_PlatformTypeClc = 4,
+  PlatformType_PlatformTypeTests = 42,
 };
 
 GPBEnumDescriptor *PlatformType_EnumDescriptor(void);

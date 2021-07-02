@@ -8,9 +8,9 @@
 #import <RxLibrary/GRXWriter+Immediate.h>
 
 #import "Wrappers.pbobjc.h"
+#import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Miscellaneous.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 
 @implementation DeviceInfo
@@ -60,14 +60,14 @@
 
 #pragma mark - Method Implementations
 
-#pragma mark NotifyAboutDeviceInfo(RequestNotifyAboutDeviceInfo) returns (ResponseVoid)
+#pragma mark NotifyAboutDeviceInfo(RequestNotifyAboutDeviceInfo) returns (Empty)
 
 /**
  * / Set info about current device
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)notifyAboutDeviceInfoWithRequest:(RequestNotifyAboutDeviceInfo *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)notifyAboutDeviceInfoWithRequest:(RequestNotifyAboutDeviceInfo *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToNotifyAboutDeviceInfoWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
@@ -76,10 +76,10 @@
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToNotifyAboutDeviceInfoWithRequest:(RequestNotifyAboutDeviceInfo *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToNotifyAboutDeviceInfoWithRequest:(RequestNotifyAboutDeviceInfo *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"NotifyAboutDeviceInfo"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
@@ -90,7 +90,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
 @end

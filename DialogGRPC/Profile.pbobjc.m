@@ -15,6 +15,7 @@
 
 #import "Profile.pbobjc.h"
 #import "Wrappers.pbobjc.h"
+#import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
 #import "Miscellaneous.pbobjc.h"
@@ -50,6 +51,7 @@ GPBObjCClassDeclaration(UserStatus);
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[GAPIAnnotationsRoot extensionRegistry]];
     [registry addExtensions:[DefinitionsRoot extensionRegistry]];
+    [registry addExtensions:[ScalapbRoot extensionRegistry]];
   }
   return registry;
 }
@@ -300,14 +302,10 @@ typedef struct RequestEditAvatar__storage_ {
 @implementation ResponseEditAvatar
 
 @dynamic hasAvatar, avatar;
-@dynamic seq;
-@dynamic state;
 
 typedef struct ResponseEditAvatar__storage_ {
   uint32_t _has_storage_[1];
-  int32_t seq;
   Avatar *avatar;
-  NSData *state;
 } ResponseEditAvatar__storage_;
 
 // This method is threadsafe because it is initially called
@@ -324,24 +322,6 @@ typedef struct ResponseEditAvatar__storage_ {
         .offset = (uint32_t)offsetof(ResponseEditAvatar__storage_, avatar),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "seq",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseEditAvatar_FieldNumber_Seq,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(ResponseEditAvatar__storage_, seq),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "state",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseEditAvatar_FieldNumber_State,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(ResponseEditAvatar__storage_, state),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
       },
     };
     GPBDescriptor *localDescriptor =

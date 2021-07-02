@@ -37,7 +37,6 @@ CF_EXTERN_C_BEGIN
 @class Space_General;
 @class Space_Private;
 @class Space_Public;
-@class UUIDValue;
 @class UserOutPeer;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -81,9 +80,7 @@ typedef GPB_ENUM(Space_SpaceType_OneOfCase) {
 
 GPB_FINAL @interface Space : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *id_p;
-/** Test to see if @c id_p has been set. */
-@property(nonatomic, readwrite) BOOL hasId_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBTimestamp *createdAt;
 /** Test to see if @c createdAt has been set. */
@@ -137,7 +134,7 @@ typedef GPB_ENUM(Space_Public_FieldNumber) {
 
 GPB_FINAL @interface Space_Public : GPBMessage
 
-@property(nonatomic, readwrite) int32_t ownerUserId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *ownerUserId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *shortname;
 
@@ -151,7 +148,7 @@ typedef GPB_ENUM(Space_Private_FieldNumber) {
 
 GPB_FINAL @interface Space_Private : GPBMessage
 
-@property(nonatomic, readwrite) int32_t ownerUserId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *ownerUserId;
 
 @end
 
@@ -168,11 +165,9 @@ typedef GPB_ENUM(SpaceMember_FieldNumber) {
 
 GPB_FINAL @interface SpaceMember : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *spaceId;
-/** Test to see if @c spaceId has been set. */
-@property(nonatomic, readwrite) BOOL hasSpaceId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *spaceId;
 
-@property(nonatomic, readwrite) int32_t userId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBTimestamp *invitedAt;
 /** Test to see if @c invitedAt has been set. */
@@ -273,9 +268,7 @@ typedef GPB_ENUM(ResponseSpaceMember_FieldNumber) {
 
 GPB_FINAL @interface ResponseSpaceMember : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *spaceId;
-/** Test to see if @c spaceId has been set. */
-@property(nonatomic, readwrite) BOOL hasSpaceId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *spaceId;
 
 @property(nonatomic, readwrite, strong, null_resettable) SpaceMember *member;
 /** Test to see if @c member has been set. */
@@ -286,15 +279,13 @@ GPB_FINAL @interface ResponseSpaceMember : GPBMessage
 #pragma mark - RequestDeleteSpace
 
 typedef GPB_ENUM(RequestDeleteSpace_FieldNumber) {
-  RequestDeleteSpace_FieldNumber_Id_p = 1,
+  RequestDeleteSpace_FieldNumber_SpaceId = 1,
   RequestDeleteSpace_FieldNumber_Clock = 2,
 };
 
 GPB_FINAL @interface RequestDeleteSpace : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *id_p;
-/** Test to see if @c id_p has been set. */
-@property(nonatomic, readwrite) BOOL hasId_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *spaceId;
 
 @property(nonatomic, readwrite, strong, null_resettable) DataClock *clock;
 /** Test to see if @c clock has been set. */
@@ -336,9 +327,7 @@ typedef GPB_ENUM(RequestStreamSpaceMembers_FieldNumber) {
 
 GPB_FINAL @interface RequestStreamSpaceMembers : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *spaceId;
-/** Test to see if @c spaceId has been set. */
-@property(nonatomic, readwrite) BOOL hasSpaceId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *spaceId;
 
 @property(nonatomic, readwrite, strong, null_resettable) DataClock *clock;
 /** Test to see if @c clock has been set. */
@@ -368,16 +357,14 @@ GPB_FINAL @interface SpaceMemberWithPeer : GPBMessage
 #pragma mark - RequestSetTitle
 
 typedef GPB_ENUM(RequestSetTitle_FieldNumber) {
-  RequestSetTitle_FieldNumber_Id_p = 1,
+  RequestSetTitle_FieldNumber_SpaceId = 1,
   RequestSetTitle_FieldNumber_Title = 2,
   RequestSetTitle_FieldNumber_Clock = 3,
 };
 
 GPB_FINAL @interface RequestSetTitle : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *id_p;
-/** Test to see if @c id_p has been set. */
-@property(nonatomic, readwrite) BOOL hasId_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *spaceId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *title;
 
@@ -390,16 +377,14 @@ GPB_FINAL @interface RequestSetTitle : GPBMessage
 #pragma mark - RequestSetShortname
 
 typedef GPB_ENUM(RequestSetShortname_FieldNumber) {
-  RequestSetShortname_FieldNumber_Id_p = 1,
+  RequestSetShortname_FieldNumber_SpaceId = 1,
   RequestSetShortname_FieldNumber_Shortname = 2,
   RequestSetShortname_FieldNumber_Clock = 3,
 };
 
 GPB_FINAL @interface RequestSetShortname : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *id_p;
-/** Test to see if @c id_p has been set. */
-@property(nonatomic, readwrite) BOOL hasId_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *spaceId;
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *shortname;
 /** Test to see if @c shortname has been set. */
@@ -414,16 +399,14 @@ GPB_FINAL @interface RequestSetShortname : GPBMessage
 #pragma mark - RequestSetAbout
 
 typedef GPB_ENUM(RequestSetAbout_FieldNumber) {
-  RequestSetAbout_FieldNumber_Id_p = 1,
+  RequestSetAbout_FieldNumber_SpaceId = 1,
   RequestSetAbout_FieldNumber_About = 2,
   RequestSetAbout_FieldNumber_Clock = 3,
 };
 
 GPB_FINAL @interface RequestSetAbout : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *id_p;
-/** Test to see if @c id_p has been set. */
-@property(nonatomic, readwrite) BOOL hasId_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *spaceId;
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *about;
 /** Test to see if @c about has been set. */
@@ -438,16 +421,14 @@ GPB_FINAL @interface RequestSetAbout : GPBMessage
 #pragma mark - RequestSetAvatar
 
 typedef GPB_ENUM(RequestSetAvatar_FieldNumber) {
-  RequestSetAvatar_FieldNumber_Id_p = 1,
+  RequestSetAvatar_FieldNumber_SpaceId = 1,
   RequestSetAvatar_FieldNumber_FileLocation = 2,
   RequestSetAvatar_FieldNumber_Clock = 3,
 };
 
 GPB_FINAL @interface RequestSetAvatar : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *id_p;
-/** Test to see if @c id_p has been set. */
-@property(nonatomic, readwrite) BOOL hasId_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *spaceId;
 
 @property(nonatomic, readwrite, strong, null_resettable) FileLocation *fileLocation;
 /** Test to see if @c fileLocation has been set. */
@@ -462,18 +443,16 @@ GPB_FINAL @interface RequestSetAvatar : GPBMessage
 #pragma mark - RequestSpaceInvite
 
 typedef GPB_ENUM(RequestSpaceInvite_FieldNumber) {
-  RequestSpaceInvite_FieldNumber_Id_p = 1,
+  RequestSpaceInvite_FieldNumber_SpaceId = 1,
   RequestSpaceInvite_FieldNumber_UserId = 2,
   RequestSpaceInvite_FieldNumber_Clock = 3,
 };
 
 GPB_FINAL @interface RequestSpaceInvite : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *id_p;
-/** Test to see if @c id_p has been set. */
-@property(nonatomic, readwrite) BOOL hasId_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *spaceId;
 
-@property(nonatomic, readwrite) int32_t userId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite, strong, null_resettable) DataClock *clock;
 /** Test to see if @c clock has been set. */
@@ -484,18 +463,16 @@ GPB_FINAL @interface RequestSpaceInvite : GPBMessage
 #pragma mark - RequestSpaceKick
 
 typedef GPB_ENUM(RequestSpaceKick_FieldNumber) {
-  RequestSpaceKick_FieldNumber_Id_p = 1,
+  RequestSpaceKick_FieldNumber_SpaceId = 1,
   RequestSpaceKick_FieldNumber_UserId = 2,
   RequestSpaceKick_FieldNumber_Clock = 3,
 };
 
 GPB_FINAL @interface RequestSpaceKick : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *id_p;
-/** Test to see if @c id_p has been set. */
-@property(nonatomic, readwrite) BOOL hasId_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *spaceId;
 
-@property(nonatomic, readwrite) int32_t userId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite, strong, null_resettable) DataClock *clock;
 /** Test to see if @c clock has been set. */
@@ -506,18 +483,16 @@ GPB_FINAL @interface RequestSpaceKick : GPBMessage
 #pragma mark - RequestSpaceLeave
 
 typedef GPB_ENUM(RequestSpaceLeave_FieldNumber) {
-  RequestSpaceLeave_FieldNumber_Id_p = 1,
+  RequestSpaceLeave_FieldNumber_SpaceId = 1,
   RequestSpaceLeave_FieldNumber_UserId = 2,
   RequestSpaceLeave_FieldNumber_Clock = 3,
 };
 
 GPB_FINAL @interface RequestSpaceLeave : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *id_p;
-/** Test to see if @c id_p has been set. */
-@property(nonatomic, readwrite) BOOL hasId_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *spaceId;
 
-@property(nonatomic, readwrite) int32_t userId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite, strong, null_resettable) DataClock *clock;
 /** Test to see if @c clock has been set. */
@@ -528,14 +503,12 @@ GPB_FINAL @interface RequestSpaceLeave : GPBMessage
 #pragma mark - RequestGetSpaceInviteUrl
 
 typedef GPB_ENUM(RequestGetSpaceInviteUrl_FieldNumber) {
-  RequestGetSpaceInviteUrl_FieldNumber_Id_p = 1,
+  RequestGetSpaceInviteUrl_FieldNumber_SpaceId = 1,
 };
 
 GPB_FINAL @interface RequestGetSpaceInviteUrl : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *id_p;
-/** Test to see if @c id_p has been set. */
-@property(nonatomic, readwrite) BOOL hasId_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *spaceId;
 
 @end
 
@@ -554,14 +527,12 @@ GPB_FINAL @interface ResponseSpaceInviteUrl : GPBMessage
 #pragma mark - RequestRevokeSpaceInviteUrl
 
 typedef GPB_ENUM(RequestRevokeSpaceInviteUrl_FieldNumber) {
-  RequestRevokeSpaceInviteUrl_FieldNumber_Id_p = 1,
+  RequestRevokeSpaceInviteUrl_FieldNumber_SpaceId = 1,
 };
 
 GPB_FINAL @interface RequestRevokeSpaceInviteUrl : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *id_p;
-/** Test to see if @c id_p has been set. */
-@property(nonatomic, readwrite) BOOL hasId_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *spaceId;
 
 @end
 

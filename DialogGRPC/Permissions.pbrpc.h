@@ -18,7 +18,6 @@
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Definitions.pbobjc.h"
   #import "Annotations.pbobjc.h"
-  #import "Scalapb.pbobjc.h"
 #endif
 
 @class GRPCUnaryProtoCall;

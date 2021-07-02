@@ -135,8 +135,6 @@ GPB_FINAL @interface RequestEditAvatar : GPBMessage
 
 typedef GPB_ENUM(ResponseEditAvatar_FieldNumber) {
   ResponseEditAvatar_FieldNumber_Avatar = 1,
-  ResponseEditAvatar_FieldNumber_Seq = 2,
-  ResponseEditAvatar_FieldNumber_State = 3,
 };
 
 GPB_FINAL @interface ResponseEditAvatar : GPBMessage
@@ -144,10 +142,6 @@ GPB_FINAL @interface ResponseEditAvatar : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) Avatar *avatar;
 /** Test to see if @c avatar has been set. */
 @property(nonatomic, readwrite) BOOL hasAvatar;
-
-@property(nonatomic, readwrite) int32_t seq;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *state;
 
 @end
 

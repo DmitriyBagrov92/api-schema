@@ -8,8 +8,8 @@
 #import <RxLibrary/GRXWriter+Immediate.h>
 
 #import "Annotations.pbobjc.h"
+#import "Empty.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Miscellaneous.pbobjc.h"
 #import "Peers.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 
@@ -60,16 +60,16 @@
 
 #pragma mark - Method Implementations
 
-#pragma mark BlockUser(RequestBlockUser) returns (ResponseSeq)
+#pragma mark BlockUser(RequestBlockUser) returns (Empty)
 
-- (void)blockUserWithRequest:(RequestBlockUser *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (void)blockUserWithRequest:(RequestBlockUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToBlockUserWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToBlockUserWithRequest:(RequestBlockUser *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToBlockUserWithRequest:(RequestBlockUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"BlockUser"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeq class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)blockUserWithMessage:(RequestBlockUser *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -77,19 +77,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeq class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark UnblockUser(RequestUnblockUser) returns (ResponseSeq)
+#pragma mark UnblockUser(RequestUnblockUser) returns (Empty)
 
-- (void)unblockUserWithRequest:(RequestUnblockUser *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (void)unblockUserWithRequest:(RequestUnblockUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToUnblockUserWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToUnblockUserWithRequest:(RequestUnblockUser *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToUnblockUserWithRequest:(RequestUnblockUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"UnblockUser"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeq class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)unblockUserWithMessage:(RequestUnblockUser *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -97,7 +97,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeq class]];
+             responseClass:[GPBEmpty class]];
 }
 
 #pragma mark LoadBlockedUsers(RequestLoadBlockedUsers) returns (ResponseLoadBlockedUsers)

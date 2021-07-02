@@ -48,7 +48,6 @@ GPBObjCClassDeclaration(RecursiveMapValue_Item);
 GPBObjCClassDeclaration(RecursiveMapValue_Value);
 GPBObjCClassDeclaration(ServerMetaInfo);
 GPBObjCClassDeclaration(ServicePeers);
-GPBObjCClassDeclaration(UUIDValue);
 
 #pragma mark - MiscellaneousRoot
 
@@ -63,6 +62,7 @@ GPBObjCClassDeclaration(UUIDValue);
     registry = [[GPBExtensionRegistry alloc] init];
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[DefinitionsRoot extensionRegistry]];
+    [registry addExtensions:[ScalapbRoot extensionRegistry]];
   }
   return registry;
 }
@@ -89,10 +89,11 @@ GPBEnumDescriptor *SupportedServerMethodsType_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "NoneSupportedMethods\000ChangePassword\000";
+        "SupportedServerMethodsTypeNone\000Supported"
+        "ServerMethodsTypeChangePassword\000";
     static const int32_t values[] = {
-        SupportedServerMethodsType_NoneSupportedMethods,
-        SupportedServerMethodsType_ChangePassword,
+        SupportedServerMethodsType_SupportedServerMethodsTypeNone,
+        SupportedServerMethodsType_SupportedServerMethodsTypeChangePassword,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(SupportedServerMethodsType)
@@ -110,8 +111,8 @@ GPBEnumDescriptor *SupportedServerMethodsType_EnumDescriptor(void) {
 
 BOOL SupportedServerMethodsType_IsValidValue(int32_t value__) {
   switch (value__) {
-    case SupportedServerMethodsType_NoneSupportedMethods:
-    case SupportedServerMethodsType_ChangePassword:
+    case SupportedServerMethodsType_SupportedServerMethodsTypeNone:
+    case SupportedServerMethodsType_SupportedServerMethodsTypeChangePassword:
       return YES;
     default:
       return NO;
@@ -124,12 +125,12 @@ GPBEnumDescriptor *RtcpMuxPolicy_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "RtcpmuxpolicyUnknown\000RtcpmuxpolicyNegoti"
-        "ate\000RtcpmuxpolicyRequire\000";
+        "RtcpMuxPolicyUnknown\000RtcpMuxPolicyNegoti"
+        "ate\000RtcpMuxPolicyRequire\000";
     static const int32_t values[] = {
-        RtcpMuxPolicy_RtcpmuxpolicyUnknown,
-        RtcpMuxPolicy_RtcpmuxpolicyNegotiate,
-        RtcpMuxPolicy_RtcpmuxpolicyRequire,
+        RtcpMuxPolicy_RtcpMuxPolicyUnknown,
+        RtcpMuxPolicy_RtcpMuxPolicyNegotiate,
+        RtcpMuxPolicy_RtcpMuxPolicyRequire,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(RtcpMuxPolicy)
@@ -147,305 +148,14 @@ GPBEnumDescriptor *RtcpMuxPolicy_EnumDescriptor(void) {
 
 BOOL RtcpMuxPolicy_IsValidValue(int32_t value__) {
   switch (value__) {
-    case RtcpMuxPolicy_RtcpmuxpolicyUnknown:
-    case RtcpMuxPolicy_RtcpmuxpolicyNegotiate:
-    case RtcpMuxPolicy_RtcpmuxpolicyRequire:
+    case RtcpMuxPolicy_RtcpMuxPolicyUnknown:
+    case RtcpMuxPolicy_RtcpMuxPolicyNegotiate:
+    case RtcpMuxPolicy_RtcpMuxPolicyRequire:
       return YES;
     default:
       return NO;
   }
 }
-
-#pragma mark - Enum UpdateOptimization
-
-GPBEnumDescriptor *UpdateOptimization_EnumDescriptor(void) {
-  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
-  if (!descriptor) {
-    static const char *valueNames =
-        "UpdateoptimizationUnknown\000Updateoptimiza"
-        "tionStripEntities\000";
-    static const int32_t values[] = {
-        UpdateOptimization_UpdateoptimizationUnknown,
-        UpdateOptimization_UpdateoptimizationStripEntities,
-    };
-    GPBEnumDescriptor *worker =
-        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(UpdateOptimization)
-                                       valueNames:valueNames
-                                           values:values
-                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
-                                     enumVerifier:UpdateOptimization_IsValidValue];
-    GPBEnumDescriptor *expected = nil;
-    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
-      [worker release];
-    }
-  }
-  return descriptor;
-}
-
-BOOL UpdateOptimization_IsValidValue(int32_t value__) {
-  switch (value__) {
-    case UpdateOptimization_UpdateoptimizationUnknown:
-    case UpdateOptimization_UpdateoptimizationStripEntities:
-      return YES;
-    default:
-      return NO;
-  }
-}
-
-#pragma mark - ResponseVoid
-
-@implementation ResponseVoid
-
-
-typedef struct ResponseVoid__storage_ {
-  uint32_t _has_storage_[1];
-} ResponseVoid__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[ResponseVoid class]
-                                     rootClass:[MiscellaneousRoot class]
-                                          file:MiscellaneousRoot_FileDescriptor()
-                                        fields:NULL
-                                    fieldCount:0
-                                   storageSize:sizeof(ResponseVoid__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - ResponseSeq
-
-@implementation ResponseSeq
-
-@dynamic seq;
-@dynamic state;
-@dynamic date;
-
-typedef struct ResponseSeq__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t seq;
-  NSData *state;
-  int64_t date;
-} ResponseSeq__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "seq",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseSeq_FieldNumber_Seq,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(ResponseSeq__storage_, seq),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "state",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseSeq_FieldNumber_State,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(ResponseSeq__storage_, state),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
-      {
-        .name = "date",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseSeq_FieldNumber_Date,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(ResponseSeq__storage_, date),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[ResponseSeq class]
-                                     rootClass:[MiscellaneousRoot class]
-                                          file:MiscellaneousRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(ResponseSeq__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - ResponseSeqDate
-
-@implementation ResponseSeqDate
-
-@dynamic seq;
-@dynamic state;
-@dynamic date;
-@dynamic hasMid, mid;
-
-typedef struct ResponseSeqDate__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t seq;
-  NSData *state;
-  UUIDValue *mid;
-  int64_t date;
-} ResponseSeqDate__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "seq",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseSeqDate_FieldNumber_Seq,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(ResponseSeqDate__storage_, seq),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "state",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseSeqDate_FieldNumber_State,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(ResponseSeqDate__storage_, state),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
-      {
-        .name = "date",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseSeqDate_FieldNumber_Date,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(ResponseSeqDate__storage_, date),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "mid",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = ResponseSeqDate_FieldNumber_Mid,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(ResponseSeqDate__storage_, mid),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[ResponseSeqDate class]
-                                     rootClass:[MiscellaneousRoot class]
-                                          file:MiscellaneousRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(ResponseSeqDate__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - ResponseSeqDateMid
-
-@implementation ResponseSeqDateMid
-
-@dynamic seq;
-@dynamic state;
-@dynamic date;
-@dynamic hasMid, mid;
-
-typedef struct ResponseSeqDateMid__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t seq;
-  NSData *state;
-  UUIDValue *mid;
-  int64_t date;
-} ResponseSeqDateMid__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "seq",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseSeqDateMid_FieldNumber_Seq,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(ResponseSeqDateMid__storage_, seq),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "state",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseSeqDateMid_FieldNumber_State,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(ResponseSeqDateMid__storage_, state),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
-      {
-        .name = "date",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseSeqDateMid_FieldNumber_Date,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(ResponseSeqDateMid__storage_, date),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "mid",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = ResponseSeqDateMid_FieldNumber_Mid,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(ResponseSeqDateMid__storage_, mid),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[ResponseSeqDateMid class]
-                                     rootClass:[MiscellaneousRoot class]
-                                          file:MiscellaneousRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(ResponseSeqDateMid__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
 
 #pragma mark - ResponseBool
 

@@ -106,7 +106,7 @@ GPB_FINAL @interface ResponseLoadBlockedUsers : GPBMessage
 #pragma mark - UpdateUserBlocked
 
 typedef GPB_ENUM(UpdateUserBlocked_FieldNumber) {
-  UpdateUserBlocked_FieldNumber_Uid = 1,
+  UpdateUserBlocked_FieldNumber_UserId = 1,
 };
 
 /**
@@ -114,14 +114,14 @@ typedef GPB_ENUM(UpdateUserBlocked_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateUserBlocked : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @end
 
 #pragma mark - UpdateUserUnblocked
 
 typedef GPB_ENUM(UpdateUserUnblocked_FieldNumber) {
-  UpdateUserUnblocked_FieldNumber_Uid = 1,
+  UpdateUserUnblocked_FieldNumber_UserId = 1,
 };
 
 /**
@@ -129,7 +129,7 @@ typedef GPB_ENUM(UpdateUserUnblocked_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateUserUnblocked : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @end
 

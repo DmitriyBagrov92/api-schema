@@ -57,26 +57,6 @@
 
 #pragma mark - Method Implementations
 
-#pragma mark ExchangeAuthIdForToken(RequestExchangeAuthIdForToken) returns (ResponseDeviceRequest)
-
-- (void)exchangeAuthIdForTokenWithRequest:(RequestExchangeAuthIdForToken *)request handler:(void(^)(ResponseDeviceRequest *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToExchangeAuthIdForTokenWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToExchangeAuthIdForTokenWithRequest:(RequestExchangeAuthIdForToken *)request handler:(void(^)(ResponseDeviceRequest *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"ExchangeAuthIdForToken"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseDeviceRequest class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-- (GRPCUnaryProtoCall *)exchangeAuthIdForTokenWithMessage:(RequestExchangeAuthIdForToken *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"ExchangeAuthIdForToken"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseDeviceRequest class]];
-}
-
 #pragma mark RegisterDevice(RequestRegisterDevice) returns (ResponseDeviceRequest)
 
 /**
@@ -104,39 +84,6 @@
  */
 - (GRPCUnaryProtoCall *)registerDeviceWithMessage:(RequestRegisterDevice *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"RegisterDevice"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseDeviceRequest class]];
-}
-
-#pragma mark RegisterDeprecatedDevice(RegisterDeprecatedDeviceRequest) returns (ResponseDeviceRequest)
-
-/**
- * deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)registerDeprecatedDeviceWithRequest:(RegisterDeprecatedDeviceRequest *)request handler:(void(^)(ResponseDeviceRequest *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToRegisterDeprecatedDeviceWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToRegisterDeprecatedDeviceWithRequest:(RegisterDeprecatedDeviceRequest *)request handler:(void(^)(ResponseDeviceRequest *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"RegisterDeprecatedDevice"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseDeviceRequest class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * deprecated
- */
-- (GRPCUnaryProtoCall *)registerDeprecatedDeviceWithMessage:(RegisterDeprecatedDeviceRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"RegisterDeprecatedDevice"
                    message:message
            responseHandler:handler
                callOptions:callOptions

@@ -8,6 +8,7 @@
 #import <RxLibrary/GRXWriter+Immediate.h>
 
 #import "Wrappers.pbobjc.h"
+#import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
 #import "Miscellaneous.pbobjc.h"
@@ -62,14 +63,14 @@
 
 #pragma mark - Method Implementations
 
-#pragma mark DoInteractiveMediaAction(RequestDoInteractiveMediaAction) returns (ResponseVoid)
+#pragma mark DoInteractiveMediaAction(RequestDoInteractiveMediaAction) returns (Empty)
 
 /**
  * / Interact with a message media (click on button for example)
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)doInteractiveMediaActionWithRequest:(RequestDoInteractiveMediaAction *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)doInteractiveMediaActionWithRequest:(RequestDoInteractiveMediaAction *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToDoInteractiveMediaActionWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
@@ -78,10 +79,10 @@
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToDoInteractiveMediaActionWithRequest:(RequestDoInteractiveMediaAction *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToDoInteractiveMediaActionWithRequest:(RequestDoInteractiveMediaAction *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"DoInteractiveMediaAction"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
@@ -92,7 +93,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
 #pragma mark SendMessage(RequestSendMessage) returns (ResponseSendMessage)
@@ -115,16 +116,16 @@
              responseClass:[ResponseSendMessage class]];
 }
 
-#pragma mark UpdateMessage(RequestUpdateMessage) returns (ResponseSeqDate)
+#pragma mark UpdateMessage(RequestUpdateMessage) returns (Empty)
 
-- (void)updateMessageWithRequest:(RequestUpdateMessage *)request handler:(void(^)(ResponseSeqDate *_Nullable response, NSError *_Nullable error))handler{
+- (void)updateMessageWithRequest:(RequestUpdateMessage *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToUpdateMessageWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToUpdateMessageWithRequest:(RequestUpdateMessage *)request handler:(void(^)(ResponseSeqDate *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToUpdateMessageWithRequest:(RequestUpdateMessage *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"UpdateMessage"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeqDate class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)updateMessageWithMessage:(RequestUpdateMessage *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -132,17 +133,17 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeqDate class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark MessageReceived(RequestMessageReceived) returns (ResponseVoid)
+#pragma mark MessageReceived(RequestMessageReceived) returns (Empty)
 
 /**
  * / Mark message as received by self
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)messageReceivedWithRequest:(RequestMessageReceived *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)messageReceivedWithRequest:(RequestMessageReceived *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToMessageReceivedWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
@@ -151,10 +152,10 @@
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToMessageReceivedWithRequest:(RequestMessageReceived *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToMessageReceivedWithRequest:(RequestMessageReceived *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"MessageReceived"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
@@ -165,17 +166,17 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark MessageRead(RequestMessageRead) returns (ResponseVoid)
+#pragma mark MessageRead(RequestMessageRead) returns (Empty)
 
 /**
  * / Mark message as read by self
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)messageReadWithRequest:(RequestMessageRead *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)messageReadWithRequest:(RequestMessageRead *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToMessageReadWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
@@ -184,10 +185,10 @@
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToMessageReadWithRequest:(RequestMessageRead *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToMessageReadWithRequest:(RequestMessageRead *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"MessageRead"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
@@ -198,52 +199,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark DeleteMessageObsolete(RequestDeleteMessageObsolete) returns (ResponseSeq)
+#pragma mark DeleteMessage(RequestDeleteMessage) returns (Empty)
 
-/**
- * / deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)deleteMessageObsoleteWithRequest:(RequestDeleteMessageObsolete *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToDeleteMessageObsoleteWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * / deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToDeleteMessageObsoleteWithRequest:(RequestDeleteMessageObsolete *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"DeleteMessageObsolete"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeq class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * / deprecated
- */
-- (GRPCUnaryProtoCall *)deleteMessageObsoleteWithMessage:(RequestDeleteMessageObsolete *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"DeleteMessageObsolete"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseSeq class]];
-}
-
-#pragma mark DeleteMessage(RequestDeleteMessage) returns (ResponseVoid)
-
-- (void)deleteMessageWithRequest:(RequestDeleteMessage *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)deleteMessageWithRequest:(RequestDeleteMessage *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToDeleteMessageWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToDeleteMessageWithRequest:(RequestDeleteMessage *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToDeleteMessageWithRequest:(RequestDeleteMessage *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"DeleteMessage"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)deleteMessageWithMessage:(RequestDeleteMessage *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -251,17 +219,17 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark ClearChat(RequestClearChat) returns (ResponseSeq)
+#pragma mark ClearChat(RequestClearChat) returns (Empty)
 
 /**
  * / Clear chat history
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)clearChatWithRequest:(RequestClearChat *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (void)clearChatWithRequest:(RequestClearChat *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToClearChatWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
@@ -270,10 +238,10 @@
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToClearChatWithRequest:(RequestClearChat *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToClearChatWithRequest:(RequestClearChat *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"ClearChat"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeq class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
@@ -284,19 +252,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeq class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark DeleteChat(RequestDeleteChat) returns (ResponseSeq)
+#pragma mark DeleteChat(RequestDeleteChat) returns (Empty)
 
-- (void)deleteChatWithRequest:(RequestDeleteChat *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (void)deleteChatWithRequest:(RequestDeleteChat *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToDeleteChatWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToDeleteChatWithRequest:(RequestDeleteChat *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToDeleteChatWithRequest:(RequestDeleteChat *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"DeleteChat"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeq class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)deleteChatWithMessage:(RequestDeleteChat *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -304,40 +272,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeq class]];
-}
-
-#pragma mark ArchiveChat(RequestArchiveChat) returns (ResponseSeq)
-
-/**
- * / deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)archiveChatWithRequest:(RequestArchiveChat *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToArchiveChatWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * / deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToArchiveChatWithRequest:(RequestArchiveChat *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"ArchiveChat"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeq class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * / deprecated
- */
-- (GRPCUnaryProtoCall *)archiveChatWithMessage:(RequestArchiveChat *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"ArchiveChat"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseSeq class]];
+             responseClass:[GPBEmpty class]];
 }
 
 #pragma mark MessageSetReaction(RequestMessageSetReaction) returns (ResponseReactionsResponse)
@@ -644,148 +579,16 @@
              responseClass:[ResponseGetLastConversationMessages class]];
 }
 
-#pragma mark LoadArchived(RequestLoadArchived) returns (ResponseLoadArchived)
+#pragma mark FavouriteDialog(RequestFavouriteDialog) returns (Empty)
 
-/**
- * / deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)loadArchivedWithRequest:(RequestLoadArchived *)request handler:(void(^)(ResponseLoadArchived *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToLoadArchivedWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * / deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToLoadArchivedWithRequest:(RequestLoadArchived *)request handler:(void(^)(ResponseLoadArchived *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"LoadArchived"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseLoadArchived class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * / deprecated
- */
-- (GRPCUnaryProtoCall *)loadArchivedWithMessage:(RequestLoadArchived *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"LoadArchived"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseLoadArchived class]];
-}
-
-#pragma mark LoadGroupedDialogs(RequestLoadGroupedDialogs) returns (ResponseLoadGroupedDialogs)
-
-/**
- * / deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)loadGroupedDialogsWithRequest:(RequestLoadGroupedDialogs *)request handler:(void(^)(ResponseLoadGroupedDialogs *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToLoadGroupedDialogsWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * / deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToLoadGroupedDialogsWithRequest:(RequestLoadGroupedDialogs *)request handler:(void(^)(ResponseLoadGroupedDialogs *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"LoadGroupedDialogs"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseLoadGroupedDialogs class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * / deprecated
- */
-- (GRPCUnaryProtoCall *)loadGroupedDialogsWithMessage:(RequestLoadGroupedDialogs *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"LoadGroupedDialogs"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseLoadGroupedDialogs class]];
-}
-
-#pragma mark HideDialog(RequestHideDialog) returns (ResponseDialogsOrder)
-
-/**
- * / deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)hideDialogWithRequest:(RequestHideDialog *)request handler:(void(^)(ResponseDialogsOrder *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToHideDialogWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * / deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToHideDialogWithRequest:(RequestHideDialog *)request handler:(void(^)(ResponseDialogsOrder *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"HideDialog"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseDialogsOrder class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * / deprecated
- */
-- (GRPCUnaryProtoCall *)hideDialogWithMessage:(RequestHideDialog *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"HideDialog"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseDialogsOrder class]];
-}
-
-#pragma mark ShowDialog(RequestShowDialog) returns (ResponseDialogsOrder)
-
-/**
- * / deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)showDialogWithRequest:(RequestShowDialog *)request handler:(void(^)(ResponseDialogsOrder *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToShowDialogWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * / deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToShowDialogWithRequest:(RequestShowDialog *)request handler:(void(^)(ResponseDialogsOrder *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"ShowDialog"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseDialogsOrder class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * / deprecated
- */
-- (GRPCUnaryProtoCall *)showDialogWithMessage:(RequestShowDialog *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"ShowDialog"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseDialogsOrder class]];
-}
-
-#pragma mark FavouriteDialog(RequestFavouriteDialog) returns (ResponseDialogsOrder)
-
-- (void)favouriteDialogWithRequest:(RequestFavouriteDialog *)request handler:(void(^)(ResponseDialogsOrder *_Nullable response, NSError *_Nullable error))handler{
+- (void)favouriteDialogWithRequest:(RequestFavouriteDialog *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToFavouriteDialogWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToFavouriteDialogWithRequest:(RequestFavouriteDialog *)request handler:(void(^)(ResponseDialogsOrder *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToFavouriteDialogWithRequest:(RequestFavouriteDialog *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"FavouriteDialog"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseDialogsOrder class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)favouriteDialogWithMessage:(RequestFavouriteDialog *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -793,19 +596,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseDialogsOrder class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark UnfavouriteDialog(RequestUnfavouriteDialog) returns (ResponseDialogsOrder)
+#pragma mark UnfavouriteDialog(RequestUnfavouriteDialog) returns (Empty)
 
-- (void)unfavouriteDialogWithRequest:(RequestUnfavouriteDialog *)request handler:(void(^)(ResponseDialogsOrder *_Nullable response, NSError *_Nullable error))handler{
+- (void)unfavouriteDialogWithRequest:(RequestUnfavouriteDialog *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToUnfavouriteDialogWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToUnfavouriteDialogWithRequest:(RequestUnfavouriteDialog *)request handler:(void(^)(ResponseDialogsOrder *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToUnfavouriteDialogWithRequest:(RequestUnfavouriteDialog *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"UnfavouriteDialog"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseDialogsOrder class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)unfavouriteDialogWithMessage:(RequestUnfavouriteDialog *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -813,19 +616,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseDialogsOrder class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark NotifyDialogOpened(RequestNotifyDialogOpened) returns (ResponseVoid)
+#pragma mark NotifyDialogOpened(RequestNotifyDialogOpened) returns (Empty)
 
-- (void)notifyDialogOpenedWithRequest:(RequestNotifyDialogOpened *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)notifyDialogOpenedWithRequest:(RequestNotifyDialogOpened *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToNotifyDialogOpenedWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToNotifyDialogOpenedWithRequest:(RequestNotifyDialogOpened *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToNotifyDialogOpenedWithRequest:(RequestNotifyDialogOpened *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"NotifyDialogOpened"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)notifyDialogOpenedWithMessage:(RequestNotifyDialogOpened *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -833,19 +636,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark PinMessage(RequestPinMessage) returns (ResponseSeqDate)
+#pragma mark PinMessage(RequestPinMessage) returns (Empty)
 
-- (void)pinMessageWithRequest:(RequestPinMessage *)request handler:(void(^)(ResponseSeqDate *_Nullable response, NSError *_Nullable error))handler{
+- (void)pinMessageWithRequest:(RequestPinMessage *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToPinMessageWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToPinMessageWithRequest:(RequestPinMessage *)request handler:(void(^)(ResponseSeqDate *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToPinMessageWithRequest:(RequestPinMessage *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"PinMessage"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeqDate class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)pinMessageWithMessage:(RequestPinMessage *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -853,19 +656,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeqDate class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark UnpinMessage(RequestUnpinMessage) returns (ResponseSeqDate)
+#pragma mark UnpinMessage(RequestUnpinMessage) returns (Empty)
 
-- (void)unpinMessageWithRequest:(RequestUnpinMessage *)request handler:(void(^)(ResponseSeqDate *_Nullable response, NSError *_Nullable error))handler{
+- (void)unpinMessageWithRequest:(RequestUnpinMessage *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToUnpinMessageWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToUnpinMessageWithRequest:(RequestUnpinMessage *)request handler:(void(^)(ResponseSeqDate *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToUnpinMessageWithRequest:(RequestUnpinMessage *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"UnpinMessage"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeqDate class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)unpinMessageWithMessage:(RequestUnpinMessage *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -873,7 +676,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeqDate class]];
+             responseClass:[GPBEmpty class]];
 }
 
 #pragma mark GetUpdatedMessages(RequestGetUpdatedMessages) returns (ResponseGetUpdatedMessages)
@@ -962,16 +765,16 @@
              responseClass:[ResponseMessageReceives class]];
 }
 
-#pragma mark ReadDialogLater(RequestReadDialogLater) returns (ResponseVoid)
+#pragma mark ReadDialogLater(RequestReadDialogLater) returns (Empty)
 
-- (void)readDialogLaterWithRequest:(RequestReadDialogLater *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)readDialogLaterWithRequest:(RequestReadDialogLater *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToReadDialogLaterWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToReadDialogLaterWithRequest:(RequestReadDialogLater *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToReadDialogLaterWithRequest:(RequestReadDialogLater *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"ReadDialogLater"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)readDialogLaterWithMessage:(RequestReadDialogLater *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -979,7 +782,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
 @end

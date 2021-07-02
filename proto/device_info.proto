@@ -6,9 +6,9 @@ package dialog;
 // For example, getting timezone or preffered languages
 
 import "wrappers.proto";
+import "empty.proto";
 import "annotations.proto";
 import "definitions.proto";
-import "miscellaneous.proto";
 import "scalapb.proto";
 
 option go_package = "dialog";
@@ -24,12 +24,12 @@ message RequestNotifyAboutDeviceInfo {
 }
 
 enum PlatformType {
-    PLATFORMTYPE_UNKNOWN = 0;
-    PLATFORMTYPE_ANDROID = 1;
-    PLATFORMTYPE_IOS = 2;
-    PLATFORMTYPE_WEB = 3;
-    PLATFORMTYPE_CLC = 4;
-    PLATFORMTYPE_TESTS = 42;
+    PLATFORM_TYPE_UNKNOWN = 0;
+    PLATFORM_TYPE_ANDROID = 1;
+    PLATFORM_TYPE_IOS = 2;
+    PLATFORM_TYPE_WEB = 3;
+    PLATFORM_TYPE_CLC = 4;
+    PLATFORM_TYPE_TESTS = 42;
 }
 
 // Generic client info, containing information about platform type, version, sdk etc
@@ -52,7 +52,7 @@ message ClientInfo {
 
 service DeviceInfo {
     /// Set info about current device
-    rpc NotifyAboutDeviceInfo (RequestNotifyAboutDeviceInfo) returns (ResponseVoid) {
+    rpc NotifyAboutDeviceInfo (RequestNotifyAboutDeviceInfo) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/DeviceInfo/NotifyAboutDeviceInfo"
             body: "*"

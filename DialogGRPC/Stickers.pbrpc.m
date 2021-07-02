@@ -8,9 +8,9 @@
 #import <RxLibrary/GRXWriter+Immediate.h>
 
 #import "Wrappers.pbobjc.h"
+#import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Miscellaneous.pbobjc.h"
 #import "MediaAndFiles.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 
@@ -101,16 +101,16 @@
              responseClass:[ResponseLoadAcesssibleStickers class]];
 }
 
-#pragma mark AddStickerPackReference(RequestAddStickerPackReference) returns (ResponseSeq)
+#pragma mark AddStickerPackReference(RequestAddStickerPackReference) returns (Empty)
 
-- (void)addStickerPackReferenceWithRequest:(RequestAddStickerPackReference *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (void)addStickerPackReferenceWithRequest:(RequestAddStickerPackReference *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToAddStickerPackReferenceWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToAddStickerPackReferenceWithRequest:(RequestAddStickerPackReference *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToAddStickerPackReferenceWithRequest:(RequestAddStickerPackReference *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"AddStickerPackReference"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeq class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)addStickerPackReferenceWithMessage:(RequestAddStickerPackReference *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -118,19 +118,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeq class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark RemoveStickerPackReference(RequestRemoveStickerPackReference) returns (ResponseSeq)
+#pragma mark RemoveStickerPackReference(RequestRemoveStickerPackReference) returns (Empty)
 
-- (void)removeStickerPackReferenceWithRequest:(RequestRemoveStickerPackReference *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (void)removeStickerPackReferenceWithRequest:(RequestRemoveStickerPackReference *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToRemoveStickerPackReferenceWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToRemoveStickerPackReferenceWithRequest:(RequestRemoveStickerPackReference *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToRemoveStickerPackReferenceWithRequest:(RequestRemoveStickerPackReference *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"RemoveStickerPackReference"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeq class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)removeStickerPackReferenceWithMessage:(RequestRemoveStickerPackReference *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -138,19 +138,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeq class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark AddStickerCollection(RequestAddStickerCollection) returns (ResponseSeq)
+#pragma mark AddStickerCollection(RequestAddStickerCollection) returns (Empty)
 
-- (void)addStickerCollectionWithRequest:(RequestAddStickerCollection *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (void)addStickerCollectionWithRequest:(RequestAddStickerCollection *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToAddStickerCollectionWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToAddStickerCollectionWithRequest:(RequestAddStickerCollection *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToAddStickerCollectionWithRequest:(RequestAddStickerCollection *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"AddStickerCollection"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeq class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)addStickerCollectionWithMessage:(RequestAddStickerCollection *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -158,19 +158,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeq class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark RemoveStickerCollection(RequestRemoveStickerCollection) returns (ResponseSeq)
+#pragma mark RemoveStickerCollection(RequestRemoveStickerCollection) returns (Empty)
 
-- (void)removeStickerCollectionWithRequest:(RequestRemoveStickerCollection *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (void)removeStickerCollectionWithRequest:(RequestRemoveStickerCollection *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToRemoveStickerCollectionWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToRemoveStickerCollectionWithRequest:(RequestRemoveStickerCollection *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToRemoveStickerCollectionWithRequest:(RequestRemoveStickerCollection *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"RemoveStickerCollection"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeq class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)removeStickerCollectionWithMessage:(RequestRemoveStickerCollection *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -178,7 +178,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeq class]];
+             responseClass:[GPBEmpty class]];
 }
 
 #pragma mark LoadStickerCollection(RequestLoadStickerCollection) returns (ResponseLoadStickerCollection)

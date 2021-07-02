@@ -17,7 +17,6 @@
 
 #import "Miniappsregistry.pbobjc.h"
 #import "Empty.pbobjc.h"
-#import "Wrappers.pbobjc.h"
 #import "Definitions.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
@@ -78,10 +77,10 @@ GPBEnumDescriptor *AppType_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "Unknown\000WebView\000";
+        "AppTypeUnknown\000AppTypeWebView\000";
     static const int32_t values[] = {
-        AppType_Unknown,
-        AppType_WebView,
+        AppType_AppTypeUnknown,
+        AppType_AppTypeWebView,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(AppType)
@@ -99,8 +98,8 @@ GPBEnumDescriptor *AppType_EnumDescriptor(void) {
 
 BOOL AppType_IsValidValue(int32_t value__) {
   switch (value__) {
-    case AppType_Unknown:
-    case AppType_WebView:
+    case AppType_AppTypeUnknown:
+    case AppType_AppTypeWebView:
       return YES;
     default:
       return NO;
@@ -358,15 +357,15 @@ GPBEnumDescriptor *UpdateMiniApp_AppLifecycle_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "ApplifecycleCreated\000ApplifecycleUpdated\000"
-        "ApplifecycleEnabled\000ApplifecycleDisabled"
-        "\000ApplifecycleDeleted\000";
+        "AppLifecycleCreated\000AppLifecycleUpdated\000"
+        "AppLifecycleEnabled\000AppLifecycleDisabled"
+        "\000AppLifecycleDeleted\000";
     static const int32_t values[] = {
-        UpdateMiniApp_AppLifecycle_ApplifecycleCreated,
-        UpdateMiniApp_AppLifecycle_ApplifecycleUpdated,
-        UpdateMiniApp_AppLifecycle_ApplifecycleEnabled,
-        UpdateMiniApp_AppLifecycle_ApplifecycleDisabled,
-        UpdateMiniApp_AppLifecycle_ApplifecycleDeleted,
+        UpdateMiniApp_AppLifecycle_AppLifecycleCreated,
+        UpdateMiniApp_AppLifecycle_AppLifecycleUpdated,
+        UpdateMiniApp_AppLifecycle_AppLifecycleEnabled,
+        UpdateMiniApp_AppLifecycle_AppLifecycleDisabled,
+        UpdateMiniApp_AppLifecycle_AppLifecycleDeleted,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(UpdateMiniApp_AppLifecycle)
@@ -384,11 +383,11 @@ GPBEnumDescriptor *UpdateMiniApp_AppLifecycle_EnumDescriptor(void) {
 
 BOOL UpdateMiniApp_AppLifecycle_IsValidValue(int32_t value__) {
   switch (value__) {
-    case UpdateMiniApp_AppLifecycle_ApplifecycleCreated:
-    case UpdateMiniApp_AppLifecycle_ApplifecycleUpdated:
-    case UpdateMiniApp_AppLifecycle_ApplifecycleEnabled:
-    case UpdateMiniApp_AppLifecycle_ApplifecycleDisabled:
-    case UpdateMiniApp_AppLifecycle_ApplifecycleDeleted:
+    case UpdateMiniApp_AppLifecycle_AppLifecycleCreated:
+    case UpdateMiniApp_AppLifecycle_AppLifecycleUpdated:
+    case UpdateMiniApp_AppLifecycle_AppLifecycleEnabled:
+    case UpdateMiniApp_AppLifecycle_AppLifecycleDisabled:
+    case UpdateMiniApp_AppLifecycle_AppLifecycleDeleted:
       return YES;
     default:
       return NO;

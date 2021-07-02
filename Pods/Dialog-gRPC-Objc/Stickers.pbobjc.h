@@ -67,7 +67,7 @@ typedef GPB_ENUM(StickerDescriptor_FieldNumber) {
 GPB_FINAL @interface StickerDescriptor : GPBMessage
 
 /** / Sticker unique id */
-@property(nonatomic, readwrite) int32_t id_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 /** / Emoji code for sticker */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *emoji;
@@ -112,7 +112,7 @@ typedef GPB_ENUM(StickerCollection_FieldNumber) {
 GPB_FINAL @interface StickerCollection : GPBMessage
 
 /** / Unique id of a collection */
-@property(nonatomic, readwrite) int32_t id_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 /** / Sticker pack title */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *title;
@@ -136,11 +136,9 @@ GPB_FINAL @interface StickerCollection : GPBMessage
 
 typedef GPB_ENUM(ResponseStickersResponse_FieldNumber) {
   ResponseStickersResponse_FieldNumber_CollectionsArray = 1,
-  ResponseStickersResponse_FieldNumber_Seq = 2,
-  ResponseStickersResponse_FieldNumber_State = 3,
-  ResponseStickersResponse_FieldNumber_RemovedCollectionsArray = 4,
-  ResponseStickersResponse_FieldNumber_Clock = 5,
-  ResponseStickersResponse_FieldNumber_PrevClock = 6,
+  ResponseStickersResponse_FieldNumber_RemovedCollectionsArray = 2,
+  ResponseStickersResponse_FieldNumber_Clock = 3,
+  ResponseStickersResponse_FieldNumber_PrevClock = 4,
 };
 
 /**
@@ -151,11 +149,6 @@ GPB_FINAL @interface ResponseStickersResponse : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<StickerCollection*> *collectionsArray;
 /** The number of items in @c collectionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger collectionsArray_Count;
-
-/** / deprecated */
-@property(nonatomic, readwrite) int32_t seq;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *state;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<StickerCollection*> *removedCollectionsArray;
 /** The number of items in @c removedCollectionsArray without causing the array to be created. */
@@ -258,7 +251,7 @@ typedef GPB_ENUM(RequestAddStickerPackReference_FieldNumber) {
  **/
 GPB_FINAL @interface RequestAddStickerPackReference : GPBMessage
 
-@property(nonatomic, readwrite) int32_t sourceStickerPack;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *sourceStickerPack;
 
 @end
 
@@ -273,7 +266,7 @@ typedef GPB_ENUM(RequestRemoveStickerPackReference_FieldNumber) {
  **/
 GPB_FINAL @interface RequestRemoveStickerPackReference : GPBMessage
 
-@property(nonatomic, readwrite) int32_t sourceStickerPack;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *sourceStickerPack;
 
 @end
 
@@ -305,7 +298,7 @@ typedef GPB_ENUM(UpdateStickerPackRemoved_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateStickerPackRemoved : GPBMessage
 
-@property(nonatomic, readwrite) int32_t packId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *packId;
 
 @end
 
@@ -352,7 +345,7 @@ typedef GPB_ENUM(RequestRemoveStickerCollection_FieldNumber) {
  **/
 GPB_FINAL @interface RequestRemoveStickerCollection : GPBMessage
 
-@property(nonatomic, readwrite) int32_t id_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 @end
 
@@ -367,7 +360,7 @@ typedef GPB_ENUM(RequestLoadStickerCollection_FieldNumber) {
  **/
 GPB_FINAL @interface RequestLoadStickerCollection : GPBMessage
 
-@property(nonatomic, readwrite) int32_t id_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 @end
 

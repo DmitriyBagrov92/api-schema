@@ -17,11 +17,10 @@ package dialog;
 // For adding/deleting contacts AddContact and DeleteContact.
 
 import "wrappers.proto";
+import "empty.proto";
 import "annotations.proto";
 import "definitions.proto";
-import "miscellaneous.proto";
 import "peers.proto";
-import "users.proto";
 import "scalapb.proto";
 
 option go_package = "dialog";
@@ -44,7 +43,7 @@ message EmailToImport {
 }
 
 message UserPhoneHashContact {
-    int32 user_id = 1;
+    string user_id = 1;
     string phone_hash = 2;
     string name = 3;
 }
@@ -55,19 +54,12 @@ message RequestImportContacts {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     repeated PhoneToImport phones = 1 [(dlg).log="compact"];
     repeated EmailToImport emails = 2 [(dlg).log="compact"];
-    /// Optimizations drops some info from response to decrease traffic and latency
-    repeated UpdateOptimization optimizations = 3 [(dlg).log="visible"];
 }
 
 message ResponseImportContacts {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    reserved 1;
-
-    int32 seq = 2; /// Deprecated
-    /// Server state related to current client, used by server only
-    bytes state = 3;
-    /// Optimizations drops some info from response to decrease traffic and latency
-    repeated UserOutPeer user_peers = 4;
+    /// Optimizations drop some info from response to decrease traffic and latency
+    repeated UserOutPeer user_peers = 1;
 }
 
 // Importing hashed phones and contact names for building contact list
@@ -84,12 +76,10 @@ message RequestDeferredImportContacts {
         string contact_name = 2;
     }
 
-    reserved 1, 2;
-
     // some stable device identifier
-    string device_id = 3;
+    string device_id = 1;
     // list of hashed phone contacts from the device
-    repeated PhoneContact phone_contacts = 4;
+    repeated PhoneContact phone_contacts = 2;
 }
 
 message ResponseDeferredImportContacts {
@@ -104,29 +94,26 @@ message ResponseDeferredImportContacts {
 message RequestGetContacts {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     string contacts_hash = 1 [(dlg).log="visible"];
-    repeated UpdateOptimization optimizations = 2 [(dlg).log="visible"];
 }
 
 message ResponseGetContacts {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    reserved 1, 4;
-
-    bool is_not_changed = 2;
-    repeated UserOutPeer user_peers = 3;
-    repeated UserPhoneHashContact phone_contacts = 5;
+    bool is_not_changed = 1;
+    repeated UserOutPeer user_peers = 2;
+    repeated UserPhoneHashContact phone_contacts = 3;
 }
 
 // Removing contact from contact list
 message RequestRemoveContact {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    int32 uid = 1 [(dlg).log="visible"];
+    string user_id = 1 [(dlg).log="visible"];
     int64 access_hash = 2 [(dlg).log="danger"];
 }
 
 // Adding contact to contact list
 message RequestAddContact {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    int32 uid = 1 [(dlg).log="visible"];
+    string user_id = 1 [(dlg).log="visible"];
     int64 access_hash = 2 [(dlg).log="danger"];
 }
 
@@ -134,35 +121,25 @@ message RequestAddContact {
 message RequestSearchContacts {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     string request = 1 [(dlg).log="visible"];
-    repeated UpdateOptimization optimizations = 2;
 }
 
 message ResponseSearchContacts {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-
-    /// Registered contacts (for old bot sdk compatibility)
-    repeated User users = 1;
-    /// ---------------------------------------------------
-
-    repeated UserOutPeer user_peers = 2;
+    repeated UserOutPeer user_peers = 1;
 }
 
 // Update about contact registration
 message UpdateContactRegistered {
-    int32 uid = 1 [(dlg).log="visible"]; /// User id of a registered contact
-    bool is_silent = 2 [(dlg).log="visible"]; /// deprecated
-    int64 date = 3 [(dlg).log="visible"]; /// deprecated
-    UUIDValue mid = 5 [(dlg).log="visible"]; /// deprecated
+    string user_id = 1 [(dlg).log="visible"]; /// User id of a registered contact
 }
 
 // Update about contacts added
 message UpdateContactsAdded {
-    reserved 2, 3, 5;
     /// User ids of the registered contacts
-    repeated int32 uids = 1 [(dlg).log="compact"];
+    repeated string user_ids = 1 [(dlg).log="compact"];
     /// Id of the task that finished
-    google.protobuf.StringValue task_id = 4 [(dlg).log="compact"];
-    repeated UserPhoneHashContact phone_contacts = 6;
+    google.protobuf.StringValue task_id = 2 [(dlg).log="compact"];
+    repeated UserPhoneHashContact phone_contacts = 3;
 }
 
 // Update about suspending task - normally it should be ignored
@@ -172,7 +149,7 @@ message UpdateContactsAddTaskSuspended {
 
 // Update about contacts removed
 message UpdateContactsRemoved {
-    repeated int32 uids = 1 [(dlg).log="compact"];
+    repeated string user_ids = 1 [(dlg).log="compact"];
 }
 
 service Contacts {
@@ -196,13 +173,13 @@ service Contacts {
             body: "*"
         };
     }
-    rpc RemoveContact (RequestRemoveContact) returns (ResponseSeq) {
+    rpc RemoveContact (RequestRemoveContact) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Contacts/RemoveContact"
             body: "*"
         };
     }
-    rpc AddContact (RequestAddContact) returns (ResponseSeq) {
+    rpc AddContact (RequestAddContact) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Contacts/AddContact"
             body: "*"

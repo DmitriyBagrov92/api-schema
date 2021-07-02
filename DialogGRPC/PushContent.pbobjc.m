@@ -109,11 +109,12 @@ GPBEnumDescriptor *PushEventType_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "Create\000Update\000Delete\000";
+        "PushEventTypeCreate\000PushEventTypeUpdate\000"
+        "PushEventTypeDelete\000";
     static const int32_t values[] = {
-        PushEventType_Create,
-        PushEventType_Update,
-        PushEventType_Delete,
+        PushEventType_PushEventTypeCreate,
+        PushEventType_PushEventTypeUpdate,
+        PushEventType_PushEventTypeDelete,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(PushEventType)
@@ -131,9 +132,9 @@ GPBEnumDescriptor *PushEventType_EnumDescriptor(void) {
 
 BOOL PushEventType_IsValidValue(int32_t value__) {
   switch (value__) {
-    case PushEventType_Create:
-    case PushEventType_Update:
-    case PushEventType_Delete:
+    case PushEventType_PushEventTypeCreate:
+    case PushEventType_PushEventTypeUpdate:
+    case PushEventType_PushEventTypeDelete:
       return YES;
     default:
       return NO;
@@ -207,7 +208,7 @@ typedef struct LocalizableString__storage_ {
 typedef struct PushPeer__storage_ {
   uint32_t _has_storage_[1];
   PushPeerType type;
-  int32_t id_p;
+  NSString *id_p;
   NSString *strId;
 } PushPeer__storage_;
 
@@ -233,7 +234,7 @@ typedef struct PushPeer__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(PushPeer__storage_, id_p),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "strId",
@@ -297,7 +298,6 @@ void SetPushPeer_Type_RawValue(PushPeer *message, int32_t value) {
 typedef struct EncryptedPushContent__storage_ {
   uint32_t _has_storage_[3];
   int32_t unreadMessageCounter;
-  int32_t senderUserId;
   PushEventType eventType;
   LocalizableString *locAlertBody;
   NSString *simpleAlertBody;
@@ -306,6 +306,7 @@ typedef struct EncryptedPushContent__storage_ {
   NSString *sound;
   PushPeer *peer;
   UUIDValue *messageId;
+  NSString *senderUserId;
   int64_t date;
 } EncryptedPushContent__storage_;
 
@@ -393,7 +394,7 @@ typedef struct EncryptedPushContent__storage_ {
         .number = EncryptedPushContent_FieldNumber_IsRespondable,
         .hasIndex = 4,
         .offset = 5,  // Stored in _has_storage_ to save space.
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
       {
@@ -403,7 +404,7 @@ typedef struct EncryptedPushContent__storage_ {
         .hasIndex = 6,
         .offset = (uint32_t)offsetof(EncryptedPushContent__storage_, senderUserId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "date",
@@ -439,11 +440,6 @@ typedef struct EncryptedPushContent__storage_ {
     [localDescriptor setupOneofs:oneofs
                            count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
                    firstHasIndex:-1];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\001\013\r\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

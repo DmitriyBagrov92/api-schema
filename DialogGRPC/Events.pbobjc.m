@@ -13,12 +13,11 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
-#import <stdatomic.h>
-
 #import "Events.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Peers.pbobjc.h"
 #import "Definitions.pbobjc.h"
+#import "Messaging.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
@@ -55,6 +54,7 @@ GPBObjCClassDeclaration(UUIDValue);
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[GAPIAnnotationsRoot extensionRegistry]];
     [registry addExtensions:[DefinitionsRoot extensionRegistry]];
+    [registry addExtensions:[ScalapbRoot extensionRegistry]];
   }
   return registry;
 }
@@ -69,48 +69,10 @@ static GPBFileDescriptor *EventsRoot_FileDescriptor(void) {
   static GPBFileDescriptor *descriptor = NULL;
   if (!descriptor) {
     GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
-    descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"dialog.events"
+    descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"dialog"
                                                      syntax:GPBFileSyntaxProto3];
   }
   return descriptor;
-}
-
-#pragma mark - Enum LoadMode
-
-GPBEnumDescriptor *LoadMode_EnumDescriptor(void) {
-  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
-  if (!descriptor) {
-    static const char *valueNames =
-        "LoadmodeUnknown\000LoadmodeForward\000Loadmode"
-        "Backward\000";
-    static const int32_t values[] = {
-        LoadMode_LoadmodeUnknown,
-        LoadMode_LoadmodeForward,
-        LoadMode_LoadmodeBackward,
-    };
-    GPBEnumDescriptor *worker =
-        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(LoadMode)
-                                       valueNames:valueNames
-                                           values:values
-                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
-                                     enumVerifier:LoadMode_IsValidValue];
-    GPBEnumDescriptor *expected = nil;
-    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
-      [worker release];
-    }
-  }
-  return descriptor;
-}
-
-BOOL LoadMode_IsValidValue(int32_t value__) {
-  switch (value__) {
-    case LoadMode_LoadmodeUnknown:
-    case LoadMode_LoadmodeForward:
-    case LoadMode_LoadmodeBackward:
-      return YES;
-    default:
-      return NO;
-  }
 }
 
 #pragma mark - Event
@@ -242,13 +204,13 @@ void Event_ClearEventOneOfCase(Event *message) {
 
 @dynamic hasPeer, peer;
 @dynamic hasMid, mid;
-@dynamic user;
+@dynamic userId;
 
 typedef struct Event_Mention__storage_ {
   uint32_t _has_storage_[1];
-  int32_t user;
   Peer *peer;
   UUIDValue *mid;
+  NSString *userId;
 } Event_Mention__storage_;
 
 // This method is threadsafe because it is initially called
@@ -276,13 +238,13 @@ typedef struct Event_Mention__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "user",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = Event_Mention_FieldNumber_User,
+        .number = Event_Mention_FieldNumber_UserId,
         .hasIndex = 2,
-        .offset = (uint32_t)offsetof(Event_Mention__storage_, user),
+        .offset = (uint32_t)offsetof(Event_Mention__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -377,12 +339,12 @@ typedef struct Event_Reactions__storage_ {
 @implementation Event_Reactions_Reaction
 
 @dynamic code;
-@dynamic users, users_Count;
+@dynamic userIds, userIds_Count;
 
 typedef struct Event_Reactions_Reaction__storage_ {
   uint32_t _has_storage_[1];
   NSString *code;
-  GPBInt32Int64Dictionary *users;
+  GPBStringInt64Dictionary *userIds;
 } Event_Reactions_Reaction__storage_;
 
 // This method is threadsafe because it is initially called
@@ -401,12 +363,12 @@ typedef struct Event_Reactions_Reaction__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "users",
+        .name = "userIds",
         .dataTypeSpecific.clazz = Nil,
-        .number = Event_Reactions_Reaction_FieldNumber_Users,
+        .number = Event_Reactions_Reaction_FieldNumber_UserIds,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(Event_Reactions_Reaction__storage_, users),
-        .flags = GPBFieldMapKeyInt32,
+        .offset = (uint32_t)offsetof(Event_Reactions_Reaction__storage_, userIds),
+        .flags = GPBFieldMapKeyString,
         .dataType = GPBDataTypeInt64,
       },
     };
@@ -435,13 +397,13 @@ typedef struct Event_Reactions_Reaction__storage_ {
 
 @dynamic hasPeer, peer;
 @dynamic hasMid, mid;
-@dynamic user;
+@dynamic userId;
 
 typedef struct Event_Reply__storage_ {
   uint32_t _has_storage_[1];
-  int32_t user;
   Peer *peer;
   UUIDValue *mid;
+  NSString *userId;
 } Event_Reply__storage_;
 
 // This method is threadsafe because it is initially called
@@ -469,13 +431,13 @@ typedef struct Event_Reply__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "user",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = Event_Reply_FieldNumber_User,
+        .number = Event_Reply_FieldNumber_UserId,
         .hasIndex = 2,
-        .offset = (uint32_t)offsetof(Event_Reply__storage_, user),
+        .offset = (uint32_t)offsetof(Event_Reply__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -502,12 +464,12 @@ typedef struct Event_Reply__storage_ {
 @implementation Event_Invite
 
 @dynamic hasPeer, peer;
-@dynamic user;
+@dynamic userId;
 
 typedef struct Event_Invite__storage_ {
   uint32_t _has_storage_[1];
-  int32_t user;
   Peer *peer;
+  NSString *userId;
 } Event_Invite__storage_;
 
 // This method is threadsafe because it is initially called
@@ -526,13 +488,13 @@ typedef struct Event_Invite__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "user",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = Event_Invite_FieldNumber_User,
+        .number = Event_Invite_FieldNumber_UserId,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(Event_Invite__storage_, user),
+        .offset = (uint32_t)offsetof(Event_Invite__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -559,12 +521,12 @@ typedef struct Event_Invite__storage_ {
 @implementation Event_Kick
 
 @dynamic hasPeer, peer;
-@dynamic user;
+@dynamic userId;
 
 typedef struct Event_Kick__storage_ {
   uint32_t _has_storage_[1];
-  int32_t user;
   Peer *peer;
+  NSString *userId;
 } Event_Kick__storage_;
 
 // This method is threadsafe because it is initially called
@@ -583,13 +545,13 @@ typedef struct Event_Kick__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "user",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = Event_Kick_FieldNumber_User,
+        .number = Event_Kick_FieldNumber_UserId,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(Event_Kick__storage_, user),
+        .offset = (uint32_t)offsetof(Event_Kick__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -677,7 +639,7 @@ typedef struct UpdateEvent__storage_ {
 
 typedef struct LoadEventsRequest__storage_ {
   uint32_t _has_storage_[1];
-  LoadMode loadMode;
+  ListLoadMode loadMode;
   int32_t limit;
   int64_t fromClock;
 } LoadEventsRequest__storage_;
@@ -699,7 +661,7 @@ typedef struct LoadEventsRequest__storage_ {
       },
       {
         .name = "loadMode",
-        .dataTypeSpecific.enumDescFunc = LoadMode_EnumDescriptor,
+        .dataTypeSpecific.enumDescFunc = ListLoadMode_EnumDescriptor,
         .number = LoadEventsRequest_FieldNumber_LoadMode,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(LoadEventsRequest__storage_, loadMode),

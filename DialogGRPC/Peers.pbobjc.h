@@ -40,11 +40,11 @@ typedef GPB_ENUM(PeerType) {
    * of the field.
    **/
   PeerType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  PeerType_PeertypeUnknown = 0,
-  PeerType_PeertypePrivate = 1,
-  PeerType_PeertypeGroup = 2,
-  PeerType_PeertypeEncryptedprivate = 3,
-  PeerType_PeertypeSip = 4,
+  PeerType_PeerTypeUnknown = 0,
+  PeerType_PeerTypePrivate = 1,
+  PeerType_PeerTypeGroup = 2,
+  PeerType_PeerTypeEncryptedprivate = 3,
+  PeerType_PeerTypeSip = 4,
 };
 
 GPBEnumDescriptor *PeerType_EnumDescriptor(void);
@@ -85,7 +85,7 @@ GPB_FINAL @interface Peer : GPBMessage
 
 @property(nonatomic, readwrite) PeerType type;
 
-@property(nonatomic, readwrite) int32_t id_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *strId;
 /** Test to see if @c strId has been set. */
@@ -121,7 +121,7 @@ GPB_FINAL @interface OutPeer : GPBMessage
 
 @property(nonatomic, readwrite) PeerType type;
 
-@property(nonatomic, readwrite) int32_t id_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 @property(nonatomic, readwrite) int64_t accessHash;
 
@@ -146,7 +146,7 @@ void SetOutPeer_Type_RawValue(OutPeer *message, int32_t value);
 #pragma mark - UserOutPeer
 
 typedef GPB_ENUM(UserOutPeer_FieldNumber) {
-  UserOutPeer_FieldNumber_Uid = 1,
+  UserOutPeer_FieldNumber_UserId = 1,
   UserOutPeer_FieldNumber_AccessHash = 2,
 };
 
@@ -156,7 +156,7 @@ typedef GPB_ENUM(UserOutPeer_FieldNumber) {
 GPB_FINAL @interface UserOutPeer : GPBMessage
 
 /** / User's id */
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite) int64_t accessHash;
 
@@ -174,7 +174,7 @@ typedef GPB_ENUM(GroupOutPeer_FieldNumber) {
  **/
 GPB_FINAL @interface GroupOutPeer : GPBMessage
 
-@property(nonatomic, readwrite) int32_t groupId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @property(nonatomic, readwrite) int64_t accessHash;
 

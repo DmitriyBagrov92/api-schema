@@ -61,7 +61,7 @@ GPB_FINAL @interface Reaction : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *code;
 
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Array *usersArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *usersArray;
 /** The number of items in @c usersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger usersArray_Count;
 
@@ -88,16 +88,16 @@ GPB_FINAL @interface MessageReactions : GPBMessage
 
 @end
 
-#pragma mark - MessageReactionsUpdate
+#pragma mark - UpdateMessageReactions
 
-typedef GPB_ENUM(MessageReactionsUpdate_FieldNumber) {
-  MessageReactionsUpdate_FieldNumber_Peer = 1,
-  MessageReactionsUpdate_FieldNumber_MessageReaction = 2,
-  MessageReactionsUpdate_FieldNumber_PeerClock = 3,
-  MessageReactionsUpdate_FieldNumber_PrevPeerClock = 4,
+typedef GPB_ENUM(UpdateMessageReactions_FieldNumber) {
+  UpdateMessageReactions_FieldNumber_Peer = 1,
+  UpdateMessageReactions_FieldNumber_MessageReaction = 2,
+  UpdateMessageReactions_FieldNumber_PeerClock = 3,
+  UpdateMessageReactions_FieldNumber_PrevPeerClock = 4,
 };
 
-GPB_FINAL @interface MessageReactionsUpdate : GPBMessage
+GPB_FINAL @interface UpdateMessageReactions : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */

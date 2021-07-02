@@ -15,11 +15,10 @@
 
 #import "Contacts.pbobjc.h"
 #import "Wrappers.pbobjc.h"
+#import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Miscellaneous.pbobjc.h"
 #import "Peers.pbobjc.h"
-#import "Users.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
@@ -36,8 +35,6 @@ GPBObjCClassDeclaration(GPBStringValue);
 GPBObjCClassDeclaration(PhoneToImport);
 GPBObjCClassDeclaration(RequestDeferredImportContacts);
 GPBObjCClassDeclaration(RequestDeferredImportContacts_PhoneContact);
-GPBObjCClassDeclaration(UUIDValue);
-GPBObjCClassDeclaration(User);
 GPBObjCClassDeclaration(UserOutPeer);
 GPBObjCClassDeclaration(UserPhoneHashContact);
 
@@ -55,6 +52,7 @@ GPBObjCClassDeclaration(UserPhoneHashContact);
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[GAPIAnnotationsRoot extensionRegistry]];
     [registry addExtensions:[DefinitionsRoot extensionRegistry]];
+    [registry addExtensions:[ScalapbRoot extensionRegistry]];
   }
   return registry;
 }
@@ -197,7 +195,7 @@ typedef struct EmailToImport__storage_ {
 
 typedef struct UserPhoneHashContact__storage_ {
   uint32_t _has_storage_[1];
-  int32_t userId;
+  NSString *userId;
   NSString *phoneHash;
   NSString *name;
 } UserPhoneHashContact__storage_;
@@ -215,7 +213,7 @@ typedef struct UserPhoneHashContact__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(UserPhoneHashContact__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "phoneHash",
@@ -260,13 +258,11 @@ typedef struct UserPhoneHashContact__storage_ {
 
 @dynamic phonesArray, phonesArray_Count;
 @dynamic emailsArray, emailsArray_Count;
-@dynamic optimizationsArray, optimizationsArray_Count;
 
 typedef struct RequestImportContacts__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *phonesArray;
   NSMutableArray *emailsArray;
-  GPBEnumArray *optimizationsArray;
 } RequestImportContacts__storage_;
 
 // This method is threadsafe because it is initially called
@@ -293,15 +289,6 @@ typedef struct RequestImportContacts__storage_ {
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
-      {
-        .name = "optimizationsArray",
-        .dataTypeSpecific.enumDescFunc = UpdateOptimization_EnumDescriptor,
-        .number = RequestImportContacts_FieldNumber_OptimizationsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestImportContacts__storage_, optimizationsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
-      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[RequestImportContacts class]
@@ -325,14 +312,10 @@ typedef struct RequestImportContacts__storage_ {
 
 @implementation ResponseImportContacts
 
-@dynamic seq;
-@dynamic state;
 @dynamic userPeersArray, userPeersArray_Count;
 
 typedef struct ResponseImportContacts__storage_ {
   uint32_t _has_storage_[1];
-  int32_t seq;
-  NSData *state;
   NSMutableArray *userPeersArray;
 } ResponseImportContacts__storage_;
 
@@ -342,24 +325,6 @@ typedef struct ResponseImportContacts__storage_ {
   static GPBDescriptor *descriptor = nil;
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "seq",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseImportContacts_FieldNumber_Seq,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(ResponseImportContacts__storage_, seq),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "state",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseImportContacts_FieldNumber_State,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(ResponseImportContacts__storage_, state),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
       {
         .name = "userPeersArray",
         .dataTypeSpecific.clazz = GPBObjCClass(UserOutPeer),
@@ -551,12 +516,10 @@ typedef struct ResponseDeferredImportContacts__storage_ {
 @implementation RequestGetContacts
 
 @dynamic contactsHash;
-@dynamic optimizationsArray, optimizationsArray_Count;
 
 typedef struct RequestGetContacts__storage_ {
   uint32_t _has_storage_[1];
   NSString *contactsHash;
-  GPBEnumArray *optimizationsArray;
 } RequestGetContacts__storage_;
 
 // This method is threadsafe because it is initially called
@@ -573,15 +536,6 @@ typedef struct RequestGetContacts__storage_ {
         .offset = (uint32_t)offsetof(RequestGetContacts__storage_, contactsHash),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "optimizationsArray",
-        .dataTypeSpecific.enumDescFunc = UpdateOptimization_EnumDescriptor,
-        .number = RequestGetContacts_FieldNumber_OptimizationsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestGetContacts__storage_, optimizationsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -672,12 +626,12 @@ typedef struct ResponseGetContacts__storage_ {
 
 @implementation RequestRemoveContact
 
-@dynamic uid;
+@dynamic userId;
 @dynamic accessHash;
 
 typedef struct RequestRemoveContact__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
+  NSString *userId;
   int64_t accessHash;
 } RequestRemoveContact__storage_;
 
@@ -688,13 +642,13 @@ typedef struct RequestRemoveContact__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = RequestRemoveContact_FieldNumber_Uid,
+        .number = RequestRemoveContact_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestRemoveContact__storage_, uid),
+        .offset = (uint32_t)offsetof(RequestRemoveContact__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "accessHash",
@@ -728,12 +682,12 @@ typedef struct RequestRemoveContact__storage_ {
 
 @implementation RequestAddContact
 
-@dynamic uid;
+@dynamic userId;
 @dynamic accessHash;
 
 typedef struct RequestAddContact__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
+  NSString *userId;
   int64_t accessHash;
 } RequestAddContact__storage_;
 
@@ -744,13 +698,13 @@ typedef struct RequestAddContact__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = RequestAddContact_FieldNumber_Uid,
+        .number = RequestAddContact_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestAddContact__storage_, uid),
+        .offset = (uint32_t)offsetof(RequestAddContact__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "accessHash",
@@ -785,12 +739,10 @@ typedef struct RequestAddContact__storage_ {
 @implementation RequestSearchContacts
 
 @dynamic request;
-@dynamic optimizationsArray, optimizationsArray_Count;
 
 typedef struct RequestSearchContacts__storage_ {
   uint32_t _has_storage_[1];
   NSString *request;
-  GPBEnumArray *optimizationsArray;
 } RequestSearchContacts__storage_;
 
 // This method is threadsafe because it is initially called
@@ -807,15 +759,6 @@ typedef struct RequestSearchContacts__storage_ {
         .offset = (uint32_t)offsetof(RequestSearchContacts__storage_, request),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "optimizationsArray",
-        .dataTypeSpecific.enumDescFunc = UpdateOptimization_EnumDescriptor,
-        .number = RequestSearchContacts_FieldNumber_OptimizationsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestSearchContacts__storage_, optimizationsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -840,12 +783,10 @@ typedef struct RequestSearchContacts__storage_ {
 
 @implementation ResponseSearchContacts
 
-@dynamic usersArray, usersArray_Count;
 @dynamic userPeersArray, userPeersArray_Count;
 
 typedef struct ResponseSearchContacts__storage_ {
   uint32_t _has_storage_[1];
-  NSMutableArray *usersArray;
   NSMutableArray *userPeersArray;
 } ResponseSearchContacts__storage_;
 
@@ -855,15 +796,6 @@ typedef struct ResponseSearchContacts__storage_ {
   static GPBDescriptor *descriptor = nil;
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "usersArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(User),
-        .number = ResponseSearchContacts_FieldNumber_UsersArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponseSearchContacts__storage_, usersArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
       {
         .name = "userPeersArray",
         .dataTypeSpecific.clazz = GPBObjCClass(UserOutPeer),
@@ -896,16 +828,11 @@ typedef struct ResponseSearchContacts__storage_ {
 
 @implementation UpdateContactRegistered
 
-@dynamic uid;
-@dynamic isSilent;
-@dynamic date;
-@dynamic hasMid, mid;
+@dynamic userId;
 
 typedef struct UpdateContactRegistered__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
-  UUIDValue *mid;
-  int64_t date;
+  NSString *userId;
 } UpdateContactRegistered__storage_;
 
 // This method is threadsafe because it is initially called
@@ -915,40 +842,13 @@ typedef struct UpdateContactRegistered__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateContactRegistered_FieldNumber_Uid,
+        .number = UpdateContactRegistered_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateContactRegistered__storage_, uid),
+        .offset = (uint32_t)offsetof(UpdateContactRegistered__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "isSilent",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateContactRegistered_FieldNumber_IsSilent,
-        .hasIndex = 1,
-        .offset = 2,  // Stored in _has_storage_ to save space.
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBool,
-      },
-      {
-        .name = "date",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateContactRegistered_FieldNumber_Date,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(UpdateContactRegistered__storage_, date),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "mid",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = UpdateContactRegistered_FieldNumber_Mid,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(UpdateContactRegistered__storage_, mid),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -973,13 +873,13 @@ typedef struct UpdateContactRegistered__storage_ {
 
 @implementation UpdateContactsAdded
 
-@dynamic uidsArray, uidsArray_Count;
+@dynamic userIdsArray, userIdsArray_Count;
 @dynamic hasTaskId, taskId;
 @dynamic phoneContactsArray, phoneContactsArray_Count;
 
 typedef struct UpdateContactsAdded__storage_ {
   uint32_t _has_storage_[1];
-  GPBInt32Array *uidsArray;
+  NSMutableArray *userIdsArray;
   GPBStringValue *taskId;
   NSMutableArray *phoneContactsArray;
 } UpdateContactsAdded__storage_;
@@ -991,13 +891,13 @@ typedef struct UpdateContactsAdded__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uidsArray",
+        .name = "userIdsArray",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateContactsAdded_FieldNumber_UidsArray,
+        .number = UpdateContactsAdded_FieldNumber_UserIdsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(UpdateContactsAdded__storage_, uidsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked),
-        .dataType = GPBDataTypeInt32,
+        .offset = (uint32_t)offsetof(UpdateContactsAdded__storage_, userIdsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "taskId",
@@ -1085,11 +985,11 @@ typedef struct UpdateContactsAddTaskSuspended__storage_ {
 
 @implementation UpdateContactsRemoved
 
-@dynamic uidsArray, uidsArray_Count;
+@dynamic userIdsArray, userIdsArray_Count;
 
 typedef struct UpdateContactsRemoved__storage_ {
   uint32_t _has_storage_[1];
-  GPBInt32Array *uidsArray;
+  NSMutableArray *userIdsArray;
 } UpdateContactsRemoved__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1099,13 +999,13 @@ typedef struct UpdateContactsRemoved__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uidsArray",
+        .name = "userIdsArray",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateContactsRemoved_FieldNumber_UidsArray,
+        .number = UpdateContactsRemoved_FieldNumber_UserIdsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(UpdateContactsRemoved__storage_, uidsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked),
-        .dataType = GPBDataTypeInt32,
+        .offset = (uint32_t)offsetof(UpdateContactsRemoved__storage_, userIdsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

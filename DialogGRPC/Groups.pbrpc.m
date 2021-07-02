@@ -12,7 +12,6 @@
 #import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Miscellaneous.pbobjc.h"
 #import "Peers.pbobjc.h"
 #import "MediaAndFiles.pbobjc.h"
 #import "Scalapb.pbobjc.h"
@@ -104,16 +103,16 @@
              responseClass:[ResponseCreateGroup class]];
 }
 
-#pragma mark EditGroupTitle(RequestEditGroupTitle) returns (ResponseSeqDateMid)
+#pragma mark EditGroupTitle(RequestEditGroupTitle) returns (Empty)
 
-- (void)editGroupTitleWithRequest:(RequestEditGroupTitle *)request handler:(void(^)(ResponseSeqDateMid *_Nullable response, NSError *_Nullable error))handler{
+- (void)editGroupTitleWithRequest:(RequestEditGroupTitle *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToEditGroupTitleWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToEditGroupTitleWithRequest:(RequestEditGroupTitle *)request handler:(void(^)(ResponseSeqDateMid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToEditGroupTitleWithRequest:(RequestEditGroupTitle *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"EditGroupTitle"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeqDateMid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)editGroupTitleWithMessage:(RequestEditGroupTitle *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -121,19 +120,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeqDateMid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark SetGroupShortname(RequestSetGroupShortname) returns (ResponseSeq)
+#pragma mark SetGroupShortname(RequestSetGroupShortname) returns (Empty)
 
-- (void)setGroupShortnameWithRequest:(RequestSetGroupShortname *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (void)setGroupShortnameWithRequest:(RequestSetGroupShortname *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToSetGroupShortnameWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToSetGroupShortnameWithRequest:(RequestSetGroupShortname *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToSetGroupShortnameWithRequest:(RequestSetGroupShortname *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"SetGroupShortname"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeq class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)setGroupShortnameWithMessage:(RequestSetGroupShortname *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -141,19 +140,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeq class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark EditGroupAvatar(RequestEditGroupAvatar) returns (ResponseEditGroupAvatar)
+#pragma mark EditGroupAvatar(RequestEditGroupAvatar) returns (Empty)
 
-- (void)editGroupAvatarWithRequest:(RequestEditGroupAvatar *)request handler:(void(^)(ResponseEditGroupAvatar *_Nullable response, NSError *_Nullable error))handler{
+- (void)editGroupAvatarWithRequest:(RequestEditGroupAvatar *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToEditGroupAvatarWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToEditGroupAvatarWithRequest:(RequestEditGroupAvatar *)request handler:(void(^)(ResponseEditGroupAvatar *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToEditGroupAvatarWithRequest:(RequestEditGroupAvatar *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"EditGroupAvatar"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseEditGroupAvatar class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)editGroupAvatarWithMessage:(RequestEditGroupAvatar *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -161,19 +160,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseEditGroupAvatar class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark RemoveGroupAvatar(RequestRemoveGroupAvatar) returns (ResponseSeqDateMid)
+#pragma mark RemoveGroupAvatar(RequestRemoveGroupAvatar) returns (Empty)
 
-- (void)removeGroupAvatarWithRequest:(RequestRemoveGroupAvatar *)request handler:(void(^)(ResponseSeqDateMid *_Nullable response, NSError *_Nullable error))handler{
+- (void)removeGroupAvatarWithRequest:(RequestRemoveGroupAvatar *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToRemoveGroupAvatarWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToRemoveGroupAvatarWithRequest:(RequestRemoveGroupAvatar *)request handler:(void(^)(ResponseSeqDateMid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToRemoveGroupAvatarWithRequest:(RequestRemoveGroupAvatar *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"RemoveGroupAvatar"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeqDateMid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)removeGroupAvatarWithMessage:(RequestRemoveGroupAvatar *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -181,19 +180,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeqDateMid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark EditGroupAbout(RequestEditGroupAbout) returns (ResponseSeqDate)
+#pragma mark EditGroupAbout(RequestEditGroupAbout) returns (Empty)
 
-- (void)editGroupAboutWithRequest:(RequestEditGroupAbout *)request handler:(void(^)(ResponseSeqDate *_Nullable response, NSError *_Nullable error))handler{
+- (void)editGroupAboutWithRequest:(RequestEditGroupAbout *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToEditGroupAboutWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToEditGroupAboutWithRequest:(RequestEditGroupAbout *)request handler:(void(^)(ResponseSeqDate *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToEditGroupAboutWithRequest:(RequestEditGroupAbout *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"EditGroupAbout"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeqDate class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)editGroupAboutWithMessage:(RequestEditGroupAbout *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -201,7 +200,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeqDate class]];
+             responseClass:[GPBEmpty class]];
 }
 
 #pragma mark EditGroupBasePermissions(RequestEditGroupBasePermissions) returns (Empty)
@@ -224,16 +223,16 @@
              responseClass:[GPBEmpty class]];
 }
 
-#pragma mark InviteUser(RequestInviteUser) returns (ResponseSeqDateMid)
+#pragma mark InviteUser(RequestInviteUser) returns (Empty)
 
-- (void)inviteUserWithRequest:(RequestInviteUser *)request handler:(void(^)(ResponseSeqDateMid *_Nullable response, NSError *_Nullable error))handler{
+- (void)inviteUserWithRequest:(RequestInviteUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToInviteUserWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToInviteUserWithRequest:(RequestInviteUser *)request handler:(void(^)(ResponseSeqDateMid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToInviteUserWithRequest:(RequestInviteUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"InviteUser"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeqDateMid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)inviteUserWithMessage:(RequestInviteUser *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -241,19 +240,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeqDateMid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark LeaveGroup(RequestLeaveGroup) returns (ResponseSeqDateMid)
+#pragma mark LeaveGroup(RequestLeaveGroup) returns (Empty)
 
-- (void)leaveGroupWithRequest:(RequestLeaveGroup *)request handler:(void(^)(ResponseSeqDateMid *_Nullable response, NSError *_Nullable error))handler{
+- (void)leaveGroupWithRequest:(RequestLeaveGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToLeaveGroupWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToLeaveGroupWithRequest:(RequestLeaveGroup *)request handler:(void(^)(ResponseSeqDateMid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToLeaveGroupWithRequest:(RequestLeaveGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"LeaveGroup"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeqDateMid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)leaveGroupWithMessage:(RequestLeaveGroup *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -261,19 +260,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeqDateMid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark KickUser(RequestKickUser) returns (ResponseSeqDateMid)
+#pragma mark KickUser(RequestKickUser) returns (Empty)
 
-- (void)kickUserWithRequest:(RequestKickUser *)request handler:(void(^)(ResponseSeqDateMid *_Nullable response, NSError *_Nullable error))handler{
+- (void)kickUserWithRequest:(RequestKickUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToKickUserWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToKickUserWithRequest:(RequestKickUser *)request handler:(void(^)(ResponseSeqDateMid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToKickUserWithRequest:(RequestKickUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"KickUser"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeqDateMid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)kickUserWithMessage:(RequestKickUser *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -281,19 +280,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeqDateMid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark MakeUserAdmin(RequestMakeUserAdmin) returns (ResponseSeqDate)
+#pragma mark MakeUserAdmin(RequestMakeUserAdmin) returns (Empty)
 
-- (void)makeUserAdminWithRequest:(RequestMakeUserAdmin *)request handler:(void(^)(ResponseSeqDate *_Nullable response, NSError *_Nullable error))handler{
+- (void)makeUserAdminWithRequest:(RequestMakeUserAdmin *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToMakeUserAdminWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToMakeUserAdminWithRequest:(RequestMakeUserAdmin *)request handler:(void(^)(ResponseSeqDate *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToMakeUserAdminWithRequest:(RequestMakeUserAdmin *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"MakeUserAdmin"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeqDate class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)makeUserAdminWithMessage:(RequestMakeUserAdmin *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -301,7 +300,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeqDate class]];
+             responseClass:[GPBEmpty class]];
 }
 
 #pragma mark GetGroupMemberPermissions(RequestGetGroupMemberPermissions) returns (ResponseGetGroupMemberPermissions)
@@ -344,16 +343,16 @@
              responseClass:[ResponseMember class]];
 }
 
-#pragma mark TransferOwnership(RequestTransferOwnership) returns (ResponseSeqDate)
+#pragma mark TransferOwnership(RequestTransferOwnership) returns (Empty)
 
-- (void)transferOwnershipWithRequest:(RequestTransferOwnership *)request handler:(void(^)(ResponseSeqDate *_Nullable response, NSError *_Nullable error))handler{
+- (void)transferOwnershipWithRequest:(RequestTransferOwnership *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToTransferOwnershipWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToTransferOwnershipWithRequest:(RequestTransferOwnership *)request handler:(void(^)(ResponseSeqDate *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToTransferOwnershipWithRequest:(RequestTransferOwnership *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"TransferOwnership"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeqDate class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)transferOwnershipWithMessage:(RequestTransferOwnership *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -361,7 +360,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeqDate class]];
+             responseClass:[GPBEmpty class]];
 }
 
 #pragma mark GetGroupInviteUrl(RequestGetGroupInviteUrl) returns (ResponseInviteUrl)
@@ -444,16 +443,16 @@
              responseClass:[ResponseJoinGroup class]];
 }
 
-#pragma mark JoinGroupByPeer(RequestJoinGroupByPeer) returns (ResponseVoid)
+#pragma mark JoinGroupByPeer(RequestJoinGroupByPeer) returns (Empty)
 
-- (void)joinGroupByPeerWithRequest:(RequestJoinGroupByPeer *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)joinGroupByPeerWithRequest:(RequestJoinGroupByPeer *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToJoinGroupByPeerWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToJoinGroupByPeerWithRequest:(RequestJoinGroupByPeer *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToJoinGroupByPeerWithRequest:(RequestJoinGroupByPeer *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"JoinGroupByPeer"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)joinGroupByPeerWithMessage:(RequestJoinGroupByPeer *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -461,7 +460,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
 #pragma mark DeleteGroup(RequestDeleteGroup) returns (Empty)

@@ -61,27 +61,27 @@ GPBEnumDescriptor *Colors_EnumDescriptor(void);
  **/
 BOOL Colors_IsValidValue(int32_t value);
 
-#pragma mark - Enum FileUrlError_ErrorTag
+#pragma mark - Enum FileUrlErrorTag
 
-typedef GPB_ENUM(FileUrlError_ErrorTag) {
+typedef GPB_ENUM(FileUrlErrorTag) {
   /**
    * Value used if any message's field encounters a value that is not defined
    * by this enum. The message will also have C functions to get/set the rawValue
    * of the field.
    **/
-  FileUrlError_ErrorTag_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  FileUrlError_ErrorTag_FileurlerrorUnknown = 0,
-  FileUrlError_ErrorTag_FileurlerrorStorageError = 1,
-  FileUrlError_ErrorTag_FileurlerrorStorageForbiddenError = 2,
+  FileUrlErrorTag_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  FileUrlErrorTag_FileURLErrorTagUnknown = 0,
+  FileUrlErrorTag_FileURLErrorTagStorageError = 1,
+  FileUrlErrorTag_FileURLErrorTagStorageForbiddenError = 2,
 };
 
-GPBEnumDescriptor *FileUrlError_ErrorTag_EnumDescriptor(void);
+GPBEnumDescriptor *FileUrlErrorTag_EnumDescriptor(void);
 
 /**
  * Checks to see if the given value is defined by the enum or was not known at
  * the time this source was generated.
  **/
-BOOL FileUrlError_ErrorTag_IsValidValue(int32_t value);
+BOOL FileUrlErrorTag_IsValidValue(int32_t value);
 
 #pragma mark - MediaAndFilesRoot
 
@@ -111,7 +111,7 @@ typedef GPB_ENUM(FileLocation_FieldNumber) {
 GPB_FINAL @interface FileLocation : GPBMessage
 
 /** / Unique Id of file */
-@property(nonatomic, readwrite) int64_t fileId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *fileId;
 
 /** / Access hash of file */
 @property(nonatomic, readwrite) int64_t accessHash;
@@ -152,9 +152,9 @@ GPB_FINAL @interface ImageLocation : GPBMessage
 
 typedef GPB_ENUM(AudioLocation_FieldNumber) {
   AudioLocation_FieldNumber_FileLocation = 1,
-  AudioLocation_FieldNumber_Duration = 2,
+  AudioLocation_FieldNumber_DurationSeconds = 2,
   AudioLocation_FieldNumber_MimeType = 3,
-  AudioLocation_FieldNumber_FileSize = 4,
+  AudioLocation_FieldNumber_FileSizeBytes = 4,
 };
 
 /**
@@ -168,13 +168,13 @@ GPB_FINAL @interface AudioLocation : GPBMessage
 @property(nonatomic, readwrite) BOOL hasFileLocation;
 
 /** / audio duration in seconds */
-@property(nonatomic, readwrite) int32_t duration;
+@property(nonatomic, readwrite) int32_t durationSeconds;
 
 /** / mime type */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *mimeType;
 
 /** / file size */
-@property(nonatomic, readwrite) int32_t fileSize;
+@property(nonatomic, readwrite) int32_t fileSizeBytes;
 
 @end
 
@@ -184,7 +184,7 @@ typedef GPB_ENUM(AvatarImage_FieldNumber) {
   AvatarImage_FieldNumber_FileLocation = 1,
   AvatarImage_FieldNumber_Width = 2,
   AvatarImage_FieldNumber_Height = 3,
-  AvatarImage_FieldNumber_FileSize = 4,
+  AvatarImage_FieldNumber_FileSizeBytes = 4,
 };
 
 /**
@@ -204,7 +204,7 @@ GPB_FINAL @interface AvatarImage : GPBMessage
 @property(nonatomic, readwrite) int32_t height;
 
 /** / Size of file */
-@property(nonatomic, readwrite) int32_t fileSize;
+@property(nonatomic, readwrite) int32_t fileSizeBytes;
 
 @end
 
@@ -371,7 +371,7 @@ typedef GPB_ENUM(FileUrlDescription_FieldNumber) {
 GPB_FINAL @interface FileUrlDescription : GPBMessage
 
 /** / File id of url */
-@property(nonatomic, readwrite) int64_t fileId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *fileId;
 
 /** / Url for downloading */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *URL;
@@ -411,7 +411,7 @@ GPB_FINAL @interface FileUrlError : GPBMessage
 @property(nonatomic, readwrite) int64_t fileId;
 
 /** / error to handle on client */
-@property(nonatomic, readwrite) FileUrlError_ErrorTag tag;
+@property(nonatomic, readwrite) FileUrlErrorTag tag;
 
 /** / text fallback */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *reason;
@@ -454,7 +454,7 @@ GPB_FINAL @interface RequestGetFileUrl : GPBMessage
 
 typedef GPB_ENUM(ResponseGetFileUrl_FieldNumber) {
   ResponseGetFileUrl_FieldNumber_URL = 1,
-  ResponseGetFileUrl_FieldNumber_Timeout = 2,
+  ResponseGetFileUrl_FieldNumber_TimeoutSeconds = 2,
   ResponseGetFileUrl_FieldNumber_UnsignedURL = 3,
   ResponseGetFileUrl_FieldNumber_UnsignedURLHeadersArray = 4,
   ResponseGetFileUrl_FieldNumber_Md5Hash = 5,
@@ -464,7 +464,7 @@ GPB_FINAL @interface ResponseGetFileUrl : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *URL;
 
-@property(nonatomic, readwrite) int32_t timeout;
+@property(nonatomic, readwrite) int32_t timeoutSeconds;
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *unsignedURL;
 /** Test to see if @c unsignedURL has been set. */
@@ -573,13 +573,10 @@ GPB_FINAL @interface RequestGetFileUploadUrl : GPBMessage
 #pragma mark - ResponseGetFileUploadUrl
 
 typedef GPB_ENUM(ResponseGetFileUploadUrl_FieldNumber) {
-  ResponseGetFileUploadUrl_FieldNumber_URL = 1,
   ResponseGetFileUploadUrl_FieldNumber_UploadKey = 2,
 };
 
 GPB_FINAL @interface ResponseGetFileUploadUrl : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *URL;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSData *uploadKey;
 

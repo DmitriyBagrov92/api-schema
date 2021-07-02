@@ -15,11 +15,5 @@ option swift_prefix="API";
 message GetDifferenceCommand {
     google.protobuf.Int32Value seq = 1;
     bytes state = 2;
-    int64 configHash = 3;
-}
-
-message ServiceUpdate {
-    oneof update {
-        google.protobuf.BytesValue obsoleteUpdate = 1;
-    }
+    int64 config_hash = 3;
 }

@@ -15,8 +15,8 @@
 
 #import "Privacy.pbobjc.h"
 #import "Annotations.pbobjc.h"
+#import "Empty.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Miscellaneous.pbobjc.h"
 #import "Peers.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 // @@protoc_insertion_point(imports)
@@ -45,6 +45,7 @@ GPBObjCClassDeclaration(UserOutPeer);
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[GAPIAnnotationsRoot extensionRegistry]];
     [registry addExtensions:[DefinitionsRoot extensionRegistry]];
+    [registry addExtensions:[ScalapbRoot extensionRegistry]];
   }
   return registry;
 }
@@ -236,11 +237,11 @@ typedef struct ResponseLoadBlockedUsers__storage_ {
 
 @implementation UpdateUserBlocked
 
-@dynamic uid;
+@dynamic userId;
 
 typedef struct UpdateUserBlocked__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
+  NSString *userId;
 } UpdateUserBlocked__storage_;
 
 // This method is threadsafe because it is initially called
@@ -250,13 +251,13 @@ typedef struct UpdateUserBlocked__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateUserBlocked_FieldNumber_Uid,
+        .number = UpdateUserBlocked_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateUserBlocked__storage_, uid),
+        .offset = (uint32_t)offsetof(UpdateUserBlocked__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -281,11 +282,11 @@ typedef struct UpdateUserBlocked__storage_ {
 
 @implementation UpdateUserUnblocked
 
-@dynamic uid;
+@dynamic userId;
 
 typedef struct UpdateUserUnblocked__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
+  NSString *userId;
 } UpdateUserUnblocked__storage_;
 
 // This method is threadsafe because it is initially called
@@ -295,13 +296,13 @@ typedef struct UpdateUserUnblocked__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateUserUnblocked_FieldNumber_Uid,
+        .number = UpdateUserUnblocked_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateUserUnblocked__storage_, uid),
+        .offset = (uint32_t)offsetof(UpdateUserUnblocked__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

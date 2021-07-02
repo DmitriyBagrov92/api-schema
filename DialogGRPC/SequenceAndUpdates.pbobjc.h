@@ -29,7 +29,6 @@ CF_EXTERN_C_BEGIN
 
 @class Config;
 @class Dialog;
-@class GPBBytesValue;
 @class GPBEmpty;
 @class GPBInt64Value;
 @class GPBStringValue;
@@ -38,12 +37,11 @@ CF_EXTERN_C_BEGIN
 @class GroupOutPeer;
 @class GroupPartialInfo;
 @class HistoryMessage;
-@class MessageReactionsUpdate;
 @class Peer;
 @class PeersList;
+@class SeqUpdate;
+@class SeqUpdateBody;
 @class UUIDValue;
-@class UpdateCallDisposed;
-@class UpdateCallHandled;
 @class UpdateChatArchive;
 @class UpdateChatClear;
 @class UpdateChatDelete;
@@ -53,46 +51,30 @@ CF_EXTERN_C_BEGIN
 @class UpdateContactsAddTaskSuspended;
 @class UpdateContactsAdded;
 @class UpdateContactsRemoved;
-@class UpdateContainer;
 @class UpdateCountersChanged;
 @class UpdateDialogFavouriteChanged;
 @class UpdateDialogReadLaterChanged;
-@class UpdateEmptyUpdate;
 @class UpdateEvent;
-@class UpdateEventBusDeviceConnected;
-@class UpdateEventBusDeviceDisconnected;
-@class UpdateEventBusDisposed;
-@class UpdateEventBusMessage;
 @class UpdateFeatureFlagChanged;
-@class UpdateForceReloadState;
 @class UpdateGroup;
 @class UpdateGroupAboutChanged;
-@class UpdateGroupAboutChangedObsolete;
 @class UpdateGroupAvatarChanged;
-@class UpdateGroupAvatarChangedObsolete;
-@class UpdateGroupInviteObsolete;
 @class UpdateGroupMemberDiff;
 @class UpdateGroupMemberInvited;
 @class UpdateGroupMemberPermissionsChanged;
 @class UpdateGroupMembersCountChanged;
-@class UpdateGroupMembersUpdateObsolete;
 @class UpdateGroupMembersUpdated;
 @class UpdateGroupOnline;
 @class UpdateGroupOwnerChanged;
 @class UpdateGroupShortnameChanged;
 @class UpdateGroupTitleChanged;
-@class UpdateGroupTitleChangedObsolete;
 @class UpdateGroupTyping;
-@class UpdateGroupUserInvitedObsolete;
-@class UpdateGroupUserKickObsolete;
-@class UpdateGroupUserLeaveObsolete;
-@class UpdateIncomingCall;
-@class UpdateIncomingCallDeprecated;
 @class UpdateInteractiveMediaEvent;
 @class UpdateMessage;
 @class UpdateMessageContentChanged;
 @class UpdateMessageDelete;
 @class UpdateMessageEditRejectedByHook;
+@class UpdateMessageReactions;
 @class UpdateMessageRead;
 @class UpdateMessageReadByMe;
 @class UpdateMessageReceived;
@@ -104,7 +86,6 @@ CF_EXTERN_C_BEGIN
 @class UpdatePinnedMessagesChanged;
 @class UpdateRawUpdate;
 @class UpdateReactionsUpdate;
-@class UpdateSeqUpdate;
 @class UpdateSpaceMemberModified;
 @class UpdateSpaceModified;
 @class UpdateStickerCollectionsChanged;
@@ -127,8 +108,6 @@ CF_EXTERN_C_BEGIN
 @class UpdateUserLocalNameChanged;
 @class UpdateUserNameChanged;
 @class UpdateUserNickChanged;
-@class UpdateUserOffline;
-@class UpdateUserOnline;
 @class UpdateUserPreferredLanguagesChanged;
 @class UpdateUserSexChanged;
 @class UpdateUserStatusChanged;
@@ -137,11 +116,11 @@ CF_EXTERN_C_BEGIN
 @class User;
 @class UserOutPeer;
 @class UserPartialInfo;
-@class WeakUpdateBox_UpdateForceReloadState;
-@class WeakUpdateBox_UpdateForceReloadState_ForceReloadField;
 @class WeakUpdateCommand_ChangeMyOnline;
 @class WeakUpdateCommand_ChangeMyTyping;
 @class WeakUpdateCommand_SubscribeToOnlines;
+@class WeakUpdate_UpdateForceReloadState;
+@class WeakUpdate_UpdateForceReloadState_ForceReloadField;
 GPB_ENUM_FWD_DECLARE(DeviceType);
 GPB_ENUM_FWD_DECLARE(TypingType);
 
@@ -162,210 +141,148 @@ NS_ASSUME_NONNULL_BEGIN
 GPB_FINAL @interface SequenceAndUpdatesRoot : GPBRootObject
 @end
 
-#pragma mark - UpdateSeqUpdate
+#pragma mark - SeqUpdateBody
 
-typedef GPB_ENUM(UpdateSeqUpdate_FieldNumber) {
-  UpdateSeqUpdate_FieldNumber_Seq = 1,
-  UpdateSeqUpdate_FieldNumber_State = 2,
-  UpdateSeqUpdate_FieldNumber_UpdateHeader = 3,
-  UpdateSeqUpdate_FieldNumber_UpdateForceReloadState = 4,
-  UpdateSeqUpdate_FieldNumber_UpdateUserAvatarChanged = 5,
-  UpdateSeqUpdate_FieldNumber_UpdateUserNameChanged = 6,
-  UpdateSeqUpdate_FieldNumber_UpdateUserLocalNameChanged = 7,
-  UpdateSeqUpdate_FieldNumber_UpdateUserContactsChanged = 8,
-  UpdateSeqUpdate_FieldNumber_UpdateUserNickChanged = 9,
-  UpdateSeqUpdate_FieldNumber_UpdateUserAboutChanged = 10,
-  UpdateSeqUpdate_FieldNumber_UpdateUserPreferredLanguagesChanged = 11,
-  UpdateSeqUpdate_FieldNumber_UpdateUserTimeZoneChanged = 12,
-  UpdateSeqUpdate_FieldNumber_UpdateUserBotCommandsChanged = 13,
-  UpdateSeqUpdate_FieldNumber_UpdateUserExtChanged = 14,
-  UpdateSeqUpdate_FieldNumber_UpdateUserFullExtChanged = 15,
-  UpdateSeqUpdate_FieldNumber_UpdateUserSexChanged = 16,
-  UpdateSeqUpdate_FieldNumber_UpdateUserCustomProfileChanged = 17,
-  UpdateSeqUpdate_FieldNumber_UpdateUserStatusChanged = 18,
-  UpdateSeqUpdate_FieldNumber_UpdateContactRegistered = 19,
-  UpdateSeqUpdate_FieldNumber_UpdateContactsAdded = 20,
-  UpdateSeqUpdate_FieldNumber_UpdateContactsAddTaskSuspended = 21,
-  UpdateSeqUpdate_FieldNumber_UpdateContactsRemoved = 22,
-  UpdateSeqUpdate_FieldNumber_UpdateUserBlocked = 23,
-  UpdateSeqUpdate_FieldNumber_UpdateUserUnblocked = 24,
-  UpdateSeqUpdate_FieldNumber_UpdateInteractiveMediaEvent = 25,
-  UpdateSeqUpdate_FieldNumber_UpdateMessage = 26,
-  UpdateSeqUpdate_FieldNumber_UpdateMessageContentChanged = 27,
-  UpdateSeqUpdate_FieldNumber_UpdateMessageSent = 28,
-  UpdateSeqUpdate_FieldNumber_UpdateMessageReceived = 29,
-  UpdateSeqUpdate_FieldNumber_UpdateMessageRead = 30,
-  UpdateSeqUpdate_FieldNumber_UpdateMessageReadByMe = 31,
-  UpdateSeqUpdate_FieldNumber_UpdateMessageDelete = 32,
-  UpdateSeqUpdate_FieldNumber_UpdateChatClear = 33,
-  UpdateSeqUpdate_FieldNumber_UpdateChatDelete = 34,
-  UpdateSeqUpdate_FieldNumber_UpdateChatArchive = 35,
-  UpdateSeqUpdate_FieldNumber_UpdateChatGroupsChanged = 36,
-  UpdateSeqUpdate_FieldNumber_UpdateReactionsUpdate = 37,
-  UpdateSeqUpdate_FieldNumber_UpdateDialogFavouriteChanged = 38,
-  UpdateSeqUpdate_FieldNumber_UpdatePinnedMessagesChanged = 39,
-  UpdateSeqUpdate_FieldNumber_UpdateGroupTitleChanged = 40,
-  UpdateSeqUpdate_FieldNumber_UpdateGroupAvatarChanged = 41,
-  UpdateSeqUpdate_FieldNumber_UpdateGroupAboutChanged = 43,
-  UpdateSeqUpdate_FieldNumber_UpdateGroupOwnerChanged = 44,
-  UpdateSeqUpdate_FieldNumber_UpdateGroupMembersUpdated = 51,
-  UpdateSeqUpdate_FieldNumber_UpdateGroupMemberDiff = 52,
-  UpdateSeqUpdate_FieldNumber_UpdateGroupMembersCountChanged = 53,
-  UpdateSeqUpdate_FieldNumber_UpdateGroupMemberPermissionsChanged = 55,
-  UpdateSeqUpdate_FieldNumber_UpdateGroupInviteObsolete = 56,
-  UpdateSeqUpdate_FieldNumber_UpdateGroupUserInvitedObsolete = 57,
-  UpdateSeqUpdate_FieldNumber_UpdateGroupUserLeaveObsolete = 58,
-  UpdateSeqUpdate_FieldNumber_UpdateGroupUserKickObsolete = 59,
-  UpdateSeqUpdate_FieldNumber_UpdateGroupMembersUpdateObsolete = 60,
-  UpdateSeqUpdate_FieldNumber_UpdateGroupTitleChangedObsolete = 61,
-  UpdateSeqUpdate_FieldNumber_UpdateGroupAboutChangedObsolete = 63,
-  UpdateSeqUpdate_FieldNumber_UpdateGroupAvatarChangedObsolete = 64,
-  UpdateSeqUpdate_FieldNumber_UpdateGroupShortnameChanged = 65,
-  UpdateSeqUpdate_FieldNumber_UpdateStickerCollectionsChanged = 66,
-  UpdateSeqUpdate_FieldNumber_UpdateStickerPackRemoved = 67,
-  UpdateSeqUpdate_FieldNumber_UpdateStickerPackAdded = 68,
-  UpdateSeqUpdate_FieldNumber_UpdateTyping = 71,
-  UpdateSeqUpdate_FieldNumber_UpdateTypingStop = 72,
-  UpdateSeqUpdate_FieldNumber_UpdateUserOnline = 73,
-  UpdateSeqUpdate_FieldNumber_UpdateUserOffline = 74,
-  UpdateSeqUpdate_FieldNumber_UpdateUserLastSeen = 75,
-  UpdateSeqUpdate_FieldNumber_UpdateGroupOnline = 76,
-  UpdateSeqUpdate_FieldNumber_UpdateEventBusDeviceConnected = 77,
-  UpdateSeqUpdate_FieldNumber_UpdateEventBusDeviceDisconnected = 78,
-  UpdateSeqUpdate_FieldNumber_UpdateEventBusMessage = 79,
-  UpdateSeqUpdate_FieldNumber_UpdateEventBusDisposed = 80,
-  UpdateSeqUpdate_FieldNumber_UpdateIncomingCallDeprecated = 81,
-  UpdateSeqUpdate_FieldNumber_UpdateIncomingCall = 82,
-  UpdateSeqUpdate_FieldNumber_UpdateCallHandled = 83,
-  UpdateSeqUpdate_FieldNumber_UpdateCallDisposed = 84,
-  UpdateSeqUpdate_FieldNumber_UpdateParameterChanged = 85,
-  UpdateSeqUpdate_FieldNumber_UpdateRawUpdate = 86,
-  UpdateSeqUpdate_FieldNumber_UpdateEmptyUpdate = 87,
-  UpdateSeqUpdate_FieldNumber_UpdateCountersChanged = 88,
-  UpdateSeqUpdate_FieldNumber_UpdateConfig = 89,
-  UpdateSeqUpdate_FieldNumber_UpdateSpaceModified = 90,
-  UpdateSeqUpdate_FieldNumber_UpdateSpaceMemberModified = 91,
-  UpdateSeqUpdate_FieldNumber_UpdateMessageRejectedByHook = 92,
-  UpdateSeqUpdate_FieldNumber_UpdateMessageEditRejectedByHook = 93,
-  UpdateSeqUpdate_FieldNumber_UpdateUser = 94,
-  UpdateSeqUpdate_FieldNumber_UpdateFeatureFlagChanged = 95,
-  UpdateSeqUpdate_FieldNumber_UpdateThreadCreated = 96,
-  UpdateSeqUpdate_FieldNumber_UpdateThreadLifted = 97,
-  UpdateSeqUpdate_FieldNumber_UpdateGroup = 98,
-  UpdateSeqUpdate_FieldNumber_UpdateGroupMemberInvited = 99,
-  UpdateSeqUpdate_FieldNumber_MessageReactionsUpdate = 100,
-  UpdateSeqUpdate_FieldNumber_UpdatePermissionsChange = 101,
-  UpdateSeqUpdate_FieldNumber_UpdateGroupTyping = 102,
-  UpdateSeqUpdate_FieldNumber_UpdateDialogReadLaterChanged = 103,
+typedef GPB_ENUM(SeqUpdateBody_FieldNumber) {
+  SeqUpdateBody_FieldNumber_UpdateUserAvatarChanged = 1,
+  SeqUpdateBody_FieldNumber_UpdateUserNameChanged = 2,
+  SeqUpdateBody_FieldNumber_UpdateUserLocalNameChanged = 3,
+  SeqUpdateBody_FieldNumber_UpdateUserContactsChanged = 4,
+  SeqUpdateBody_FieldNumber_UpdateUserNickChanged = 5,
+  SeqUpdateBody_FieldNumber_UpdateUserAboutChanged = 6,
+  SeqUpdateBody_FieldNumber_UpdateUserPreferredLanguagesChanged = 7,
+  SeqUpdateBody_FieldNumber_UpdateUserTimeZoneChanged = 8,
+  SeqUpdateBody_FieldNumber_UpdateUserBotCommandsChanged = 9,
+  SeqUpdateBody_FieldNumber_UpdateUserExtChanged = 10,
+  SeqUpdateBody_FieldNumber_UpdateUserFullExtChanged = 11,
+  SeqUpdateBody_FieldNumber_UpdateUserSexChanged = 12,
+  SeqUpdateBody_FieldNumber_UpdateUserCustomProfileChanged = 13,
+  SeqUpdateBody_FieldNumber_UpdateUserStatusChanged = 14,
+  SeqUpdateBody_FieldNumber_UpdateContactRegistered = 15,
+  SeqUpdateBody_FieldNumber_UpdateContactsAdded = 16,
+  SeqUpdateBody_FieldNumber_UpdateContactsAddTaskSuspended = 17,
+  SeqUpdateBody_FieldNumber_UpdateContactsRemoved = 18,
+  SeqUpdateBody_FieldNumber_UpdateUserBlocked = 19,
+  SeqUpdateBody_FieldNumber_UpdateUserUnblocked = 20,
+  SeqUpdateBody_FieldNumber_UpdateInteractiveMediaEvent = 21,
+  SeqUpdateBody_FieldNumber_UpdateMessage = 22,
+  SeqUpdateBody_FieldNumber_UpdateMessageContentChanged = 23,
+  SeqUpdateBody_FieldNumber_UpdateMessageSent = 24,
+  SeqUpdateBody_FieldNumber_UpdateMessageReceived = 25,
+  SeqUpdateBody_FieldNumber_UpdateMessageRead = 26,
+  SeqUpdateBody_FieldNumber_UpdateMessageReadByMe = 27,
+  SeqUpdateBody_FieldNumber_UpdateMessageDelete = 28,
+  SeqUpdateBody_FieldNumber_UpdateChatClear = 29,
+  SeqUpdateBody_FieldNumber_UpdateChatDelete = 30,
+  SeqUpdateBody_FieldNumber_UpdateChatArchive = 31,
+  SeqUpdateBody_FieldNumber_UpdateChatGroupsChanged = 32,
+  SeqUpdateBody_FieldNumber_UpdateReactionsUpdate = 33,
+  SeqUpdateBody_FieldNumber_UpdateDialogFavouriteChanged = 34,
+  SeqUpdateBody_FieldNumber_UpdatePinnedMessagesChanged = 35,
+  SeqUpdateBody_FieldNumber_UpdateGroupTitleChanged = 36,
+  SeqUpdateBody_FieldNumber_UpdateGroupAvatarChanged = 37,
+  SeqUpdateBody_FieldNumber_UpdateGroupAboutChanged = 38,
+  SeqUpdateBody_FieldNumber_UpdateGroupOwnerChanged = 39,
+  SeqUpdateBody_FieldNumber_UpdateGroupMembersUpdated = 40,
+  SeqUpdateBody_FieldNumber_UpdateGroupMemberDiff = 41,
+  SeqUpdateBody_FieldNumber_UpdateGroupMembersCountChanged = 42,
+  SeqUpdateBody_FieldNumber_UpdateGroupMemberPermissionsChanged = 43,
+  SeqUpdateBody_FieldNumber_UpdateGroupShortnameChanged = 44,
+  SeqUpdateBody_FieldNumber_UpdateStickerCollectionsChanged = 45,
+  SeqUpdateBody_FieldNumber_UpdateStickerPackRemoved = 46,
+  SeqUpdateBody_FieldNumber_UpdateStickerPackAdded = 47,
+  SeqUpdateBody_FieldNumber_UpdateParameterChanged = 48,
+  SeqUpdateBody_FieldNumber_UpdateRawUpdate = 49,
+  SeqUpdateBody_FieldNumber_UpdateCountersChanged = 50,
+  SeqUpdateBody_FieldNumber_UpdateConfig = 51,
+  SeqUpdateBody_FieldNumber_UpdateSpaceModified = 52,
+  SeqUpdateBody_FieldNumber_UpdateSpaceMemberModified = 53,
+  SeqUpdateBody_FieldNumber_UpdateMessageRejectedByHook = 54,
+  SeqUpdateBody_FieldNumber_UpdateMessageEditRejectedByHook = 55,
+  SeqUpdateBody_FieldNumber_UpdateUser = 56,
+  SeqUpdateBody_FieldNumber_UpdateFeatureFlagChanged = 57,
+  SeqUpdateBody_FieldNumber_UpdateThreadCreated = 58,
+  SeqUpdateBody_FieldNumber_UpdateThreadLifted = 59,
+  SeqUpdateBody_FieldNumber_UpdateGroup = 60,
+  SeqUpdateBody_FieldNumber_UpdateGroupMemberInvited = 61,
+  SeqUpdateBody_FieldNumber_MessageReactionsUpdate = 62,
+  SeqUpdateBody_FieldNumber_UpdatePermissionsChange = 63,
+  SeqUpdateBody_FieldNumber_UpdateGroupTyping = 64,
+  SeqUpdateBody_FieldNumber_UpdateDialogReadLaterChanged = 65,
 };
 
-typedef GPB_ENUM(UpdateSeqUpdate_Update_OneOfCase) {
-  UpdateSeqUpdate_Update_OneOfCase_GPBUnsetOneOfCase = 0,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateForceReloadState = 4,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateUserAvatarChanged = 5,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateUserNameChanged = 6,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateUserLocalNameChanged = 7,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateUserContactsChanged = 8,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateUserNickChanged = 9,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateUserAboutChanged = 10,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateUserPreferredLanguagesChanged = 11,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateUserTimeZoneChanged = 12,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateUserBotCommandsChanged = 13,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateUserExtChanged = 14,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateUserFullExtChanged = 15,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateUserSexChanged = 16,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateUserCustomProfileChanged = 17,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateUserStatusChanged = 18,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateContactRegistered = 19,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateContactsAdded = 20,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateContactsAddTaskSuspended = 21,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateContactsRemoved = 22,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateUserBlocked = 23,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateUserUnblocked = 24,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateInteractiveMediaEvent = 25,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateMessage = 26,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateMessageContentChanged = 27,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateMessageSent = 28,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateMessageReceived = 29,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateMessageRead = 30,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateMessageReadByMe = 31,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateMessageDelete = 32,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateChatClear = 33,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateChatDelete = 34,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateChatArchive = 35,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateChatGroupsChanged = 36,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateReactionsUpdate = 37,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateDialogFavouriteChanged = 38,
-  UpdateSeqUpdate_Update_OneOfCase_UpdatePinnedMessagesChanged = 39,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroupTitleChanged = 40,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroupAvatarChanged = 41,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroupAboutChanged = 43,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroupOwnerChanged = 44,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroupMembersUpdated = 51,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroupMemberDiff = 52,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroupMembersCountChanged = 53,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroupMemberPermissionsChanged = 55,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroupInviteObsolete = 56,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroupUserInvitedObsolete = 57,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroupUserLeaveObsolete = 58,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroupUserKickObsolete = 59,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroupMembersUpdateObsolete = 60,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroupTitleChangedObsolete = 61,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroupAboutChangedObsolete = 63,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroupAvatarChangedObsolete = 64,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroupShortnameChanged = 65,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateStickerCollectionsChanged = 66,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateStickerPackRemoved = 67,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateStickerPackAdded = 68,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateTyping = 71,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateTypingStop = 72,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateUserOnline = 73,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateUserOffline = 74,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateUserLastSeen = 75,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroupOnline = 76,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateEventBusDeviceConnected = 77,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateEventBusDeviceDisconnected = 78,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateEventBusMessage = 79,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateEventBusDisposed = 80,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateIncomingCallDeprecated = 81,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateIncomingCall = 82,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateCallHandled = 83,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateCallDisposed = 84,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateParameterChanged = 85,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateRawUpdate = 86,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateEmptyUpdate = 87,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateCountersChanged = 88,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateConfig = 89,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateSpaceModified = 90,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateSpaceMemberModified = 91,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateMessageRejectedByHook = 92,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateMessageEditRejectedByHook = 93,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateUser = 94,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateFeatureFlagChanged = 95,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateThreadCreated = 96,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateThreadLifted = 97,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroup = 98,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroupMemberInvited = 99,
-  UpdateSeqUpdate_Update_OneOfCase_MessageReactionsUpdate = 100,
-  UpdateSeqUpdate_Update_OneOfCase_UpdatePermissionsChange = 101,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateGroupTyping = 102,
-  UpdateSeqUpdate_Update_OneOfCase_UpdateDialogReadLaterChanged = 103,
+typedef GPB_ENUM(SeqUpdateBody_Update_OneOfCase) {
+  SeqUpdateBody_Update_OneOfCase_GPBUnsetOneOfCase = 0,
+  SeqUpdateBody_Update_OneOfCase_UpdateUserAvatarChanged = 1,
+  SeqUpdateBody_Update_OneOfCase_UpdateUserNameChanged = 2,
+  SeqUpdateBody_Update_OneOfCase_UpdateUserLocalNameChanged = 3,
+  SeqUpdateBody_Update_OneOfCase_UpdateUserContactsChanged = 4,
+  SeqUpdateBody_Update_OneOfCase_UpdateUserNickChanged = 5,
+  SeqUpdateBody_Update_OneOfCase_UpdateUserAboutChanged = 6,
+  SeqUpdateBody_Update_OneOfCase_UpdateUserPreferredLanguagesChanged = 7,
+  SeqUpdateBody_Update_OneOfCase_UpdateUserTimeZoneChanged = 8,
+  SeqUpdateBody_Update_OneOfCase_UpdateUserBotCommandsChanged = 9,
+  SeqUpdateBody_Update_OneOfCase_UpdateUserExtChanged = 10,
+  SeqUpdateBody_Update_OneOfCase_UpdateUserFullExtChanged = 11,
+  SeqUpdateBody_Update_OneOfCase_UpdateUserSexChanged = 12,
+  SeqUpdateBody_Update_OneOfCase_UpdateUserCustomProfileChanged = 13,
+  SeqUpdateBody_Update_OneOfCase_UpdateUserStatusChanged = 14,
+  SeqUpdateBody_Update_OneOfCase_UpdateContactRegistered = 15,
+  SeqUpdateBody_Update_OneOfCase_UpdateContactsAdded = 16,
+  SeqUpdateBody_Update_OneOfCase_UpdateContactsAddTaskSuspended = 17,
+  SeqUpdateBody_Update_OneOfCase_UpdateContactsRemoved = 18,
+  SeqUpdateBody_Update_OneOfCase_UpdateUserBlocked = 19,
+  SeqUpdateBody_Update_OneOfCase_UpdateUserUnblocked = 20,
+  SeqUpdateBody_Update_OneOfCase_UpdateInteractiveMediaEvent = 21,
+  SeqUpdateBody_Update_OneOfCase_UpdateMessage = 22,
+  SeqUpdateBody_Update_OneOfCase_UpdateMessageContentChanged = 23,
+  SeqUpdateBody_Update_OneOfCase_UpdateMessageSent = 24,
+  SeqUpdateBody_Update_OneOfCase_UpdateMessageReceived = 25,
+  SeqUpdateBody_Update_OneOfCase_UpdateMessageRead = 26,
+  SeqUpdateBody_Update_OneOfCase_UpdateMessageReadByMe = 27,
+  SeqUpdateBody_Update_OneOfCase_UpdateMessageDelete = 28,
+  SeqUpdateBody_Update_OneOfCase_UpdateChatClear = 29,
+  SeqUpdateBody_Update_OneOfCase_UpdateChatDelete = 30,
+  SeqUpdateBody_Update_OneOfCase_UpdateChatArchive = 31,
+  SeqUpdateBody_Update_OneOfCase_UpdateChatGroupsChanged = 32,
+  SeqUpdateBody_Update_OneOfCase_UpdateReactionsUpdate = 33,
+  SeqUpdateBody_Update_OneOfCase_UpdateDialogFavouriteChanged = 34,
+  SeqUpdateBody_Update_OneOfCase_UpdatePinnedMessagesChanged = 35,
+  SeqUpdateBody_Update_OneOfCase_UpdateGroupTitleChanged = 36,
+  SeqUpdateBody_Update_OneOfCase_UpdateGroupAvatarChanged = 37,
+  SeqUpdateBody_Update_OneOfCase_UpdateGroupAboutChanged = 38,
+  SeqUpdateBody_Update_OneOfCase_UpdateGroupOwnerChanged = 39,
+  SeqUpdateBody_Update_OneOfCase_UpdateGroupMembersUpdated = 40,
+  SeqUpdateBody_Update_OneOfCase_UpdateGroupMemberDiff = 41,
+  SeqUpdateBody_Update_OneOfCase_UpdateGroupMembersCountChanged = 42,
+  SeqUpdateBody_Update_OneOfCase_UpdateGroupMemberPermissionsChanged = 43,
+  SeqUpdateBody_Update_OneOfCase_UpdateGroupShortnameChanged = 44,
+  SeqUpdateBody_Update_OneOfCase_UpdateStickerCollectionsChanged = 45,
+  SeqUpdateBody_Update_OneOfCase_UpdateStickerPackRemoved = 46,
+  SeqUpdateBody_Update_OneOfCase_UpdateStickerPackAdded = 47,
+  SeqUpdateBody_Update_OneOfCase_UpdateParameterChanged = 48,
+  SeqUpdateBody_Update_OneOfCase_UpdateRawUpdate = 49,
+  SeqUpdateBody_Update_OneOfCase_UpdateCountersChanged = 50,
+  SeqUpdateBody_Update_OneOfCase_UpdateConfig = 51,
+  SeqUpdateBody_Update_OneOfCase_UpdateSpaceModified = 52,
+  SeqUpdateBody_Update_OneOfCase_UpdateSpaceMemberModified = 53,
+  SeqUpdateBody_Update_OneOfCase_UpdateMessageRejectedByHook = 54,
+  SeqUpdateBody_Update_OneOfCase_UpdateMessageEditRejectedByHook = 55,
+  SeqUpdateBody_Update_OneOfCase_UpdateUser = 56,
+  SeqUpdateBody_Update_OneOfCase_UpdateFeatureFlagChanged = 57,
+  SeqUpdateBody_Update_OneOfCase_UpdateThreadCreated = 58,
+  SeqUpdateBody_Update_OneOfCase_UpdateThreadLifted = 59,
+  SeqUpdateBody_Update_OneOfCase_UpdateGroup = 60,
+  SeqUpdateBody_Update_OneOfCase_UpdateGroupMemberInvited = 61,
+  SeqUpdateBody_Update_OneOfCase_MessageReactionsUpdate = 62,
+  SeqUpdateBody_Update_OneOfCase_UpdatePermissionsChange = 63,
+  SeqUpdateBody_Update_OneOfCase_UpdateGroupTyping = 64,
+  SeqUpdateBody_Update_OneOfCase_UpdateDialogReadLaterChanged = 65,
 };
 
-/**
- * Sequence update
- **/
-GPB_FINAL @interface UpdateSeqUpdate : GPBMessage
+GPB_FINAL @interface SeqUpdateBody : GPBMessage
 
-@property(nonatomic, readwrite) int32_t seq;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *state;
-
-@property(nonatomic, readwrite) int32_t updateHeader;
-
-@property(nonatomic, readonly) UpdateSeqUpdate_Update_OneOfCase updateOneOfCase;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateForceReloadState *updateForceReloadState;
+@property(nonatomic, readonly) SeqUpdateBody_Update_OneOfCase updateOneOfCase;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateUserAvatarChanged *updateUserAvatarChanged;
 
@@ -453,22 +370,6 @@ GPB_FINAL @interface UpdateSeqUpdate : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateGroupMemberPermissionsChanged *updateGroupMemberPermissionsChanged;
 
-@property(nonatomic, readwrite, strong, null_resettable) UpdateGroupInviteObsolete *updateGroupInviteObsolete;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateGroupUserInvitedObsolete *updateGroupUserInvitedObsolete;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateGroupUserLeaveObsolete *updateGroupUserLeaveObsolete;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateGroupUserKickObsolete *updateGroupUserKickObsolete;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateGroupMembersUpdateObsolete *updateGroupMembersUpdateObsolete;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateGroupTitleChangedObsolete *updateGroupTitleChangedObsolete;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateGroupAboutChangedObsolete *updateGroupAboutChangedObsolete;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateGroupAvatarChangedObsolete *updateGroupAvatarChangedObsolete;
-
 @property(nonatomic, readwrite, strong, null_resettable) UpdateGroupShortnameChanged *updateGroupShortnameChanged;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateStickerCollectionsChanged *updateStickerCollectionsChanged;
@@ -477,39 +378,9 @@ GPB_FINAL @interface UpdateSeqUpdate : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateStickerPackAdded *updateStickerPackAdded;
 
-@property(nonatomic, readwrite, strong, null_resettable) UpdateTyping *updateTyping;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateTypingStop *updateTypingStop;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateUserOnline *updateUserOnline;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateUserOffline *updateUserOffline;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateUserLastSeen *updateUserLastSeen;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateGroupOnline *updateGroupOnline;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateEventBusDeviceConnected *updateEventBusDeviceConnected;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateEventBusDeviceDisconnected *updateEventBusDeviceDisconnected;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateEventBusMessage *updateEventBusMessage;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateEventBusDisposed *updateEventBusDisposed;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateIncomingCallDeprecated *updateIncomingCallDeprecated;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateIncomingCall *updateIncomingCall;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateCallHandled *updateCallHandled;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateCallDisposed *updateCallDisposed;
-
 @property(nonatomic, readwrite, strong, null_resettable) UpdateParameterChanged *updateParameterChanged;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateRawUpdate *updateRawUpdate;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateEmptyUpdate *updateEmptyUpdate;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateCountersChanged *updateCountersChanged;
 
@@ -535,7 +406,7 @@ GPB_FINAL @interface UpdateSeqUpdate : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateGroupMemberInvited *updateGroupMemberInvited;
 
-@property(nonatomic, readwrite, strong, null_resettable) MessageReactionsUpdate *messageReactionsUpdate;
+@property(nonatomic, readwrite, strong, null_resettable) UpdateMessageReactions *messageReactionsUpdate;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdatePermissionsChange *updatePermissionsChange;
 
@@ -548,184 +419,25 @@ GPB_FINAL @interface UpdateSeqUpdate : GPBMessage
 /**
  * Clears whatever value was set for the oneof 'update'.
  **/
-void UpdateSeqUpdate_ClearUpdateOneOfCase(UpdateSeqUpdate *message);
+void SeqUpdateBody_ClearUpdateOneOfCase(SeqUpdateBody *message);
 
-#pragma mark - UpdateFatSeqUpdate
+#pragma mark - SeqUpdate
 
-typedef GPB_ENUM(UpdateFatSeqUpdate_FieldNumber) {
-  UpdateFatSeqUpdate_FieldNumber_Seq = 1,
-  UpdateFatSeqUpdate_FieldNumber_State = 2,
-  UpdateFatSeqUpdate_FieldNumber_UpdateHeader = 3,
-  UpdateFatSeqUpdate_FieldNumber_Update = 4,
-  UpdateFatSeqUpdate_FieldNumber_UsersArray = 5,
-  UpdateFatSeqUpdate_FieldNumber_GroupsArray = 6,
+typedef GPB_ENUM(SeqUpdate_FieldNumber) {
+  SeqUpdate_FieldNumber_Seq = 1,
+  SeqUpdate_FieldNumber_Body = 2,
 };
 
 /**
- * Fat sequence update with additional data
+ * Sequence update
  **/
-GPB_FINAL @interface UpdateFatSeqUpdate : GPBMessage
+GPB_FINAL @interface SeqUpdate : GPBMessage
 
 @property(nonatomic, readwrite) int32_t seq;
 
-@property(nonatomic, readwrite, copy, null_resettable) NSData *state;
-
-@property(nonatomic, readwrite) int32_t updateHeader;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *update;
-
-/** / related users */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<User*> *usersArray;
-/** The number of items in @c usersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger usersArray_Count;
-
-/** / related groups */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Group*> *groupsArray;
-/** The number of items in @c groupsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger groupsArray_Count;
-
-@end
-
-#pragma mark - UpdateWeakUpdate
-
-typedef GPB_ENUM(UpdateWeakUpdate_FieldNumber) {
-  UpdateWeakUpdate_FieldNumber_Date = 1,
-  UpdateWeakUpdate_FieldNumber_UpdateHeader = 2,
-  UpdateWeakUpdate_FieldNumber_Update = 3,
-};
-
-/**
- * Out of sequence update (for typing and online statuses)
- **/
-GPB_FINAL @interface UpdateWeakUpdate : GPBMessage
-
-@property(nonatomic, readwrite) int64_t date;
-
-@property(nonatomic, readwrite) int32_t updateHeader;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *update;
-
-@end
-
-#pragma mark - UpdateWeakFatUpdate
-
-typedef GPB_ENUM(UpdateWeakFatUpdate_FieldNumber) {
-  UpdateWeakFatUpdate_FieldNumber_Date = 1,
-  UpdateWeakFatUpdate_FieldNumber_UpdateHeader = 2,
-  UpdateWeakFatUpdate_FieldNumber_Update = 3,
-  UpdateWeakFatUpdate_FieldNumber_UsersArray = 4,
-  UpdateWeakFatUpdate_FieldNumber_GroupsArray = 5,
-};
-
-/**
- * Fat Weak Update
- **/
-GPB_FINAL @interface UpdateWeakFatUpdate : GPBMessage
-
-@property(nonatomic, readwrite) int64_t date;
-
-@property(nonatomic, readwrite) int32_t updateHeader;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *update;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<User*> *usersArray;
-/** The number of items in @c usersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger usersArray_Count;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Group*> *groupsArray;
-/** The number of items in @c groupsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger groupsArray_Count;
-
-@end
-
-#pragma mark - UpdateSeqUpdateTooLong
-
-/**
- * Notification about requiring performing manual GetDifference
- **/
-GPB_FINAL @interface UpdateSeqUpdateTooLong : GPBMessage
-
-@end
-
-#pragma mark - UpdateContainer
-
-typedef GPB_ENUM(UpdateContainer_FieldNumber) {
-  UpdateContainer_FieldNumber_UpdateHeader = 1,
-  UpdateContainer_FieldNumber_Update = 2,
-};
-
-/**
- * Update container
- **/
-GPB_FINAL @interface UpdateContainer : GPBMessage
-
-@property(nonatomic, readwrite) int32_t updateHeader;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *update;
-
-@end
-
-#pragma mark - UpdateCombinedUpdate
-
-typedef GPB_ENUM(UpdateCombinedUpdate_FieldNumber) {
-  UpdateCombinedUpdate_FieldNumber_SeqStart = 1,
-  UpdateCombinedUpdate_FieldNumber_SeqEnd = 2,
-  UpdateCombinedUpdate_FieldNumber_State = 3,
-  UpdateCombinedUpdate_FieldNumber_UsersArray = 4,
-  UpdateCombinedUpdate_FieldNumber_GroupsArray = 5,
-  UpdateCombinedUpdate_FieldNumber_UpdatesArray = 6,
-  UpdateCombinedUpdate_FieldNumber_MessagesArray = 7,
-};
-
-/**
- * Combined update
- **/
-GPB_FINAL @interface UpdateCombinedUpdate : GPBMessage
-
-/** / start of related sequence intervals */
-@property(nonatomic, readwrite) int32_t seqStart;
-
-/** / end of related sequence intervals */
-@property(nonatomic, readwrite) int32_t seqEnd;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *state;
-
-/** / related users */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<User*> *usersArray;
-/** The number of items in @c usersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger usersArray_Count;
-
-/** / related groups */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Group*> *groupsArray;
-/** The number of items in @c groupsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger groupsArray_Count;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UpdateContainer*> *updatesArray;
-/** The number of items in @c updatesArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger updatesArray_Count;
-
-/** / related messages */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<HistoryMessage*> *messagesArray;
-/** The number of items in @c messagesArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger messagesArray_Count;
-
-@end
-
-#pragma mark - RequestGetState
-
-typedef GPB_ENUM(RequestGetState_FieldNumber) {
-  RequestGetState_FieldNumber_OptimizationsArray = 1,
-};
-
-/**
- * Get main sequence state
- **/
-GPB_FINAL @interface RequestGetState : GPBMessage
-
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) SeqUpdateBody *body;
+/** Test to see if @c body has been set. */
+@property(nonatomic, readwrite) BOOL hasBody;
 
 @end
 
@@ -733,9 +445,7 @@ GPB_FINAL @interface RequestGetState : GPBMessage
 
 typedef GPB_ENUM(RequestGetDifference_FieldNumber) {
   RequestGetDifference_FieldNumber_Seq = 1,
-  RequestGetDifference_FieldNumber_State = 2,
-  RequestGetDifference_FieldNumber_OptimizationsArray = 3,
-  RequestGetDifference_FieldNumber_ConfigHash = 4,
+  RequestGetDifference_FieldNumber_ConfigHash = 2,
 };
 
 /**
@@ -744,13 +454,6 @@ typedef GPB_ENUM(RequestGetDifference_FieldNumber) {
 GPB_FINAL @interface RequestGetDifference : GPBMessage
 
 @property(nonatomic, readwrite) int32_t seq;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *state;
-
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *configHash;
 /** Test to see if @c configHash has been set. */
@@ -762,14 +465,13 @@ GPB_FINAL @interface RequestGetDifference : GPBMessage
 
 typedef GPB_ENUM(ResponseGetDifference_FieldNumber) {
   ResponseGetDifference_FieldNumber_Seq = 1,
-  ResponseGetDifference_FieldNumber_State = 2,
-  ResponseGetDifference_FieldNumber_UpdatesArray = 4,
-  ResponseGetDifference_FieldNumber_NeedMore = 5,
-  ResponseGetDifference_FieldNumber_MessagesArray = 7,
-  ResponseGetDifference_FieldNumber_UsersRefsArray = 8,
-  ResponseGetDifference_FieldNumber_GroupsRefsArray = 9,
-  ResponseGetDifference_FieldNumber_Config = 10,
-  ResponseGetDifference_FieldNumber_ConfigHash = 11,
+  ResponseGetDifference_FieldNumber_UpdatesArray = 2,
+  ResponseGetDifference_FieldNumber_MessagesArray = 3,
+  ResponseGetDifference_FieldNumber_NeedMore = 4,
+  ResponseGetDifference_FieldNumber_UsersRefsArray = 5,
+  ResponseGetDifference_FieldNumber_GroupsRefsArray = 6,
+  ResponseGetDifference_FieldNumber_Config = 7,
+  ResponseGetDifference_FieldNumber_ConfigHash = 8,
 };
 
 /**
@@ -780,9 +482,7 @@ GPB_FINAL @interface ResponseGetDifference : GPBMessage
 /** / seq of the last loaded update */
 @property(nonatomic, readwrite) int32_t seq;
 
-@property(nonatomic, readwrite, copy, null_resettable) NSData *state;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UpdateSeqUpdate*> *updatesArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<SeqUpdate*> *updatesArray;
 /** The number of items in @c updatesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger updatesArray_Count;
 
@@ -871,25 +571,25 @@ GPB_FINAL @interface GroupMembersSubset : GPBMessage
 /** Test to see if @c groupPeer has been set. */
 @property(nonatomic, readwrite) BOOL hasGroupPeer;
 
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Array *memberIdsArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *memberIdsArray;
 /** The number of items in @c memberIdsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger memberIdsArray_Count;
 
 @end
 
-#pragma mark - RequestGetReferencedEntitites
+#pragma mark - RequestGetReferencedEntities
 
-typedef GPB_ENUM(RequestGetReferencedEntitites_FieldNumber) {
-  RequestGetReferencedEntitites_FieldNumber_UsersArray = 1,
-  RequestGetReferencedEntitites_FieldNumber_MidsArray = 3,
-  RequestGetReferencedEntitites_FieldNumber_GroupMembersArray = 4,
-  RequestGetReferencedEntitites_FieldNumber_GroupsArray = 5,
+typedef GPB_ENUM(RequestGetReferencedEntities_FieldNumber) {
+  RequestGetReferencedEntities_FieldNumber_UsersArray = 1,
+  RequestGetReferencedEntities_FieldNumber_MidsArray = 2,
+  RequestGetReferencedEntities_FieldNumber_GroupMembersArray = 3,
+  RequestGetReferencedEntities_FieldNumber_GroupsArray = 4,
 };
 
 /**
  * Loading referenced entities
  **/
-GPB_FINAL @interface RequestGetReferencedEntitites : GPBMessage
+GPB_FINAL @interface RequestGetReferencedEntities : GPBMessage
 
 /** / users needed */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *usersArray;
@@ -917,15 +617,15 @@ GPB_FINAL @interface RequestGetReferencedEntitites : GPBMessage
 
 @end
 
-#pragma mark - ResponseGetReferencedEntitites
+#pragma mark - ResponseGetReferencedEntities
 
-typedef GPB_ENUM(ResponseGetReferencedEntitites_FieldNumber) {
-  ResponseGetReferencedEntitites_FieldNumber_UsersArray = 1,
-  ResponseGetReferencedEntitites_FieldNumber_GroupsArray = 2,
-  ResponseGetReferencedEntitites_FieldNumber_MessagesArray = 3,
+typedef GPB_ENUM(ResponseGetReferencedEntities_FieldNumber) {
+  ResponseGetReferencedEntities_FieldNumber_UsersArray = 1,
+  ResponseGetReferencedEntities_FieldNumber_GroupsArray = 2,
+  ResponseGetReferencedEntities_FieldNumber_MessagesArray = 3,
 };
 
-GPB_FINAL @interface ResponseGetReferencedEntitites : GPBMessage
+GPB_FINAL @interface ResponseGetReferencedEntities : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<User*> *usersArray;
 /** The number of items in @c usersArray without causing the array to be created. */
@@ -1001,116 +701,6 @@ GPB_FINAL @interface UpdateRawUpdate : GPBMessage
 @property(nonatomic, readwrite) BOOL hasType;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSData *bytes;
-
-@end
-
-#pragma mark - UpdateEmptyUpdate
-
-/**
- * Empty update
- **/
-GPB_FINAL @interface UpdateEmptyUpdate : GPBMessage
-
-@end
-
-#pragma mark - RequestSubscribeToOnline
-
-typedef GPB_ENUM(RequestSubscribeToOnline_FieldNumber) {
-  RequestSubscribeToOnline_FieldNumber_UsersArray = 1,
-};
-
-/**
- * Subscribing for users online
- **/
-GPB_FINAL @interface RequestSubscribeToOnline : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *usersArray;
-/** The number of items in @c usersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger usersArray_Count;
-
-@end
-
-#pragma mark - RequestSubscribeFromOnline
-
-typedef GPB_ENUM(RequestSubscribeFromOnline_FieldNumber) {
-  RequestSubscribeFromOnline_FieldNumber_UsersArray = 1,
-};
-
-/**
- * Removing subscription for users online
- **/
-GPB_FINAL @interface RequestSubscribeFromOnline : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *usersArray;
-/** The number of items in @c usersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger usersArray_Count;
-
-@end
-
-#pragma mark - RequestSubscribeToGroupOnline
-
-typedef GPB_ENUM(RequestSubscribeToGroupOnline_FieldNumber) {
-  RequestSubscribeToGroupOnline_FieldNumber_GroupsArray = 1,
-  RequestSubscribeToGroupOnline_FieldNumber_SendUsersId = 2,
-};
-
-/**
- * Subscribing for groups online
- **/
-GPB_FINAL @interface RequestSubscribeToGroupOnline : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupsArray;
-/** The number of items in @c groupsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger groupsArray_Count;
-
-/** If set to true UpdateGroupOnline will return list of online users id. */
-@property(nonatomic, readwrite) BOOL sendUsersId;
-
-@end
-
-#pragma mark - RequestSubscribeFromGroupOnline
-
-typedef GPB_ENUM(RequestSubscribeFromGroupOnline_FieldNumber) {
-  RequestSubscribeFromGroupOnline_FieldNumber_GroupsArray = 1,
-};
-
-/**
- * Removing subscription for groups online
- **/
-GPB_FINAL @interface RequestSubscribeFromGroupOnline : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupsArray;
-/** The number of items in @c groupsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger groupsArray_Count;
-
-@end
-
-#pragma mark - SeqUpdateBox
-
-typedef GPB_ENUM(SeqUpdateBox_FieldNumber) {
-  SeqUpdateBox_FieldNumber_Seq = 1,
-  SeqUpdateBox_FieldNumber_State = 2,
-  SeqUpdateBox_FieldNumber_Update = 3,
-  SeqUpdateBox_FieldNumber_UnboxedUpdate = 4,
-};
-
-/**
- * / Container which contains UpdateSeqUpdate
- **/
-GPB_FINAL @interface SeqUpdateBox : GPBMessage
-
-@property(nonatomic, readwrite) int32_t seq;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *state;
-
-/** / UpdateSeqUpdate in bytes */
-@property(nonatomic, readwrite, strong, null_resettable) GPBBytesValue *update;
-/** Test to see if @c update has been set. */
-@property(nonatomic, readwrite) BOOL hasUpdate;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateSeqUpdate *unboxedUpdate;
-/** Test to see if @c unboxedUpdate has been set. */
-@property(nonatomic, readwrite) BOOL hasUnboxedUpdate;
 
 @end
 
@@ -1260,60 +850,58 @@ int32_t WeakUpdateCommand_ChangeMyTyping_Type_RawValue(WeakUpdateCommand_ChangeM
  **/
 void SetWeakUpdateCommand_ChangeMyTyping_Type_RawValue(WeakUpdateCommand_ChangeMyTyping *message, int32_t value);
 
-#pragma mark - WeakUpdateBox
+#pragma mark - WeakUpdate
 
-typedef GPB_ENUM(WeakUpdateBox_FieldNumber) {
-  WeakUpdateBox_FieldNumber_Typing = 1,
-  WeakUpdateBox_FieldNumber_TypingStop = 2,
-  WeakUpdateBox_FieldNumber_UserLastSeen = 3,
-  WeakUpdateBox_FieldNumber_GroupOnline = 4,
-  WeakUpdateBox_FieldNumber_ForceReload = 5,
-  WeakUpdateBox_FieldNumber_PermissionsChange = 6,
-  WeakUpdateBox_FieldNumber_UserStatusChange = 7,
-  WeakUpdateBox_FieldNumber_MessageReactionUpdate = 8,
-  WeakUpdateBox_FieldNumber_Message = 9,
-  WeakUpdateBox_FieldNumber_MessageContentChange = 10,
-  WeakUpdateBox_FieldNumber_MessageRead = 11,
-  WeakUpdateBox_FieldNumber_MessageReceived = 12,
-  WeakUpdateBox_FieldNumber_MessageReadByMe = 13,
-  WeakUpdateBox_FieldNumber_UserOnline = 14,
-  WeakUpdateBox_FieldNumber_GroupTyping = 15,
-  WeakUpdateBox_FieldNumber_MiniApp = 16,
-  WeakUpdateBox_FieldNumber_Event = 17,
-  WeakUpdateBox_FieldNumber_UpdateContactRegistered = 18,
-  WeakUpdateBox_FieldNumber_UpdateContactsAdded = 19,
-  WeakUpdateBox_FieldNumber_UpdateContactsAddTaskSuspended = 20,
-  WeakUpdateBox_FieldNumber_UpdateContactsRemoved = 21,
+typedef GPB_ENUM(WeakUpdate_FieldNumber) {
+  WeakUpdate_FieldNumber_Typing = 1,
+  WeakUpdate_FieldNumber_TypingStop = 2,
+  WeakUpdate_FieldNumber_UserLastSeen = 3,
+  WeakUpdate_FieldNumber_GroupOnline = 4,
+  WeakUpdate_FieldNumber_ForceReload = 5,
+  WeakUpdate_FieldNumber_PermissionsChange = 6,
+  WeakUpdate_FieldNumber_UserStatusChange = 7,
+  WeakUpdate_FieldNumber_MessageReactionUpdate = 8,
+  WeakUpdate_FieldNumber_Message = 9,
+  WeakUpdate_FieldNumber_MessageContentChange = 10,
+  WeakUpdate_FieldNumber_MessageRead = 11,
+  WeakUpdate_FieldNumber_MessageReceived = 12,
+  WeakUpdate_FieldNumber_MessageReadByMe = 13,
+  WeakUpdate_FieldNumber_GroupTyping = 15,
+  WeakUpdate_FieldNumber_MiniApp = 16,
+  WeakUpdate_FieldNumber_Event = 17,
+  WeakUpdate_FieldNumber_UpdateContactRegistered = 18,
+  WeakUpdate_FieldNumber_UpdateContactsAdded = 19,
+  WeakUpdate_FieldNumber_UpdateContactsAddTaskSuspended = 20,
+  WeakUpdate_FieldNumber_UpdateContactsRemoved = 21,
 };
 
-typedef GPB_ENUM(WeakUpdateBox_Updatebox_OneOfCase) {
-  WeakUpdateBox_Updatebox_OneOfCase_GPBUnsetOneOfCase = 0,
-  WeakUpdateBox_Updatebox_OneOfCase_Typing = 1,
-  WeakUpdateBox_Updatebox_OneOfCase_TypingStop = 2,
-  WeakUpdateBox_Updatebox_OneOfCase_UserLastSeen = 3,
-  WeakUpdateBox_Updatebox_OneOfCase_GroupOnline = 4,
-  WeakUpdateBox_Updatebox_OneOfCase_ForceReload = 5,
-  WeakUpdateBox_Updatebox_OneOfCase_PermissionsChange = 6,
-  WeakUpdateBox_Updatebox_OneOfCase_UserStatusChange = 7,
-  WeakUpdateBox_Updatebox_OneOfCase_MessageReactionUpdate = 8,
-  WeakUpdateBox_Updatebox_OneOfCase_Message = 9,
-  WeakUpdateBox_Updatebox_OneOfCase_MessageContentChange = 10,
-  WeakUpdateBox_Updatebox_OneOfCase_MessageRead = 11,
-  WeakUpdateBox_Updatebox_OneOfCase_MessageReceived = 12,
-  WeakUpdateBox_Updatebox_OneOfCase_MessageReadByMe = 13,
-  WeakUpdateBox_Updatebox_OneOfCase_UserOnline = 14,
-  WeakUpdateBox_Updatebox_OneOfCase_GroupTyping = 15,
-  WeakUpdateBox_Updatebox_OneOfCase_MiniApp = 16,
-  WeakUpdateBox_Updatebox_OneOfCase_Event = 17,
-  WeakUpdateBox_Updatebox_OneOfCase_UpdateContactRegistered = 18,
-  WeakUpdateBox_Updatebox_OneOfCase_UpdateContactsAdded = 19,
-  WeakUpdateBox_Updatebox_OneOfCase_UpdateContactsAddTaskSuspended = 20,
-  WeakUpdateBox_Updatebox_OneOfCase_UpdateContactsRemoved = 21,
+typedef GPB_ENUM(WeakUpdate_Updatebox_OneOfCase) {
+  WeakUpdate_Updatebox_OneOfCase_GPBUnsetOneOfCase = 0,
+  WeakUpdate_Updatebox_OneOfCase_Typing = 1,
+  WeakUpdate_Updatebox_OneOfCase_TypingStop = 2,
+  WeakUpdate_Updatebox_OneOfCase_UserLastSeen = 3,
+  WeakUpdate_Updatebox_OneOfCase_GroupOnline = 4,
+  WeakUpdate_Updatebox_OneOfCase_ForceReload = 5,
+  WeakUpdate_Updatebox_OneOfCase_PermissionsChange = 6,
+  WeakUpdate_Updatebox_OneOfCase_UserStatusChange = 7,
+  WeakUpdate_Updatebox_OneOfCase_MessageReactionUpdate = 8,
+  WeakUpdate_Updatebox_OneOfCase_Message = 9,
+  WeakUpdate_Updatebox_OneOfCase_MessageContentChange = 10,
+  WeakUpdate_Updatebox_OneOfCase_MessageRead = 11,
+  WeakUpdate_Updatebox_OneOfCase_MessageReceived = 12,
+  WeakUpdate_Updatebox_OneOfCase_MessageReadByMe = 13,
+  WeakUpdate_Updatebox_OneOfCase_GroupTyping = 15,
+  WeakUpdate_Updatebox_OneOfCase_MiniApp = 16,
+  WeakUpdate_Updatebox_OneOfCase_Event = 17,
+  WeakUpdate_Updatebox_OneOfCase_UpdateContactRegistered = 18,
+  WeakUpdate_Updatebox_OneOfCase_UpdateContactsAdded = 19,
+  WeakUpdate_Updatebox_OneOfCase_UpdateContactsAddTaskSuspended = 20,
+  WeakUpdate_Updatebox_OneOfCase_UpdateContactsRemoved = 21,
 };
 
-GPB_FINAL @interface WeakUpdateBox : GPBMessage
+GPB_FINAL @interface WeakUpdate : GPBMessage
 
-@property(nonatomic, readonly) WeakUpdateBox_Updatebox_OneOfCase updateboxOneOfCase;
+@property(nonatomic, readonly) WeakUpdate_Updatebox_OneOfCase updateboxOneOfCase;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateTyping *typing;
 
@@ -1323,13 +911,13 @@ GPB_FINAL @interface WeakUpdateBox : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateGroupOnline *groupOnline;
 
-@property(nonatomic, readwrite, strong, null_resettable) WeakUpdateBox_UpdateForceReloadState *forceReload;
+@property(nonatomic, readwrite, strong, null_resettable) WeakUpdate_UpdateForceReloadState *forceReload;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdatePermissionsChange *permissionsChange;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateUserStatusChanged *userStatusChange;
 
-@property(nonatomic, readwrite, strong, null_resettable) MessageReactionsUpdate *messageReactionUpdate;
+@property(nonatomic, readwrite, strong, null_resettable) UpdateMessageReactions *messageReactionUpdate;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateMessage *message;
 
@@ -1340,8 +928,6 @@ GPB_FINAL @interface WeakUpdateBox : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UpdateMessageReceived *messageReceived;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateMessageReadByMe *messageReadByMe;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateUserOnline *userOnline;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateGroupTyping *groupTyping;
 
@@ -1362,40 +948,40 @@ GPB_FINAL @interface WeakUpdateBox : GPBMessage
 /**
  * Clears whatever value was set for the oneof 'updatebox'.
  **/
-void WeakUpdateBox_ClearUpdateboxOneOfCase(WeakUpdateBox *message);
+void WeakUpdate_ClearUpdateboxOneOfCase(WeakUpdate *message);
 
-#pragma mark - WeakUpdateBox_UpdateForceReloadState
+#pragma mark - WeakUpdate_UpdateForceReloadState
 
-typedef GPB_ENUM(WeakUpdateBox_UpdateForceReloadState_FieldNumber) {
-  WeakUpdateBox_UpdateForceReloadState_FieldNumber_FieldsArray = 1,
+typedef GPB_ENUM(WeakUpdate_UpdateForceReloadState_FieldNumber) {
+  WeakUpdate_UpdateForceReloadState_FieldNumber_FieldsArray = 1,
 };
 
-GPB_FINAL @interface WeakUpdateBox_UpdateForceReloadState : GPBMessage
+GPB_FINAL @interface WeakUpdate_UpdateForceReloadState : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<WeakUpdateBox_UpdateForceReloadState_ForceReloadField*> *fieldsArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<WeakUpdate_UpdateForceReloadState_ForceReloadField*> *fieldsArray;
 /** The number of items in @c fieldsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger fieldsArray_Count;
 
 @end
 
-#pragma mark - WeakUpdateBox_UpdateForceReloadState_ForceReloadField
+#pragma mark - WeakUpdate_UpdateForceReloadState_ForceReloadField
 
-typedef GPB_ENUM(WeakUpdateBox_UpdateForceReloadState_ForceReloadField_FieldNumber) {
-  WeakUpdateBox_UpdateForceReloadState_ForceReloadField_FieldNumber_ReloadDialogs = 1,
-  WeakUpdateBox_UpdateForceReloadState_ForceReloadField_FieldNumber_ReloadContacts = 2,
-  WeakUpdateBox_UpdateForceReloadState_ForceReloadField_FieldNumber_ReloadHistory = 3,
+typedef GPB_ENUM(WeakUpdate_UpdateForceReloadState_ForceReloadField_FieldNumber) {
+  WeakUpdate_UpdateForceReloadState_ForceReloadField_FieldNumber_ReloadDialogs = 1,
+  WeakUpdate_UpdateForceReloadState_ForceReloadField_FieldNumber_ReloadContacts = 2,
+  WeakUpdate_UpdateForceReloadState_ForceReloadField_FieldNumber_ReloadHistory = 3,
 };
 
-typedef GPB_ENUM(WeakUpdateBox_UpdateForceReloadState_ForceReloadField_Field_OneOfCase) {
-  WeakUpdateBox_UpdateForceReloadState_ForceReloadField_Field_OneOfCase_GPBUnsetOneOfCase = 0,
-  WeakUpdateBox_UpdateForceReloadState_ForceReloadField_Field_OneOfCase_ReloadDialogs = 1,
-  WeakUpdateBox_UpdateForceReloadState_ForceReloadField_Field_OneOfCase_ReloadContacts = 2,
-  WeakUpdateBox_UpdateForceReloadState_ForceReloadField_Field_OneOfCase_ReloadHistory = 3,
+typedef GPB_ENUM(WeakUpdate_UpdateForceReloadState_ForceReloadField_Field_OneOfCase) {
+  WeakUpdate_UpdateForceReloadState_ForceReloadField_Field_OneOfCase_GPBUnsetOneOfCase = 0,
+  WeakUpdate_UpdateForceReloadState_ForceReloadField_Field_OneOfCase_ReloadDialogs = 1,
+  WeakUpdate_UpdateForceReloadState_ForceReloadField_Field_OneOfCase_ReloadContacts = 2,
+  WeakUpdate_UpdateForceReloadState_ForceReloadField_Field_OneOfCase_ReloadHistory = 3,
 };
 
-GPB_FINAL @interface WeakUpdateBox_UpdateForceReloadState_ForceReloadField : GPBMessage
+GPB_FINAL @interface WeakUpdate_UpdateForceReloadState_ForceReloadField : GPBMessage
 
-@property(nonatomic, readonly) WeakUpdateBox_UpdateForceReloadState_ForceReloadField_Field_OneOfCase fieldOneOfCase;
+@property(nonatomic, readonly) WeakUpdate_UpdateForceReloadState_ForceReloadField_Field_OneOfCase fieldOneOfCase;
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBEmpty *reloadDialogs;
 
@@ -1408,7 +994,28 @@ GPB_FINAL @interface WeakUpdateBox_UpdateForceReloadState_ForceReloadField : GPB
 /**
  * Clears whatever value was set for the oneof 'field'.
  **/
-void WeakUpdateBox_UpdateForceReloadState_ForceReloadField_ClearFieldOneOfCase(WeakUpdateBox_UpdateForceReloadState_ForceReloadField *message);
+void WeakUpdate_UpdateForceReloadState_ForceReloadField_ClearFieldOneOfCase(WeakUpdate_UpdateForceReloadState_ForceReloadField *message);
+
+#pragma mark - RequestGetState
+
+GPB_FINAL @interface RequestGetState : GPBMessage
+
+@end
+
+#pragma mark - ResponseGetState
+
+typedef GPB_ENUM(ResponseGetState_FieldNumber) {
+  ResponseGetState_FieldNumber_Seq = 1,
+  ResponseGetState_FieldNumber_Date = 2,
+};
+
+GPB_FINAL @interface ResponseGetState : GPBMessage
+
+@property(nonatomic, readwrite) int32_t seq;
+
+@property(nonatomic, readwrite) int64_t date;
+
+@end
 
 NS_ASSUME_NONNULL_END
 

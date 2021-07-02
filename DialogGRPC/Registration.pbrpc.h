@@ -12,8 +12,6 @@
 #import <RxLibrary/GRXWriter.h>
 #endif
 
-@class RegisterDeprecatedDeviceRequest;
-@class RequestExchangeAuthIdForToken;
 @class RequestRegisterDevice;
 @class ResponseDeviceRequest;
 
@@ -33,23 +31,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol Registration2 <NSObject>
 
-#pragma mark ExchangeAuthIdForToken(RequestExchangeAuthIdForToken) returns (ResponseDeviceRequest)
-
-- (GRPCUnaryProtoCall *)exchangeAuthIdForTokenWithMessage:(RequestExchangeAuthIdForToken *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
 #pragma mark RegisterDevice(RequestRegisterDevice) returns (ResponseDeviceRequest)
 
 /**
  * / register device to get auth token
  */
 - (GRPCUnaryProtoCall *)registerDeviceWithMessage:(RequestRegisterDevice *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark RegisterDeprecatedDevice(RegisterDeprecatedDeviceRequest) returns (ResponseDeviceRequest)
-
-/**
- * deprecated
- */
-- (GRPCUnaryProtoCall *)registerDeprecatedDeviceWithMessage:(RegisterDeprecatedDeviceRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 @end
 
@@ -58,13 +45,6 @@ NS_ASSUME_NONNULL_BEGIN
  * recognize call options provided in the initializer. Using the v2 protocol is recommended.
  */
 @protocol Registration <NSObject>
-
-#pragma mark ExchangeAuthIdForToken(RequestExchangeAuthIdForToken) returns (ResponseDeviceRequest)
-
-- (void)exchangeAuthIdForTokenWithRequest:(RequestExchangeAuthIdForToken *)request handler:(void(^)(ResponseDeviceRequest *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToExchangeAuthIdForTokenWithRequest:(RequestExchangeAuthIdForToken *)request handler:(void(^)(ResponseDeviceRequest *_Nullable response, NSError *_Nullable error))handler;
-
 
 #pragma mark RegisterDevice(RequestRegisterDevice) returns (ResponseDeviceRequest)
 
@@ -81,23 +61,6 @@ NS_ASSUME_NONNULL_BEGIN
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToRegisterDeviceWithRequest:(RequestRegisterDevice *)request handler:(void(^)(ResponseDeviceRequest *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark RegisterDeprecatedDevice(RegisterDeprecatedDeviceRequest) returns (ResponseDeviceRequest)
-
-/**
- * deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)registerDeprecatedDeviceWithRequest:(RegisterDeprecatedDeviceRequest *)request handler:(void(^)(ResponseDeviceRequest *_Nullable response, NSError *_Nullable error))handler;
-
-/**
- * deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToRegisterDeprecatedDeviceWithRequest:(RegisterDeprecatedDeviceRequest *)request handler:(void(^)(ResponseDeviceRequest *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end

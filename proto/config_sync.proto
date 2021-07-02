@@ -6,9 +6,9 @@ package dialog;
 // across devices without rewriting server side code.
 
 import "wrappers.proto";
+import "empty.proto";
 import "annotations.proto";
 import "definitions.proto";
-import "miscellaneous.proto";
 import "scalapb.proto";
 
 option go_package = "dialog";
@@ -62,9 +62,7 @@ message UpdateFeatureFlagChanged {
 
 // Update about parameter change
 message UpdateParameterChanged {
-    string key = 1 [(dlg).log="visible"]; /// deprecated use this field from parameter
-    google.protobuf.StringValue value = 2 [(dlg).log="hidden"]; /// deprecated use this field from parameter
-    Parameter parameter = 3; /// changed parameter
+    Parameter parameter = 1; /// changed parameter
 }
 
 service ConfigSync {
@@ -74,7 +72,7 @@ service ConfigSync {
             body: "*"
         };
     }
-    rpc EditParameter (RequestEditParameter) returns (ResponseSeq) {
+    rpc EditParameter (RequestEditParameter) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/ConfigSync/EditParameter"
             body: "*"

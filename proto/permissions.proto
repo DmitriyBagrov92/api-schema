@@ -4,7 +4,6 @@ package dialog;
 
 import "definitions.proto";
 import "annotations.proto";
-import "scalapb.proto";
 
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";

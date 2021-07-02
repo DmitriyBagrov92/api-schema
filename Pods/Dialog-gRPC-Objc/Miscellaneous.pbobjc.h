@@ -44,7 +44,6 @@ CF_EXTERN_C_BEGIN
 @class RecursiveMapValue_Value;
 @class ServerMetaInfo;
 @class ServicePeers;
-@class UUIDValue;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -57,8 +56,8 @@ typedef GPB_ENUM(SupportedServerMethodsType) {
    * of the field.
    **/
   SupportedServerMethodsType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  SupportedServerMethodsType_NoneSupportedMethods = 0,
-  SupportedServerMethodsType_ChangePassword = 1,
+  SupportedServerMethodsType_SupportedServerMethodsTypeNone = 0,
+  SupportedServerMethodsType_SupportedServerMethodsTypeChangePassword = 1,
 };
 
 GPBEnumDescriptor *SupportedServerMethodsType_EnumDescriptor(void);
@@ -78,9 +77,9 @@ typedef GPB_ENUM(RtcpMuxPolicy) {
    * of the field.
    **/
   RtcpMuxPolicy_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  RtcpMuxPolicy_RtcpmuxpolicyUnknown = 0,
-  RtcpMuxPolicy_RtcpmuxpolicyNegotiate = 1,
-  RtcpMuxPolicy_RtcpmuxpolicyRequire = 2,
+  RtcpMuxPolicy_RtcpMuxPolicyUnknown = 0,
+  RtcpMuxPolicy_RtcpMuxPolicyNegotiate = 1,
+  RtcpMuxPolicy_RtcpMuxPolicyRequire = 2,
 };
 
 GPBEnumDescriptor *RtcpMuxPolicy_EnumDescriptor(void);
@@ -90,29 +89,6 @@ GPBEnumDescriptor *RtcpMuxPolicy_EnumDescriptor(void);
  * the time this source was generated.
  **/
 BOOL RtcpMuxPolicy_IsValidValue(int32_t value);
-
-#pragma mark - Enum UpdateOptimization
-
-typedef GPB_ENUM(UpdateOptimization) {
-  /**
-   * Value used if any message's field encounters a value that is not defined
-   * by this enum. The message will also have C functions to get/set the rawValue
-   * of the field.
-   **/
-  UpdateOptimization_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  UpdateOptimization_UpdateoptimizationUnknown = 0,
-
-  /** For old bot sdk compatibility */
-  UpdateOptimization_UpdateoptimizationStripEntities = 2,
-};
-
-GPBEnumDescriptor *UpdateOptimization_EnumDescriptor(void);
-
-/**
- * Checks to see if the given value is defined by the enum or was not known at
- * the time this source was generated.
- **/
-BOOL UpdateOptimization_IsValidValue(int32_t value);
 
 #pragma mark - MiscellaneousRoot
 
@@ -127,88 +103,6 @@ BOOL UpdateOptimization_IsValidValue(int32_t value);
  * this file and all files that it depends on.
  **/
 GPB_FINAL @interface MiscellaneousRoot : GPBRootObject
-@end
-
-#pragma mark - ResponseVoid
-
-/**
- * Empty response
- **/
-GPB_FINAL @interface ResponseVoid : GPBMessage
-
-@end
-
-#pragma mark - ResponseSeq
-
-typedef GPB_ENUM(ResponseSeq_FieldNumber) {
-  ResponseSeq_FieldNumber_Seq = 1,
-  ResponseSeq_FieldNumber_State = 2,
-  ResponseSeq_FieldNumber_Date = 3,
-};
-
-/**
- * Sequence response. Methods that return this value must process response in particular order
- **/
-GPB_FINAL @interface ResponseSeq : GPBMessage
-
-@property(nonatomic, readwrite) int32_t seq;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *state;
-
-@property(nonatomic, readwrite) int64_t date;
-
-@end
-
-#pragma mark - ResponseSeqDate
-
-typedef GPB_ENUM(ResponseSeqDate_FieldNumber) {
-  ResponseSeqDate_FieldNumber_Seq = 1,
-  ResponseSeqDate_FieldNumber_State = 2,
-  ResponseSeqDate_FieldNumber_Date = 3,
-  ResponseSeqDate_FieldNumber_Mid = 4,
-};
-
-/**
- * Sequence response with date. Methods that return this value must process response in particular order
- **/
-GPB_FINAL @interface ResponseSeqDate : GPBMessage
-
-@property(nonatomic, readwrite) int32_t seq;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *state;
-
-@property(nonatomic, readwrite) int64_t date;
-
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
-
-@end
-
-#pragma mark - ResponseSeqDateMid
-
-typedef GPB_ENUM(ResponseSeqDateMid_FieldNumber) {
-  ResponseSeqDateMid_FieldNumber_Seq = 1,
-  ResponseSeqDateMid_FieldNumber_State = 2,
-  ResponseSeqDateMid_FieldNumber_Date = 3,
-  ResponseSeqDateMid_FieldNumber_Mid = 4,
-};
-
-/**
- * Response with seq, date and messageId
- **/
-GPB_FINAL @interface ResponseSeqDateMid : GPBMessage
-
-@property(nonatomic, readwrite) int32_t seq;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *state;
-
-@property(nonatomic, readwrite) int64_t date;
-
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
-
 @end
 
 #pragma mark - ResponseBool

@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package dialog;
 
-import "scalapb.proto";
 import "descriptor.proto";
 
 option go_package = "dialog";

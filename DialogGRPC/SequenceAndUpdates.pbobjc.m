@@ -23,8 +23,6 @@
 #import "Groups.pbobjc.h"
 #import "Stickers.pbobjc.h"
 #import "Presence.pbobjc.h"
-#import "EventBus.pbobjc.h"
-#import "WebRtc.pbobjc.h"
 #import "ConfigSync.pbobjc.h"
 #import "Counters.pbobjc.h"
 #import "Contacts.pbobjc.h"
@@ -51,7 +49,6 @@
 // We don't use [Foo class] because it is not a static value.
 GPBObjCClassDeclaration(Config);
 GPBObjCClassDeclaration(Dialog);
-GPBObjCClassDeclaration(GPBBytesValue);
 GPBObjCClassDeclaration(GPBEmpty);
 GPBObjCClassDeclaration(GPBInt64Value);
 GPBObjCClassDeclaration(GPBStringValue);
@@ -60,12 +57,11 @@ GPBObjCClassDeclaration(GroupMembersSubset);
 GPBObjCClassDeclaration(GroupOutPeer);
 GPBObjCClassDeclaration(GroupPartialInfo);
 GPBObjCClassDeclaration(HistoryMessage);
-GPBObjCClassDeclaration(MessageReactionsUpdate);
 GPBObjCClassDeclaration(Peer);
 GPBObjCClassDeclaration(PeersList);
+GPBObjCClassDeclaration(SeqUpdate);
+GPBObjCClassDeclaration(SeqUpdateBody);
 GPBObjCClassDeclaration(UUIDValue);
-GPBObjCClassDeclaration(UpdateCallDisposed);
-GPBObjCClassDeclaration(UpdateCallHandled);
 GPBObjCClassDeclaration(UpdateChatArchive);
 GPBObjCClassDeclaration(UpdateChatClear);
 GPBObjCClassDeclaration(UpdateChatDelete);
@@ -75,46 +71,30 @@ GPBObjCClassDeclaration(UpdateContactRegistered);
 GPBObjCClassDeclaration(UpdateContactsAddTaskSuspended);
 GPBObjCClassDeclaration(UpdateContactsAdded);
 GPBObjCClassDeclaration(UpdateContactsRemoved);
-GPBObjCClassDeclaration(UpdateContainer);
 GPBObjCClassDeclaration(UpdateCountersChanged);
 GPBObjCClassDeclaration(UpdateDialogFavouriteChanged);
 GPBObjCClassDeclaration(UpdateDialogReadLaterChanged);
-GPBObjCClassDeclaration(UpdateEmptyUpdate);
 GPBObjCClassDeclaration(UpdateEvent);
-GPBObjCClassDeclaration(UpdateEventBusDeviceConnected);
-GPBObjCClassDeclaration(UpdateEventBusDeviceDisconnected);
-GPBObjCClassDeclaration(UpdateEventBusDisposed);
-GPBObjCClassDeclaration(UpdateEventBusMessage);
 GPBObjCClassDeclaration(UpdateFeatureFlagChanged);
-GPBObjCClassDeclaration(UpdateForceReloadState);
 GPBObjCClassDeclaration(UpdateGroup);
 GPBObjCClassDeclaration(UpdateGroupAboutChanged);
-GPBObjCClassDeclaration(UpdateGroupAboutChangedObsolete);
 GPBObjCClassDeclaration(UpdateGroupAvatarChanged);
-GPBObjCClassDeclaration(UpdateGroupAvatarChangedObsolete);
-GPBObjCClassDeclaration(UpdateGroupInviteObsolete);
 GPBObjCClassDeclaration(UpdateGroupMemberDiff);
 GPBObjCClassDeclaration(UpdateGroupMemberInvited);
 GPBObjCClassDeclaration(UpdateGroupMemberPermissionsChanged);
 GPBObjCClassDeclaration(UpdateGroupMembersCountChanged);
-GPBObjCClassDeclaration(UpdateGroupMembersUpdateObsolete);
 GPBObjCClassDeclaration(UpdateGroupMembersUpdated);
 GPBObjCClassDeclaration(UpdateGroupOnline);
 GPBObjCClassDeclaration(UpdateGroupOwnerChanged);
 GPBObjCClassDeclaration(UpdateGroupShortnameChanged);
 GPBObjCClassDeclaration(UpdateGroupTitleChanged);
-GPBObjCClassDeclaration(UpdateGroupTitleChangedObsolete);
 GPBObjCClassDeclaration(UpdateGroupTyping);
-GPBObjCClassDeclaration(UpdateGroupUserInvitedObsolete);
-GPBObjCClassDeclaration(UpdateGroupUserKickObsolete);
-GPBObjCClassDeclaration(UpdateGroupUserLeaveObsolete);
-GPBObjCClassDeclaration(UpdateIncomingCall);
-GPBObjCClassDeclaration(UpdateIncomingCallDeprecated);
 GPBObjCClassDeclaration(UpdateInteractiveMediaEvent);
 GPBObjCClassDeclaration(UpdateMessage);
 GPBObjCClassDeclaration(UpdateMessageContentChanged);
 GPBObjCClassDeclaration(UpdateMessageDelete);
 GPBObjCClassDeclaration(UpdateMessageEditRejectedByHook);
+GPBObjCClassDeclaration(UpdateMessageReactions);
 GPBObjCClassDeclaration(UpdateMessageRead);
 GPBObjCClassDeclaration(UpdateMessageReadByMe);
 GPBObjCClassDeclaration(UpdateMessageReceived);
@@ -126,7 +106,6 @@ GPBObjCClassDeclaration(UpdatePermissionsChange);
 GPBObjCClassDeclaration(UpdatePinnedMessagesChanged);
 GPBObjCClassDeclaration(UpdateRawUpdate);
 GPBObjCClassDeclaration(UpdateReactionsUpdate);
-GPBObjCClassDeclaration(UpdateSeqUpdate);
 GPBObjCClassDeclaration(UpdateSpaceMemberModified);
 GPBObjCClassDeclaration(UpdateSpaceModified);
 GPBObjCClassDeclaration(UpdateStickerCollectionsChanged);
@@ -149,8 +128,6 @@ GPBObjCClassDeclaration(UpdateUserLastSeen);
 GPBObjCClassDeclaration(UpdateUserLocalNameChanged);
 GPBObjCClassDeclaration(UpdateUserNameChanged);
 GPBObjCClassDeclaration(UpdateUserNickChanged);
-GPBObjCClassDeclaration(UpdateUserOffline);
-GPBObjCClassDeclaration(UpdateUserOnline);
 GPBObjCClassDeclaration(UpdateUserPreferredLanguagesChanged);
 GPBObjCClassDeclaration(UpdateUserSexChanged);
 GPBObjCClassDeclaration(UpdateUserStatusChanged);
@@ -159,13 +136,13 @@ GPBObjCClassDeclaration(UpdateUserUnblocked);
 GPBObjCClassDeclaration(User);
 GPBObjCClassDeclaration(UserOutPeer);
 GPBObjCClassDeclaration(UserPartialInfo);
-GPBObjCClassDeclaration(WeakUpdateBox);
-GPBObjCClassDeclaration(WeakUpdateBox_UpdateForceReloadState);
-GPBObjCClassDeclaration(WeakUpdateBox_UpdateForceReloadState_ForceReloadField);
+GPBObjCClassDeclaration(WeakUpdate);
 GPBObjCClassDeclaration(WeakUpdateCommand);
 GPBObjCClassDeclaration(WeakUpdateCommand_ChangeMyOnline);
 GPBObjCClassDeclaration(WeakUpdateCommand_ChangeMyTyping);
 GPBObjCClassDeclaration(WeakUpdateCommand_SubscribeToOnlines);
+GPBObjCClassDeclaration(WeakUpdate_UpdateForceReloadState);
+GPBObjCClassDeclaration(WeakUpdate_UpdateForceReloadState_ForceReloadField);
 
 #pragma mark - SequenceAndUpdatesRoot
 
@@ -181,6 +158,7 @@ GPBObjCClassDeclaration(WeakUpdateCommand_SubscribeToOnlines);
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[GAPIAnnotationsRoot extensionRegistry]];
     [registry addExtensions:[DefinitionsRoot extensionRegistry]];
+    [registry addExtensions:[ScalapbRoot extensionRegistry]];
   }
   return registry;
 }
@@ -201,15 +179,11 @@ static GPBFileDescriptor *SequenceAndUpdatesRoot_FileDescriptor(void) {
   return descriptor;
 }
 
-#pragma mark - UpdateSeqUpdate
+#pragma mark - SeqUpdateBody
 
-@implementation UpdateSeqUpdate
+@implementation SeqUpdateBody
 
 @dynamic updateOneOfCase;
-@dynamic seq;
-@dynamic state;
-@dynamic updateHeader;
-@dynamic updateForceReloadState;
 @dynamic updateUserAvatarChanged;
 @dynamic updateUserNameChanged;
 @dynamic updateUserLocalNameChanged;
@@ -253,35 +227,12 @@ static GPBFileDescriptor *SequenceAndUpdatesRoot_FileDescriptor(void) {
 @dynamic updateGroupMemberDiff;
 @dynamic updateGroupMembersCountChanged;
 @dynamic updateGroupMemberPermissionsChanged;
-@dynamic updateGroupInviteObsolete;
-@dynamic updateGroupUserInvitedObsolete;
-@dynamic updateGroupUserLeaveObsolete;
-@dynamic updateGroupUserKickObsolete;
-@dynamic updateGroupMembersUpdateObsolete;
-@dynamic updateGroupTitleChangedObsolete;
-@dynamic updateGroupAboutChangedObsolete;
-@dynamic updateGroupAvatarChangedObsolete;
 @dynamic updateGroupShortnameChanged;
 @dynamic updateStickerCollectionsChanged;
 @dynamic updateStickerPackRemoved;
 @dynamic updateStickerPackAdded;
-@dynamic updateTyping;
-@dynamic updateTypingStop;
-@dynamic updateUserOnline;
-@dynamic updateUserOffline;
-@dynamic updateUserLastSeen;
-@dynamic updateGroupOnline;
-@dynamic updateEventBusDeviceConnected;
-@dynamic updateEventBusDeviceDisconnected;
-@dynamic updateEventBusMessage;
-@dynamic updateEventBusDisposed;
-@dynamic updateIncomingCallDeprecated;
-@dynamic updateIncomingCall;
-@dynamic updateCallHandled;
-@dynamic updateCallDisposed;
 @dynamic updateParameterChanged;
 @dynamic updateRawUpdate;
-@dynamic updateEmptyUpdate;
 @dynamic updateCountersChanged;
 @dynamic updateConfig;
 @dynamic updateSpaceModified;
@@ -299,12 +250,8 @@ static GPBFileDescriptor *SequenceAndUpdatesRoot_FileDescriptor(void) {
 @dynamic updateGroupTyping;
 @dynamic updateDialogReadLaterChanged;
 
-typedef struct UpdateSeqUpdate__storage_ {
+typedef struct SeqUpdateBody__storage_ {
   uint32_t _has_storage_[2];
-  int32_t seq;
-  int32_t updateHeader;
-  NSData *state;
-  UpdateForceReloadState *updateForceReloadState;
   UpdateUserAvatarChanged *updateUserAvatarChanged;
   UpdateUserNameChanged *updateUserNameChanged;
   UpdateUserLocalNameChanged *updateUserLocalNameChanged;
@@ -348,35 +295,12 @@ typedef struct UpdateSeqUpdate__storage_ {
   UpdateGroupMemberDiff *updateGroupMemberDiff;
   UpdateGroupMembersCountChanged *updateGroupMembersCountChanged;
   UpdateGroupMemberPermissionsChanged *updateGroupMemberPermissionsChanged;
-  UpdateGroupInviteObsolete *updateGroupInviteObsolete;
-  UpdateGroupUserInvitedObsolete *updateGroupUserInvitedObsolete;
-  UpdateGroupUserLeaveObsolete *updateGroupUserLeaveObsolete;
-  UpdateGroupUserKickObsolete *updateGroupUserKickObsolete;
-  UpdateGroupMembersUpdateObsolete *updateGroupMembersUpdateObsolete;
-  UpdateGroupTitleChangedObsolete *updateGroupTitleChangedObsolete;
-  UpdateGroupAboutChangedObsolete *updateGroupAboutChangedObsolete;
-  UpdateGroupAvatarChangedObsolete *updateGroupAvatarChangedObsolete;
   UpdateGroupShortnameChanged *updateGroupShortnameChanged;
   UpdateStickerCollectionsChanged *updateStickerCollectionsChanged;
   UpdateStickerPackRemoved *updateStickerPackRemoved;
   UpdateStickerPackAdded *updateStickerPackAdded;
-  UpdateTyping *updateTyping;
-  UpdateTypingStop *updateTypingStop;
-  UpdateUserOnline *updateUserOnline;
-  UpdateUserOffline *updateUserOffline;
-  UpdateUserLastSeen *updateUserLastSeen;
-  UpdateGroupOnline *updateGroupOnline;
-  UpdateEventBusDeviceConnected *updateEventBusDeviceConnected;
-  UpdateEventBusDeviceDisconnected *updateEventBusDeviceDisconnected;
-  UpdateEventBusMessage *updateEventBusMessage;
-  UpdateEventBusDisposed *updateEventBusDisposed;
-  UpdateIncomingCallDeprecated *updateIncomingCallDeprecated;
-  UpdateIncomingCall *updateIncomingCall;
-  UpdateCallHandled *updateCallHandled;
-  UpdateCallDisposed *updateCallDisposed;
   UpdateParameterChanged *updateParameterChanged;
   UpdateRawUpdate *updateRawUpdate;
-  UpdateEmptyUpdate *updateEmptyUpdate;
   UpdateCountersChanged *updateCountersChanged;
   UpdateConfig *updateConfig;
   UpdateSpaceModified *updateSpaceModified;
@@ -389,11 +313,11 @@ typedef struct UpdateSeqUpdate__storage_ {
   UpdateThreadLifted *updateThreadLifted;
   UpdateGroup *updateGroup;
   UpdateGroupMemberInvited *updateGroupMemberInvited;
-  MessageReactionsUpdate *messageReactionsUpdate;
+  UpdateMessageReactions *messageReactionsUpdate;
   UpdatePermissionsChange *updatePermissionsChange;
   UpdateGroupTyping *updateGroupTyping;
   UpdateDialogReadLaterChanged *updateDialogReadLaterChanged;
-} UpdateSeqUpdate__storage_;
+} SeqUpdateBody__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -402,841 +326,598 @@ typedef struct UpdateSeqUpdate__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "seq",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateSeqUpdate_FieldNumber_Seq,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, seq),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "state",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateSeqUpdate_FieldNumber_State,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, state),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
-      {
-        .name = "updateHeader",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateSeqUpdate_FieldNumber_UpdateHeader,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateHeader),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "updateForceReloadState",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateForceReloadState),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateForceReloadState,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateForceReloadState),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "updateUserAvatarChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserAvatarChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateUserAvatarChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateUserAvatarChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateUserAvatarChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateUserAvatarChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateUserNameChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserNameChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateUserNameChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateUserNameChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateUserNameChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateUserNameChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateUserLocalNameChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserLocalNameChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateUserLocalNameChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateUserLocalNameChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateUserLocalNameChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateUserLocalNameChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateUserContactsChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserContactsChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateUserContactsChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateUserContactsChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateUserContactsChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateUserContactsChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateUserNickChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserNickChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateUserNickChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateUserNickChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateUserNickChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateUserNickChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateUserAboutChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserAboutChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateUserAboutChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateUserAboutChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateUserAboutChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateUserAboutChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateUserPreferredLanguagesChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserPreferredLanguagesChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateUserPreferredLanguagesChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateUserPreferredLanguagesChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateUserPreferredLanguagesChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateUserPreferredLanguagesChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateUserTimeZoneChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserTimeZoneChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateUserTimeZoneChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateUserTimeZoneChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateUserTimeZoneChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateUserTimeZoneChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateUserBotCommandsChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserBotCommandsChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateUserBotCommandsChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateUserBotCommandsChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateUserBotCommandsChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateUserBotCommandsChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateUserExtChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserExtChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateUserExtChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateUserExtChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateUserExtChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateUserExtChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateUserFullExtChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserFullExtChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateUserFullExtChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateUserFullExtChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateUserFullExtChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateUserFullExtChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateUserSexChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserSexChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateUserSexChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateUserSexChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateUserSexChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateUserSexChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateUserCustomProfileChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserCustomProfileChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateUserCustomProfileChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateUserCustomProfileChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateUserCustomProfileChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateUserCustomProfileChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateUserStatusChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserStatusChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateUserStatusChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateUserStatusChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateUserStatusChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateUserStatusChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateContactRegistered",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateContactRegistered),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateContactRegistered,
+        .number = SeqUpdateBody_FieldNumber_UpdateContactRegistered,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateContactRegistered),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateContactRegistered),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateContactsAdded",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateContactsAdded),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateContactsAdded,
+        .number = SeqUpdateBody_FieldNumber_UpdateContactsAdded,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateContactsAdded),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateContactsAdded),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateContactsAddTaskSuspended",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateContactsAddTaskSuspended),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateContactsAddTaskSuspended,
+        .number = SeqUpdateBody_FieldNumber_UpdateContactsAddTaskSuspended,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateContactsAddTaskSuspended),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateContactsAddTaskSuspended),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateContactsRemoved",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateContactsRemoved),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateContactsRemoved,
+        .number = SeqUpdateBody_FieldNumber_UpdateContactsRemoved,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateContactsRemoved),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateContactsRemoved),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateUserBlocked",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserBlocked),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateUserBlocked,
+        .number = SeqUpdateBody_FieldNumber_UpdateUserBlocked,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateUserBlocked),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateUserBlocked),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateUserUnblocked",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserUnblocked),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateUserUnblocked,
+        .number = SeqUpdateBody_FieldNumber_UpdateUserUnblocked,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateUserUnblocked),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateUserUnblocked),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateInteractiveMediaEvent",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateInteractiveMediaEvent),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateInteractiveMediaEvent,
+        .number = SeqUpdateBody_FieldNumber_UpdateInteractiveMediaEvent,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateInteractiveMediaEvent),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateInteractiveMediaEvent),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateMessage",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessage),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateMessage,
+        .number = SeqUpdateBody_FieldNumber_UpdateMessage,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateMessage),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateMessage),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateMessageContentChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageContentChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateMessageContentChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateMessageContentChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateMessageContentChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateMessageContentChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateMessageSent",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageSent),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateMessageSent,
+        .number = SeqUpdateBody_FieldNumber_UpdateMessageSent,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateMessageSent),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateMessageSent),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateMessageReceived",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageReceived),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateMessageReceived,
+        .number = SeqUpdateBody_FieldNumber_UpdateMessageReceived,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateMessageReceived),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateMessageReceived),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateMessageRead",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageRead),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateMessageRead,
+        .number = SeqUpdateBody_FieldNumber_UpdateMessageRead,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateMessageRead),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateMessageRead),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateMessageReadByMe",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageReadByMe),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateMessageReadByMe,
+        .number = SeqUpdateBody_FieldNumber_UpdateMessageReadByMe,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateMessageReadByMe),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateMessageReadByMe),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateMessageDelete",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageDelete),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateMessageDelete,
+        .number = SeqUpdateBody_FieldNumber_UpdateMessageDelete,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateMessageDelete),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateMessageDelete),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateChatClear",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateChatClear),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateChatClear,
+        .number = SeqUpdateBody_FieldNumber_UpdateChatClear,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateChatClear),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateChatClear),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateChatDelete",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateChatDelete),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateChatDelete,
+        .number = SeqUpdateBody_FieldNumber_UpdateChatDelete,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateChatDelete),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateChatDelete),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateChatArchive",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateChatArchive),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateChatArchive,
+        .number = SeqUpdateBody_FieldNumber_UpdateChatArchive,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateChatArchive),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateChatArchive),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateChatGroupsChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateChatGroupsChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateChatGroupsChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateChatGroupsChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateChatGroupsChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateChatGroupsChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateReactionsUpdate",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateReactionsUpdate),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateReactionsUpdate,
+        .number = SeqUpdateBody_FieldNumber_UpdateReactionsUpdate,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateReactionsUpdate),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateReactionsUpdate),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateDialogFavouriteChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateDialogFavouriteChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateDialogFavouriteChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateDialogFavouriteChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateDialogFavouriteChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateDialogFavouriteChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updatePinnedMessagesChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdatePinnedMessagesChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdatePinnedMessagesChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdatePinnedMessagesChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updatePinnedMessagesChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updatePinnedMessagesChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateGroupTitleChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupTitleChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroupTitleChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateGroupTitleChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroupTitleChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateGroupTitleChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateGroupAvatarChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupAvatarChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroupAvatarChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateGroupAvatarChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroupAvatarChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateGroupAvatarChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateGroupAboutChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupAboutChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroupAboutChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateGroupAboutChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroupAboutChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateGroupAboutChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateGroupOwnerChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupOwnerChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroupOwnerChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateGroupOwnerChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroupOwnerChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateGroupOwnerChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateGroupMembersUpdated",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupMembersUpdated),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroupMembersUpdated,
+        .number = SeqUpdateBody_FieldNumber_UpdateGroupMembersUpdated,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroupMembersUpdated),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateGroupMembersUpdated),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateGroupMemberDiff",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupMemberDiff),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroupMemberDiff,
+        .number = SeqUpdateBody_FieldNumber_UpdateGroupMemberDiff,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroupMemberDiff),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateGroupMemberDiff),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateGroupMembersCountChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupMembersCountChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroupMembersCountChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateGroupMembersCountChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroupMembersCountChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateGroupMembersCountChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateGroupMemberPermissionsChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupMemberPermissionsChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroupMemberPermissionsChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateGroupMemberPermissionsChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroupMemberPermissionsChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateGroupInviteObsolete",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupInviteObsolete),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroupInviteObsolete,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroupInviteObsolete),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateGroupUserInvitedObsolete",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupUserInvitedObsolete),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroupUserInvitedObsolete,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroupUserInvitedObsolete),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateGroupUserLeaveObsolete",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupUserLeaveObsolete),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroupUserLeaveObsolete,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroupUserLeaveObsolete),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateGroupUserKickObsolete",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupUserKickObsolete),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroupUserKickObsolete,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroupUserKickObsolete),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateGroupMembersUpdateObsolete",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupMembersUpdateObsolete),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroupMembersUpdateObsolete,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroupMembersUpdateObsolete),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateGroupTitleChangedObsolete",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupTitleChangedObsolete),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroupTitleChangedObsolete,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroupTitleChangedObsolete),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateGroupAboutChangedObsolete",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupAboutChangedObsolete),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroupAboutChangedObsolete,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroupAboutChangedObsolete),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateGroupAvatarChangedObsolete",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupAvatarChangedObsolete),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroupAvatarChangedObsolete,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroupAvatarChangedObsolete),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateGroupMemberPermissionsChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateGroupShortnameChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupShortnameChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroupShortnameChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateGroupShortnameChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroupShortnameChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateGroupShortnameChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateStickerCollectionsChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateStickerCollectionsChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateStickerCollectionsChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateStickerCollectionsChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateStickerCollectionsChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateStickerCollectionsChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateStickerPackRemoved",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateStickerPackRemoved),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateStickerPackRemoved,
+        .number = SeqUpdateBody_FieldNumber_UpdateStickerPackRemoved,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateStickerPackRemoved),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateStickerPackRemoved),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateStickerPackAdded",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateStickerPackAdded),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateStickerPackAdded,
+        .number = SeqUpdateBody_FieldNumber_UpdateStickerPackAdded,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateStickerPackAdded),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateTyping",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateTyping),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateTyping,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateTyping),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateTypingStop",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateTypingStop),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateTypingStop,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateTypingStop),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateUserOnline",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserOnline),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateUserOnline,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateUserOnline),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateUserOffline",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserOffline),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateUserOffline,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateUserOffline),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateUserLastSeen",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserLastSeen),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateUserLastSeen,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateUserLastSeen),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateGroupOnline",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupOnline),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroupOnline,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroupOnline),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateEventBusDeviceConnected",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateEventBusDeviceConnected),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateEventBusDeviceConnected,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateEventBusDeviceConnected),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateEventBusDeviceDisconnected",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateEventBusDeviceDisconnected),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateEventBusDeviceDisconnected,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateEventBusDeviceDisconnected),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateEventBusMessage",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateEventBusMessage),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateEventBusMessage,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateEventBusMessage),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateEventBusDisposed",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateEventBusDisposed),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateEventBusDisposed,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateEventBusDisposed),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateIncomingCallDeprecated",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateIncomingCallDeprecated),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateIncomingCallDeprecated,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateIncomingCallDeprecated),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateIncomingCall",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateIncomingCall),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateIncomingCall,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateIncomingCall),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateCallHandled",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateCallHandled),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateCallHandled,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateCallHandled),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateCallDisposed",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateCallDisposed),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateCallDisposed,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateCallDisposed),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateStickerPackAdded),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateParameterChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateParameterChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateParameterChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateParameterChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateParameterChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateParameterChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateRawUpdate",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateRawUpdate),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateRawUpdate,
+        .number = SeqUpdateBody_FieldNumber_UpdateRawUpdate,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateRawUpdate),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateEmptyUpdate",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateEmptyUpdate),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateEmptyUpdate,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateEmptyUpdate),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateRawUpdate),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateCountersChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateCountersChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateCountersChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateCountersChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateCountersChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateCountersChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateConfig",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateConfig),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateConfig,
+        .number = SeqUpdateBody_FieldNumber_UpdateConfig,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateConfig),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateConfig),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateSpaceModified",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateSpaceModified),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateSpaceModified,
+        .number = SeqUpdateBody_FieldNumber_UpdateSpaceModified,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateSpaceModified),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateSpaceModified),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateSpaceMemberModified",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateSpaceMemberModified),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateSpaceMemberModified,
+        .number = SeqUpdateBody_FieldNumber_UpdateSpaceMemberModified,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateSpaceMemberModified),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateSpaceMemberModified),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateMessageRejectedByHook",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageRejectedByHook),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateMessageRejectedByHook,
+        .number = SeqUpdateBody_FieldNumber_UpdateMessageRejectedByHook,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateMessageRejectedByHook),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateMessageRejectedByHook),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateMessageEditRejectedByHook",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageEditRejectedByHook),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateMessageEditRejectedByHook,
+        .number = SeqUpdateBody_FieldNumber_UpdateMessageEditRejectedByHook,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateMessageEditRejectedByHook),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateMessageEditRejectedByHook),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateUser",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateUser),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateUser,
+        .number = SeqUpdateBody_FieldNumber_UpdateUser,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateUser),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateUser),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateFeatureFlagChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateFeatureFlagChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateFeatureFlagChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateFeatureFlagChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateFeatureFlagChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateFeatureFlagChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateThreadCreated",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateThreadCreated),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateThreadCreated,
+        .number = SeqUpdateBody_FieldNumber_UpdateThreadCreated,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateThreadCreated),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateThreadCreated),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateThreadLifted",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateThreadLifted),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateThreadLifted,
+        .number = SeqUpdateBody_FieldNumber_UpdateThreadLifted,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateThreadLifted),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateThreadLifted),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateGroup",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroup),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroup,
+        .number = SeqUpdateBody_FieldNumber_UpdateGroup,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroup),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateGroup),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateGroupMemberInvited",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupMemberInvited),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroupMemberInvited,
+        .number = SeqUpdateBody_FieldNumber_UpdateGroupMemberInvited,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroupMemberInvited),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateGroupMemberInvited),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "messageReactionsUpdate",
-        .dataTypeSpecific.clazz = GPBObjCClass(MessageReactionsUpdate),
-        .number = UpdateSeqUpdate_FieldNumber_MessageReactionsUpdate,
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageReactions),
+        .number = SeqUpdateBody_FieldNumber_MessageReactionsUpdate,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, messageReactionsUpdate),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, messageReactionsUpdate),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updatePermissionsChange",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdatePermissionsChange),
-        .number = UpdateSeqUpdate_FieldNumber_UpdatePermissionsChange,
+        .number = SeqUpdateBody_FieldNumber_UpdatePermissionsChange,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updatePermissionsChange),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updatePermissionsChange),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateGroupTyping",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupTyping),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateGroupTyping,
+        .number = SeqUpdateBody_FieldNumber_UpdateGroupTyping,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateGroupTyping),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateGroupTyping),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateDialogReadLaterChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateDialogReadLaterChanged),
-        .number = UpdateSeqUpdate_FieldNumber_UpdateDialogReadLaterChanged,
+        .number = SeqUpdateBody_FieldNumber_UpdateDialogReadLaterChanged,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateSeqUpdate__storage_, updateDialogReadLaterChanged),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateDialogReadLaterChanged),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateSeqUpdate class]
+        [GPBDescriptor allocDescriptorForClass:[SeqUpdateBody class]
                                      rootClass:[SequenceAndUpdatesRoot class]
                                           file:SequenceAndUpdatesRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateSeqUpdate__storage_)
+                                   storageSize:sizeof(SeqUpdateBody__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     static const char *oneofs[] = {
       "update",
@@ -1244,17 +925,6 @@ typedef struct UpdateSeqUpdate__storage_ {
     [localDescriptor setupOneofs:oneofs
                            count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
                    firstHasIndex:-1];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "Y\004\026\000\005\027\000\006\025\000\007\032\000\010\031\000\t\025\000\n\026\000\013\037\004\000\014\031\000\r\034\000\016\024\000\017\030\000\020\024"
-        "\000\021\036\000\022\027\000\023\027\000\024\023\000\025\036\000\026\025\000\027\021\000\030\023\000\031\033\000\032\r\000\033\033\000\034\021\000\035\025\000"
-        "\036\021\000\037\025\000 \023\000!\017\000\"\020\000#\021\000$\027\000%\025\000&\034\000\'\033\000(\027\000)\030\000+\027\000,"
-        "\027\0003\031\0004\025\0005\036\0007\037\004\0008\031\0009\036\000:\034\000;\033\000<\037\001\000=\037\000\?\037\000@\037\001"
-        "\000A\033\000B\037\000C\030\000D\026\000G\014\000H\020\000I\020\000J\021\000K\022\000L\021\000M\035\000N\037\001\000O\025"
-        "\000P\026\000Q\034\000R\022\000S\021\000T\022\000U\026\000V\017\000W\021\000X\025\000Y\014\000Z\023\000[\031\000\\\033\000"
-        "]\037\000^\n\000_\030\000`\023\000a\022\000b\013\000c\030\000d\026\000e\027\000f\021\000g\034\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1265,31 +935,23 @@ typedef struct UpdateSeqUpdate__storage_ {
 
 @end
 
-void UpdateSeqUpdate_ClearUpdateOneOfCase(UpdateSeqUpdate *message) {
-  GPBDescriptor *descriptor = [UpdateSeqUpdate descriptor];
+void SeqUpdateBody_ClearUpdateOneOfCase(SeqUpdateBody *message) {
+  GPBDescriptor *descriptor = [SeqUpdateBody descriptor];
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
   GPBClearOneof(message, oneof);
 }
-#pragma mark - UpdateFatSeqUpdate
+#pragma mark - SeqUpdate
 
-@implementation UpdateFatSeqUpdate
+@implementation SeqUpdate
 
 @dynamic seq;
-@dynamic state;
-@dynamic updateHeader;
-@dynamic update;
-@dynamic usersArray, usersArray_Count;
-@dynamic groupsArray, groupsArray_Count;
+@dynamic hasBody, body;
 
-typedef struct UpdateFatSeqUpdate__storage_ {
+typedef struct SeqUpdate__storage_ {
   uint32_t _has_storage_[1];
   int32_t seq;
-  int32_t updateHeader;
-  NSData *state;
-  NSData *update;
-  NSMutableArray *usersArray;
-  NSMutableArray *groupsArray;
-} UpdateFatSeqUpdate__storage_;
+  SeqUpdateBody *body;
+} SeqUpdate__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -1300,465 +962,29 @@ typedef struct UpdateFatSeqUpdate__storage_ {
       {
         .name = "seq",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateFatSeqUpdate_FieldNumber_Seq,
+        .number = SeqUpdate_FieldNumber_Seq,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateFatSeqUpdate__storage_, seq),
+        .offset = (uint32_t)offsetof(SeqUpdate__storage_, seq),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
       {
-        .name = "state",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateFatSeqUpdate_FieldNumber_State,
+        .name = "body",
+        .dataTypeSpecific.clazz = GPBObjCClass(SeqUpdateBody),
+        .number = SeqUpdate_FieldNumber_Body,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateFatSeqUpdate__storage_, state),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
-      {
-        .name = "updateHeader",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateFatSeqUpdate_FieldNumber_UpdateHeader,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(UpdateFatSeqUpdate__storage_, updateHeader),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "update",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateFatSeqUpdate_FieldNumber_Update,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(UpdateFatSeqUpdate__storage_, update),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
-      {
-        .name = "usersArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(User),
-        .number = UpdateFatSeqUpdate_FieldNumber_UsersArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(UpdateFatSeqUpdate__storage_, usersArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "groupsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(Group),
-        .number = UpdateFatSeqUpdate_FieldNumber_GroupsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(UpdateFatSeqUpdate__storage_, groupsArray),
-        .flags = GPBFieldRepeated,
+        .offset = (uint32_t)offsetof(SeqUpdate__storage_, body),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateFatSeqUpdate class]
+        [GPBDescriptor allocDescriptorForClass:[SeqUpdate class]
                                      rootClass:[SequenceAndUpdatesRoot class]
                                           file:SequenceAndUpdatesRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateFatSeqUpdate__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - UpdateWeakUpdate
-
-@implementation UpdateWeakUpdate
-
-@dynamic date;
-@dynamic updateHeader;
-@dynamic update;
-
-typedef struct UpdateWeakUpdate__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t updateHeader;
-  NSData *update;
-  int64_t date;
-} UpdateWeakUpdate__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "date",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateWeakUpdate_FieldNumber_Date,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateWeakUpdate__storage_, date),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "updateHeader",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateWeakUpdate_FieldNumber_UpdateHeader,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateWeakUpdate__storage_, updateHeader),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "update",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateWeakUpdate_FieldNumber_Update,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(UpdateWeakUpdate__storage_, update),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateWeakUpdate class]
-                                     rootClass:[SequenceAndUpdatesRoot class]
-                                          file:SequenceAndUpdatesRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateWeakUpdate__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - UpdateWeakFatUpdate
-
-@implementation UpdateWeakFatUpdate
-
-@dynamic date;
-@dynamic updateHeader;
-@dynamic update;
-@dynamic usersArray, usersArray_Count;
-@dynamic groupsArray, groupsArray_Count;
-
-typedef struct UpdateWeakFatUpdate__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t updateHeader;
-  NSData *update;
-  NSMutableArray *usersArray;
-  NSMutableArray *groupsArray;
-  int64_t date;
-} UpdateWeakFatUpdate__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "date",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateWeakFatUpdate_FieldNumber_Date,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateWeakFatUpdate__storage_, date),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "updateHeader",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateWeakFatUpdate_FieldNumber_UpdateHeader,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateWeakFatUpdate__storage_, updateHeader),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "update",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateWeakFatUpdate_FieldNumber_Update,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(UpdateWeakFatUpdate__storage_, update),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
-      {
-        .name = "usersArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(User),
-        .number = UpdateWeakFatUpdate_FieldNumber_UsersArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(UpdateWeakFatUpdate__storage_, usersArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "groupsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(Group),
-        .number = UpdateWeakFatUpdate_FieldNumber_GroupsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(UpdateWeakFatUpdate__storage_, groupsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateWeakFatUpdate class]
-                                     rootClass:[SequenceAndUpdatesRoot class]
-                                          file:SequenceAndUpdatesRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateWeakFatUpdate__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - UpdateSeqUpdateTooLong
-
-@implementation UpdateSeqUpdateTooLong
-
-
-typedef struct UpdateSeqUpdateTooLong__storage_ {
-  uint32_t _has_storage_[1];
-} UpdateSeqUpdateTooLong__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateSeqUpdateTooLong class]
-                                     rootClass:[SequenceAndUpdatesRoot class]
-                                          file:SequenceAndUpdatesRoot_FileDescriptor()
-                                        fields:NULL
-                                    fieldCount:0
-                                   storageSize:sizeof(UpdateSeqUpdateTooLong__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - UpdateContainer
-
-@implementation UpdateContainer
-
-@dynamic updateHeader;
-@dynamic update;
-
-typedef struct UpdateContainer__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t updateHeader;
-  NSData *update;
-} UpdateContainer__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "updateHeader",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateContainer_FieldNumber_UpdateHeader,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateContainer__storage_, updateHeader),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "update",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateContainer_FieldNumber_Update,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateContainer__storage_, update),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateContainer class]
-                                     rootClass:[SequenceAndUpdatesRoot class]
-                                          file:SequenceAndUpdatesRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateContainer__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - UpdateCombinedUpdate
-
-@implementation UpdateCombinedUpdate
-
-@dynamic seqStart;
-@dynamic seqEnd;
-@dynamic state;
-@dynamic usersArray, usersArray_Count;
-@dynamic groupsArray, groupsArray_Count;
-@dynamic updatesArray, updatesArray_Count;
-@dynamic messagesArray, messagesArray_Count;
-
-typedef struct UpdateCombinedUpdate__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t seqStart;
-  int32_t seqEnd;
-  NSData *state;
-  NSMutableArray *usersArray;
-  NSMutableArray *groupsArray;
-  NSMutableArray *updatesArray;
-  NSMutableArray *messagesArray;
-} UpdateCombinedUpdate__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "seqStart",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateCombinedUpdate_FieldNumber_SeqStart,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateCombinedUpdate__storage_, seqStart),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "seqEnd",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateCombinedUpdate_FieldNumber_SeqEnd,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateCombinedUpdate__storage_, seqEnd),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "state",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateCombinedUpdate_FieldNumber_State,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(UpdateCombinedUpdate__storage_, state),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
-      {
-        .name = "usersArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(User),
-        .number = UpdateCombinedUpdate_FieldNumber_UsersArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(UpdateCombinedUpdate__storage_, usersArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "groupsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(Group),
-        .number = UpdateCombinedUpdate_FieldNumber_GroupsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(UpdateCombinedUpdate__storage_, groupsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updatesArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateContainer),
-        .number = UpdateCombinedUpdate_FieldNumber_UpdatesArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(UpdateCombinedUpdate__storage_, updatesArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "messagesArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(HistoryMessage),
-        .number = UpdateCombinedUpdate_FieldNumber_MessagesArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(UpdateCombinedUpdate__storage_, messagesArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateCombinedUpdate class]
-                                     rootClass:[SequenceAndUpdatesRoot class]
-                                          file:SequenceAndUpdatesRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateCombinedUpdate__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - RequestGetState
-
-@implementation RequestGetState
-
-@dynamic optimizationsArray, optimizationsArray_Count;
-
-typedef struct RequestGetState__storage_ {
-  uint32_t _has_storage_[1];
-  GPBEnumArray *optimizationsArray;
-} RequestGetState__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "optimizationsArray",
-        .dataTypeSpecific.enumDescFunc = UpdateOptimization_EnumDescriptor,
-        .number = RequestGetState_FieldNumber_OptimizationsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestGetState__storage_, optimizationsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestGetState class]
-                                     rootClass:[SequenceAndUpdatesRoot class]
-                                          file:SequenceAndUpdatesRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestGetState__storage_)
+                                   storageSize:sizeof(SeqUpdate__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -1775,15 +1001,11 @@ typedef struct RequestGetState__storage_ {
 @implementation RequestGetDifference
 
 @dynamic seq;
-@dynamic state;
-@dynamic optimizationsArray, optimizationsArray_Count;
 @dynamic hasConfigHash, configHash;
 
 typedef struct RequestGetDifference__storage_ {
   uint32_t _has_storage_[1];
   int32_t seq;
-  NSData *state;
-  GPBEnumArray *optimizationsArray;
   GPBInt64Value *configHash;
 } RequestGetDifference__storage_;
 
@@ -1803,28 +1025,10 @@ typedef struct RequestGetDifference__storage_ {
         .dataType = GPBDataTypeInt32,
       },
       {
-        .name = "state",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestGetDifference_FieldNumber_State,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestGetDifference__storage_, state),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
-      {
-        .name = "optimizationsArray",
-        .dataTypeSpecific.enumDescFunc = UpdateOptimization_EnumDescriptor,
-        .number = RequestGetDifference_FieldNumber_OptimizationsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestGetDifference__storage_, optimizationsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
-      },
-      {
         .name = "configHash",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBInt64Value),
         .number = RequestGetDifference_FieldNumber_ConfigHash,
-        .hasIndex = 2,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(RequestGetDifference__storage_, configHash),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -1853,7 +1057,6 @@ typedef struct RequestGetDifference__storage_ {
 @implementation ResponseGetDifference
 
 @dynamic seq;
-@dynamic state;
 @dynamic updatesArray, updatesArray_Count;
 @dynamic messagesArray, messagesArray_Count;
 @dynamic needMore;
@@ -1865,7 +1068,6 @@ typedef struct RequestGetDifference__storage_ {
 typedef struct ResponseGetDifference__storage_ {
   uint32_t _has_storage_[1];
   int32_t seq;
-  NSData *state;
   NSMutableArray *updatesArray;
   NSMutableArray *messagesArray;
   NSMutableArray *usersRefsArray;
@@ -1890,31 +1092,13 @@ typedef struct ResponseGetDifference__storage_ {
         .dataType = GPBDataTypeInt32,
       },
       {
-        .name = "state",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseGetDifference_FieldNumber_State,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(ResponseGetDifference__storage_, state),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
-      {
         .name = "updatesArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateSeqUpdate),
+        .dataTypeSpecific.clazz = GPBObjCClass(SeqUpdate),
         .number = ResponseGetDifference_FieldNumber_UpdatesArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(ResponseGetDifference__storage_, updatesArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "needMore",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseGetDifference_FieldNumber_NeedMore,
-        .hasIndex = 2,
-        .offset = 3,  // Stored in _has_storage_ to save space.
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBool,
       },
       {
         .name = "messagesArray",
@@ -1924,6 +1108,15 @@ typedef struct ResponseGetDifference__storage_ {
         .offset = (uint32_t)offsetof(ResponseGetDifference__storage_, messagesArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "needMore",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ResponseGetDifference_FieldNumber_NeedMore,
+        .hasIndex = 1,
+        .offset = 2,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
       },
       {
         .name = "usersRefsArray",
@@ -1947,7 +1140,7 @@ typedef struct ResponseGetDifference__storage_ {
         .name = "config",
         .dataTypeSpecific.clazz = GPBObjCClass(Config),
         .number = ResponseGetDifference_FieldNumber_Config,
-        .hasIndex = 4,
+        .hasIndex = 3,
         .offset = (uint32_t)offsetof(ResponseGetDifference__storage_, config),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -1956,7 +1149,7 @@ typedef struct ResponseGetDifference__storage_ {
         .name = "configHash",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBInt64Value),
         .number = ResponseGetDifference_FieldNumber_ConfigHash,
-        .hasIndex = 5,
+        .hasIndex = 4,
         .offset = (uint32_t)offsetof(ResponseGetDifference__storage_, configHash),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -2102,7 +1295,7 @@ typedef struct ResponseGetDialogsDifference__storage_ {
 typedef struct GroupMembersSubset__storage_ {
   uint32_t _has_storage_[1];
   GroupOutPeer *groupPeer;
-  GPBInt32Array *memberIdsArray;
+  NSMutableArray *memberIdsArray;
 } GroupMembersSubset__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2126,8 +1319,8 @@ typedef struct GroupMembersSubset__storage_ {
         .number = GroupMembersSubset_FieldNumber_MemberIdsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(GroupMembersSubset__storage_, memberIdsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked),
-        .dataType = GPBDataTypeInt32,
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -2148,22 +1341,22 @@ typedef struct GroupMembersSubset__storage_ {
 
 @end
 
-#pragma mark - RequestGetReferencedEntitites
+#pragma mark - RequestGetReferencedEntities
 
-@implementation RequestGetReferencedEntitites
+@implementation RequestGetReferencedEntities
 
 @dynamic usersArray, usersArray_Count;
 @dynamic midsArray, midsArray_Count;
 @dynamic groupMembersArray, groupMembersArray_Count;
 @dynamic groupsArray, groupsArray_Count;
 
-typedef struct RequestGetReferencedEntitites__storage_ {
+typedef struct RequestGetReferencedEntities__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *usersArray;
   NSMutableArray *midsArray;
   NSMutableArray *groupMembersArray;
   NSMutableArray *groupsArray;
-} RequestGetReferencedEntitites__storage_;
+} RequestGetReferencedEntities__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -2174,47 +1367,47 @@ typedef struct RequestGetReferencedEntitites__storage_ {
       {
         .name = "usersArray",
         .dataTypeSpecific.clazz = GPBObjCClass(UserOutPeer),
-        .number = RequestGetReferencedEntitites_FieldNumber_UsersArray,
+        .number = RequestGetReferencedEntities_FieldNumber_UsersArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestGetReferencedEntitites__storage_, usersArray),
+        .offset = (uint32_t)offsetof(RequestGetReferencedEntities__storage_, usersArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "midsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestGetReferencedEntitites_FieldNumber_MidsArray,
+        .number = RequestGetReferencedEntities_FieldNumber_MidsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestGetReferencedEntitites__storage_, midsArray),
+        .offset = (uint32_t)offsetof(RequestGetReferencedEntities__storage_, midsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "groupMembersArray",
         .dataTypeSpecific.clazz = GPBObjCClass(GroupMembersSubset),
-        .number = RequestGetReferencedEntitites_FieldNumber_GroupMembersArray,
+        .number = RequestGetReferencedEntities_FieldNumber_GroupMembersArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestGetReferencedEntitites__storage_, groupMembersArray),
+        .offset = (uint32_t)offsetof(RequestGetReferencedEntities__storage_, groupMembersArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "groupsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(GroupOutPeer),
-        .number = RequestGetReferencedEntitites_FieldNumber_GroupsArray,
+        .number = RequestGetReferencedEntities_FieldNumber_GroupsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestGetReferencedEntitites__storage_, groupsArray),
+        .offset = (uint32_t)offsetof(RequestGetReferencedEntities__storage_, groupsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestGetReferencedEntitites class]
+        [GPBDescriptor allocDescriptorForClass:[RequestGetReferencedEntities class]
                                      rootClass:[SequenceAndUpdatesRoot class]
                                           file:SequenceAndUpdatesRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestGetReferencedEntitites__storage_)
+                                   storageSize:sizeof(RequestGetReferencedEntities__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -2226,20 +1419,20 @@ typedef struct RequestGetReferencedEntitites__storage_ {
 
 @end
 
-#pragma mark - ResponseGetReferencedEntitites
+#pragma mark - ResponseGetReferencedEntities
 
-@implementation ResponseGetReferencedEntitites
+@implementation ResponseGetReferencedEntities
 
 @dynamic usersArray, usersArray_Count;
 @dynamic groupsArray, groupsArray_Count;
 @dynamic messagesArray, messagesArray_Count;
 
-typedef struct ResponseGetReferencedEntitites__storage_ {
+typedef struct ResponseGetReferencedEntities__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *usersArray;
   NSMutableArray *groupsArray;
   NSMutableArray *messagesArray;
-} ResponseGetReferencedEntitites__storage_;
+} ResponseGetReferencedEntities__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -2250,38 +1443,38 @@ typedef struct ResponseGetReferencedEntitites__storage_ {
       {
         .name = "usersArray",
         .dataTypeSpecific.clazz = GPBObjCClass(User),
-        .number = ResponseGetReferencedEntitites_FieldNumber_UsersArray,
+        .number = ResponseGetReferencedEntities_FieldNumber_UsersArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponseGetReferencedEntitites__storage_, usersArray),
+        .offset = (uint32_t)offsetof(ResponseGetReferencedEntities__storage_, usersArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "groupsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(Group),
-        .number = ResponseGetReferencedEntitites_FieldNumber_GroupsArray,
+        .number = ResponseGetReferencedEntities_FieldNumber_GroupsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponseGetReferencedEntitites__storage_, groupsArray),
+        .offset = (uint32_t)offsetof(ResponseGetReferencedEntities__storage_, groupsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "messagesArray",
         .dataTypeSpecific.clazz = GPBObjCClass(HistoryMessage),
-        .number = ResponseGetReferencedEntitites_FieldNumber_MessagesArray,
+        .number = ResponseGetReferencedEntities_FieldNumber_MessagesArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponseGetReferencedEntitites__storage_, messagesArray),
+        .offset = (uint32_t)offsetof(ResponseGetReferencedEntities__storage_, messagesArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[ResponseGetReferencedEntitites class]
+        [GPBDescriptor allocDescriptorForClass:[ResponseGetReferencedEntities class]
                                      rootClass:[SequenceAndUpdatesRoot class]
                                           file:SequenceAndUpdatesRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(ResponseGetReferencedEntitites__storage_)
+                                   storageSize:sizeof(ResponseGetReferencedEntities__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -2461,306 +1654,6 @@ typedef struct UpdateRawUpdate__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(UpdateRawUpdate__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - UpdateEmptyUpdate
-
-@implementation UpdateEmptyUpdate
-
-
-typedef struct UpdateEmptyUpdate__storage_ {
-  uint32_t _has_storage_[1];
-} UpdateEmptyUpdate__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateEmptyUpdate class]
-                                     rootClass:[SequenceAndUpdatesRoot class]
-                                          file:SequenceAndUpdatesRoot_FileDescriptor()
-                                        fields:NULL
-                                    fieldCount:0
-                                   storageSize:sizeof(UpdateEmptyUpdate__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - RequestSubscribeToOnline
-
-@implementation RequestSubscribeToOnline
-
-@dynamic usersArray, usersArray_Count;
-
-typedef struct RequestSubscribeToOnline__storage_ {
-  uint32_t _has_storage_[1];
-  NSMutableArray *usersArray;
-} RequestSubscribeToOnline__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "usersArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(UserOutPeer),
-        .number = RequestSubscribeToOnline_FieldNumber_UsersArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestSubscribeToOnline__storage_, usersArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestSubscribeToOnline class]
-                                     rootClass:[SequenceAndUpdatesRoot class]
-                                          file:SequenceAndUpdatesRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestSubscribeToOnline__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - RequestSubscribeFromOnline
-
-@implementation RequestSubscribeFromOnline
-
-@dynamic usersArray, usersArray_Count;
-
-typedef struct RequestSubscribeFromOnline__storage_ {
-  uint32_t _has_storage_[1];
-  NSMutableArray *usersArray;
-} RequestSubscribeFromOnline__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "usersArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(UserOutPeer),
-        .number = RequestSubscribeFromOnline_FieldNumber_UsersArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestSubscribeFromOnline__storage_, usersArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestSubscribeFromOnline class]
-                                     rootClass:[SequenceAndUpdatesRoot class]
-                                          file:SequenceAndUpdatesRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestSubscribeFromOnline__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - RequestSubscribeToGroupOnline
-
-@implementation RequestSubscribeToGroupOnline
-
-@dynamic groupsArray, groupsArray_Count;
-@dynamic sendUsersId;
-
-typedef struct RequestSubscribeToGroupOnline__storage_ {
-  uint32_t _has_storage_[1];
-  NSMutableArray *groupsArray;
-} RequestSubscribeToGroupOnline__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "groupsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(GroupOutPeer),
-        .number = RequestSubscribeToGroupOnline_FieldNumber_GroupsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestSubscribeToGroupOnline__storage_, groupsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "sendUsersId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestSubscribeToGroupOnline_FieldNumber_SendUsersId,
-        .hasIndex = 0,
-        .offset = 1,  // Stored in _has_storage_ to save space.
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBool,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestSubscribeToGroupOnline class]
-                                     rootClass:[SequenceAndUpdatesRoot class]
-                                          file:SequenceAndUpdatesRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestSubscribeToGroupOnline__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - RequestSubscribeFromGroupOnline
-
-@implementation RequestSubscribeFromGroupOnline
-
-@dynamic groupsArray, groupsArray_Count;
-
-typedef struct RequestSubscribeFromGroupOnline__storage_ {
-  uint32_t _has_storage_[1];
-  NSMutableArray *groupsArray;
-} RequestSubscribeFromGroupOnline__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "groupsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(GroupOutPeer),
-        .number = RequestSubscribeFromGroupOnline_FieldNumber_GroupsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestSubscribeFromGroupOnline__storage_, groupsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestSubscribeFromGroupOnline class]
-                                     rootClass:[SequenceAndUpdatesRoot class]
-                                          file:SequenceAndUpdatesRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestSubscribeFromGroupOnline__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - SeqUpdateBox
-
-@implementation SeqUpdateBox
-
-@dynamic seq;
-@dynamic state;
-@dynamic hasUpdate, update;
-@dynamic hasUnboxedUpdate, unboxedUpdate;
-
-typedef struct SeqUpdateBox__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t seq;
-  NSData *state;
-  GPBBytesValue *update;
-  UpdateSeqUpdate *unboxedUpdate;
-} SeqUpdateBox__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "seq",
-        .dataTypeSpecific.clazz = Nil,
-        .number = SeqUpdateBox_FieldNumber_Seq,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(SeqUpdateBox__storage_, seq),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "state",
-        .dataTypeSpecific.clazz = Nil,
-        .number = SeqUpdateBox_FieldNumber_State,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(SeqUpdateBox__storage_, state),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
-      {
-        .name = "update",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBBytesValue),
-        .number = SeqUpdateBox_FieldNumber_Update,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(SeqUpdateBox__storage_, update),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "unboxedUpdate",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateSeqUpdate),
-        .number = SeqUpdateBox_FieldNumber_UnboxedUpdate,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(SeqUpdateBox__storage_, unboxedUpdate),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[SeqUpdateBox class]
-                                     rootClass:[SequenceAndUpdatesRoot class]
-                                          file:SequenceAndUpdatesRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(SeqUpdateBox__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -3165,9 +2058,9 @@ void SetWeakUpdateCommand_ChangeMyTyping_Type_RawValue(WeakUpdateCommand_ChangeM
   GPBSetMessageRawEnumField(message, field, value);
 }
 
-#pragma mark - WeakUpdateBox
+#pragma mark - WeakUpdate
 
-@implementation WeakUpdateBox
+@implementation WeakUpdate
 
 @dynamic updateboxOneOfCase;
 @dynamic typing;
@@ -3183,7 +2076,6 @@ void SetWeakUpdateCommand_ChangeMyTyping_Type_RawValue(WeakUpdateCommand_ChangeM
 @dynamic messageRead;
 @dynamic messageReceived;
 @dynamic messageReadByMe;
-@dynamic userOnline;
 @dynamic groupTyping;
 @dynamic miniApp;
 @dynamic event;
@@ -3192,22 +2084,21 @@ void SetWeakUpdateCommand_ChangeMyTyping_Type_RawValue(WeakUpdateCommand_ChangeM
 @dynamic updateContactsAddTaskSuspended;
 @dynamic updateContactsRemoved;
 
-typedef struct WeakUpdateBox__storage_ {
+typedef struct WeakUpdate__storage_ {
   uint32_t _has_storage_[2];
   UpdateTyping *typing;
   UpdateTypingStop *typingStop;
   UpdateUserLastSeen *userLastSeen;
   UpdateGroupOnline *groupOnline;
-  WeakUpdateBox_UpdateForceReloadState *forceReload;
+  WeakUpdate_UpdateForceReloadState *forceReload;
   UpdatePermissionsChange *permissionsChange;
   UpdateUserStatusChanged *userStatusChange;
-  MessageReactionsUpdate *messageReactionUpdate;
+  UpdateMessageReactions *messageReactionUpdate;
   UpdateMessage *message;
   UpdateMessageContentChanged *messageContentChange;
   UpdateMessageRead *messageRead;
   UpdateMessageReceived *messageReceived;
   UpdateMessageReadByMe *messageReadByMe;
-  UpdateUserOnline *userOnline;
   UpdateGroupTyping *groupTyping;
   UpdateMiniApp *miniApp;
   UpdateEvent *event;
@@ -3215,7 +2106,7 @@ typedef struct WeakUpdateBox__storage_ {
   UpdateContactsAdded *updateContactsAdded;
   UpdateContactsAddTaskSuspended *updateContactsAddTaskSuspended;
   UpdateContactsRemoved *updateContactsRemoved;
-} WeakUpdateBox__storage_;
+} WeakUpdate__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -3226,200 +2117,191 @@ typedef struct WeakUpdateBox__storage_ {
       {
         .name = "typing",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateTyping),
-        .number = WeakUpdateBox_FieldNumber_Typing,
+        .number = WeakUpdate_FieldNumber_Typing,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, typing),
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, typing),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "typingStop",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateTypingStop),
-        .number = WeakUpdateBox_FieldNumber_TypingStop,
+        .number = WeakUpdate_FieldNumber_TypingStop,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, typingStop),
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, typingStop),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "userLastSeen",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserLastSeen),
-        .number = WeakUpdateBox_FieldNumber_UserLastSeen,
+        .number = WeakUpdate_FieldNumber_UserLastSeen,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, userLastSeen),
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, userLastSeen),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "groupOnline",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupOnline),
-        .number = WeakUpdateBox_FieldNumber_GroupOnline,
+        .number = WeakUpdate_FieldNumber_GroupOnline,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, groupOnline),
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, groupOnline),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "forceReload",
-        .dataTypeSpecific.clazz = GPBObjCClass(WeakUpdateBox_UpdateForceReloadState),
-        .number = WeakUpdateBox_FieldNumber_ForceReload,
+        .dataTypeSpecific.clazz = GPBObjCClass(WeakUpdate_UpdateForceReloadState),
+        .number = WeakUpdate_FieldNumber_ForceReload,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, forceReload),
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, forceReload),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "permissionsChange",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdatePermissionsChange),
-        .number = WeakUpdateBox_FieldNumber_PermissionsChange,
+        .number = WeakUpdate_FieldNumber_PermissionsChange,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, permissionsChange),
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, permissionsChange),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "userStatusChange",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserStatusChanged),
-        .number = WeakUpdateBox_FieldNumber_UserStatusChange,
+        .number = WeakUpdate_FieldNumber_UserStatusChange,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, userStatusChange),
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, userStatusChange),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "messageReactionUpdate",
-        .dataTypeSpecific.clazz = GPBObjCClass(MessageReactionsUpdate),
-        .number = WeakUpdateBox_FieldNumber_MessageReactionUpdate,
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageReactions),
+        .number = WeakUpdate_FieldNumber_MessageReactionUpdate,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, messageReactionUpdate),
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, messageReactionUpdate),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "message",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessage),
-        .number = WeakUpdateBox_FieldNumber_Message,
+        .number = WeakUpdate_FieldNumber_Message,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, message),
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, message),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "messageContentChange",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageContentChanged),
-        .number = WeakUpdateBox_FieldNumber_MessageContentChange,
+        .number = WeakUpdate_FieldNumber_MessageContentChange,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, messageContentChange),
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, messageContentChange),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "messageRead",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageRead),
-        .number = WeakUpdateBox_FieldNumber_MessageRead,
+        .number = WeakUpdate_FieldNumber_MessageRead,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, messageRead),
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, messageRead),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "messageReceived",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageReceived),
-        .number = WeakUpdateBox_FieldNumber_MessageReceived,
+        .number = WeakUpdate_FieldNumber_MessageReceived,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, messageReceived),
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, messageReceived),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "messageReadByMe",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageReadByMe),
-        .number = WeakUpdateBox_FieldNumber_MessageReadByMe,
+        .number = WeakUpdate_FieldNumber_MessageReadByMe,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, messageReadByMe),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "userOnline",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserOnline),
-        .number = WeakUpdateBox_FieldNumber_UserOnline,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, userOnline),
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, messageReadByMe),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "groupTyping",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupTyping),
-        .number = WeakUpdateBox_FieldNumber_GroupTyping,
+        .number = WeakUpdate_FieldNumber_GroupTyping,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, groupTyping),
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, groupTyping),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "miniApp",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateMiniApp),
-        .number = WeakUpdateBox_FieldNumber_MiniApp,
+        .number = WeakUpdate_FieldNumber_MiniApp,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, miniApp),
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, miniApp),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "event",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateEvent),
-        .number = WeakUpdateBox_FieldNumber_Event,
+        .number = WeakUpdate_FieldNumber_Event,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, event),
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, event),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateContactRegistered",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateContactRegistered),
-        .number = WeakUpdateBox_FieldNumber_UpdateContactRegistered,
+        .number = WeakUpdate_FieldNumber_UpdateContactRegistered,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, updateContactRegistered),
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, updateContactRegistered),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateContactsAdded",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateContactsAdded),
-        .number = WeakUpdateBox_FieldNumber_UpdateContactsAdded,
+        .number = WeakUpdate_FieldNumber_UpdateContactsAdded,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, updateContactsAdded),
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, updateContactsAdded),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateContactsAddTaskSuspended",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateContactsAddTaskSuspended),
-        .number = WeakUpdateBox_FieldNumber_UpdateContactsAddTaskSuspended,
+        .number = WeakUpdate_FieldNumber_UpdateContactsAddTaskSuspended,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, updateContactsAddTaskSuspended),
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, updateContactsAddTaskSuspended),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "updateContactsRemoved",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateContactsRemoved),
-        .number = WeakUpdateBox_FieldNumber_UpdateContactsRemoved,
+        .number = WeakUpdate_FieldNumber_UpdateContactsRemoved,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, updateContactsRemoved),
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, updateContactsRemoved),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[WeakUpdateBox class]
+        [GPBDescriptor allocDescriptorForClass:[WeakUpdate class]
                                      rootClass:[SequenceAndUpdatesRoot class]
                                           file:SequenceAndUpdatesRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(WeakUpdateBox__storage_)
+                                   storageSize:sizeof(WeakUpdate__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     static const char *oneofs[] = {
       "updatebox",
@@ -3437,21 +2319,21 @@ typedef struct WeakUpdateBox__storage_ {
 
 @end
 
-void WeakUpdateBox_ClearUpdateboxOneOfCase(WeakUpdateBox *message) {
-  GPBDescriptor *descriptor = [WeakUpdateBox descriptor];
+void WeakUpdate_ClearUpdateboxOneOfCase(WeakUpdate *message) {
+  GPBDescriptor *descriptor = [WeakUpdate descriptor];
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
   GPBClearOneof(message, oneof);
 }
-#pragma mark - WeakUpdateBox_UpdateForceReloadState
+#pragma mark - WeakUpdate_UpdateForceReloadState
 
-@implementation WeakUpdateBox_UpdateForceReloadState
+@implementation WeakUpdate_UpdateForceReloadState
 
 @dynamic fieldsArray, fieldsArray_Count;
 
-typedef struct WeakUpdateBox_UpdateForceReloadState__storage_ {
+typedef struct WeakUpdate_UpdateForceReloadState__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *fieldsArray;
-} WeakUpdateBox_UpdateForceReloadState__storage_;
+} WeakUpdate_UpdateForceReloadState__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -3461,23 +2343,23 @@ typedef struct WeakUpdateBox_UpdateForceReloadState__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "fieldsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(WeakUpdateBox_UpdateForceReloadState_ForceReloadField),
-        .number = WeakUpdateBox_UpdateForceReloadState_FieldNumber_FieldsArray,
+        .dataTypeSpecific.clazz = GPBObjCClass(WeakUpdate_UpdateForceReloadState_ForceReloadField),
+        .number = WeakUpdate_UpdateForceReloadState_FieldNumber_FieldsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(WeakUpdateBox_UpdateForceReloadState__storage_, fieldsArray),
+        .offset = (uint32_t)offsetof(WeakUpdate_UpdateForceReloadState__storage_, fieldsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[WeakUpdateBox_UpdateForceReloadState class]
+        [GPBDescriptor allocDescriptorForClass:[WeakUpdate_UpdateForceReloadState class]
                                      rootClass:[SequenceAndUpdatesRoot class]
                                           file:SequenceAndUpdatesRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(WeakUpdateBox_UpdateForceReloadState__storage_)
+                                   storageSize:sizeof(WeakUpdate_UpdateForceReloadState__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    [localDescriptor setupContainingMessageClass:GPBObjCClass(WeakUpdateBox)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(WeakUpdate)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -3488,21 +2370,21 @@ typedef struct WeakUpdateBox_UpdateForceReloadState__storage_ {
 
 @end
 
-#pragma mark - WeakUpdateBox_UpdateForceReloadState_ForceReloadField
+#pragma mark - WeakUpdate_UpdateForceReloadState_ForceReloadField
 
-@implementation WeakUpdateBox_UpdateForceReloadState_ForceReloadField
+@implementation WeakUpdate_UpdateForceReloadState_ForceReloadField
 
 @dynamic fieldOneOfCase;
 @dynamic reloadDialogs;
 @dynamic reloadContacts;
 @dynamic reloadHistory;
 
-typedef struct WeakUpdateBox_UpdateForceReloadState_ForceReloadField__storage_ {
+typedef struct WeakUpdate_UpdateForceReloadState_ForceReloadField__storage_ {
   uint32_t _has_storage_[2];
   GPBEmpty *reloadDialogs;
   GPBEmpty *reloadContacts;
   PeersList *reloadHistory;
-} WeakUpdateBox_UpdateForceReloadState_ForceReloadField__storage_;
+} WeakUpdate_UpdateForceReloadState_ForceReloadField__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -3513,38 +2395,38 @@ typedef struct WeakUpdateBox_UpdateForceReloadState_ForceReloadField__storage_ {
       {
         .name = "reloadDialogs",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBEmpty),
-        .number = WeakUpdateBox_UpdateForceReloadState_ForceReloadField_FieldNumber_ReloadDialogs,
+        .number = WeakUpdate_UpdateForceReloadState_ForceReloadField_FieldNumber_ReloadDialogs,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox_UpdateForceReloadState_ForceReloadField__storage_, reloadDialogs),
+        .offset = (uint32_t)offsetof(WeakUpdate_UpdateForceReloadState_ForceReloadField__storage_, reloadDialogs),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "reloadContacts",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBEmpty),
-        .number = WeakUpdateBox_UpdateForceReloadState_ForceReloadField_FieldNumber_ReloadContacts,
+        .number = WeakUpdate_UpdateForceReloadState_ForceReloadField_FieldNumber_ReloadContacts,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox_UpdateForceReloadState_ForceReloadField__storage_, reloadContacts),
+        .offset = (uint32_t)offsetof(WeakUpdate_UpdateForceReloadState_ForceReloadField__storage_, reloadContacts),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "reloadHistory",
         .dataTypeSpecific.clazz = GPBObjCClass(PeersList),
-        .number = WeakUpdateBox_UpdateForceReloadState_ForceReloadField_FieldNumber_ReloadHistory,
+        .number = WeakUpdate_UpdateForceReloadState_ForceReloadField_FieldNumber_ReloadHistory,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdateBox_UpdateForceReloadState_ForceReloadField__storage_, reloadHistory),
+        .offset = (uint32_t)offsetof(WeakUpdate_UpdateForceReloadState_ForceReloadField__storage_, reloadHistory),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[WeakUpdateBox_UpdateForceReloadState_ForceReloadField class]
+        [GPBDescriptor allocDescriptorForClass:[WeakUpdate_UpdateForceReloadState_ForceReloadField class]
                                      rootClass:[SequenceAndUpdatesRoot class]
                                           file:SequenceAndUpdatesRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(WeakUpdateBox_UpdateForceReloadState_ForceReloadField__storage_)
+                                   storageSize:sizeof(WeakUpdate_UpdateForceReloadState_ForceReloadField__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     static const char *oneofs[] = {
       "field",
@@ -3552,7 +2434,7 @@ typedef struct WeakUpdateBox_UpdateForceReloadState_ForceReloadField__storage_ {
     [localDescriptor setupOneofs:oneofs
                            count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
                    firstHasIndex:-1];
-    [localDescriptor setupContainingMessageClass:GPBObjCClass(WeakUpdateBox_UpdateForceReloadState)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(WeakUpdate_UpdateForceReloadState)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -3563,11 +2445,99 @@ typedef struct WeakUpdateBox_UpdateForceReloadState_ForceReloadField__storage_ {
 
 @end
 
-void WeakUpdateBox_UpdateForceReloadState_ForceReloadField_ClearFieldOneOfCase(WeakUpdateBox_UpdateForceReloadState_ForceReloadField *message) {
-  GPBDescriptor *descriptor = [WeakUpdateBox_UpdateForceReloadState_ForceReloadField descriptor];
+void WeakUpdate_UpdateForceReloadState_ForceReloadField_ClearFieldOneOfCase(WeakUpdate_UpdateForceReloadState_ForceReloadField *message) {
+  GPBDescriptor *descriptor = [WeakUpdate_UpdateForceReloadState_ForceReloadField descriptor];
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
   GPBClearOneof(message, oneof);
 }
+#pragma mark - RequestGetState
+
+@implementation RequestGetState
+
+
+typedef struct RequestGetState__storage_ {
+  uint32_t _has_storage_[1];
+} RequestGetState__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestGetState class]
+                                     rootClass:[SequenceAndUpdatesRoot class]
+                                          file:SequenceAndUpdatesRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(RequestGetState__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - ResponseGetState
+
+@implementation ResponseGetState
+
+@dynamic seq;
+@dynamic date;
+
+typedef struct ResponseGetState__storage_ {
+  uint32_t _has_storage_[1];
+  int32_t seq;
+  int64_t date;
+} ResponseGetState__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "seq",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ResponseGetState_FieldNumber_Seq,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(ResponseGetState__storage_, seq),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "date",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ResponseGetState_FieldNumber_Date,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(ResponseGetState__storage_, date),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt64,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ResponseGetState class]
+                                     rootClass:[SequenceAndUpdatesRoot class]
+                                          file:SequenceAndUpdatesRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ResponseGetState__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 
 #pragma clang diagnostic pop
 

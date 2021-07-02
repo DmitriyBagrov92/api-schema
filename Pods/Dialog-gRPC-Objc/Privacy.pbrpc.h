@@ -12,16 +12,16 @@
 #import <RxLibrary/GRXWriter.h>
 #endif
 
+@class GPBEmpty;
 @class RequestBlockUser;
 @class RequestLoadBlockedUsers;
 @class RequestUnblockUser;
 @class ResponseLoadBlockedUsers;
-@class ResponseSeq;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Annotations.pbobjc.h"
+  #import "Empty.pbobjc.h"
   #import "Definitions.pbobjc.h"
-  #import "Miscellaneous.pbobjc.h"
   #import "Peers.pbobjc.h"
   #import "Scalapb.pbobjc.h"
 #endif
@@ -37,11 +37,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol Privacy2 <NSObject>
 
-#pragma mark BlockUser(RequestBlockUser) returns (ResponseSeq)
+#pragma mark BlockUser(RequestBlockUser) returns (Empty)
 
 - (GRPCUnaryProtoCall *)blockUserWithMessage:(RequestBlockUser *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark UnblockUser(RequestUnblockUser) returns (ResponseSeq)
+#pragma mark UnblockUser(RequestUnblockUser) returns (Empty)
 
 - (GRPCUnaryProtoCall *)unblockUserWithMessage:(RequestUnblockUser *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
@@ -57,18 +57,18 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @protocol Privacy <NSObject>
 
-#pragma mark BlockUser(RequestBlockUser) returns (ResponseSeq)
+#pragma mark BlockUser(RequestBlockUser) returns (Empty)
 
-- (void)blockUserWithRequest:(RequestBlockUser *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
+- (void)blockUserWithRequest:(RequestBlockUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToBlockUserWithRequest:(RequestBlockUser *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToBlockUserWithRequest:(RequestBlockUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark UnblockUser(RequestUnblockUser) returns (ResponseSeq)
+#pragma mark UnblockUser(RequestUnblockUser) returns (Empty)
 
-- (void)unblockUserWithRequest:(RequestUnblockUser *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
+- (void)unblockUserWithRequest:(RequestUnblockUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToUnblockUserWithRequest:(RequestUnblockUser *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToUnblockUserWithRequest:(RequestUnblockUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark LoadBlockedUsers(RequestLoadBlockedUsers) returns (ResponseLoadBlockedUsers)

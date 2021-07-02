@@ -14,9 +14,9 @@
 #endif
 
 #import "Push.pbobjc.h"
+#import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Miscellaneous.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
@@ -37,6 +37,7 @@
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[GAPIAnnotationsRoot extensionRegistry]];
     [registry addExtensions:[DefinitionsRoot extensionRegistry]];
+    [registry addExtensions:[ScalapbRoot extensionRegistry]];
   }
   return registry;
 }
@@ -66,8 +67,8 @@ static GPBFileDescriptor *PushRoot_FileDescriptor(void) {
 
 typedef struct RequestRegisterGooglePush__storage_ {
   uint32_t _has_storage_[1];
+  NSString *projectId;
   NSString *token;
-  int64_t projectId;
 } RequestRegisterGooglePush__storage_;
 
 // This method is threadsafe because it is initially called
@@ -83,7 +84,7 @@ typedef struct RequestRegisterGooglePush__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestRegisterGooglePush__storage_, projectId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "token",
@@ -168,7 +169,7 @@ typedef struct RequestUnregisterGooglePush__storage_ {
 
 typedef struct RequestRegisterApplePush__storage_ {
   uint32_t _has_storage_[1];
-  int32_t apnsKey;
+  NSString *apnsKey;
   NSString *token;
   NSString *apnsStringKey;
 } RequestRegisterApplePush__storage_;
@@ -186,7 +187,7 @@ typedef struct RequestRegisterApplePush__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestRegisterApplePush__storage_, apnsKey),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "token",
@@ -280,7 +281,7 @@ typedef struct RequestUnregisterApplePush__storage_ {
 
 typedef struct RequestRegisterApplePushKit__storage_ {
   uint32_t _has_storage_[1];
-  int32_t apnsKey;
+  NSString *apnsKey;
   NSString *token;
   NSString *apnsStringKey;
 } RequestRegisterApplePushKit__storage_;
@@ -298,7 +299,7 @@ typedef struct RequestRegisterApplePushKit__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestRegisterApplePushKit__storage_, apnsKey),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "token",

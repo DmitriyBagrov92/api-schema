@@ -12,14 +12,14 @@
 #import <RxLibrary/GRXWriter.h>
 #endif
 
+@class GPBEmpty;
 @class RequestNotifyAboutDeviceInfo;
-@class ResponseVoid;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Wrappers.pbobjc.h"
+  #import "Empty.pbobjc.h"
   #import "Annotations.pbobjc.h"
   #import "Definitions.pbobjc.h"
-  #import "Miscellaneous.pbobjc.h"
   #import "Scalapb.pbobjc.h"
 #endif
 
@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol DeviceInfo2 <NSObject>
 
-#pragma mark NotifyAboutDeviceInfo(RequestNotifyAboutDeviceInfo) returns (ResponseVoid)
+#pragma mark NotifyAboutDeviceInfo(RequestNotifyAboutDeviceInfo) returns (Empty)
 
 /**
  * / Set info about current device
@@ -49,21 +49,21 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @protocol DeviceInfo <NSObject>
 
-#pragma mark NotifyAboutDeviceInfo(RequestNotifyAboutDeviceInfo) returns (ResponseVoid)
+#pragma mark NotifyAboutDeviceInfo(RequestNotifyAboutDeviceInfo) returns (Empty)
 
 /**
  * / Set info about current device
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)notifyAboutDeviceInfoWithRequest:(RequestNotifyAboutDeviceInfo *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (void)notifyAboutDeviceInfoWithRequest:(RequestNotifyAboutDeviceInfo *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * / Set info about current device
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToNotifyAboutDeviceInfoWithRequest:(RequestNotifyAboutDeviceInfo *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToNotifyAboutDeviceInfoWithRequest:(RequestNotifyAboutDeviceInfo *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end

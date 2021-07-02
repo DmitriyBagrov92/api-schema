@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package clickroad;
+package dialog;
 
 import "wrappers.proto";
 import "timestamp.proto";

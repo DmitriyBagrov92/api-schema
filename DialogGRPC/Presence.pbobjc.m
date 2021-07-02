@@ -17,17 +17,15 @@
 
 #import "Presence.pbobjc.h"
 #import "Timestamp.pbobjc.h"
-#import "Wrappers.pbobjc.h"
+#import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Miscellaneous.pbobjc.h"
 #import "Peers.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-#pragma clang diagnostic ignored "-Wdirect-ivar-access"
 #pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
 
 #pragma mark - Objective C Class declarations
@@ -37,8 +35,6 @@
 GPBObjCClassDeclaration(GPBTimestamp);
 GPBObjCClassDeclaration(OutPeer);
 GPBObjCClassDeclaration(Peer);
-GPBObjCClassDeclaration(ResponseUserLastPresence);
-GPBObjCClassDeclaration(ResponseUserLastPresence_UserNotFoundError);
 GPBObjCClassDeclaration(UpdateGroupTyping);
 GPBObjCClassDeclaration(UpdateGroupTyping_UserTyping);
 GPBObjCClassDeclaration(UserOutPeer);
@@ -57,6 +53,7 @@ GPBObjCClassDeclaration(UserOutPeer);
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[GAPIAnnotationsRoot extensionRegistry]];
     [registry addExtensions:[DefinitionsRoot extensionRegistry]];
+    [registry addExtensions:[ScalapbRoot extensionRegistry]];
   }
   return registry;
 }
@@ -83,12 +80,12 @@ GPBEnumDescriptor *TypingType_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "TypingtypeUnknown\000TypingtypeText\000Typingt"
+        "TypingTypeUnknown\000TypingTypeText\000TypingT"
         "ypeVoice\000";
     static const int32_t values[] = {
-        TypingType_TypingtypeUnknown,
-        TypingType_TypingtypeText,
-        TypingType_TypingtypeVoice,
+        TypingType_TypingTypeUnknown,
+        TypingType_TypingTypeText,
+        TypingType_TypingTypeVoice,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(TypingType)
@@ -106,9 +103,9 @@ GPBEnumDescriptor *TypingType_EnumDescriptor(void) {
 
 BOOL TypingType_IsValidValue(int32_t value__) {
   switch (value__) {
-    case TypingType_TypingtypeUnknown:
-    case TypingType_TypingtypeText:
-    case TypingType_TypingtypeVoice:
+    case TypingType_TypingTypeUnknown:
+    case TypingType_TypingTypeText:
+    case TypingType_TypingTypeVoice:
       return YES;
     default:
       return NO;
@@ -121,20 +118,20 @@ GPBEnumDescriptor *DeviceType_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "DevicetypeUnknown\000DevicetypeGeneric\000Devi"
-        "cetypePc\000DevicetypeMobile\000DevicetypeTabl"
-        "et\000DevicetypeWatch\000DevicetypeMirror\000Devi"
-        "cetypeCar\000DevicetypeTable\000";
+        "DeviceTypeUnknown\000DeviceTypeGeneric\000Devi"
+        "ceTypePc\000DeviceTypeMobile\000DeviceTypeTabl"
+        "et\000DeviceTypeWatch\000DeviceTypeMirror\000Devi"
+        "ceTypeCar\000DeviceTypeTable\000";
     static const int32_t values[] = {
-        DeviceType_DevicetypeUnknown,
-        DeviceType_DevicetypeGeneric,
-        DeviceType_DevicetypePc,
-        DeviceType_DevicetypeMobile,
-        DeviceType_DevicetypeTablet,
-        DeviceType_DevicetypeWatch,
-        DeviceType_DevicetypeMirror,
-        DeviceType_DevicetypeCar,
-        DeviceType_DevicetypeTable,
+        DeviceType_DeviceTypeUnknown,
+        DeviceType_DeviceTypeGeneric,
+        DeviceType_DeviceTypePc,
+        DeviceType_DeviceTypeMobile,
+        DeviceType_DeviceTypeTablet,
+        DeviceType_DeviceTypeWatch,
+        DeviceType_DeviceTypeMirror,
+        DeviceType_DeviceTypeCar,
+        DeviceType_DeviceTypeTable,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(DeviceType)
@@ -152,15 +149,15 @@ GPBEnumDescriptor *DeviceType_EnumDescriptor(void) {
 
 BOOL DeviceType_IsValidValue(int32_t value__) {
   switch (value__) {
-    case DeviceType_DevicetypeUnknown:
-    case DeviceType_DevicetypeGeneric:
-    case DeviceType_DevicetypePc:
-    case DeviceType_DevicetypeMobile:
-    case DeviceType_DevicetypeTablet:
-    case DeviceType_DevicetypeWatch:
-    case DeviceType_DevicetypeMirror:
-    case DeviceType_DevicetypeCar:
-    case DeviceType_DevicetypeTable:
+    case DeviceType_DeviceTypeUnknown:
+    case DeviceType_DeviceTypeGeneric:
+    case DeviceType_DeviceTypePc:
+    case DeviceType_DeviceTypeMobile:
+    case DeviceType_DeviceTypeTablet:
+    case DeviceType_DeviceTypeWatch:
+    case DeviceType_DeviceTypeMirror:
+    case DeviceType_DeviceTypeCar:
+    case DeviceType_DeviceTypeTable:
       return YES;
     default:
       return NO;
@@ -391,9 +388,9 @@ void SetRequestSetOnline_DeviceType_RawValue(RequestSetOnline *message, int32_t 
 
 typedef struct UpdateTyping__storage_ {
   uint32_t _has_storage_[1];
-  int32_t userId;
   TypingType typingType;
   Peer *peer;
+  NSString *userId;
 } UpdateTyping__storage_;
 
 // This method is threadsafe because it is initially called
@@ -418,7 +415,7 @@ typedef struct UpdateTyping__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(UpdateTyping__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "typingType",
@@ -470,9 +467,9 @@ void SetUpdateTyping_TypingType_RawValue(UpdateTyping *message, int32_t value) {
 
 typedef struct UpdateTypingStop__storage_ {
   uint32_t _has_storage_[1];
-  int32_t userId;
   TypingType typingType;
   Peer *peer;
+  NSString *userId;
 } UpdateTypingStop__storage_;
 
 // This method is threadsafe because it is initially called
@@ -497,7 +494,7 @@ typedef struct UpdateTypingStop__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(UpdateTypingStop__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "typingType",
@@ -539,18 +536,22 @@ void SetUpdateTypingStop_TypingType_RawValue(UpdateTypingStop *message, int32_t 
   GPBSetMessageRawEnumField(message, field, value);
 }
 
-#pragma mark - UpdateUserOnline
+#pragma mark - UpdateUserLastSeen
 
-@implementation UpdateUserOnline
+@implementation UpdateUserLastSeen
 
 @dynamic userId;
+@dynamic lastSeenAt;
 @dynamic deviceType;
+@dynamic currentServerTime;
 
-typedef struct UpdateUserOnline__storage_ {
+typedef struct UpdateUserLastSeen__storage_ {
   uint32_t _has_storage_[1];
-  int32_t userId;
   DeviceType deviceType;
-} UpdateUserOnline__storage_;
+  NSString *userId;
+  int64_t lastSeenAt;
+  int64_t currentServerTime;
+} UpdateUserLastSeen__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -561,151 +562,11 @@ typedef struct UpdateUserOnline__storage_ {
       {
         .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateUserOnline_FieldNumber_UserId,
+        .number = UpdateUserLastSeen_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateUserOnline__storage_, userId),
+        .offset = (uint32_t)offsetof(UpdateUserLastSeen__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "deviceType",
-        .dataTypeSpecific.enumDescFunc = DeviceType_EnumDescriptor,
-        .number = UpdateUserOnline_FieldNumber_DeviceType,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateUserOnline__storage_, deviceType),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeEnum,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateUserOnline class]
-                                     rootClass:[PresenceRoot class]
-                                          file:PresenceRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateUserOnline__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-int32_t UpdateUserOnline_DeviceType_RawValue(UpdateUserOnline *message) {
-  GPBDescriptor *descriptor = [UpdateUserOnline descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:UpdateUserOnline_FieldNumber_DeviceType];
-  return GPBGetMessageRawEnumField(message, field);
-}
-
-void SetUpdateUserOnline_DeviceType_RawValue(UpdateUserOnline *message, int32_t value) {
-  GPBDescriptor *descriptor = [UpdateUserOnline descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:UpdateUserOnline_FieldNumber_DeviceType];
-  GPBSetMessageRawEnumField(message, field, value);
-}
-
-#pragma mark - UpdateUserOffline
-
-@implementation UpdateUserOffline
-
-@dynamic uid;
-@dynamic deviceType;
-
-typedef struct UpdateUserOffline__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t uid;
-  DeviceType deviceType;
-} UpdateUserOffline__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "uid",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateUserOffline_FieldNumber_Uid,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateUserOffline__storage_, uid),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "deviceType",
-        .dataTypeSpecific.enumDescFunc = DeviceType_EnumDescriptor,
-        .number = UpdateUserOffline_FieldNumber_DeviceType,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateUserOffline__storage_, deviceType),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeEnum,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateUserOffline class]
-                                     rootClass:[PresenceRoot class]
-                                          file:PresenceRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateUserOffline__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-int32_t UpdateUserOffline_DeviceType_RawValue(UpdateUserOffline *message) {
-  GPBDescriptor *descriptor = [UpdateUserOffline descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:UpdateUserOffline_FieldNumber_DeviceType];
-  return GPBGetMessageRawEnumField(message, field);
-}
-
-void SetUpdateUserOffline_DeviceType_RawValue(UpdateUserOffline *message, int32_t value) {
-  GPBDescriptor *descriptor = [UpdateUserOffline descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:UpdateUserOffline_FieldNumber_DeviceType];
-  GPBSetMessageRawEnumField(message, field, value);
-}
-
-#pragma mark - UpdateUserLastSeen
-
-@implementation UpdateUserLastSeen
-
-@dynamic uid;
-@dynamic lastSeenAt;
-@dynamic deviceType;
-@dynamic currentTime;
-
-typedef struct UpdateUserLastSeen__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t uid;
-  DeviceType deviceType;
-  int64_t lastSeenAt;
-  int64_t currentTime;
-} UpdateUserLastSeen__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "uid",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateUserLastSeen_FieldNumber_Uid,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateUserLastSeen__storage_, uid),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "lastSeenAt",
@@ -726,11 +587,11 @@ typedef struct UpdateUserLastSeen__storage_ {
         .dataType = GPBDataTypeEnum,
       },
       {
-        .name = "currentTime",
+        .name = "currentServerTime",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateUserLastSeen_FieldNumber_CurrentTime,
+        .number = UpdateUserLastSeen_FieldNumber_CurrentServerTime,
         .hasIndex = 3,
-        .offset = (uint32_t)offsetof(UpdateUserLastSeen__storage_, currentTime),
+        .offset = (uint32_t)offsetof(UpdateUserLastSeen__storage_, currentServerTime),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
@@ -775,9 +636,9 @@ void SetUpdateUserLastSeen_DeviceType_RawValue(UpdateUserLastSeen *message, int3
 
 typedef struct UpdateGroupOnline__storage_ {
   uint32_t _has_storage_[1];
-  int32_t groupId;
   int32_t count;
-  GPBInt32Array *usersIdArray;
+  NSString *groupId;
+  NSMutableArray *usersIdArray;
 } UpdateGroupOnline__storage_;
 
 // This method is threadsafe because it is initially called
@@ -793,7 +654,7 @@ typedef struct UpdateGroupOnline__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(UpdateGroupOnline__storage_, groupId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "count",
@@ -810,8 +671,8 @@ typedef struct UpdateGroupOnline__storage_ {
         .number = UpdateGroupOnline_FieldNumber_UsersIdArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(UpdateGroupOnline__storage_, usersIdArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked),
-        .dataType = GPBDataTypeInt32,
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -841,7 +702,7 @@ typedef struct UpdateGroupOnline__storage_ {
 
 typedef struct UpdateGroupTyping__storage_ {
   uint32_t _has_storage_[1];
-  int32_t groupId;
+  NSString *groupId;
   NSMutableArray *usersTypingArray;
 } UpdateGroupTyping__storage_;
 
@@ -858,7 +719,7 @@ typedef struct UpdateGroupTyping__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(UpdateGroupTyping__storage_, groupId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "usersTypingArray",
@@ -897,8 +758,8 @@ typedef struct UpdateGroupTyping__storage_ {
 
 typedef struct UpdateGroupTyping_UserTyping__storage_ {
   uint32_t _has_storage_[1];
-  int32_t userId;
   TypingType typingType;
+  NSString *userId;
 } UpdateGroupTyping_UserTyping__storage_;
 
 // This method is threadsafe because it is initially called
@@ -914,7 +775,7 @@ typedef struct UpdateGroupTyping_UserTyping__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(UpdateGroupTyping_UserTyping__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "typingType",
@@ -1006,14 +867,11 @@ typedef struct RequestGetUserLastPresence__storage_ {
 
 @implementation ResponseUserLastPresence
 
-@dynamic payloadOneOfCase;
-@dynamic lastOnlineAt;
-@dynamic notFoundError;
+@dynamic hasLastOnlineAt, lastOnlineAt;
 
 typedef struct ResponseUserLastPresence__storage_ {
-  uint32_t _has_storage_[2];
+  uint32_t _has_storage_[1];
   GPBTimestamp *lastOnlineAt;
-  ResponseUserLastPresence_UserNotFoundError *notFoundError;
 } ResponseUserLastPresence__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1026,17 +884,8 @@ typedef struct ResponseUserLastPresence__storage_ {
         .name = "lastOnlineAt",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBTimestamp),
         .number = ResponseUserLastPresence_FieldNumber_LastOnlineAt,
-        .hasIndex = -1,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(ResponseUserLastPresence__storage_, lastOnlineAt),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "notFoundError",
-        .dataTypeSpecific.clazz = GPBObjCClass(ResponseUserLastPresence_UserNotFoundError),
-        .number = ResponseUserLastPresence_FieldNumber_NotFoundError,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(ResponseUserLastPresence__storage_, notFoundError),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -1049,50 +898,6 @@ typedef struct ResponseUserLastPresence__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(ResponseUserLastPresence__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    static const char *oneofs[] = {
-      "payload",
-    };
-    [localDescriptor setupOneofs:oneofs
-                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
-                   firstHasIndex:-1];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-void ResponseUserLastPresence_ClearPayloadOneOfCase(ResponseUserLastPresence *message) {
-  GPBDescriptor *descriptor = [ResponseUserLastPresence descriptor];
-  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
-  GPBClearOneof(message, oneof);
-}
-#pragma mark - ResponseUserLastPresence_UserNotFoundError
-
-@implementation ResponseUserLastPresence_UserNotFoundError
-
-
-typedef struct ResponseUserLastPresence_UserNotFoundError__storage_ {
-  uint32_t _has_storage_[1];
-} ResponseUserLastPresence_UserNotFoundError__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[ResponseUserLastPresence_UserNotFoundError class]
-                                     rootClass:[PresenceRoot class]
-                                          file:PresenceRoot_FileDescriptor()
-                                        fields:NULL
-                                    fieldCount:0
-                                   storageSize:sizeof(ResponseUserLastPresence_UserNotFoundError__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    [localDescriptor setupContainingMessageClass:GPBObjCClass(ResponseUserLastPresence)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

@@ -17,9 +17,9 @@
 
 #import "DeviceInfo.pbobjc.h"
 #import "Wrappers.pbobjc.h"
+#import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Miscellaneous.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
@@ -47,6 +47,7 @@ GPBObjCClassDeclaration(GPBStringValue);
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[GAPIAnnotationsRoot extensionRegistry]];
     [registry addExtensions:[DefinitionsRoot extensionRegistry]];
+    [registry addExtensions:[ScalapbRoot extensionRegistry]];
   }
   return registry;
 }
@@ -73,16 +74,16 @@ GPBEnumDescriptor *PlatformType_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "PlatformtypeUnknown\000PlatformtypeAndroid\000"
-        "PlatformtypeIos\000PlatformtypeWeb\000Platform"
-        "typeClc\000PlatformtypeTests\000";
+        "PlatformTypeUnknown\000PlatformTypeAndroid\000"
+        "PlatformTypeIos\000PlatformTypeWeb\000Platform"
+        "TypeClc\000PlatformTypeTests\000";
     static const int32_t values[] = {
-        PlatformType_PlatformtypeUnknown,
-        PlatformType_PlatformtypeAndroid,
-        PlatformType_PlatformtypeIos,
-        PlatformType_PlatformtypeWeb,
-        PlatformType_PlatformtypeClc,
-        PlatformType_PlatformtypeTests,
+        PlatformType_PlatformTypeUnknown,
+        PlatformType_PlatformTypeAndroid,
+        PlatformType_PlatformTypeIos,
+        PlatformType_PlatformTypeWeb,
+        PlatformType_PlatformTypeClc,
+        PlatformType_PlatformTypeTests,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(PlatformType)
@@ -100,12 +101,12 @@ GPBEnumDescriptor *PlatformType_EnumDescriptor(void) {
 
 BOOL PlatformType_IsValidValue(int32_t value__) {
   switch (value__) {
-    case PlatformType_PlatformtypeUnknown:
-    case PlatformType_PlatformtypeAndroid:
-    case PlatformType_PlatformtypeIos:
-    case PlatformType_PlatformtypeWeb:
-    case PlatformType_PlatformtypeClc:
-    case PlatformType_PlatformtypeTests:
+    case PlatformType_PlatformTypeUnknown:
+    case PlatformType_PlatformTypeAndroid:
+    case PlatformType_PlatformTypeIos:
+    case PlatformType_PlatformTypeWeb:
+    case PlatformType_PlatformTypeClc:
+    case PlatformType_PlatformTypeTests:
       return YES;
     default:
       return NO;

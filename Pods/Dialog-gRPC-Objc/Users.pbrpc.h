@@ -12,15 +12,14 @@
 #import <RxLibrary/GRXWriter.h>
 #endif
 
+@class GPBEmpty;
 @class RequestEditUserLocalName;
-@class RequestLoadFullUsers;
 @class RequestLoadUserData;
-@class ResponseLoadFullUsers;
 @class ResponseLoadUserData;
-@class ResponseSeq;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Wrappers.pbobjc.h"
+  #import "Empty.pbobjc.h"
   #import "Annotations.pbobjc.h"
   #import "Definitions.pbobjc.h"
   #import "Miscellaneous.pbobjc.h"
@@ -40,16 +39,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol Users2 <NSObject>
 
-#pragma mark EditUserLocalName(RequestEditUserLocalName) returns (ResponseSeq)
+#pragma mark EditUserLocalName(RequestEditUserLocalName) returns (Empty)
 
 - (GRPCUnaryProtoCall *)editUserLocalNameWithMessage:(RequestEditUserLocalName *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark LoadFullUsers(RequestLoadFullUsers) returns (ResponseLoadFullUsers)
-
-/**
- * / Deprecated
- */
-- (GRPCUnaryProtoCall *)loadFullUsersWithMessage:(RequestLoadFullUsers *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark LoadUserData(RequestLoadUserData) returns (ResponseLoadUserData)
 
@@ -63,28 +55,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @protocol Users <NSObject>
 
-#pragma mark EditUserLocalName(RequestEditUserLocalName) returns (ResponseSeq)
+#pragma mark EditUserLocalName(RequestEditUserLocalName) returns (Empty)
 
-- (void)editUserLocalNameWithRequest:(RequestEditUserLocalName *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
+- (void)editUserLocalNameWithRequest:(RequestEditUserLocalName *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToEditUserLocalNameWithRequest:(RequestEditUserLocalName *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark LoadFullUsers(RequestLoadFullUsers) returns (ResponseLoadFullUsers)
-
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)loadFullUsersWithRequest:(RequestLoadFullUsers *)request handler:(void(^)(ResponseLoadFullUsers *_Nullable response, NSError *_Nullable error))handler;
-
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToLoadFullUsersWithRequest:(RequestLoadFullUsers *)request handler:(void(^)(ResponseLoadFullUsers *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToEditUserLocalNameWithRequest:(RequestEditUserLocalName *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark LoadUserData(RequestLoadUserData) returns (ResponseLoadUserData)

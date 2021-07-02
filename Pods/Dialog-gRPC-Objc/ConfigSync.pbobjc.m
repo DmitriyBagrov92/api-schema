@@ -15,9 +15,9 @@
 
 #import "ConfigSync.pbobjc.h"
 #import "Wrappers.pbobjc.h"
+#import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Miscellaneous.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
@@ -47,6 +47,7 @@ GPBObjCClassDeclaration(Parameter);
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[GAPIAnnotationsRoot extensionRegistry]];
     [registry addExtensions:[DefinitionsRoot extensionRegistry]];
+    [registry addExtensions:[ScalapbRoot extensionRegistry]];
   }
   return registry;
 }
@@ -497,14 +498,10 @@ typedef struct UpdateFeatureFlagChanged__storage_ {
 
 @implementation UpdateParameterChanged
 
-@dynamic key;
-@dynamic hasValue, value;
 @dynamic hasParameter, parameter;
 
 typedef struct UpdateParameterChanged__storage_ {
   uint32_t _has_storage_[1];
-  NSString *key;
-  GPBStringValue *value;
   Parameter *parameter;
 } UpdateParameterChanged__storage_;
 
@@ -515,28 +512,10 @@ typedef struct UpdateParameterChanged__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "key",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateParameterChanged_FieldNumber_Key,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateParameterChanged__storage_, key),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "value",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
-        .number = UpdateParameterChanged_FieldNumber_Value,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateParameterChanged__storage_, value),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "parameter",
         .dataTypeSpecific.clazz = GPBObjCClass(Parameter),
         .number = UpdateParameterChanged_FieldNumber_Parameter,
-        .hasIndex = 2,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(UpdateParameterChanged__storage_, parameter),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,

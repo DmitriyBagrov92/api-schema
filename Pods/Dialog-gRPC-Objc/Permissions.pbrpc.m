@@ -9,7 +9,6 @@
 
 #import "Definitions.pbobjc.h"
 #import "Annotations.pbobjc.h"
-#import "Scalapb.pbobjc.h"
 
 @implementation Permissions
 

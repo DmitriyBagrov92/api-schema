@@ -8,10 +8,9 @@
 #import <RxLibrary/GRXWriter+Immediate.h>
 
 #import "Timestamp.pbobjc.h"
-#import "Wrappers.pbobjc.h"
+#import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Miscellaneous.pbobjc.h"
 #import "Peers.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 
@@ -62,16 +61,16 @@
 
 #pragma mark - Method Implementations
 
-#pragma mark StartTyping(RequestStartTyping) returns (ResponseVoid)
+#pragma mark StartTyping(RequestStartTyping) returns (Empty)
 
-- (void)startTypingWithRequest:(RequestStartTyping *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)startTypingWithRequest:(RequestStartTyping *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToStartTypingWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToStartTypingWithRequest:(RequestStartTyping *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToStartTypingWithRequest:(RequestStartTyping *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"StartTyping"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)startTypingWithMessage:(RequestStartTyping *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -79,19 +78,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark StopTyping(RequestStopTyping) returns (ResponseVoid)
+#pragma mark StopTyping(RequestStopTyping) returns (Empty)
 
-- (void)stopTypingWithRequest:(RequestStopTyping *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)stopTypingWithRequest:(RequestStopTyping *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToStopTypingWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToStopTypingWithRequest:(RequestStopTyping *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToStopTypingWithRequest:(RequestStopTyping *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"StopTyping"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)stopTypingWithMessage:(RequestStopTyping *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -99,19 +98,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark SetOnline(RequestSetOnline) returns (ResponseVoid)
+#pragma mark SetOnline(RequestSetOnline) returns (Empty)
 
-- (void)setOnlineWithRequest:(RequestSetOnline *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)setOnlineWithRequest:(RequestSetOnline *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToSetOnlineWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToSetOnlineWithRequest:(RequestSetOnline *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToSetOnlineWithRequest:(RequestSetOnline *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"SetOnline"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)setOnlineWithMessage:(RequestSetOnline *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -119,7 +118,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
 #pragma mark GetUserLastPresence(RequestGetUserLastPresence) returns (ResponseUserLastPresence)

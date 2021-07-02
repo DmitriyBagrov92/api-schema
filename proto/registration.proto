@@ -28,25 +28,11 @@ message RequestRegisterDevice {
 message ResponseDeviceRequest {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     bytes server_pk = 1;
-    int64 auth_id = 2;
-    string token = 3;
-    repeated AuthorizationMethod auth_method_seq = 4; /// Sequence of the required authorization methods
-}
-
-message RegisterDeprecatedDeviceRequest {}
-
-message RequestExchangeAuthIdForToken {
-  int64 auth_id = 1;
-  bytes signature = 2;
+    string token = 2;
+    repeated AuthorizationMethod auth_method_seq = 3; /// Sequence of the required authorization methods
 }
 
 service Registration {
-  rpc ExchangeAuthIdForToken (RequestExchangeAuthIdForToken) returns (ResponseDeviceRequest) {
-    option (google.api.http) = {
-        post: "/v1/grpc/Registration/ExchangeAuthIdForToken"
-        body: "*"
-    };
-  }
   /// register device to get auth token
   rpc RegisterDevice (RequestRegisterDevice) returns (ResponseDeviceRequest) {
       option (google.api.http) = {
@@ -54,12 +40,4 @@ service Registration {
           body: "*"
       };
   }
-  // deprecated
-  rpc RegisterDeprecatedDevice (RegisterDeprecatedDeviceRequest) returns (ResponseDeviceRequest) {
-      option (google.api.http) = {
-          post: "/v1/grpc/Registration/RegisterDeprecatedDevice"
-          body: "*"
-      };
-  }
-
 }

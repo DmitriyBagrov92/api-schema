@@ -31,8 +31,6 @@ CF_EXTERN_C_BEGIN
 @class GPBStringValue;
 @class PhoneToImport;
 @class RequestDeferredImportContacts_PhoneContact;
-@class UUIDValue;
-@class User;
 @class UserOutPeer;
 @class UserPhoneHashContact;
 
@@ -107,7 +105,7 @@ typedef GPB_ENUM(UserPhoneHashContact_FieldNumber) {
 
 GPB_FINAL @interface UserPhoneHashContact : GPBMessage
 
-@property(nonatomic, readwrite) int32_t userId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *phoneHash;
 
@@ -120,7 +118,6 @@ GPB_FINAL @interface UserPhoneHashContact : GPBMessage
 typedef GPB_ENUM(RequestImportContacts_FieldNumber) {
   RequestImportContacts_FieldNumber_PhonesArray = 1,
   RequestImportContacts_FieldNumber_EmailsArray = 2,
-  RequestImportContacts_FieldNumber_OptimizationsArray = 3,
 };
 
 /**
@@ -137,31 +134,17 @@ GPB_FINAL @interface RequestImportContacts : GPBMessage
 /** The number of items in @c emailsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger emailsArray_Count;
 
-/** / Optimizations drops some info from response to decrease traffic and latency */
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
-
 @end
 
 #pragma mark - ResponseImportContacts
 
 typedef GPB_ENUM(ResponseImportContacts_FieldNumber) {
-  ResponseImportContacts_FieldNumber_Seq = 2,
-  ResponseImportContacts_FieldNumber_State = 3,
-  ResponseImportContacts_FieldNumber_UserPeersArray = 4,
+  ResponseImportContacts_FieldNumber_UserPeersArray = 1,
 };
 
 GPB_FINAL @interface ResponseImportContacts : GPBMessage
 
-/** / Deprecated */
-@property(nonatomic, readwrite) int32_t seq;
-
-/** / Server state related to current client, used by server only */
-@property(nonatomic, readwrite, copy, null_resettable) NSData *state;
-
-/** / Optimizations drops some info from response to decrease traffic and latency */
+/** / Optimizations drop some info from response to decrease traffic and latency */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *userPeersArray;
 /** The number of items in @c userPeersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userPeersArray_Count;
@@ -171,8 +154,8 @@ GPB_FINAL @interface ResponseImportContacts : GPBMessage
 #pragma mark - RequestDeferredImportContacts
 
 typedef GPB_ENUM(RequestDeferredImportContacts_FieldNumber) {
-  RequestDeferredImportContacts_FieldNumber_DeviceId = 3,
-  RequestDeferredImportContacts_FieldNumber_PhoneContactsArray = 4,
+  RequestDeferredImportContacts_FieldNumber_DeviceId = 1,
+  RequestDeferredImportContacts_FieldNumber_PhoneContactsArray = 2,
 };
 
 /**
@@ -228,7 +211,6 @@ GPB_FINAL @interface ResponseDeferredImportContacts : GPBMessage
 
 typedef GPB_ENUM(RequestGetContacts_FieldNumber) {
   RequestGetContacts_FieldNumber_ContactsHash = 1,
-  RequestGetContacts_FieldNumber_OptimizationsArray = 2,
 };
 
 /**
@@ -241,19 +223,14 @@ GPB_FINAL @interface RequestGetContacts : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *contactsHash;
 
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
-
 @end
 
 #pragma mark - ResponseGetContacts
 
 typedef GPB_ENUM(ResponseGetContacts_FieldNumber) {
-  ResponseGetContacts_FieldNumber_IsNotChanged = 2,
-  ResponseGetContacts_FieldNumber_UserPeersArray = 3,
-  ResponseGetContacts_FieldNumber_PhoneContactsArray = 5,
+  ResponseGetContacts_FieldNumber_IsNotChanged = 1,
+  ResponseGetContacts_FieldNumber_UserPeersArray = 2,
+  ResponseGetContacts_FieldNumber_PhoneContactsArray = 3,
 };
 
 GPB_FINAL @interface ResponseGetContacts : GPBMessage
@@ -273,7 +250,7 @@ GPB_FINAL @interface ResponseGetContacts : GPBMessage
 #pragma mark - RequestRemoveContact
 
 typedef GPB_ENUM(RequestRemoveContact_FieldNumber) {
-  RequestRemoveContact_FieldNumber_Uid = 1,
+  RequestRemoveContact_FieldNumber_UserId = 1,
   RequestRemoveContact_FieldNumber_AccessHash = 2,
 };
 
@@ -282,7 +259,7 @@ typedef GPB_ENUM(RequestRemoveContact_FieldNumber) {
  **/
 GPB_FINAL @interface RequestRemoveContact : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite) int64_t accessHash;
 
@@ -291,7 +268,7 @@ GPB_FINAL @interface RequestRemoveContact : GPBMessage
 #pragma mark - RequestAddContact
 
 typedef GPB_ENUM(RequestAddContact_FieldNumber) {
-  RequestAddContact_FieldNumber_Uid = 1,
+  RequestAddContact_FieldNumber_UserId = 1,
   RequestAddContact_FieldNumber_AccessHash = 2,
 };
 
@@ -300,7 +277,7 @@ typedef GPB_ENUM(RequestAddContact_FieldNumber) {
  **/
 GPB_FINAL @interface RequestAddContact : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite) int64_t accessHash;
 
@@ -310,7 +287,6 @@ GPB_FINAL @interface RequestAddContact : GPBMessage
 
 typedef GPB_ENUM(RequestSearchContacts_FieldNumber) {
   RequestSearchContacts_FieldNumber_Request = 1,
-  RequestSearchContacts_FieldNumber_OptimizationsArray = 2,
 };
 
 /**
@@ -320,26 +296,15 @@ GPB_FINAL @interface RequestSearchContacts : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *request;
 
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
-
 @end
 
 #pragma mark - ResponseSearchContacts
 
 typedef GPB_ENUM(ResponseSearchContacts_FieldNumber) {
-  ResponseSearchContacts_FieldNumber_UsersArray = 1,
-  ResponseSearchContacts_FieldNumber_UserPeersArray = 2,
+  ResponseSearchContacts_FieldNumber_UserPeersArray = 1,
 };
 
 GPB_FINAL @interface ResponseSearchContacts : GPBMessage
-
-/** / Registered contacts (for old bot sdk compatibility) */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<User*> *usersArray;
-/** The number of items in @c usersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger usersArray_Count;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *userPeersArray;
 /** The number of items in @c userPeersArray without causing the array to be created. */
@@ -350,10 +315,7 @@ GPB_FINAL @interface ResponseSearchContacts : GPBMessage
 #pragma mark - UpdateContactRegistered
 
 typedef GPB_ENUM(UpdateContactRegistered_FieldNumber) {
-  UpdateContactRegistered_FieldNumber_Uid = 1,
-  UpdateContactRegistered_FieldNumber_IsSilent = 2,
-  UpdateContactRegistered_FieldNumber_Date = 3,
-  UpdateContactRegistered_FieldNumber_Mid = 5,
+  UpdateContactRegistered_FieldNumber_UserId = 1,
 };
 
 /**
@@ -362,27 +324,16 @@ typedef GPB_ENUM(UpdateContactRegistered_FieldNumber) {
 GPB_FINAL @interface UpdateContactRegistered : GPBMessage
 
 /** / User id of a registered contact */
-@property(nonatomic, readwrite) int32_t uid;
-
-/** / deprecated */
-@property(nonatomic, readwrite) BOOL isSilent;
-
-/** / deprecated */
-@property(nonatomic, readwrite) int64_t date;
-
-/** / deprecated */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @end
 
 #pragma mark - UpdateContactsAdded
 
 typedef GPB_ENUM(UpdateContactsAdded_FieldNumber) {
-  UpdateContactsAdded_FieldNumber_UidsArray = 1,
-  UpdateContactsAdded_FieldNumber_TaskId = 4,
-  UpdateContactsAdded_FieldNumber_PhoneContactsArray = 6,
+  UpdateContactsAdded_FieldNumber_UserIdsArray = 1,
+  UpdateContactsAdded_FieldNumber_TaskId = 2,
+  UpdateContactsAdded_FieldNumber_PhoneContactsArray = 3,
 };
 
 /**
@@ -391,9 +342,9 @@ typedef GPB_ENUM(UpdateContactsAdded_FieldNumber) {
 GPB_FINAL @interface UpdateContactsAdded : GPBMessage
 
 /** / User ids of the registered contacts */
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Array *uidsArray;
-/** The number of items in @c uidsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger uidsArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *userIdsArray;
+/** The number of items in @c userIdsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger userIdsArray_Count;
 
 /** / Id of the task that finished */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *taskId;
@@ -424,7 +375,7 @@ GPB_FINAL @interface UpdateContactsAddTaskSuspended : GPBMessage
 #pragma mark - UpdateContactsRemoved
 
 typedef GPB_ENUM(UpdateContactsRemoved_FieldNumber) {
-  UpdateContactsRemoved_FieldNumber_UidsArray = 1,
+  UpdateContactsRemoved_FieldNumber_UserIdsArray = 1,
 };
 
 /**
@@ -432,9 +383,9 @@ typedef GPB_ENUM(UpdateContactsRemoved_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateContactsRemoved : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Array *uidsArray;
-/** The number of items in @c uidsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger uidsArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *userIdsArray;
+/** The number of items in @c userIdsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger userIdsArray_Count;
 
 @end
 

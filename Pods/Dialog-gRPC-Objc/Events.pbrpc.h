@@ -19,6 +19,7 @@
   #import "Annotations.pbobjc.h"
   #import "Peers.pbobjc.h"
   #import "Definitions.pbobjc.h"
+  #import "Messaging.pbobjc.h"
   #import "Scalapb.pbobjc.h"
 #endif
 

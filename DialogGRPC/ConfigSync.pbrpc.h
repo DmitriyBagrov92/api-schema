@@ -12,18 +12,18 @@
 #import <RxLibrary/GRXWriter.h>
 #endif
 
+@class GPBEmpty;
 @class RequestEditParameter;
 @class RequestFeatureFlags;
 @class RequestGetParameters;
 @class ResponseFeatureFlags;
 @class ResponseGetParameters;
-@class ResponseSeq;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Wrappers.pbobjc.h"
+  #import "Empty.pbobjc.h"
   #import "Annotations.pbobjc.h"
   #import "Definitions.pbobjc.h"
-  #import "Miscellaneous.pbobjc.h"
   #import "Scalapb.pbobjc.h"
 #endif
 
@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (GRPCUnaryProtoCall *)getParametersWithMessage:(RequestGetParameters *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark EditParameter(RequestEditParameter) returns (ResponseSeq)
+#pragma mark EditParameter(RequestEditParameter) returns (Empty)
 
 - (GRPCUnaryProtoCall *)editParameterWithMessage:(RequestEditParameter *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
@@ -65,11 +65,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetParametersWithRequest:(RequestGetParameters *)request handler:(void(^)(ResponseGetParameters *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark EditParameter(RequestEditParameter) returns (ResponseSeq)
+#pragma mark EditParameter(RequestEditParameter) returns (Empty)
 
-- (void)editParameterWithRequest:(RequestEditParameter *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
+- (void)editParameterWithRequest:(RequestEditParameter *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToEditParameterWithRequest:(RequestEditParameter *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToEditParameterWithRequest:(RequestEditParameter *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark FeatureFlags(RequestFeatureFlags) returns (ResponseFeatureFlags)

@@ -30,8 +30,6 @@ CF_EXTERN_C_BEGIN
 @class Avatar;
 @class BotCommand;
 @class ContactRecord;
-@class DataClock;
-@class FullUser;
 @class GPBBoolValue;
 @class GPBInt64Value;
 @class GPBStringValue;
@@ -42,7 +40,6 @@ CF_EXTERN_C_BEGIN
 @class User;
 @class UserData;
 @class UserData_Ext;
-@class UserOutPeer;
 @class UserStatus;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -57,8 +54,8 @@ typedef GPB_ENUM(Sex) {
    **/
   Sex_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   Sex_SexUnknown = 0,
-  Sex_SexMale = 2,
-  Sex_SexFemale = 3,
+  Sex_SexMale = 1,
+  Sex_SexFemale = 2,
 };
 
 GPBEnumDescriptor *Sex_EnumDescriptor(void);
@@ -78,11 +75,11 @@ typedef GPB_ENUM(ContactType) {
    * of the field.
    **/
   ContactType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  ContactType_ContacttypeUnknown = 0,
-  ContactType_ContacttypePhone = 1,
-  ContactType_ContacttypeEmail = 2,
-  ContactType_ContacttypeWeb = 3,
-  ContactType_ContacttypeSocial = 4,
+  ContactType_ContactTypeUnknown = 0,
+  ContactType_ContactTypePhone = 1,
+  ContactType_ContactTypeEmail = 2,
+  ContactType_ContactTypeWeb = 3,
+  ContactType_ContactTypeSocial = 4,
 };
 
 GPBEnumDescriptor *ContactType_EnumDescriptor(void);
@@ -102,12 +99,12 @@ typedef GPB_ENUM(UserStatusType) {
    * of the field.
    **/
   UserStatusType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  UserStatusType_UserstatustypeUnknown = 0,
-  UserStatusType_UserstatustypeUnset = 1,
-  UserStatusType_UserstatustypeAway = 2,
-  UserStatusType_UserstatustypeDonotdisturb = 3,
-  UserStatusType_UserstatustypeInvisible = 4,
-  UserStatusType_UserstatustypeBusy = 5,
+  UserStatusType_UserStatusTypeUnknown = 0,
+  UserStatusType_UserStatusTypeUnset = 1,
+  UserStatusType_UserStatusTypeAway = 2,
+  UserStatusType_UserStatusTypeDonotdisturb = 3,
+  UserStatusType_UserStatusTypeInvisible = 4,
+  UserStatusType_UserStatusTypeBusy = 5,
 };
 
 GPBEnumDescriptor *UserStatusType_EnumDescriptor(void);
@@ -127,11 +124,11 @@ typedef GPB_ENUM(UserData_Lifecycle) {
    * of the field.
    **/
   UserData_Lifecycle_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  UserData_Lifecycle_Missed = 0,
-  UserData_Lifecycle_Active = 1,
-  UserData_Lifecycle_Deleted = 2,
-  UserData_Lifecycle_Blocked = 3,
-  UserData_Lifecycle_BlockedAndDeleted = 4,
+  UserData_Lifecycle_LifecycleMissed = 0,
+  UserData_Lifecycle_LifecycleActive = 1,
+  UserData_Lifecycle_LifecycleDeleted = 2,
+  UserData_Lifecycle_LifecycleBlocked = 3,
+  UserData_Lifecycle_LifecycleBlockedAndDeleted = 4,
 };
 
 GPBEnumDescriptor *UserData_Lifecycle_EnumDescriptor(void);
@@ -151,8 +148,8 @@ typedef GPB_ENUM(UserData_Hint) {
    * of the field.
    **/
   UserData_Hint_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  UserData_Hint_UserHintRegular = 0,
-  UserData_Hint_UserHintGuest = 1,
+  UserData_Hint_HintUserRegular = 0,
+  UserData_Hint_HintUserGuest = 1,
 };
 
 GPBEnumDescriptor *UserData_Hint_EnumDescriptor(void);
@@ -284,15 +281,14 @@ typedef GPB_ENUM(UserData_FieldNumber) {
   UserData_FieldNumber_UserStatus = 7,
   UserData_FieldNumber_TimeZone = 8,
   UserData_FieldNumber_ExtsArray = 9,
-  UserData_FieldNumber_ObsoleteClock = 10,
-  UserData_FieldNumber_LocalesArray = 11,
-  UserData_FieldNumber_About = 12,
-  UserData_FieldNumber_ContactInfoArray = 13,
-  UserData_FieldNumber_BotCommandsArray = 14,
-  UserData_FieldNumber_CustomProfile = 15,
-  UserData_FieldNumber_Clock = 16,
-  UserData_FieldNumber_Hint = 17,
-  UserData_FieldNumber_WasAuthorized = 18,
+  UserData_FieldNumber_LocalesArray = 10,
+  UserData_FieldNumber_About = 11,
+  UserData_FieldNumber_ContactInfoArray = 12,
+  UserData_FieldNumber_BotCommandsArray = 13,
+  UserData_FieldNumber_CustomProfile = 14,
+  UserData_FieldNumber_Hint = 15,
+  UserData_FieldNumber_WasAuthorized = 16,
+  UserData_FieldNumber_Clock = 17,
 };
 
 /**
@@ -327,11 +323,6 @@ GPB_FINAL @interface UserData : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserData_Ext*> *extsArray;
 /** The number of items in @c extsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger extsArray_Count;
-
-/** deprecated */
-@property(nonatomic, readwrite, strong, null_resettable) DataClock *obsoleteClock;
-/** Test to see if @c obsoleteClock has been set. */
-@property(nonatomic, readwrite) BOOL hasObsoleteClock;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *localesArray;
 /** The number of items in @c localesArray without causing the array to be created. */
@@ -440,7 +431,7 @@ typedef GPB_ENUM(User_FieldNumber) {
 GPB_FINAL @interface User : GPBMessage
 
 /** / User's id */
-@property(nonatomic, readwrite) int32_t id_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 @property(nonatomic, readwrite) int64_t accessHash;
 
@@ -464,7 +455,7 @@ typedef GPB_ENUM(UserPartialInfo_FieldNumber) {
 
 GPB_FINAL @interface UserPartialInfo : GPBMessage
 
-@property(nonatomic, readwrite) int32_t id_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 @property(nonatomic, readwrite) int64_t accessHash;
 
@@ -491,8 +482,8 @@ typedef GPB_ENUM(UserProfile_FieldNumber) {
   UserProfile_FieldNumber_PreferredLanguagesArray = 4,
   UserProfile_FieldNumber_TimeZone = 5,
   UserProfile_FieldNumber_BotCommandsArray = 6,
-  UserProfile_FieldNumber_CustomProfile = 9,
-  UserProfile_FieldNumber_IntegrationToken = 10,
+  UserProfile_FieldNumber_CustomProfile = 7,
+  UserProfile_FieldNumber_IntegrationToken = 8,
 };
 
 GPB_FINAL @interface UserProfile : GPBMessage
@@ -531,67 +522,6 @@ GPB_FINAL @interface UserProfile : GPBMessage
 
 @end
 
-#pragma mark - FullUser
-
-typedef GPB_ENUM(FullUser_FieldNumber) {
-  FullUser_FieldNumber_Id_p = 1,
-  FullUser_FieldNumber_ContactInfoArray = 2,
-  FullUser_FieldNumber_About = 3,
-  FullUser_FieldNumber_PreferredLanguagesArray = 4,
-  FullUser_FieldNumber_TimeZone = 5,
-  FullUser_FieldNumber_BotCommandsArray = 6,
-  FullUser_FieldNumber_IsBlocked = 8,
-  FullUser_FieldNumber_CustomProfile = 9,
-  FullUser_FieldNumber_IntegrationToken = 10,
-  FullUser_FieldNumber_Status = 11,
-};
-
-/**
- * Full User representation - deprecated
- **/
-GPB_FINAL @interface FullUser : GPBMessage
-
-/** / User's id */
-@property(nonatomic, readwrite) int32_t id_p;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<ContactRecord*> *contactInfoArray;
-/** The number of items in @c contactInfoArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger contactInfoArray_Count;
-
-@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *about;
-/** Test to see if @c about has been set. */
-@property(nonatomic, readwrite) BOOL hasAbout;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *preferredLanguagesArray;
-/** The number of items in @c preferredLanguagesArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger preferredLanguagesArray_Count;
-
-/** / Time Zone of user in TZ format */
-@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *timeZone;
-/** Test to see if @c timeZone has been set. */
-@property(nonatomic, readwrite) BOOL hasTimeZone;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<BotCommand*> *botCommandsArray;
-/** The number of items in @c botCommandsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger botCommandsArray_Count;
-
-@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isBlocked;
-/** Test to see if @c isBlocked has been set. */
-@property(nonatomic, readwrite) BOOL hasIsBlocked;
-
-/** / custom user profile info in JSON format */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *customProfile;
-
-@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *integrationToken;
-/** Test to see if @c integrationToken has been set. */
-@property(nonatomic, readwrite) BOOL hasIntegrationToken;
-
-@property(nonatomic, readwrite, strong, null_resettable) UserStatus *status;
-/** Test to see if @c status has been set. */
-@property(nonatomic, readwrite) BOOL hasStatus;
-
-@end
-
 #pragma mark - BotCommand
 
 typedef GPB_ENUM(BotCommand_FieldNumber) {
@@ -621,7 +551,7 @@ GPB_FINAL @interface BotCommand : GPBMessage
 #pragma mark - RequestEditUserLocalName
 
 typedef GPB_ENUM(RequestEditUserLocalName_FieldNumber) {
-  RequestEditUserLocalName_FieldNumber_Uid = 1,
+  RequestEditUserLocalName_FieldNumber_UserId = 1,
   RequestEditUserLocalName_FieldNumber_AccessHash = 2,
   RequestEditUserLocalName_FieldNumber_Name = 3,
 };
@@ -631,7 +561,7 @@ typedef GPB_ENUM(RequestEditUserLocalName_FieldNumber) {
  **/
 GPB_FINAL @interface RequestEditUserLocalName : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite) int64_t accessHash;
 
@@ -732,7 +662,7 @@ typedef GPB_ENUM(UpdateUser_FieldNumber) {
 
 GPB_FINAL @interface UpdateUser : GPBMessage
 
-@property(nonatomic, readwrite) int32_t id_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 @property(nonatomic, readwrite, strong, null_resettable) UserData *data_p;
 /** Test to see if @c data_p has been set. */
@@ -743,7 +673,7 @@ GPB_FINAL @interface UpdateUser : GPBMessage
 #pragma mark - UpdateUserAvatarChanged
 
 typedef GPB_ENUM(UpdateUserAvatarChanged_FieldNumber) {
-  UpdateUserAvatarChanged_FieldNumber_Uid = 1,
+  UpdateUserAvatarChanged_FieldNumber_UserId = 1,
   UpdateUserAvatarChanged_FieldNumber_Avatar = 2,
 };
 
@@ -752,7 +682,7 @@ typedef GPB_ENUM(UpdateUserAvatarChanged_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateUserAvatarChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite, strong, null_resettable) Avatar *avatar;
 /** Test to see if @c avatar has been set. */
@@ -763,7 +693,7 @@ GPB_FINAL @interface UpdateUserAvatarChanged : GPBMessage
 #pragma mark - UpdateUserNameChanged
 
 typedef GPB_ENUM(UpdateUserNameChanged_FieldNumber) {
-  UpdateUserNameChanged_FieldNumber_Uid = 1,
+  UpdateUserNameChanged_FieldNumber_UserId = 1,
   UpdateUserNameChanged_FieldNumber_Name = 2,
 };
 
@@ -772,7 +702,7 @@ typedef GPB_ENUM(UpdateUserNameChanged_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateUserNameChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
@@ -781,7 +711,7 @@ GPB_FINAL @interface UpdateUserNameChanged : GPBMessage
 #pragma mark - UpdateUserLocalNameChanged
 
 typedef GPB_ENUM(UpdateUserLocalNameChanged_FieldNumber) {
-  UpdateUserLocalNameChanged_FieldNumber_Uid = 1,
+  UpdateUserLocalNameChanged_FieldNumber_UserId = 1,
   UpdateUserLocalNameChanged_FieldNumber_LocalName = 2,
 };
 
@@ -790,7 +720,7 @@ typedef GPB_ENUM(UpdateUserLocalNameChanged_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateUserLocalNameChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *localName;
 /** Test to see if @c localName has been set. */
@@ -801,8 +731,8 @@ GPB_FINAL @interface UpdateUserLocalNameChanged : GPBMessage
 #pragma mark - UpdateUserContactsChanged
 
 typedef GPB_ENUM(UpdateUserContactsChanged_FieldNumber) {
-  UpdateUserContactsChanged_FieldNumber_Uid = 1,
-  UpdateUserContactsChanged_FieldNumber_ContactRecordsArray = 4,
+  UpdateUserContactsChanged_FieldNumber_UserId = 1,
+  UpdateUserContactsChanged_FieldNumber_ContactRecordsArray = 2,
 };
 
 /**
@@ -810,7 +740,7 @@ typedef GPB_ENUM(UpdateUserContactsChanged_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateUserContactsChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<ContactRecord*> *contactRecordsArray;
 /** The number of items in @c contactRecordsArray without causing the array to be created. */
@@ -821,7 +751,7 @@ GPB_FINAL @interface UpdateUserContactsChanged : GPBMessage
 #pragma mark - UpdateUserNickChanged
 
 typedef GPB_ENUM(UpdateUserNickChanged_FieldNumber) {
-  UpdateUserNickChanged_FieldNumber_Uid = 1,
+  UpdateUserNickChanged_FieldNumber_UserId = 1,
   UpdateUserNickChanged_FieldNumber_Nickname = 2,
 };
 
@@ -830,7 +760,7 @@ typedef GPB_ENUM(UpdateUserNickChanged_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateUserNickChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *nickname;
 /** Test to see if @c nickname has been set. */
@@ -841,7 +771,7 @@ GPB_FINAL @interface UpdateUserNickChanged : GPBMessage
 #pragma mark - UpdateUserAboutChanged
 
 typedef GPB_ENUM(UpdateUserAboutChanged_FieldNumber) {
-  UpdateUserAboutChanged_FieldNumber_Uid = 1,
+  UpdateUserAboutChanged_FieldNumber_UserId = 1,
   UpdateUserAboutChanged_FieldNumber_About = 2,
 };
 
@@ -850,7 +780,7 @@ typedef GPB_ENUM(UpdateUserAboutChanged_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateUserAboutChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *about;
 /** Test to see if @c about has been set. */
@@ -861,7 +791,7 @@ GPB_FINAL @interface UpdateUserAboutChanged : GPBMessage
 #pragma mark - UpdateUserPreferredLanguagesChanged
 
 typedef GPB_ENUM(UpdateUserPreferredLanguagesChanged_FieldNumber) {
-  UpdateUserPreferredLanguagesChanged_FieldNumber_Uid = 1,
+  UpdateUserPreferredLanguagesChanged_FieldNumber_UserId = 1,
   UpdateUserPreferredLanguagesChanged_FieldNumber_PreferredLanguagesArray = 2,
 };
 
@@ -870,7 +800,7 @@ typedef GPB_ENUM(UpdateUserPreferredLanguagesChanged_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateUserPreferredLanguagesChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *preferredLanguagesArray;
 /** The number of items in @c preferredLanguagesArray without causing the array to be created. */
@@ -881,7 +811,7 @@ GPB_FINAL @interface UpdateUserPreferredLanguagesChanged : GPBMessage
 #pragma mark - UpdateUserTimeZoneChanged
 
 typedef GPB_ENUM(UpdateUserTimeZoneChanged_FieldNumber) {
-  UpdateUserTimeZoneChanged_FieldNumber_Uid = 1,
+  UpdateUserTimeZoneChanged_FieldNumber_UserId = 1,
   UpdateUserTimeZoneChanged_FieldNumber_TimeZone = 2,
 };
 
@@ -890,7 +820,7 @@ typedef GPB_ENUM(UpdateUserTimeZoneChanged_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateUserTimeZoneChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *timeZone;
 /** Test to see if @c timeZone has been set. */
@@ -901,7 +831,7 @@ GPB_FINAL @interface UpdateUserTimeZoneChanged : GPBMessage
 #pragma mark - UpdateUserBotCommandsChanged
 
 typedef GPB_ENUM(UpdateUserBotCommandsChanged_FieldNumber) {
-  UpdateUserBotCommandsChanged_FieldNumber_Uid = 1,
+  UpdateUserBotCommandsChanged_FieldNumber_UserId = 1,
   UpdateUserBotCommandsChanged_FieldNumber_CommandsArray = 2,
 };
 
@@ -910,7 +840,7 @@ typedef GPB_ENUM(UpdateUserBotCommandsChanged_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateUserBotCommandsChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<BotCommand*> *commandsArray;
 /** The number of items in @c commandsArray without causing the array to be created. */
@@ -921,7 +851,7 @@ GPB_FINAL @interface UpdateUserBotCommandsChanged : GPBMessage
 #pragma mark - UpdateUserSexChanged
 
 typedef GPB_ENUM(UpdateUserSexChanged_FieldNumber) {
-  UpdateUserSexChanged_FieldNumber_Uid = 1,
+  UpdateUserSexChanged_FieldNumber_UserId = 1,
   UpdateUserSexChanged_FieldNumber_Sex = 2,
 };
 
@@ -930,7 +860,7 @@ typedef GPB_ENUM(UpdateUserSexChanged_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateUserSexChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite) Sex sex;
 
@@ -951,7 +881,7 @@ void SetUpdateUserSexChanged_Sex_RawValue(UpdateUserSexChanged *message, int32_t
 #pragma mark - UpdateUserCustomProfileChanged
 
 typedef GPB_ENUM(UpdateUserCustomProfileChanged_FieldNumber) {
-  UpdateUserCustomProfileChanged_FieldNumber_Uid = 1,
+  UpdateUserCustomProfileChanged_FieldNumber_UserId = 1,
   UpdateUserCustomProfileChanged_FieldNumber_CustomProfile = 2,
 };
 
@@ -960,7 +890,7 @@ typedef GPB_ENUM(UpdateUserCustomProfileChanged_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateUserCustomProfileChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 /** / custom user profile info in JSON format */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *customProfile;
@@ -970,7 +900,7 @@ GPB_FINAL @interface UpdateUserCustomProfileChanged : GPBMessage
 #pragma mark - UpdateUserStatusChanged
 
 typedef GPB_ENUM(UpdateUserStatusChanged_FieldNumber) {
-  UpdateUserStatusChanged_FieldNumber_Uid = 1,
+  UpdateUserStatusChanged_FieldNumber_UserId = 1,
   UpdateUserStatusChanged_FieldNumber_Status = 2,
 };
 
@@ -979,7 +909,7 @@ typedef GPB_ENUM(UpdateUserStatusChanged_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateUserStatusChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite, strong, null_resettable) UserStatus *status;
 /** Test to see if @c status has been set. */
@@ -990,13 +920,13 @@ GPB_FINAL @interface UpdateUserStatusChanged : GPBMessage
 #pragma mark - UpdateUserExtChanged
 
 typedef GPB_ENUM(UpdateUserExtChanged_FieldNumber) {
-  UpdateUserExtChanged_FieldNumber_Uid = 1,
+  UpdateUserExtChanged_FieldNumber_UserId = 1,
   UpdateUserExtChanged_FieldNumber_Ext = 2,
 };
 
 GPB_FINAL @interface UpdateUserExtChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite, strong, null_resettable) RecursiveMapValue *ext;
 /** Test to see if @c ext has been set. */
@@ -1007,48 +937,17 @@ GPB_FINAL @interface UpdateUserExtChanged : GPBMessage
 #pragma mark - UpdateUserFullExtChanged
 
 typedef GPB_ENUM(UpdateUserFullExtChanged_FieldNumber) {
-  UpdateUserFullExtChanged_FieldNumber_Uid = 1,
+  UpdateUserFullExtChanged_FieldNumber_UserId = 1,
   UpdateUserFullExtChanged_FieldNumber_Ext = 2,
 };
 
 GPB_FINAL @interface UpdateUserFullExtChanged : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite, strong, null_resettable) RecursiveMapValue *ext;
 /** Test to see if @c ext has been set. */
 @property(nonatomic, readwrite) BOOL hasExt;
-
-@end
-
-#pragma mark - RequestLoadFullUsers
-
-typedef GPB_ENUM(RequestLoadFullUsers_FieldNumber) {
-  RequestLoadFullUsers_FieldNumber_UserPeersArray = 1,
-};
-
-/**
- * Loading Full User information
- **/
-GPB_FINAL @interface RequestLoadFullUsers : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *userPeersArray;
-/** The number of items in @c userPeersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger userPeersArray_Count;
-
-@end
-
-#pragma mark - ResponseLoadFullUsers
-
-typedef GPB_ENUM(ResponseLoadFullUsers_FieldNumber) {
-  ResponseLoadFullUsers_FieldNumber_FullUsersArray = 1,
-};
-
-GPB_FINAL @interface ResponseLoadFullUsers : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FullUser*> *fullUsersArray;
-/** The number of items in @c fullUsersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger fullUsersArray_Count;
 
 @end
 

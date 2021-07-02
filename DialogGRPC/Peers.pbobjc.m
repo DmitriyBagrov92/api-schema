@@ -18,7 +18,6 @@
 #import "Peers.pbobjc.h"
 #import "Wrappers.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Scalapb.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -70,15 +69,15 @@ GPBEnumDescriptor *PeerType_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "PeertypeUnknown\000PeertypePrivate\000Peertype"
-        "Group\000PeertypeEncryptedprivate\000PeertypeS"
+        "PeerTypeUnknown\000PeerTypePrivate\000PeerType"
+        "Group\000PeerTypeEncryptedprivate\000PeerTypeS"
         "ip\000";
     static const int32_t values[] = {
-        PeerType_PeertypeUnknown,
-        PeerType_PeertypePrivate,
-        PeerType_PeertypeGroup,
-        PeerType_PeertypeEncryptedprivate,
-        PeerType_PeertypeSip,
+        PeerType_PeerTypeUnknown,
+        PeerType_PeerTypePrivate,
+        PeerType_PeerTypeGroup,
+        PeerType_PeerTypeEncryptedprivate,
+        PeerType_PeerTypeSip,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(PeerType)
@@ -96,11 +95,11 @@ GPBEnumDescriptor *PeerType_EnumDescriptor(void) {
 
 BOOL PeerType_IsValidValue(int32_t value__) {
   switch (value__) {
-    case PeerType_PeertypeUnknown:
-    case PeerType_PeertypePrivate:
-    case PeerType_PeertypeGroup:
-    case PeerType_PeertypeEncryptedprivate:
-    case PeerType_PeertypeSip:
+    case PeerType_PeerTypeUnknown:
+    case PeerType_PeerTypePrivate:
+    case PeerType_PeerTypeGroup:
+    case PeerType_PeerTypeEncryptedprivate:
+    case PeerType_PeerTypeSip:
       return YES;
     default:
       return NO;
@@ -118,7 +117,7 @@ BOOL PeerType_IsValidValue(int32_t value__) {
 typedef struct Peer__storage_ {
   uint32_t _has_storage_[1];
   PeerType type;
-  int32_t id_p;
+  NSString *id_p;
   GPBStringValue *strId;
 } Peer__storage_;
 
@@ -144,7 +143,7 @@ typedef struct Peer__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(Peer__storage_, id_p),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "strId",
@@ -198,7 +197,7 @@ void SetPeer_Type_RawValue(Peer *message, int32_t value) {
 typedef struct OutPeer__storage_ {
   uint32_t _has_storage_[1];
   PeerType type;
-  int32_t id_p;
+  NSString *id_p;
   GPBStringValue *strId;
   int64_t accessHash;
 } OutPeer__storage_;
@@ -225,7 +224,7 @@ typedef struct OutPeer__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(OutPeer__storage_, id_p),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "accessHash",
@@ -280,12 +279,12 @@ void SetOutPeer_Type_RawValue(OutPeer *message, int32_t value) {
 
 @implementation UserOutPeer
 
-@dynamic uid;
+@dynamic userId;
 @dynamic accessHash;
 
 typedef struct UserOutPeer__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
+  NSString *userId;
   int64_t accessHash;
 } UserOutPeer__storage_;
 
@@ -296,13 +295,13 @@ typedef struct UserOutPeer__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = UserOutPeer_FieldNumber_Uid,
+        .number = UserOutPeer_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UserOutPeer__storage_, uid),
+        .offset = (uint32_t)offsetof(UserOutPeer__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "accessHash",
@@ -341,7 +340,7 @@ typedef struct UserOutPeer__storage_ {
 
 typedef struct GroupOutPeer__storage_ {
   uint32_t _has_storage_[1];
-  int32_t groupId;
+  NSString *groupId;
   int64_t accessHash;
 } GroupOutPeer__storage_;
 
@@ -358,7 +357,7 @@ typedef struct GroupOutPeer__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(GroupOutPeer__storage_, groupId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "accessHash",

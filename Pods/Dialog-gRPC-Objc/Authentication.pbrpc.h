@@ -20,14 +20,9 @@
 @class RequestGetIdToken;
 @class RequestGetOAuth2Params;
 @class RequestResendCode;
-@class RequestSendAuthCallObsolete;
-@class RequestSendAuthCodeObsolete;
 @class RequestSendCodeByPhoneCall;
-@class RequestSignInObsolete;
 @class RequestSignOut;
 @class RequestSignUp;
-@class RequestSignUpObsolete;
-@class RequestStartAnonymousAuth;
 @class RequestStartAuthTransaction;
 @class RequestStartCertificateAuth;
 @class RequestStartEmailAuth;
@@ -43,12 +38,10 @@
 @class ResponseGetIdToken;
 @class ResponseGetOAuth2Params;
 @class ResponseGetSelf;
-@class ResponseSendAuthCodeObsolete;
 @class ResponseStartAuthTransaction;
 @class ResponseStartEmailAuth;
 @class ResponseStartPhoneAuth;
 @class ResponseStartUsernameAuth;
-@class ResponseVoid;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Empty.pbobjc.h"
@@ -79,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (GRPCUnaryProtoCall *)startPhoneAuthWithMessage:(RequestStartPhoneAuth *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark SendCodeByPhoneCall(RequestSendCodeByPhoneCall) returns (ResponseVoid)
+#pragma mark SendCodeByPhoneCall(RequestSendCodeByPhoneCall) returns (Empty)
 
 /**
  * / Resend code by transaction hash
@@ -92,13 +85,6 @@ NS_ASSUME_NONNULL_BEGIN
  * / Start email authorization process
  */
 - (GRPCUnaryProtoCall *)startEmailAuthWithMessage:(RequestStartEmailAuth *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark StartAnonymousAuth(RequestStartAnonymousAuth) returns (ResponseAuth)
-
-/**
- * / Deprecated
- */
-- (GRPCUnaryProtoCall *)startAnonymousAuthWithMessage:(RequestStartAnonymousAuth *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark StartCertificateAuth(RequestStartCertificateAuth) returns (ResponseAuth)
 
@@ -141,7 +127,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (GRPCUnaryProtoCall *)validateCodeWithMessage:(RequestValidateCode *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark ResendCode(RequestResendCode) returns (ResponseVoid)
+#pragma mark ResendCode(RequestResendCode) returns (Empty)
 
 /**
  * / Resend code if you don't receive it with first attempt
@@ -183,56 +169,25 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (GRPCUnaryProtoCall *)getAuthSessionsWithMessage:(RequestGetAuthSessions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark TerminateSession(RequestTerminateSession) returns (ResponseVoid)
+#pragma mark TerminateSession(RequestTerminateSession) returns (Empty)
 
-/**
- * / Deprecated. Does not produce any effect.
- */
 - (GRPCUnaryProtoCall *)terminateSessionWithMessage:(RequestTerminateSession *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark TerminateAllSessions(RequestTerminateAllSessions) returns (ResponseVoid)
+#pragma mark TerminateAllSessions(RequestTerminateAllSessions) returns (Empty)
 
 /**
  * / Log out user
  */
 - (GRPCUnaryProtoCall *)terminateAllSessionsWithMessage:(RequestTerminateAllSessions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark SignOut(RequestSignOut) returns (ResponseVoid)
+#pragma mark SignOut(RequestSignOut) returns (Empty)
 
 /**
  * / Log out current session
  */
 - (GRPCUnaryProtoCall *)signOutWithMessage:(RequestSignOut *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark SignInObsolete(RequestSignInObsolete) returns (ResponseAuth)
-
-/**
- * / Deprecated
- */
-- (GRPCUnaryProtoCall *)signInObsoleteWithMessage:(RequestSignInObsolete *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark SignUpObsolete(RequestSignUpObsolete) returns (ResponseAuth)
-
-/**
- * / Deprecated
- */
-- (GRPCUnaryProtoCall *)signUpObsoleteWithMessage:(RequestSignUpObsolete *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark SendAuthCodeObsolete(RequestSendAuthCodeObsolete) returns (ResponseSendAuthCodeObsolete)
-
-/**
- * / Deprecated
- */
-- (GRPCUnaryProtoCall *)sendAuthCodeObsoleteWithMessage:(RequestSendAuthCodeObsolete *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark SendAuthCallObsolete(RequestSendAuthCallObsolete) returns (ResponseVoid)
-
-/**
- * / Deprecated
- */
-- (GRPCUnaryProtoCall *)sendAuthCallObsoleteWithMessage:(RequestSendAuthCallObsolete *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark ChangePassword(RequestChangePassword) returns (ResponseVoid)
+#pragma mark ChangePassword(RequestChangePassword) returns (Empty)
 
 - (GRPCUnaryProtoCall *)changePasswordWithMessage:(RequestChangePassword *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
@@ -265,21 +220,21 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToStartPhoneAuthWithRequest:(RequestStartPhoneAuth *)request handler:(void(^)(ResponseStartPhoneAuth *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark SendCodeByPhoneCall(RequestSendCodeByPhoneCall) returns (ResponseVoid)
+#pragma mark SendCodeByPhoneCall(RequestSendCodeByPhoneCall) returns (Empty)
 
 /**
  * / Resend code by transaction hash
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)sendCodeByPhoneCallWithRequest:(RequestSendCodeByPhoneCall *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (void)sendCodeByPhoneCallWithRequest:(RequestSendCodeByPhoneCall *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * / Resend code by transaction hash
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToSendCodeByPhoneCallWithRequest:(RequestSendCodeByPhoneCall *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToSendCodeByPhoneCallWithRequest:(RequestSendCodeByPhoneCall *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark StartEmailAuth(RequestStartEmailAuth) returns (ResponseStartEmailAuth)
@@ -297,23 +252,6 @@ NS_ASSUME_NONNULL_BEGIN
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToStartEmailAuthWithRequest:(RequestStartEmailAuth *)request handler:(void(^)(ResponseStartEmailAuth *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark StartAnonymousAuth(RequestStartAnonymousAuth) returns (ResponseAuth)
-
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)startAnonymousAuthWithRequest:(RequestStartAnonymousAuth *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler;
-
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToStartAnonymousAuthWithRequest:(RequestStartAnonymousAuth *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark StartCertificateAuth(RequestStartCertificateAuth) returns (ResponseAuth)
@@ -407,21 +345,21 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToValidateCodeWithRequest:(RequestValidateCode *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark ResendCode(RequestResendCode) returns (ResponseVoid)
+#pragma mark ResendCode(RequestResendCode) returns (Empty)
 
 /**
  * / Resend code if you don't receive it with first attempt
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)resendCodeWithRequest:(RequestResendCode *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (void)resendCodeWithRequest:(RequestResendCode *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * / Resend code if you don't receive it with first attempt
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToResendCodeWithRequest:(RequestResendCode *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToResendCodeWithRequest:(RequestResendCode *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark ValidatePassword(RequestValidatePassword) returns (ResponseAuth)
@@ -509,130 +447,52 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetAuthSessionsWithRequest:(RequestGetAuthSessions *)request handler:(void(^)(ResponseGetAuthSessions *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark TerminateSession(RequestTerminateSession) returns (ResponseVoid)
+#pragma mark TerminateSession(RequestTerminateSession) returns (Empty)
 
-/**
- * / Deprecated. Does not produce any effect.
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)terminateSessionWithRequest:(RequestTerminateSession *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (void)terminateSessionWithRequest:(RequestTerminateSession *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-/**
- * / Deprecated. Does not produce any effect.
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToTerminateSessionWithRequest:(RequestTerminateSession *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToTerminateSessionWithRequest:(RequestTerminateSession *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark TerminateAllSessions(RequestTerminateAllSessions) returns (ResponseVoid)
+#pragma mark TerminateAllSessions(RequestTerminateAllSessions) returns (Empty)
 
 /**
  * / Log out user
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)terminateAllSessionsWithRequest:(RequestTerminateAllSessions *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (void)terminateAllSessionsWithRequest:(RequestTerminateAllSessions *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * / Log out user
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToTerminateAllSessionsWithRequest:(RequestTerminateAllSessions *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToTerminateAllSessionsWithRequest:(RequestTerminateAllSessions *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark SignOut(RequestSignOut) returns (ResponseVoid)
-
-/**
- * / Log out current session
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)signOutWithRequest:(RequestSignOut *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+#pragma mark SignOut(RequestSignOut) returns (Empty)
 
 /**
  * / Log out current session
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToSignOutWithRequest:(RequestSignOut *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark SignInObsolete(RequestSignInObsolete) returns (ResponseAuth)
+- (void)signOutWithRequest:(RequestSignOut *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Deprecated
+ * / Log out current session
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)signInObsoleteWithRequest:(RequestSignInObsolete *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler;
-
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToSignInObsoleteWithRequest:(RequestSignInObsolete *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToSignOutWithRequest:(RequestSignOut *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark SignUpObsolete(RequestSignUpObsolete) returns (ResponseAuth)
+#pragma mark ChangePassword(RequestChangePassword) returns (Empty)
 
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)signUpObsoleteWithRequest:(RequestSignUpObsolete *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler;
+- (void)changePasswordWithRequest:(RequestChangePassword *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToSignUpObsoleteWithRequest:(RequestSignUpObsolete *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark SendAuthCodeObsolete(RequestSendAuthCodeObsolete) returns (ResponseSendAuthCodeObsolete)
-
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)sendAuthCodeObsoleteWithRequest:(RequestSendAuthCodeObsolete *)request handler:(void(^)(ResponseSendAuthCodeObsolete *_Nullable response, NSError *_Nullable error))handler;
-
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToSendAuthCodeObsoleteWithRequest:(RequestSendAuthCodeObsolete *)request handler:(void(^)(ResponseSendAuthCodeObsolete *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark SendAuthCallObsolete(RequestSendAuthCallObsolete) returns (ResponseVoid)
-
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)sendAuthCallObsoleteWithRequest:(RequestSendAuthCallObsolete *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToSendAuthCallObsoleteWithRequest:(RequestSendAuthCallObsolete *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark ChangePassword(RequestChangePassword) returns (ResponseVoid)
-
-- (void)changePasswordWithRequest:(RequestChangePassword *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToChangePasswordWithRequest:(RequestChangePassword *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToChangePasswordWithRequest:(RequestChangePassword *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetSelf(Empty) returns (ResponseGetSelf)

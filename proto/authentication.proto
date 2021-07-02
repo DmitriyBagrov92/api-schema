@@ -29,34 +29,33 @@ option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
 
 enum PhoneActivationType {
-    PHONEACTIVATIONTYPE_UNKNOWN = 0;
-    PHONEACTIVATIONTYPE_CODE = 1;
-    PHONEACTIVATIONTYPE_PASSWORD = 2;
+    PHONE_ACTIVATION_TYPE_UNKNOWN = 0;
+    PHONE_ACTIVATION_TYPE_CODE = 1;
+    PHONE_ACTIVATION_TYPE_PASSWORD = 2;
 }
 
 enum EmailActivationType {
-    EMAILACTIVATIONTYPE_UNKNOWN = 0;
-    EMAILACTIVATIONTYPE_CODE = 1;
-    EMAILACTIVATIONTYPE_OAUTH2 = 2;
-    EMAILACTIVATIONTYPE_PASSWORD = 3;
+    EMAIL_ACTIVATION_TYPE_UNKNOWN = 0;
+    EMAIL_ACTIVATION_TYPE_CODE = 1;
+    EMAIL_ACTIVATION_TYPE_OAUTH2 = 2;
+    EMAIL_ACTIVATION_TYPE_PASSWORD = 3;
 }
 
 // Start Phone Activation
 message RequestStartPhoneAuth {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     int64 phone_number = 1 [(dlg).log="visible"];
-    reserved 2,3,4,5;
     /** Your timezone **/
-    google.protobuf.StringValue time_zone = 6 [(dlg).log="visible"];
+    google.protobuf.StringValue time_zone = 2 [(dlg).log="visible"];
     /** First language from this array will be used for some notifications from server **/
-    repeated string preferred_languages = 7 [(dlg).log="visible"];
+    repeated string preferred_languages = 3 [(dlg).log="visible"];
 }
 
 message ResponseStartPhoneAuth {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     /** Hash of authorization transaction **/
     string transaction_hash = 1;
-    bool is_registered = 2; /// Deprecated
+    bool is_registered = 2;
     /** Code or password - call ValidateCode if code **/
     PhoneActivationType activation_type = 3;
 }
@@ -72,37 +71,26 @@ message RequestSendCodeByPhoneCall {
 message RequestStartEmailAuth {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     string email = 1 [(dlg).log="visible"];
-    reserved 2,3,4,5;
     /** Your timezone **/
-    google.protobuf.StringValue time_zone = 6 [(dlg).log="visible"];
+    google.protobuf.StringValue time_zone = 2 [(dlg).log="visible"];
     /** First language from this array will be used for some notifications from server **/
-    repeated string preferred_languages = 7 [(dlg).log="visible"];
+    repeated string preferred_languages = 3 [(dlg).log="visible"];
 }
 
 message ResponseStartEmailAuth {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     /** Hash of authorization transaction **/
     string transaction_hash = 1;
-    bool is_registered = 2; /// Deprecated
+    bool is_registered = 2;
     /** Code or password - call ValidateCode if code **/
     EmailActivationType activation_type = 3;
-}
-
-// Starting Anonymous login - deprecated
-message RequestStartAnonymousAuth {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string name = 1 [(dlg).log="visible"];
-    reserved 2,3,4,5;
-    google.protobuf.StringValue time_zone = 6 [(dlg).log="visible"];
-    repeated string preferred_languages = 7 [(dlg).log="visible"];
 }
 
 message RequestStartCertificateAuth {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     string name = 1 [(dlg).log="visible"];
-    reserved 2,3,4,5;
-    google.protobuf.StringValue time_zone = 6 [(dlg).log="visible"];
-    repeated string preferred_languages = 7 [(dlg).log="visible"];
+    google.protobuf.StringValue time_zone = 2 [(dlg).log="visible"];
+    repeated string preferred_languages = 3 [(dlg).log="visible"];
 }
 
 // Starting token-based login - to authorize bot
@@ -110,28 +98,26 @@ message RequestStartTokenAuth {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     /** Token received from BotFather **/
     string token = 1 [(dlg).log="visible"];
-    reserved 2,3,4,5;
     /** Your timezone **/
-    google.protobuf.StringValue time_zone = 6 [(dlg).log="visible"];
+    google.protobuf.StringValue time_zone = 2 [(dlg).log="visible"];
     /** First language from this array will be used for some notifications from server **/
-    repeated string preferred_languages = 7 [(dlg).log="visible"];
+    repeated string preferred_languages = 3 [(dlg).log="visible"];
 }
 
 // Starting Login Authentication
 message RequestStartUsernameAuth {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     string username = 1 [(dlg).log="visible"];
-    reserved 2,3,4,5;
-    google.protobuf.StringValue time_zone = 6 [(dlg).log="visible"];
+    google.protobuf.StringValue time_zone = 2 [(dlg).log="visible"];
     /** First language from this array will be used for some notifications from server **/
-    repeated string preferred_languages = 7 [(dlg).log="visible"];
+    repeated string preferred_languages = 3 [(dlg).log="visible"];
 }
 
 message ResponseStartUsernameAuth {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     /** Hash of authorization transaction **/
     string transaction_hash = 1;
-    bool is_registered = 2; /// Deprecated
+    bool is_registered = 2;
 }
 
 // Apply external session to authorize user
@@ -220,14 +206,13 @@ message RequestSignUp {
     string transaction_hash = 1 [(dlg).log="danger"];
     // Your name
     string name = 2 [(dlg).log="visible"];
-    /// Use it in case of anonymous authorization (deprecated)
     Sex sex = 3 [(dlg).log="visible"];
     google.protobuf.StringValue password = 4 [(dlg).log="hidden"];
 }
 
 enum AuthExtraInfoType {
-    NONE_EXTRA_INFO = 0;
-    NEED_CHANGE_PASSWORD = 1;
+    AUTH_EXTRA_INFO_TYPE_NONE = 0;
+    AUTH_EXTRA_INFO_TYPE_NEED_CHANGE_PASSWORD = 1;
 }
 
 // Authentication result
@@ -244,13 +229,13 @@ message ResponseAuth {
 
 // Authentication session
 message AuthSession {
-    int32 id = 1 [(dlg).log="visible"]; /// Unuque ID of session
+    string id = 1 [(dlg).log="visible"]; /// Unuque ID of session
     /// holder of session. 1 - this device, 2 - other.
     AuthHolder auth_holder = 2 [(dlg).log="visible"];
     /// Application Id that you set during authorization
     int32 app_id = 3 [(dlg).log="visible"];
-    string app_title = 4 [(dlg).log="visible"]; /// Deprecated
-    string device_title = 5 [(dlg).log="visible"]; /// Deprecated
+    string app_title = 4 [(dlg).log="visible"];
+    string device_title = 5 [(dlg).log="visible"];
     /// Time of session creating
     int32 auth_time = 6 [(dlg).log="visible"];
     /// Two-letter country code of session create
@@ -261,9 +246,9 @@ message AuthSession {
 
 /// Holder of session
 enum AuthHolder {
-    AUTHHOLDER_UNKNOWN = 0;
-    AUTHHOLDER_THISDEVICE = 1;
-    AUTHHOLDER_OTHERDEVICE = 2;
+    AUTH_HOLDER_UNKNOWN = 0;
+    AUTH_HOLDER_THISDEVICE = 1;
+    AUTH_HOLDER_OTHERDEVICE = 2;
 }
 
 // Getting of all active user's authentication sessions
@@ -279,7 +264,7 @@ message ResponseGetAuthSessions {
 // SignOut on specified user's session
 message RequestTerminateSession {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    int32 id = 1 [(dlg).log="visible"]; /// Session id
+    string id = 1 [(dlg).log="visible"]; /// Session id
 }
 
 // SignOut on all exept current sessions
@@ -298,9 +283,9 @@ message RequestSignOut {
  */
 message ForceReloadField {
     oneof body {
-        ForceReloadDialogs forceReloadDialogs = 1;
-        ForceReloadContacts forceReloadContacts = 2;
-        ForceReloadHistory forceReloadHistory = 3;
+        ForceReloadDialogs force_reload_dialogs = 1;
+        ForceReloadContacts force_reload_contacts = 2;
+        ForceReloadHistory force_reload_history = 3;
     }
 }
 
@@ -316,61 +301,6 @@ message ForceReloadContacts {
 // peer the peer whose history should be reloaded
 message ForceReloadHistory {
     Peer peer = 1 [(dlg).log="visible"];
-}
-
-// This update is sent by the server to force a client to reload its data
-message UpdateForceReloadState {
-    repeated ForceReloadField fields = 1 [(dlg).log="visible"];
-}
-
-// Performing user signin - deprecated
-message RequestSignInObsolete {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    int64 phone_number = 1 [(dlg).log="danger"];
-    string sms_hash = 2 [(dlg).log="danger"];
-    string sms_code = 3 [(dlg).log="danger"];
-    bytes device_hash = 5 [(dlg).log="visible"];
-    string device_title = 6 [(dlg).log="visible"];
-    int32 app_id = 7 [(dlg).log="hidden"];
-    string app_key = 8 [(dlg).log="hidden"];
-}
-
-// Performing user signup. If user perform signup on already registered user it just override previous
-// profile information
-message RequestSignUpObsolete {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    int64 phone_number = 1 [(dlg).log="danger"];
-    string sms_hash = 2 [(dlg).log="danger"];
-    string sms_code = 3 [(dlg).log="danger"];
-    string name = 4 [(dlg).log="visible"];
-    bytes device_hash = 7 [(dlg).log="visible"];
-    string device_title = 8 [(dlg).log="visible"];
-    int32 app_id = 9 [(dlg).log="hidden"];
-    string app_key = 10 [(dlg).log="hidden"];
-    bool is_silent = 11;
-}
-
-// Sending SMS with activation code
-message RequestSendAuthCodeObsolete {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    int64 phone_number = 1 [(dlg).log="visible"];
-    int32 app_id = 2 [(dlg).log="hidden"];
-    string api_key = 3 [(dlg).log="hidden"];
-}
-
-message ResponseSendAuthCodeObsolete {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    string sms_hash = 1;
-    bool is_registered = 2;
-}
-
-// Requesting Phone activation
-message RequestSendAuthCallObsolete {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    int64 phone_number = 1 [(dlg).log="visible"];
-    string sms_hash = 2 [(dlg).log="danger"];
-    int32 app_id = 3 [(dlg).log="hidden"];
-    string api_key = 4 [(dlg).log="hidden"];
 }
 
 message RequestChangePassword {
@@ -394,7 +324,7 @@ service Authentication {
         };
     }
     /// Resend code by transaction hash
-    rpc SendCodeByPhoneCall (RequestSendCodeByPhoneCall) returns (ResponseVoid) {
+    rpc SendCodeByPhoneCall (RequestSendCodeByPhoneCall) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Authentication/SendCodeByPhoneCall"
             body: "*"
@@ -404,13 +334,6 @@ service Authentication {
     rpc StartEmailAuth (RequestStartEmailAuth) returns (ResponseStartEmailAuth) {
         option (google.api.http) = {
             post: "/v1/grpc/Authentication/StartEmailAuth"
-            body: "*"
-        };
-    }
-    /// Deprecated
-    rpc StartAnonymousAuth (RequestStartAnonymousAuth) returns (ResponseAuth) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/StartAnonymousAuth"
             body: "*"
         };
     }
@@ -467,7 +390,7 @@ service Authentication {
         };
     }
     /// Resend code if you don't receive it with first attempt
-    rpc ResendCode (RequestResendCode) returns (ResponseVoid) {
+    rpc ResendCode (RequestResendCode) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Authentication/ResendCode"
             body: "*"
@@ -508,57 +431,28 @@ service Authentication {
             body: "*"
         };
     }
-    /// Deprecated. Does not produce any effect.
-    rpc TerminateSession (RequestTerminateSession) returns (ResponseVoid) {
+    
+    rpc TerminateSession (RequestTerminateSession) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Authentication/TerminateSession"
             body: "*"
         };
     }
     /// Log out user
-    rpc TerminateAllSessions (RequestTerminateAllSessions) returns (ResponseVoid) {
+    rpc TerminateAllSessions (RequestTerminateAllSessions) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Authentication/TerminateAllSessions"
             body: "*"
         };
     }
     /// Log out current session
-    rpc SignOut (RequestSignOut) returns (ResponseVoid) {
+    rpc SignOut (RequestSignOut) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Authentication/SignOut"
             body: "*"
         };
     }
-    /// Deprecated
-    rpc SignInObsolete (RequestSignInObsolete) returns (ResponseAuth) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/SignInObsolete"
-            body: "*"
-        };
-    }
-    /// Deprecated
-    rpc SignUpObsolete (RequestSignUpObsolete) returns (ResponseAuth) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/SignUpObsolete"
-            body: "*"
-        };
-    }
-    /// Deprecated
-    rpc SendAuthCodeObsolete (RequestSendAuthCodeObsolete) returns (ResponseSendAuthCodeObsolete) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/SendAuthCodeObsolete"
-            body: "*"
-        };
-    }
-    /// Deprecated
-    rpc SendAuthCallObsolete (RequestSendAuthCallObsolete) returns (ResponseVoid) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/SendAuthCallObsolete"
-            body: "*"
-        };
-    }
-
-    rpc ChangePassword (RequestChangePassword) returns (ResponseVoid) {
+    rpc ChangePassword (RequestChangePassword) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Authentication/ChangePassword"
             body: "*"

@@ -14,11 +14,10 @@
 #endif
 
 #import "Reactions.pbobjc.h"
+#import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Peers.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Scalapb.pbobjc.h"
-#import "Empty.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -62,7 +61,7 @@ static GPBFileDescriptor *ReactionsRoot_FileDescriptor(void) {
   static GPBFileDescriptor *descriptor = NULL;
   if (!descriptor) {
     GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
-    descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"dialog.reactions"
+    descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"dialog"
                                                      syntax:GPBFileSyntaxProto3];
   }
   return descriptor;
@@ -80,7 +79,7 @@ typedef struct Reaction__storage_ {
   uint32_t _has_storage_[1];
   int32_t usersAmount;
   NSString *code;
-  GPBInt32Array *usersArray;
+  NSMutableArray *usersArray;
 } Reaction__storage_;
 
 // This method is threadsafe because it is initially called
@@ -104,8 +103,8 @@ typedef struct Reaction__storage_ {
         .number = Reaction_FieldNumber_UsersArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(Reaction__storage_, usersArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked),
-        .dataType = GPBDataTypeInt32,
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "usersAmount",
@@ -191,22 +190,22 @@ typedef struct MessageReactions__storage_ {
 
 @end
 
-#pragma mark - MessageReactionsUpdate
+#pragma mark - UpdateMessageReactions
 
-@implementation MessageReactionsUpdate
+@implementation UpdateMessageReactions
 
 @dynamic hasPeer, peer;
 @dynamic hasMessageReaction, messageReaction;
 @dynamic peerClock;
 @dynamic prevPeerClock;
 
-typedef struct MessageReactionsUpdate__storage_ {
+typedef struct UpdateMessageReactions__storage_ {
   uint32_t _has_storage_[1];
   Peer *peer;
   MessageReactions *messageReaction;
   int64_t peerClock;
   int64_t prevPeerClock;
-} MessageReactionsUpdate__storage_;
+} UpdateMessageReactions__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -217,53 +216,48 @@ typedef struct MessageReactionsUpdate__storage_ {
       {
         .name = "peer",
         .dataTypeSpecific.clazz = GPBObjCClass(Peer),
-        .number = MessageReactionsUpdate_FieldNumber_Peer,
+        .number = UpdateMessageReactions_FieldNumber_Peer,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(MessageReactionsUpdate__storage_, peer),
+        .offset = (uint32_t)offsetof(UpdateMessageReactions__storage_, peer),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "messageReaction",
         .dataTypeSpecific.clazz = GPBObjCClass(MessageReactions),
-        .number = MessageReactionsUpdate_FieldNumber_MessageReaction,
+        .number = UpdateMessageReactions_FieldNumber_MessageReaction,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(MessageReactionsUpdate__storage_, messageReaction),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .offset = (uint32_t)offsetof(UpdateMessageReactions__storage_, messageReaction),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "peerClock",
         .dataTypeSpecific.clazz = Nil,
-        .number = MessageReactionsUpdate_FieldNumber_PeerClock,
+        .number = UpdateMessageReactions_FieldNumber_PeerClock,
         .hasIndex = 2,
-        .offset = (uint32_t)offsetof(MessageReactionsUpdate__storage_, peerClock),
+        .offset = (uint32_t)offsetof(UpdateMessageReactions__storage_, peerClock),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
       {
         .name = "prevPeerClock",
         .dataTypeSpecific.clazz = Nil,
-        .number = MessageReactionsUpdate_FieldNumber_PrevPeerClock,
+        .number = UpdateMessageReactions_FieldNumber_PrevPeerClock,
         .hasIndex = 3,
-        .offset = (uint32_t)offsetof(MessageReactionsUpdate__storage_, prevPeerClock),
+        .offset = (uint32_t)offsetof(UpdateMessageReactions__storage_, prevPeerClock),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[MessageReactionsUpdate class]
+        [GPBDescriptor allocDescriptorForClass:[UpdateMessageReactions class]
                                      rootClass:[ReactionsRoot class]
                                           file:ReactionsRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(MessageReactionsUpdate__storage_)
+                                   storageSize:sizeof(UpdateMessageReactions__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\001\002\017\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -356,7 +350,7 @@ typedef struct GetReactionsResponse__storage_ {
         .number = GetReactionsResponse_FieldNumber_MessageReactionsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(GetReactionsResponse__storage_, messageReactionsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldTextFormatNameCustom),
+        .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
       {
@@ -386,11 +380,6 @@ typedef struct GetReactionsResponse__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(GetReactionsResponse__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\001\001\000messageReactions\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -480,7 +469,7 @@ typedef struct GetMessageReactionsResponse__storage_ {
         .number = GetMessageReactionsResponse_FieldNumber_MessageReactionsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(GetMessageReactionsResponse__storage_, messageReactionsArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldTextFormatNameCustom),
+        .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
     };
@@ -492,11 +481,6 @@ typedef struct GetMessageReactionsResponse__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(GetMessageReactionsResponse__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\001\001\000messageReactions\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

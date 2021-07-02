@@ -30,7 +30,6 @@ CF_EXTERN_C_BEGIN
 @class GPBTimestamp;
 @class OutPeer;
 @class Peer;
-@class ResponseUserLastPresence_UserNotFoundError;
 @class UpdateGroupTyping_UserTyping;
 @class UserOutPeer;
 
@@ -45,9 +44,9 @@ typedef GPB_ENUM(TypingType) {
    * of the field.
    **/
   TypingType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  TypingType_TypingtypeUnknown = 0,
-  TypingType_TypingtypeText = 1,
-  TypingType_TypingtypeVoice = 2,
+  TypingType_TypingTypeUnknown = 0,
+  TypingType_TypingTypeText = 1,
+  TypingType_TypingTypeVoice = 2,
 };
 
 GPBEnumDescriptor *TypingType_EnumDescriptor(void);
@@ -67,15 +66,15 @@ typedef GPB_ENUM(DeviceType) {
    * of the field.
    **/
   DeviceType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  DeviceType_DevicetypeUnknown = 0,
-  DeviceType_DevicetypeGeneric = 1,
-  DeviceType_DevicetypePc = 2,
-  DeviceType_DevicetypeMobile = 3,
-  DeviceType_DevicetypeTablet = 4,
-  DeviceType_DevicetypeWatch = 5,
-  DeviceType_DevicetypeMirror = 6,
-  DeviceType_DevicetypeCar = 7,
-  DeviceType_DevicetypeTable = 8,
+  DeviceType_DeviceTypeUnknown = 0,
+  DeviceType_DeviceTypeGeneric = 1,
+  DeviceType_DeviceTypePc = 2,
+  DeviceType_DeviceTypeMobile = 3,
+  DeviceType_DeviceTypeTablet = 4,
+  DeviceType_DeviceTypeWatch = 5,
+  DeviceType_DeviceTypeMirror = 6,
+  DeviceType_DeviceTypeCar = 7,
+  DeviceType_DeviceTypeTable = 8,
 };
 
 GPBEnumDescriptor *DeviceType_EnumDescriptor(void);
@@ -105,7 +104,7 @@ GPB_FINAL @interface PresenceRoot : GPBRootObject
 
 typedef GPB_ENUM(RequestStartTyping_FieldNumber) {
   RequestStartTyping_FieldNumber_Peer = 1,
-  RequestStartTyping_FieldNumber_TypingType = 3,
+  RequestStartTyping_FieldNumber_TypingType = 2,
 };
 
 /**
@@ -216,7 +215,7 @@ GPB_FINAL @interface UpdateTyping : GPBMessage
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-@property(nonatomic, readwrite) int32_t userId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite) TypingType typingType;
 
@@ -251,7 +250,7 @@ GPB_FINAL @interface UpdateTypingStop : GPBMessage
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-@property(nonatomic, readwrite) int32_t userId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite) TypingType typingType;
 
@@ -269,73 +268,13 @@ int32_t UpdateTypingStop_TypingType_RawValue(UpdateTypingStop *message);
  **/
 void SetUpdateTypingStop_TypingType_RawValue(UpdateTypingStop *message, int32_t value);
 
-#pragma mark - UpdateUserOnline
-
-typedef GPB_ENUM(UpdateUserOnline_FieldNumber) {
-  UpdateUserOnline_FieldNumber_UserId = 1,
-  UpdateUserOnline_FieldNumber_DeviceType = 2,
-};
-
-/**
- * Update about user became online
- **/
-GPB_FINAL @interface UpdateUserOnline : GPBMessage
-
-@property(nonatomic, readwrite) int32_t userId;
-
-@property(nonatomic, readwrite) DeviceType deviceType;
-
-@end
-
-/**
- * Fetches the raw value of a @c UpdateUserOnline's @c deviceType property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
-int32_t UpdateUserOnline_DeviceType_RawValue(UpdateUserOnline *message);
-/**
- * Sets the raw value of an @c UpdateUserOnline's @c deviceType property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
-void SetUpdateUserOnline_DeviceType_RawValue(UpdateUserOnline *message, int32_t value);
-
-#pragma mark - UpdateUserOffline
-
-typedef GPB_ENUM(UpdateUserOffline_FieldNumber) {
-  UpdateUserOffline_FieldNumber_Uid = 1,
-  UpdateUserOffline_FieldNumber_DeviceType = 2,
-};
-
-/**
- * Update about user became offline
- **/
-GPB_FINAL @interface UpdateUserOffline : GPBMessage
-
-@property(nonatomic, readwrite) int32_t uid;
-
-@property(nonatomic, readwrite) DeviceType deviceType;
-
-@end
-
-/**
- * Fetches the raw value of a @c UpdateUserOffline's @c deviceType property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
-int32_t UpdateUserOffline_DeviceType_RawValue(UpdateUserOffline *message);
-/**
- * Sets the raw value of an @c UpdateUserOffline's @c deviceType property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
-void SetUpdateUserOffline_DeviceType_RawValue(UpdateUserOffline *message, int32_t value);
-
 #pragma mark - UpdateUserLastSeen
 
 typedef GPB_ENUM(UpdateUserLastSeen_FieldNumber) {
-  UpdateUserLastSeen_FieldNumber_Uid = 1,
+  UpdateUserLastSeen_FieldNumber_UserId = 1,
   UpdateUserLastSeen_FieldNumber_LastSeenAt = 2,
   UpdateUserLastSeen_FieldNumber_DeviceType = 3,
-  UpdateUserLastSeen_FieldNumber_CurrentTime = 5,
+  UpdateUserLastSeen_FieldNumber_CurrentServerTime = 4,
 };
 
 /**
@@ -343,13 +282,13 @@ typedef GPB_ENUM(UpdateUserLastSeen_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateUserLastSeen : GPBMessage
 
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite) int64_t lastSeenAt;
 
 @property(nonatomic, readwrite) DeviceType deviceType;
 
-@property(nonatomic, readwrite) int64_t currentTime;
+@property(nonatomic, readwrite) int64_t currentServerTime;
 
 @end
 
@@ -378,13 +317,13 @@ typedef GPB_ENUM(UpdateGroupOnline_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateGroupOnline : GPBMessage
 
-@property(nonatomic, readwrite) int32_t groupId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 /** / amount of online users. */
 @property(nonatomic, readwrite) int32_t count;
 
 /** / The list of online users will only be sent if the flag was set during the subscription. */
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Array *usersIdArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *usersIdArray;
 /** The number of items in @c usersIdArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger usersIdArray_Count;
 
@@ -399,7 +338,7 @@ typedef GPB_ENUM(UpdateGroupTyping_FieldNumber) {
 
 GPB_FINAL @interface UpdateGroupTyping : GPBMessage
 
-@property(nonatomic, readwrite) int32_t groupId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UpdateGroupTyping_UserTyping*> *usersTypingArray;
 /** The number of items in @c usersTypingArray without causing the array to be created. */
@@ -416,7 +355,7 @@ typedef GPB_ENUM(UpdateGroupTyping_UserTyping_FieldNumber) {
 
 GPB_FINAL @interface UpdateGroupTyping_UserTyping : GPBMessage
 
-@property(nonatomic, readwrite) int32_t userId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @property(nonatomic, readwrite) TypingType typingType;
 
@@ -455,13 +394,6 @@ GPB_FINAL @interface RequestGetUserLastPresence : GPBMessage
 
 typedef GPB_ENUM(ResponseUserLastPresence_FieldNumber) {
   ResponseUserLastPresence_FieldNumber_LastOnlineAt = 1,
-  ResponseUserLastPresence_FieldNumber_NotFoundError = 2,
-};
-
-typedef GPB_ENUM(ResponseUserLastPresence_Payload_OneOfCase) {
-  ResponseUserLastPresence_Payload_OneOfCase_GPBUnsetOneOfCase = 0,
-  ResponseUserLastPresence_Payload_OneOfCase_LastOnlineAt = 1,
-  ResponseUserLastPresence_Payload_OneOfCase_NotFoundError = 2,
 };
 
 /**
@@ -469,22 +401,9 @@ typedef GPB_ENUM(ResponseUserLastPresence_Payload_OneOfCase) {
  **/
 GPB_FINAL @interface ResponseUserLastPresence : GPBMessage
 
-@property(nonatomic, readonly) ResponseUserLastPresence_Payload_OneOfCase payloadOneOfCase;
-
 @property(nonatomic, readwrite, strong, null_resettable) GPBTimestamp *lastOnlineAt;
-
-@property(nonatomic, readwrite, strong, null_resettable) ResponseUserLastPresence_UserNotFoundError *notFoundError;
-
-@end
-
-/**
- * Clears whatever value was set for the oneof 'payload'.
- **/
-void ResponseUserLastPresence_ClearPayloadOneOfCase(ResponseUserLastPresence *message);
-
-#pragma mark - ResponseUserLastPresence_UserNotFoundError
-
-GPB_FINAL @interface ResponseUserLastPresence_UserNotFoundError : GPBMessage
+/** Test to see if @c lastOnlineAt has been set. */
+@property(nonatomic, readwrite) BOOL hasLastOnlineAt;
 
 @end
 

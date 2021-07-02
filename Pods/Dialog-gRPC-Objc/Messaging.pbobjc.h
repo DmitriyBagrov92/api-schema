@@ -71,6 +71,7 @@ CF_EXTERN_C_BEGIN
 @class MessageAttributes;
 @class MessageContent;
 @class MessageMedia;
+@class MessageOverrides;
 @class MessageReaction;
 @class MessageStatus;
 @class OutPeer;
@@ -124,10 +125,10 @@ typedef GPB_ENUM(InteractiveMediaStyle) {
    * of the field.
    **/
   InteractiveMediaStyle_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  InteractiveMediaStyle_InteractivemediastyleUnknown = 0,
-  InteractiveMediaStyle_InteractivemediastyleDefault = 1,
-  InteractiveMediaStyle_InteractivemediastylePrimary = 2,
-  InteractiveMediaStyle_InteractivemediastyleDanger = 3,
+  InteractiveMediaStyle_InteractiveMediaStyleUnknown = 0,
+  InteractiveMediaStyle_InteractiveMediaStyleDefault = 1,
+  InteractiveMediaStyle_InteractiveMediaStylePrimary = 2,
+  InteractiveMediaStyle_InteractiveMediaStyleDanger = 3,
 };
 
 GPBEnumDescriptor *InteractiveMediaStyle_EnumDescriptor(void);
@@ -147,10 +148,10 @@ typedef GPB_ENUM(MessageState) {
    * of the field.
    **/
   MessageState_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  MessageState_MessagestateUnknown = 0,
-  MessageState_MessagestateSent = 1,
-  MessageState_MessagestateReceived = 2,
-  MessageState_MessagestateRead = 3,
+  MessageState_MessageStateUnknown = 0,
+  MessageState_MessageStateSent = 1,
+  MessageState_MessageStateReceived = 2,
+  MessageState_MessageStateRead = 3,
 };
 
 GPBEnumDescriptor *MessageState_EnumDescriptor(void);
@@ -170,10 +171,10 @@ typedef GPB_ENUM(ListLoadMode) {
    * of the field.
    **/
   ListLoadMode_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  ListLoadMode_ListloadmodeUnknown = 0,
-  ListLoadMode_ListloadmodeForward = 1,
-  ListLoadMode_ListloadmodeBackward = 2,
-  ListLoadMode_ListloadmodeBoth = 3,
+  ListLoadMode_ListLoadModeUnknown = 0,
+  ListLoadMode_ListLoadModeForward = 1,
+  ListLoadMode_ListLoadModeBackward = 2,
+  ListLoadMode_ListLoadModeBoth = 3,
 };
 
 GPBEnumDescriptor *ListLoadMode_EnumDescriptor(void);
@@ -193,9 +194,9 @@ typedef GPB_ENUM(DialogsFilter) {
    * of the field.
    **/
   DialogsFilter_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  DialogsFilter_DialogsfilterUnknown = 0,
-  DialogsFilter_DialogsfilterExcludefavourites = 1,
-  DialogsFilter_DialogsfilterExcludearchived = 2,
+  DialogsFilter_DialogsFilterUnknown = 0,
+  DialogsFilter_DialogsFilterExcludefavourites = 1,
+  DialogsFilter_DialogsFilterExcludearchived = 2,
 };
 
 GPBEnumDescriptor *DialogsFilter_EnumDescriptor(void);
@@ -228,6 +229,7 @@ typedef GPB_ENUM(MessageAttributes_FieldNumber) {
   MessageAttributes_FieldNumber_IsHighlighted = 2,
   MessageAttributes_FieldNumber_IsNotified = 3,
   MessageAttributes_FieldNumber_IsOnlyForYou = 4,
+  MessageAttributes_FieldNumber_Unclassified = 5,
 };
 
 /**
@@ -255,48 +257,9 @@ GPB_FINAL @interface MessageAttributes : GPBMessage
 /** Test to see if @c isOnlyForYou has been set. */
 @property(nonatomic, readwrite) BOOL hasIsOnlyForYou;
 
-@end
-
-#pragma mark - QuotedMessage
-
-typedef GPB_ENUM(QuotedMessage_FieldNumber) {
-  QuotedMessage_FieldNumber_MessageId = 1,
-  QuotedMessage_FieldNumber_PublicGroupId = 2,
-  QuotedMessage_FieldNumber_SenderUserId = 3,
-  QuotedMessage_FieldNumber_MessageDate = 4,
-  QuotedMessage_FieldNumber_QuotedMessageContent = 5,
-};
-
-/**
- * Quoted Message
- * messageId
- * publicGroupId
- * senderUserId
- * messageDate
- * quotedMessageContent
- **/
-GPB_FINAL @interface QuotedMessage : GPBMessage
-
-/** / Message Id if present */
-@property(nonatomic, readwrite) int64_t messageId;
-
-/** / Public Group id if present */
-@property(nonatomic, readwrite) int32_t publicGroupId;
-
-/** / Sender of message */
-@property(nonatomic, readwrite) int32_t senderUserId;
-
-/** / Date of message */
-@property(nonatomic, readwrite) int64_t messageDate;
-
-/**
- * *
- * Optional Quoted Message Content.
- * Can be empty if messageId is present and message is in current peer.
- **/
-@property(nonatomic, readwrite, strong, null_resettable) MessageContent *quotedMessageContent;
-/** Test to see if @c quotedMessageContent has been set. */
-@property(nonatomic, readwrite) BOOL hasQuotedMessageContent;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *unclassified;
+/** The number of items in @c unclassified without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger unclassified_Count;
 
 @end
 
@@ -663,7 +626,7 @@ typedef GPB_ENUM(UpdateInteractiveMediaEvent_FieldNumber) {
   UpdateInteractiveMediaEvent_FieldNumber_Mid = 1,
   UpdateInteractiveMediaEvent_FieldNumber_Id_p = 2,
   UpdateInteractiveMediaEvent_FieldNumber_Value = 3,
-  UpdateInteractiveMediaEvent_FieldNumber_Uid = 4,
+  UpdateInteractiveMediaEvent_FieldNumber_UserId = 4,
 };
 
 /**
@@ -683,7 +646,7 @@ GPB_FINAL @interface UpdateInteractiveMediaEvent : GPBMessage
 @property(nonatomic, readwrite, copy, null_resettable) NSString *value;
 
 /** / who interacted with that media */
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @end
 
@@ -713,6 +676,30 @@ GPB_FINAL @interface RequestDoInteractiveMediaAction : GPBMessage
 
 @end
 
+#pragma mark - MessageOverrides
+
+typedef GPB_ENUM(MessageOverrides_FieldNumber) {
+  MessageOverrides_FieldNumber_SenderNameOverride = 1,
+  MessageOverrides_FieldNumber_SenderPhotoOverride = 2,
+  MessageOverrides_FieldNumber_SenderPhotoURLOverride = 3,
+};
+
+GPB_FINAL @interface MessageOverrides : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *senderNameOverride;
+/** Test to see if @c senderNameOverride has been set. */
+@property(nonatomic, readwrite) BOOL hasSenderNameOverride;
+
+@property(nonatomic, readwrite, strong, null_resettable) Avatar *senderPhotoOverride;
+/** Test to see if @c senderPhotoOverride has been set. */
+@property(nonatomic, readwrite) BOOL hasSenderPhotoOverride;
+
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *senderPhotoURLOverride;
+/** Test to see if @c senderPhotoURLOverride has been set. */
+@property(nonatomic, readwrite) BOOL hasSenderPhotoURLOverride;
+
+@end
+
 #pragma mark - MessageContent
 
 typedef GPB_ENUM(MessageContent_FieldNumber) {
@@ -725,6 +712,7 @@ typedef GPB_ENUM(MessageContent_FieldNumber) {
   MessageContent_FieldNumber_BinaryMessage = 7,
   MessageContent_FieldNumber_EmptyMessage = 8,
   MessageContent_FieldNumber_DeletedMessage = 9,
+  MessageContent_FieldNumber_Overides = 10,
 };
 
 typedef GPB_ENUM(MessageContent_Body_OneOfCase) {
@@ -762,6 +750,10 @@ GPB_FINAL @interface MessageContent : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) DeletedMessage *deletedMessage;
 
+@property(nonatomic, readwrite, strong, null_resettable) MessageOverrides *overides;
+/** Test to see if @c overides has been set. */
+@property(nonatomic, readwrite) BOOL hasOverides;
+
 @end
 
 /**
@@ -773,11 +765,10 @@ void MessageContent_ClearBodyOneOfCase(MessageContent *message);
 
 typedef GPB_ENUM(TextMessage_FieldNumber) {
   TextMessage_FieldNumber_Text = 1,
-  TextMessage_FieldNumber_ObsoleteMentionsArray = 2,
-  TextMessage_FieldNumber_Ext = 3,
-  TextMessage_FieldNumber_MediaArray = 4,
-  TextMessage_FieldNumber_ExtensionsArray = 5,
-  TextMessage_FieldNumber_MentionsArray = 6,
+  TextMessage_FieldNumber_Ext = 2,
+  TextMessage_FieldNumber_MediaArray = 3,
+  TextMessage_FieldNumber_ExtensionsArray = 4,
+  TextMessage_FieldNumber_MentionsArray = 5,
 };
 
 /**
@@ -786,11 +777,6 @@ typedef GPB_ENUM(TextMessage_FieldNumber) {
 GPB_FINAL @interface TextMessage : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *text;
-
-/** / Field is deprecated since server 2.6 version. */
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Array *obsoleteMentionsArray;
-/** The number of items in @c obsoleteMentionsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger obsoleteMentionsArray_Count;
 
 /** / Optional bytes of extension */
 @property(nonatomic, readwrite, strong, null_resettable) TextMessageEx *ext;
@@ -864,7 +850,7 @@ void TextMessageEx_ClearBodyOneOfCase(TextMessageEx *message);
 #pragma mark - TextExMarkdown
 
 typedef GPB_ENUM(TextExMarkdown_FieldNumber) {
-  TextExMarkdown_FieldNumber_Markdown = 2,
+  TextExMarkdown_FieldNumber_Markdown = 1,
 };
 
 /**
@@ -881,11 +867,8 @@ GPB_FINAL @interface TextExMarkdown : GPBMessage
 
 typedef GPB_ENUM(TextModernMessage_FieldNumber) {
   TextModernMessage_FieldNumber_Text = 1,
-  TextModernMessage_FieldNumber_SenderNameOverride = 2,
-  TextModernMessage_FieldNumber_SenderPhotoOverride = 3,
-  TextModernMessage_FieldNumber_Style = 4,
-  TextModernMessage_FieldNumber_AttachesArray = 5,
-  TextModernMessage_FieldNumber_SenderPhotoURLOverride = 6,
+  TextModernMessage_FieldNumber_Style = 2,
+  TextModernMessage_FieldNumber_AttachesArray = 3,
 };
 
 /**
@@ -896,18 +879,6 @@ GPB_FINAL @interface TextModernMessage : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *text;
 /** Test to see if @c text has been set. */
 @property(nonatomic, readwrite) BOOL hasText;
-
-@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *senderNameOverride;
-/** Test to see if @c senderNameOverride has been set. */
-@property(nonatomic, readwrite) BOOL hasSenderNameOverride;
-
-@property(nonatomic, readwrite, strong, null_resettable) Avatar *senderPhotoOverride;
-/** Test to see if @c senderPhotoOverride has been set. */
-@property(nonatomic, readwrite) BOOL hasSenderPhotoOverride;
-
-@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *senderPhotoURLOverride;
-/** Test to see if @c senderPhotoURLOverride has been set. */
-@property(nonatomic, readwrite) BOOL hasSenderPhotoURLOverride;
 
 @property(nonatomic, readwrite, strong, null_resettable) ParagraphStyle *style;
 /** Test to see if @c style has been set. */
@@ -1038,7 +1009,7 @@ GPB_FINAL @interface TextCommand : GPBMessage
 
 typedef GPB_ENUM(ServiceMessage_FieldNumber) {
   ServiceMessage_FieldNumber_Text = 1,
-  ServiceMessage_FieldNumber_Ext = 3,
+  ServiceMessage_FieldNumber_Ext = 2,
 };
 
 /**
@@ -1062,17 +1033,17 @@ typedef GPB_ENUM(ServiceEx_FieldNumber) {
   ServiceEx_FieldNumber_UserKicked = 3,
   ServiceEx_FieldNumber_UserLeft = 4,
   ServiceEx_FieldNumber_GroupCreated = 5,
-  ServiceEx_FieldNumber_ChangedTitle = 6,
-  ServiceEx_FieldNumber_ChangedTopic = 7,
-  ServiceEx_FieldNumber_ChangedAbout = 8,
-  ServiceEx_FieldNumber_ChangedAvatar = 9,
-  ServiceEx_FieldNumber_ContactRegistered = 10,
-  ServiceEx_FieldNumber_PhoneMissed = 11,
-  ServiceEx_FieldNumber_PhoneCall = 12,
-  ServiceEx_FieldNumber_PhoneRejected = 13,
-  ServiceEx_FieldNumber_ChatArchived = 14,
-  ServiceEx_FieldNumber_ChatRestored = 15,
-  ServiceEx_FieldNumber_ChangedShortname = 16,
+  ServiceEx_FieldNumber_ChangedShortname = 6,
+  ServiceEx_FieldNumber_ChangedTitle = 7,
+  ServiceEx_FieldNumber_ChangedTopic = 8,
+  ServiceEx_FieldNumber_ChangedAbout = 9,
+  ServiceEx_FieldNumber_ChangedAvatar = 10,
+  ServiceEx_FieldNumber_ContactRegistered = 11,
+  ServiceEx_FieldNumber_PhoneMissed = 12,
+  ServiceEx_FieldNumber_PhoneCall = 13,
+  ServiceEx_FieldNumber_PhoneRejected = 14,
+  ServiceEx_FieldNumber_ChatArchived = 15,
+  ServiceEx_FieldNumber_ChatRestored = 16,
   ServiceEx_FieldNumber_ConferenceStatus = 17,
 };
 
@@ -1083,17 +1054,17 @@ typedef GPB_ENUM(ServiceEx_Body_OneOfCase) {
   ServiceEx_Body_OneOfCase_UserKicked = 3,
   ServiceEx_Body_OneOfCase_UserLeft = 4,
   ServiceEx_Body_OneOfCase_GroupCreated = 5,
-  ServiceEx_Body_OneOfCase_ChangedShortname = 16,
-  ServiceEx_Body_OneOfCase_ChangedTitle = 6,
-  ServiceEx_Body_OneOfCase_ChangedTopic = 7,
-  ServiceEx_Body_OneOfCase_ChangedAbout = 8,
-  ServiceEx_Body_OneOfCase_ChangedAvatar = 9,
-  ServiceEx_Body_OneOfCase_ContactRegistered = 10,
-  ServiceEx_Body_OneOfCase_PhoneMissed = 11,
-  ServiceEx_Body_OneOfCase_PhoneCall = 12,
-  ServiceEx_Body_OneOfCase_PhoneRejected = 13,
-  ServiceEx_Body_OneOfCase_ChatArchived = 14,
-  ServiceEx_Body_OneOfCase_ChatRestored = 15,
+  ServiceEx_Body_OneOfCase_ChangedShortname = 6,
+  ServiceEx_Body_OneOfCase_ChangedTitle = 7,
+  ServiceEx_Body_OneOfCase_ChangedTopic = 8,
+  ServiceEx_Body_OneOfCase_ChangedAbout = 9,
+  ServiceEx_Body_OneOfCase_ChangedAvatar = 10,
+  ServiceEx_Body_OneOfCase_ContactRegistered = 11,
+  ServiceEx_Body_OneOfCase_PhoneMissed = 12,
+  ServiceEx_Body_OneOfCase_PhoneCall = 13,
+  ServiceEx_Body_OneOfCase_PhoneRejected = 14,
+  ServiceEx_Body_OneOfCase_ChatArchived = 15,
+  ServiceEx_Body_OneOfCase_ChatRestored = 16,
   ServiceEx_Body_OneOfCase_ConferenceStatus = 17,
 };
 
@@ -1145,7 +1116,7 @@ void ServiceEx_ClearBodyOneOfCase(ServiceEx *message);
 #pragma mark - ServiceExUserInvited
 
 typedef GPB_ENUM(ServiceExUserInvited_FieldNumber) {
-  ServiceExUserInvited_FieldNumber_InvitedUid = 1,
+  ServiceExUserInvited_FieldNumber_InvitedUserId = 1,
 };
 
 /**
@@ -1154,7 +1125,7 @@ typedef GPB_ENUM(ServiceExUserInvited_FieldNumber) {
 GPB_FINAL @interface ServiceExUserInvited : GPBMessage
 
 /** / added user id */
-@property(nonatomic, readwrite) int32_t invitedUid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *invitedUserId;
 
 @end
 
@@ -1169,14 +1140,14 @@ typedef GPB_ENUM(ServiceExUserJoined_FieldNumber) {
  **/
 GPB_FINAL @interface ServiceExUserJoined : GPBMessage
 
-@property(nonatomic, readwrite) int32_t joinedUserId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *joinedUserId;
 
 @end
 
 #pragma mark - ServiceExUserKicked
 
 typedef GPB_ENUM(ServiceExUserKicked_FieldNumber) {
-  ServiceExUserKicked_FieldNumber_KickedUid = 1,
+  ServiceExUserKicked_FieldNumber_KickedUserId = 1,
 };
 
 /**
@@ -1184,7 +1155,7 @@ typedef GPB_ENUM(ServiceExUserKicked_FieldNumber) {
  **/
 GPB_FINAL @interface ServiceExUserKicked : GPBMessage
 
-@property(nonatomic, readwrite) int32_t kickedUid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *kickedUserId;
 
 @end
 
@@ -1199,7 +1170,7 @@ typedef GPB_ENUM(ServiceExUserLeft_FieldNumber) {
  **/
 GPB_FINAL @interface ServiceExUserLeft : GPBMessage
 
-@property(nonatomic, readwrite) int32_t leftUserId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *leftUserId;
 
 @end
 
@@ -1301,7 +1272,7 @@ GPB_FINAL @interface ServiceExChangedAvatar : GPBMessage
 #pragma mark - ServiceExContactRegistered
 
 typedef GPB_ENUM(ServiceExContactRegistered_FieldNumber) {
-  ServiceExContactRegistered_FieldNumber_Uid = 1,
+  ServiceExContactRegistered_FieldNumber_UserId = 1,
 };
 
 /**
@@ -1310,7 +1281,7 @@ typedef GPB_ENUM(ServiceExContactRegistered_FieldNumber) {
 GPB_FINAL @interface ServiceExContactRegistered : GPBMessage
 
 /** / User Id */
-@property(nonatomic, readwrite) int32_t uid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @end
 
@@ -1326,7 +1297,7 @@ GPB_FINAL @interface ServiceExPhoneMissed : GPBMessage
 #pragma mark - ServiceExPhoneCall
 
 typedef GPB_ENUM(ServiceExPhoneCall_FieldNumber) {
-  ServiceExPhoneCall_FieldNumber_Duration = 1,
+  ServiceExPhoneCall_FieldNumber_DurationSeconds = 1,
 };
 
 /**
@@ -1335,7 +1306,7 @@ typedef GPB_ENUM(ServiceExPhoneCall_FieldNumber) {
 GPB_FINAL @interface ServiceExPhoneCall : GPBMessage
 
 /** / Duration of a phone call */
-@property(nonatomic, readwrite) int32_t duration;
+@property(nonatomic, readwrite) int32_t durationSeconds;
 
 @end
 
@@ -1393,9 +1364,9 @@ typedef GPB_ENUM(DocumentMessage_FieldNumber) {
   DocumentMessage_FieldNumber_Name = 4,
   DocumentMessage_FieldNumber_MimeType = 5,
   DocumentMessage_FieldNumber_Thumb = 6,
-  DocumentMessage_FieldNumber_Ext = 8,
-  DocumentMessage_FieldNumber_Caption = 9,
-  DocumentMessage_FieldNumber_MentionsArray = 10,
+  DocumentMessage_FieldNumber_Ext = 7,
+  DocumentMessage_FieldNumber_Caption = 8,
+  DocumentMessage_FieldNumber_MentionsArray = 9,
 };
 
 /**
@@ -1403,7 +1374,7 @@ typedef GPB_ENUM(DocumentMessage_FieldNumber) {
  **/
 GPB_FINAL @interface DocumentMessage : GPBMessage
 
-@property(nonatomic, readwrite) int64_t fileId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *fileId;
 
 @property(nonatomic, readwrite) int64_t accessHash;
 
@@ -1565,7 +1536,7 @@ typedef GPB_ENUM(StickerMessage_FieldNumber) {
 GPB_FINAL @interface StickerMessage : GPBMessage
 
 /** / Optional Unique ID of sticker */
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *stickerId;
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *stickerId;
 /** Test to see if @c stickerId has been set. */
 @property(nonatomic, readwrite) BOOL hasStickerId;
 
@@ -1585,7 +1556,7 @@ GPB_FINAL @interface StickerMessage : GPBMessage
 @property(nonatomic, readwrite) BOOL hasImage256;
 
 /** / Optional Collection ID */
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *stickerCollectionId;
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *stickerCollectionId;
 /** Test to see if @c stickerCollectionId has been set. */
 @property(nonatomic, readwrite) BOOL hasStickerCollectionId;
 
@@ -1656,7 +1627,7 @@ GPB_FINAL @interface DeletedMessage : GPBMessage
 typedef GPB_ENUM(DialogShort_FieldNumber) {
   DialogShort_FieldNumber_Peer = 1,
   DialogShort_FieldNumber_Counter = 2,
-  DialogShort_FieldNumber_Date = 4,
+  DialogShort_FieldNumber_Date = 3,
 };
 
 /**
@@ -1713,7 +1684,7 @@ typedef GPB_ENUM(MessageReaction_FieldNumber) {
 GPB_FINAL @interface MessageReaction : GPBMessage
 
 /** / User's reaction */
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Array *usersArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *usersArray;
 /** The number of items in @c usersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger usersArray_Count;
 
@@ -1746,14 +1717,14 @@ GPB_FINAL @interface SearchPredicate : GPBMessage
 
 typedef GPB_ENUM(RequestSendMessage_FieldNumber) {
   RequestSendMessage_FieldNumber_Peer = 1,
-  RequestSendMessage_FieldNumber_DeduplicationId = 3,
-  RequestSendMessage_FieldNumber_Message = 4,
-  RequestSendMessage_FieldNumber_IsOnlyForUser = 5,
-  RequestSendMessage_FieldNumber_Forward = 8,
-  RequestSendMessage_FieldNumber_Reply = 9,
-  RequestSendMessage_FieldNumber_PredicatesArray = 10,
-  RequestSendMessage_FieldNumber_WhiteListArray = 11,
-  RequestSendMessage_FieldNumber_BlackListArray = 12,
+  RequestSendMessage_FieldNumber_DeduplicationId = 2,
+  RequestSendMessage_FieldNumber_Message = 3,
+  RequestSendMessage_FieldNumber_IsOnlyForUser = 4,
+  RequestSendMessage_FieldNumber_Forward = 5,
+  RequestSendMessage_FieldNumber_Reply = 6,
+  RequestSendMessage_FieldNumber_PredicatesArray = 7,
+  RequestSendMessage_FieldNumber_WhiteListArray = 8,
+  RequestSendMessage_FieldNumber_BlackListArray = 9,
 };
 
 /**
@@ -1773,7 +1744,9 @@ GPB_FINAL @interface RequestSendMessage : GPBMessage
 @property(nonatomic, readwrite) BOOL hasMessage;
 
 /** / if not empty, then message will be send to this user only */
-@property(nonatomic, readwrite) int32_t isOnlyForUser;
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *isOnlyForUser;
+/** Test to see if @c isOnlyForUser has been set. */
+@property(nonatomic, readwrite) BOOL hasIsOnlyForUser;
 
 /** / If current message forwards some other */
 @property(nonatomic, readwrite, strong, null_resettable) ReferencedMessages *forward;
@@ -1789,11 +1762,11 @@ GPB_FINAL @interface RequestSendMessage : GPBMessage
 /** The number of items in @c predicatesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger predicatesArray_Count;
 
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Array *whiteListArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *whiteListArray;
 /** The number of items in @c whiteListArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger whiteListArray_Count;
 
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Array *blackListArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *blackListArray;
 /** The number of items in @c blackListArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger blackListArray_Count;
 
@@ -1802,9 +1775,9 @@ GPB_FINAL @interface RequestSendMessage : GPBMessage
 #pragma mark - RequestUpdateMessage
 
 typedef GPB_ENUM(RequestUpdateMessage_FieldNumber) {
-  RequestUpdateMessage_FieldNumber_Mid = 2,
-  RequestUpdateMessage_FieldNumber_UpdatedMessage = 3,
-  RequestUpdateMessage_FieldNumber_LastEditedAt = 4,
+  RequestUpdateMessage_FieldNumber_Mid = 1,
+  RequestUpdateMessage_FieldNumber_UpdatedMessage = 2,
+  RequestUpdateMessage_FieldNumber_LastEditedAt = 3,
 };
 
 /**
@@ -1830,7 +1803,7 @@ GPB_FINAL @interface RequestUpdateMessage : GPBMessage
 
 typedef GPB_ENUM(RequestMessageReceived_FieldNumber) {
   RequestMessageReceived_FieldNumber_Peer = 1,
-  RequestMessageReceived_FieldNumber_Date = 3,
+  RequestMessageReceived_FieldNumber_Date = 2,
 };
 
 /**
@@ -1850,7 +1823,7 @@ GPB_FINAL @interface RequestMessageReceived : GPBMessage
 
 typedef GPB_ENUM(RequestMessageRead_FieldNumber) {
   RequestMessageRead_FieldNumber_Peer = 1,
-  RequestMessageRead_FieldNumber_Date = 3,
+  RequestMessageRead_FieldNumber_Date = 2,
 };
 
 /**
@@ -1863,24 +1836,6 @@ GPB_FINAL @interface RequestMessageRead : GPBMessage
 @property(nonatomic, readwrite) BOOL hasPeer;
 
 @property(nonatomic, readwrite) int64_t date;
-
-@end
-
-#pragma mark - RequestDeleteMessageObsolete
-
-typedef GPB_ENUM(RequestDeleteMessageObsolete_FieldNumber) {
-  RequestDeleteMessageObsolete_FieldNumber_MidsArray = 3,
-};
-
-/**
- * Deleting messages
- **/
-GPB_FINAL @interface RequestDeleteMessageObsolete : GPBMessage
-
-/** / Message ids */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UUIDValue*> *midsArray;
-/** The number of items in @c midsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger midsArray_Count;
 
 @end
 
@@ -1971,8 +1926,8 @@ GPB_FINAL @interface RequestArchiveChat : GPBMessage
 
 typedef GPB_ENUM(RequestMessageSetReaction_FieldNumber) {
   RequestMessageSetReaction_FieldNumber_Peer = 1,
+  RequestMessageSetReaction_FieldNumber_Mid = 2,
   RequestMessageSetReaction_FieldNumber_Code = 3,
-  RequestMessageSetReaction_FieldNumber_Mid = 4,
 };
 
 /**
@@ -1998,8 +1953,8 @@ GPB_FINAL @interface RequestMessageSetReaction : GPBMessage
 
 typedef GPB_ENUM(RequestMessageRemoveReaction_FieldNumber) {
   RequestMessageRemoveReaction_FieldNumber_Peer = 1,
+  RequestMessageRemoveReaction_FieldNumber_Mid = 2,
   RequestMessageRemoveReaction_FieldNumber_Code = 3,
-  RequestMessageRemoveReaction_FieldNumber_Mid = 4,
 };
 
 /**
@@ -2024,20 +1979,13 @@ GPB_FINAL @interface RequestMessageRemoveReaction : GPBMessage
 #pragma mark - ResponseReactionsResponse
 
 typedef GPB_ENUM(ResponseReactionsResponse_FieldNumber) {
-  ResponseReactionsResponse_FieldNumber_Seq = 1,
-  ResponseReactionsResponse_FieldNumber_State = 2,
-  ResponseReactionsResponse_FieldNumber_ReactionsArray = 3,
+  ResponseReactionsResponse_FieldNumber_ReactionsArray = 1,
 };
 
 /**
  * Response for reactions change
  **/
 GPB_FINAL @interface ResponseReactionsResponse : GPBMessage
-
-/** / deprecated */
-@property(nonatomic, readwrite) int32_t seq;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *state;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MessageReaction*> *reactionsArray;
 /** The number of items in @c reactionsArray without causing the array to be created. */
@@ -2071,7 +2019,7 @@ GPB_FINAL @interface ResponseSendMessage : GPBMessage
 @property(nonatomic, readwrite) BOOL hasPreviousMessageId;
 
 /** Message creator */
-@property(nonatomic, readwrite) int64_t creatorUserId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *creatorUserId;
 
 /** Clock of this message (initially equals the message_date field) */
 @property(nonatomic, readwrite) int64_t clock;
@@ -2082,27 +2030,27 @@ GPB_FINAL @interface ResponseSendMessage : GPBMessage
 
 typedef GPB_ENUM(UpdateMessage_FieldNumber) {
   UpdateMessage_FieldNumber_Peer = 1,
-  UpdateMessage_FieldNumber_SenderUid = 2,
+  UpdateMessage_FieldNumber_SenderUserId = 2,
   UpdateMessage_FieldNumber_Date = 3,
+  UpdateMessage_FieldNumber_Mid = 4,
   UpdateMessage_FieldNumber_Message = 5,
   UpdateMessage_FieldNumber_Attributes = 6,
-  UpdateMessage_FieldNumber_Mid = 8,
-  UpdateMessage_FieldNumber_Forward = 9,
-  UpdateMessage_FieldNumber_Reply = 10,
-  UpdateMessage_FieldNumber_PreviousMid = 11,
+  UpdateMessage_FieldNumber_Forward = 7,
+  UpdateMessage_FieldNumber_Reply = 8,
+  UpdateMessage_FieldNumber_PreviousMid = 9,
+  UpdateMessage_FieldNumber_PrevMessageDate = 10,
+  UpdateMessage_FieldNumber_UnreadCounterClock = 11,
   UpdateMessage_FieldNumber_Counter = 12,
   UpdateMessage_FieldNumber_MyReadDate = 13,
   UpdateMessage_FieldNumber_RandomId = 14,
-  UpdateMessage_FieldNumber_PrevMessageDate = 15,
-  UpdateMessage_FieldNumber_ModifiedAt = 16,
-  UpdateMessage_FieldNumber_PrevEditInPeerAt = 17,
-  UpdateMessage_FieldNumber_UnreadCounterClock = 18,
+  UpdateMessage_FieldNumber_ModifiedAt = 15,
+  UpdateMessage_FieldNumber_PrevEditInPeerAt = 16,
 };
 
 typedef GPB_ENUM(UpdateMessage_Attach_OneOfCase) {
   UpdateMessage_Attach_OneOfCase_GPBUnsetOneOfCase = 0,
-  UpdateMessage_Attach_OneOfCase_Forward = 9,
-  UpdateMessage_Attach_OneOfCase_Reply = 10,
+  UpdateMessage_Attach_OneOfCase_Forward = 7,
+  UpdateMessage_Attach_OneOfCase_Reply = 8,
 };
 
 /**
@@ -2114,7 +2062,7 @@ GPB_FINAL @interface UpdateMessage : GPBMessage
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-@property(nonatomic, readwrite) int32_t senderUid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *senderUserId;
 
 /** message creation date (interval end) */
 @property(nonatomic, readwrite) int64_t date;
@@ -2183,11 +2131,11 @@ void UpdateMessage_ClearAttachOneOfCase(UpdateMessage *message);
 
 typedef GPB_ENUM(UpdateMessageContentChanged_FieldNumber) {
   UpdateMessageContentChanged_FieldNumber_Peer = 1,
+  UpdateMessageContentChanged_FieldNumber_Mid = 2,
   UpdateMessageContentChanged_FieldNumber_Message = 3,
-  UpdateMessageContentChanged_FieldNumber_Mid = 4,
-  UpdateMessageContentChanged_FieldNumber_EditedAt = 5,
-  UpdateMessageContentChanged_FieldNumber_PrevEditInPeerAt = 6,
-  UpdateMessageContentChanged_FieldNumber_IsSilent = 7,
+  UpdateMessageContentChanged_FieldNumber_EditedAt = 4,
+  UpdateMessageContentChanged_FieldNumber_PrevEditInPeerAt = 5,
+  UpdateMessageContentChanged_FieldNumber_IsSilent = 6,
 };
 
 /**
@@ -2227,17 +2175,17 @@ typedef GPB_ENUM(UpdateMessageSent_FieldNumber) {
   UpdateMessageSent_FieldNumber_Date = 3,
   UpdateMessageSent_FieldNumber_Mid = 4,
   UpdateMessageSent_FieldNumber_PrevMid = 5,
-  UpdateMessageSent_FieldNumber_UnreadCounter = 6,
-  UpdateMessageSent_FieldNumber_MyReadDate = 7,
-  UpdateMessageSent_FieldNumber_Forward = 8,
-  UpdateMessageSent_FieldNumber_Reply = 9,
-  UpdateMessageSent_FieldNumber_UnreadCounterClock = 10,
+  UpdateMessageSent_FieldNumber_UnreadCounterClock = 6,
+  UpdateMessageSent_FieldNumber_UnreadCounter = 7,
+  UpdateMessageSent_FieldNumber_MyReadDate = 8,
+  UpdateMessageSent_FieldNumber_Forward = 9,
+  UpdateMessageSent_FieldNumber_Reply = 10,
 };
 
 typedef GPB_ENUM(UpdateMessageSent_Attach_OneOfCase) {
   UpdateMessageSent_Attach_OneOfCase_GPBUnsetOneOfCase = 0,
-  UpdateMessageSent_Attach_OneOfCase_Forward = 8,
-  UpdateMessageSent_Attach_OneOfCase_Reply = 9,
+  UpdateMessageSent_Attach_OneOfCase_Forward = 9,
+  UpdateMessageSent_Attach_OneOfCase_Reply = 10,
 };
 
 /**
@@ -2342,8 +2290,8 @@ GPB_FINAL @interface UpdateMessageRead : GPBMessage
 typedef GPB_ENUM(UpdateMessageReadByMe_FieldNumber) {
   UpdateMessageReadByMe_FieldNumber_Peer = 1,
   UpdateMessageReadByMe_FieldNumber_StartDate = 2,
-  UpdateMessageReadByMe_FieldNumber_UnreadCounter = 3,
-  UpdateMessageReadByMe_FieldNumber_UnreadCounterClock = 4,
+  UpdateMessageReadByMe_FieldNumber_UnreadCounterClock = 3,
+  UpdateMessageReadByMe_FieldNumber_UnreadCounter = 4,
 };
 
 /**
@@ -2372,9 +2320,9 @@ GPB_FINAL @interface UpdateMessageReadByMe : GPBMessage
 
 typedef GPB_ENUM(UpdateMessageDelete_FieldNumber) {
   UpdateMessageDelete_FieldNumber_Peer = 1,
-  UpdateMessageDelete_FieldNumber_MidsArray = 3,
-  UpdateMessageDelete_FieldNumber_Counter = 4,
-  UpdateMessageDelete_FieldNumber_ActionDate = 5,
+  UpdateMessageDelete_FieldNumber_MidsArray = 2,
+  UpdateMessageDelete_FieldNumber_Counter = 3,
+  UpdateMessageDelete_FieldNumber_ActionDate = 4,
 };
 
 /**
@@ -2479,8 +2427,8 @@ GPB_FINAL @interface UpdateChatGroupsChanged : GPBMessage
 
 typedef GPB_ENUM(UpdateReactionsUpdate_FieldNumber) {
   UpdateReactionsUpdate_FieldNumber_Peer = 1,
+  UpdateReactionsUpdate_FieldNumber_Mid = 2,
   UpdateReactionsUpdate_FieldNumber_ReactionsArray = 3,
-  UpdateReactionsUpdate_FieldNumber_Mid = 4,
 };
 
 /**
@@ -2629,26 +2577,26 @@ GPB_FINAL @interface ReferencedMessages : GPBMessage
 #pragma mark - HistoryMessage
 
 typedef GPB_ENUM(HistoryMessage_FieldNumber) {
-  HistoryMessage_FieldNumber_SenderUid = 1,
-  HistoryMessage_FieldNumber_Date = 3,
-  HistoryMessage_FieldNumber_Message = 5,
-  HistoryMessage_FieldNumber_State = 6,
-  HistoryMessage_FieldNumber_ReactionsArray = 7,
-  HistoryMessage_FieldNumber_Attribute = 8,
-  HistoryMessage_FieldNumber_Mid = 10,
-  HistoryMessage_FieldNumber_HostPeer = 12,
-  HistoryMessage_FieldNumber_Forward = 13,
-  HistoryMessage_FieldNumber_Reply = 14,
-  HistoryMessage_FieldNumber_SenderPeer = 15,
-  HistoryMessage_FieldNumber_EditedAt = 16,
-  HistoryMessage_FieldNumber_PrevMid = 17,
-  HistoryMessage_FieldNumber_RandomId = 18,
+  HistoryMessage_FieldNumber_SenderUserId = 1,
+  HistoryMessage_FieldNumber_SenderPeer = 2,
+  HistoryMessage_FieldNumber_HostPeer = 3,
+  HistoryMessage_FieldNumber_Mid = 4,
+  HistoryMessage_FieldNumber_PrevMid = 5,
+  HistoryMessage_FieldNumber_Date = 6,
+  HistoryMessage_FieldNumber_Message = 7,
+  HistoryMessage_FieldNumber_State = 8,
+  HistoryMessage_FieldNumber_ReactionsArray = 9,
+  HistoryMessage_FieldNumber_Attribute = 10,
+  HistoryMessage_FieldNumber_Forward = 11,
+  HistoryMessage_FieldNumber_Reply = 12,
+  HistoryMessage_FieldNumber_EditedAt = 13,
+  HistoryMessage_FieldNumber_RandomId = 14,
 };
 
 typedef GPB_ENUM(HistoryMessage_Attach_OneOfCase) {
   HistoryMessage_Attach_OneOfCase_GPBUnsetOneOfCase = 0,
-  HistoryMessage_Attach_OneOfCase_Forward = 13,
-  HistoryMessage_Attach_OneOfCase_Reply = 14,
+  HistoryMessage_Attach_OneOfCase_Forward = 11,
+  HistoryMessage_Attach_OneOfCase_Reply = 12,
 };
 
 /**
@@ -2656,7 +2604,7 @@ typedef GPB_ENUM(HistoryMessage_Attach_OneOfCase) {
  **/
 GPB_FINAL @interface HistoryMessage : GPBMessage
 
-@property(nonatomic, readwrite) int32_t senderUid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *senderUserId;
 
 @property(nonatomic, readwrite, strong, null_resettable) OutPeer *senderPeer;
 /** Test to see if @c senderPeer has been set. */
@@ -2726,10 +2674,9 @@ void HistoryMessage_ClearAttachOneOfCase(HistoryMessage *message);
 
 typedef GPB_ENUM(RequestLoadHistory_FieldNumber) {
   RequestLoadHistory_FieldNumber_Peer = 1,
-  RequestLoadHistory_FieldNumber_Date = 3,
+  RequestLoadHistory_FieldNumber_Date = 2,
+  RequestLoadHistory_FieldNumber_LoadMode = 3,
   RequestLoadHistory_FieldNumber_Limit = 4,
-  RequestLoadHistory_FieldNumber_LoadMode = 5,
-  RequestLoadHistory_FieldNumber_OptimizationsArray = 6,
 };
 
 /**
@@ -2747,11 +2694,6 @@ GPB_FINAL @interface RequestLoadHistory : GPBMessage
 @property(nonatomic, readwrite) ListLoadMode loadMode;
 
 @property(nonatomic, readwrite) int32_t limit;
-
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
 
 @end
 
@@ -2771,12 +2713,12 @@ void SetRequestLoadHistory_LoadMode_RawValue(RequestLoadHistory *message, int32_
 
 typedef GPB_ENUM(ResponseLoadHistory_FieldNumber) {
   ResponseLoadHistory_FieldNumber_HistoryArray = 1,
-  ResponseLoadHistory_FieldNumber_UserPeersArray = 4,
-  ResponseLoadHistory_FieldNumber_GroupPeersArray = 6,
-  ResponseLoadHistory_FieldNumber_Counter = 7,
-  ResponseLoadHistory_FieldNumber_CounterDate = 8,
-  ResponseLoadHistory_FieldNumber_LastConversationMessageDate = 9,
-  ResponseLoadHistory_FieldNumber_CountForeignAfterLastReturned = 10,
+  ResponseLoadHistory_FieldNumber_UserPeersArray = 2,
+  ResponseLoadHistory_FieldNumber_GroupPeersArray = 3,
+  ResponseLoadHistory_FieldNumber_Counter = 4,
+  ResponseLoadHistory_FieldNumber_CounterDate = 5,
+  ResponseLoadHistory_FieldNumber_LastConversationMessageDate = 6,
+  ResponseLoadHistory_FieldNumber_CountForeignAfterLastReturned = 7,
 };
 
 GPB_FINAL @interface ResponseLoadHistory : GPBMessage
@@ -2846,7 +2788,7 @@ GPB_FINAL @interface ResponseHistoryDifference : GPBMessage
 #pragma mark - HistoryMessageLight
 
 typedef GPB_ENUM(HistoryMessageLight_FieldNumber) {
-  HistoryMessageLight_FieldNumber_SenderUid = 1,
+  HistoryMessageLight_FieldNumber_SenderUserId = 1,
   HistoryMessageLight_FieldNumber_MessageId = 2,
   HistoryMessageLight_FieldNumber_Date = 3,
   HistoryMessageLight_FieldNumber_Message = 4,
@@ -2864,7 +2806,7 @@ typedef GPB_ENUM(HistoryMessageLight_Attach_OneOfCase) {
 
 GPB_FINAL @interface HistoryMessageLight : GPBMessage
 
-@property(nonatomic, readwrite) int32_t senderUid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *senderUserId;
 
 /** / Message id generated by server */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *messageId;
@@ -2898,9 +2840,9 @@ void HistoryMessageLight_ClearAttachOneOfCase(HistoryMessageLight *message);
 
 typedef GPB_ENUM(RequestLoadHistoryLight_FieldNumber) {
   RequestLoadHistoryLight_FieldNumber_Peer = 1,
-  RequestLoadHistoryLight_FieldNumber_Date = 3,
+  RequestLoadHistoryLight_FieldNumber_Date = 2,
+  RequestLoadHistoryLight_FieldNumber_LoadMode = 3,
   RequestLoadHistoryLight_FieldNumber_Limit = 4,
-  RequestLoadHistoryLight_FieldNumber_LoadMode = 5,
 };
 
 GPB_FINAL @interface RequestLoadHistoryLight : GPBMessage
@@ -2982,23 +2924,23 @@ GPB_FINAL @interface ResponseCountForeignMessages : GPBMessage
 
 typedef GPB_ENUM(Dialog_FieldNumber) {
   Dialog_FieldNumber_Peer = 1,
-  Dialog_FieldNumber_UnreadCount = 3,
-  Dialog_FieldNumber_SortDate = 4,
-  Dialog_FieldNumber_SenderUid = 5,
+  Dialog_FieldNumber_UnreadCount = 2,
+  Dialog_FieldNumber_SortDate = 3,
+  Dialog_FieldNumber_SenderUserId = 4,
+  Dialog_FieldNumber_IsFavourite = 5,
+  Dialog_FieldNumber_Mid = 6,
   Dialog_FieldNumber_Date = 7,
   Dialog_FieldNumber_Message = 8,
   Dialog_FieldNumber_State = 9,
   Dialog_FieldNumber_FirstUnreadDate = 10,
   Dialog_FieldNumber_Attributes = 11,
-  Dialog_FieldNumber_Mid = 12,
-  Dialog_FieldNumber_IsFavourite = 13,
-  Dialog_FieldNumber_PinnedMessages = 14,
-  Dialog_FieldNumber_HistoryMessage = 15,
-  Dialog_FieldNumber_LastReceive = 16,
-  Dialog_FieldNumber_LastRead = 17,
-  Dialog_FieldNumber_LastReactionAt = 18,
-  Dialog_FieldNumber_ReadLater = 19,
-  Dialog_FieldNumber_DialogType = 20,
+  Dialog_FieldNumber_PinnedMessages = 12,
+  Dialog_FieldNumber_HistoryMessage = 13,
+  Dialog_FieldNumber_LastReceive = 14,
+  Dialog_FieldNumber_LastRead = 15,
+  Dialog_FieldNumber_LastReactionAt = 16,
+  Dialog_FieldNumber_ReadLater = 17,
+  Dialog_FieldNumber_DialogType = 18,
 };
 
 /**
@@ -3030,7 +2972,7 @@ GPB_FINAL @interface Dialog : GPBMessage
 /** / deprecated */
 @property(nonatomic, readwrite) int64_t sortDate;
 
-@property(nonatomic, readwrite) int32_t senderUid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *senderUserId;
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isFavourite;
 /** Test to see if @c isFavourite has been set. */
@@ -3095,9 +3037,8 @@ void SetDialog_State_RawValue(Dialog *message, int32_t value);
 typedef GPB_ENUM(RequestLoadDialogs_FieldNumber) {
   RequestLoadDialogs_FieldNumber_MinDate = 1,
   RequestLoadDialogs_FieldNumber_Limit = 2,
-  RequestLoadDialogs_FieldNumber_OptimizationsArray = 3,
-  RequestLoadDialogs_FieldNumber_FiltersArray = 4,
-  RequestLoadDialogs_FieldNumber_PeersToLoadArray = 5,
+  RequestLoadDialogs_FieldNumber_FiltersArray = 3,
+  RequestLoadDialogs_FieldNumber_PeersToLoadArray = 4,
 };
 
 /**
@@ -3108,11 +3049,6 @@ GPB_FINAL @interface RequestLoadDialogs : GPBMessage
 @property(nonatomic, readwrite) int64_t minDate;
 
 @property(nonatomic, readwrite) int32_t limit;
-
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
 
 // |filtersArray| contains |DialogsFilter|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *filtersArray;
@@ -3128,9 +3064,9 @@ GPB_FINAL @interface RequestLoadDialogs : GPBMessage
 #pragma mark - ResponseLoadDialogs
 
 typedef GPB_ENUM(ResponseLoadDialogs_FieldNumber) {
-  ResponseLoadDialogs_FieldNumber_DialogsArray = 3,
-  ResponseLoadDialogs_FieldNumber_UserPeersArray = 4,
-  ResponseLoadDialogs_FieldNumber_GroupPeersArray = 5,
+  ResponseLoadDialogs_FieldNumber_DialogsArray = 1,
+  ResponseLoadDialogs_FieldNumber_UserPeersArray = 2,
+  ResponseLoadDialogs_FieldNumber_GroupPeersArray = 3,
 };
 
 /**
@@ -3155,9 +3091,9 @@ GPB_FINAL @interface ResponseLoadDialogs : GPBMessage
 #pragma mark - DialogData
 
 typedef GPB_ENUM(DialogData_FieldNumber) {
-  DialogData_FieldNumber_IsFavourite = 2,
-  DialogData_FieldNumber_CreatedAt = 3,
-  DialogData_FieldNumber_Clock = 4,
+  DialogData_FieldNumber_IsFavourite = 1,
+  DialogData_FieldNumber_CreatedAt = 2,
+  DialogData_FieldNumber_Clock = 3,
 };
 
 /**
@@ -3202,18 +3138,18 @@ GPB_FINAL @interface DialogIndex : GPBMessage
 
 typedef GPB_ENUM(DialogListEntry_FieldNumber) {
   DialogListEntry_FieldNumber_Peer = 1,
-  DialogListEntry_FieldNumber_UnreadCount = 2,
-  DialogListEntry_FieldNumber_MyReadDate = 3,
-  DialogListEntry_FieldNumber_LastMessageDate = 4,
-  DialogListEntry_FieldNumber_ReceiveDate = 5,
-  DialogListEntry_FieldNumber_ReadDate = 6,
-  DialogListEntry_FieldNumber_EntryClock = 7,
-  DialogListEntry_FieldNumber_Data_p = 8,
+  DialogListEntry_FieldNumber_UnreadCounterClock = 2,
+  DialogListEntry_FieldNumber_UnreadCount = 3,
+  DialogListEntry_FieldNumber_MyReadDate = 4,
+  DialogListEntry_FieldNumber_LastMessageDate = 5,
+  DialogListEntry_FieldNumber_ReceiveDate = 6,
+  DialogListEntry_FieldNumber_ReadDate = 7,
+  DialogListEntry_FieldNumber_EntryClock = 8,
   DialogListEntry_FieldNumber_LastUpdateOfMessageDate = 9,
   DialogListEntry_FieldNumber_LastReactionDate = 10,
   DialogListEntry_FieldNumber_ReadLater = 11,
-  DialogListEntry_FieldNumber_UnreadCounterClock = 12,
-  DialogListEntry_FieldNumber_DialogType = 13,
+  DialogListEntry_FieldNumber_DialogType = 12,
+  DialogListEntry_FieldNumber_Data_p = 13,
 };
 
 /**
@@ -3379,176 +3315,6 @@ GPB_FINAL @interface ResponseGetLastConversationMessages_Pair : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) HistoryMessage *message;
 /** Test to see if @c message has been set. */
 @property(nonatomic, readwrite) BOOL hasMessage;
-
-@end
-
-#pragma mark - RequestLoadArchived
-
-typedef GPB_ENUM(RequestLoadArchived_FieldNumber) {
-  RequestLoadArchived_FieldNumber_NextOffset = 1,
-  RequestLoadArchived_FieldNumber_Limit = 2,
-  RequestLoadArchived_FieldNumber_OptimizationsArray = 3,
-};
-
-/**
- * Loading archived messages - deprecated
- **/
-GPB_FINAL @interface RequestLoadArchived : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) GPBBytesValue *nextOffset;
-/** Test to see if @c nextOffset has been set. */
-@property(nonatomic, readwrite) BOOL hasNextOffset;
-
-@property(nonatomic, readwrite) int32_t limit;
-
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
-
-@end
-
-#pragma mark - ResponseLoadArchived
-
-typedef GPB_ENUM(ResponseLoadArchived_FieldNumber) {
-  ResponseLoadArchived_FieldNumber_DialogsArray = 3,
-  ResponseLoadArchived_FieldNumber_NextOffset = 4,
-  ResponseLoadArchived_FieldNumber_UserPeersArray = 5,
-  ResponseLoadArchived_FieldNumber_GroupPeersArray = 6,
-};
-
-/**
- * / deprecated
- **/
-GPB_FINAL @interface ResponseLoadArchived : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Dialog*> *dialogsArray;
-/** The number of items in @c dialogsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger dialogsArray_Count;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *userPeersArray;
-/** The number of items in @c userPeersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger userPeersArray_Count;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupPeersArray;
-/** The number of items in @c groupPeersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger groupPeersArray_Count;
-
-@property(nonatomic, readwrite, strong, null_resettable) GPBBytesValue *nextOffset;
-/** Test to see if @c nextOffset has been set. */
-@property(nonatomic, readwrite) BOOL hasNextOffset;
-
-@end
-
-#pragma mark - RequestLoadGroupedDialogs
-
-typedef GPB_ENUM(RequestLoadGroupedDialogs_FieldNumber) {
-  RequestLoadGroupedDialogs_FieldNumber_OptimizationsArray = 1,
-};
-
-/**
- * Load all dialogs from grouped list - deprecated
- **/
-GPB_FINAL @interface RequestLoadGroupedDialogs : GPBMessage
-
-// |optimizationsArray| contains |UpdateOptimization|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *optimizationsArray;
-/** The number of items in @c optimizationsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger optimizationsArray_Count;
-
-@end
-
-#pragma mark - ResponseLoadGroupedDialogs
-
-typedef GPB_ENUM(ResponseLoadGroupedDialogs_FieldNumber) {
-  ResponseLoadGroupedDialogs_FieldNumber_DialogsArray = 1,
-  ResponseLoadGroupedDialogs_FieldNumber_ShowArchived = 4,
-  ResponseLoadGroupedDialogs_FieldNumber_ShowInvite = 5,
-  ResponseLoadGroupedDialogs_FieldNumber_UserPeersArray = 6,
-  ResponseLoadGroupedDialogs_FieldNumber_GroupPeersArray = 7,
-};
-
-/**
- * / deprecated
- **/
-GPB_FINAL @interface ResponseLoadGroupedDialogs : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<DialogGroup*> *dialogsArray;
-/** The number of items in @c dialogsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger dialogsArray_Count;
-
-@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *showArchived;
-/** Test to see if @c showArchived has been set. */
-@property(nonatomic, readwrite) BOOL hasShowArchived;
-
-@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *showInvite;
-/** Test to see if @c showInvite has been set. */
-@property(nonatomic, readwrite) BOOL hasShowInvite;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *userPeersArray;
-/** The number of items in @c userPeersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger userPeersArray_Count;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupPeersArray;
-/** The number of items in @c groupPeersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger groupPeersArray_Count;
-
-@end
-
-#pragma mark - ResponseDialogsOrder
-
-typedef GPB_ENUM(ResponseDialogsOrder_FieldNumber) {
-  ResponseDialogsOrder_FieldNumber_Seq = 1,
-  ResponseDialogsOrder_FieldNumber_State = 2,
-  ResponseDialogsOrder_FieldNumber_GroupsArray = 3,
-};
-
-/**
- * Dialogs order response - deprecated
- **/
-GPB_FINAL @interface ResponseDialogsOrder : GPBMessage
-
-@property(nonatomic, readwrite) int32_t seq;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *state;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<DialogGroup*> *groupsArray;
-/** The number of items in @c groupsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger groupsArray_Count;
-
-@end
-
-#pragma mark - RequestHideDialog
-
-typedef GPB_ENUM(RequestHideDialog_FieldNumber) {
-  RequestHideDialog_FieldNumber_Peer = 1,
-};
-
-/**
- * Hide Dialog from grouped list
- **/
-GPB_FINAL @interface RequestHideDialog : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-@end
-
-#pragma mark - RequestShowDialog
-
-typedef GPB_ENUM(RequestShowDialog_FieldNumber) {
-  RequestShowDialog_FieldNumber_Peer = 1,
-};
-
-/**
- * Show Dialog in grouped list
- **/
-GPB_FINAL @interface RequestShowDialog : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
 
 @end
 
@@ -3855,6 +3621,8 @@ GPB_FINAL @interface RequestMessageReceives : GPBMessage
 typedef GPB_ENUM(ResponseMessageReads_FieldNumber) {
   ResponseMessageReads_FieldNumber_StatusArray = 1,
   ResponseMessageReads_FieldNumber_TimestampTill = 2,
+  ResponseMessageReads_FieldNumber_LastReadDate = 3,
+  ResponseMessageReads_FieldNumber_Counter = 4,
 };
 
 /**
@@ -3868,6 +3636,10 @@ GPB_FINAL @interface ResponseMessageReads : GPBMessage
 
 /** max time of returned entries, or requested time if empty */
 @property(nonatomic, readwrite) int64_t timestampTill;
+
+@property(nonatomic, readwrite) int64_t lastReadDate;
+
+@property(nonatomic, readwrite) int32_t counter;
 
 @end
 

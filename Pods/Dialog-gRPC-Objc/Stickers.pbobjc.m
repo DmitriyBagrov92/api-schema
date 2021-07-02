@@ -15,9 +15,9 @@
 
 #import "Stickers.pbobjc.h"
 #import "Wrappers.pbobjc.h"
+#import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Miscellaneous.pbobjc.h"
 #import "MediaAndFiles.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 // @@protoc_insertion_point(imports)
@@ -50,6 +50,7 @@ GPBObjCClassDeclaration(StickerDescriptor);
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[GAPIAnnotationsRoot extensionRegistry]];
     [registry addExtensions:[DefinitionsRoot extensionRegistry]];
+    [registry addExtensions:[ScalapbRoot extensionRegistry]];
   }
   return registry;
 }
@@ -83,7 +84,7 @@ static GPBFileDescriptor *StickersRoot_FileDescriptor(void) {
 
 typedef struct StickerDescriptor__storage_ {
   uint32_t _has_storage_[1];
-  int32_t id_p;
+  NSString *id_p;
   GPBStringValue *emoji;
   ImageLocation *image128;
   ImageLocation *image512;
@@ -104,7 +105,7 @@ typedef struct StickerDescriptor__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(StickerDescriptor__storage_, id_p),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "emoji",
@@ -187,7 +188,7 @@ typedef struct StickerDescriptor__storage_ {
 
 typedef struct StickerCollection__storage_ {
   uint32_t _has_storage_[1];
-  int32_t id_p;
+  NSString *id_p;
   GPBStringValue *title;
   NSMutableArray *stickersArray;
   GPBBoolValue *ownedByMe;
@@ -207,7 +208,7 @@ typedef struct StickerCollection__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(StickerCollection__storage_, id_p),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "title",
@@ -269,17 +270,13 @@ typedef struct StickerCollection__storage_ {
 @implementation ResponseStickersResponse
 
 @dynamic collectionsArray, collectionsArray_Count;
-@dynamic seq;
-@dynamic state;
 @dynamic removedCollectionsArray, removedCollectionsArray_Count;
 @dynamic clock;
 @dynamic prevClock;
 
 typedef struct ResponseStickersResponse__storage_ {
   uint32_t _has_storage_[1];
-  int32_t seq;
   NSMutableArray *collectionsArray;
-  NSData *state;
   NSMutableArray *removedCollectionsArray;
   int64_t clock;
   int64_t prevClock;
@@ -301,24 +298,6 @@ typedef struct ResponseStickersResponse__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "seq",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseStickersResponse_FieldNumber_Seq,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(ResponseStickersResponse__storage_, seq),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "state",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseStickersResponse_FieldNumber_State,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(ResponseStickersResponse__storage_, state),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBytes,
-      },
-      {
         .name = "removedCollectionsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(StickerCollection),
         .number = ResponseStickersResponse_FieldNumber_RemovedCollectionsArray,
@@ -331,7 +310,7 @@ typedef struct ResponseStickersResponse__storage_ {
         .name = "clock",
         .dataTypeSpecific.clazz = Nil,
         .number = ResponseStickersResponse_FieldNumber_Clock,
-        .hasIndex = 2,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(ResponseStickersResponse__storage_, clock),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
@@ -340,7 +319,7 @@ typedef struct ResponseStickersResponse__storage_ {
         .name = "prevClock",
         .dataTypeSpecific.clazz = Nil,
         .number = ResponseStickersResponse_FieldNumber_PrevClock,
-        .hasIndex = 3,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(ResponseStickersResponse__storage_, prevClock),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
@@ -618,7 +597,7 @@ typedef struct ResponseLoadAcesssibleStickers__storage_ {
 
 typedef struct RequestAddStickerPackReference__storage_ {
   uint32_t _has_storage_[1];
-  int32_t sourceStickerPack;
+  NSString *sourceStickerPack;
 } RequestAddStickerPackReference__storage_;
 
 // This method is threadsafe because it is initially called
@@ -634,7 +613,7 @@ typedef struct RequestAddStickerPackReference__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestAddStickerPackReference__storage_, sourceStickerPack),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -663,7 +642,7 @@ typedef struct RequestAddStickerPackReference__storage_ {
 
 typedef struct RequestRemoveStickerPackReference__storage_ {
   uint32_t _has_storage_[1];
-  int32_t sourceStickerPack;
+  NSString *sourceStickerPack;
 } RequestRemoveStickerPackReference__storage_;
 
 // This method is threadsafe because it is initially called
@@ -679,7 +658,7 @@ typedef struct RequestRemoveStickerPackReference__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestRemoveStickerPackReference__storage_, sourceStickerPack),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -753,7 +732,7 @@ typedef struct UpdateStickerCollectionsChanged__storage_ {
 
 typedef struct UpdateStickerPackRemoved__storage_ {
   uint32_t _has_storage_[1];
-  int32_t packId;
+  NSString *packId;
 } UpdateStickerPackRemoved__storage_;
 
 // This method is threadsafe because it is initially called
@@ -769,7 +748,7 @@ typedef struct UpdateStickerPackRemoved__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(UpdateStickerPackRemoved__storage_, packId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -888,7 +867,7 @@ typedef struct RequestAddStickerCollection__storage_ {
 
 typedef struct RequestRemoveStickerCollection__storage_ {
   uint32_t _has_storage_[1];
-  int32_t id_p;
+  NSString *id_p;
 } RequestRemoveStickerCollection__storage_;
 
 // This method is threadsafe because it is initially called
@@ -904,7 +883,7 @@ typedef struct RequestRemoveStickerCollection__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestRemoveStickerCollection__storage_, id_p),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -933,7 +912,7 @@ typedef struct RequestRemoveStickerCollection__storage_ {
 
 typedef struct RequestLoadStickerCollection__storage_ {
   uint32_t _has_storage_[1];
-  int32_t id_p;
+  NSString *id_p;
 } RequestLoadStickerCollection__storage_;
 
 // This method is threadsafe because it is initially called
@@ -949,7 +928,7 @@ typedef struct RequestLoadStickerCollection__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestLoadStickerCollection__storage_, id_p),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

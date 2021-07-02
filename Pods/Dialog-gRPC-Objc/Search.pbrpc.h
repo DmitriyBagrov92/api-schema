@@ -35,13 +35,9 @@
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Wrappers.pbobjc.h"
   #import "Annotations.pbobjc.h"
-  #import "Timestamp.pbobjc.h"
   #import "Definitions.pbobjc.h"
-  #import "Groups.pbobjc.h"
   #import "Peers.pbobjc.h"
   #import "Messaging.pbobjc.h"
-  #import "Users.pbobjc.h"
-  #import "Miscellaneous.pbobjc.h"
   #import "Scalapb.pbobjc.h"
 #endif
 

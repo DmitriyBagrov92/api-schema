@@ -16,7 +16,6 @@
 #import <DialogGRPC/Definitions.pbobjc.h>
 #import <DialogGRPC/Descriptor.pbobjc.h>
 #import <DialogGRPC/DeviceInfo.pbobjc.h>
-#import <DialogGRPC/EventBus.pbobjc.h>
 #import <DialogGRPC/GatewayService.pbobjc.h>
 #import <DialogGRPC/Groups.pbobjc.h>
 #import <DialogGRPC/HTTP.pbobjc.h>
@@ -25,7 +24,6 @@
 #import <DialogGRPC/Messaging.pbobjc.h>
 #import <DialogGRPC/Miniappsregistry.pbobjc.h>
 #import <DialogGRPC/Miscellaneous.pbobjc.h>
-#import <DialogGRPC/Obsolete.pbobjc.h>
 #import <DialogGRPC/Peers.pbobjc.h>
 #import <DialogGRPC/Permissions.pbobjc.h>
 #import <DialogGRPC/Presence.pbobjc.h>
@@ -43,20 +41,17 @@
 #import <DialogGRPC/Stickers.pbobjc.h>
 #import <DialogGRPC/Threads.pbobjc.h>
 #import <DialogGRPC/Users.pbobjc.h>
-#import <DialogGRPC/WebRtc.pbobjc.h>
 #import <DialogGRPC/Authentication.pbrpc.h>
 #import <DialogGRPC/Clickroad.pbrpc.h>
 #import <DialogGRPC/ConfigSync.pbrpc.h>
 #import <DialogGRPC/Contacts.pbrpc.h>
 #import <DialogGRPC/Crypto.pbrpc.h>
 #import <DialogGRPC/DeviceInfo.pbrpc.h>
-#import <DialogGRPC/EventBus.pbrpc.h>
 #import <DialogGRPC/Groups.pbrpc.h>
 #import <DialogGRPC/Integrations.pbrpc.h>
 #import <DialogGRPC/MediaAndFiles.pbrpc.h>
 #import <DialogGRPC/Messaging.pbrpc.h>
 #import <DialogGRPC/Miniappsregistry.pbrpc.h>
-#import <DialogGRPC/Obsolete.pbrpc.h>
 #import <DialogGRPC/Permissions.pbrpc.h>
 #import <DialogGRPC/Presence.pbrpc.h>
 #import <DialogGRPC/Privacy.pbrpc.h>
@@ -71,7 +66,6 @@
 #import <DialogGRPC/Stickers.pbrpc.h>
 #import <DialogGRPC/Threads.pbrpc.h>
 #import <DialogGRPC/Users.pbrpc.h>
-#import <DialogGRPC/WebRtc.pbrpc.h>
 
 //! Project version number for DialogGRPC.
 FOUNDATION_EXPORT double DialogGRPCVersionNumber;

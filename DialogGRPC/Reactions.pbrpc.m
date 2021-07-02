@@ -7,11 +7,10 @@
 #import <ProtoRPC/ProtoRPCLegacy.h>
 #import <RxLibrary/GRXWriter+Immediate.h>
 
+#import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Peers.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Scalapb.pbobjc.h"
-#import "Empty.pbobjc.h"
 
 @implementation Reactions
 
@@ -21,14 +20,14 @@
 // Designated initializer
 - (instancetype)initWithHost:(NSString *)host callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [super initWithHost:host
-                 packageName:@"dialog.reactions"
+                 packageName:@"dialog"
                  serviceName:@"Reactions"
                  callOptions:callOptions];
 }
 
 - (instancetype)initWithHost:(NSString *)host {
   return [super initWithHost:host
-                 packageName:@"dialog.reactions"
+                 packageName:@"dialog"
                  serviceName:@"Reactions"];
 }
 

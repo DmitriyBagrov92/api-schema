@@ -186,23 +186,13 @@ GPB_FINAL @interface UpdateFeatureFlagChanged : GPBMessage
 #pragma mark - UpdateParameterChanged
 
 typedef GPB_ENUM(UpdateParameterChanged_FieldNumber) {
-  UpdateParameterChanged_FieldNumber_Key = 1,
-  UpdateParameterChanged_FieldNumber_Value = 2,
-  UpdateParameterChanged_FieldNumber_Parameter = 3,
+  UpdateParameterChanged_FieldNumber_Parameter = 1,
 };
 
 /**
  * Update about parameter change
  **/
 GPB_FINAL @interface UpdateParameterChanged : GPBMessage
-
-/** / deprecated use this field from parameter */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *key;
-
-/** / deprecated use this field from parameter */
-@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *value;
-/** Test to see if @c value has been set. */
-@property(nonatomic, readwrite) BOOL hasValue;
 
 /** / changed parameter */
 @property(nonatomic, readwrite, strong, null_resettable) Parameter *parameter;

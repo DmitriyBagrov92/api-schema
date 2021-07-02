@@ -21,11 +21,10 @@
 @class RequestSetMessageReaction;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
+  #import "Empty.pbobjc.h"
   #import "Annotations.pbobjc.h"
   #import "Peers.pbobjc.h"
   #import "Definitions.pbobjc.h"
-  #import "Scalapb.pbobjc.h"
-  #import "Empty.pbobjc.h"
 #endif
 
 @class GRPCUnaryProtoCall;

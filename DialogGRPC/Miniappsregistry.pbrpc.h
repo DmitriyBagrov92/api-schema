@@ -23,7 +23,6 @@
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Empty.pbobjc.h"
-  #import "Wrappers.pbobjc.h"
   #import "Definitions.pbobjc.h"
 #endif
 

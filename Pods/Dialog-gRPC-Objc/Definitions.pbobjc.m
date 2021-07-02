@@ -14,7 +14,6 @@
 #endif
 
 #import "Definitions.pbobjc.h"
-#import "Scalapb.pbobjc.h"
 #import "Descriptor.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
@@ -60,8 +59,8 @@ GPBObjCClassDeclaration(GPBFieldOptions);
       [self globallyRegisterExtension:extension];
       [extension release];
     }
-    // Merge in the imports (direct or indirect) that defined extensions.
-    [registry addExtensions:[ScalapbRoot extensionRegistry]];
+    // None of the imports (direct or indirect) defined extensions, so no need to add
+    // them to this registry.
   }
   return registry;
 }

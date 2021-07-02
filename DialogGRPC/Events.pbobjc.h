@@ -36,34 +36,9 @@ CF_EXTERN_C_BEGIN
 @class Event_Reply;
 @class Peer;
 @class UUIDValue;
+GPB_ENUM_FWD_DECLARE(ListLoadMode);
 
 NS_ASSUME_NONNULL_BEGIN
-
-#pragma mark - Enum LoadMode
-
-typedef GPB_ENUM(LoadMode) {
-  /**
-   * Value used if any message's field encounters a value that is not defined
-   * by this enum. The message will also have C functions to get/set the rawValue
-   * of the field.
-   **/
-  LoadMode_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  LoadMode_LoadmodeUnknown = 0,
-
-  /** load from clock to future */
-  LoadMode_LoadmodeForward = 1,
-
-  /** load from clock to past */
-  LoadMode_LoadmodeBackward = 2,
-};
-
-GPBEnumDescriptor *LoadMode_EnumDescriptor(void);
-
-/**
- * Checks to see if the given value is defined by the enum or was not known at
- * the time this source was generated.
- **/
-BOOL LoadMode_IsValidValue(int32_t value);
 
 #pragma mark - EventsRoot
 
@@ -133,7 +108,7 @@ void Event_ClearEventOneOfCase(Event *message);
 typedef GPB_ENUM(Event_Mention_FieldNumber) {
   Event_Mention_FieldNumber_Peer = 1,
   Event_Mention_FieldNumber_Mid = 2,
-  Event_Mention_FieldNumber_User = 3,
+  Event_Mention_FieldNumber_UserId = 3,
 };
 
 GPB_FINAL @interface Event_Mention : GPBMessage
@@ -149,7 +124,7 @@ GPB_FINAL @interface Event_Mention : GPBMessage
 @property(nonatomic, readwrite) BOOL hasMid;
 
 /** mention author */
-@property(nonatomic, readwrite) int32_t user;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @end
 
@@ -183,7 +158,7 @@ GPB_FINAL @interface Event_Reactions : GPBMessage
 
 typedef GPB_ENUM(Event_Reactions_Reaction_FieldNumber) {
   Event_Reactions_Reaction_FieldNumber_Code = 1,
-  Event_Reactions_Reaction_FieldNumber_Users = 2,
+  Event_Reactions_Reaction_FieldNumber_UserIds = 2,
 };
 
 GPB_FINAL @interface Event_Reactions_Reaction : GPBMessage
@@ -192,9 +167,9 @@ GPB_FINAL @interface Event_Reactions_Reaction : GPBMessage
 @property(nonatomic, readwrite, copy, null_resettable) NSString *code;
 
 /** userId to time when reaction is set by user */
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Int64Dictionary *users;
-/** The number of items in @c users without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger users_Count;
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringInt64Dictionary *userIds;
+/** The number of items in @c userIds without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger userIds_Count;
 
 @end
 
@@ -203,7 +178,7 @@ GPB_FINAL @interface Event_Reactions_Reaction : GPBMessage
 typedef GPB_ENUM(Event_Reply_FieldNumber) {
   Event_Reply_FieldNumber_Peer = 1,
   Event_Reply_FieldNumber_Mid = 2,
-  Event_Reply_FieldNumber_User = 3,
+  Event_Reply_FieldNumber_UserId = 3,
 };
 
 GPB_FINAL @interface Event_Reply : GPBMessage
@@ -219,7 +194,7 @@ GPB_FINAL @interface Event_Reply : GPBMessage
 @property(nonatomic, readwrite) BOOL hasMid;
 
 /** message author */
-@property(nonatomic, readwrite) int32_t user;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @end
 
@@ -227,7 +202,7 @@ GPB_FINAL @interface Event_Reply : GPBMessage
 
 typedef GPB_ENUM(Event_Invite_FieldNumber) {
   Event_Invite_FieldNumber_Peer = 1,
-  Event_Invite_FieldNumber_User = 2,
+  Event_Invite_FieldNumber_UserId = 2,
 };
 
 GPB_FINAL @interface Event_Invite : GPBMessage
@@ -238,7 +213,7 @@ GPB_FINAL @interface Event_Invite : GPBMessage
 @property(nonatomic, readwrite) BOOL hasPeer;
 
 /** inviter userId */
-@property(nonatomic, readwrite) int32_t user;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @end
 
@@ -246,7 +221,7 @@ GPB_FINAL @interface Event_Invite : GPBMessage
 
 typedef GPB_ENUM(Event_Kick_FieldNumber) {
   Event_Kick_FieldNumber_Peer = 1,
-  Event_Kick_FieldNumber_User = 2,
+  Event_Kick_FieldNumber_UserId = 2,
 };
 
 GPB_FINAL @interface Event_Kick : GPBMessage
@@ -257,7 +232,7 @@ GPB_FINAL @interface Event_Kick : GPBMessage
 @property(nonatomic, readwrite) BOOL hasPeer;
 
 /** kicker userId */
-@property(nonatomic, readwrite) int32_t user;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @end
 
@@ -292,7 +267,7 @@ GPB_FINAL @interface LoadEventsRequest : GPBMessage
 /** clock to load from */
 @property(nonatomic, readwrite) int64_t fromClock;
 
-@property(nonatomic, readwrite) LoadMode loadMode;
+@property(nonatomic, readwrite) enum ListLoadMode loadMode;
 
 /** how much to load */
 @property(nonatomic, readwrite) int32_t limit;

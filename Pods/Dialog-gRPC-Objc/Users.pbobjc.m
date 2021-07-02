@@ -17,6 +17,7 @@
 
 #import "Users.pbobjc.h"
 #import "Wrappers.pbobjc.h"
+#import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
 #import "Miscellaneous.pbobjc.h"
@@ -37,8 +38,6 @@
 GPBObjCClassDeclaration(Avatar);
 GPBObjCClassDeclaration(BotCommand);
 GPBObjCClassDeclaration(ContactRecord);
-GPBObjCClassDeclaration(DataClock);
-GPBObjCClassDeclaration(FullUser);
 GPBObjCClassDeclaration(GPBBoolValue);
 GPBObjCClassDeclaration(GPBInt64Value);
 GPBObjCClassDeclaration(GPBStringValue);
@@ -50,7 +49,6 @@ GPBObjCClassDeclaration(UUIDValue);
 GPBObjCClassDeclaration(User);
 GPBObjCClassDeclaration(UserData);
 GPBObjCClassDeclaration(UserData_Ext);
-GPBObjCClassDeclaration(UserOutPeer);
 GPBObjCClassDeclaration(UserStatus);
 
 #pragma mark - UsersRoot
@@ -67,6 +65,7 @@ GPBObjCClassDeclaration(UserStatus);
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[GAPIAnnotationsRoot extensionRegistry]];
     [registry addExtensions:[DefinitionsRoot extensionRegistry]];
+    [registry addExtensions:[ScalapbRoot extensionRegistry]];
   }
   return registry;
 }
@@ -130,15 +129,15 @@ GPBEnumDescriptor *ContactType_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "ContacttypeUnknown\000ContacttypePhone\000Cont"
-        "acttypeEmail\000ContacttypeWeb\000ContacttypeS"
+        "ContactTypeUnknown\000ContactTypePhone\000Cont"
+        "actTypeEmail\000ContactTypeWeb\000ContactTypeS"
         "ocial\000";
     static const int32_t values[] = {
-        ContactType_ContacttypeUnknown,
-        ContactType_ContacttypePhone,
-        ContactType_ContacttypeEmail,
-        ContactType_ContacttypeWeb,
-        ContactType_ContacttypeSocial,
+        ContactType_ContactTypeUnknown,
+        ContactType_ContactTypePhone,
+        ContactType_ContactTypeEmail,
+        ContactType_ContactTypeWeb,
+        ContactType_ContactTypeSocial,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(ContactType)
@@ -156,11 +155,11 @@ GPBEnumDescriptor *ContactType_EnumDescriptor(void) {
 
 BOOL ContactType_IsValidValue(int32_t value__) {
   switch (value__) {
-    case ContactType_ContacttypeUnknown:
-    case ContactType_ContacttypePhone:
-    case ContactType_ContacttypeEmail:
-    case ContactType_ContacttypeWeb:
-    case ContactType_ContacttypeSocial:
+    case ContactType_ContactTypeUnknown:
+    case ContactType_ContactTypePhone:
+    case ContactType_ContactTypeEmail:
+    case ContactType_ContactTypeWeb:
+    case ContactType_ContactTypeSocial:
       return YES;
     default:
       return NO;
@@ -173,17 +172,17 @@ GPBEnumDescriptor *UserStatusType_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "UserstatustypeUnknown\000UserstatustypeUnse"
-        "t\000UserstatustypeAway\000UserstatustypeDonot"
-        "disturb\000UserstatustypeInvisible\000Userstat"
-        "ustypeBusy\000";
+        "UserStatusTypeUnknown\000UserStatusTypeUnse"
+        "t\000UserStatusTypeAway\000UserStatusTypeDonot"
+        "disturb\000UserStatusTypeInvisible\000UserStat"
+        "usTypeBusy\000";
     static const int32_t values[] = {
-        UserStatusType_UserstatustypeUnknown,
-        UserStatusType_UserstatustypeUnset,
-        UserStatusType_UserstatustypeAway,
-        UserStatusType_UserstatustypeDonotdisturb,
-        UserStatusType_UserstatustypeInvisible,
-        UserStatusType_UserstatustypeBusy,
+        UserStatusType_UserStatusTypeUnknown,
+        UserStatusType_UserStatusTypeUnset,
+        UserStatusType_UserStatusTypeAway,
+        UserStatusType_UserStatusTypeDonotdisturb,
+        UserStatusType_UserStatusTypeInvisible,
+        UserStatusType_UserStatusTypeBusy,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(UserStatusType)
@@ -201,12 +200,12 @@ GPBEnumDescriptor *UserStatusType_EnumDescriptor(void) {
 
 BOOL UserStatusType_IsValidValue(int32_t value__) {
   switch (value__) {
-    case UserStatusType_UserstatustypeUnknown:
-    case UserStatusType_UserstatustypeUnset:
-    case UserStatusType_UserstatustypeAway:
-    case UserStatusType_UserstatustypeDonotdisturb:
-    case UserStatusType_UserstatustypeInvisible:
-    case UserStatusType_UserstatustypeBusy:
+    case UserStatusType_UserStatusTypeUnknown:
+    case UserStatusType_UserStatusTypeUnset:
+    case UserStatusType_UserStatusTypeAway:
+    case UserStatusType_UserStatusTypeDonotdisturb:
+    case UserStatusType_UserStatusTypeInvisible:
+    case UserStatusType_UserStatusTypeBusy:
       return YES;
     default:
       return NO;
@@ -417,7 +416,6 @@ void SetUserStatus_Type_RawValue(UserStatus *message, int32_t value) {
 @dynamic hasUserStatus, userStatus;
 @dynamic timeZone;
 @dynamic extsArray, extsArray_Count;
-@dynamic hasObsoleteClock, obsoleteClock;
 @dynamic localesArray, localesArray_Count;
 @dynamic hasAbout, about;
 @dynamic contactInfoArray, contactInfoArray_Count;
@@ -439,7 +437,6 @@ typedef struct UserData__storage_ {
   UserStatus *userStatus;
   NSString *timeZone;
   NSMutableArray *extsArray;
-  DataClock *obsoleteClock;
   NSMutableArray *localesArray;
   GPBStringValue *about;
   NSMutableArray *contactInfoArray;
@@ -536,15 +533,6 @@ typedef struct UserData__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "obsoleteClock",
-        .dataTypeSpecific.clazz = GPBObjCClass(DataClock),
-        .number = UserData_FieldNumber_ObsoleteClock,
-        .hasIndex = 8,
-        .offset = (uint32_t)offsetof(UserData__storage_, obsoleteClock),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "localesArray",
         .dataTypeSpecific.clazz = Nil,
         .number = UserData_FieldNumber_LocalesArray,
@@ -557,7 +545,7 @@ typedef struct UserData__storage_ {
         .name = "about",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
         .number = UserData_FieldNumber_About,
-        .hasIndex = 9,
+        .hasIndex = 8,
         .offset = (uint32_t)offsetof(UserData__storage_, about),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -584,25 +572,16 @@ typedef struct UserData__storage_ {
         .name = "customProfile",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
         .number = UserData_FieldNumber_CustomProfile,
-        .hasIndex = 10,
+        .hasIndex = 9,
         .offset = (uint32_t)offsetof(UserData__storage_, customProfile),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "clock",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UserData_FieldNumber_Clock,
-        .hasIndex = 14,
-        .offset = (uint32_t)offsetof(UserData__storage_, clock),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
         .name = "hint",
         .dataTypeSpecific.enumDescFunc = UserData_Hint_EnumDescriptor,
         .number = UserData_FieldNumber_Hint,
-        .hasIndex = 11,
+        .hasIndex = 10,
         .offset = (uint32_t)offsetof(UserData__storage_, hint),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
@@ -611,10 +590,19 @@ typedef struct UserData__storage_ {
         .name = "wasAuthorized",
         .dataTypeSpecific.clazz = Nil,
         .number = UserData_FieldNumber_WasAuthorized,
-        .hasIndex = 12,
-        .offset = 13,  // Stored in _has_storage_ to save space.
+        .hasIndex = 11,
+        .offset = 12,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "clock",
+        .dataTypeSpecific.clazz = Nil,
+        .number = UserData_FieldNumber_Clock,
+        .hasIndex = 13,
+        .offset = (uint32_t)offsetof(UserData__storage_, clock),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -625,11 +613,6 @@ typedef struct UserData__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(UserData__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\001\n\r\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -682,14 +665,15 @@ GPBEnumDescriptor *UserData_Lifecycle_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "Missed\000Active\000Deleted\000Blocked\000BlockedAnd"
-        "Deleted\000";
+        "LifecycleMissed\000LifecycleActive\000Lifecycl"
+        "eDeleted\000LifecycleBlocked\000LifecycleBlock"
+        "edAndDeleted\000";
     static const int32_t values[] = {
-        UserData_Lifecycle_Missed,
-        UserData_Lifecycle_Active,
-        UserData_Lifecycle_Deleted,
-        UserData_Lifecycle_Blocked,
-        UserData_Lifecycle_BlockedAndDeleted,
+        UserData_Lifecycle_LifecycleMissed,
+        UserData_Lifecycle_LifecycleActive,
+        UserData_Lifecycle_LifecycleDeleted,
+        UserData_Lifecycle_LifecycleBlocked,
+        UserData_Lifecycle_LifecycleBlockedAndDeleted,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(UserData_Lifecycle)
@@ -707,11 +691,11 @@ GPBEnumDescriptor *UserData_Lifecycle_EnumDescriptor(void) {
 
 BOOL UserData_Lifecycle_IsValidValue(int32_t value__) {
   switch (value__) {
-    case UserData_Lifecycle_Missed:
-    case UserData_Lifecycle_Active:
-    case UserData_Lifecycle_Deleted:
-    case UserData_Lifecycle_Blocked:
-    case UserData_Lifecycle_BlockedAndDeleted:
+    case UserData_Lifecycle_LifecycleMissed:
+    case UserData_Lifecycle_LifecycleActive:
+    case UserData_Lifecycle_LifecycleDeleted:
+    case UserData_Lifecycle_LifecycleBlocked:
+    case UserData_Lifecycle_LifecycleBlockedAndDeleted:
       return YES;
     default:
       return NO;
@@ -724,19 +708,17 @@ GPBEnumDescriptor *UserData_Hint_EnumDescriptor(void) {
   static _Atomic(GPBEnumDescriptor*) descriptor = nil;
   if (!descriptor) {
     static const char *valueNames =
-        "UserHintRegular\000UserHintGuest\000";
+        "HintUserRegular\000HintUserGuest\000";
     static const int32_t values[] = {
-        UserData_Hint_UserHintRegular,
-        UserData_Hint_UserHintGuest,
+        UserData_Hint_HintUserRegular,
+        UserData_Hint_HintUserGuest,
     };
-    static const char *extraTextFormatInfo = "\002\000$\244\247\000\001$\244\245\000";
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(UserData_Hint)
                                        valueNames:valueNames
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
-                                     enumVerifier:UserData_Hint_IsValidValue
-                              extraTextFormatInfo:extraTextFormatInfo];
+                                     enumVerifier:UserData_Hint_IsValidValue];
     GPBEnumDescriptor *expected = nil;
     if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
       [worker release];
@@ -747,8 +729,8 @@ GPBEnumDescriptor *UserData_Hint_EnumDescriptor(void) {
 
 BOOL UserData_Hint_IsValidValue(int32_t value__) {
   switch (value__) {
-    case UserData_Hint_UserHintRegular:
-    case UserData_Hint_UserHintGuest:
+    case UserData_Hint_HintUserRegular:
+    case UserData_Hint_HintUserGuest:
       return YES;
     default:
       return NO;
@@ -844,7 +826,7 @@ void UserData_Ext_ClearVOneOfCase(UserData_Ext *message) {
 
 typedef struct User__storage_ {
   uint32_t _has_storage_[1];
-  int32_t id_p;
+  NSString *id_p;
   UserData *data_p;
   int64_t accessHash;
 } User__storage_;
@@ -862,7 +844,7 @@ typedef struct User__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(User__storage_, id_p),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "accessHash",
@@ -914,7 +896,7 @@ typedef struct User__storage_ {
 
 typedef struct UserPartialInfo__storage_ {
   uint32_t _has_storage_[1];
-  int32_t id_p;
+  NSString *id_p;
   NSString *name;
   GPBStringValue *nick;
   Avatar *avatar;
@@ -935,7 +917,7 @@ typedef struct UserPartialInfo__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(UserPartialInfo__storage_, id_p),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "accessHash",
@@ -1123,150 +1105,6 @@ typedef struct UserProfile__storage_ {
 
 @end
 
-#pragma mark - FullUser
-
-@implementation FullUser
-
-@dynamic id_p;
-@dynamic contactInfoArray, contactInfoArray_Count;
-@dynamic hasAbout, about;
-@dynamic preferredLanguagesArray, preferredLanguagesArray_Count;
-@dynamic hasTimeZone, timeZone;
-@dynamic botCommandsArray, botCommandsArray_Count;
-@dynamic hasIsBlocked, isBlocked;
-@dynamic customProfile;
-@dynamic hasIntegrationToken, integrationToken;
-@dynamic hasStatus, status;
-
-typedef struct FullUser__storage_ {
-  uint32_t _has_storage_[1];
-  int32_t id_p;
-  NSMutableArray *contactInfoArray;
-  GPBStringValue *about;
-  NSMutableArray *preferredLanguagesArray;
-  GPBStringValue *timeZone;
-  NSMutableArray *botCommandsArray;
-  GPBBoolValue *isBlocked;
-  NSString *customProfile;
-  GPBStringValue *integrationToken;
-  UserStatus *status;
-} FullUser__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "id_p",
-        .dataTypeSpecific.clazz = Nil,
-        .number = FullUser_FieldNumber_Id_p,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(FullUser__storage_, id_p),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
-      },
-      {
-        .name = "contactInfoArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(ContactRecord),
-        .number = FullUser_FieldNumber_ContactInfoArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(FullUser__storage_, contactInfoArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "about",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
-        .number = FullUser_FieldNumber_About,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(FullUser__storage_, about),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "preferredLanguagesArray",
-        .dataTypeSpecific.clazz = Nil,
-        .number = FullUser_FieldNumber_PreferredLanguagesArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(FullUser__storage_, preferredLanguagesArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "timeZone",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
-        .number = FullUser_FieldNumber_TimeZone,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(FullUser__storage_, timeZone),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "botCommandsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(BotCommand),
-        .number = FullUser_FieldNumber_BotCommandsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(FullUser__storage_, botCommandsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "isBlocked",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
-        .number = FullUser_FieldNumber_IsBlocked,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(FullUser__storage_, isBlocked),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "customProfile",
-        .dataTypeSpecific.clazz = Nil,
-        .number = FullUser_FieldNumber_CustomProfile,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(FullUser__storage_, customProfile),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "integrationToken",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
-        .number = FullUser_FieldNumber_IntegrationToken,
-        .hasIndex = 5,
-        .offset = (uint32_t)offsetof(FullUser__storage_, integrationToken),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "status",
-        .dataTypeSpecific.clazz = GPBObjCClass(UserStatus),
-        .number = FullUser_FieldNumber_Status,
-        .hasIndex = 6,
-        .offset = (uint32_t)offsetof(FullUser__storage_, status),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[FullUser class]
-                                     rootClass:[UsersRoot class]
-                                          file:UsersRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(FullUser__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
 #pragma mark - BotCommand
 
 @implementation BotCommand
@@ -1338,13 +1176,13 @@ typedef struct BotCommand__storage_ {
 
 @implementation RequestEditUserLocalName
 
-@dynamic uid;
+@dynamic userId;
 @dynamic accessHash;
 @dynamic name;
 
 typedef struct RequestEditUserLocalName__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
+  NSString *userId;
   NSString *name;
   int64_t accessHash;
 } RequestEditUserLocalName__storage_;
@@ -1356,13 +1194,13 @@ typedef struct RequestEditUserLocalName__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = RequestEditUserLocalName_FieldNumber_Uid,
+        .number = RequestEditUserLocalName_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestEditUserLocalName__storage_, uid),
+        .offset = (uint32_t)offsetof(RequestEditUserLocalName__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "accessHash",
@@ -1615,7 +1453,7 @@ typedef struct ResponseLoadUserData__storage_ {
 
 typedef struct UpdateUser__storage_ {
   uint32_t _has_storage_[1];
-  int32_t id_p;
+  NSString *id_p;
   UserData *data_p;
 } UpdateUser__storage_;
 
@@ -1632,7 +1470,7 @@ typedef struct UpdateUser__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(UpdateUser__storage_, id_p),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "data_p",
@@ -1666,12 +1504,12 @@ typedef struct UpdateUser__storage_ {
 
 @implementation UpdateUserAvatarChanged
 
-@dynamic uid;
+@dynamic userId;
 @dynamic hasAvatar, avatar;
 
 typedef struct UpdateUserAvatarChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
+  NSString *userId;
   Avatar *avatar;
 } UpdateUserAvatarChanged__storage_;
 
@@ -1682,13 +1520,13 @@ typedef struct UpdateUserAvatarChanged__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateUserAvatarChanged_FieldNumber_Uid,
+        .number = UpdateUserAvatarChanged_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateUserAvatarChanged__storage_, uid),
+        .offset = (uint32_t)offsetof(UpdateUserAvatarChanged__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "avatar",
@@ -1722,12 +1560,12 @@ typedef struct UpdateUserAvatarChanged__storage_ {
 
 @implementation UpdateUserNameChanged
 
-@dynamic uid;
+@dynamic userId;
 @dynamic name;
 
 typedef struct UpdateUserNameChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
+  NSString *userId;
   NSString *name;
 } UpdateUserNameChanged__storage_;
 
@@ -1738,13 +1576,13 @@ typedef struct UpdateUserNameChanged__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateUserNameChanged_FieldNumber_Uid,
+        .number = UpdateUserNameChanged_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateUserNameChanged__storage_, uid),
+        .offset = (uint32_t)offsetof(UpdateUserNameChanged__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "name",
@@ -1778,12 +1616,12 @@ typedef struct UpdateUserNameChanged__storage_ {
 
 @implementation UpdateUserLocalNameChanged
 
-@dynamic uid;
+@dynamic userId;
 @dynamic hasLocalName, localName;
 
 typedef struct UpdateUserLocalNameChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
+  NSString *userId;
   GPBStringValue *localName;
 } UpdateUserLocalNameChanged__storage_;
 
@@ -1794,13 +1632,13 @@ typedef struct UpdateUserLocalNameChanged__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateUserLocalNameChanged_FieldNumber_Uid,
+        .number = UpdateUserLocalNameChanged_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateUserLocalNameChanged__storage_, uid),
+        .offset = (uint32_t)offsetof(UpdateUserLocalNameChanged__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "localName",
@@ -1834,12 +1672,12 @@ typedef struct UpdateUserLocalNameChanged__storage_ {
 
 @implementation UpdateUserContactsChanged
 
-@dynamic uid;
+@dynamic userId;
 @dynamic contactRecordsArray, contactRecordsArray_Count;
 
 typedef struct UpdateUserContactsChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
+  NSString *userId;
   NSMutableArray *contactRecordsArray;
 } UpdateUserContactsChanged__storage_;
 
@@ -1850,13 +1688,13 @@ typedef struct UpdateUserContactsChanged__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateUserContactsChanged_FieldNumber_Uid,
+        .number = UpdateUserContactsChanged_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateUserContactsChanged__storage_, uid),
+        .offset = (uint32_t)offsetof(UpdateUserContactsChanged__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "contactRecordsArray",
@@ -1890,12 +1728,12 @@ typedef struct UpdateUserContactsChanged__storage_ {
 
 @implementation UpdateUserNickChanged
 
-@dynamic uid;
+@dynamic userId;
 @dynamic hasNickname, nickname;
 
 typedef struct UpdateUserNickChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
+  NSString *userId;
   GPBStringValue *nickname;
 } UpdateUserNickChanged__storage_;
 
@@ -1906,13 +1744,13 @@ typedef struct UpdateUserNickChanged__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateUserNickChanged_FieldNumber_Uid,
+        .number = UpdateUserNickChanged_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateUserNickChanged__storage_, uid),
+        .offset = (uint32_t)offsetof(UpdateUserNickChanged__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "nickname",
@@ -1946,12 +1784,12 @@ typedef struct UpdateUserNickChanged__storage_ {
 
 @implementation UpdateUserAboutChanged
 
-@dynamic uid;
+@dynamic userId;
 @dynamic hasAbout, about;
 
 typedef struct UpdateUserAboutChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
+  NSString *userId;
   GPBStringValue *about;
 } UpdateUserAboutChanged__storage_;
 
@@ -1962,13 +1800,13 @@ typedef struct UpdateUserAboutChanged__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateUserAboutChanged_FieldNumber_Uid,
+        .number = UpdateUserAboutChanged_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateUserAboutChanged__storage_, uid),
+        .offset = (uint32_t)offsetof(UpdateUserAboutChanged__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "about",
@@ -2002,12 +1840,12 @@ typedef struct UpdateUserAboutChanged__storage_ {
 
 @implementation UpdateUserPreferredLanguagesChanged
 
-@dynamic uid;
+@dynamic userId;
 @dynamic preferredLanguagesArray, preferredLanguagesArray_Count;
 
 typedef struct UpdateUserPreferredLanguagesChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
+  NSString *userId;
   NSMutableArray *preferredLanguagesArray;
 } UpdateUserPreferredLanguagesChanged__storage_;
 
@@ -2018,13 +1856,13 @@ typedef struct UpdateUserPreferredLanguagesChanged__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateUserPreferredLanguagesChanged_FieldNumber_Uid,
+        .number = UpdateUserPreferredLanguagesChanged_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateUserPreferredLanguagesChanged__storage_, uid),
+        .offset = (uint32_t)offsetof(UpdateUserPreferredLanguagesChanged__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "preferredLanguagesArray",
@@ -2058,12 +1896,12 @@ typedef struct UpdateUserPreferredLanguagesChanged__storage_ {
 
 @implementation UpdateUserTimeZoneChanged
 
-@dynamic uid;
+@dynamic userId;
 @dynamic hasTimeZone, timeZone;
 
 typedef struct UpdateUserTimeZoneChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
+  NSString *userId;
   GPBStringValue *timeZone;
 } UpdateUserTimeZoneChanged__storage_;
 
@@ -2074,13 +1912,13 @@ typedef struct UpdateUserTimeZoneChanged__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateUserTimeZoneChanged_FieldNumber_Uid,
+        .number = UpdateUserTimeZoneChanged_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateUserTimeZoneChanged__storage_, uid),
+        .offset = (uint32_t)offsetof(UpdateUserTimeZoneChanged__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "timeZone",
@@ -2114,12 +1952,12 @@ typedef struct UpdateUserTimeZoneChanged__storage_ {
 
 @implementation UpdateUserBotCommandsChanged
 
-@dynamic uid;
+@dynamic userId;
 @dynamic commandsArray, commandsArray_Count;
 
 typedef struct UpdateUserBotCommandsChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
+  NSString *userId;
   NSMutableArray *commandsArray;
 } UpdateUserBotCommandsChanged__storage_;
 
@@ -2130,13 +1968,13 @@ typedef struct UpdateUserBotCommandsChanged__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateUserBotCommandsChanged_FieldNumber_Uid,
+        .number = UpdateUserBotCommandsChanged_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateUserBotCommandsChanged__storage_, uid),
+        .offset = (uint32_t)offsetof(UpdateUserBotCommandsChanged__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "commandsArray",
@@ -2170,13 +2008,13 @@ typedef struct UpdateUserBotCommandsChanged__storage_ {
 
 @implementation UpdateUserSexChanged
 
-@dynamic uid;
+@dynamic userId;
 @dynamic sex;
 
 typedef struct UpdateUserSexChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
   Sex sex;
+  NSString *userId;
 } UpdateUserSexChanged__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2186,13 +2024,13 @@ typedef struct UpdateUserSexChanged__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateUserSexChanged_FieldNumber_Uid,
+        .number = UpdateUserSexChanged_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateUserSexChanged__storage_, uid),
+        .offset = (uint32_t)offsetof(UpdateUserSexChanged__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "sex",
@@ -2238,12 +2076,12 @@ void SetUpdateUserSexChanged_Sex_RawValue(UpdateUserSexChanged *message, int32_t
 
 @implementation UpdateUserCustomProfileChanged
 
-@dynamic uid;
+@dynamic userId;
 @dynamic customProfile;
 
 typedef struct UpdateUserCustomProfileChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
+  NSString *userId;
   NSString *customProfile;
 } UpdateUserCustomProfileChanged__storage_;
 
@@ -2254,13 +2092,13 @@ typedef struct UpdateUserCustomProfileChanged__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateUserCustomProfileChanged_FieldNumber_Uid,
+        .number = UpdateUserCustomProfileChanged_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateUserCustomProfileChanged__storage_, uid),
+        .offset = (uint32_t)offsetof(UpdateUserCustomProfileChanged__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "customProfile",
@@ -2294,12 +2132,12 @@ typedef struct UpdateUserCustomProfileChanged__storage_ {
 
 @implementation UpdateUserStatusChanged
 
-@dynamic uid;
+@dynamic userId;
 @dynamic hasStatus, status;
 
 typedef struct UpdateUserStatusChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
+  NSString *userId;
   UserStatus *status;
 } UpdateUserStatusChanged__storage_;
 
@@ -2310,13 +2148,13 @@ typedef struct UpdateUserStatusChanged__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateUserStatusChanged_FieldNumber_Uid,
+        .number = UpdateUserStatusChanged_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateUserStatusChanged__storage_, uid),
+        .offset = (uint32_t)offsetof(UpdateUserStatusChanged__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "status",
@@ -2350,12 +2188,12 @@ typedef struct UpdateUserStatusChanged__storage_ {
 
 @implementation UpdateUserExtChanged
 
-@dynamic uid;
+@dynamic userId;
 @dynamic hasExt, ext;
 
 typedef struct UpdateUserExtChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
+  NSString *userId;
   RecursiveMapValue *ext;
 } UpdateUserExtChanged__storage_;
 
@@ -2366,13 +2204,13 @@ typedef struct UpdateUserExtChanged__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateUserExtChanged_FieldNumber_Uid,
+        .number = UpdateUserExtChanged_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateUserExtChanged__storage_, uid),
+        .offset = (uint32_t)offsetof(UpdateUserExtChanged__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "ext",
@@ -2406,12 +2244,12 @@ typedef struct UpdateUserExtChanged__storage_ {
 
 @implementation UpdateUserFullExtChanged
 
-@dynamic uid;
+@dynamic userId;
 @dynamic hasExt, ext;
 
 typedef struct UpdateUserFullExtChanged__storage_ {
   uint32_t _has_storage_[1];
-  int32_t uid;
+  NSString *userId;
   RecursiveMapValue *ext;
 } UpdateUserFullExtChanged__storage_;
 
@@ -2422,13 +2260,13 @@ typedef struct UpdateUserFullExtChanged__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "uid",
+        .name = "userId",
         .dataTypeSpecific.clazz = Nil,
-        .number = UpdateUserFullExtChanged_FieldNumber_Uid,
+        .number = UpdateUserFullExtChanged_FieldNumber_UserId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateUserFullExtChanged__storage_, uid),
+        .offset = (uint32_t)offsetof(UpdateUserFullExtChanged__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "ext",
@@ -2447,96 +2285,6 @@ typedef struct UpdateUserFullExtChanged__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(UpdateUserFullExtChanged__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - RequestLoadFullUsers
-
-@implementation RequestLoadFullUsers
-
-@dynamic userPeersArray, userPeersArray_Count;
-
-typedef struct RequestLoadFullUsers__storage_ {
-  uint32_t _has_storage_[1];
-  NSMutableArray *userPeersArray;
-} RequestLoadFullUsers__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "userPeersArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(UserOutPeer),
-        .number = RequestLoadFullUsers_FieldNumber_UserPeersArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestLoadFullUsers__storage_, userPeersArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestLoadFullUsers class]
-                                     rootClass:[UsersRoot class]
-                                          file:UsersRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestLoadFullUsers__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - ResponseLoadFullUsers
-
-@implementation ResponseLoadFullUsers
-
-@dynamic fullUsersArray, fullUsersArray_Count;
-
-typedef struct ResponseLoadFullUsers__storage_ {
-  uint32_t _has_storage_[1];
-  NSMutableArray *fullUsersArray;
-} ResponseLoadFullUsers__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "fullUsersArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(FullUser),
-        .number = ResponseLoadFullUsers_FieldNumber_FullUsersArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponseLoadFullUsers__storage_, fullUsersArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[ResponseLoadFullUsers class]
-                                     rootClass:[UsersRoot class]
-                                          file:UsersRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(ResponseLoadFullUsers__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");

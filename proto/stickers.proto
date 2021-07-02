@@ -5,9 +5,9 @@ package dialog;
 // Stickers support in Actor
 
 import "wrappers.proto";
+import "empty.proto";
 import "annotations.proto";
 import "definitions.proto";
-import "miscellaneous.proto";
 import "media_and_files.proto";
 import "scalapb.proto";
 
@@ -16,7 +16,7 @@ option java_package = "im.dlg.grpc.services";
 
 // Descriptor of a Sticker
 message StickerDescriptor {
-    int32 id = 1 [(dlg).log="visible"]; /// Sticker unique id
+    string id = 1 [(dlg).log="visible"]; /// Sticker unique id
     /// Emoji code for sticker
     google.protobuf.StringValue emoji = 2 [(dlg).log="visible"];
     /// Image of sticker 128x128 in WebP format
@@ -32,7 +32,7 @@ message StickerDescriptor {
 // Sticker collection
 message StickerCollection {
     /// Unique id of a collection
-    int32 id = 1 [(dlg).log="visible"];
+    string id = 1 [(dlg).log="visible"];
     /// Sticker pack title
     google.protobuf.StringValue title = 2 [(dlg).log="visible"];
     repeated StickerDescriptor stickers = 3 [(dlg).log="visible"];
@@ -45,11 +45,9 @@ message StickerCollection {
 message ResponseStickersResponse {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     repeated StickerCollection collections = 1 [(dlg).log="visible"];
-    int32 seq = 2 [(dlg).log="visible"]; /// deprecated
-    bytes state = 3 [(dlg).log="visible"];
-    repeated StickerCollection removed_collections = 4 [(dlg).log="visible"];
-    int64 clock = 5 [(dlg).log="visible"];
-    int64 prev_clock = 6 [(dlg).log="visible"];
+    repeated StickerCollection removed_collections = 2 [(dlg).log="visible"];
+    int64 clock = 3 [(dlg).log="visible"];
+    int64 prev_clock = 4 [(dlg).log="visible"];
 }
 
 // Loading own stickers
@@ -83,13 +81,13 @@ message ResponseLoadAcesssibleStickers {
 // Add a reference to other user's sticker pack
 message RequestAddStickerPackReference {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    int32 source_sticker_pack = 1 [(dlg).log="visible"];
+    string source_sticker_pack = 1 [(dlg).log="visible"];
 }
 
 // Remove a reference to an other user's sticker pack
 message RequestRemoveStickerPackReference {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    int32 source_sticker_pack = 1 [(dlg).log="visible"];
+    string source_sticker_pack = 1 [(dlg).log="visible"];
 }
 
 // Sticker collection changed
@@ -99,7 +97,7 @@ message UpdateStickerCollectionsChanged {
 
 // Sticker pack removed
 message UpdateStickerPackRemoved {
-    int32 pack_id = 1 [(dlg).log="visible"];
+    string pack_id = 1 [(dlg).log="visible"];
 }
 
 // Sticker pack was added
@@ -116,13 +114,13 @@ message RequestAddStickerCollection {
 // Removing sticker collection
 message RequestRemoveStickerCollection {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    int32 id = 1 [(dlg).log="visible"];
+    string id = 1 [(dlg).log="visible"];
 }
 
 // Loading stickers
 message RequestLoadStickerCollection {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    int32 id = 1 [(dlg).log="visible"];
+    string id = 1 [(dlg).log="visible"];
 }
 
 message ResponseLoadStickerCollection {
@@ -143,25 +141,25 @@ service Stickers {
             body: "*"
         };
     }
-    rpc AddStickerPackReference (RequestAddStickerPackReference) returns (ResponseSeq) {
+    rpc AddStickerPackReference (RequestAddStickerPackReference) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Stickers/AddStickerPackReference"
             body: "*"
         };
     }
-    rpc RemoveStickerPackReference (RequestRemoveStickerPackReference) returns (ResponseSeq) {
+    rpc RemoveStickerPackReference (RequestRemoveStickerPackReference) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Stickers/RemoveStickerPackReference"
             body: "*"
         };
     }
-    rpc AddStickerCollection (RequestAddStickerCollection) returns (ResponseSeq) {
+    rpc AddStickerCollection (RequestAddStickerCollection) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Stickers/AddStickerCollection"
             body: "*"
         };
     }
-    rpc RemoveStickerCollection (RequestRemoveStickerCollection) returns (ResponseSeq) {
+    rpc RemoveStickerCollection (RequestRemoveStickerCollection) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Stickers/RemoveStickerCollection"
             body: "*"

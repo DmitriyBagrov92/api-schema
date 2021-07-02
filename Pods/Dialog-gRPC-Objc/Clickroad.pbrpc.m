@@ -18,14 +18,14 @@
 // Designated initializer
 - (instancetype)initWithHost:(NSString *)host callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [super initWithHost:host
-                 packageName:@"clickroad"
+                 packageName:@"dialog"
                  serviceName:@"ClickRoad"
                  callOptions:callOptions];
 }
 
 - (instancetype)initWithHost:(NSString *)host {
   return [super initWithHost:host
-                 packageName:@"clickroad"
+                 packageName:@"dialog"
                  serviceName:@"ClickRoad"];
 }
 

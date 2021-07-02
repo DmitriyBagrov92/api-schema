@@ -31,7 +31,6 @@ CF_EXTERN_C_BEGIN
 @class Config;
 @class ForceReloadContacts;
 @class ForceReloadDialogs;
-@class ForceReloadField;
 @class ForceReloadHistory;
 @class GPBDoubleValue;
 @class GPBInt64Value;
@@ -51,9 +50,9 @@ typedef GPB_ENUM(PhoneActivationType) {
    * of the field.
    **/
   PhoneActivationType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  PhoneActivationType_PhoneactivationtypeUnknown = 0,
-  PhoneActivationType_PhoneactivationtypeCode = 1,
-  PhoneActivationType_PhoneactivationtypePassword = 2,
+  PhoneActivationType_PhoneActivationTypeUnknown = 0,
+  PhoneActivationType_PhoneActivationTypeCode = 1,
+  PhoneActivationType_PhoneActivationTypePassword = 2,
 };
 
 GPBEnumDescriptor *PhoneActivationType_EnumDescriptor(void);
@@ -73,10 +72,10 @@ typedef GPB_ENUM(EmailActivationType) {
    * of the field.
    **/
   EmailActivationType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  EmailActivationType_EmailactivationtypeUnknown = 0,
-  EmailActivationType_EmailactivationtypeCode = 1,
-  EmailActivationType_EmailactivationtypeOauth2 = 2,
-  EmailActivationType_EmailactivationtypePassword = 3,
+  EmailActivationType_EmailActivationTypeUnknown = 0,
+  EmailActivationType_EmailActivationTypeCode = 1,
+  EmailActivationType_EmailActivationTypeOauth2 = 2,
+  EmailActivationType_EmailActivationTypePassword = 3,
 };
 
 GPBEnumDescriptor *EmailActivationType_EnumDescriptor(void);
@@ -96,8 +95,8 @@ typedef GPB_ENUM(AuthExtraInfoType) {
    * of the field.
    **/
   AuthExtraInfoType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  AuthExtraInfoType_NoneExtraInfo = 0,
-  AuthExtraInfoType_NeedChangePassword = 1,
+  AuthExtraInfoType_AuthExtraInfoTypeNone = 0,
+  AuthExtraInfoType_AuthExtraInfoTypeNeedChangePassword = 1,
 };
 
 GPBEnumDescriptor *AuthExtraInfoType_EnumDescriptor(void);
@@ -118,9 +117,9 @@ typedef GPB_ENUM(AuthHolder) {
    * of the field.
    **/
   AuthHolder_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  AuthHolder_AuthholderUnknown = 0,
-  AuthHolder_AuthholderThisdevice = 1,
-  AuthHolder_AuthholderOtherdevice = 2,
+  AuthHolder_AuthHolderUnknown = 0,
+  AuthHolder_AuthHolderThisdevice = 1,
+  AuthHolder_AuthHolderOtherdevice = 2,
 };
 
 GPBEnumDescriptor *AuthHolder_EnumDescriptor(void);
@@ -150,8 +149,8 @@ GPB_FINAL @interface AuthenticationRoot : GPBRootObject
 
 typedef GPB_ENUM(RequestStartPhoneAuth_FieldNumber) {
   RequestStartPhoneAuth_FieldNumber_PhoneNumber = 1,
-  RequestStartPhoneAuth_FieldNumber_TimeZone = 6,
-  RequestStartPhoneAuth_FieldNumber_PreferredLanguagesArray = 7,
+  RequestStartPhoneAuth_FieldNumber_TimeZone = 2,
+  RequestStartPhoneAuth_FieldNumber_PreferredLanguagesArray = 3,
 };
 
 /**
@@ -186,7 +185,6 @@ GPB_FINAL @interface ResponseStartPhoneAuth : GPBMessage
 /** * Hash of authorization transaction * */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transactionHash;
 
-/** / Deprecated */
 @property(nonatomic, readwrite) BOOL isRegistered;
 
 /** * Code or password - call ValidateCode if code * */
@@ -226,8 +224,8 @@ GPB_FINAL @interface RequestSendCodeByPhoneCall : GPBMessage
 
 typedef GPB_ENUM(RequestStartEmailAuth_FieldNumber) {
   RequestStartEmailAuth_FieldNumber_Email = 1,
-  RequestStartEmailAuth_FieldNumber_TimeZone = 6,
-  RequestStartEmailAuth_FieldNumber_PreferredLanguagesArray = 7,
+  RequestStartEmailAuth_FieldNumber_TimeZone = 2,
+  RequestStartEmailAuth_FieldNumber_PreferredLanguagesArray = 3,
 };
 
 /**
@@ -262,7 +260,6 @@ GPB_FINAL @interface ResponseStartEmailAuth : GPBMessage
 /** * Hash of authorization transaction * */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transactionHash;
 
-/** / Deprecated */
 @property(nonatomic, readwrite) BOOL isRegistered;
 
 /** * Code or password - call ValidateCode if code * */
@@ -282,37 +279,12 @@ int32_t ResponseStartEmailAuth_ActivationType_RawValue(ResponseStartEmailAuth *m
  **/
 void SetResponseStartEmailAuth_ActivationType_RawValue(ResponseStartEmailAuth *message, int32_t value);
 
-#pragma mark - RequestStartAnonymousAuth
-
-typedef GPB_ENUM(RequestStartAnonymousAuth_FieldNumber) {
-  RequestStartAnonymousAuth_FieldNumber_Name = 1,
-  RequestStartAnonymousAuth_FieldNumber_TimeZone = 6,
-  RequestStartAnonymousAuth_FieldNumber_PreferredLanguagesArray = 7,
-};
-
-/**
- * Starting Anonymous login - deprecated
- **/
-GPB_FINAL @interface RequestStartAnonymousAuth : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
-
-@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *timeZone;
-/** Test to see if @c timeZone has been set. */
-@property(nonatomic, readwrite) BOOL hasTimeZone;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *preferredLanguagesArray;
-/** The number of items in @c preferredLanguagesArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger preferredLanguagesArray_Count;
-
-@end
-
 #pragma mark - RequestStartCertificateAuth
 
 typedef GPB_ENUM(RequestStartCertificateAuth_FieldNumber) {
   RequestStartCertificateAuth_FieldNumber_Name = 1,
-  RequestStartCertificateAuth_FieldNumber_TimeZone = 6,
-  RequestStartCertificateAuth_FieldNumber_PreferredLanguagesArray = 7,
+  RequestStartCertificateAuth_FieldNumber_TimeZone = 2,
+  RequestStartCertificateAuth_FieldNumber_PreferredLanguagesArray = 3,
 };
 
 GPB_FINAL @interface RequestStartCertificateAuth : GPBMessage
@@ -333,8 +305,8 @@ GPB_FINAL @interface RequestStartCertificateAuth : GPBMessage
 
 typedef GPB_ENUM(RequestStartTokenAuth_FieldNumber) {
   RequestStartTokenAuth_FieldNumber_Token = 1,
-  RequestStartTokenAuth_FieldNumber_TimeZone = 6,
-  RequestStartTokenAuth_FieldNumber_PreferredLanguagesArray = 7,
+  RequestStartTokenAuth_FieldNumber_TimeZone = 2,
+  RequestStartTokenAuth_FieldNumber_PreferredLanguagesArray = 3,
 };
 
 /**
@@ -361,8 +333,8 @@ GPB_FINAL @interface RequestStartTokenAuth : GPBMessage
 
 typedef GPB_ENUM(RequestStartUsernameAuth_FieldNumber) {
   RequestStartUsernameAuth_FieldNumber_Username = 1,
-  RequestStartUsernameAuth_FieldNumber_TimeZone = 6,
-  RequestStartUsernameAuth_FieldNumber_PreferredLanguagesArray = 7,
+  RequestStartUsernameAuth_FieldNumber_TimeZone = 2,
+  RequestStartUsernameAuth_FieldNumber_PreferredLanguagesArray = 3,
 };
 
 /**
@@ -395,7 +367,6 @@ GPB_FINAL @interface ResponseStartUsernameAuth : GPBMessage
 /** * Hash of authorization transaction * */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transactionHash;
 
-/** / Deprecated */
 @property(nonatomic, readwrite) BOOL isRegistered;
 
 @end
@@ -613,7 +584,6 @@ GPB_FINAL @interface RequestSignUp : GPBMessage
 /** Your name */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
-/** / Use it in case of anonymous authorization (deprecated) */
 @property(nonatomic, readwrite) enum Sex sex;
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *password;
@@ -690,7 +660,7 @@ typedef GPB_ENUM(AuthSession_FieldNumber) {
 GPB_FINAL @interface AuthSession : GPBMessage
 
 /** / Unuque ID of session */
-@property(nonatomic, readwrite) int32_t id_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 /** / holder of session. 1 - this device, 2 - other. */
 @property(nonatomic, readwrite) AuthHolder authHolder;
@@ -698,10 +668,8 @@ GPB_FINAL @interface AuthSession : GPBMessage
 /** / Application Id that you set during authorization */
 @property(nonatomic, readwrite) int32_t appId;
 
-/** / Deprecated */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *appTitle;
 
-/** / Deprecated */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *deviceTitle;
 
 /** / Time of session creating */
@@ -768,7 +736,7 @@ typedef GPB_ENUM(RequestTerminateSession_FieldNumber) {
 GPB_FINAL @interface RequestTerminateSession : GPBMessage
 
 /** / Session id */
-@property(nonatomic, readwrite) int32_t id_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 @end
 
@@ -860,156 +828,6 @@ GPB_FINAL @interface ForceReloadHistory : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
-
-@end
-
-#pragma mark - UpdateForceReloadState
-
-typedef GPB_ENUM(UpdateForceReloadState_FieldNumber) {
-  UpdateForceReloadState_FieldNumber_FieldsArray = 1,
-};
-
-/**
- * This update is sent by the server to force a client to reload its data
- **/
-GPB_FINAL @interface UpdateForceReloadState : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<ForceReloadField*> *fieldsArray;
-/** The number of items in @c fieldsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger fieldsArray_Count;
-
-@end
-
-#pragma mark - RequestSignInObsolete
-
-typedef GPB_ENUM(RequestSignInObsolete_FieldNumber) {
-  RequestSignInObsolete_FieldNumber_PhoneNumber = 1,
-  RequestSignInObsolete_FieldNumber_SmsHash = 2,
-  RequestSignInObsolete_FieldNumber_SmsCode = 3,
-  RequestSignInObsolete_FieldNumber_DeviceHash = 5,
-  RequestSignInObsolete_FieldNumber_DeviceTitle = 6,
-  RequestSignInObsolete_FieldNumber_AppId = 7,
-  RequestSignInObsolete_FieldNumber_AppKey = 8,
-};
-
-/**
- * Performing user signin - deprecated
- **/
-GPB_FINAL @interface RequestSignInObsolete : GPBMessage
-
-@property(nonatomic, readwrite) int64_t phoneNumber;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *smsHash;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *smsCode;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *deviceHash;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *deviceTitle;
-
-@property(nonatomic, readwrite) int32_t appId;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *appKey;
-
-@end
-
-#pragma mark - RequestSignUpObsolete
-
-typedef GPB_ENUM(RequestSignUpObsolete_FieldNumber) {
-  RequestSignUpObsolete_FieldNumber_PhoneNumber = 1,
-  RequestSignUpObsolete_FieldNumber_SmsHash = 2,
-  RequestSignUpObsolete_FieldNumber_SmsCode = 3,
-  RequestSignUpObsolete_FieldNumber_Name = 4,
-  RequestSignUpObsolete_FieldNumber_DeviceHash = 7,
-  RequestSignUpObsolete_FieldNumber_DeviceTitle = 8,
-  RequestSignUpObsolete_FieldNumber_AppId = 9,
-  RequestSignUpObsolete_FieldNumber_AppKey = 10,
-  RequestSignUpObsolete_FieldNumber_IsSilent = 11,
-};
-
-/**
- * Performing user signup. If user perform signup on already registered user it just override previous
- * profile information
- **/
-GPB_FINAL @interface RequestSignUpObsolete : GPBMessage
-
-@property(nonatomic, readwrite) int64_t phoneNumber;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *smsHash;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *smsCode;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSData *deviceHash;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *deviceTitle;
-
-@property(nonatomic, readwrite) int32_t appId;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *appKey;
-
-@property(nonatomic, readwrite) BOOL isSilent;
-
-@end
-
-#pragma mark - RequestSendAuthCodeObsolete
-
-typedef GPB_ENUM(RequestSendAuthCodeObsolete_FieldNumber) {
-  RequestSendAuthCodeObsolete_FieldNumber_PhoneNumber = 1,
-  RequestSendAuthCodeObsolete_FieldNumber_AppId = 2,
-  RequestSendAuthCodeObsolete_FieldNumber_ApiKey = 3,
-};
-
-/**
- * Sending SMS with activation code
- **/
-GPB_FINAL @interface RequestSendAuthCodeObsolete : GPBMessage
-
-@property(nonatomic, readwrite) int64_t phoneNumber;
-
-@property(nonatomic, readwrite) int32_t appId;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *apiKey;
-
-@end
-
-#pragma mark - ResponseSendAuthCodeObsolete
-
-typedef GPB_ENUM(ResponseSendAuthCodeObsolete_FieldNumber) {
-  ResponseSendAuthCodeObsolete_FieldNumber_SmsHash = 1,
-  ResponseSendAuthCodeObsolete_FieldNumber_IsRegistered = 2,
-};
-
-GPB_FINAL @interface ResponseSendAuthCodeObsolete : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *smsHash;
-
-@property(nonatomic, readwrite) BOOL isRegistered;
-
-@end
-
-#pragma mark - RequestSendAuthCallObsolete
-
-typedef GPB_ENUM(RequestSendAuthCallObsolete_FieldNumber) {
-  RequestSendAuthCallObsolete_FieldNumber_PhoneNumber = 1,
-  RequestSendAuthCallObsolete_FieldNumber_SmsHash = 2,
-  RequestSendAuthCallObsolete_FieldNumber_AppId = 3,
-  RequestSendAuthCallObsolete_FieldNumber_ApiKey = 4,
-};
-
-/**
- * Requesting Phone activation
- **/
-GPB_FINAL @interface RequestSendAuthCallObsolete : GPBMessage
-
-@property(nonatomic, readwrite) int64_t phoneNumber;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *smsHash;
-
-@property(nonatomic, readwrite) int32_t appId;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *apiKey;
 
 @end
 

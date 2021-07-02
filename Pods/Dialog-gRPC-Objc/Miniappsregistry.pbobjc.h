@@ -48,10 +48,10 @@ typedef GPB_ENUM(AppType) {
    * of the field.
    **/
   AppType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  AppType_Unknown = 0,
+  AppType_AppTypeUnknown = 0,
 
   /** Url which can be opened inside WebView in dialog app */
-  AppType_WebView = 1,
+  AppType_AppTypeWebView = 1,
 };
 
 GPBEnumDescriptor *AppType_EnumDescriptor(void);
@@ -71,11 +71,11 @@ typedef GPB_ENUM(UpdateMiniApp_AppLifecycle) {
    * of the field.
    **/
   UpdateMiniApp_AppLifecycle_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  UpdateMiniApp_AppLifecycle_ApplifecycleCreated = 0,
-  UpdateMiniApp_AppLifecycle_ApplifecycleUpdated = 1,
-  UpdateMiniApp_AppLifecycle_ApplifecycleEnabled = 2,
-  UpdateMiniApp_AppLifecycle_ApplifecycleDisabled = 3,
-  UpdateMiniApp_AppLifecycle_ApplifecycleDeleted = 4,
+  UpdateMiniApp_AppLifecycle_AppLifecycleCreated = 0,
+  UpdateMiniApp_AppLifecycle_AppLifecycleUpdated = 1,
+  UpdateMiniApp_AppLifecycle_AppLifecycleEnabled = 2,
+  UpdateMiniApp_AppLifecycle_AppLifecycleDisabled = 3,
+  UpdateMiniApp_AppLifecycle_AppLifecycleDeleted = 4,
 };
 
 GPBEnumDescriptor *UpdateMiniApp_AppLifecycle_EnumDescriptor(void);
@@ -111,10 +111,10 @@ typedef GPB_ENUM(MiniApp_FieldNumber) {
   MiniApp_FieldNumber_Version = 5,
   MiniApp_FieldNumber_Icon = 6,
   MiniApp_FieldNumber_Link = 7,
-  MiniApp_FieldNumber_ModifiedAtTs = 10,
-  MiniApp_FieldNumber_IsEnabled = 11,
-  MiniApp_FieldNumber_Locales = 12,
-  MiniApp_FieldNumber_PermissionsArray = 13,
+  MiniApp_FieldNumber_ModifiedAtTs = 8,
+  MiniApp_FieldNumber_IsEnabled = 9,
+  MiniApp_FieldNumber_Locales = 10,
+  MiniApp_FieldNumber_PermissionsArray = 11,
 };
 
 GPB_FINAL @interface MiniApp : GPBMessage

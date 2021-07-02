@@ -7,9 +7,9 @@
 #import <ProtoRPC/ProtoRPCLegacy.h>
 #import <RxLibrary/GRXWriter+Immediate.h>
 
+#import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
-#import "Miscellaneous.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 
 @implementation Push
@@ -59,16 +59,16 @@
 
 #pragma mark - Method Implementations
 
-#pragma mark RegisterGooglePush(RequestRegisterGooglePush) returns (ResponseVoid)
+#pragma mark RegisterGooglePush(RequestRegisterGooglePush) returns (Empty)
 
-- (void)registerGooglePushWithRequest:(RequestRegisterGooglePush *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)registerGooglePushWithRequest:(RequestRegisterGooglePush *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToRegisterGooglePushWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToRegisterGooglePushWithRequest:(RequestRegisterGooglePush *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToRegisterGooglePushWithRequest:(RequestRegisterGooglePush *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"RegisterGooglePush"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)registerGooglePushWithMessage:(RequestRegisterGooglePush *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -76,19 +76,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark UnregisterGooglePush(RequestUnregisterGooglePush) returns (ResponseVoid)
+#pragma mark UnregisterGooglePush(RequestUnregisterGooglePush) returns (Empty)
 
-- (void)unregisterGooglePushWithRequest:(RequestUnregisterGooglePush *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)unregisterGooglePushWithRequest:(RequestUnregisterGooglePush *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToUnregisterGooglePushWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToUnregisterGooglePushWithRequest:(RequestUnregisterGooglePush *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToUnregisterGooglePushWithRequest:(RequestUnregisterGooglePush *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"UnregisterGooglePush"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)unregisterGooglePushWithMessage:(RequestUnregisterGooglePush *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -96,19 +96,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark RegisterApplePush(RequestRegisterApplePush) returns (ResponseVoid)
+#pragma mark RegisterApplePush(RequestRegisterApplePush) returns (Empty)
 
-- (void)registerApplePushWithRequest:(RequestRegisterApplePush *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)registerApplePushWithRequest:(RequestRegisterApplePush *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToRegisterApplePushWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToRegisterApplePushWithRequest:(RequestRegisterApplePush *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToRegisterApplePushWithRequest:(RequestRegisterApplePush *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"RegisterApplePush"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)registerApplePushWithMessage:(RequestRegisterApplePush *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -116,19 +116,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark UnregisterApplePush(RequestUnregisterApplePush) returns (ResponseVoid)
+#pragma mark UnregisterApplePush(RequestUnregisterApplePush) returns (Empty)
 
-- (void)unregisterApplePushWithRequest:(RequestUnregisterApplePush *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)unregisterApplePushWithRequest:(RequestUnregisterApplePush *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToUnregisterApplePushWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToUnregisterApplePushWithRequest:(RequestUnregisterApplePush *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToUnregisterApplePushWithRequest:(RequestUnregisterApplePush *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"UnregisterApplePush"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)unregisterApplePushWithMessage:(RequestUnregisterApplePush *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -136,19 +136,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark RegisterApplePushKit(RequestRegisterApplePushKit) returns (ResponseVoid)
+#pragma mark RegisterApplePushKit(RequestRegisterApplePushKit) returns (Empty)
 
-- (void)registerApplePushKitWithRequest:(RequestRegisterApplePushKit *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)registerApplePushKitWithRequest:(RequestRegisterApplePushKit *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToRegisterApplePushKitWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToRegisterApplePushKitWithRequest:(RequestRegisterApplePushKit *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToRegisterApplePushKitWithRequest:(RequestRegisterApplePushKit *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"RegisterApplePushKit"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)registerApplePushKitWithMessage:(RequestRegisterApplePushKit *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -156,19 +156,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark UnregisterApplePushKit(RequestUnregisterApplePushKit) returns (ResponseVoid)
+#pragma mark UnregisterApplePushKit(RequestUnregisterApplePushKit) returns (Empty)
 
-- (void)unregisterApplePushKitWithRequest:(RequestUnregisterApplePushKit *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)unregisterApplePushKitWithRequest:(RequestUnregisterApplePushKit *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToUnregisterApplePushKitWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToUnregisterApplePushKitWithRequest:(RequestUnregisterApplePushKit *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToUnregisterApplePushKitWithRequest:(RequestUnregisterApplePushKit *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"UnregisterApplePushKit"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)unregisterApplePushKitWithMessage:(RequestUnregisterApplePushKit *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -176,19 +176,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark RegisterApplePushToken(RequestRegisterApplePushToken) returns (ResponseVoid)
+#pragma mark RegisterApplePushToken(RequestRegisterApplePushToken) returns (Empty)
 
-- (void)registerApplePushTokenWithRequest:(RequestRegisterApplePushToken *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)registerApplePushTokenWithRequest:(RequestRegisterApplePushToken *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToRegisterApplePushTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToRegisterApplePushTokenWithRequest:(RequestRegisterApplePushToken *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToRegisterApplePushTokenWithRequest:(RequestRegisterApplePushToken *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"RegisterApplePushToken"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)registerApplePushTokenWithMessage:(RequestRegisterApplePushToken *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -196,19 +196,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark UnregisterApplePushToken(RequestUnregisterApplePushToken) returns (ResponseVoid)
+#pragma mark UnregisterApplePushToken(RequestUnregisterApplePushToken) returns (Empty)
 
-- (void)unregisterApplePushTokenWithRequest:(RequestUnregisterApplePushToken *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)unregisterApplePushTokenWithRequest:(RequestUnregisterApplePushToken *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToUnregisterApplePushTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToUnregisterApplePushTokenWithRequest:(RequestUnregisterApplePushToken *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToUnregisterApplePushTokenWithRequest:(RequestUnregisterApplePushToken *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"UnregisterApplePushToken"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)unregisterApplePushTokenWithMessage:(RequestUnregisterApplePushToken *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -216,19 +216,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark RegisterAvroraPushToken(RequestRegisterAvroraPushToken) returns (ResponseVoid)
+#pragma mark RegisterAvroraPushToken(RequestRegisterAvroraPushToken) returns (Empty)
 
-- (void)registerAvroraPushTokenWithRequest:(RequestRegisterAvroraPushToken *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)registerAvroraPushTokenWithRequest:(RequestRegisterAvroraPushToken *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToRegisterAvroraPushTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToRegisterAvroraPushTokenWithRequest:(RequestRegisterAvroraPushToken *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToRegisterAvroraPushTokenWithRequest:(RequestRegisterAvroraPushToken *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"RegisterAvroraPushToken"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)registerAvroraPushTokenWithMessage:(RequestRegisterAvroraPushToken *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -236,19 +236,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
-#pragma mark UnregisterAvroraPushToken(RequestUnregisterAvroraPushToken) returns (ResponseVoid)
+#pragma mark UnregisterAvroraPushToken(RequestUnregisterAvroraPushToken) returns (Empty)
 
-- (void)unregisterAvroraPushTokenWithRequest:(RequestUnregisterAvroraPushToken *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (void)unregisterAvroraPushTokenWithRequest:(RequestUnregisterAvroraPushToken *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToUnregisterAvroraPushTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToUnregisterAvroraPushTokenWithRequest:(RequestUnregisterAvroraPushToken *)request handler:(void(^)(ResponseVoid *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToUnregisterAvroraPushTokenWithRequest:(RequestUnregisterAvroraPushToken *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"UnregisterAvroraPushToken"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseVoid class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)unregisterAvroraPushTokenWithMessage:(RequestUnregisterAvroraPushToken *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -256,7 +256,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseVoid class]];
+             responseClass:[GPBEmpty class]];
 }
 
 @end

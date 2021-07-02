@@ -8,6 +8,7 @@
 #import <RxLibrary/GRXWriter+Immediate.h>
 
 #import "Wrappers.pbobjc.h"
+#import "Empty.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
 #import "Miscellaneous.pbobjc.h"
@@ -62,16 +63,16 @@
 
 #pragma mark - Method Implementations
 
-#pragma mark EditUserLocalName(RequestEditUserLocalName) returns (ResponseSeq)
+#pragma mark EditUserLocalName(RequestEditUserLocalName) returns (Empty)
 
-- (void)editUserLocalNameWithRequest:(RequestEditUserLocalName *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (void)editUserLocalNameWithRequest:(RequestEditUserLocalName *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToEditUserLocalNameWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToEditUserLocalNameWithRequest:(RequestEditUserLocalName *)request handler:(void(^)(ResponseSeq *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToEditUserLocalNameWithRequest:(RequestEditUserLocalName *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"EditUserLocalName"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseSeq class]
+             responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)editUserLocalNameWithMessage:(RequestEditUserLocalName *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -79,40 +80,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseSeq class]];
-}
-
-#pragma mark LoadFullUsers(RequestLoadFullUsers) returns (ResponseLoadFullUsers)
-
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)loadFullUsersWithRequest:(RequestLoadFullUsers *)request handler:(void(^)(ResponseLoadFullUsers *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToLoadFullUsersWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * / Deprecated
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToLoadFullUsersWithRequest:(RequestLoadFullUsers *)request handler:(void(^)(ResponseLoadFullUsers *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"LoadFullUsers"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseLoadFullUsers class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * / Deprecated
- */
-- (GRPCUnaryProtoCall *)loadFullUsersWithMessage:(RequestLoadFullUsers *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"LoadFullUsers"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseLoadFullUsers class]];
+             responseClass:[GPBEmpty class]];
 }
 
 #pragma mark LoadUserData(RequestLoadUserData) returns (ResponseLoadUserData)

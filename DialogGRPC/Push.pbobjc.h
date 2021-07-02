@@ -56,7 +56,7 @@ typedef GPB_ENUM(RequestRegisterGooglePush_FieldNumber) {
  **/
 GPB_FINAL @interface RequestRegisterGooglePush : GPBMessage
 
-@property(nonatomic, readwrite) int64_t projectId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *projectId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *token;
 
@@ -90,7 +90,7 @@ typedef GPB_ENUM(RequestRegisterApplePush_FieldNumber) {
  **/
 GPB_FINAL @interface RequestRegisterApplePush : GPBMessage
 
-@property(nonatomic, readwrite) int32_t apnsKey;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *apnsKey;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *token;
 
@@ -126,7 +126,7 @@ typedef GPB_ENUM(RequestRegisterApplePushKit_FieldNumber) {
  **/
 GPB_FINAL @interface RequestRegisterApplePushKit : GPBMessage
 
-@property(nonatomic, readwrite) int32_t apnsKey;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *apnsKey;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *token;
 
