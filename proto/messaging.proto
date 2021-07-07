@@ -1105,7 +1105,7 @@ message ResponseMessageReads {
     repeated MessageStatus status = 1;
     int64 timestamp_till = 2 [(dlg).log="visible"]; // max time of returned entries, or requested time if empty
     int64 last_read_date = 3 [(dlg).log="visible"];
-    int32 counter = 4 [(dlg).log="visible"];; 
+    int32 counter = 4 [(dlg).log="visible"]; 
 }
 
 // Response with the list of message statuses receives
