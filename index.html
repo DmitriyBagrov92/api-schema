@@ -3043,6 +3043,49 @@ drawDiagram("title%20%D0%90%D1%83%D1%82%D0%B5%D0%BD%D1%82%D0%B8%D1%84%D0%B8%D0%B
         
           
           <li>
+            <a href="#suggests.proto">suggests.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#dialog.Suggests"><span class="badge">S</span>Suggests</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#dialog.MessageSuggests"><span class="badge">M</span>MessageSuggests</a>
+                </li>
+              
+                <li>
+                  <a href="#dialog.RequestLoadMessageSuggests"><span class="badge">M</span>RequestLoadMessageSuggests</a>
+                </li>
+              
+                <li>
+                  <a href="#dialog.RequestLoadSuggests"><span class="badge">M</span>RequestLoadSuggests</a>
+                </li>
+              
+                <li>
+                  <a href="#dialog.RequestSendSuggestAction"><span class="badge">M</span>RequestSendSuggestAction</a>
+                </li>
+              
+                <li>
+                  <a href="#dialog.ResponseLoadMessageSuggests"><span class="badge">M</span>ResponseLoadMessageSuggests</a>
+                </li>
+              
+                <li>
+                  <a href="#dialog.ResponseLoadSuggests"><span class="badge">M</span>ResponseLoadSuggests</a>
+                </li>
+              
+                <li>
+                  <a href="#dialog.UpdateSuggests"><span class="badge">M</span>UpdateSuggests</a>
+                </li>
+              
+              
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#threads.proto">threads.proto</a>
             <ul>
               
@@ -25206,6 +25249,13 @@ For loading members of big groups by chunks. </p></td>
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>update_suggests</td>
+                  <td><a href="#dialog.UpdateSuggests">UpdateSuggests</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
             </tbody>
           </table>
         
@@ -26947,6 +26997,291 @@ For loading members of big groups by chunks. </p></td>
                 <tr>
                   <td>pack_id</td>
                   <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+
+      
+
+  
+    
+      
+      <div class="file-heading">
+        <h2 id="suggests.proto">suggests.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+    
+
+      
+        <h3 id="dialog.Suggests">Suggests</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>LoadSuggests</td>
+                <td><a href="#dialog.RequestLoadSuggests">RequestLoadSuggests</a></td>
+                <td><a href="#dialog.ResponseLoadSuggests">ResponseLoadSuggests</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>LoadMessageSuggests</td>
+                <td><a href="#dialog.RequestLoadMessageSuggests">RequestLoadMessageSuggests</a></td>
+                <td><a href="#dialog.ResponseLoadMessageSuggests">ResponseLoadMessageSuggests</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>SendSuggestAction</td>
+                <td><a href="#dialog.RequestSendSuggestAction">RequestSendSuggestAction</a></td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+        <h3 id="dialog.MessageSuggests">MessageSuggests</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>message_id</td>
+                  <td><a href="#dialog.UUIDValue">UUIDValue</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>suggests_payload</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="dialog.RequestLoadMessageSuggests">RequestLoadMessageSuggests</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>peer</td>
+                  <td><a href="#dialog.Peer">Peer</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message_ids</td>
+                  <td><a href="#dialog.UUIDValue">UUIDValue</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="dialog.RequestLoadSuggests">RequestLoadSuggests</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>from_clock</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>peer</td>
+                  <td><a href="#dialog.Peer">Peer</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="dialog.RequestSendSuggestAction">RequestSendSuggestAction</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>request_id</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>suggest_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>peer</td>
+                  <td><a href="#dialog.Peer">Peer</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>payload</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="dialog.ResponseLoadMessageSuggests">ResponseLoadMessageSuggests</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>message_suggests</td>
+                  <td><a href="#dialog.MessageSuggests">MessageSuggests</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="dialog.ResponseLoadSuggests">ResponseLoadSuggests</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>clock</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>suggests</td>
+                  <td><a href="#dialog.MessageSuggests">MessageSuggests</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>more_available</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="dialog.UpdateSuggests">UpdateSuggests</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>clock</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>prev_clock</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>peer</td>
+                  <td><a href="#dialog.Peer">Peer</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message_suggests</td>
+                  <td><a href="#dialog.MessageSuggests">MessageSuggests</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>

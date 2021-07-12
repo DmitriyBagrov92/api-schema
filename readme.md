@@ -732,6 +732,17 @@
   
     - [Stickers](#dialog.Stickers)
   
+- [suggests.proto](#suggests.proto)
+    - [MessageSuggests](#dialog.MessageSuggests)
+    - [RequestLoadMessageSuggests](#dialog.RequestLoadMessageSuggests)
+    - [RequestLoadSuggests](#dialog.RequestLoadSuggests)
+    - [RequestSendSuggestAction](#dialog.RequestSendSuggestAction)
+    - [ResponseLoadMessageSuggests](#dialog.ResponseLoadMessageSuggests)
+    - [ResponseLoadSuggests](#dialog.ResponseLoadSuggests)
+    - [UpdateSuggests](#dialog.UpdateSuggests)
+  
+    - [Suggests](#dialog.Suggests)
+  
 - [threads.proto](#threads.proto)
     - [RequestCreateThread](#dialog.RequestCreateThread)
     - [RequestJoinThread](#dialog.RequestJoinThread)
@@ -10864,6 +10875,7 @@ Out of sequence update (for typing and online statuses)
 | update_contacts_added | [UpdateContactsAdded](#dialog.UpdateContactsAdded) |  |  |
 | update_contacts_add_task_suspended | [UpdateContactsAddTaskSuspended](#dialog.UpdateContactsAddTaskSuspended) |  |  |
 | update_contacts_removed | [UpdateContactsRemoved](#dialog.UpdateContactsRemoved) |  |  |
+| update_suggests | [UpdateSuggests](#dialog.UpdateSuggests) |  |  |
 
 
 
@@ -11731,6 +11743,150 @@ Sticker pack removed
 | AddStickerCollection | [RequestAddStickerCollection](#dialog.RequestAddStickerCollection) | [ResponseSeq](#dialog.ResponseSeq) |  |
 | RemoveStickerCollection | [RequestRemoveStickerCollection](#dialog.RequestRemoveStickerCollection) | [ResponseSeq](#dialog.ResponseSeq) |  |
 | LoadStickerCollection | [RequestLoadStickerCollection](#dialog.RequestLoadStickerCollection) | [ResponseLoadStickerCollection](#dialog.ResponseLoadStickerCollection) |  |
+
+ 
+
+
+
+<a name="suggests.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## suggests.proto
+
+
+
+<a name="dialog.MessageSuggests"></a>
+
+### MessageSuggests
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| message_id | [UUIDValue](#dialog.UUIDValue) |  |  |
+| suggests_payload | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="dialog.RequestLoadMessageSuggests"></a>
+
+### RequestLoadMessageSuggests
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| peer | [Peer](#dialog.Peer) |  |  |
+| message_ids | [UUIDValue](#dialog.UUIDValue) | repeated |  |
+
+
+
+
+
+
+<a name="dialog.RequestLoadSuggests"></a>
+
+### RequestLoadSuggests
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| from_clock | [int64](#int64) |  |  |
+| peer | [Peer](#dialog.Peer) |  |  |
+
+
+
+
+
+
+<a name="dialog.RequestSendSuggestAction"></a>
+
+### RequestSendSuggestAction
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| request_id | [int64](#int64) |  |  |
+| suggest_id | [string](#string) |  |  |
+| peer | [Peer](#dialog.Peer) |  |  |
+| payload | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="dialog.ResponseLoadMessageSuggests"></a>
+
+### ResponseLoadMessageSuggests
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| message_suggests | [MessageSuggests](#dialog.MessageSuggests) | repeated |  |
+
+
+
+
+
+
+<a name="dialog.ResponseLoadSuggests"></a>
+
+### ResponseLoadSuggests
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| clock | [int64](#int64) |  |  |
+| suggests | [MessageSuggests](#dialog.MessageSuggests) | repeated |  |
+| more_available | [bool](#bool) |  |  |
+
+
+
+
+
+
+<a name="dialog.UpdateSuggests"></a>
+
+### UpdateSuggests
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| clock | [int64](#int64) |  |  |
+| prev_clock | [int64](#int64) |  |  |
+| peer | [Peer](#dialog.Peer) |  |  |
+| message_suggests | [MessageSuggests](#dialog.MessageSuggests) |  |  |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+
+<a name="dialog.Suggests"></a>
+
+### Suggests
+
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| LoadSuggests | [RequestLoadSuggests](#dialog.RequestLoadSuggests) | [ResponseLoadSuggests](#dialog.ResponseLoadSuggests) |  |
+| LoadMessageSuggests | [RequestLoadMessageSuggests](#dialog.RequestLoadMessageSuggests) | [ResponseLoadMessageSuggests](#dialog.ResponseLoadMessageSuggests) |  |
+| SendSuggestAction | [RequestSendSuggestAction](#dialog.RequestSendSuggestAction) | [.google.protobuf.Empty](#google.protobuf.Empty) |  |
 
  
 
