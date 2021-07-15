@@ -73,11 +73,6 @@
   #include  "google/protobuf/duration.upb.h"
 #endif
 #if COCOAPODS==1
-  #include  "src/core/ext/upb-generated/google/protobuf/struct.upb.h"
-#else
-  #include  "google/protobuf/struct.upb.h"
-#endif
-#if COCOAPODS==1
   #include  "src/core/ext/upb-generated/google/protobuf/wrappers.upb.h"
 #else
   #include  "google/protobuf/wrappers.upb.h"
@@ -551,14 +546,15 @@ static const upb_msglayout *const envoy_config_route_v3_RouteAction_UpgradeConfi
   &envoy_config_core_v3_ProxyProtocolConfig_msginit,
 };
 
-static const upb_msglayout_field envoy_config_route_v3_RouteAction_UpgradeConfig_ConnectConfig__fields[1] = {
+static const upb_msglayout_field envoy_config_route_v3_RouteAction_UpgradeConfig_ConnectConfig__fields[2] = {
   {1, UPB_SIZE(4, 8), 1, 0, 11, 1},
+  {2, UPB_SIZE(1, 1), 0, 0, 8, 1},
 };
 
 const upb_msglayout envoy_config_route_v3_RouteAction_UpgradeConfig_ConnectConfig_msginit = {
   &envoy_config_route_v3_RouteAction_UpgradeConfig_ConnectConfig_submsgs[0],
   &envoy_config_route_v3_RouteAction_UpgradeConfig_ConnectConfig__fields[0],
-  UPB_SIZE(8, 16), 1, false, 255,
+  UPB_SIZE(8, 16), 2, false, 255,
 };
 
 static const upb_msglayout *const envoy_config_route_v3_RouteAction_MaxStreamDuration_submsgs[1] = {
@@ -696,7 +692,11 @@ const upb_msglayout envoy_config_route_v3_HedgePolicy_msginit = {
   UPB_SIZE(16, 24), 3, false, 255,
 };
 
-static const upb_msglayout_field envoy_config_route_v3_RedirectAction__fields[8] = {
+static const upb_msglayout *const envoy_config_route_v3_RedirectAction_submsgs[1] = {
+  &envoy_type_matcher_v3_RegexMatchAndSubstitute_msginit,
+};
+
+static const upb_msglayout_field envoy_config_route_v3_RedirectAction__fields[9] = {
   {1, UPB_SIZE(12, 16), 0, 0, 9, 1},
   {2, UPB_SIZE(20, 32), UPB_SIZE(-29, -49), 0, 9, 1},
   {3, UPB_SIZE(0, 0), 0, 0, 14, 1},
@@ -705,12 +705,13 @@ static const upb_msglayout_field envoy_config_route_v3_RedirectAction__fields[8]
   {6, UPB_SIZE(8, 8), 0, 0, 8, 1},
   {7, UPB_SIZE(32, 56), UPB_SIZE(-41, -73), 0, 9, 1},
   {8, UPB_SIZE(4, 4), 0, 0, 13, 1},
+  {9, UPB_SIZE(20, 32), UPB_SIZE(-29, -49), 0, 11, 1},
 };
 
 const upb_msglayout envoy_config_route_v3_RedirectAction_msginit = {
-  NULL,
+  &envoy_config_route_v3_RedirectAction_submsgs[0],
   &envoy_config_route_v3_RedirectAction__fields[0],
-  UPB_SIZE(48, 80), 8, false, 255,
+  UPB_SIZE(48, 80), 9, false, 255,
 };
 
 static const upb_msglayout *const envoy_config_route_v3_DirectResponseAction_submsgs[1] = {
@@ -795,30 +796,34 @@ const upb_msglayout envoy_config_route_v3_RateLimit_msginit = {
   UPB_SIZE(24, 48), 4, false, 255,
 };
 
-static const upb_msglayout *const envoy_config_route_v3_RateLimit_Action_submsgs[7] = {
+static const upb_msglayout *const envoy_config_route_v3_RateLimit_Action_submsgs[9] = {
+  &envoy_config_core_v3_TypedExtensionConfig_msginit,
   &envoy_config_route_v3_RateLimit_Action_DestinationCluster_msginit,
   &envoy_config_route_v3_RateLimit_Action_DynamicMetaData_msginit,
   &envoy_config_route_v3_RateLimit_Action_GenericKey_msginit,
   &envoy_config_route_v3_RateLimit_Action_HeaderValueMatch_msginit,
+  &envoy_config_route_v3_RateLimit_Action_MetaData_msginit,
   &envoy_config_route_v3_RateLimit_Action_RemoteAddress_msginit,
   &envoy_config_route_v3_RateLimit_Action_RequestHeaders_msginit,
   &envoy_config_route_v3_RateLimit_Action_SourceCluster_msginit,
 };
 
-static const upb_msglayout_field envoy_config_route_v3_RateLimit_Action__fields[7] = {
-  {1, UPB_SIZE(0, 0), UPB_SIZE(-5, -9), 6, 11, 1},
-  {2, UPB_SIZE(0, 0), UPB_SIZE(-5, -9), 0, 11, 1},
-  {3, UPB_SIZE(0, 0), UPB_SIZE(-5, -9), 5, 11, 1},
-  {4, UPB_SIZE(0, 0), UPB_SIZE(-5, -9), 4, 11, 1},
-  {5, UPB_SIZE(0, 0), UPB_SIZE(-5, -9), 2, 11, 1},
-  {6, UPB_SIZE(0, 0), UPB_SIZE(-5, -9), 3, 11, 1},
-  {7, UPB_SIZE(0, 0), UPB_SIZE(-5, -9), 1, 11, 1},
+static const upb_msglayout_field envoy_config_route_v3_RateLimit_Action__fields[9] = {
+  {1, UPB_SIZE(0, 0), UPB_SIZE(-5, -9), 8, 11, 1},
+  {2, UPB_SIZE(0, 0), UPB_SIZE(-5, -9), 1, 11, 1},
+  {3, UPB_SIZE(0, 0), UPB_SIZE(-5, -9), 7, 11, 1},
+  {4, UPB_SIZE(0, 0), UPB_SIZE(-5, -9), 6, 11, 1},
+  {5, UPB_SIZE(0, 0), UPB_SIZE(-5, -9), 3, 11, 1},
+  {6, UPB_SIZE(0, 0), UPB_SIZE(-5, -9), 4, 11, 1},
+  {7, UPB_SIZE(0, 0), UPB_SIZE(-5, -9), 2, 11, 1},
+  {8, UPB_SIZE(0, 0), UPB_SIZE(-5, -9), 5, 11, 1},
+  {9, UPB_SIZE(0, 0), UPB_SIZE(-5, -9), 0, 11, 1},
 };
 
 const upb_msglayout envoy_config_route_v3_RateLimit_Action_msginit = {
   &envoy_config_route_v3_RateLimit_Action_submsgs[0],
   &envoy_config_route_v3_RateLimit_Action__fields[0],
-  UPB_SIZE(8, 16), 7, false, 255,
+  UPB_SIZE(8, 16), 9, false, 255,
 };
 
 const upb_msglayout envoy_config_route_v3_RateLimit_Action_SourceCluster_msginit = {
@@ -893,6 +898,23 @@ const upb_msglayout envoy_config_route_v3_RateLimit_Action_DynamicMetaData_msgin
   &envoy_config_route_v3_RateLimit_Action_DynamicMetaData_submsgs[0],
   &envoy_config_route_v3_RateLimit_Action_DynamicMetaData__fields[0],
   UPB_SIZE(24, 48), 3, false, 255,
+};
+
+static const upb_msglayout *const envoy_config_route_v3_RateLimit_Action_MetaData_submsgs[1] = {
+  &envoy_type_metadata_v3_MetadataKey_msginit,
+};
+
+static const upb_msglayout_field envoy_config_route_v3_RateLimit_Action_MetaData__fields[4] = {
+  {1, UPB_SIZE(8, 8), 0, 0, 9, 1},
+  {2, UPB_SIZE(24, 40), 1, 0, 11, 1},
+  {3, UPB_SIZE(16, 24), 0, 0, 9, 1},
+  {4, UPB_SIZE(4, 4), 0, 0, 14, 1},
+};
+
+const upb_msglayout envoy_config_route_v3_RateLimit_Action_MetaData_msginit = {
+  &envoy_config_route_v3_RateLimit_Action_MetaData_submsgs[0],
+  &envoy_config_route_v3_RateLimit_Action_MetaData__fields[0],
+  UPB_SIZE(32, 48), 4, false, 255,
 };
 
 static const upb_msglayout *const envoy_config_route_v3_RateLimit_Override_submsgs[1] = {
@@ -978,6 +1000,21 @@ const upb_msglayout envoy_config_route_v3_InternalRedirectPolicy_msginit = {
   &envoy_config_route_v3_InternalRedirectPolicy_submsgs[0],
   &envoy_config_route_v3_InternalRedirectPolicy__fields[0],
   UPB_SIZE(16, 32), 4, false, 255,
+};
+
+static const upb_msglayout *const envoy_config_route_v3_FilterConfig_submsgs[1] = {
+  &google_protobuf_Any_msginit,
+};
+
+static const upb_msglayout_field envoy_config_route_v3_FilterConfig__fields[2] = {
+  {1, UPB_SIZE(4, 8), 1, 0, 11, 1},
+  {2, UPB_SIZE(1, 1), 0, 0, 8, 1},
+};
+
+const upb_msglayout envoy_config_route_v3_FilterConfig_msginit = {
+  &envoy_config_route_v3_FilterConfig_submsgs[0],
+  &envoy_config_route_v3_FilterConfig__fields[0],
+  UPB_SIZE(8, 16), 2, false, 255,
 };
 
 #if COCOAPODS==1

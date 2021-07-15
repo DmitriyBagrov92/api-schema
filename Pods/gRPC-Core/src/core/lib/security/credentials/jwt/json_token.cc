@@ -33,8 +33,6 @@
 #include "src/core/lib/security/util/json_util.h"
 #include "src/core/lib/slice/b64.h"
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wmodule-import-in-extern-c"
 extern "C" {
 #if COCOAPODS==1
   #include <openssl_grpc/bio.h>
@@ -52,7 +50,6 @@ extern "C" {
   #include <openssl/pem.h>
 #endif
 }
-#pragma clang diagnostic pop
 
 using grpc_core::Json;
 

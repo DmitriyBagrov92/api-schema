@@ -33,9 +33,9 @@
   #include  "google/protobuf/wrappers.upb.h"
 #endif
 #if COCOAPODS==1
-  #include  "src/core/ext/upb-generated/udpa/core/v1/authority.upb.h"
+  #include  "src/core/ext/upb-generated/xds/core/v3/authority.upb.h"
 #else
-  #include  "udpa/core/v1/authority.upb.h"
+  #include  "xds/core/v3/authority.upb.h"
 #endif
 #if COCOAPODS==1
   #include  "src/core/ext/upb-generated/envoy/annotations/deprecation.upb.h"
@@ -124,7 +124,7 @@ static const upb_msglayout *const envoy_config_core_v3_ConfigSource_submsgs[5] =
   &envoy_config_core_v3_ApiConfigSource_msginit,
   &envoy_config_core_v3_SelfConfigSource_msginit,
   &google_protobuf_Duration_msginit,
-  &udpa_core_v1_Authority_msginit,
+  &xds_core_v3_Authority_msginit,
 };
 
 static const upb_msglayout_field envoy_config_core_v3_ConfigSource__fields[7] = {

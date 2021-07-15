@@ -25,8 +25,6 @@
 #include "absl/strings/string_view.h"
 #include "src/core/tsi/transport_security_interface.h"
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wmodule-import-in-extern-c"
 extern "C" {
 #if COCOAPODS==1
   #include <openssl_grpc/x509.h>
@@ -34,7 +32,6 @@ extern "C" {
   #include <openssl/x509.h>
 #endif
 }
-#pragma clang diagnostic pop
 
 /* Value for the TSI_CERTIFICATE_TYPE_PEER_PROPERTY property for X509 certs. */
 #define TSI_X509_CERTIFICATE_TYPE "X509"

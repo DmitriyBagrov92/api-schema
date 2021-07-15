@@ -43,11 +43,6 @@
   #include  "google/protobuf/any.upb.h"
 #endif
 #if COCOAPODS==1
-  #include  "src/core/ext/upb-generated/google/protobuf/struct.upb.h"
-#else
-  #include  "google/protobuf/struct.upb.h"
-#endif
-#if COCOAPODS==1
   #include  "src/core/ext/upb-generated/google/protobuf/wrappers.upb.h"
 #else
   #include  "google/protobuf/wrappers.upb.h"

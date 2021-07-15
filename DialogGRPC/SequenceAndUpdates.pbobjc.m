@@ -38,6 +38,7 @@
 #import "Events.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 #import "Miniappsregistry.pbobjc.h"
+#import "Suggests.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -132,6 +133,7 @@ GPBObjCClassDeclaration(UpdateSpaceModified);
 GPBObjCClassDeclaration(UpdateStickerCollectionsChanged);
 GPBObjCClassDeclaration(UpdateStickerPackAdded);
 GPBObjCClassDeclaration(UpdateStickerPackRemoved);
+GPBObjCClassDeclaration(UpdateSuggests);
 GPBObjCClassDeclaration(UpdateThreadCreated);
 GPBObjCClassDeclaration(UpdateThreadLifted);
 GPBObjCClassDeclaration(UpdateTyping);
@@ -3191,6 +3193,7 @@ void SetWeakUpdateCommand_ChangeMyTyping_Type_RawValue(WeakUpdateCommand_ChangeM
 @dynamic updateContactsAdded;
 @dynamic updateContactsAddTaskSuspended;
 @dynamic updateContactsRemoved;
+@dynamic updateSuggests;
 
 typedef struct WeakUpdateBox__storage_ {
   uint32_t _has_storage_[2];
@@ -3215,6 +3218,7 @@ typedef struct WeakUpdateBox__storage_ {
   UpdateContactsAdded *updateContactsAdded;
   UpdateContactsAddTaskSuspended *updateContactsAddTaskSuspended;
   UpdateContactsRemoved *updateContactsRemoved;
+  UpdateSuggests *updateSuggests;
 } WeakUpdateBox__storage_;
 
 // This method is threadsafe because it is initially called
@@ -3409,6 +3413,15 @@ typedef struct WeakUpdateBox__storage_ {
         .number = WeakUpdateBox_FieldNumber_UpdateContactsRemoved,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, updateContactsRemoved),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateSuggests",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateSuggests),
+        .number = WeakUpdateBox_FieldNumber_UpdateSuggests,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(WeakUpdateBox__storage_, updateSuggests),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
