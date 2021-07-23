@@ -24,7 +24,7 @@ message MessageAttributes {
     google.protobuf.BoolValue is_notified = 3 [(dlg).log="visible"];
     /// If this message is only for you. Default is false
     google.protobuf.BoolValue is_only_for_you = 4 [(dlg).log="visible"];
-    map<string, string> unclassified = 5 [(dlg).log="visible"]; 
+    map<string, string> unclassified = 5 [(dlg).log="visible"];
 }
 
 // Message media
@@ -1080,7 +1080,7 @@ message ResponseGetUpdatedMessages {
 // The model describing when a user received or read a message
 message MessageStatus {
     int64 clock = 1 [(dlg).log="visible"]; // time when message was read or received
-    int32 user_id = 2 [(dlg).log="visible"];
+    string user_id = 2 [(dlg).log="visible"];
 }
 
 // Load message statuses for every user in conversation reads
@@ -1105,7 +1105,7 @@ message ResponseMessageReads {
     repeated MessageStatus status = 1;
     int64 timestamp_till = 2 [(dlg).log="visible"]; // max time of returned entries, or requested time if empty
     int64 last_read_date = 3 [(dlg).log="visible"];
-    int32 counter = 4 [(dlg).log="visible"]; 
+    int32 counter = 4 [(dlg).log="visible"];
 }
 
 // Response with the list of message statuses receives
