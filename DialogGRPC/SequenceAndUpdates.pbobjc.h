@@ -91,6 +91,7 @@ CF_EXTERN_C_BEGIN
 @class UpdateStickerCollectionsChanged;
 @class UpdateStickerPackAdded;
 @class UpdateStickerPackRemoved;
+@class UpdateSuggests;
 @class UpdateThreadCreated;
 @class UpdateThreadLifted;
 @class UpdateTyping;
@@ -873,6 +874,7 @@ typedef GPB_ENUM(WeakUpdate_FieldNumber) {
   WeakUpdate_FieldNumber_UpdateContactsAdded = 19,
   WeakUpdate_FieldNumber_UpdateContactsAddTaskSuspended = 20,
   WeakUpdate_FieldNumber_UpdateContactsRemoved = 21,
+  WeakUpdate_FieldNumber_UpdateSuggests = 22,
 };
 
 typedef GPB_ENUM(WeakUpdate_Updatebox_OneOfCase) {
@@ -897,6 +899,7 @@ typedef GPB_ENUM(WeakUpdate_Updatebox_OneOfCase) {
   WeakUpdate_Updatebox_OneOfCase_UpdateContactsAdded = 19,
   WeakUpdate_Updatebox_OneOfCase_UpdateContactsAddTaskSuspended = 20,
   WeakUpdate_Updatebox_OneOfCase_UpdateContactsRemoved = 21,
+  WeakUpdate_Updatebox_OneOfCase_UpdateSuggests = 22,
 };
 
 GPB_FINAL @interface WeakUpdate : GPBMessage
@@ -942,6 +945,8 @@ GPB_FINAL @interface WeakUpdate : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UpdateContactsAddTaskSuspended *updateContactsAddTaskSuspended;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateContactsRemoved *updateContactsRemoved;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateSuggests *updateSuggests;
 
 @end
 

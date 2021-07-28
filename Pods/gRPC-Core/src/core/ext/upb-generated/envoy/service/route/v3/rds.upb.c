@@ -28,11 +28,6 @@
   #include  "google/api/annotations.upb.h"
 #endif
 #if COCOAPODS==1
-  #include  "src/core/ext/upb-generated/google/protobuf/wrappers.upb.h"
-#else
-  #include  "google/protobuf/wrappers.upb.h"
-#endif
-#if COCOAPODS==1
   #include  "src/core/ext/upb-generated/envoy/annotations/resource.upb.h"
 #else
   #include  "envoy/annotations/resource.upb.h"
@@ -46,11 +41,6 @@
   #include  "src/core/ext/upb-generated/udpa/annotations/versioning.upb.h"
 #else
   #include  "udpa/annotations/versioning.upb.h"
-#endif
-#if COCOAPODS==1
-  #include  "src/core/ext/upb-generated/validate/validate.upb.h"
-#else
-  #include  "validate/validate.upb.h"
 #endif
 
 #if COCOAPODS==1

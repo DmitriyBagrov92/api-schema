@@ -34,6 +34,7 @@ import "permissions.proto";
 import "events.proto";
 import "scalapb.proto";
 import "miniappsregistry.proto";
+import "suggests.proto";
 
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
@@ -265,6 +266,7 @@ message WeakUpdate {
         UpdateContactsAdded update_contacts_added                         = 19;
         UpdateContactsAddTaskSuspended update_contacts_add_task_suspended = 20;
         UpdateContactsRemoved update_contacts_removed                     = 21;
+        UpdateSuggests update_suggests                                    = 22;
     }
 }
 

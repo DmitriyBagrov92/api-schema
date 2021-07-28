@@ -8969,7 +8969,7 @@ typedef struct ResponseGetUpdatedMessages_UpdatedMessage__storage_ {
 
 typedef struct MessageStatus__storage_ {
   uint32_t _has_storage_[1];
-  int32_t userId;
+  NSString *userId;
   int64_t clock;
 } MessageStatus__storage_;
 
@@ -8995,7 +8995,7 @@ typedef struct MessageStatus__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(MessageStatus__storage_, userId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

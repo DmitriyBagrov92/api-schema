@@ -42,11 +42,6 @@
 #else
   #include  "udpa/annotations/versioning.upb.h"
 #endif
-#if COCOAPODS==1
-  #include  "src/core/ext/upb-generated/validate/validate.upb.h"
-#else
-  #include  "validate/validate.upb.h"
-#endif
 
 #if COCOAPODS==1
   #include  "third_party/upb/upb/port_def.inc"

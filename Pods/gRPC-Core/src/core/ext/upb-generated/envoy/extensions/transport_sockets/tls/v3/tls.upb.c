@@ -33,11 +33,6 @@
   #include  "envoy/extensions/transport_sockets/tls/v3/secret.upb.h"
 #endif
 #if COCOAPODS==1
-  #include  "src/core/ext/upb-generated/google/protobuf/any.upb.h"
-#else
-  #include  "google/protobuf/any.upb.h"
-#endif
-#if COCOAPODS==1
   #include  "src/core/ext/upb-generated/google/protobuf/duration.upb.h"
 #else
   #include  "google/protobuf/duration.upb.h"

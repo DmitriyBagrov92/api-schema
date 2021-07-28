@@ -66,6 +66,8 @@
 #import <DialogGRPC/Stickers.pbrpc.h>
 #import <DialogGRPC/Threads.pbrpc.h>
 #import <DialogGRPC/Users.pbrpc.h>
+#import <DialogGRPC/Suggests.pbobjc.h>
+#import <DialogGRPC/Suggests.pbrpc.h>
 
 //! Project version number for DialogGRPC.
 FOUNDATION_EXPORT double DialogGRPCVersionNumber;

@@ -28,11 +28,6 @@
   #include  "envoy/type/v3/percent.upb.h"
 #endif
 #if COCOAPODS==1
-  #include  "src/core/ext/upb-generated/google/api/annotations.upb.h"
-#else
-  #include  "google/api/annotations.upb.h"
-#endif
-#if COCOAPODS==1
   #include  "src/core/ext/upb-generated/google/protobuf/duration.upb.h"
 #else
   #include  "google/protobuf/duration.upb.h"

@@ -3560,7 +3560,7 @@ GPB_FINAL @interface MessageStatus : GPBMessage
 /** time when message was read or received */
 @property(nonatomic, readwrite) int64_t clock;
 
-@property(nonatomic, readwrite) int32_t userId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @end
 
