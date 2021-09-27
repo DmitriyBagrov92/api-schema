@@ -378,6 +378,11 @@
       "default": null,
       "description": "if installed, value from custom profile with the key will be displayed in search user cell"
     },
+    "search.messages.isEnabled": {
+      "type": "boolean",
+      "title": "Activates message search",
+      "default": false
+    },
     "notifications.android.isEnable": {
       "type": "boolean",
       "title": "Toggle switch to enable / disable the display of push notifications",
