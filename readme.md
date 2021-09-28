@@ -11813,6 +11813,7 @@ Sticker pack removed
 | ----- | ---- | ----- | ----------- |
 | request_id | [int64](#int64) |  |  |
 | suggest_id | [string](#string) |  |  |
+| message_id | [UUIDValue](#dialog.UUIDValue) |  |  |
 | peer | [Peer](#dialog.Peer) |  |  |
 | payload | [string](#string) |  |  |
 
