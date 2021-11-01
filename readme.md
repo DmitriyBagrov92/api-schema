@@ -9,11 +9,9 @@
     - [ForceReloadDialogs](#dialog.ForceReloadDialogs)
     - [ForceReloadField](#dialog.ForceReloadField)
     - [ForceReloadHistory](#dialog.ForceReloadHistory)
-    - [RequestApplyExternalSessionAuth](#dialog.RequestApplyExternalSessionAuth)
     - [RequestChangePassword](#dialog.RequestChangePassword)
     - [RequestCompleteOAuth2](#dialog.RequestCompleteOAuth2)
     - [RequestGetAuthSessions](#dialog.RequestGetAuthSessions)
-    - [RequestGetIdToken](#dialog.RequestGetIdToken)
     - [RequestGetOAuth2Params](#dialog.RequestGetOAuth2Params)
     - [RequestResendCode](#dialog.RequestResendCode)
     - [RequestSendAuthCallObsolete](#dialog.RequestSendAuthCallObsolete)
@@ -25,7 +23,6 @@
     - [RequestSignUpObsolete](#dialog.RequestSignUpObsolete)
     - [RequestStartAnonymousAuth](#dialog.RequestStartAnonymousAuth)
     - [RequestStartAuthTransaction](#dialog.RequestStartAuthTransaction)
-    - [RequestStartCertificateAuth](#dialog.RequestStartCertificateAuth)
     - [RequestStartEmailAuth](#dialog.RequestStartEmailAuth)
     - [RequestStartPhoneAuth](#dialog.RequestStartPhoneAuth)
     - [RequestStartTokenAuth](#dialog.RequestStartTokenAuth)
@@ -36,7 +33,6 @@
     - [RequestValidatePassword](#dialog.RequestValidatePassword)
     - [ResponseAuth](#dialog.ResponseAuth)
     - [ResponseGetAuthSessions](#dialog.ResponseGetAuthSessions)
-    - [ResponseGetIdToken](#dialog.ResponseGetIdToken)
     - [ResponseGetOAuth2Params](#dialog.ResponseGetOAuth2Params)
     - [ResponseGetSelf](#dialog.ResponseGetSelf)
     - [ResponseSendAuthCodeObsolete](#dialog.ResponseSendAuthCodeObsolete)
@@ -85,7 +81,6 @@
     - [PhoneToImport](#dialog.PhoneToImport)
     - [RequestAddContact](#dialog.RequestAddContact)
     - [RequestDeferredImportContacts](#dialog.RequestDeferredImportContacts)
-    - [RequestDeferredImportContacts.PhoneContact](#dialog.RequestDeferredImportContacts.PhoneContact)
     - [RequestGetContacts](#dialog.RequestGetContacts)
     - [RequestImportContacts](#dialog.RequestImportContacts)
     - [RequestRemoveContact](#dialog.RequestRemoveContact)
@@ -98,7 +93,6 @@
     - [UpdateContactsAddTaskSuspended](#dialog.UpdateContactsAddTaskSuspended)
     - [UpdateContactsAdded](#dialog.UpdateContactsAdded)
     - [UpdateContactsRemoved](#dialog.UpdateContactsRemoved)
-    - [UserPhoneHashContact](#dialog.UserPhoneHashContact)
   
     - [Contacts](#dialog.Contacts)
   
@@ -278,7 +272,6 @@
     - [DocumentMessage](#dialog.DocumentMessage)
     - [EmptyMessage](#dialog.EmptyMessage)
     - [HistoryMessage](#dialog.HistoryMessage)
-    - [HistoryMessageLight](#dialog.HistoryMessageLight)
     - [ImageMedia](#dialog.ImageMedia)
     - [InteractiveMedia](#dialog.InteractiveMedia)
     - [InteractiveMediaButton](#dialog.InteractiveMediaButton)
@@ -302,7 +295,6 @@
     - [ReferencedMessages](#dialog.ReferencedMessages)
     - [RequestArchiveChat](#dialog.RequestArchiveChat)
     - [RequestClearChat](#dialog.RequestClearChat)
-    - [RequestCountForeignMessages](#dialog.RequestCountForeignMessages)
     - [RequestDeleteChat](#dialog.RequestDeleteChat)
     - [RequestDeleteMessage](#dialog.RequestDeleteMessage)
     - [RequestDeleteMessageObsolete](#dialog.RequestDeleteMessageObsolete)
@@ -318,7 +310,6 @@
     - [RequestLoadDialogs](#dialog.RequestLoadDialogs)
     - [RequestLoadGroupedDialogs](#dialog.RequestLoadGroupedDialogs)
     - [RequestLoadHistory](#dialog.RequestLoadHistory)
-    - [RequestLoadHistoryLight](#dialog.RequestLoadHistoryLight)
     - [RequestMessageRead](#dialog.RequestMessageRead)
     - [RequestMessageReads](#dialog.RequestMessageReads)
     - [RequestMessageReceived](#dialog.RequestMessageReceived)
@@ -333,7 +324,6 @@
     - [RequestUnfavouriteDialog](#dialog.RequestUnfavouriteDialog)
     - [RequestUnpinMessage](#dialog.RequestUnpinMessage)
     - [RequestUpdateMessage](#dialog.RequestUpdateMessage)
-    - [ResponseCountForeignMessages](#dialog.ResponseCountForeignMessages)
     - [ResponseDialogListDifference](#dialog.ResponseDialogListDifference)
     - [ResponseDialogsOrder](#dialog.ResponseDialogsOrder)
     - [ResponseFetchDialogIndex](#dialog.ResponseFetchDialogIndex)
@@ -346,7 +336,6 @@
     - [ResponseLoadDialogs](#dialog.ResponseLoadDialogs)
     - [ResponseLoadGroupedDialogs](#dialog.ResponseLoadGroupedDialogs)
     - [ResponseLoadHistory](#dialog.ResponseLoadHistory)
-    - [ResponseLoadHistoryLight](#dialog.ResponseLoadHistoryLight)
     - [ResponseMessageReads](#dialog.ResponseMessageReads)
     - [ResponseMessageReceives](#dialog.ResponseMessageReceives)
     - [ResponseReactionsResponse](#dialog.ResponseReactionsResponse)
@@ -360,7 +349,6 @@
     - [ServiceExChangedTopic](#dialog.ServiceExChangedTopic)
     - [ServiceExChatArchived](#dialog.ServiceExChatArchived)
     - [ServiceExChatRestored](#dialog.ServiceExChatRestored)
-    - [ServiceExConferenceStatus](#dialog.ServiceExConferenceStatus)
     - [ServiceExContactRegistered](#dialog.ServiceExContactRegistered)
     - [ServiceExGroupCreated](#dialog.ServiceExGroupCreated)
     - [ServiceExPhoneCall](#dialog.ServiceExPhoneCall)
@@ -411,20 +399,12 @@
   
 - [miniappsregistry.proto](#miniappsregistry.proto)
     - [AccessTokenResponse](#dialog.AccessTokenResponse)
-    - [ExtensionPoint](#dialog.ExtensionPoint)
     - [FindAppRequest](#dialog.FindAppRequest)
     - [FindAppResponse](#dialog.FindAppResponse)
     - [GetAppsRequest](#dialog.GetAppsRequest)
     - [GetAppsResponse](#dialog.GetAppsResponse)
-    - [GetExtensionsResponse](#dialog.GetExtensionsResponse)
-    - [GroupConditions](#dialog.GroupConditions)
-    - [GroupConditions.GroupCondition](#dialog.GroupConditions.GroupCondition)
     - [IssueAccessTokenRequest](#dialog.IssueAccessTokenRequest)
-    - [MessageConditions](#dialog.MessageConditions)
-    - [MessageConditions.MessageCondition](#dialog.MessageConditions.MessageCondition)
-    - [MessageConditions.MessageCondition.DocumentCondition](#dialog.MessageConditions.MessageCondition.DocumentCondition)
     - [MiniApp](#dialog.MiniApp)
-    - [MiniApp.LocalesEntry](#dialog.MiniApp.LocalesEntry)
     - [UpdateMiniApp](#dialog.UpdateMiniApp)
   
     - [AppType](#dialog.AppType)
@@ -579,8 +559,6 @@
     - [RawAPI](#dialog.RawAPI)
   
 - [reactions.proto](#reactions.proto)
-    - [GetMessageReactionsRequest](#dialog.reactions.GetMessageReactionsRequest)
-    - [GetMessageReactionsResponse](#dialog.reactions.GetMessageReactionsResponse)
     - [GetReactionsRequest](#dialog.reactions.GetReactionsRequest)
     - [GetReactionsResponse](#dialog.reactions.GetReactionsResponse)
     - [MessageReactions](#dialog.reactions.MessageReactions)
@@ -600,6 +578,22 @@
     - [AuthorizationMethod](#dialog.AuthorizationMethod)
   
     - [Registration](#dialog.Registration)
+  
+- [rpc_error_details.proto](#rpc_error_details.proto)
+    - [BadRequest](#dialog.BadRequest)
+    - [BadRequest.FieldViolation](#dialog.BadRequest.FieldViolation)
+    - [ErrorInfo](#dialog.ErrorInfo)
+    - [ErrorInfo.MetadataEntry](#dialog.ErrorInfo.MetadataEntry)
+    - [Help](#dialog.Help)
+    - [Help.Link](#dialog.Help.Link)
+    - [LocalizedMessage](#dialog.LocalizedMessage)
+    - [PreconditionFailure](#dialog.PreconditionFailure)
+    - [PreconditionFailure.Violation](#dialog.PreconditionFailure.Violation)
+    - [QuotaFailure](#dialog.QuotaFailure)
+    - [QuotaFailure.Violation](#dialog.QuotaFailure.Violation)
+    - [RequestInfo](#dialog.RequestInfo)
+    - [ResourceInfo](#dialog.ResourceInfo)
+    - [Status](#dialog.Status)
   
 - [search.proto](#search.proto)
     - [MessageSearchItem](#dialog.MessageSearchItem)
@@ -731,17 +725,6 @@
     - [UpdateStickerPackRemoved](#dialog.UpdateStickerPackRemoved)
   
     - [Stickers](#dialog.Stickers)
-  
-- [suggests.proto](#suggests.proto)
-    - [MessageSuggests](#dialog.MessageSuggests)
-    - [RequestLoadMessageSuggests](#dialog.RequestLoadMessageSuggests)
-    - [RequestLoadSuggests](#dialog.RequestLoadSuggests)
-    - [RequestSendSuggestAction](#dialog.RequestSendSuggestAction)
-    - [ResponseLoadMessageSuggests](#dialog.ResponseLoadMessageSuggests)
-    - [ResponseLoadSuggests](#dialog.ResponseLoadSuggests)
-    - [UpdateSuggests](#dialog.UpdateSuggests)
-  
-    - [Suggests](#dialog.Suggests)
   
 - [threads.proto](#threads.proto)
     - [RequestCreateThread](#dialog.RequestCreateThread)
@@ -934,21 +917,6 @@ peer the peer whose history should be reloaded
 
 
 
-<a name="dialog.RequestApplyExternalSessionAuth"></a>
-
-### RequestApplyExternalSessionAuth
-Apply external session to authorize user
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| session_id | [string](#string) |  |  |
-
-
-
-
-
-
 <a name="dialog.RequestChangePassword"></a>
 
 ### RequestChangePassword
@@ -968,7 +936,7 @@ Apply external session to authorize user
 <a name="dialog.RequestCompleteOAuth2"></a>
 
 ### RequestCompleteOAuth2
-Complete OAuth2 Authentication
+Complete OAuth2 Authentication - deprecated
 
 
 | Field | Type | Label | Description |
@@ -991,25 +959,10 @@ Getting of all active user&#39;s authentication sessions
 
 
 
-<a name="dialog.RequestGetIdToken"></a>
-
-### RequestGetIdToken
-Get Id Token for external system
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| service | [string](#string) |  | service alias token is intended for * |
-
-
-
-
-
-
 <a name="dialog.RequestGetOAuth2Params"></a>
 
 ### RequestGetOAuth2Params
-Loading OAuth2 Parameters
+Loading OAuth2 Parameters - deprecated
 
 
 | Field | Type | Label | Description |
@@ -1193,23 +1146,6 @@ Start Authentication/Authorization via external oAuth2/OpenID SSO Provider
 
 
 
-<a name="dialog.RequestStartCertificateAuth"></a>
-
-### RequestStartCertificateAuth
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| name | [string](#string) |  |  |
-| time_zone | [google.protobuf.StringValue](#google.protobuf.StringValue) |  |  |
-| preferred_languages | [string](#string) | repeated |  |
-
-
-
-
-
-
 <a name="dialog.RequestStartEmailAuth"></a>
 
 ### RequestStartEmailAuth
@@ -1368,26 +1304,10 @@ Authentication result
 
 
 
-<a name="dialog.ResponseGetIdToken"></a>
-
-### ResponseGetIdToken
-Get Id Token for external system
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| token | [string](#string) |  |  |
-| expiration_date | [int64](#int64) |  | Unix time stamp * |
-
-
-
-
-
-
 <a name="dialog.ResponseGetOAuth2Params"></a>
 
 ### ResponseGetOAuth2Params
-Redirect url result
+Deprecated
 
 
 | Field | Type | Label | Description |
@@ -1579,17 +1499,14 @@ Holder of session
 | SendCodeByPhoneCall | [RequestSendCodeByPhoneCall](#dialog.RequestSendCodeByPhoneCall) | [ResponseVoid](#dialog.ResponseVoid) | Resend code by transaction hash |
 | StartEmailAuth | [RequestStartEmailAuth](#dialog.RequestStartEmailAuth) | [ResponseStartEmailAuth](#dialog.ResponseStartEmailAuth) | Start email authorization process |
 | StartAnonymousAuth | [RequestStartAnonymousAuth](#dialog.RequestStartAnonymousAuth) | [ResponseAuth](#dialog.ResponseAuth) | Deprecated |
-| StartCertificateAuth | [RequestStartCertificateAuth](#dialog.RequestStartCertificateAuth) | [ResponseAuth](#dialog.ResponseAuth) |  |
 | StartTokenAuth | [RequestStartTokenAuth](#dialog.RequestStartTokenAuth) | [ResponseAuth](#dialog.ResponseAuth) | Start token auth authorization (actual for bots) |
 | StartUsernameAuth | [RequestStartUsernameAuth](#dialog.RequestStartUsernameAuth) | [ResponseStartUsernameAuth](#dialog.ResponseStartUsernameAuth) | Start login/password authorization process |
-| ApplyExternalSessionAuth | [RequestApplyExternalSessionAuth](#dialog.RequestApplyExternalSessionAuth) | [ResponseAuth](#dialog.ResponseAuth) |  |
-| GetIdToken | [RequestGetIdToken](#dialog.RequestGetIdToken) | [ResponseGetIdToken](#dialog.ResponseGetIdToken) | Get Id Token for external system |
 | StartAuthTransaction | [RequestStartAuthTransaction](#dialog.RequestStartAuthTransaction) | [ResponseStartAuthTransaction](#dialog.ResponseStartAuthTransaction) |  |
 | ValidateCode | [RequestValidateCode](#dialog.RequestValidateCode) | [ResponseAuth](#dialog.ResponseAuth) | Validate code received by phone or email Returns error if user does not exist |
 | ResendCode | [RequestResendCode](#dialog.RequestResendCode) | [ResponseVoid](#dialog.ResponseVoid) | Resend code if you don&#39;t receive it with first attempt |
 | ValidatePassword | [RequestValidatePassword](#dialog.RequestValidatePassword) | [ResponseAuth](#dialog.ResponseAuth) | Validate your passwword |
-| GetOAuth2Params | [RequestGetOAuth2Params](#dialog.RequestGetOAuth2Params) | [ResponseGetOAuth2Params](#dialog.ResponseGetOAuth2Params) | Get redirect url |
-| CompleteOAuth2 | [RequestCompleteOAuth2](#dialog.RequestCompleteOAuth2) | [ResponseAuth](#dialog.ResponseAuth) | Complete OAuth2 Authentication |
+| GetOAuth2Params | [RequestGetOAuth2Params](#dialog.RequestGetOAuth2Params) | [ResponseGetOAuth2Params](#dialog.ResponseGetOAuth2Params) | Deprecated |
+| CompleteOAuth2 | [RequestCompleteOAuth2](#dialog.RequestCompleteOAuth2) | [ResponseAuth](#dialog.ResponseAuth) | Deprecated |
 | SignUp | [RequestSignUp](#dialog.RequestSignUp) | [ResponseAuth](#dialog.ResponseAuth) | Sign up existed user |
 | GetAuthSessions | [RequestGetAuthSessions](#dialog.RequestGetAuthSessions) | [ResponseGetAuthSessions](#dialog.ResponseGetAuthSessions) | Returns all authorized user&#39;s sessions |
 | TerminateSession | [RequestTerminateSession](#dialog.RequestTerminateSession) | [ResponseVoid](#dialog.ResponseVoid) | Deprecated. Does not produce any effect. |
@@ -2031,31 +1948,15 @@ Adding contact to contact list
 <a name="dialog.RequestDeferredImportContacts"></a>
 
 ### RequestDeferredImportContacts
-Importing hashed phones and contact names for building contact list
+Importing phones and emails for building contact list
 Import evaluated lazily, response does not contain any info
 Maximum amount of items for import per method call equals to 100.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| device_id | [string](#string) |  | some stable device identifier |
-| phone_contacts | [RequestDeferredImportContacts.PhoneContact](#dialog.RequestDeferredImportContacts.PhoneContact) | repeated | list of hashed phone contacts from the device |
-
-
-
-
-
-
-<a name="dialog.RequestDeferredImportContacts.PhoneContact"></a>
-
-### RequestDeferredImportContacts.PhoneContact
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| phone_hash | [string](#string) |  | hash of phone number in format: name-of-hash-function:hashed-phone-number name of the hash function is optional (if not present, the default function will be used) |
-| contact_name | [string](#string) |  | name of contact as is on the device |
+| phones | [PhoneToImport](#dialog.PhoneToImport) | repeated |  |
+| emails | [EmailToImport](#dialog.EmailToImport) | repeated |  |
 
 
 
@@ -2156,7 +2057,6 @@ Searching contacts by user&#39;s query
 | ----- | ---- | ----- | ----------- |
 | is_not_changed | [bool](#bool) |  |  |
 | user_peers | [UserOutPeer](#dialog.UserOutPeer) | repeated |  |
-| phone_contacts | [UserPhoneHashContact](#dialog.UserPhoneHashContact) | repeated |  |
 
 
 
@@ -2241,7 +2141,6 @@ Update about contacts added
 | ----- | ---- | ----- | ----------- |
 | uids | [int32](#int32) | repeated | User ids of the registered contacts |
 | task_id | [google.protobuf.StringValue](#google.protobuf.StringValue) |  | Id of the task that finished |
-| phone_contacts | [UserPhoneHashContact](#dialog.UserPhoneHashContact) | repeated |  |
 
 
 
@@ -2257,23 +2156,6 @@ Update about contacts removed
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | uids | [int32](#int32) | repeated |  |
-
-
-
-
-
-
-<a name="dialog.UserPhoneHashContact"></a>
-
-### UserPhoneHashContact
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| user_id | [int32](#int32) |  |  |
-| phone_hash | [string](#string) |  |  |
-| name | [string](#string) |  |  |
 
 
 
@@ -4669,7 +4551,6 @@ historyMessage Optional last messages
 | last_read | [int64](#int64) |  |  |
 | last_reaction_at | [int64](#int64) |  |  |
 | read_later | [bool](#bool) |  |  |
-| dialogType | [string](#string) |  |  |
 
 
 
@@ -4745,7 +4626,6 @@ data data related to dialog itself
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | peer | [Peer](#dialog.Peer) |  | Peer of conversation |
-| unread_counter_clock | [int64](#int64) |  |  |
 | unread_count | [int32](#int32) |  |  |
 | my_read_date | [int64](#int64) |  |  |
 | last_message_date | [int64](#int64) |  |  |
@@ -4755,7 +4635,6 @@ data data related to dialog itself
 | last_update_of_message_date | [int64](#int64) |  |  |
 | last_reaction_date | [int64](#int64) |  |  |
 | read_later | [bool](#bool) |  |  |
-| dialogType | [string](#string) |  |  |
 | data | [DialogData](#dialog.DialogData) |  |  |
 
 
@@ -4860,8 +4739,6 @@ File message
 | mime_type | [string](#string) |  |  |
 | thumb | [FastThumb](#dialog.FastThumb) |  | optional thumb of file. JPEG less that 90x90 with 60-70 quality. |
 | ext | [DocumentEx](#dialog.DocumentEx) |  |  |
-| caption | [google.protobuf.StringValue](#google.protobuf.StringValue) |  |  |
-| mentions | [Mention](#dialog.Mention) | repeated |  |
 
 
 
@@ -4899,28 +4776,6 @@ Message from history
 | forward | [ReferencedMessages](#dialog.ReferencedMessages) |  |  |
 | reply | [ReferencedMessages](#dialog.ReferencedMessages) |  |  |
 | edited_at | [google.protobuf.Int64Value](#google.protobuf.Int64Value) |  |  |
-| random_id | [int64](#int64) |  |  |
-
-
-
-
-
-
-<a name="dialog.HistoryMessageLight"></a>
-
-### HistoryMessageLight
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| sender_uid | [int32](#int32) |  |  |
-| message_id | [UUIDValue](#dialog.UUIDValue) |  | Message id generated by server |
-| date | [int64](#int64) |  |  |
-| message | [MessageContent](#dialog.MessageContent) |  |  |
-| forward | [ReferencedMessages](#dialog.ReferencedMessages) |  |  |
-| reply | [ReferencedMessages](#dialog.ReferencedMessages) |  |  |
-| edited_at | [int64](#int64) |  |  |
 | random_id | [int64](#int64) |  |  |
 
 
@@ -5320,22 +5175,6 @@ Clearing of conversation (without removing dialog from dialogs list)
 
 
 
-<a name="dialog.RequestCountForeignMessages"></a>
-
-### RequestCountForeignMessages
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| peer | [Peer](#dialog.Peer) |  |  |
-| from_date | [int64](#int64) |  |  |
-
-
-
-
-
-
 <a name="dialog.RequestDeleteChat"></a>
 
 ### RequestDeleteChat
@@ -5568,24 +5407,6 @@ Loading history of chat
 | load_mode | [ListLoadMode](#dialog.ListLoadMode) |  | forward, backward or both |
 | limit | [int32](#int32) |  |  |
 | optimizations | [UpdateOptimization](#dialog.UpdateOptimization) | repeated |  |
-
-
-
-
-
-
-<a name="dialog.RequestLoadHistoryLight"></a>
-
-### RequestLoadHistoryLight
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| peer | [Peer](#dialog.Peer) |  |  |
-| date | [int64](#int64) |  |  |
-| load_mode | [ListLoadMode](#dialog.ListLoadMode) |  | forward, backward or both |
-| limit | [int32](#int32) |  |  |
 
 
 
@@ -5827,22 +5648,6 @@ Changing Message content
 
 
 
-<a name="dialog.ResponseCountForeignMessages"></a>
-
-### ResponseCountForeignMessages
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| last_conversation_message_date | [int64](#int64) |  | last conversation message date |
-| count | [int32](#int32) |  | counter of the messages between last conversation message (including it) and last returned in this response |
-
-
-
-
-
-
 <a name="dialog.ResponseDialogListDifference"></a>
 
 ### ResponseDialogListDifference
@@ -6049,21 +5854,6 @@ deprecated
 
 
 
-<a name="dialog.ResponseLoadHistoryLight"></a>
-
-### ResponseLoadHistoryLight
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| history | [HistoryMessageLight](#dialog.HistoryMessageLight) | repeated |  |
-
-
-
-
-
-
 <a name="dialog.ResponseMessageReads"></a>
 
 ### ResponseMessageReads
@@ -6172,7 +5962,6 @@ Predicate for searching in custom profile
 | phoneRejected | [ServiceExPhoneRejected](#dialog.ServiceExPhoneRejected) |  |  |
 | chatArchived | [ServiceExChatArchived](#dialog.ServiceExChatArchived) |  |  |
 | chatRestored | [ServiceExChatRestored](#dialog.ServiceExChatRestored) |  |  |
-| conferenceStatus | [ServiceExConferenceStatus](#dialog.ServiceExConferenceStatus) |  |  |
 
 
 
@@ -6268,22 +6057,6 @@ Message about chat archived
 
 ### ServiceExChatRestored
 Message about chat restored
-
-
-
-
-
-
-<a name="dialog.ServiceExConferenceStatus"></a>
-
-### ServiceExConferenceStatus
-Message about conference call state
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| conference_id | [string](#string) |  |  |
-| conference_status | [string](#string) |  |  |
 
 
 
@@ -6564,7 +6337,6 @@ Modern text message
 | text | [google.protobuf.StringValue](#google.protobuf.StringValue) |  |  |
 | sender_name_override | [google.protobuf.StringValue](#google.protobuf.StringValue) |  |  |
 | sender_photo_override | [Avatar](#dialog.Avatar) |  |  |
-| sender_photo_url_override | [google.protobuf.StringValue](#google.protobuf.StringValue) |  |  |
 | style | [ParagraphStyle](#dialog.ParagraphStyle) |  |  |
 | attaches | [TextModernAttach](#dialog.TextModernAttach) | repeated |  |
 
@@ -6713,7 +6485,6 @@ Update about plain message
 | reply | [ReferencedMessages](#dialog.ReferencedMessages) |  |  |
 | previous_mid | [UUIDValue](#dialog.UUIDValue) |  | Message id of previos message from current conversation |
 | prev_message_date | [google.protobuf.Int64Value](#google.protobuf.Int64Value) |  | interval start |
-| unread_counter_clock | [int64](#int64) |  | counter clock of the unread messages |
 | counter | [google.protobuf.Int32Value](#google.protobuf.Int32Value) |  | counter of the unread messages |
 | my_read_date | [google.protobuf.Int64Value](#google.protobuf.Int64Value) |  | date of my own read |
 | random_id | [int64](#int64) |  |  |
@@ -6808,8 +6579,7 @@ Update about message read by me
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | peer | [Peer](#dialog.Peer) |  |  |
-| start_date | [int64](#int64) |  | date of the read message |
-| unread_counter_clock | [int64](#int64) |  | when message was read |
+| start_date | [int64](#int64) |  | when message was read |
 | unread_counter | [google.protobuf.Int32Value](#google.protobuf.Int32Value) |  | counter of unread messages |
 
 
@@ -6866,8 +6636,7 @@ Update about message sent
 | date | [int64](#int64) |  |  |
 | mid | [UUIDValue](#dialog.UUIDValue) |  | Message id |
 | prev_mid | [UUIDValue](#dialog.UUIDValue) |  | Previous message id in current conversation |
-| unread_counter_clock | [int64](#int64) |  | counter of unread messages |
-| unread_counter | [google.protobuf.Int32Value](#google.protobuf.Int32Value) |  |  |
+| unread_counter | [google.protobuf.Int32Value](#google.protobuf.Int32Value) |  | counter of unread messages |
 | myReadDate | [google.protobuf.Int64Value](#google.protobuf.Int64Value) |  |  |
 | forward | [ReferencedMessages](#dialog.ReferencedMessages) |  |  |
 | reply | [ReferencedMessages](#dialog.ReferencedMessages) |  |  |
@@ -7041,8 +6810,6 @@ Webpage media
 | MessageSetReaction | [RequestMessageSetReaction](#dialog.RequestMessageSetReaction) | [ResponseReactionsResponse](#dialog.ResponseReactionsResponse) | Add reaction on message (emoji) |
 | MessageRemoveReaction | [RequestMessageRemoveReaction](#dialog.RequestMessageRemoveReaction) | [ResponseReactionsResponse](#dialog.ResponseReactionsResponse) |  |
 | LoadHistory | [RequestLoadHistory](#dialog.RequestLoadHistory) | [ResponseLoadHistory](#dialog.ResponseLoadHistory) | Load conversation history |
-| LoadHistoryLight | [RequestLoadHistoryLight](#dialog.RequestLoadHistoryLight) | [ResponseLoadHistoryLight](#dialog.ResponseLoadHistoryLight) | Load conversation history |
-| CountForeignMessages | [RequestCountForeignMessages](#dialog.RequestCountForeignMessages) | [ResponseCountForeignMessages](#dialog.ResponseCountForeignMessages) |  |
 | HistoryDifference | [RequestHistoryDifference](#dialog.RequestHistoryDifference) | [ResponseHistoryDifference](#dialog.ResponseHistoryDifference) | Load total history difference for all user&#39;s conversations |
 | LoadDialogs | [RequestLoadDialogs](#dialog.RequestLoadDialogs) | [ResponseLoadDialogs](#dialog.ResponseLoadDialogs) | Load user&#39;s dialogs |
 | FetchDialogIndex | [RequestFetchDialogIndex](#dialog.RequestFetchDialogIndex) | [ResponseFetchDialogIndex](#dialog.ResponseFetchDialogIndex) | Load short info about all user&#39;s dialogs |
@@ -7082,25 +6849,6 @@ Webpage media
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | access_token | [string](#string) |  |  |
-
-
-
-
-
-
-<a name="dialog.ExtensionPoint"></a>
-
-### ExtensionPoint
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| app_id | [UUIDValue](#dialog.UUIDValue) |  |  |
-| action | [string](#string) |  |  |
-| label | [string](#string) |  |  |
-| message_conditions | [MessageConditions](#dialog.MessageConditions) |  |  |
-| group_conditions | [GroupConditions](#dialog.GroupConditions) |  |  |
 
 
 
@@ -7168,54 +6916,6 @@ List of the mini-app
 
 
 
-<a name="dialog.GetExtensionsResponse"></a>
-
-### GetExtensionsResponse
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| message_extensions | [ExtensionPoint](#dialog.ExtensionPoint) | repeated |  |
-| chat_extensions | [ExtensionPoint](#dialog.ExtensionPoint) | repeated |  |
-
-
-
-
-
-
-<a name="dialog.GroupConditions"></a>
-
-### GroupConditions
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| group_condition | [GroupConditions.GroupCondition](#dialog.GroupConditions.GroupCondition) | repeated |  |
-
-
-
-
-
-
-<a name="dialog.GroupConditions.GroupCondition"></a>
-
-### GroupConditions.GroupCondition
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| group_type | [string](#string) |  |  |
-| visibility | [string](#string) |  |  |
-| permission | [string](#string) | repeated |  |
-
-
-
-
-
-
 <a name="dialog.IssueAccessTokenRequest"></a>
 
 ### IssueAccessTokenRequest
@@ -7225,55 +6925,6 @@ Issue JWT token for third-party applications
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | app_id | [UUIDValue](#dialog.UUIDValue) |  |  |
-
-
-
-
-
-
-<a name="dialog.MessageConditions"></a>
-
-### MessageConditions
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| message_condition | [MessageConditions.MessageCondition](#dialog.MessageConditions.MessageCondition) | repeated |  |
-
-
-
-
-
-
-<a name="dialog.MessageConditions.MessageCondition"></a>
-
-### MessageConditions.MessageCondition
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| text_message | [string](#string) |  |  |
-| document_message | [MessageConditions.MessageCondition.DocumentCondition](#dialog.MessageConditions.MessageCondition.DocumentCondition) |  |  |
-
-
-
-
-
-
-<a name="dialog.MessageConditions.MessageCondition.DocumentCondition"></a>
-
-### MessageConditions.MessageCondition.DocumentCondition
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| is_image | [bool](#bool) |  |  |
-| is_video | [bool](#bool) |  |  |
-| is_audio | [bool](#bool) |  |  |
-| mime_type | [string](#string) | repeated |  |
 
 
 
@@ -7295,26 +6946,10 @@ Issue JWT token for third-party applications
 | version | [string](#string) |  | version of app |
 | icon | [string](#string) |  | icon name for this app |
 | link | [string](#string) |  | link to this app |
+| json_content | [google.protobuf.StringValue](#google.protobuf.StringValue) |  | additional data stored in json format |
+| created_at_ts | [int64](#int64) |  | creation date/time in millis |
 | modified_at_ts | [int64](#int64) |  | update date/time in millis |
 | is_enabled | [bool](#bool) |  | specifies if this app enabled and user can use it, ot not |
-| locales | [MiniApp.LocalesEntry](#dialog.MiniApp.LocalesEntry) | repeated | supported locales |
-| permissions | [string](#string) | repeated | application-level permissions |
-
-
-
-
-
-
-<a name="dialog.MiniApp.LocalesEntry"></a>
-
-### MiniApp.LocalesEntry
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| key | [string](#string) |  |  |
-| value | [string](#string) |  |  |
 
 
 
@@ -7380,7 +7015,6 @@ Defines the type of the app. Currently only WebView supported, but more types ca
 | ----------- | ------------ | ------------- | ------------|
 | FindApp | [FindAppRequest](#dialog.FindAppRequest) | [FindAppResponse](#dialog.FindAppResponse) |  |
 | GetApps | [GetAppsRequest](#dialog.GetAppsRequest) | [GetAppsResponse](#dialog.GetAppsResponse) |  |
-| GetExtensions | [.google.protobuf.Empty](#google.protobuf.Empty) | [GetExtensionsResponse](#dialog.GetExtensionsResponse) |  |
 | IssueAccessToken | [IssueAccessTokenRequest](#dialog.IssueAccessTokenRequest) | [AccessTokenResponse](#dialog.AccessTokenResponse) |  |
 
  
@@ -9373,37 +9007,6 @@ The structure of encrypted push content
 
 
 
-<a name="dialog.reactions.GetMessageReactionsRequest"></a>
-
-### GetMessageReactionsRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| peer | [dialog.Peer](#dialog.Peer) |  |  |
-| message_ids | [dialog.UUIDValue](#dialog.UUIDValue) | repeated |  |
-
-
-
-
-
-
-<a name="dialog.reactions.GetMessageReactionsResponse"></a>
-
-### GetMessageReactionsResponse
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| messageReactions | [MessageReactions](#dialog.reactions.MessageReactions) | repeated |  |
-
-
-
-
-
-
 <a name="dialog.reactions.GetReactionsRequest"></a>
 
 ### GetReactionsRequest
@@ -9536,7 +9139,6 @@ The structure of encrypted push content
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
 | GetReactions | [GetReactionsRequest](#dialog.reactions.GetReactionsRequest) | [GetReactionsResponse](#dialog.reactions.GetReactionsResponse) |  |
-| GetMessageReactions | [GetMessageReactionsRequest](#dialog.reactions.GetMessageReactionsRequest) | [GetMessageReactionsResponse](#dialog.reactions.GetMessageReactionsResponse) |  |
 | MessageSetReaction | [RequestSetMessageReaction](#dialog.reactions.RequestSetMessageReaction) | [.google.protobuf.Empty](#google.protobuf.Empty) |  |
 | MessageRemoveReaction | [RequestRemoveMessageReaction](#dialog.reactions.RequestRemoveMessageReaction) | [.google.protobuf.Empty](#google.protobuf.Empty) |  |
 
@@ -9645,6 +9247,304 @@ The structure of encrypted push content
 | ExchangeAuthIdForToken | [RequestExchangeAuthIdForToken](#dialog.RequestExchangeAuthIdForToken) | [ResponseDeviceRequest](#dialog.ResponseDeviceRequest) |  |
 | RegisterDevice | [RequestRegisterDevice](#dialog.RequestRegisterDevice) | [ResponseDeviceRequest](#dialog.ResponseDeviceRequest) | register device to get auth token |
 | RegisterDeprecatedDevice | [RegisterDeprecatedDeviceRequest](#dialog.RegisterDeprecatedDeviceRequest) | [ResponseDeviceRequest](#dialog.ResponseDeviceRequest) | deprecated |
+
+ 
+
+
+
+<a name="rpc_error_details.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## rpc_error_details.proto
+
+
+
+<a name="dialog.BadRequest"></a>
+
+### BadRequest
+Describes violations in a client request. This error type focuses on the
+syntactic aspects of the request.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| field_violations | [BadRequest.FieldViolation](#dialog.BadRequest.FieldViolation) | repeated | Describes all violations in a client request. |
+
+
+
+
+
+
+<a name="dialog.BadRequest.FieldViolation"></a>
+
+### BadRequest.FieldViolation
+A message type used to describe a single bad request field.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| field | [string](#string) |  | A path leading to a field in the request body. The value will be a sequence of dot-separated identifiers that identify a protocol buffer field. E.g., &#34;field_violations.field&#34; would identify this field. |
+| description | [string](#string) |  | A description of why the request element is bad. |
+
+
+
+
+
+
+<a name="dialog.ErrorInfo"></a>
+
+### ErrorInfo
+Describes the cause of the error with structured details.
+
+Example of an error when contacting the &#34;pubsub.googleapis.com&#34; API when it
+is not enabled:
+
+    { &#34;reason&#34;: &#34;API_DISABLED&#34;
+      &#34;domain&#34;: &#34;googleapis.com&#34;
+      &#34;metadata&#34;: {
+        &#34;resource&#34;: &#34;projects/123&#34;,
+        &#34;service&#34;: &#34;pubsub.googleapis.com&#34;
+      }
+    }
+
+This response indicates that the pubsub.googleapis.com API is not enabled.
+
+Example of an error that is returned when attempting to create a Spanner
+instance in a region that is out of stock:
+
+    { &#34;reason&#34;: &#34;STOCKOUT&#34;
+      &#34;domain&#34;: &#34;spanner.googleapis.com&#34;,
+      &#34;metadata&#34;: {
+        &#34;availableRegions&#34;: &#34;us-central1,us-east2&#34;
+      }
+    }
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| reason | [string](#string) |  | The reason of the error. This is a constant value that identifies the proximate cause of the error. Error reasons are unique within a particular domain of errors. This should be at most 63 characters and match /[A-Z0-9_]&#43;/. |
+| domain | [string](#string) |  | The logical grouping to which the &#34;reason&#34; belongs. The error domain is typically the registered service name of the tool or product that generates the error. Example: &#34;pubsub.googleapis.com&#34;. If the error is generated by some common infrastructure, the error domain must be a globally unique value that identifies the infrastructure. For Google API infrastructure, the error domain is &#34;googleapis.com&#34;. |
+| metadata | [ErrorInfo.MetadataEntry](#dialog.ErrorInfo.MetadataEntry) | repeated | Additional structured details about this error.
+
+Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in length. When identifying the current value of an exceeded limit, the units should be contained in the key, not the value. For example, rather than {&#34;instanceLimit&#34;: &#34;100/request&#34;}, should be returned as, {&#34;instanceLimitPerRequest&#34;: &#34;100&#34;}, if the client exceeds the number of instances that can be created in a single (batch) request. |
+
+
+
+
+
+
+<a name="dialog.ErrorInfo.MetadataEntry"></a>
+
+### ErrorInfo.MetadataEntry
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | [string](#string) |  |  |
+| value | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="dialog.Help"></a>
+
+### Help
+Provides links to documentation or for performing an out of band action.
+
+For example, if a quota check failed with an error indicating the calling
+project hasn&#39;t enabled the accessed service, this can contain a URL pointing
+directly to the right place in the developer console to flip the bit.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| links | [Help.Link](#dialog.Help.Link) | repeated | URL(s) pointing to additional information on handling the current error. |
+
+
+
+
+
+
+<a name="dialog.Help.Link"></a>
+
+### Help.Link
+Describes a URL link.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| description | [string](#string) |  | Describes what the link offers. |
+| url | [string](#string) |  | The URL of the link. |
+
+
+
+
+
+
+<a name="dialog.LocalizedMessage"></a>
+
+### LocalizedMessage
+Provides a localized error message that is safe to return to the user
+which can be attached to an RPC error.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| locale | [string](#string) |  | The locale used following the specification defined at http://www.rfc-editor.org/rfc/bcp/bcp47.txt. Examples are: &#34;en-US&#34;, &#34;fr-CH&#34;, &#34;es-MX&#34; |
+| message | [string](#string) |  | The localized error message in the above locale. |
+
+
+
+
+
+
+<a name="dialog.PreconditionFailure"></a>
+
+### PreconditionFailure
+Describes what preconditions have failed.
+
+For example, if an RPC failed because it required the Terms of Service to be
+acknowledged, it could list the terms of service violation in the
+PreconditionFailure message.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| violations | [PreconditionFailure.Violation](#dialog.PreconditionFailure.Violation) | repeated | Describes all precondition violations. |
+
+
+
+
+
+
+<a name="dialog.PreconditionFailure.Violation"></a>
+
+### PreconditionFailure.Violation
+A message type used to describe a single precondition failure.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| type | [string](#string) |  | The type of PreconditionFailure. We recommend using a service-specific enum type to define the supported precondition violation subjects. For example, &#34;TOS&#34; for &#34;Terms of Service violation&#34;. |
+| subject | [string](#string) |  | The subject, relative to the type, that failed. For example, &#34;google.com/cloud&#34; relative to the &#34;TOS&#34; type would indicate which terms of service is being referenced. |
+| description | [string](#string) |  | A description of how the precondition failed. Developers can use this description to understand how to fix the failure.
+
+For example: &#34;Terms of service not accepted&#34;. |
+
+
+
+
+
+
+<a name="dialog.QuotaFailure"></a>
+
+### QuotaFailure
+Describes how a quota check failed.
+
+For example if a daily limit was exceeded for the calling project,
+a service could respond with a QuotaFailure detail containing the project
+id and the description of the quota limit that was exceeded.  If the
+calling project hasn&#39;t enabled the service in the developer console, then
+a service could respond with the project id and set `service_disabled`
+to true.
+
+Also see RetryInfo and Help types for other details about handling a
+quota failure.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| violations | [QuotaFailure.Violation](#dialog.QuotaFailure.Violation) | repeated | Describes all quota violations. |
+
+
+
+
+
+
+<a name="dialog.QuotaFailure.Violation"></a>
+
+### QuotaFailure.Violation
+A message type used to describe a single quota violation.  For example, a
+daily quota or a custom quota that was exceeded.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| subject | [string](#string) |  | The subject on which the quota check failed. For example, &#34;clientip:&lt;ip address of client&gt;&#34; or &#34;project:&lt;Google developer project id&gt;&#34;. |
+| description | [string](#string) |  | A description of how the quota check failed. Clients can use this description to find more about the quota configuration in the service&#39;s public documentation, or find the relevant quota limit to adjust through developer console.
+
+For example: &#34;Service disabled&#34; or &#34;Daily Limit for read operations exceeded&#34;. |
+
+
+
+
+
+
+<a name="dialog.RequestInfo"></a>
+
+### RequestInfo
+Contains metadata about the request that clients can attach when filing a bug
+or providing other forms of feedback.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| request_id | [string](#string) |  | An opaque string that should only be interpreted by the service generating it. For example, it can be used to identify requests in the service&#39;s logs. |
+| serving_data | [string](#string) |  | Any data that was used to serve this request. For example, an encrypted stack trace that can be sent back to the service provider for debugging. |
+
+
+
+
+
+
+<a name="dialog.ResourceInfo"></a>
+
+### ResourceInfo
+Describes the resource that is being accessed.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| resource_type | [string](#string) |  | A name for the type of resource being accessed, e.g. &#34;sql table&#34;, &#34;cloud storage bucket&#34;, &#34;file&#34;, &#34;Google calendar&#34;; or the type URL of the resource: e.g. &#34;type.googleapis.com/google.pubsub.v1.Topic&#34;. |
+| resource_name | [string](#string) |  | The name of the resource being accessed. For example, a shared calendar name: &#34;example.com_4fghdhgsrgh@group.calendar.google.com&#34;, if the current error is [google.rpc.Code.PERMISSION_DENIED][google.rpc.Code.PERMISSION_DENIED]. |
+| owner | [string](#string) |  | The owner of the resource (optional). For example, &#34;user:&lt;owner email&gt;&#34; or &#34;project:&lt;Google developer project id&gt;&#34;. |
+| description | [string](#string) |  | Describes what error is encountered when accessing this resource. For example, updating a cloud project may require the `writer` permission on the developer console project. |
+
+
+
+
+
+
+<a name="dialog.Status"></a>
+
+### Status
+The `Status` type defines a logical error model that is suitable for
+different programming environments, including REST APIs and RPC APIs. It is
+used by [gRPC](https://github.com/grpc). Each `Status` message contains
+three pieces of data: error code, error message, and error details.
+
+You can find out more about this error model and how to work with it in the
+[API Design Guide](https://cloud.google.com/apis/design/errors).
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| code | [int32](#int32) |  | The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code]. |
+| message | [string](#string) |  | A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client. |
+| details | [google.protobuf.Any](#google.protobuf.Any) | repeated | A list of messages that carry the error details. There is a common set of message types for APIs to use. |
+
+
+
+
+
+ 
+
+ 
+
+ 
 
  
 
@@ -10182,7 +10082,6 @@ Searching sender uid condition
 | type | [SearchContentType](#dialog.SearchContentType) |  | content message type to search |
 | search_direction | [SearchDirection](#dialog.SearchDirection) |  | search direction gt/lt |
 | date_from | [google.protobuf.Int64Value](#google.protobuf.Int64Value) |  | search message from |
-| sender | [Peer](#dialog.Peer) |  | only search messages from specific sender |
 
 
 
@@ -10871,11 +10770,6 @@ Out of sequence update (for typing and online statuses)
 | group_typing | [UpdateGroupTyping](#dialog.UpdateGroupTyping) |  |  |
 | mini_app | [UpdateMiniApp](#dialog.UpdateMiniApp) |  |  |
 | event | [events.UpdateEvent](#dialog.events.UpdateEvent) |  |  |
-| update_contact_registered | [UpdateContactRegistered](#dialog.UpdateContactRegistered) |  |  |
-| update_contacts_added | [UpdateContactsAdded](#dialog.UpdateContactsAdded) |  |  |
-| update_contacts_add_task_suspended | [UpdateContactsAddTaskSuspended](#dialog.UpdateContactsAddTaskSuspended) |  |  |
-| update_contacts_removed | [UpdateContactsRemoved](#dialog.UpdateContactsRemoved) |  |  |
-| update_suggests | [UpdateSuggests](#dialog.UpdateSuggests) |  |  |
 
 
 
@@ -11748,151 +11642,6 @@ Sticker pack removed
 
 
 
-<a name="suggests.proto"></a>
-<p align="right"><a href="#top">Top</a></p>
-
-## suggests.proto
-
-
-
-<a name="dialog.MessageSuggests"></a>
-
-### MessageSuggests
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| message_id | [UUIDValue](#dialog.UUIDValue) |  |  |
-| suggests_payload | [string](#string) |  |  |
-
-
-
-
-
-
-<a name="dialog.RequestLoadMessageSuggests"></a>
-
-### RequestLoadMessageSuggests
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| peer | [Peer](#dialog.Peer) |  |  |
-| message_ids | [UUIDValue](#dialog.UUIDValue) | repeated |  |
-
-
-
-
-
-
-<a name="dialog.RequestLoadSuggests"></a>
-
-### RequestLoadSuggests
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| from_clock | [int64](#int64) |  |  |
-| peer | [Peer](#dialog.Peer) |  |  |
-
-
-
-
-
-
-<a name="dialog.RequestSendSuggestAction"></a>
-
-### RequestSendSuggestAction
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| request_id | [int64](#int64) |  |  |
-| suggest_id | [string](#string) |  |  |
-| message_id | [UUIDValue](#dialog.UUIDValue) |  |  |
-| peer | [Peer](#dialog.Peer) |  |  |
-| payload | [string](#string) |  |  |
-
-
-
-
-
-
-<a name="dialog.ResponseLoadMessageSuggests"></a>
-
-### ResponseLoadMessageSuggests
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| message_suggests | [MessageSuggests](#dialog.MessageSuggests) | repeated |  |
-
-
-
-
-
-
-<a name="dialog.ResponseLoadSuggests"></a>
-
-### ResponseLoadSuggests
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| clock | [int64](#int64) |  |  |
-| suggests | [MessageSuggests](#dialog.MessageSuggests) | repeated |  |
-| more_available | [bool](#bool) |  |  |
-
-
-
-
-
-
-<a name="dialog.UpdateSuggests"></a>
-
-### UpdateSuggests
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| clock | [int64](#int64) |  |  |
-| prev_clock | [int64](#int64) |  |  |
-| peer | [Peer](#dialog.Peer) |  |  |
-| message_suggests | [MessageSuggests](#dialog.MessageSuggests) |  |  |
-
-
-
-
-
- 
-
- 
-
- 
-
-
-<a name="dialog.Suggests"></a>
-
-### Suggests
-
-
-| Method Name | Request Type | Response Type | Description |
-| ----------- | ------------ | ------------- | ------------|
-| LoadSuggests | [RequestLoadSuggests](#dialog.RequestLoadSuggests) | [ResponseLoadSuggests](#dialog.ResponseLoadSuggests) |  |
-| LoadMessageSuggests | [RequestLoadMessageSuggests](#dialog.RequestLoadMessageSuggests) | [ResponseLoadMessageSuggests](#dialog.ResponseLoadMessageSuggests) |  |
-| SendSuggestAction | [RequestSendSuggestAction](#dialog.RequestSendSuggestAction) | [.google.protobuf.Empty](#google.protobuf.Empty) |  |
-
- 
-
-
-
 <a name="threads.proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
@@ -12189,11 +11938,9 @@ Loading Full User information
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | user_peer | [Peer](#dialog.Peer) |  |  |
-| p2p | [bool](#bool) |  | load data about user in p2p conversation |
-| group_member | [Peer](#dialog.Peer) |  | load data about group member by group peer if requested user and client are both group members |
-| contact | [bool](#bool) |  | load data about user if this user is in the client&#39;s contacts |
-| message_sender | [UUIDValue](#dialog.UUIDValue) |  | load data about group message sender by messageId if this message is accessible for the client |
-| bot | [bool](#bool) |  | load data about bot |
+| p2p | [bool](#bool) |  |  |
+| group_member | [Peer](#dialog.Peer) |  |  |
+| contact | [bool](#bool) |  |  |
 
 
 
@@ -12511,7 +12258,6 @@ Main user object
 | bot_commands | [BotCommand](#dialog.BotCommand) | repeated |  |
 | custom_profile | [google.protobuf.StringValue](#google.protobuf.StringValue) |  |  |
 | hint | [UserData.Hint](#dialog.UserData.Hint) |  | This parameter intended just to show in UI (client shouldn&#39;t base any logic on that) |
-| was_authorized | [bool](#bool) |  |  |
 | clock | [int64](#int64) |  |  |
 
 
