@@ -27,12 +27,17 @@
 
 CF_EXTERN_C_BEGIN
 
+@class ContactSearchResult;
+@class FacetHighlight;
 @class GPBBoolValue;
 @class GPBBytesValue;
 @class GPBInt32Value;
 @class GPBInt64Value;
 @class GPBStringValue;
+@class GPBTimestamp;
+@class GroupData;
 @class GroupOutPeer;
+@class GroupSearchResult;
 @class MessageContent;
 @class MessageSearchItem;
 @class MessageSearchResult;
@@ -47,7 +52,9 @@ CF_EXTERN_C_BEGIN
 @class SearchPeerTypeCondition;
 @class SearchPieceText;
 @class SearchPredicate;
+@class SearchResult;
 @class SearchSenderIdConfition;
+@class SearchUserCondition;
 @class SimpleContactSearchCondition;
 @class SimpleGroupSearchCondition;
 @class SimpleMessageSearchCondition;
@@ -55,8 +62,10 @@ CF_EXTERN_C_BEGIN
 @class SimpleSearchCondition;
 @class SimpleUserProfileSearchCondition;
 @class UUIDValue;
+@class UserData;
 @class UserMatch;
 @class UserOutPeer;
+@class UserSearchResult;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -341,6 +350,7 @@ typedef GPB_ENUM(SearchCondition_FieldNumber) {
   SearchCondition_FieldNumber_SearchPeerCondition = 5,
   SearchCondition_FieldNumber_SearchPeerContentType = 6,
   SearchCondition_FieldNumber_SearchSenderIdConfition = 7,
+  SearchCondition_FieldNumber_SearchUserCondition = 8,
 };
 
 typedef GPB_ENUM(SearchCondition_Body_OneOfCase) {
@@ -352,6 +362,7 @@ typedef GPB_ENUM(SearchCondition_Body_OneOfCase) {
   SearchCondition_Body_OneOfCase_SearchPeerCondition = 5,
   SearchCondition_Body_OneOfCase_SearchPeerContentType = 6,
   SearchCondition_Body_OneOfCase_SearchSenderIdConfition = 7,
+  SearchCondition_Body_OneOfCase_SearchUserCondition = 8,
 };
 
 GPB_FINAL @interface SearchCondition : GPBMessage
@@ -371,6 +382,8 @@ GPB_FINAL @interface SearchCondition : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) SearchPeerContentType *searchPeerContentType;
 
 @property(nonatomic, readwrite, strong, null_resettable) SearchSenderIdConfition *searchSenderIdConfition;
+
+@property(nonatomic, readwrite, strong, null_resettable) SearchUserCondition *searchUserCondition;
 
 @end
 
@@ -500,6 +513,21 @@ int32_t SearchPeerContentType_ContentType_RawValue(SearchPeerContentType *messag
  * was generated.
  **/
 void SetSearchPeerContentType_ContentType_RawValue(SearchPeerContentType *message, int32_t value);
+
+#pragma mark - SearchUserCondition
+
+typedef GPB_ENUM(SearchUserCondition_FieldNumber) {
+  SearchUserCondition_FieldNumber_IsBot = 1,
+};
+
+GPB_FINAL @interface SearchUserCondition : GPBMessage
+
+/** todo: add other fields, like Lifecycle */
+@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isBot;
+/** Test to see if @c isBot has been set. */
+@property(nonatomic, readwrite) BOOL hasIsBot;
+
+@end
 
 #pragma mark - SearchSenderIdConfition
 
@@ -644,16 +672,98 @@ GPB_FINAL @interface ResponseResolvePeer : GPBMessage
 
 @end
 
+#pragma mark - FacetHighlight
+
+typedef GPB_ENUM(FacetHighlight_FieldNumber) {
+  FacetHighlight_FieldNumber_Text = 1,
+  FacetHighlight_FieldNumber_HighlightStartPos = 2,
+  FacetHighlight_FieldNumber_HighlightEndPos = 3,
+};
+
+GPB_FINAL @interface FacetHighlight : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *text;
+
+@property(nonatomic, readwrite) int32_t highlightStartPos;
+
+@property(nonatomic, readwrite) int32_t highlightEndPos;
+
+@end
+
+#pragma mark - UserSearchResult
+
+typedef GPB_ENUM(UserSearchResult_FieldNumber) {
+  UserSearchResult_FieldNumber_Peer = 1,
+  UserSearchResult_FieldNumber_LastOnlineAt = 2,
+  UserSearchResult_FieldNumber_FacetHighlightsArray = 3,
+};
+
+GPB_FINAL @interface UserSearchResult : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) UserOutPeer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
+
+@property(nonatomic, readwrite, strong, null_resettable) GPBTimestamp *lastOnlineAt;
+/** Test to see if @c lastOnlineAt has been set. */
+@property(nonatomic, readwrite) BOOL hasLastOnlineAt;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FacetHighlight*> *facetHighlightsArray;
+/** The number of items in @c facetHighlightsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger facetHighlightsArray_Count;
+
+@end
+
+#pragma mark - GroupSearchResult
+
+typedef GPB_ENUM(GroupSearchResult_FieldNumber) {
+  GroupSearchResult_FieldNumber_Peer = 1,
+  GroupSearchResult_FieldNumber_FacetHighlightsArray = 2,
+};
+
+GPB_FINAL @interface GroupSearchResult : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FacetHighlight*> *facetHighlightsArray;
+/** The number of items in @c facetHighlightsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger facetHighlightsArray_Count;
+
+@end
+
+#pragma mark - ContactSearchResult
+
+typedef GPB_ENUM(ContactSearchResult_FieldNumber) {
+  ContactSearchResult_FieldNumber_PhoneHash = 1,
+  ContactSearchResult_FieldNumber_UserId = 2,
+  ContactSearchResult_FieldNumber_FacetHighlightsArray = 3,
+};
+
+GPB_FINAL @interface ContactSearchResult : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *phoneHash;
+
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *userId;
+/** Test to see if @c userId has been set. */
+@property(nonatomic, readwrite) BOOL hasUserId;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FacetHighlight*> *facetHighlightsArray;
+/** The number of items in @c facetHighlightsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger facetHighlightsArray_Count;
+
+@end
+
 #pragma mark - MessageSearchResult
 
 typedef GPB_ENUM(MessageSearchResult_FieldNumber) {
   MessageSearchResult_FieldNumber_Peer = 1,
-  MessageSearchResult_FieldNumber_Rid = 2,
   MessageSearchResult_FieldNumber_Date = 3,
   MessageSearchResult_FieldNumber_SenderId = 4,
   MessageSearchResult_FieldNumber_Content = 5,
   MessageSearchResult_FieldNumber_Mid = 6,
-  MessageSearchResult_FieldNumber_HighlightTokensArray = 7,
+  MessageSearchResult_FieldNumber_FacetHighlightsArray = 8,
 };
 
 /**
@@ -664,9 +774,6 @@ GPB_FINAL @interface MessageSearchResult : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
-
-/** / deprecated */
-@property(nonatomic, readwrite) int64_t rid;
 
 @property(nonatomic, readwrite) int64_t date;
 
@@ -680,11 +787,47 @@ GPB_FINAL @interface MessageSearchResult : GPBMessage
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *highlightTokensArray;
-/** The number of items in @c highlightTokensArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger highlightTokensArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FacetHighlight*> *facetHighlightsArray;
+/** The number of items in @c facetHighlightsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger facetHighlightsArray_Count;
 
 @end
+
+#pragma mark - SearchResult
+
+typedef GPB_ENUM(SearchResult_FieldNumber) {
+  SearchResult_FieldNumber_ContactSearchResult = 1,
+  SearchResult_FieldNumber_UserSearchResult = 2,
+  SearchResult_FieldNumber_GroupSearchResult = 3,
+  SearchResult_FieldNumber_MessageSearchResult = 4,
+};
+
+typedef GPB_ENUM(SearchResult_Body_OneOfCase) {
+  SearchResult_Body_OneOfCase_GPBUnsetOneOfCase = 0,
+  SearchResult_Body_OneOfCase_ContactSearchResult = 1,
+  SearchResult_Body_OneOfCase_UserSearchResult = 2,
+  SearchResult_Body_OneOfCase_GroupSearchResult = 3,
+  SearchResult_Body_OneOfCase_MessageSearchResult = 4,
+};
+
+GPB_FINAL @interface SearchResult : GPBMessage
+
+@property(nonatomic, readonly) SearchResult_Body_OneOfCase bodyOneOfCase;
+
+@property(nonatomic, readwrite, strong, null_resettable) ContactSearchResult *contactSearchResult;
+
+@property(nonatomic, readwrite, strong, null_resettable) UserSearchResult *userSearchResult;
+
+@property(nonatomic, readwrite, strong, null_resettable) GroupSearchResult *groupSearchResult;
+
+@property(nonatomic, readwrite, strong, null_resettable) MessageSearchResult *messageSearchResult;
+
+@end
+
+/**
+ * Clears whatever value was set for the oneof 'body'.
+ **/
+void SearchResult_ClearBodyOneOfCase(SearchResult *message);
 
 #pragma mark - MessageSearchItem
 
@@ -963,6 +1106,60 @@ GPB_FINAL @interface ResponseGetPromotedPeers : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupPeersArray;
 /** The number of items in @c groupPeersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger groupPeersArray_Count;
+
+@end
+
+#pragma mark - RequestSearch
+
+typedef GPB_ENUM(RequestSearch_FieldNumber) {
+  RequestSearch_FieldNumber_Query = 1,
+  RequestSearch_FieldNumber_Limit = 2,
+  RequestSearch_FieldNumber_Cursor = 3,
+  RequestSearch_FieldNumber_Condition = 4,
+};
+
+GPB_FINAL @interface RequestSearch : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *query;
+
+@property(nonatomic, readwrite) int32_t limit;
+
+@property(nonatomic, readwrite, strong, null_resettable) GPBBytesValue *cursor;
+/** Test to see if @c cursor has been set. */
+@property(nonatomic, readwrite) BOOL hasCursor;
+
+@property(nonatomic, readwrite, strong, null_resettable) SearchCondition *condition;
+/** Test to see if @c condition has been set. */
+@property(nonatomic, readwrite) BOOL hasCondition;
+
+@end
+
+#pragma mark - ResponseSearch
+
+typedef GPB_ENUM(ResponseSearch_FieldNumber) {
+  ResponseSearch_FieldNumber_SearchResultsArray = 1,
+  ResponseSearch_FieldNumber_UserData = 2,
+  ResponseSearch_FieldNumber_GroupData = 3,
+  ResponseSearch_FieldNumber_NextCursor = 4,
+};
+
+GPB_FINAL @interface ResponseSearch : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<SearchResult*> *searchResultsArray;
+/** The number of items in @c searchResultsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger searchResultsArray_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, UserData*> *userData;
+/** The number of items in @c userData without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger userData_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, GroupData*> *groupData;
+/** The number of items in @c groupData without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger groupData_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) GPBBytesValue *nextCursor;
+/** Test to see if @c nextCursor has been set. */
+@property(nonatomic, readwrite) BOOL hasNextCursor;
 
 @end
 

@@ -7,11 +7,14 @@
 #import <ProtoRPC/ProtoRPCLegacy.h>
 #import <RxLibrary/GRXWriter+Immediate.h>
 
+#import "Timestamp.pbobjc.h"
 #import "Wrappers.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
+#import "Groups.pbobjc.h"
 #import "Peers.pbobjc.h"
 #import "Messaging.pbobjc.h"
+#import "Users.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 
 @implementation Search
@@ -331,6 +334,26 @@
            responseHandler:handler
                callOptions:callOptions
              responseClass:[ResponseGetPromotedPeers class]];
+}
+
+#pragma mark Search(RequestSearch) returns (ResponseSearch)
+
+- (void)searchWithRequest:(RequestSearch *)request handler:(void(^)(ResponseSearch *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToSearchWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToSearchWithRequest:(RequestSearch *)request handler:(void(^)(ResponseSearch *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"Search"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[ResponseSearch class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+- (GRPCUnaryProtoCall *)searchWithMessage:(RequestSearch *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"Search"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[ResponseSearch class]];
 }
 
 @end

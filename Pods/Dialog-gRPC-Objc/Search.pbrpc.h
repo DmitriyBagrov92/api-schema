@@ -21,6 +21,7 @@
 @class RequestMessageSearchMore;
 @class RequestPeerSearch;
 @class RequestResolvePeer;
+@class RequestSearch;
 @class RequestSimpleSearch;
 @class RequestSimpleSearchMore;
 @class ResponseFieldAutocomplete;
@@ -31,13 +32,17 @@
 @class ResponseMessageSearchResponse;
 @class ResponsePeerSearch;
 @class ResponseResolvePeer;
+@class ResponseSearch;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
+  #import "Timestamp.pbobjc.h"
   #import "Wrappers.pbobjc.h"
   #import "Annotations.pbobjc.h"
   #import "Definitions.pbobjc.h"
+  #import "Groups.pbobjc.h"
   #import "Peers.pbobjc.h"
   #import "Messaging.pbobjc.h"
+  #import "Users.pbobjc.h"
   #import "Scalapb.pbobjc.h"
 #endif
 
@@ -107,6 +112,10 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark GetPromotedPeers(RequestGetPromotedPeers) returns (ResponseGetPromotedPeers)
 
 - (GRPCUnaryProtoCall *)getPromotedPeersWithMessage:(RequestGetPromotedPeers *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark Search(RequestSearch) returns (ResponseSearch)
+
+- (GRPCUnaryProtoCall *)searchWithMessage:(RequestSearch *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 @end
 
@@ -231,6 +240,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getPromotedPeersWithRequest:(RequestGetPromotedPeers *)request handler:(void(^)(ResponseGetPromotedPeers *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToGetPromotedPeersWithRequest:(RequestGetPromotedPeers *)request handler:(void(^)(ResponseGetPromotedPeers *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark Search(RequestSearch) returns (ResponseSearch)
+
+- (void)searchWithRequest:(RequestSearch *)request handler:(void(^)(ResponseSearch *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToSearchWithRequest:(RequestSearch *)request handler:(void(^)(ResponseSearch *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end

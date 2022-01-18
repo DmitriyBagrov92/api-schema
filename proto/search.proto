@@ -4,11 +4,14 @@ package dialog;
 
 // Searching API
 
+import "timestamp.proto";
 import "wrappers.proto";
 import "annotations.proto";
 import "definitions.proto";
+import "groups.proto";
 import "peers.proto";
 import "messaging.proto";
+import "users.proto";
 import "scalapb.proto";
 
 option go_package = "dialog";
@@ -86,6 +89,7 @@ message SearchCondition {
         SearchPeerCondition search_peer_condition = 5;
         SearchPeerContentType search_peer_content_type = 6;
         SearchSenderIdConfition search_sender_id_confition = 7;
+        SearchUserCondition search_user_condition = 8;
     }
 }
 
@@ -119,6 +123,10 @@ message SearchPeerCondition {
 // Search content type condition
 message SearchPeerContentType {
     SearchContentType content_type = 1 [(dlg).log="visible"];
+}
+
+message SearchUserCondition {
+    google.protobuf.BoolValue is_bot = 1; // todo: add other fields, like Lifecycle
 }
 
 // Searching sender uid condition
@@ -167,15 +175,48 @@ message ResponseResolvePeer {
     OutPeer peer = 1;
 }
 
+message FacetHighlight {
+    string text = 1;
+    int32 highlight_start_pos = 2;
+    int32 highlight_end_pos = 3;
+}
+
+message UserSearchResult {
+    UserOutPeer peer = 1;
+    google.protobuf.Timestamp last_online_at = 2;
+    repeated FacetHighlight facet_highlights = 3;
+}
+
+message GroupSearchResult {
+    GroupOutPeer peer = 1;
+    repeated FacetHighlight facet_highlights = 2;
+}
+
+message ContactSearchResult {
+    string phone_hash = 1;
+    google.protobuf.StringValue user_id = 2;
+    repeated FacetHighlight facet_highlights = 3;
+}
+
 // Message container
 message MessageSearchResult {
     Peer peer = 1 [(dlg).log="visible"];
-    int64 rid = 2 [(dlg).log="visible"]; /// deprecated
+    reserved 2; reserved "rid";
     int64 date = 3 [(dlg).log="visible"];
     string sender_id = 4 [(dlg).log="visible"];
     MessageContent content = 5 [(dlg).log="visible"];
     UUIDValue mid = 6 [(dlg).log="visible"];
-    repeated string highlight_tokens = 7 [(dlg).log="visible"];
+    reserved 7; reserved "highlight_tokens";
+    repeated FacetHighlight facet_highlights = 8;
+}
+
+message SearchResult {
+    oneof body {
+        ContactSearchResult contact_search_result = 1;
+        UserSearchResult user_search_result = 2;
+        GroupSearchResult group_search_result = 3;
+        MessageSearchResult message_search_result = 4;
+    }
 }
 
 // Message Search result container
@@ -280,6 +321,22 @@ message ResponseGetPromotedPeers {
     repeated GroupOutPeer group_peers = 2;
 }
 
+message RequestSearch {
+    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    string query = 1;
+    int32 limit = 2;
+    google.protobuf.BytesValue cursor = 3;
+    SearchCondition condition = 4;
+}
+
+message ResponseSearch {
+    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
+    repeated SearchResult search_results = 1;
+    map<string, UserData> user_data = 2;
+    map<string, GroupData> group_data = 3;
+    google.protobuf.BytesValue next_cursor = 4;
+}
+
 service Search {
     /// Search among groups/users/contacts
     rpc PeerSearch (RequestPeerSearch) returns (ResponsePeerSearch) {
@@ -356,4 +413,10 @@ service Search {
         };
     }
 
+    rpc Search(RequestSearch) returns (ResponseSearch) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Search/Search"
+            body: "*"
+        };
+    }
 }
