@@ -712,7 +712,9 @@ typedef GPB_ENUM(MessageContent_FieldNumber) {
   MessageContent_FieldNumber_BinaryMessage = 7,
   MessageContent_FieldNumber_EmptyMessage = 8,
   MessageContent_FieldNumber_DeletedMessage = 9,
-  MessageContent_FieldNumber_Overides = 10,
+  MessageContent_FieldNumber_Overrides = 10,
+  MessageContent_FieldNumber_ExtensionsArray = 11,
+  MessageContent_FieldNumber_DisableNotifications = 12,
 };
 
 typedef GPB_ENUM(MessageContent_Body_OneOfCase) {
@@ -750,9 +752,15 @@ GPB_FINAL @interface MessageContent : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) DeletedMessage *deletedMessage;
 
-@property(nonatomic, readwrite, strong, null_resettable) MessageOverrides *overides;
-/** Test to see if @c overides has been set. */
-@property(nonatomic, readwrite) BOOL hasOverides;
+@property(nonatomic, readwrite, strong, null_resettable) MessageOverrides *overrides;
+/** Test to see if @c overrides has been set. */
+@property(nonatomic, readwrite) BOOL hasOverrides;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Any*> *extensionsArray;
+/** The number of items in @c extensionsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger extensionsArray_Count;
+
+@property(nonatomic, readwrite) BOOL disableNotifications;
 
 @end
 

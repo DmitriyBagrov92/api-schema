@@ -1495,7 +1495,9 @@ typedef struct MessageOverrides__storage_ {
 @dynamic binaryMessage;
 @dynamic emptyMessage;
 @dynamic deletedMessage;
-@dynamic hasOverides, overides;
+@dynamic hasOverrides, overrides;
+@dynamic extensionsArray, extensionsArray_Count;
+@dynamic disableNotifications;
 
 typedef struct MessageContent__storage_ {
   uint32_t _has_storage_[2];
@@ -1508,7 +1510,8 @@ typedef struct MessageContent__storage_ {
   BinaryMessage *binaryMessage;
   EmptyMessage *emptyMessage;
   DeletedMessage *deletedMessage;
-  MessageOverrides *overides;
+  MessageOverrides *overrides;
+  NSMutableArray *extensionsArray;
 } MessageContent__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1599,13 +1602,31 @@ typedef struct MessageContent__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "overides",
+        .name = "overrides",
         .dataTypeSpecific.clazz = GPBObjCClass(MessageOverrides),
-        .number = MessageContent_FieldNumber_Overides,
+        .number = MessageContent_FieldNumber_Overrides,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(MessageContent__storage_, overides),
+        .offset = (uint32_t)offsetof(MessageContent__storage_, overrides),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "extensionsArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(Any),
+        .number = MessageContent_FieldNumber_ExtensionsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(MessageContent__storage_, extensionsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "disableNotifications",
+        .dataTypeSpecific.clazz = Nil,
+        .number = MessageContent_FieldNumber_DisableNotifications,
+        .hasIndex = 1,
+        .offset = 2,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
       },
     };
     GPBDescriptor *localDescriptor =

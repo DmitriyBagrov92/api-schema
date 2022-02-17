@@ -182,7 +182,9 @@ message MessageContent {
         DeletedMessage deleted_message = 9;
     }
 
-    MessageOverrides overides = 10;
+    MessageOverrides overrides = 10;
+    repeated Any extensions = 11;
+    bool disable_notifications = 12;
 }
 
 // Text message
