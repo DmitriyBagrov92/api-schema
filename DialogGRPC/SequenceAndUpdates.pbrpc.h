@@ -51,6 +51,7 @@
   #import "Scalapb.pbobjc.h"
   #import "Miniappsregistry.pbobjc.h"
   #import "Suggests.pbobjc.h"
+  #import "Drafts.pbobjc.h"
 #endif
 
 @class GRPCUnaryProtoCall;

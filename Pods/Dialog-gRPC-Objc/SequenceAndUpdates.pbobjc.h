@@ -53,7 +53,9 @@ CF_EXTERN_C_BEGIN
 @class UpdateContactsRemoved;
 @class UpdateCountersChanged;
 @class UpdateDialogFavouriteChanged;
+@class UpdateDialogMuteChanged;
 @class UpdateDialogReadLaterChanged;
+@class UpdateDraftsChanged;
 @class UpdateEvent;
 @class UpdateFeatureFlagChanged;
 @class UpdateGroup;
@@ -86,6 +88,7 @@ CF_EXTERN_C_BEGIN
 @class UpdatePinnedMessagesChanged;
 @class UpdateRawUpdate;
 @class UpdateReactionsUpdate;
+@class UpdateSettingsChanged;
 @class UpdateSpaceMemberModified;
 @class UpdateSpaceModified;
 @class UpdateStickerCollectionsChanged;
@@ -210,6 +213,8 @@ typedef GPB_ENUM(SeqUpdateBody_FieldNumber) {
   SeqUpdateBody_FieldNumber_UpdatePermissionsChange = 63,
   SeqUpdateBody_FieldNumber_UpdateGroupTyping = 64,
   SeqUpdateBody_FieldNumber_UpdateDialogReadLaterChanged = 65,
+  SeqUpdateBody_FieldNumber_UpdateDialogMuteChanged = 66,
+  SeqUpdateBody_FieldNumber_UpdateSettingsChanged = 67,
 };
 
 typedef GPB_ENUM(SeqUpdateBody_Update_OneOfCase) {
@@ -279,6 +284,8 @@ typedef GPB_ENUM(SeqUpdateBody_Update_OneOfCase) {
   SeqUpdateBody_Update_OneOfCase_UpdatePermissionsChange = 63,
   SeqUpdateBody_Update_OneOfCase_UpdateGroupTyping = 64,
   SeqUpdateBody_Update_OneOfCase_UpdateDialogReadLaterChanged = 65,
+  SeqUpdateBody_Update_OneOfCase_UpdateDialogMuteChanged = 66,
+  SeqUpdateBody_Update_OneOfCase_UpdateSettingsChanged = 67,
 };
 
 GPB_FINAL @interface SeqUpdateBody : GPBMessage
@@ -415,6 +422,10 @@ GPB_FINAL @interface SeqUpdateBody : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateDialogReadLaterChanged *updateDialogReadLaterChanged;
 
+@property(nonatomic, readwrite, strong, null_resettable) UpdateDialogMuteChanged *updateDialogMuteChanged;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateSettingsChanged *updateSettingsChanged;
+
 @end
 
 /**
@@ -456,9 +467,9 @@ GPB_FINAL @interface RequestGetDifference : GPBMessage
 
 @property(nonatomic, readwrite) int32_t seq;
 
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *configHash;
+@property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *configHash GPB_DEPRECATED_MSG("dialog.RequestGetDifference.config_hash is deprecated (see sequence_and_updates.proto).");
 /** Test to see if @c configHash has been set. */
-@property(nonatomic, readwrite) BOOL hasConfigHash;
+@property(nonatomic, readwrite) BOOL hasConfigHash GPB_DEPRECATED_MSG("dialog.RequestGetDifference.config_hash is deprecated (see sequence_and_updates.proto).");
 
 @end
 
@@ -487,29 +498,29 @@ GPB_FINAL @interface ResponseGetDifference : GPBMessage
 /** The number of items in @c updatesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger updatesArray_Count;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<HistoryMessage*> *messagesArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<HistoryMessage*> *messagesArray GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.messages is deprecated (see sequence_and_updates.proto).");
 /** The number of items in @c messagesArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger messagesArray_Count;
+@property(nonatomic, readonly) NSUInteger messagesArray_Count GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.messages is deprecated (see sequence_and_updates.proto).");
 
 /** / false if all updates returned */
 @property(nonatomic, readwrite) BOOL needMore;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *usersRefsArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *usersRefsArray GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.users_refs is deprecated (see sequence_and_updates.proto).");
 /** The number of items in @c usersRefsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger usersRefsArray_Count;
+@property(nonatomic, readonly) NSUInteger usersRefsArray_Count GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.users_refs is deprecated (see sequence_and_updates.proto).");
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupsRefsArray;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupsRefsArray GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.groups_refs is deprecated (see sequence_and_updates.proto).");
 /** The number of items in @c groupsRefsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger groupsRefsArray_Count;
+@property(nonatomic, readonly) NSUInteger groupsRefsArray_Count GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.groups_refs is deprecated (see sequence_and_updates.proto).");
 
 /** / user's config */
-@property(nonatomic, readwrite, strong, null_resettable) Config *config;
+@property(nonatomic, readwrite, strong, null_resettable) Config *config GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.config is deprecated (see sequence_and_updates.proto).");
 /** Test to see if @c config has been set. */
-@property(nonatomic, readwrite) BOOL hasConfig;
+@property(nonatomic, readwrite) BOOL hasConfig GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.config is deprecated (see sequence_and_updates.proto).");
 
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *configHash;
+@property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *configHash GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.config_hash is deprecated (see sequence_and_updates.proto).");
 /** Test to see if @c configHash has been set. */
-@property(nonatomic, readwrite) BOOL hasConfigHash;
+@property(nonatomic, readwrite) BOOL hasConfigHash GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.config_hash is deprecated (see sequence_and_updates.proto).");
 
 @end
 
@@ -875,6 +886,9 @@ typedef GPB_ENUM(WeakUpdate_FieldNumber) {
   WeakUpdate_FieldNumber_UpdateContactsAddTaskSuspended = 20,
   WeakUpdate_FieldNumber_UpdateContactsRemoved = 21,
   WeakUpdate_FieldNumber_UpdateSuggests = 22,
+  WeakUpdate_FieldNumber_UpdateFeatureFlagChanged = 23,
+  WeakUpdate_FieldNumber_UpdateDraftsChanged = 24,
+  WeakUpdate_FieldNumber_UpdateUser = 25,
 };
 
 typedef GPB_ENUM(WeakUpdate_Updatebox_OneOfCase) {
@@ -900,6 +914,9 @@ typedef GPB_ENUM(WeakUpdate_Updatebox_OneOfCase) {
   WeakUpdate_Updatebox_OneOfCase_UpdateContactsAddTaskSuspended = 20,
   WeakUpdate_Updatebox_OneOfCase_UpdateContactsRemoved = 21,
   WeakUpdate_Updatebox_OneOfCase_UpdateSuggests = 22,
+  WeakUpdate_Updatebox_OneOfCase_UpdateFeatureFlagChanged = 23,
+  WeakUpdate_Updatebox_OneOfCase_UpdateDraftsChanged = 24,
+  WeakUpdate_Updatebox_OneOfCase_UpdateUser = 25,
 };
 
 GPB_FINAL @interface WeakUpdate : GPBMessage
@@ -947,6 +964,12 @@ GPB_FINAL @interface WeakUpdate : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UpdateContactsRemoved *updateContactsRemoved;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateSuggests *updateSuggests;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateFeatureFlagChanged *updateFeatureFlagChanged;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateDraftsChanged *updateDraftsChanged;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateUser *updateUser;
 
 @end
 
@@ -1018,7 +1041,7 @@ GPB_FINAL @interface ResponseGetState : GPBMessage
 
 @property(nonatomic, readwrite) int32_t seq;
 
-@property(nonatomic, readwrite) int64_t date;
+@property(nonatomic, readwrite) int64_t date GPB_DEPRECATED_MSG("dialog.ResponseGetState.date is deprecated (see sequence_and_updates.proto).");
 
 @end
 

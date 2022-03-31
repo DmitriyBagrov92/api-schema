@@ -33,11 +33,13 @@
 @class RequestMessageReceives;
 @class RequestMessageRemoveReaction;
 @class RequestMessageSetReaction;
+@class RequestMuteChat;
 @class RequestNotifyDialogOpened;
 @class RequestPinMessage;
 @class RequestReadDialogLater;
 @class RequestSendMessage;
 @class RequestUnfavouriteDialog;
+@class RequestUnmuteChat;
 @class RequestUnpinMessage;
 @class RequestUpdateMessage;
 @class ResponseCountForeignMessages;
@@ -57,6 +59,7 @@
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Wrappers.pbobjc.h"
   #import "Empty.pbobjc.h"
+  #import "Duration.pbobjc.h"
   #import "Annotations.pbobjc.h"
   #import "Definitions.pbobjc.h"
   #import "Miscellaneous.pbobjc.h"
@@ -203,6 +206,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark UnpinMessage(RequestUnpinMessage) returns (Empty)
 
 - (GRPCUnaryProtoCall *)unpinMessageWithMessage:(RequestUnpinMessage *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark MuteChat(RequestMuteChat) returns (Empty)
+
+- (GRPCUnaryProtoCall *)muteChatWithMessage:(RequestMuteChat *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark UnmuteChat(RequestUnmuteChat) returns (Empty)
+
+- (GRPCUnaryProtoCall *)unmuteChatWithMessage:(RequestUnmuteChat *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetUpdatedMessages(RequestGetUpdatedMessages) returns (ResponseGetUpdatedMessages)
 
@@ -513,6 +524,20 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)unpinMessageWithRequest:(RequestUnpinMessage *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToUnpinMessageWithRequest:(RequestUnpinMessage *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark MuteChat(RequestMuteChat) returns (Empty)
+
+- (void)muteChatWithRequest:(RequestMuteChat *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToMuteChatWithRequest:(RequestMuteChat *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark UnmuteChat(RequestUnmuteChat) returns (Empty)
+
+- (void)unmuteChatWithRequest:(RequestUnmuteChat *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToUnmuteChatWithRequest:(RequestUnmuteChat *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetUpdatedMessages(RequestGetUpdatedMessages) returns (ResponseGetUpdatedMessages)

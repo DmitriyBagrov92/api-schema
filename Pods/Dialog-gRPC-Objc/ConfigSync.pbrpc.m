@@ -60,6 +60,46 @@
 
 #pragma mark - Method Implementations
 
+#pragma mark GetSettings(RequestGetSettings) returns (ResponseGetSettings)
+
+- (void)getSettingsWithRequest:(RequestGetSettings *)request handler:(void(^)(ResponseGetSettings *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetSettingsWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToGetSettingsWithRequest:(RequestGetSettings *)request handler:(void(^)(ResponseGetSettings *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetSettings"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[ResponseGetSettings class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+- (GRPCUnaryProtoCall *)getSettingsWithMessage:(RequestGetSettings *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"GetSettings"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[ResponseGetSettings class]];
+}
+
+#pragma mark ChangeSettings(RequestChangeSettings) returns (Empty)
+
+- (void)changeSettingsWithRequest:(RequestChangeSettings *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToChangeSettingsWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToChangeSettingsWithRequest:(RequestChangeSettings *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"ChangeSettings"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GPBEmpty class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+- (GRPCUnaryProtoCall *)changeSettingsWithMessage:(RequestChangeSettings *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"ChangeSettings"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[GPBEmpty class]];
+}
+
 #pragma mark GetParameters(RequestGetParameters) returns (ResponseGetParameters)
 
 - (void)getParametersWithRequest:(RequestGetParameters *)request handler:(void(^)(ResponseGetParameters *_Nullable response, NSError *_Nullable error))handler{

@@ -18,6 +18,7 @@
 #import "Messaging.pbobjc.h"
 #import "Wrappers.pbobjc.h"
 #import "Empty.pbobjc.h"
+#import "Duration.pbobjc.h"
 #import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
 #import "Miscellaneous.pbobjc.h"
@@ -57,6 +58,7 @@ GPBObjCClassDeclaration(EmptyMessage);
 GPBObjCClassDeclaration(FastThumb);
 GPBObjCClassDeclaration(GPBBoolValue);
 GPBObjCClassDeclaration(GPBBytesValue);
+GPBObjCClassDeclaration(GPBDuration);
 GPBObjCClassDeclaration(GPBInt32Value);
 GPBObjCClassDeclaration(GPBInt64Value);
 GPBObjCClassDeclaration(GPBStringValue);
@@ -1495,9 +1497,7 @@ typedef struct MessageOverrides__storage_ {
 @dynamic binaryMessage;
 @dynamic emptyMessage;
 @dynamic deletedMessage;
-@dynamic hasOverrides, overrides;
-@dynamic extensionsArray, extensionsArray_Count;
-@dynamic disableNotifications;
+@dynamic hasOverides, overides;
 
 typedef struct MessageContent__storage_ {
   uint32_t _has_storage_[2];
@@ -1510,8 +1510,7 @@ typedef struct MessageContent__storage_ {
   BinaryMessage *binaryMessage;
   EmptyMessage *emptyMessage;
   DeletedMessage *deletedMessage;
-  MessageOverrides *overrides;
-  NSMutableArray *extensionsArray;
+  MessageOverrides *overides;
 } MessageContent__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1602,31 +1601,13 @@ typedef struct MessageContent__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "overrides",
+        .name = "overides",
         .dataTypeSpecific.clazz = GPBObjCClass(MessageOverrides),
-        .number = MessageContent_FieldNumber_Overrides,
+        .number = MessageContent_FieldNumber_Overides,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(MessageContent__storage_, overrides),
+        .offset = (uint32_t)offsetof(MessageContent__storage_, overides),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "extensionsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(Any),
-        .number = MessageContent_FieldNumber_ExtensionsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(MessageContent__storage_, extensionsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "disableNotifications",
-        .dataTypeSpecific.clazz = Nil,
-        .number = MessageContent_FieldNumber_DisableNotifications,
-        .hasIndex = 1,
-        .offset = 2,  // Stored in _has_storage_ to save space.
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBool,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -7343,6 +7324,7 @@ typedef struct ResponseCountForeignMessages__storage_ {
 @dynamic lastReactionAt;
 @dynamic readLater;
 @dynamic dialogType;
+@dynamic isMuted;
 
 typedef struct Dialog__storage_ {
   uint32_t _has_storage_[1];
@@ -7533,6 +7515,15 @@ typedef struct Dialog__storage_ {
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
+      {
+        .name = "isMuted",
+        .dataTypeSpecific.clazz = Nil,
+        .number = Dialog_FieldNumber_IsMuted,
+        .hasIndex = 19,
+        .offset = 20,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[Dialog class]
@@ -7716,6 +7707,7 @@ typedef struct ResponseLoadDialogs__storage_ {
 @dynamic isFavourite;
 @dynamic createdAt;
 @dynamic clock;
+@dynamic isMuted;
 
 typedef struct DialogData__storage_ {
   uint32_t _has_storage_[1];
@@ -7755,6 +7747,15 @@ typedef struct DialogData__storage_ {
         .offset = (uint32_t)offsetof(DialogData__storage_, clock),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "isMuted",
+        .dataTypeSpecific.clazz = Nil,
+        .number = DialogData_FieldNumber_IsMuted,
+        .hasIndex = 4,
+        .offset = 5,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -8489,6 +8490,61 @@ typedef struct UpdateDialogFavouriteChanged__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(UpdateDialogFavouriteChanged__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - UpdateDialogMuteChanged
+
+@implementation UpdateDialogMuteChanged
+
+@dynamic hasPeer, peer;
+@dynamic isMuted;
+
+typedef struct UpdateDialogMuteChanged__storage_ {
+  uint32_t _has_storage_[1];
+  Peer *peer;
+} UpdateDialogMuteChanged__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "peer",
+        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
+        .number = UpdateDialogMuteChanged_FieldNumber_Peer,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(UpdateDialogMuteChanged__storage_, peer),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "isMuted",
+        .dataTypeSpecific.clazz = Nil,
+        .number = UpdateDialogMuteChanged_FieldNumber_IsMuted,
+        .hasIndex = 1,
+        .offset = 2,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[UpdateDialogMuteChanged class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(UpdateDialogMuteChanged__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -9404,6 +9460,107 @@ typedef struct UpdateDialogReadLaterChanged__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(UpdateDialogReadLaterChanged__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - RequestMuteChat
+
+@implementation RequestMuteChat
+
+@dynamic hasPeer, peer;
+@dynamic hasDuration, duration;
+
+typedef struct RequestMuteChat__storage_ {
+  uint32_t _has_storage_[1];
+  Peer *peer;
+  GPBDuration *duration;
+} RequestMuteChat__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "peer",
+        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
+        .number = RequestMuteChat_FieldNumber_Peer,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(RequestMuteChat__storage_, peer),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "duration",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBDuration),
+        .number = RequestMuteChat_FieldNumber_Duration,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(RequestMuteChat__storage_, duration),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestMuteChat class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RequestMuteChat__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - RequestUnmuteChat
+
+@implementation RequestUnmuteChat
+
+@dynamic hasPeer, peer;
+
+typedef struct RequestUnmuteChat__storage_ {
+  uint32_t _has_storage_[1];
+  Peer *peer;
+} RequestUnmuteChat__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "peer",
+        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
+        .number = RequestUnmuteChat_FieldNumber_Peer,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(RequestUnmuteChat__storage_, peer),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestUnmuteChat class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RequestUnmuteChat__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");

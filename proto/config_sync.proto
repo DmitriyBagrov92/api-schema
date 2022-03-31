@@ -65,14 +65,59 @@ message UpdateParameterChanged {
     Parameter parameter = 1; /// changed parameter
 }
 
+message Settings {
+    message NotificationsSettings {
+        message MuteSettings {
+            bool mute_privates = 1 [(dlg).log="visible"];
+            bool mute_groups = 2 [(dlg).log="visible"];
+            bool mute_channels = 3 [(dlg).log="visible"];
+        }
+
+        bool pierce_mute_on_mention = 1 [(dlg).log="visible"];
+        bool show_text = 2 [(dlg).log="visible"];
+        bool show_names = 3 [(dlg).log="visible"];
+        MuteSettings mutes = 4;
+    }
+
+    NotificationsSettings notifications = 1 [(dlg).log="visible"];
+}
+
+message UpdateSettingsChanged {
+    Settings settings = 1 [(dlg).log="visible"];
+}
+
+message RequestGetSettings {}
+
+message ResponseGetSettings {
+    Settings settings = 1 [(dlg).log="visible"];
+}
+
+message RequestChangeSettings {
+    Settings settings = 1 [(dlg).log="visible"];
+}
+
 service ConfigSync {
+    rpc GetSettings(RequestGetSettings) returns (ResponseGetSettings) {
+        option (google.api.http) = {
+            post: "/v1/grpc/ConfigSync/GetSettings"
+            body: "*"
+        };
+    }
+    rpc ChangeSettings(RequestChangeSettings) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/grpc/ConfigSync/ChangeSettings"
+            body: "*"
+        };
+    }
     rpc GetParameters (RequestGetParameters) returns (ResponseGetParameters) {
+        option deprecated = true;
         option (google.api.http) = {
             post: "/v1/grpc/ConfigSync/GetParameters"
             body: "*"
         };
     }
     rpc EditParameter (RequestEditParameter) returns (google.protobuf.Empty) {
+        option deprecated = true;
         option (google.api.http) = {
             post: "/v1/grpc/ConfigSync/EditParameter"
             body: "*"

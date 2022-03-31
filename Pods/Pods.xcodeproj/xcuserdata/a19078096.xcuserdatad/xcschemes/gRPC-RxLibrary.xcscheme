@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6ACE59D1174B8848E741EBFD5A8B1803"
-               BuildableName = "gRPCCertificates.bundle"
-               BlueprintName = "gRPC-gRPCCertificates"
+               BlueprintIdentifier = "99B1DE31EF95463C39932B2E06C8F4F7"
+               BuildableName = "RxLibrary.framework"
+               BlueprintName = "gRPC-RxLibrary"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

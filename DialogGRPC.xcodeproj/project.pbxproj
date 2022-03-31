@@ -11,6 +11,10 @@
 		808B53C226B1678100DDA58B /* Suggests.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 808B53BE26B1678100DDA58B /* Suggests.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		808B53C326B1678100DDA58B /* Suggests.pbrpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 808B53BF26B1678100DDA58B /* Suggests.pbrpc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		808B53C426B1678100DDA58B /* Suggests.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 808B53C026B1678100DDA58B /* Suggests.pbobjc.m */; };
+		80D2832627F59BD700B1B2C4 /* Drafts.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 80D2832227F59BD600B1B2C4 /* Drafts.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		80D2832727F59BD700B1B2C4 /* Drafts.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D2832327F59BD700B1B2C4 /* Drafts.pbobjc.m */; };
+		80D2832827F59BD700B1B2C4 /* Drafts.pbrpc.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D2832427F59BD700B1B2C4 /* Drafts.pbrpc.m */; };
+		80D2832927F59BD700B1B2C4 /* Drafts.pbrpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 80D2832527F59BD700B1B2C4 /* Drafts.pbrpc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8D24997425FA3193000A5B7D /* Events.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D24997025FA3193000A5B7D /* Events.pbobjc.m */; };
 		8D24997525FA3193000A5B7D /* Events.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D24997125FA3193000A5B7D /* Events.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8D24997625FA3193000A5B7D /* Events.pbrpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D24997225FA3193000A5B7D /* Events.pbrpc.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -145,6 +149,10 @@
 		808B53BE26B1678100DDA58B /* Suggests.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Suggests.pbobjc.h; sourceTree = "<group>"; };
 		808B53BF26B1678100DDA58B /* Suggests.pbrpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Suggests.pbrpc.h; sourceTree = "<group>"; };
 		808B53C026B1678100DDA58B /* Suggests.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Suggests.pbobjc.m; sourceTree = "<group>"; };
+		80D2832227F59BD600B1B2C4 /* Drafts.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drafts.pbobjc.h; sourceTree = "<group>"; };
+		80D2832327F59BD700B1B2C4 /* Drafts.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Drafts.pbobjc.m; sourceTree = "<group>"; };
+		80D2832427F59BD700B1B2C4 /* Drafts.pbrpc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Drafts.pbrpc.m; sourceTree = "<group>"; };
+		80D2832527F59BD700B1B2C4 /* Drafts.pbrpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drafts.pbrpc.h; sourceTree = "<group>"; };
 		8D24997025FA3193000A5B7D /* Events.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Events.pbobjc.m; sourceTree = "<group>"; };
 		8D24997125FA3193000A5B7D /* Events.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.pbobjc.h; sourceTree = "<group>"; };
 		8D24997225FA3193000A5B7D /* Events.pbrpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.pbrpc.h; sourceTree = "<group>"; };
@@ -331,6 +339,10 @@
 		8D5BA12725CADA8200755F7D /* DialogGRPC */ = {
 			isa = PBXGroup;
 			children = (
+				80D2832227F59BD600B1B2C4 /* Drafts.pbobjc.h */,
+				80D2832327F59BD700B1B2C4 /* Drafts.pbobjc.m */,
+				80D2832527F59BD700B1B2C4 /* Drafts.pbrpc.h */,
+				80D2832427F59BD700B1B2C4 /* Drafts.pbrpc.m */,
 				808B53BE26B1678100DDA58B /* Suggests.pbobjc.h */,
 				808B53C026B1678100DDA58B /* Suggests.pbobjc.m */,
 				808B53BF26B1678100DDA58B /* Suggests.pbrpc.h */,
@@ -541,8 +553,10 @@
 				8D24997525FA3193000A5B7D /* Events.pbobjc.h in Headers */,
 				808B53C226B1678100DDA58B /* Suggests.pbobjc.h in Headers */,
 				808B53C326B1678100DDA58B /* Suggests.pbrpc.h in Headers */,
+				80D2832627F59BD700B1B2C4 /* Drafts.pbobjc.h in Headers */,
 				8D5BA46925CB1B4100755F7D /* Annotations.pbobjc.h in Headers */,
 				8D5BA47425CB1B4100755F7D /* Peers.pbobjc.h in Headers */,
+				80D2832927F59BD700B1B2C4 /* Drafts.pbrpc.h in Headers */,
 				8D24997625FA3193000A5B7D /* Events.pbrpc.h in Headers */,
 				8D5BA49425CB1B4100755F7D /* Privacy.pbobjc.h in Headers */,
 				8D5BA49B25CB1B4100755F7D /* Contacts.pbobjc.h in Headers */,
@@ -651,6 +665,7 @@
 				8D5BA4D725CB1B4100755F7D /* Crypto.pbrpc.m in Sources */,
 				8D5BA4C125CB1B4100755F7D /* ConfigSync.pbrpc.m in Sources */,
 				8D5BA4BA25CB1B4100755F7D /* Integrations.pbobjc.m in Sources */,
+				80D2832727F59BD700B1B2C4 /* Drafts.pbobjc.m in Sources */,
 				8D5BA4BE25CB1B4100755F7D /* Miniappsregistry.pbrpc.m in Sources */,
 				8D5BA48E25CB1B4100755F7D /* Registration.pbrpc.m in Sources */,
 				8D5BA4AD25CB1B4100755F7D /* Contacts.pbrpc.m in Sources */,
@@ -660,6 +675,7 @@
 				8D5BA4A225CB1B4100755F7D /* Annotations.pbobjc.m in Sources */,
 				8D5BA46F25CB1B4100755F7D /* Clickroad.pbobjc.m in Sources */,
 				8D24997425FA3193000A5B7D /* Events.pbobjc.m in Sources */,
+				80D2832827F59BD700B1B2C4 /* Drafts.pbrpc.m in Sources */,
 				8D5BA4CE25CB1B4100755F7D /* Profile.pbobjc.m in Sources */,
 				8D5BA4D525CB1B4100755F7D /* Counters.pbobjc.m in Sources */,
 				8D5BA47325CB1B4100755F7D /* Crypto.pbobjc.m in Sources */,

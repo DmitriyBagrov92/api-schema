@@ -32,6 +32,9 @@
 GPBObjCClassDeclaration(FeatureFlag);
 GPBObjCClassDeclaration(GPBStringValue);
 GPBObjCClassDeclaration(Parameter);
+GPBObjCClassDeclaration(Settings);
+GPBObjCClassDeclaration(Settings_NotificationsSettings);
+GPBObjCClassDeclaration(Settings_NotificationsSettings_MuteSettings);
 
 #pragma mark - ConfigSyncRoot
 
@@ -528,6 +531,359 @@ typedef struct UpdateParameterChanged__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(UpdateParameterChanged__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - Settings
+
+@implementation Settings
+
+@dynamic hasNotifications, notifications;
+
+typedef struct Settings__storage_ {
+  uint32_t _has_storage_[1];
+  Settings_NotificationsSettings *notifications;
+} Settings__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "notifications",
+        .dataTypeSpecific.clazz = GPBObjCClass(Settings_NotificationsSettings),
+        .number = Settings_FieldNumber_Notifications,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Settings__storage_, notifications),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Settings class]
+                                     rootClass:[ConfigSyncRoot class]
+                                          file:ConfigSyncRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Settings__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - Settings_NotificationsSettings
+
+@implementation Settings_NotificationsSettings
+
+@dynamic pierceMuteOnMention;
+@dynamic showText;
+@dynamic showNames;
+@dynamic hasMutes, mutes;
+
+typedef struct Settings_NotificationsSettings__storage_ {
+  uint32_t _has_storage_[1];
+  Settings_NotificationsSettings_MuteSettings *mutes;
+} Settings_NotificationsSettings__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "pierceMuteOnMention",
+        .dataTypeSpecific.clazz = Nil,
+        .number = Settings_NotificationsSettings_FieldNumber_PierceMuteOnMention,
+        .hasIndex = 0,
+        .offset = 1,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "showText",
+        .dataTypeSpecific.clazz = Nil,
+        .number = Settings_NotificationsSettings_FieldNumber_ShowText,
+        .hasIndex = 2,
+        .offset = 3,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "showNames",
+        .dataTypeSpecific.clazz = Nil,
+        .number = Settings_NotificationsSettings_FieldNumber_ShowNames,
+        .hasIndex = 4,
+        .offset = 5,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "mutes",
+        .dataTypeSpecific.clazz = GPBObjCClass(Settings_NotificationsSettings_MuteSettings),
+        .number = Settings_NotificationsSettings_FieldNumber_Mutes,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(Settings_NotificationsSettings__storage_, mutes),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Settings_NotificationsSettings class]
+                                     rootClass:[ConfigSyncRoot class]
+                                          file:ConfigSyncRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Settings_NotificationsSettings__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(Settings)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - Settings_NotificationsSettings_MuteSettings
+
+@implementation Settings_NotificationsSettings_MuteSettings
+
+@dynamic mutePrivates;
+@dynamic muteGroups;
+@dynamic muteChannels;
+
+typedef struct Settings_NotificationsSettings_MuteSettings__storage_ {
+  uint32_t _has_storage_[1];
+} Settings_NotificationsSettings_MuteSettings__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "mutePrivates",
+        .dataTypeSpecific.clazz = Nil,
+        .number = Settings_NotificationsSettings_MuteSettings_FieldNumber_MutePrivates,
+        .hasIndex = 0,
+        .offset = 1,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "muteGroups",
+        .dataTypeSpecific.clazz = Nil,
+        .number = Settings_NotificationsSettings_MuteSettings_FieldNumber_MuteGroups,
+        .hasIndex = 2,
+        .offset = 3,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "muteChannels",
+        .dataTypeSpecific.clazz = Nil,
+        .number = Settings_NotificationsSettings_MuteSettings_FieldNumber_MuteChannels,
+        .hasIndex = 4,
+        .offset = 5,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Settings_NotificationsSettings_MuteSettings class]
+                                     rootClass:[ConfigSyncRoot class]
+                                          file:ConfigSyncRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Settings_NotificationsSettings_MuteSettings__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(Settings_NotificationsSettings)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - UpdateSettingsChanged
+
+@implementation UpdateSettingsChanged
+
+@dynamic hasSettings, settings;
+
+typedef struct UpdateSettingsChanged__storage_ {
+  uint32_t _has_storage_[1];
+  Settings *settings;
+} UpdateSettingsChanged__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "settings",
+        .dataTypeSpecific.clazz = GPBObjCClass(Settings),
+        .number = UpdateSettingsChanged_FieldNumber_Settings,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(UpdateSettingsChanged__storage_, settings),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[UpdateSettingsChanged class]
+                                     rootClass:[ConfigSyncRoot class]
+                                          file:ConfigSyncRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(UpdateSettingsChanged__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - RequestGetSettings
+
+@implementation RequestGetSettings
+
+
+typedef struct RequestGetSettings__storage_ {
+  uint32_t _has_storage_[1];
+} RequestGetSettings__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestGetSettings class]
+                                     rootClass:[ConfigSyncRoot class]
+                                          file:ConfigSyncRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(RequestGetSettings__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - ResponseGetSettings
+
+@implementation ResponseGetSettings
+
+@dynamic hasSettings, settings;
+
+typedef struct ResponseGetSettings__storage_ {
+  uint32_t _has_storage_[1];
+  Settings *settings;
+} ResponseGetSettings__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "settings",
+        .dataTypeSpecific.clazz = GPBObjCClass(Settings),
+        .number = ResponseGetSettings_FieldNumber_Settings,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(ResponseGetSettings__storage_, settings),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ResponseGetSettings class]
+                                     rootClass:[ConfigSyncRoot class]
+                                          file:ConfigSyncRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ResponseGetSettings__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - RequestChangeSettings
+
+@implementation RequestChangeSettings
+
+@dynamic hasSettings, settings;
+
+typedef struct RequestChangeSettings__storage_ {
+  uint32_t _has_storage_[1];
+  Settings *settings;
+} RequestChangeSettings__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "settings",
+        .dataTypeSpecific.clazz = GPBObjCClass(Settings),
+        .number = RequestChangeSettings_FieldNumber_Settings,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(RequestChangeSettings__storage_, settings),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestChangeSettings class]
+                                     rootClass:[ConfigSyncRoot class]
+                                          file:ConfigSyncRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RequestChangeSettings__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");

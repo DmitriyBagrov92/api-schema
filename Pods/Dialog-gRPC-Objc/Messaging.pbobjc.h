@@ -49,6 +49,7 @@ CF_EXTERN_C_BEGIN
 @class FastThumb;
 @class GPBBoolValue;
 @class GPBBytesValue;
+@class GPBDuration;
 @class GPBInt32Value;
 @class GPBInt64Value;
 @class GPBStringValue;
@@ -712,9 +713,7 @@ typedef GPB_ENUM(MessageContent_FieldNumber) {
   MessageContent_FieldNumber_BinaryMessage = 7,
   MessageContent_FieldNumber_EmptyMessage = 8,
   MessageContent_FieldNumber_DeletedMessage = 9,
-  MessageContent_FieldNumber_Overrides = 10,
-  MessageContent_FieldNumber_ExtensionsArray = 11,
-  MessageContent_FieldNumber_DisableNotifications = 12,
+  MessageContent_FieldNumber_Overides = 10,
 };
 
 typedef GPB_ENUM(MessageContent_Body_OneOfCase) {
@@ -752,15 +751,9 @@ GPB_FINAL @interface MessageContent : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) DeletedMessage *deletedMessage;
 
-@property(nonatomic, readwrite, strong, null_resettable) MessageOverrides *overrides;
-/** Test to see if @c overrides has been set. */
-@property(nonatomic, readwrite) BOOL hasOverrides;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Any*> *extensionsArray;
-/** The number of items in @c extensionsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger extensionsArray_Count;
-
-@property(nonatomic, readwrite) BOOL disableNotifications;
+@property(nonatomic, readwrite, strong, null_resettable) MessageOverrides *overides;
+/** Test to see if @c overides has been set. */
+@property(nonatomic, readwrite) BOOL hasOverides;
 
 @end
 
@@ -2949,6 +2942,7 @@ typedef GPB_ENUM(Dialog_FieldNumber) {
   Dialog_FieldNumber_LastReactionAt = 16,
   Dialog_FieldNumber_ReadLater = 17,
   Dialog_FieldNumber_DialogType = 18,
+  Dialog_FieldNumber_IsMuted = 19,
 };
 
 /**
@@ -3026,6 +3020,8 @@ GPB_FINAL @interface Dialog : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *dialogType;
 
+@property(nonatomic, readwrite) BOOL isMuted;
+
 @end
 
 /**
@@ -3102,6 +3098,7 @@ typedef GPB_ENUM(DialogData_FieldNumber) {
   DialogData_FieldNumber_IsFavourite = 1,
   DialogData_FieldNumber_CreatedAt = 2,
   DialogData_FieldNumber_Clock = 3,
+  DialogData_FieldNumber_IsMuted = 4,
 };
 
 /**
@@ -3115,6 +3112,8 @@ GPB_FINAL @interface DialogData : GPBMessage
 
 /** / When dialog was changed last time */
 @property(nonatomic, readwrite) int64_t clock;
+
+@property(nonatomic, readwrite) BOOL isMuted;
 
 @end
 
@@ -3379,6 +3378,23 @@ GPB_FINAL @interface UpdateDialogFavouriteChanged : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isFavourite;
 /** Test to see if @c isFavourite has been set. */
 @property(nonatomic, readwrite) BOOL hasIsFavourite;
+
+@end
+
+#pragma mark - UpdateDialogMuteChanged
+
+typedef GPB_ENUM(UpdateDialogMuteChanged_FieldNumber) {
+  UpdateDialogMuteChanged_FieldNumber_Peer = 1,
+  UpdateDialogMuteChanged_FieldNumber_IsMuted = 2,
+};
+
+GPB_FINAL @interface UpdateDialogMuteChanged : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
+
+@property(nonatomic, readwrite) BOOL isMuted;
 
 @end
 
@@ -3706,6 +3722,39 @@ GPB_FINAL @interface UpdateDialogReadLaterChanged : GPBMessage
 @property(nonatomic, readwrite) BOOL hasPeer;
 
 @property(nonatomic, readwrite) BOOL readLater;
+
+@end
+
+#pragma mark - RequestMuteChat
+
+typedef GPB_ENUM(RequestMuteChat_FieldNumber) {
+  RequestMuteChat_FieldNumber_Peer = 1,
+  RequestMuteChat_FieldNumber_Duration = 2,
+};
+
+GPB_FINAL @interface RequestMuteChat : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
+
+@property(nonatomic, readwrite, strong, null_resettable) GPBDuration *duration;
+/** Test to see if @c duration has been set. */
+@property(nonatomic, readwrite) BOOL hasDuration;
+
+@end
+
+#pragma mark - RequestUnmuteChat
+
+typedef GPB_ENUM(RequestUnmuteChat_FieldNumber) {
+  RequestUnmuteChat_FieldNumber_Peer = 1,
+};
+
+GPB_FINAL @interface RequestUnmuteChat : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
 
 @end
 

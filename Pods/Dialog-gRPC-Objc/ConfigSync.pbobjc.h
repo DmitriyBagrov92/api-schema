@@ -30,6 +30,9 @@ CF_EXTERN_C_BEGIN
 @class FeatureFlag;
 @class GPBStringValue;
 @class Parameter;
+@class Settings;
+@class Settings_NotificationsSettings;
+@class Settings_NotificationsSettings_MuteSettings;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -198,6 +201,109 @@ GPB_FINAL @interface UpdateParameterChanged : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) Parameter *parameter;
 /** Test to see if @c parameter has been set. */
 @property(nonatomic, readwrite) BOOL hasParameter;
+
+@end
+
+#pragma mark - Settings
+
+typedef GPB_ENUM(Settings_FieldNumber) {
+  Settings_FieldNumber_Notifications = 1,
+};
+
+GPB_FINAL @interface Settings : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Settings_NotificationsSettings *notifications;
+/** Test to see if @c notifications has been set. */
+@property(nonatomic, readwrite) BOOL hasNotifications;
+
+@end
+
+#pragma mark - Settings_NotificationsSettings
+
+typedef GPB_ENUM(Settings_NotificationsSettings_FieldNumber) {
+  Settings_NotificationsSettings_FieldNumber_PierceMuteOnMention = 1,
+  Settings_NotificationsSettings_FieldNumber_ShowText = 2,
+  Settings_NotificationsSettings_FieldNumber_ShowNames = 3,
+  Settings_NotificationsSettings_FieldNumber_Mutes = 4,
+};
+
+GPB_FINAL @interface Settings_NotificationsSettings : GPBMessage
+
+@property(nonatomic, readwrite) BOOL pierceMuteOnMention;
+
+@property(nonatomic, readwrite) BOOL showText;
+
+@property(nonatomic, readwrite) BOOL showNames;
+
+@property(nonatomic, readwrite, strong, null_resettable) Settings_NotificationsSettings_MuteSettings *mutes;
+/** Test to see if @c mutes has been set. */
+@property(nonatomic, readwrite) BOOL hasMutes;
+
+@end
+
+#pragma mark - Settings_NotificationsSettings_MuteSettings
+
+typedef GPB_ENUM(Settings_NotificationsSettings_MuteSettings_FieldNumber) {
+  Settings_NotificationsSettings_MuteSettings_FieldNumber_MutePrivates = 1,
+  Settings_NotificationsSettings_MuteSettings_FieldNumber_MuteGroups = 2,
+  Settings_NotificationsSettings_MuteSettings_FieldNumber_MuteChannels = 3,
+};
+
+GPB_FINAL @interface Settings_NotificationsSettings_MuteSettings : GPBMessage
+
+@property(nonatomic, readwrite) BOOL mutePrivates;
+
+@property(nonatomic, readwrite) BOOL muteGroups;
+
+@property(nonatomic, readwrite) BOOL muteChannels;
+
+@end
+
+#pragma mark - UpdateSettingsChanged
+
+typedef GPB_ENUM(UpdateSettingsChanged_FieldNumber) {
+  UpdateSettingsChanged_FieldNumber_Settings = 1,
+};
+
+GPB_FINAL @interface UpdateSettingsChanged : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Settings *settings;
+/** Test to see if @c settings has been set. */
+@property(nonatomic, readwrite) BOOL hasSettings;
+
+@end
+
+#pragma mark - RequestGetSettings
+
+GPB_FINAL @interface RequestGetSettings : GPBMessage
+
+@end
+
+#pragma mark - ResponseGetSettings
+
+typedef GPB_ENUM(ResponseGetSettings_FieldNumber) {
+  ResponseGetSettings_FieldNumber_Settings = 1,
+};
+
+GPB_FINAL @interface ResponseGetSettings : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Settings *settings;
+/** Test to see if @c settings has been set. */
+@property(nonatomic, readwrite) BOOL hasSettings;
+
+@end
+
+#pragma mark - RequestChangeSettings
+
+typedef GPB_ENUM(RequestChangeSettings_FieldNumber) {
+  RequestChangeSettings_FieldNumber_Settings = 1,
+};
+
+GPB_FINAL @interface RequestChangeSettings : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Settings *settings;
+/** Test to see if @c settings has been set. */
+@property(nonatomic, readwrite) BOOL hasSettings;
 
 @end
 

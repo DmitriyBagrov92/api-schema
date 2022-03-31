@@ -13,11 +13,14 @@
 #endif
 
 @class GPBEmpty;
+@class RequestChangeSettings;
 @class RequestEditParameter;
 @class RequestFeatureFlags;
 @class RequestGetParameters;
+@class RequestGetSettings;
 @class ResponseFeatureFlags;
 @class ResponseGetParameters;
+@class ResponseGetSettings;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Wrappers.pbobjc.h"
@@ -38,6 +41,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ConfigSync2 <NSObject>
 
+#pragma mark GetSettings(RequestGetSettings) returns (ResponseGetSettings)
+
+- (GRPCUnaryProtoCall *)getSettingsWithMessage:(RequestGetSettings *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark ChangeSettings(RequestChangeSettings) returns (Empty)
+
+- (GRPCUnaryProtoCall *)changeSettingsWithMessage:(RequestChangeSettings *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
 #pragma mark GetParameters(RequestGetParameters) returns (ResponseGetParameters)
 
 - (GRPCUnaryProtoCall *)getParametersWithMessage:(RequestGetParameters *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
@@ -57,6 +68,20 @@ NS_ASSUME_NONNULL_BEGIN
  * recognize call options provided in the initializer. Using the v2 protocol is recommended.
  */
 @protocol ConfigSync <NSObject>
+
+#pragma mark GetSettings(RequestGetSettings) returns (ResponseGetSettings)
+
+- (void)getSettingsWithRequest:(RequestGetSettings *)request handler:(void(^)(ResponseGetSettings *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToGetSettingsWithRequest:(RequestGetSettings *)request handler:(void(^)(ResponseGetSettings *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark ChangeSettings(RequestChangeSettings) returns (Empty)
+
+- (void)changeSettingsWithRequest:(RequestChangeSettings *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToChangeSettingsWithRequest:(RequestChangeSettings *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
 
 #pragma mark GetParameters(RequestGetParameters) returns (ResponseGetParameters)
 

@@ -37,6 +37,7 @@
 #import "Scalapb.pbobjc.h"
 #import "Miniappsregistry.pbobjc.h"
 #import "Suggests.pbobjc.h"
+#import "Drafts.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -74,7 +75,9 @@ GPBObjCClassDeclaration(UpdateContactsAdded);
 GPBObjCClassDeclaration(UpdateContactsRemoved);
 GPBObjCClassDeclaration(UpdateCountersChanged);
 GPBObjCClassDeclaration(UpdateDialogFavouriteChanged);
+GPBObjCClassDeclaration(UpdateDialogMuteChanged);
 GPBObjCClassDeclaration(UpdateDialogReadLaterChanged);
+GPBObjCClassDeclaration(UpdateDraftsChanged);
 GPBObjCClassDeclaration(UpdateEvent);
 GPBObjCClassDeclaration(UpdateFeatureFlagChanged);
 GPBObjCClassDeclaration(UpdateGroup);
@@ -107,6 +110,7 @@ GPBObjCClassDeclaration(UpdatePermissionsChange);
 GPBObjCClassDeclaration(UpdatePinnedMessagesChanged);
 GPBObjCClassDeclaration(UpdateRawUpdate);
 GPBObjCClassDeclaration(UpdateReactionsUpdate);
+GPBObjCClassDeclaration(UpdateSettingsChanged);
 GPBObjCClassDeclaration(UpdateSpaceMemberModified);
 GPBObjCClassDeclaration(UpdateSpaceModified);
 GPBObjCClassDeclaration(UpdateStickerCollectionsChanged);
@@ -251,6 +255,8 @@ static GPBFileDescriptor *SequenceAndUpdatesRoot_FileDescriptor(void) {
 @dynamic updatePermissionsChange;
 @dynamic updateGroupTyping;
 @dynamic updateDialogReadLaterChanged;
+@dynamic updateDialogMuteChanged;
+@dynamic updateSettingsChanged;
 
 typedef struct SeqUpdateBody__storage_ {
   uint32_t _has_storage_[2];
@@ -319,6 +325,8 @@ typedef struct SeqUpdateBody__storage_ {
   UpdatePermissionsChange *updatePermissionsChange;
   UpdateGroupTyping *updateGroupTyping;
   UpdateDialogReadLaterChanged *updateDialogReadLaterChanged;
+  UpdateDialogMuteChanged *updateDialogMuteChanged;
+  UpdateSettingsChanged *updateSettingsChanged;
 } SeqUpdateBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -909,6 +917,24 @@ typedef struct SeqUpdateBody__storage_ {
         .number = SeqUpdateBody_FieldNumber_UpdateDialogReadLaterChanged,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateDialogReadLaterChanged),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateDialogMuteChanged",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateDialogMuteChanged),
+        .number = SeqUpdateBody_FieldNumber_UpdateDialogMuteChanged,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateDialogMuteChanged),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateSettingsChanged",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateSettingsChanged),
+        .number = SeqUpdateBody_FieldNumber_UpdateSettingsChanged,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateSettingsChanged),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -2086,6 +2112,9 @@ void SetWeakUpdateCommand_ChangeMyTyping_Type_RawValue(WeakUpdateCommand_ChangeM
 @dynamic updateContactsAddTaskSuspended;
 @dynamic updateContactsRemoved;
 @dynamic updateSuggests;
+@dynamic updateFeatureFlagChanged;
+@dynamic updateDraftsChanged;
+@dynamic updateUser;
 
 typedef struct WeakUpdate__storage_ {
   uint32_t _has_storage_[2];
@@ -2110,6 +2139,9 @@ typedef struct WeakUpdate__storage_ {
   UpdateContactsAddTaskSuspended *updateContactsAddTaskSuspended;
   UpdateContactsRemoved *updateContactsRemoved;
   UpdateSuggests *updateSuggests;
+  UpdateFeatureFlagChanged *updateFeatureFlagChanged;
+  UpdateDraftsChanged *updateDraftsChanged;
+  UpdateUser *updateUser;
 } WeakUpdate__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2304,6 +2336,33 @@ typedef struct WeakUpdate__storage_ {
         .number = WeakUpdate_FieldNumber_UpdateSuggests,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(WeakUpdate__storage_, updateSuggests),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateFeatureFlagChanged",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateFeatureFlagChanged),
+        .number = WeakUpdate_FieldNumber_UpdateFeatureFlagChanged,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, updateFeatureFlagChanged),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateDraftsChanged",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateDraftsChanged),
+        .number = WeakUpdate_FieldNumber_UpdateDraftsChanged,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, updateDraftsChanged),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateUser",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateUser),
+        .number = WeakUpdate_FieldNumber_UpdateUser,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, updateUser),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

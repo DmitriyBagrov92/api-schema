@@ -4,6 +4,7 @@ package dialog;
 
 import "wrappers.proto";
 import "empty.proto";
+import "duration.proto";
 import "annotations.proto";
 import "definitions.proto";
 import "miscellaneous.proto";
@@ -182,9 +183,7 @@ message MessageContent {
         DeletedMessage deleted_message = 9;
     }
 
-    MessageOverrides overrides = 10;
-    repeated Any extensions = 11;
-    bool disable_notifications = 12;
+    MessageOverrides overides = 10;
 }
 
 // Text message
@@ -476,8 +475,8 @@ message MessageReaction {
 
 // Predicate for searching in custom profile
 message SearchPredicate {
-    string key = 1 [(dlg).log = "visible"];
-    repeated string values = 2 [(dlg).log = "visible"];
+    string key = 1 [(dlg).log="visible"];
+    repeated string values = 2 [(dlg).log="visible"];
 }
 
 // Sending plain message
@@ -492,9 +491,9 @@ message RequestSendMessage {
     ReferencedMessages forward = 5 [(dlg).log="visible"];
     /// If current message is a reply on some other
     ReferencedMessages reply = 6 [(dlg).log="visible"];
-    repeated SearchPredicate predicates = 7 [(dlg).log = "visible"];
-    repeated string white_list = 8 [(dlg).log = "visible"];
-    repeated string black_list = 9 [(dlg).log = "visible"];
+    repeated SearchPredicate predicates = 7 [(dlg).log="visible"];
+    repeated string white_list = 8 [(dlg).log="visible"];
+    repeated string black_list = 9 [(dlg).log="visible"];
 }
 
 // Changing Message content
@@ -581,31 +580,31 @@ message ResponseSendMessage {
 
 // Update about plain message
 message UpdateMessage {
-     Peer peer = 1 [(dlg).log="visible"];
-     string sender_user_id = 2 [(dlg).log="visible"];
-     int64 date = 3 [(dlg).log="visible"]; // message creation date (interval end)
-     UUIDValue mid = 4 [(dlg).log="visible"]; /// Message id
-     MessageContent message = 5 [(dlg).log="visible"];
-     /// attributes to help reasoning about message
-     MessageAttributes attributes = 6 [(dlg).log="visible"];
-     oneof attach {
-         ReferencedMessages forward = 7 [(dlg).log="visible"];
-         ReferencedMessages reply = 8 [(dlg).log="visible"];
-     }
-     /// Message id of previos message from current conversation
-     UUIDValue previous_mid = 9 [(dlg).log="visible"];
-     google.protobuf.Int64Value prev_message_date = 10; // interval start
-     /// counter clock of the unread messages
-     int64 unread_counter_clock = 11 [(dlg).log="visible"];
-     /// counter of the unread messages
-     google.protobuf.Int32Value counter = 12 [(dlg).log="visible"];
-     /// date of my own read
-     google.protobuf.Int64Value my_read_date = 13 [(dlg).log="visible"];
-     int64 random_id = 14 [(dlg).log="visible"];
-     // when greater than date, then message is edited
-     int64 modified_at = 15 [(dlg).log="visible"];
-     // make sense for edited message only (modified_at > date)
-     google.protobuf.Int64Value prev_edit_in_peer_at = 16 [(dlg).log="visible"];
+    Peer peer = 1 [(dlg).log="visible"];
+    string sender_user_id = 2 [(dlg).log="visible"];
+    int64 date = 3 [(dlg).log="visible"]; // message creation date (interval end)
+    UUIDValue mid = 4 [(dlg).log="visible"]; /// Message id
+    MessageContent message = 5 [(dlg).log="visible"];
+    /// attributes to help reasoning about message
+    MessageAttributes attributes = 6 [(dlg).log="visible"];
+    oneof attach {
+        ReferencedMessages forward = 7 [(dlg).log="visible"];
+        ReferencedMessages reply = 8 [(dlg).log="visible"];
+    }
+    /// Message id of previos message from current conversation
+    UUIDValue previous_mid = 9 [(dlg).log="visible"];
+    google.protobuf.Int64Value prev_message_date = 10; // interval start
+    /// counter clock of the unread messages
+    int64 unread_counter_clock = 11 [(dlg).log="visible"];
+    /// counter of the unread messages
+    google.protobuf.Int32Value counter = 12 [(dlg).log="visible"];
+    /// date of my own read
+    google.protobuf.Int64Value my_read_date = 13 [(dlg).log="visible"];
+    int64 random_id = 14 [(dlg).log="visible"];
+    // when greater than date, then message is edited
+    int64 modified_at = 15 [(dlg).log="visible"];
+    // make sense for edited message only (modified_at > date)
+    google.protobuf.Int64Value prev_edit_in_peer_at = 16 [(dlg).log="visible"];
 }
 
 // Update about message change
@@ -725,7 +724,7 @@ message UpdateMessageEditRejectedByHook {
 
 // Update about new thread inside group
 message UpdateThreadCreated {
-    GroupOutPeer peer = 1 [(dlg).log="visible"];       // peer representing thread
+    GroupOutPeer peer = 1 [(dlg).log="visible"]; // peer representing thread
     UUIDValue start_message = 2 [(dlg).log="visible"]; // messageId from parent group where thread starts
 }
 
@@ -891,6 +890,7 @@ message Dialog {
     int64 last_reaction_at = 16;
     bool read_later = 17;
     string dialog_type = 18;
+    bool is_muted = 19 [(dlg).log="visible"];
 }
 
 enum DialogsFilter {
@@ -922,6 +922,7 @@ message DialogData {
     int64 created_at = 2 [(dlg).log="visible"];
     /// When dialog was changed last time
     int64 clock = 3 [(dlg).log="visible"];
+    bool is_muted = 4 [(dlg).log="visible"];
 }
 
 message DialogIndex {
@@ -1027,6 +1028,11 @@ message UpdateDialogFavouriteChanged {
     google.protobuf.BoolValue is_favourite = 2 [(dlg).log="visible"];
 }
 
+message UpdateDialogMuteChanged {
+    Peer peer = 1 [(dlg).log="visible"];
+    bool is_muted = 2 [(dlg).log="visible"];
+}
+
 // Notifying about dialog open
 message RequestNotifyDialogOpened {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
@@ -1127,6 +1133,15 @@ message RequestReadDialogLater {
 message UpdateDialogReadLaterChanged {
     Peer peer = 1 [(dlg).log="visible"];
     bool read_later = 2 [(dlg).log="visible"];
+}
+
+message RequestMuteChat {
+    Peer peer = 1 [(dlg).log="visible"];
+    google.protobuf.Duration duration = 2 [(dlg).log="visible"];
+}
+
+message RequestUnmuteChat {
+    Peer peer = 1 [(dlg).log="visible"];
 }
 
 service Messaging {
@@ -1282,6 +1297,18 @@ service Messaging {
             body: "*"
         };
     }
+    rpc MuteChat (RequestMuteChat) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Messaging/MuteChat"
+            body: "*"
+        };
+    }
+    rpc UnmuteChat (RequestUnmuteChat) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Messaging/UnmuteChat"
+            body: "*"
+        };
+    }
     rpc GetUpdatedMessages (RequestGetUpdatedMessages) returns (ResponseGetUpdatedMessages) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/GetUpdatedMessages"
@@ -1301,7 +1328,7 @@ service Messaging {
     rpc GetMessageReceives (RequestMessageReceives) returns (ResponseMessageReceives) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/GetMessageReceives"
-              body: "*"
+            body: "*"
         };
     }
 

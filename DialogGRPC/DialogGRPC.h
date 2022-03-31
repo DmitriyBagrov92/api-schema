@@ -68,6 +68,8 @@
 #import <DialogGRPC/Users.pbrpc.h>
 #import <DialogGRPC/Suggests.pbobjc.h>
 #import <DialogGRPC/Suggests.pbrpc.h>
+#import <DialogGRPC/Drafts.pbobjc.h>
+#import <DialogGRPC/Drafts.pbrpc.h>
 
 //! Project version number for DialogGRPC.
 FOUNDATION_EXPORT double DialogGRPCVersionNumber;
