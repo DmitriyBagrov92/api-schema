@@ -16,8 +16,8 @@ message MessageSuggests {
 }
 
 message UpdateSuggests {
-    int64 clock = 1 [(dlg).log = "visible"];
-    int64 prev_clock = 2 [(dlg).log = "visible"];
+    int64 clock = 1;
+    int64 prev_clock = 2;
     Peer peer = 3;
     MessageSuggests message_suggests = 4;
 }
@@ -25,12 +25,12 @@ message UpdateSuggests {
 message RequestLoadSuggests {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     int64 from_clock = 1;
-    Peer peer = 2 [(dlg).log = "visible", (dlg).required = true];
+    Peer peer = 2 [(dlg).required = true];
 }
 
 message ResponseLoadSuggests {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    int64 clock = 1 [(dlg).log = "visible"];
+    int64 clock = 1;
     repeated MessageSuggests suggests = 2;
     bool more_available = 3;
 }
@@ -52,7 +52,7 @@ message RequestSendSuggestAction {
     string suggest_id = 2;
     UUIDValue message_id = 3;
     Peer peer = 4 [(dlg).required = true];
-    string payload = 5 [(dlg).log = "hidden"];
+    string payload = 5 [(dlg).log = log_confidential];
 }
 
 service Suggests {

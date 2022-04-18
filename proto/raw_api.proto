@@ -14,8 +14,8 @@ option java_package = "im.dlg.grpc.services";
 
 message RequestRawRequest {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    google.protobuf.StringValue service = 1 [(dlg).log="visible"];
-    google.protobuf.BytesValue body = 2 [(dlg).log="hidden"];
+    google.protobuf.StringValue service = 1;
+    google.protobuf.BytesValue body = 2;
 }
 
 message ResponseRawRequest {

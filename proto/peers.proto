@@ -20,27 +20,27 @@ enum PeerType {
 
 // Peer
 message Peer {
-    PeerType type = 1 [(dlg).log="visible"];
-    string id = 2 [(dlg).log="visible"];
-    google.protobuf.StringValue str_id = 3 [(dlg).log="visible"];
+    PeerType type = 1;
+    string id = 2;
+    google.protobuf.StringValue str_id = 3;
 }
 
 // Out peer with access hash
 message OutPeer {
-    PeerType type = 1 [(dlg).log="visible"];
-    string id = 2 [(dlg).log="visible"];
-    int64 access_hash = 3 [(dlg).log="danger"];
-    google.protobuf.StringValue str_id = 4 [(dlg).log="visible"];
+    PeerType type = 1;
+    string id = 2;
+    int64 access_hash = 3 [(dlg).log=log_confidential];
+    google.protobuf.StringValue str_id = 4;
 }
 
 // User's out peer
 message UserOutPeer {
-    string user_id = 1 [(dlg).log="visible"]; /// User's id
-    int64 access_hash = 2 [(dlg).log="danger"];
+    string user_id = 1; /// User's id
+    int64 access_hash = 2 [(dlg).log=log_confidential];
 }
 
 // Group's out peer
 message GroupOutPeer {
-    string group_id = 1 [(dlg).log="visible"];
-    int64 access_hash = 2 [(dlg).log="danger"];
+    string group_id = 1;
+    int64 access_hash = 2 [(dlg).log=log_confidential];
 }

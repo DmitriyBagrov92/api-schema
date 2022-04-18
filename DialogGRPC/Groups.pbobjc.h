@@ -185,7 +185,6 @@ GPB_FINAL @interface Group : GPBMessage
 #pragma mark - GroupData
 
 typedef GPB_ENUM(GroupData_FieldNumber) {
-  GroupData_FieldNumber_SpaceId = 1,
   GroupData_FieldNumber_Title = 2,
   GroupData_FieldNumber_Avatar = 3,
   GroupData_FieldNumber_MembersAmount = 4,
@@ -203,8 +202,6 @@ typedef GPB_ENUM(GroupData_FieldNumber) {
 };
 
 GPB_FINAL @interface GroupData : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *spaceId;
 
 /** / Title of group */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *title;
@@ -565,7 +562,6 @@ GPB_FINAL @interface UpdateGroupMembersCountChanged : GPBMessage
 
 typedef GPB_ENUM(RequestCreateGroup_FieldNumber) {
   RequestCreateGroup_FieldNumber_Rid = 1,
-  RequestCreateGroup_FieldNumber_SpaceId = 2,
   RequestCreateGroup_FieldNumber_Title = 3,
   RequestCreateGroup_FieldNumber_UsersArray = 4,
   RequestCreateGroup_FieldNumber_GroupType = 5,
@@ -580,10 +576,6 @@ GPB_FINAL @interface RequestCreateGroup : GPBMessage
 
 /** / Id for query deduplication */
 @property(nonatomic, readwrite) int64_t rid;
-
-@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *spaceId;
-/** Test to see if @c spaceId has been set. */
-@property(nonatomic, readwrite) BOOL hasSpaceId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *title;
 

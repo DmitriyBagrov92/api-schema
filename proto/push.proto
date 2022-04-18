@@ -16,67 +16,67 @@ option java_package = "im.dlg.grpc.services";
 // Registering push token on server
 message RequestRegisterGooglePush {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string project_id = 1 [(dlg).log="hidden"];
-    string token = 2 [(dlg).log="hidden"];
+    string project_id = 1 [(dlg).log=log_sensitive];
+    string token = 2 [(dlg).log=log_confidential];
 }
 
 // Unregistering Google Push
 message RequestUnregisterGooglePush {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string token = 1 [(dlg).log="hidden"];
+    string token = 1 [(dlg).log=log_confidential];
 }
 
 // Registering apple push on server
 message RequestRegisterApplePush {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string apns_key = 1 [(dlg).log="visible"];
-    string token = 2 [(dlg).log="hidden"];
-    string apns_string_key = 3 [(dlg).log="visible"];
+    string apns_key = 1;
+    string token = 2 [(dlg).log=log_confidential];
+    string apns_string_key = 3;
 }
 
 // Unregistering Apple Push
 message RequestUnregisterApplePush {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string token = 1 [(dlg).log="hidden"];
+    string token = 1 [(dlg).log=log_confidential];
 }
 
 // Registration of a new Apple's PushKit tokens
 message RequestRegisterApplePushKit {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string apns_key = 1 [(dlg).log="visible"];
-    string token = 2 [(dlg).log="hidden"];
-    string apns_string_key = 3 [(dlg).log="visible"];
+    string apns_key = 1;
+    string token = 2 [(dlg).log=log_confidential];
+    string apns_string_key = 3;
 }
 
 // Unregistering Apple Push Kit token
 message RequestUnregisterApplePushKit {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string token = 1 [(dlg).log="hidden"];
+    string token = 1 [(dlg).log=log_confidential];
 }
 
 // Registering Apple Push Token
 message RequestRegisterApplePushToken {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string bundle_id = 1 [(dlg).log="visible"];
-    string token = 2 [(dlg).log="hidden"];
+    string bundle_id = 1;
+    string token = 2 [(dlg).log=log_confidential];
 }
 
 // Unregister Apple Push token
 message RequestUnregisterApplePushToken {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string token = 1 [(dlg).log="hidden"];
+    string token = 1 [(dlg).log=log_confidential];
 }
 
 // Registering Avrora Push Token
 message RequestRegisterAvroraPushToken {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string token = 1 [(dlg).log="hidden"];
+    string token = 1 [(dlg).log=log_confidential];
 }
 
 // Unregister Avrora Push token
 message RequestUnregisterAvroraPushToken {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string token = 1 [(dlg).log="hidden"];
+    string token = 1 [(dlg).log=log_confidential];
 }
 
 service Push {

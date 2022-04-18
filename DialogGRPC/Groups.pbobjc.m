@@ -369,7 +369,6 @@ typedef struct Group__storage_ {
 
 @implementation GroupData
 
-@dynamic spaceId;
 @dynamic title;
 @dynamic hasAvatar, avatar;
 @dynamic membersAmount;
@@ -389,7 +388,6 @@ typedef struct GroupData__storage_ {
   uint32_t _has_storage_[1];
   int32_t membersAmount;
   GroupType groupType;
-  NSString *spaceId;
   NSString *title;
   Avatar *avatar;
   NSString *ownerUserId;
@@ -411,19 +409,10 @@ typedef struct GroupData__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "spaceId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = GroupData_FieldNumber_SpaceId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GroupData__storage_, spaceId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
         .name = "title",
         .dataTypeSpecific.clazz = Nil,
         .number = GroupData_FieldNumber_Title,
-        .hasIndex = 1,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(GroupData__storage_, title),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
@@ -432,7 +421,7 @@ typedef struct GroupData__storage_ {
         .name = "avatar",
         .dataTypeSpecific.clazz = GPBObjCClass(Avatar),
         .number = GroupData_FieldNumber_Avatar,
-        .hasIndex = 2,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(GroupData__storage_, avatar),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -441,7 +430,7 @@ typedef struct GroupData__storage_ {
         .name = "membersAmount",
         .dataTypeSpecific.clazz = Nil,
         .number = GroupData_FieldNumber_MembersAmount,
-        .hasIndex = 3,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(GroupData__storage_, membersAmount),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
@@ -450,7 +439,7 @@ typedef struct GroupData__storage_ {
         .name = "groupType",
         .dataTypeSpecific.enumDescFunc = GroupType_EnumDescriptor,
         .number = GroupData_FieldNumber_GroupType,
-        .hasIndex = 4,
+        .hasIndex = 3,
         .offset = (uint32_t)offsetof(GroupData__storage_, groupType),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
@@ -459,7 +448,7 @@ typedef struct GroupData__storage_ {
         .name = "ownerUserId",
         .dataTypeSpecific.clazz = Nil,
         .number = GroupData_FieldNumber_OwnerUserId,
-        .hasIndex = 5,
+        .hasIndex = 4,
         .offset = (uint32_t)offsetof(GroupData__storage_, ownerUserId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
@@ -468,7 +457,7 @@ typedef struct GroupData__storage_ {
         .name = "createdAt",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBTimestamp),
         .number = GroupData_FieldNumber_CreatedAt,
-        .hasIndex = 6,
+        .hasIndex = 5,
         .offset = (uint32_t)offsetof(GroupData__storage_, createdAt),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -477,7 +466,7 @@ typedef struct GroupData__storage_ {
         .name = "about",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
         .number = GroupData_FieldNumber_About,
-        .hasIndex = 7,
+        .hasIndex = 6,
         .offset = (uint32_t)offsetof(GroupData__storage_, about),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -486,7 +475,7 @@ typedef struct GroupData__storage_ {
         .name = "shortname",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
         .number = GroupData_FieldNumber_Shortname,
-        .hasIndex = 8,
+        .hasIndex = 7,
         .offset = (uint32_t)offsetof(GroupData__storage_, shortname),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -504,7 +493,7 @@ typedef struct GroupData__storage_ {
         .name = "clock",
         .dataTypeSpecific.clazz = Nil,
         .number = GroupData_FieldNumber_Clock,
-        .hasIndex = 9,
+        .hasIndex = 8,
         .offset = (uint32_t)offsetof(GroupData__storage_, clock),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
@@ -513,7 +502,7 @@ typedef struct GroupData__storage_ {
         .name = "pinnedAt",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBInt64Value),
         .number = GroupData_FieldNumber_PinnedAt,
-        .hasIndex = 10,
+        .hasIndex = 9,
         .offset = (uint32_t)offsetof(GroupData__storage_, pinnedAt),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -522,7 +511,7 @@ typedef struct GroupData__storage_ {
         .name = "conferenceLink",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
         .number = GroupData_FieldNumber_ConferenceLink,
-        .hasIndex = 11,
+        .hasIndex = 10,
         .offset = (uint32_t)offsetof(GroupData__storage_, conferenceLink),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -531,7 +520,7 @@ typedef struct GroupData__storage_ {
         .name = "membersCountLimit",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBInt32Value),
         .number = GroupData_FieldNumber_MembersCountLimit,
-        .hasIndex = 12,
+        .hasIndex = 11,
         .offset = (uint32_t)offsetof(GroupData__storage_, membersCountLimit),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -540,7 +529,7 @@ typedef struct GroupData__storage_ {
         .name = "deletedAt",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBInt64Value),
         .number = GroupData_FieldNumber_DeletedAt,
-        .hasIndex = 13,
+        .hasIndex = 12,
         .offset = (uint32_t)offsetof(GroupData__storage_, deletedAt),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -1375,7 +1364,6 @@ typedef struct UpdateGroupMembersCountChanged__storage_ {
 @implementation RequestCreateGroup
 
 @dynamic rid;
-@dynamic hasSpaceId, spaceId;
 @dynamic title;
 @dynamic usersArray, usersArray_Count;
 @dynamic groupType;
@@ -1385,7 +1373,6 @@ typedef struct UpdateGroupMembersCountChanged__storage_ {
 typedef struct RequestCreateGroup__storage_ {
   uint32_t _has_storage_[1];
   GroupType groupType;
-  GPBStringValue *spaceId;
   NSString *title;
   NSMutableArray *usersArray;
   GPBStringValue *username;
@@ -1409,19 +1396,10 @@ typedef struct RequestCreateGroup__storage_ {
         .dataType = GPBDataTypeInt64,
       },
       {
-        .name = "spaceId",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
-        .number = RequestCreateGroup_FieldNumber_SpaceId,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestCreateGroup__storage_, spaceId),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "title",
         .dataTypeSpecific.clazz = Nil,
         .number = RequestCreateGroup_FieldNumber_Title,
-        .hasIndex = 2,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(RequestCreateGroup__storage_, title),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
@@ -1439,7 +1417,7 @@ typedef struct RequestCreateGroup__storage_ {
         .name = "groupType",
         .dataTypeSpecific.enumDescFunc = GroupType_EnumDescriptor,
         .number = RequestCreateGroup_FieldNumber_GroupType,
-        .hasIndex = 3,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(RequestCreateGroup__storage_, groupType),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
@@ -1448,7 +1426,7 @@ typedef struct RequestCreateGroup__storage_ {
         .name = "username",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
         .number = RequestCreateGroup_FieldNumber_Username,
-        .hasIndex = 4,
+        .hasIndex = 3,
         .offset = (uint32_t)offsetof(RequestCreateGroup__storage_, username),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,

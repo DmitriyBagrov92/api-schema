@@ -156,6 +156,74 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@protocol GroupsAsync2 <NSObject>
+
+#pragma mark CreateGroup(RequestCreateGroup) returns (Empty)
+
+- (GRPCUnaryProtoCall *)createGroupWithMessage:(RequestCreateGroup *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark EditGroupTitle(RequestEditGroupTitle) returns (Empty)
+
+- (GRPCUnaryProtoCall *)editGroupTitleWithMessage:(RequestEditGroupTitle *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark SetGroupShortname(RequestSetGroupShortname) returns (Empty)
+
+- (GRPCUnaryProtoCall *)setGroupShortnameWithMessage:(RequestSetGroupShortname *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark EditGroupAvatar(RequestEditGroupAvatar) returns (Empty)
+
+- (GRPCUnaryProtoCall *)editGroupAvatarWithMessage:(RequestEditGroupAvatar *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark RemoveGroupAvatar(RequestRemoveGroupAvatar) returns (Empty)
+
+- (GRPCUnaryProtoCall *)removeGroupAvatarWithMessage:(RequestRemoveGroupAvatar *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark EditGroupAbout(RequestEditGroupAbout) returns (Empty)
+
+- (GRPCUnaryProtoCall *)editGroupAboutWithMessage:(RequestEditGroupAbout *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark EditGroupBasePermissions(RequestEditGroupBasePermissions) returns (Empty)
+
+- (GRPCUnaryProtoCall *)editGroupBasePermissionsWithMessage:(RequestEditGroupBasePermissions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark InviteUser(RequestInviteUser) returns (Empty)
+
+- (GRPCUnaryProtoCall *)inviteUserWithMessage:(RequestInviteUser *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark LeaveGroup(RequestLeaveGroup) returns (Empty)
+
+- (GRPCUnaryProtoCall *)leaveGroupWithMessage:(RequestLeaveGroup *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark KickUser(RequestKickUser) returns (Empty)
+
+- (GRPCUnaryProtoCall *)kickUserWithMessage:(RequestKickUser *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark MakeUserAdmin(RequestMakeUserAdmin) returns (Empty)
+
+- (GRPCUnaryProtoCall *)makeUserAdminWithMessage:(RequestMakeUserAdmin *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark EditMemberPermissions(RequestEditMemberPermissions) returns (Empty)
+
+- (GRPCUnaryProtoCall *)editMemberPermissionsWithMessage:(RequestEditMemberPermissions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark TransferOwnership(RequestTransferOwnership) returns (Empty)
+
+- (GRPCUnaryProtoCall *)transferOwnershipWithMessage:(RequestTransferOwnership *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark JoinGroup(RequestJoinGroup) returns (Empty)
+
+- (GRPCUnaryProtoCall *)joinGroupWithMessage:(RequestJoinGroup *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark JoinGroupByPeer(RequestJoinGroupByPeer) returns (Empty)
+
+- (GRPCUnaryProtoCall *)joinGroupByPeerWithMessage:(RequestJoinGroupByPeer *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark DeleteGroup(RequestDeleteGroup) returns (Empty)
+
+- (GRPCUnaryProtoCall *)deleteGroupWithMessage:(RequestDeleteGroup *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+@end
+
 /**
  * The methods in this protocol belong to a set of old APIs that have been deprecated. They do not
  * recognize call options provided in the initializer. Using the v2 protocol is recommended.
@@ -318,6 +386,126 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ * The methods in this protocol belong to a set of old APIs that have been deprecated. They do not
+ * recognize call options provided in the initializer. Using the v2 protocol is recommended.
+ */
+@protocol GroupsAsync <NSObject>
+
+#pragma mark CreateGroup(RequestCreateGroup) returns (Empty)
+
+- (void)createGroupWithRequest:(RequestCreateGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToCreateGroupWithRequest:(RequestCreateGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark EditGroupTitle(RequestEditGroupTitle) returns (Empty)
+
+- (void)editGroupTitleWithRequest:(RequestEditGroupTitle *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToEditGroupTitleWithRequest:(RequestEditGroupTitle *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark SetGroupShortname(RequestSetGroupShortname) returns (Empty)
+
+- (void)setGroupShortnameWithRequest:(RequestSetGroupShortname *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToSetGroupShortnameWithRequest:(RequestSetGroupShortname *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark EditGroupAvatar(RequestEditGroupAvatar) returns (Empty)
+
+- (void)editGroupAvatarWithRequest:(RequestEditGroupAvatar *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToEditGroupAvatarWithRequest:(RequestEditGroupAvatar *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark RemoveGroupAvatar(RequestRemoveGroupAvatar) returns (Empty)
+
+- (void)removeGroupAvatarWithRequest:(RequestRemoveGroupAvatar *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToRemoveGroupAvatarWithRequest:(RequestRemoveGroupAvatar *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark EditGroupAbout(RequestEditGroupAbout) returns (Empty)
+
+- (void)editGroupAboutWithRequest:(RequestEditGroupAbout *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToEditGroupAboutWithRequest:(RequestEditGroupAbout *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark EditGroupBasePermissions(RequestEditGroupBasePermissions) returns (Empty)
+
+- (void)editGroupBasePermissionsWithRequest:(RequestEditGroupBasePermissions *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToEditGroupBasePermissionsWithRequest:(RequestEditGroupBasePermissions *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark InviteUser(RequestInviteUser) returns (Empty)
+
+- (void)inviteUserWithRequest:(RequestInviteUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToInviteUserWithRequest:(RequestInviteUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark LeaveGroup(RequestLeaveGroup) returns (Empty)
+
+- (void)leaveGroupWithRequest:(RequestLeaveGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToLeaveGroupWithRequest:(RequestLeaveGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark KickUser(RequestKickUser) returns (Empty)
+
+- (void)kickUserWithRequest:(RequestKickUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToKickUserWithRequest:(RequestKickUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark MakeUserAdmin(RequestMakeUserAdmin) returns (Empty)
+
+- (void)makeUserAdminWithRequest:(RequestMakeUserAdmin *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToMakeUserAdminWithRequest:(RequestMakeUserAdmin *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark EditMemberPermissions(RequestEditMemberPermissions) returns (Empty)
+
+- (void)editMemberPermissionsWithRequest:(RequestEditMemberPermissions *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToEditMemberPermissionsWithRequest:(RequestEditMemberPermissions *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark TransferOwnership(RequestTransferOwnership) returns (Empty)
+
+- (void)transferOwnershipWithRequest:(RequestTransferOwnership *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToTransferOwnershipWithRequest:(RequestTransferOwnership *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark JoinGroup(RequestJoinGroup) returns (Empty)
+
+- (void)joinGroupWithRequest:(RequestJoinGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToJoinGroupWithRequest:(RequestJoinGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark JoinGroupByPeer(RequestJoinGroupByPeer) returns (Empty)
+
+- (void)joinGroupByPeerWithRequest:(RequestJoinGroupByPeer *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToJoinGroupByPeerWithRequest:(RequestJoinGroupByPeer *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark DeleteGroup(RequestDeleteGroup) returns (Empty)
+
+- (void)deleteGroupWithRequest:(RequestDeleteGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToDeleteGroupWithRequest:(RequestDeleteGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+@end
+
 
 #if !defined(GPB_GRPC_PROTOCOL_ONLY) || !GPB_GRPC_PROTOCOL_ONLY
 /**
@@ -325,6 +513,17 @@ NS_ASSUME_NONNULL_BEGIN
  * marshalling and parsing.
  */
 @interface Groups : GRPCProtoService<Groups2, Groups>
+- (instancetype)initWithHost:(NSString *)host callOptions:(GRPCCallOptions *_Nullable)callOptions NS_DESIGNATED_INITIALIZER;
++ (instancetype)serviceWithHost:(NSString *)host callOptions:(GRPCCallOptions *_Nullable)callOptions;
+// The following methods belong to a set of old APIs that have been deprecated.
+- (instancetype)initWithHost:(NSString *)host;
++ (instancetype)serviceWithHost:(NSString *)host;
+@end
+/**
+ * Basic service implementation, over gRPC, that only does
+ * marshalling and parsing.
+ */
+@interface GroupsAsync : GRPCProtoService<GroupsAsync2, GroupsAsync>
 - (instancetype)initWithHost:(NSString *)host callOptions:(GRPCCallOptions *_Nullable)callOptions NS_DESIGNATED_INITIALIZER;
 + (instancetype)serviceWithHost:(NSString *)host callOptions:(GRPCCallOptions *_Nullable)callOptions;
 // The following methods belong to a set of old APIs that have been deprecated.

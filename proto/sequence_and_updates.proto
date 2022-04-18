@@ -95,8 +95,8 @@ message SeqUpdateBody {
         UpdateConfig update_config = 51;
         UpdateSpaceModified update_space_modified = 52;
         UpdateSpaceMemberModified update_space_member_modified = 53;
-        UpdateMessageRejectedByHook update_message_rejected_by_hook = 54;
-        UpdateMessageEditRejectedByHook update_message_edit_rejected_by_hook = 55;
+        UpdateSendMessageError update_send_message_error = 54;
+        UpdateEditMessageError update_edit_message_error = 55;
         UpdateUser update_user = 56;
         UpdateFeatureFlagChanged update_feature_flag_changed = 57;
         UpdateThreadCreated update_thread_created = 58;
@@ -109,20 +109,30 @@ message SeqUpdateBody {
         UpdateDialogReadLaterChanged update_dialog_read_later_changed = 65;
         UpdateDialogMuteChanged update_dialog_mute_changed = 66;
         UpdateSettingsChanged update_settings_changed = 67;
+        UpdateDeleteMessageError update_delete_message_error = 68;
+        UpdateMessageReadError update_message_read_error = 69;
+        UpdateMessageReceivedError update_message_received_error = 70;
+        UpdateMessageRemoveReactionError update_message_remove_reaction_error = 71;
+        UpdateMessageSetReactionError update_message_set_reaction_error = 72;
+        UpdateClearChatError update_clear_chat_error = 73;
+        UpdateDeleteChatError update_delete_chat_error = 74;
+        UpdateFavouriteDialogError update_favourite_dialog_error = 75;
+        UpdateUnfavouriteDialogError update_unfavourite_dialog_error = 76;
+        UpdateReadDialogLaterError update_read_dialog_later_error = 77;
     }
 }
 
 // Sequence update
 message SeqUpdate {
-    int32 seq = 1 [(dlg).log="visible"];
-    SeqUpdateBody body = 2 [(dlg).log="visible"];
+    int32 seq = 1;
+    SeqUpdateBody body = 2;
 }
 
 // Getting difference of sequence
 message RequestGetDifference {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    int32 seq = 1 [(dlg).log="visible"];
-    google.protobuf.Int64Value config_hash = 2 [(dlg).log="visible",deprecated=true];
+    int32 seq = 1;
+    google.protobuf.Int64Value config_hash = 2 [deprecated=true];
 }
 
 /// Updates happens after requested seq number + related peers and entities
@@ -143,7 +153,7 @@ message ResponseGetDifference {
 message RequestGetDialogsDifference {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     /// max of the last action dates among all user's dialogs
-    int64 clock = 1 [(dlg).log="visible"];
+    int64 clock = 1;
 }
 
 /// Dialogs + peers and entities
@@ -156,24 +166,24 @@ message ResponseGetDialogsDifference {
 
 // Represents subset of group members
 message GroupMembersSubset {
-    GroupOutPeer group_peer = 1 [(dlg).log="visible"];
-    repeated string member_ids = 2 [(dlg).log="visible"];
+    GroupOutPeer group_peer = 1;
+    repeated string member_ids = 2;
 }
 
 // Loading referenced entities
 message RequestGetReferencedEntities {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     /// users needed
-    repeated UserOutPeer users = 1 [(dlg).log="compact"];
+    repeated UserOutPeer users = 1;
     /// messages needed
-    repeated UUIDValue mids = 2 [(dlg).log="visible"];
+    repeated UUIDValue mids = 2;
     /**
      * Group + subset of members to return.
      * For loading members of big groups by chunks.
      */
-    repeated GroupMembersSubset group_members = 3 [(dlg).log="visible"];
+    repeated GroupMembersSubset group_members = 3;
     /// groups needed
-    repeated GroupOutPeer groups = 4 [(dlg).log="visible"];
+    repeated GroupOutPeer groups = 4;
 }
 
 message ResponseGetReferencedEntities {
@@ -185,21 +195,21 @@ message ResponseGetReferencedEntities {
 
 message RequestGetPartialPeerInfo {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    repeated UserOutPeer users = 1 [(dlg).log="visible"];
-    repeated GroupOutPeer groups = 2 [(dlg).log="visible"];
-    repeated GroupMembersSubset group_members = 3 [(dlg).log="visible"];
+    repeated UserOutPeer users = 1;
+    repeated GroupOutPeer groups = 2;
+    repeated GroupMembersSubset group_members = 3;
 }
 
 message ResponseGetPartialPeerInfo {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    repeated UserPartialInfo users = 1 [(dlg).log="visible"];
-    repeated GroupPartialInfo groups = 2 [(dlg).log="visible"];
+    repeated UserPartialInfo users = 1;
+    repeated GroupPartialInfo groups = 2;
 }
 
 // Custom Raw Update
 message UpdateRawUpdate {
-    google.protobuf.StringValue type = 1 [(dlg).log="visible"];
-    bytes bytes = 2 [(dlg).log="visible"];
+    google.protobuf.StringValue type = 1;
+    bytes bytes = 2;
 }
 
 message PeersList {
@@ -278,8 +288,8 @@ message WeakUpdate {
 
 message RequestGetState {}
 message ResponseGetState {
-    int32 seq = 1 [(dlg).log="visible"];
-    int64 date = 2 [(dlg).log="visible",deprecated=true];
+    int32 seq = 1;
+    int64 date = 2 [deprecated=true];
 }
 
 service SequenceAndUpdates {

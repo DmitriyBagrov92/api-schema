@@ -117,6 +117,26 @@
              responseClass:[ResponseSendMessage class]];
 }
 
+#pragma mark SendMessageAsync(RequestSendMessageAsync) returns (Empty)
+
+- (void)sendMessageAsyncWithRequest:(RequestSendMessageAsync *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToSendMessageAsyncWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToSendMessageAsyncWithRequest:(RequestSendMessageAsync *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"SendMessageAsync"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GPBEmpty class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+- (GRPCUnaryProtoCall *)sendMessageAsyncWithMessage:(RequestSendMessageAsync *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"SendMessageAsync"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[GPBEmpty class]];
+}
+
 #pragma mark UpdateMessage(RequestUpdateMessage) returns (Empty)
 
 - (void)updateMessageWithRequest:(RequestUpdateMessage *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
@@ -309,6 +329,26 @@
              responseClass:[ResponseReactionsResponse class]];
 }
 
+#pragma mark MessageSetReactionAsync(RequestMessageSetReactionAsync) returns (Empty)
+
+- (void)messageSetReactionAsyncWithRequest:(RequestMessageSetReactionAsync *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToMessageSetReactionAsyncWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToMessageSetReactionAsyncWithRequest:(RequestMessageSetReactionAsync *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"MessageSetReactionAsync"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GPBEmpty class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+- (GRPCUnaryProtoCall *)messageSetReactionAsyncWithMessage:(RequestMessageSetReactionAsync *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"MessageSetReactionAsync"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[GPBEmpty class]];
+}
+
 #pragma mark MessageRemoveReaction(RequestMessageRemoveReaction) returns (ResponseReactionsResponse)
 
 - (void)messageRemoveReactionWithRequest:(RequestMessageRemoveReaction *)request handler:(void(^)(ResponseReactionsResponse *_Nullable response, NSError *_Nullable error))handler{
@@ -327,6 +367,26 @@
            responseHandler:handler
                callOptions:callOptions
              responseClass:[ResponseReactionsResponse class]];
+}
+
+#pragma mark MessageRemoveReactionAsync(RequestMessageRemoveReactionAsync) returns (Empty)
+
+- (void)messageRemoveReactionAsyncWithRequest:(RequestMessageRemoveReactionAsync *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToMessageRemoveReactionAsyncWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToMessageRemoveReactionAsyncWithRequest:(RequestMessageRemoveReactionAsync *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"MessageRemoveReactionAsync"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GPBEmpty class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+- (GRPCUnaryProtoCall *)messageRemoveReactionAsyncWithMessage:(RequestMessageRemoveReactionAsync *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"MessageRemoveReactionAsync"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[GPBEmpty class]];
 }
 
 #pragma mark LoadHistory(RequestLoadHistory) returns (ResponseLoadHistory)

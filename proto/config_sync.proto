@@ -16,9 +16,9 @@ option java_package = "im.dlg.grpc.services";
 
 // Syncing Parameter
 message Parameter {
-    string key = 1 [(dlg).log="visible"]; /// Key of parameter
-    string value = 2 [(dlg).log="hidden"]; /// Value of parameter
-    int64 clock = 3 [(dlg).log="visible"]; /// last modification date
+    string key = 1; /// Key of parameter
+    string value = 2 [(dlg).log=log_confidential]; /// Value of parameter
+    int64 clock = 3; /// last modification date
 }
 
 // Getting Parameters
@@ -35,15 +35,15 @@ message ResponseGetParameters {
 // Change parameter value
 message RequestEditParameter {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string key = 1 [(dlg).log="visible"];
-    google.protobuf.StringValue value = 2 [(dlg).log="hidden"];
-    int64 clock = 3 [(dlg).log="visible"]; /// current known clock
+    string key = 1;
+    google.protobuf.StringValue value = 2 [(dlg).log=log_confidential];
+    int64 clock = 3; /// current known clock
 }
 
 message FeatureFlag {
-    string key = 1 [(dlg).log="visible"];
-    string value = 2 [(dlg).log="visible"];
-    int64 clock = 3 [(dlg).log="visible"];
+    string key = 1;
+    string value = 2;
+    int64 clock = 3;
 }
 
 message RequestFeatureFlags {
@@ -57,7 +57,7 @@ message ResponseFeatureFlags {
 }
 
 message UpdateFeatureFlagChanged {
-    FeatureFlag feature = 1 [(dlg).log="visible"];
+    FeatureFlag feature = 1;
 }
 
 // Update about parameter change
@@ -68,32 +68,32 @@ message UpdateParameterChanged {
 message Settings {
     message NotificationsSettings {
         message MuteSettings {
-            bool mute_privates = 1 [(dlg).log="visible"];
-            bool mute_groups = 2 [(dlg).log="visible"];
-            bool mute_channels = 3 [(dlg).log="visible"];
+            bool mute_privates = 1;
+            bool mute_groups = 2;
+            bool mute_channels = 3;
         }
 
-        bool pierce_mute_on_mention = 1 [(dlg).log="visible"];
-        bool show_text = 2 [(dlg).log="visible"];
-        bool show_names = 3 [(dlg).log="visible"];
+        bool pierce_mute_on_mention = 1;
+        bool show_text = 2;
+        bool show_names = 3;
         MuteSettings mutes = 4;
     }
 
-    NotificationsSettings notifications = 1 [(dlg).log="visible"];
+    NotificationsSettings notifications = 1;
 }
 
 message UpdateSettingsChanged {
-    Settings settings = 1 [(dlg).log="visible"];
+    Settings settings = 1;
 }
 
 message RequestGetSettings {}
 
 message ResponseGetSettings {
-    Settings settings = 1 [(dlg).log="visible"];
+    Settings settings = 1;
 }
 
 message RequestChangeSettings {
-    Settings settings = 1 [(dlg).log="visible"];
+    Settings settings = 1;
 }
 
 service ConfigSync {

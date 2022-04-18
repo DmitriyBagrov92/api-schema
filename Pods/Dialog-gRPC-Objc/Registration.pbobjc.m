@@ -18,6 +18,7 @@
 #import "Registration.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 #import "Annotations.pbobjc.h"
+#import "Definitions.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -37,6 +38,7 @@
     // Merge in the imports (direct or indirect) that defined extensions.
     [registry addExtensions:[ScalapbRoot extensionRegistry]];
     [registry addExtensions:[GAPIAnnotationsRoot extensionRegistry]];
+    [registry addExtensions:[DefinitionsRoot extensionRegistry]];
   }
   return registry;
 }

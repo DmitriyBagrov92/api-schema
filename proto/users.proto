@@ -39,17 +39,17 @@ enum ContactType {
 
 // Contact information record
 message ContactRecord {
-    ContactType type = 1 [(dlg).log="visible"];
+    ContactType type = 1;
     /**
      * Value for specification type of contact,
      * for example 'mobile/standalone/office' for phones or 'vk/fb/telegram'
      * for extenrnal networks.
      */
-    google.protobuf.StringValue type_spec = 6 [(dlg).log="hidden"];
-    google.protobuf.StringValue string_value = 2 [(dlg).log="visible"];
-    google.protobuf.Int64Value long_value = 3 [(dlg).log="visible"];
-    google.protobuf.StringValue title = 4 [(dlg).log="visible"];
-    google.protobuf.StringValue subtitle = 5 [(dlg).log="hidden"];
+    google.protobuf.StringValue type_spec = 6;
+    google.protobuf.StringValue string_value = 2;
+    google.protobuf.Int64Value long_value = 3;
+    google.protobuf.StringValue title = 4;
+    google.protobuf.StringValue subtitle = 5;
 }
 
 enum UserStatusType {
@@ -63,10 +63,10 @@ enum UserStatusType {
 
 // User's status
 message UserStatus {
-    UserStatusType type = 1 [(dlg).log="visible"];
+    UserStatusType type = 1;
     /// Text supplied by user
-    google.protobuf.StringValue text = 2 [(dlg).log="visible"];
-    int64 clock = 3 [(dlg).log="visible"];
+    google.protobuf.StringValue text = 2;
+    int64 clock = 3;
 }
 
 // Main user object
@@ -78,11 +78,11 @@ message UserData {
             bool b = 3;
         }
     }
-    string name = 1 [(dlg).log="hidden"];
-    google.protobuf.StringValue nick = 2 [(dlg).log="visible"];
-    Sex sex = 3 [(dlg).log="hidden"];
-    Avatar avatar = 4 [(dlg).log="compact"];
-    google.protobuf.BoolValue is_bot = 5 [(dlg).log="visible"];
+    string name = 1 [(dlg).log=log_sensitive];
+    google.protobuf.StringValue nick = 2;
+    Sex sex = 3;
+    Avatar avatar = 4;
+    google.protobuf.BoolValue is_bot = 5;
     enum Lifecycle {
         LIFECYCLE_MISSED = 0;
         LIFECYCLE_ACTIVE = 1;
@@ -90,14 +90,14 @@ message UserData {
         LIFECYCLE_BLOCKED = 3;
         LIFECYCLE_BLOCKED_AND_DELETED = 4;
     }
-    Lifecycle status = 6 [(dlg).log="visible"];
-    UserStatus user_status = 7 [(dlg).log="visible"];
-    string time_zone = 8 [(dlg).log="visible"];
-    repeated Ext exts = 9 [(dlg).log="hidden"];
+    Lifecycle status = 6;
+    UserStatus user_status = 7;
+    string time_zone = 8;
+    repeated Ext exts = 9;
     repeated string locales = 10;
-    google.protobuf.StringValue about = 11 [(dlg).log="compact"];
-    repeated ContactRecord contact_info = 12 [(dlg).log="compact"];
-    repeated BotCommand bot_commands = 13 [(dlg).log="visible"];
+    google.protobuf.StringValue about = 11;
+    repeated ContactRecord contact_info = 12;
+    repeated BotCommand bot_commands = 13;
     google.protobuf.StringValue custom_profile = 14;
     enum Hint {
         HINT_USER_REGULAR = 0;
@@ -109,28 +109,28 @@ message UserData {
     int64 clock = 17;
 }
 message User {
-    string id = 1 [(dlg).log = "visible"]; /// User's id
-    int64 access_hash = 2 [(dlg).log="danger"];
+    string id = 1; /// User's id
+    int64 access_hash = 2 [(dlg).log=log_confidential];
     UserData data = 3; // required
 }
 
 message UserPartialInfo {
-    string id = 1 [(dlg).log = "visible"];
-    int64 access_hash = 2 [(dlg).log="danger"];
-    int64 clock = 3 [(dlg).log="visible"];
-    string name = 4 [(dlg).log="compact"];
-    google.protobuf.StringValue nick = 5 [(dlg).log="visible"];
-    Avatar avatar = 6 [(dlg).log="compact"];
+    string id = 1;
+    int64 access_hash = 2 [(dlg).log=log_confidential];
+    int64 clock = 3;
+    string name = 4;
+    google.protobuf.StringValue nick = 5;
+    Avatar avatar = 6;
 }
 
 message UserProfile {
-    User user = 1 [(dlg).log="visible"];
-    repeated ContactRecord contact_info = 2 [(dlg).log="compact"];
-    google.protobuf.StringValue about = 3 [(dlg).log="hidden"];
-    repeated string preferred_languages = 4 [(dlg).log="visible"];
+    User user = 1;
+    repeated ContactRecord contact_info = 2;
+    google.protobuf.StringValue about = 3 [(dlg).log=log_sensitive];
+    repeated string preferred_languages = 4;
     /// Time Zone of user in TZ format
-    google.protobuf.StringValue time_zone = 5 [(dlg).log="visible"];
-    repeated BotCommand bot_commands = 6 [(dlg).log="visible"];
+    google.protobuf.StringValue time_zone = 5;
+    repeated BotCommand bot_commands = 6;
     /// custom user profile info in JSON format
     string custom_profile = 7;
     google.protobuf.StringValue integration_token = 8;
@@ -139,45 +139,45 @@ message UserProfile {
 // Available bot commands
 message BotCommand {
     /// Slash command name (wihtout slash)
-    string slash_command = 1 [(dlg).log="visible"];
+    string slash_command = 1;
     /// Slash command description
-    string description = 2 [(dlg).log="visible"];
+    string description = 2;
     /// Optional Localization Key for i18n
-    google.protobuf.StringValue loc_key = 3 [(dlg).log="visible"];
+    google.protobuf.StringValue loc_key = 3;
 }
 
 // Renaming of user's visible name
 message RequestEditUserLocalName {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string user_id = 1 [(dlg).log="visible"];
-    int64 access_hash = 2 [(dlg).log="danger"];
-    string name = 3 [(dlg).log="hidden"];
+    string user_id = 1;
+    int64 access_hash = 2 [(dlg).log=log_confidential];
+    string name = 3 [(dlg).log=log_sensitive];
 }
 
 message RequestLoadUserData {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     message Claim {
-        Peer user_peer = 1 [(dlg).log="visible"];
+        Peer user_peer = 1;
         oneof kind {
             // load data about user in p2p conversation
-            bool p2p = 2 [(dlg).log="visible"];
+            bool p2p = 2;
             // load data about group member by group peer
             // if requested user and client are both group members
-            Peer group_member = 3 [(dlg).log="visible"];
+            Peer group_member = 3;
             // load data about user if this user is in the client's contacts
-            bool contact = 4 [(dlg).log="visible"];
+            bool contact = 4;
             // load data about group message sender by messageId
             // if this message is accessible for the client
-            UUIDValue message_sender = 5 [(dlg).log="visible"];
+            UUIDValue message_sender = 5;
             // load data about bot
-            bool bot = 6 [(dlg).log="visible"];
+            bool bot = 6;
         }
     }
-    repeated Claim claims = 1 [(dlg).log="visible"];
+    repeated Claim claims = 1;
 }
 message ResponseLoadUserData {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    repeated User users = 1 [(dlg).log="visible"];
+    repeated User users = 1;
 }
 
 message UpdateUser {
@@ -187,85 +187,85 @@ message UpdateUser {
 
 // Update about avatar changed
 message UpdateUserAvatarChanged {
-    string user_id = 1 [(dlg).log="visible"];
-    Avatar avatar = 2 [(dlg).log="compact"];
+    string user_id = 1;
+    Avatar avatar = 2;
 }
 
 // Update about name changed
 message UpdateUserNameChanged {
-    string user_id = 1 [(dlg).log="visible"];
-    string name = 2 [(dlg).log="hidden"];
+    string user_id = 1;
+    string name = 2 [(dlg).log=log_sensitive];
 }
 
 // Update about local name changed
 message UpdateUserLocalNameChanged {
-    string user_id = 1 [(dlg).log="visible"];
-    google.protobuf.StringValue local_name = 2 [(dlg).log="hidden"];
+    string user_id = 1;
+    google.protobuf.StringValue local_name = 2 [(dlg).log=log_sensitive];
 }
 
 // Update about contact information change
 message UpdateUserContactsChanged {
-    string user_id = 1 [(dlg).log="visible"];
-    repeated ContactRecord contact_records = 2 [(dlg).log="compact"];
+    string user_id = 1;
+    repeated ContactRecord contact_records = 2;
 }
 
 // Update about nick changed
 message UpdateUserNickChanged {
-    string user_id = 1 [(dlg).log="visible"];
-    google.protobuf.StringValue nickname = 2 [(dlg).log="visible"];
+    string user_id = 1;
+    google.protobuf.StringValue nickname = 2;
 }
 
 // Update about user's about changed
 message UpdateUserAboutChanged {
-    string user_id = 1 [(dlg).log="visible"];
-    google.protobuf.StringValue about = 2 [(dlg).log="hidden"];
+    string user_id = 1;
+    google.protobuf.StringValue about = 2 [(dlg).log=log_sensitive];
 }
 
 // Update about user's preferred languages
 message UpdateUserPreferredLanguagesChanged {
-    string user_id = 1 [(dlg).log="visible"];
-    repeated string preferred_languages = 2 [(dlg).log="visible"];
+    string user_id = 1;
+    repeated string preferred_languages = 2;
 }
 
 // User TimeZone changed
 message UpdateUserTimeZoneChanged {
-    string user_id = 1 [(dlg).log="visible"];
-    google.protobuf.StringValue time_zone = 2 [(dlg).log="visible"];
+    string user_id = 1;
+    google.protobuf.StringValue time_zone = 2;
 }
 
 // Update about bot commands changed
 message UpdateUserBotCommandsChanged {
-    string user_id = 1 [(dlg).log="visible"];
-    repeated BotCommand commands = 2 [(dlg).log="visible"];
+    string user_id = 1;
+    repeated BotCommand commands = 2;
 }
 
 // Update about user sex changed
 message UpdateUserSexChanged {
-    string user_id = 1 [(dlg).log="visible"];
-    Sex sex = 2 [(dlg).log="hidden"];
+    string user_id = 1;
+    Sex sex = 2;
 }
 
 // Update about user custom profile changed
 message UpdateUserCustomProfileChanged {
-    string user_id = 1 [(dlg).log="visible"];
+    string user_id = 1;
     /// custom user profile info in JSON format
-    string custom_profile = 2 [(dlg).log="visible"];
+    string custom_profile = 2;
 }
 
 // Update about user status change
 message UpdateUserStatusChanged {
-    string user_id = 1 [(dlg).log="visible"];
-    UserStatus status = 2 [(dlg).log="visible"];
+    string user_id = 1;
+    UserStatus status = 2;
 }
 
 message UpdateUserExtChanged {
-    string user_id = 1 [(dlg).log="visible"];
-    RecursiveMapValue ext = 2 [(dlg).log="visible"];
+    string user_id = 1;
+    RecursiveMapValue ext = 2;
 }
 
 message UpdateUserFullExtChanged {
-    string user_id = 1 [(dlg).log="visible"];
-    RecursiveMapValue ext = 2 [(dlg).log="visible"];
+    string user_id = 1;
+    RecursiveMapValue ext = 2;
 }
 
 service Users {

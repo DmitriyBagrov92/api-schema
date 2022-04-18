@@ -173,11 +173,11 @@ typedef struct LoadDraftsResponse__storage_ {
 
 @implementation SaveDraftsRequest
 
-@dynamic draftArray, draftArray_Count;
+@dynamic draftsArray, draftsArray_Count;
 
 typedef struct SaveDraftsRequest__storage_ {
   uint32_t _has_storage_[1];
-  NSMutableArray *draftArray;
+  NSMutableArray *draftsArray;
 } SaveDraftsRequest__storage_;
 
 // This method is threadsafe because it is initially called
@@ -187,11 +187,11 @@ typedef struct SaveDraftsRequest__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "draftArray",
+        .name = "draftsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(Draft),
-        .number = SaveDraftsRequest_FieldNumber_DraftArray,
+        .number = SaveDraftsRequest_FieldNumber_DraftsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(SaveDraftsRequest__storage_, draftArray),
+        .offset = (uint32_t)offsetof(SaveDraftsRequest__storage_, draftsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
@@ -263,13 +263,13 @@ typedef struct SaveDraftsResponse__storage_ {
 
 @implementation UpdateDraftsChanged
 
-@dynamic draftArray, draftArray_Count;
+@dynamic draftsArray, draftsArray_Count;
 @dynamic clock;
 @dynamic prevClock;
 
 typedef struct UpdateDraftsChanged__storage_ {
   uint32_t _has_storage_[1];
-  NSMutableArray *draftArray;
+  NSMutableArray *draftsArray;
   int64_t clock;
   int64_t prevClock;
 } UpdateDraftsChanged__storage_;
@@ -281,11 +281,11 @@ typedef struct UpdateDraftsChanged__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "draftArray",
+        .name = "draftsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(Draft),
-        .number = UpdateDraftsChanged_FieldNumber_DraftArray,
+        .number = UpdateDraftsChanged_FieldNumber_DraftsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(UpdateDraftsChanged__storage_, draftArray),
+        .offset = (uint32_t)offsetof(UpdateDraftsChanged__storage_, draftsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },

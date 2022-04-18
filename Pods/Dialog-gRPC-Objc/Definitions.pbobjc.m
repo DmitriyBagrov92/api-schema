@@ -13,6 +13,8 @@
  #import "GPBProtocolBuffers_RuntimeSupport.h"
 #endif
 
+#import <stdatomic.h>
+
 #import "Definitions.pbobjc.h"
 #import "Descriptor.pbobjc.h"
 // @@protoc_insertion_point(imports)
@@ -81,6 +83,45 @@ static GPBFileDescriptor *DefinitionsRoot_FileDescriptor(void) {
   return descriptor;
 }
 
+#pragma mark - Enum Level
+
+GPBEnumDescriptor *Level_EnumDescriptor(void) {
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
+  if (!descriptor) {
+    static const char *valueNames =
+        "LogDefault\000LogSensitive\000LogConfidential\000";
+    static const int32_t values[] = {
+        Level_LogDefault,
+        Level_LogSensitive,
+        Level_LogConfidential,
+    };
+    static const char *extraTextFormatInfo = "\003\000#\247\000\001#\251\000\002#\254\000";
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(Level)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:Level_IsValidValue
+                              extraTextFormatInfo:extraTextFormatInfo];
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL Level_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case Level_LogDefault:
+    case Level_LogSensitive:
+    case Level_LogConfidential:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
 #pragma mark - UUIDValue
 
 @implementation UUIDValue
@@ -146,7 +187,7 @@ typedef struct UUIDValue__storage_ {
 
 typedef struct DialogOptions__storage_ {
   uint32_t _has_storage_[1];
-  NSString *log;
+  Level log;
 } DialogOptions__storage_;
 
 // This method is threadsafe because it is initially called
@@ -157,12 +198,12 @@ typedef struct DialogOptions__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "log",
-        .dataTypeSpecific.clazz = Nil,
+        .dataTypeSpecific.enumDescFunc = Level_EnumDescriptor,
         .number = DialogOptions_FieldNumber_Log,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(DialogOptions__storage_, log),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeEnum,
       },
       {
         .name = "required",
@@ -191,6 +232,18 @@ typedef struct DialogOptions__storage_ {
 }
 
 @end
+
+int32_t DialogOptions_Log_RawValue(DialogOptions *message) {
+  GPBDescriptor *descriptor = [DialogOptions descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:DialogOptions_FieldNumber_Log];
+  return GPBGetMessageRawEnumField(message, field);
+}
+
+void SetDialogOptions_Log_RawValue(DialogOptions *message, int32_t value) {
+  GPBDescriptor *descriptor = [DialogOptions descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:DialogOptions_FieldNumber_Log];
+  GPBSetMessageRawEnumField(message, field, value);
+}
 
 #pragma mark - DataClock
 

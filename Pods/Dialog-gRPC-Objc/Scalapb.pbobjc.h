@@ -27,14 +27,35 @@
 
 CF_EXTERN_C_BEGIN
 
+@class Collection;
 @class EnumOptions;
 @class FieldOptions;
+@class FieldTransformation;
+@class GPBFieldDescriptorProto;
+@class GPBFieldOptions;
 @class MessageOptions;
+@class ScalaPbOptions;
 @class ScalaPbOptions_AuxEnumOptions;
 @class ScalaPbOptions_AuxFieldOptions;
 @class ScalaPbOptions_AuxMessageOptions;
 
 NS_ASSUME_NONNULL_BEGIN
+
+#pragma mark - Enum MatchType
+
+typedef GPB_ENUM(MatchType) {
+  MatchType_Contains = 0,
+  MatchType_Exact = 1,
+  MatchType_Presence = 2,
+};
+
+GPBEnumDescriptor *MatchType_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL MatchType_IsValidValue(int32_t value);
 
 #pragma mark - Enum ScalaPbOptions_OptionsScope
 
@@ -148,7 +169,11 @@ typedef GPB_ENUM(ScalaPbOptions_FieldNumber) {
   ScalaPbOptions_FieldNumber_AuxFieldOptionsArray = 19,
   ScalaPbOptions_FieldNumber_AuxEnumOptionsArray = 20,
   ScalaPbOptions_FieldNumber_BytesType = 21,
-  ScalaPbOptions_FieldNumber_TestOnlyNoJavaConversions = 100001,
+  ScalaPbOptions_FieldNumber_JavaConversions = 23,
+  ScalaPbOptions_FieldNumber_PreprocessorsArray = 24,
+  ScalaPbOptions_FieldNumber_FieldTransformationsArray = 25,
+  ScalaPbOptions_FieldNumber_IgnoreAllTransformations = 26,
+  ScalaPbOptions_FieldNumber_TestOnlyNoJavaConversions = 999,
 };
 
 GPB_FINAL @interface ScalaPbOptions : GPBMessage
@@ -271,6 +296,15 @@ GPB_FINAL @interface ScalaPbOptions : GPBMessage
 @property(nonatomic, readwrite) BOOL enumStripPrefix;
 
 @property(nonatomic, readwrite) BOOL hasEnumStripPrefix;
+/** Scala type to use for bytes fields. */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *bytesType;
+/** Test to see if @c bytesType has been set. */
+@property(nonatomic, readwrite) BOOL hasBytesType;
+
+/** Enable java conversions for this file. */
+@property(nonatomic, readwrite) BOOL javaConversions;
+
+@property(nonatomic, readwrite) BOOL hasJavaConversions;
 /** List of message options to apply to some messages. */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<ScalaPbOptions_AuxMessageOptions*> *auxMessageOptionsArray;
 /** The number of items in @c auxMessageOptionsArray without causing the array to be created. */
@@ -286,11 +320,21 @@ GPB_FINAL @interface ScalaPbOptions : GPBMessage
 /** The number of items in @c auxEnumOptionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger auxEnumOptionsArray_Count;
 
-/** Scala type to use for bytes fields. */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *bytesType;
-/** Test to see if @c bytesType has been set. */
-@property(nonatomic, readwrite) BOOL hasBytesType;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *preprocessorsArray;
+/** The number of items in @c preprocessorsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger preprocessorsArray_Count;
 
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FieldTransformation*> *fieldTransformationsArray;
+/** The number of items in @c fieldTransformationsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger fieldTransformationsArray_Count;
+
+/**
+ * Ignores all transformations for this file. This is meant to allow specific files to
+ * opt out from transformations inherited through package-scoped options.
+ **/
+@property(nonatomic, readwrite) BOOL ignoreAllTransformations;
+
+@property(nonatomic, readwrite) BOOL hasIgnoreAllTransformations;
 /**
  * For use in tests only. Inhibit Java conversions even when when generator parameters
  * request for it.
@@ -397,6 +441,7 @@ typedef GPB_ENUM(MessageOptions_FieldNumber) {
   MessageOptions_FieldNumber_CompanionAnnotationsArray = 5,
   MessageOptions_FieldNumber_SealedOneofExtendsArray = 6,
   MessageOptions_FieldNumber_NoBox = 7,
+  MessageOptions_FieldNumber_UnknownFieldsAnnotationsArray = 8,
 };
 
 GPB_FINAL @interface MessageOptions : GPBMessage
@@ -441,6 +486,48 @@ GPB_FINAL @interface MessageOptions : GPBMessage
 @property(nonatomic, readwrite) BOOL noBox;
 
 @property(nonatomic, readwrite) BOOL hasNoBox;
+/** Custom annotations to add to the generated `unknownFields` case class field. */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *unknownFieldsAnnotationsArray;
+/** The number of items in @c unknownFieldsAnnotationsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger unknownFieldsAnnotationsArray_Count;
+
+@end
+
+#pragma mark - Collection
+
+typedef GPB_ENUM(Collection_FieldNumber) {
+  Collection_FieldNumber_Type = 1,
+  Collection_FieldNumber_NonEmpty = 2,
+  Collection_FieldNumber_Adapter = 3,
+};
+
+/**
+ * Represents a custom Collection type in Scala. This allows ScalaPB to integrate with
+ * collection types that are different enough from the ones in the standard library.
+ **/
+GPB_FINAL @interface Collection : GPBMessage
+
+/** Type of the collection */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *type;
+/** Test to see if @c type has been set. */
+@property(nonatomic, readwrite) BOOL hasType;
+
+/**
+ * Set to true if this collection type is not allowed to be empty, for example
+ * cats.data.NonEmptyList.  When true, ScalaPB will not generate `clearX` for the repeated
+ * field and not provide a default argument in the constructor.
+ **/
+@property(nonatomic, readwrite) BOOL nonEmpty;
+
+@property(nonatomic, readwrite) BOOL hasNonEmpty;
+/**
+ * An Adapter is a Scala object available at runtime that provides certain static methods
+ * that can operate on this collection type.
+ **/
+@property(nonatomic, readwrite, copy, null_resettable) NSString *adapter;
+/** Test to see if @c adapter has been set. */
+@property(nonatomic, readwrite) BOOL hasAdapter;
+
 @end
 
 #pragma mark - FieldOptions
@@ -453,7 +540,9 @@ typedef GPB_ENUM(FieldOptions_FieldNumber) {
   FieldOptions_FieldNumber_ValueType = 5,
   FieldOptions_FieldNumber_AnnotationsArray = 6,
   FieldOptions_FieldNumber_MapType = 7,
+  FieldOptions_FieldNumber_Collection = 8,
   FieldOptions_FieldNumber_NoBox = 30,
+  FieldOptions_FieldNumber_Required = 31,
 };
 
 GPB_FINAL @interface FieldOptions : GPBMessage
@@ -474,6 +563,10 @@ GPB_FINAL @interface FieldOptions : GPBMessage
 @property(nonatomic, readwrite, copy, null_resettable) NSString *collectionType;
 /** Test to see if @c collectionType has been set. */
 @property(nonatomic, readwrite) BOOL hasCollectionType;
+
+@property(nonatomic, readwrite, strong, null_resettable) Collection *collection;
+/** Test to see if @c collection has been set. */
+@property(nonatomic, readwrite) BOOL hasCollection;
 
 /**
  * If the field is a map, you can specify custom Scala types for the key
@@ -505,6 +598,13 @@ GPB_FINAL @interface FieldOptions : GPBMessage
 @property(nonatomic, readwrite) BOOL noBox;
 
 @property(nonatomic, readwrite) BOOL hasNoBox;
+/**
+ * Like no_box it does not box a value in Option[T], but also fails parsing when a value
+ * is not provided. This enables to emulate required fields in proto3.
+ **/
+@property(nonatomic, readwrite) BOOL required;
+
+@property(nonatomic, readwrite) BOOL hasRequired;
 @end
 
 #pragma mark - EnumOptions
@@ -570,6 +670,43 @@ GPB_FINAL @interface OneofOptions : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *extendsArray;
 /** The number of items in @c extendsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger extendsArray_Count;
+
+@end
+
+#pragma mark - FieldTransformation
+
+typedef GPB_ENUM(FieldTransformation_FieldNumber) {
+  FieldTransformation_FieldNumber_When = 1,
+  FieldTransformation_FieldNumber_MatchType = 2,
+  FieldTransformation_FieldNumber_Set = 3,
+};
+
+GPB_FINAL @interface FieldTransformation : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) GPBFieldDescriptorProto *when;
+/** Test to see if @c when has been set. */
+@property(nonatomic, readwrite) BOOL hasWhen;
+
+@property(nonatomic, readwrite) MatchType matchType;
+
+@property(nonatomic, readwrite) BOOL hasMatchType;
+@property(nonatomic, readwrite, strong, null_resettable) GPBFieldOptions *set;
+/** Test to see if @c set has been set. */
+@property(nonatomic, readwrite) BOOL hasSet;
+
+@end
+
+#pragma mark - PreprocessorOutput
+
+typedef GPB_ENUM(PreprocessorOutput_FieldNumber) {
+  PreprocessorOutput_FieldNumber_OptionsByFile = 1,
+};
+
+GPB_FINAL @interface PreprocessorOutput : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, ScalaPbOptions*> *optionsByFile;
+/** The number of items in @c optionsByFile without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger optionsByFile_Count;
 
 @end
 

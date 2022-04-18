@@ -29,6 +29,28 @@ CF_EXTERN_C_BEGIN
 
 NS_ASSUME_NONNULL_BEGIN
 
+#pragma mark - Enum Level
+
+typedef GPB_ENUM(Level) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  Level_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  Level_LogDefault = 0,
+  Level_LogSensitive = 1,
+  Level_LogConfidential = 2,
+};
+
+GPBEnumDescriptor *Level_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL Level_IsValidValue(int32_t value);
+
 #pragma mark - DefinitionsRoot
 
 /**
@@ -72,11 +94,23 @@ typedef GPB_ENUM(DialogOptions_FieldNumber) {
 
 GPB_FINAL @interface DialogOptions : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *log;
+@property(nonatomic, readwrite) Level log;
 
 @property(nonatomic, readwrite) BOOL required;
 
 @end
+
+/**
+ * Fetches the raw value of a @c DialogOptions's @c log property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t DialogOptions_Log_RawValue(DialogOptions *message);
+/**
+ * Sets the raw value of an @c DialogOptions's @c log property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetDialogOptions_Log_RawValue(DialogOptions *message, int32_t value);
 
 #pragma mark - DataClock
 

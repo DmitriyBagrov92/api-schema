@@ -18,9 +18,9 @@ option java_package = "im.dlg.grpc.services";
 message RequestNotifyAboutDeviceInfo {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     /** First language from this array will be used for some notifications from server **/
-    repeated string preferred_languages = 1 [(dlg).log="visible"];
+    repeated string preferred_languages = 1;
     /** Your timezone **/
-    google.protobuf.StringValue time_zone = 2 [(dlg).log="visible"];
+    google.protobuf.StringValue time_zone = 2;
 }
 
 enum PlatformType {
@@ -35,19 +35,19 @@ enum PlatformType {
 // Generic client info, containing information about platform type, version, sdk etc
 message ClientInfo {
     /// The platform enum. Can be either Android, Web or iOS
-    PlatformType platform = 1 [(dlg).log="visible"];
+    PlatformType platform = 1;
     /// For android: vendor and model; For iOS: model; For Web: platform and user agent
-    string device_name = 2 [(dlg).log="visible"];
+    string device_name = 2;
     /// Optional application name
-    string app_name = 3 [(dlg).log="visible"];
+    string app_name = 3;
     /// Application version
-    google.protobuf.StringValue app_version = 4 [(dlg).log="visible"];
+    google.protobuf.StringValue app_version = 4;
     /// Optional SDK version
-    google.protobuf.StringValue sdk_version = 5 [(dlg).log="visible"];
+    google.protobuf.StringValue sdk_version = 5;
     /// Optional ISO-639 language code and ISO-3166 country code: ru-RU
-    repeated string preferred_languages = 6 [(dlg).log="visible"];
+    repeated string preferred_languages = 6;
     /// Optional TimeZone id
-    google.protobuf.StringValue time_zone = 7 [(dlg).log="visible"];
+    google.protobuf.StringValue time_zone = 7;
 }
 
 service DeviceInfo {

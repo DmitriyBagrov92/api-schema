@@ -29,31 +29,31 @@ option java_package = "im.dlg.grpc.services";
 // Phone for import
 message PhoneToImport {
     /// phone number for import in international format
-    int64 phone_number = 1 [(dlg).log="visible"];
+    int64 phone_number = 1 [(dlg).log=log_confidential];
     /// optional name for contact
-    google.protobuf.StringValue name = 2 [(dlg).log="visible"];
+    google.protobuf.StringValue name = 2 [(dlg).log=log_confidential];
 }
 
 // Email for import
 message EmailToImport {
     /// email for importing
-    string email = 1 [(dlg).log="visible"];
+    string email = 1 [(dlg).log=log_sensitive];
     /// optional name for contact
-    google.protobuf.StringValue name = 2 [(dlg).log="visible"];
+    google.protobuf.StringValue name = 2 [(dlg).log=log_sensitive];
 }
 
 message UserPhoneHashContact {
     string user_id = 1;
-    string phone_hash = 2;
-    string name = 3;
+    string phone_hash = 2 [(dlg).log=log_sensitive];
+    string name = 3 [(dlg).log=log_sensitive];
 }
 
 // Importing phones and emails for building contact list
 // Maximum amount of items for import per method call equals to 100.
 message RequestImportContacts {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    repeated PhoneToImport phones = 1 [(dlg).log="compact"];
-    repeated EmailToImport emails = 2 [(dlg).log="compact"];
+    repeated PhoneToImport phones = 1;
+    repeated EmailToImport emails = 2;
 }
 
 message ResponseImportContacts {
@@ -71,9 +71,9 @@ message RequestDeferredImportContacts {
     message PhoneContact {
         // hash of phone number in format: name-of-hash-function:hashed-phone-number
         // name of the hash function is optional (if not present, the default function will be used)
-        string phone_hash = 1;
+        string phone_hash = 1 [(dlg).log=log_sensitive];
         // name of contact as is on the device
-        string contact_name = 2;
+        string contact_name = 2 [(dlg).log=log_sensitive];
     }
 
     // some stable device identifier
@@ -93,7 +93,7 @@ message ResponseDeferredImportContacts {
 // If the contact list was not changed, isNotChanged will be true.
 message RequestGetContacts {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string contacts_hash = 1 [(dlg).log="visible"];
+    string contacts_hash = 1;
 }
 
 message ResponseGetContacts {
@@ -106,21 +106,21 @@ message ResponseGetContacts {
 // Removing contact from contact list
 message RequestRemoveContact {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string user_id = 1 [(dlg).log="visible"];
-    int64 access_hash = 2 [(dlg).log="danger"];
+    string user_id = 1;
+    int64 access_hash = 2 [(dlg).log=log_confidential];
 }
 
 // Adding contact to contact list
 message RequestAddContact {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string user_id = 1 [(dlg).log="visible"];
-    int64 access_hash = 2 [(dlg).log="danger"];
+    string user_id = 1;
+    int64 access_hash = 2 [(dlg).log=log_confidential];
 }
 
 // Searching contacts by user's query
 message RequestSearchContacts {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string request = 1 [(dlg).log="visible"];
+    string request = 1;
 }
 
 message ResponseSearchContacts {
@@ -130,26 +130,26 @@ message ResponseSearchContacts {
 
 // Update about contact registration
 message UpdateContactRegistered {
-    string user_id = 1 [(dlg).log="visible"]; /// User id of a registered contact
+    string user_id = 1; /// User id of a registered contact
 }
 
 // Update about contacts added
 message UpdateContactsAdded {
     /// User ids of the registered contacts
-    repeated string user_ids = 1 [(dlg).log="compact"];
+    repeated string user_ids = 1;
     /// Id of the task that finished
-    google.protobuf.StringValue task_id = 2 [(dlg).log="compact"];
+    google.protobuf.StringValue task_id = 2;
     repeated UserPhoneHashContact phone_contacts = 3;
 }
 
 // Update about suspending task - normally it should be ignored
 message UpdateContactsAddTaskSuspended {
-    string task_id = 1 [(dlg).log="compact"];
+    string task_id = 1;
 }
 
 // Update about contacts removed
 message UpdateContactsRemoved {
-    repeated string user_ids = 1 [(dlg).log="compact"];
+    repeated string user_ids = 1;
 }
 
 service Contacts {

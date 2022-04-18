@@ -4,6 +4,7 @@ package dialog;
 
 import "scalapb.proto";
 import "annotations.proto";
+import "definitions.proto";
 
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
@@ -28,7 +29,7 @@ message RequestRegisterDevice {
 message ResponseDeviceRequest {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     bytes server_pk = 1;
-    string token = 2;
+    string token = 2 [(dialog.dlg).log=log_sensitive];
     repeated AuthorizationMethod auth_method_seq = 3; /// Sequence of the required authorization methods
 }
 

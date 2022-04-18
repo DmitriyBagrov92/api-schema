@@ -13,7 +13,7 @@ message UUIDValue {
 }
 
 message DialogOptions {
-  string log = 1;
+  Level log = 1;
   bool required = 2;
 }
 
@@ -24,4 +24,10 @@ extend google.protobuf.FieldOptions {
 /// server timestamp when state was created or modified
 message DataClock {
   int64 clock = 1;
+}
+
+enum Level {
+  log_default = 0;
+  log_sensitive = 1;
+  log_confidential = 2;
 }

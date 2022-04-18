@@ -14,13 +14,13 @@ option java_package = "im.dlg.grpc.services";
 // Block User
 message RequestBlockUser {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    UserOutPeer peer = 1 [(dlg).log="visible"];
+    UserOutPeer peer = 1;
 }
 
 // Unblock User
 message RequestUnblockUser {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    UserOutPeer peer = 1 [(dlg).log="visible"];
+    UserOutPeer peer = 1;
 }
 
 // Load Blocked Users
@@ -36,12 +36,12 @@ message ResponseLoadBlockedUsers {
 
 // Update about User Blocked
 message UpdateUserBlocked {
-    string user_id = 1 [(dlg).log="visible"];
+    string user_id = 1;
 }
 
 // Update about User Unblocked
 message UpdateUserUnblocked {
-    string user_id = 1 [(dlg).log="visible"];
+    string user_id = 1;
 }
 
 service Privacy {

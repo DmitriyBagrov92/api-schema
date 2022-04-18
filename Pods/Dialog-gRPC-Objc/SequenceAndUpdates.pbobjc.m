@@ -68,17 +68,22 @@ GPBObjCClassDeclaration(UpdateChatArchive);
 GPBObjCClassDeclaration(UpdateChatClear);
 GPBObjCClassDeclaration(UpdateChatDelete);
 GPBObjCClassDeclaration(UpdateChatGroupsChanged);
+GPBObjCClassDeclaration(UpdateClearChatError);
 GPBObjCClassDeclaration(UpdateConfig);
 GPBObjCClassDeclaration(UpdateContactRegistered);
 GPBObjCClassDeclaration(UpdateContactsAddTaskSuspended);
 GPBObjCClassDeclaration(UpdateContactsAdded);
 GPBObjCClassDeclaration(UpdateContactsRemoved);
 GPBObjCClassDeclaration(UpdateCountersChanged);
+GPBObjCClassDeclaration(UpdateDeleteChatError);
+GPBObjCClassDeclaration(UpdateDeleteMessageError);
 GPBObjCClassDeclaration(UpdateDialogFavouriteChanged);
 GPBObjCClassDeclaration(UpdateDialogMuteChanged);
 GPBObjCClassDeclaration(UpdateDialogReadLaterChanged);
 GPBObjCClassDeclaration(UpdateDraftsChanged);
+GPBObjCClassDeclaration(UpdateEditMessageError);
 GPBObjCClassDeclaration(UpdateEvent);
+GPBObjCClassDeclaration(UpdateFavouriteDialogError);
 GPBObjCClassDeclaration(UpdateFeatureFlagChanged);
 GPBObjCClassDeclaration(UpdateGroup);
 GPBObjCClassDeclaration(UpdateGroupAboutChanged);
@@ -97,19 +102,23 @@ GPBObjCClassDeclaration(UpdateInteractiveMediaEvent);
 GPBObjCClassDeclaration(UpdateMessage);
 GPBObjCClassDeclaration(UpdateMessageContentChanged);
 GPBObjCClassDeclaration(UpdateMessageDelete);
-GPBObjCClassDeclaration(UpdateMessageEditRejectedByHook);
 GPBObjCClassDeclaration(UpdateMessageReactions);
 GPBObjCClassDeclaration(UpdateMessageRead);
 GPBObjCClassDeclaration(UpdateMessageReadByMe);
+GPBObjCClassDeclaration(UpdateMessageReadError);
 GPBObjCClassDeclaration(UpdateMessageReceived);
-GPBObjCClassDeclaration(UpdateMessageRejectedByHook);
+GPBObjCClassDeclaration(UpdateMessageReceivedError);
+GPBObjCClassDeclaration(UpdateMessageRemoveReactionError);
 GPBObjCClassDeclaration(UpdateMessageSent);
+GPBObjCClassDeclaration(UpdateMessageSetReactionError);
 GPBObjCClassDeclaration(UpdateMiniApp);
 GPBObjCClassDeclaration(UpdateParameterChanged);
 GPBObjCClassDeclaration(UpdatePermissionsChange);
 GPBObjCClassDeclaration(UpdatePinnedMessagesChanged);
 GPBObjCClassDeclaration(UpdateRawUpdate);
 GPBObjCClassDeclaration(UpdateReactionsUpdate);
+GPBObjCClassDeclaration(UpdateReadDialogLaterError);
+GPBObjCClassDeclaration(UpdateSendMessageError);
 GPBObjCClassDeclaration(UpdateSettingsChanged);
 GPBObjCClassDeclaration(UpdateSpaceMemberModified);
 GPBObjCClassDeclaration(UpdateSpaceModified);
@@ -121,6 +130,7 @@ GPBObjCClassDeclaration(UpdateThreadCreated);
 GPBObjCClassDeclaration(UpdateThreadLifted);
 GPBObjCClassDeclaration(UpdateTyping);
 GPBObjCClassDeclaration(UpdateTypingStop);
+GPBObjCClassDeclaration(UpdateUnfavouriteDialogError);
 GPBObjCClassDeclaration(UpdateUser);
 GPBObjCClassDeclaration(UpdateUserAboutChanged);
 GPBObjCClassDeclaration(UpdateUserAvatarChanged);
@@ -243,8 +253,8 @@ static GPBFileDescriptor *SequenceAndUpdatesRoot_FileDescriptor(void) {
 @dynamic updateConfig;
 @dynamic updateSpaceModified;
 @dynamic updateSpaceMemberModified;
-@dynamic updateMessageRejectedByHook;
-@dynamic updateMessageEditRejectedByHook;
+@dynamic updateSendMessageError;
+@dynamic updateEditMessageError;
 @dynamic updateUser;
 @dynamic updateFeatureFlagChanged;
 @dynamic updateThreadCreated;
@@ -257,6 +267,16 @@ static GPBFileDescriptor *SequenceAndUpdatesRoot_FileDescriptor(void) {
 @dynamic updateDialogReadLaterChanged;
 @dynamic updateDialogMuteChanged;
 @dynamic updateSettingsChanged;
+@dynamic updateDeleteMessageError;
+@dynamic updateMessageReadError;
+@dynamic updateMessageReceivedError;
+@dynamic updateMessageRemoveReactionError;
+@dynamic updateMessageSetReactionError;
+@dynamic updateClearChatError;
+@dynamic updateDeleteChatError;
+@dynamic updateFavouriteDialogError;
+@dynamic updateUnfavouriteDialogError;
+@dynamic updateReadDialogLaterError;
 
 typedef struct SeqUpdateBody__storage_ {
   uint32_t _has_storage_[2];
@@ -313,8 +333,8 @@ typedef struct SeqUpdateBody__storage_ {
   UpdateConfig *updateConfig;
   UpdateSpaceModified *updateSpaceModified;
   UpdateSpaceMemberModified *updateSpaceMemberModified;
-  UpdateMessageRejectedByHook *updateMessageRejectedByHook;
-  UpdateMessageEditRejectedByHook *updateMessageEditRejectedByHook;
+  UpdateSendMessageError *updateSendMessageError;
+  UpdateEditMessageError *updateEditMessageError;
   UpdateUser *updateUser;
   UpdateFeatureFlagChanged *updateFeatureFlagChanged;
   UpdateThreadCreated *updateThreadCreated;
@@ -327,6 +347,16 @@ typedef struct SeqUpdateBody__storage_ {
   UpdateDialogReadLaterChanged *updateDialogReadLaterChanged;
   UpdateDialogMuteChanged *updateDialogMuteChanged;
   UpdateSettingsChanged *updateSettingsChanged;
+  UpdateDeleteMessageError *updateDeleteMessageError;
+  UpdateMessageReadError *updateMessageReadError;
+  UpdateMessageReceivedError *updateMessageReceivedError;
+  UpdateMessageRemoveReactionError *updateMessageRemoveReactionError;
+  UpdateMessageSetReactionError *updateMessageSetReactionError;
+  UpdateClearChatError *updateClearChatError;
+  UpdateDeleteChatError *updateDeleteChatError;
+  UpdateFavouriteDialogError *updateFavouriteDialogError;
+  UpdateUnfavouriteDialogError *updateUnfavouriteDialogError;
+  UpdateReadDialogLaterError *updateReadDialogLaterError;
 } SeqUpdateBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -813,20 +843,20 @@ typedef struct SeqUpdateBody__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "updateMessageRejectedByHook",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageRejectedByHook),
-        .number = SeqUpdateBody_FieldNumber_UpdateMessageRejectedByHook,
+        .name = "updateSendMessageError",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateSendMessageError),
+        .number = SeqUpdateBody_FieldNumber_UpdateSendMessageError,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateMessageRejectedByHook),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateSendMessageError),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "updateMessageEditRejectedByHook",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageEditRejectedByHook),
-        .number = SeqUpdateBody_FieldNumber_UpdateMessageEditRejectedByHook,
+        .name = "updateEditMessageError",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateEditMessageError),
+        .number = SeqUpdateBody_FieldNumber_UpdateEditMessageError,
         .hasIndex = -1,
-        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateMessageEditRejectedByHook),
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateEditMessageError),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -935,6 +965,96 @@ typedef struct SeqUpdateBody__storage_ {
         .number = SeqUpdateBody_FieldNumber_UpdateSettingsChanged,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateSettingsChanged),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateDeleteMessageError",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateDeleteMessageError),
+        .number = SeqUpdateBody_FieldNumber_UpdateDeleteMessageError,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateDeleteMessageError),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateMessageReadError",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageReadError),
+        .number = SeqUpdateBody_FieldNumber_UpdateMessageReadError,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateMessageReadError),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateMessageReceivedError",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageReceivedError),
+        .number = SeqUpdateBody_FieldNumber_UpdateMessageReceivedError,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateMessageReceivedError),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateMessageRemoveReactionError",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageRemoveReactionError),
+        .number = SeqUpdateBody_FieldNumber_UpdateMessageRemoveReactionError,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateMessageRemoveReactionError),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateMessageSetReactionError",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageSetReactionError),
+        .number = SeqUpdateBody_FieldNumber_UpdateMessageSetReactionError,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateMessageSetReactionError),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateClearChatError",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateClearChatError),
+        .number = SeqUpdateBody_FieldNumber_UpdateClearChatError,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateClearChatError),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateDeleteChatError",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateDeleteChatError),
+        .number = SeqUpdateBody_FieldNumber_UpdateDeleteChatError,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateDeleteChatError),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateFavouriteDialogError",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateFavouriteDialogError),
+        .number = SeqUpdateBody_FieldNumber_UpdateFavouriteDialogError,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateFavouriteDialogError),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateUnfavouriteDialogError",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateUnfavouriteDialogError),
+        .number = SeqUpdateBody_FieldNumber_UpdateUnfavouriteDialogError,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateUnfavouriteDialogError),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateReadDialogLaterError",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateReadDialogLaterError),
+        .number = SeqUpdateBody_FieldNumber_UpdateReadDialogLaterError,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateReadDialogLaterError),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

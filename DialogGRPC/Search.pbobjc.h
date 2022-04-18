@@ -53,8 +53,9 @@ CF_EXTERN_C_BEGIN
 @class SearchPieceText;
 @class SearchPredicate;
 @class SearchResult;
-@class SearchSenderIdConfition;
+@class SearchSenderIdCondition;
 @class SearchUserCondition;
+@class SearchUserCondition_ExtensionCondition;
 @class SimpleContactSearchCondition;
 @class SimpleGroupSearchCondition;
 @class SimpleMessageSearchCondition;
@@ -349,7 +350,7 @@ typedef GPB_ENUM(SearchCondition_FieldNumber) {
   SearchCondition_FieldNumber_SearchOrCondition = 4,
   SearchCondition_FieldNumber_SearchPeerCondition = 5,
   SearchCondition_FieldNumber_SearchPeerContentType = 6,
-  SearchCondition_FieldNumber_SearchSenderIdConfition = 7,
+  SearchCondition_FieldNumber_SearchSenderIdCondition = 7,
   SearchCondition_FieldNumber_SearchUserCondition = 8,
 };
 
@@ -361,7 +362,7 @@ typedef GPB_ENUM(SearchCondition_Body_OneOfCase) {
   SearchCondition_Body_OneOfCase_SearchOrCondition = 4,
   SearchCondition_Body_OneOfCase_SearchPeerCondition = 5,
   SearchCondition_Body_OneOfCase_SearchPeerContentType = 6,
-  SearchCondition_Body_OneOfCase_SearchSenderIdConfition = 7,
+  SearchCondition_Body_OneOfCase_SearchSenderIdCondition = 7,
   SearchCondition_Body_OneOfCase_SearchUserCondition = 8,
 };
 
@@ -381,7 +382,7 @@ GPB_FINAL @interface SearchCondition : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) SearchPeerContentType *searchPeerContentType;
 
-@property(nonatomic, readwrite, strong, null_resettable) SearchSenderIdConfition *searchSenderIdConfition;
+@property(nonatomic, readwrite, strong, null_resettable) SearchSenderIdCondition *searchSenderIdCondition;
 
 @property(nonatomic, readwrite, strong, null_resettable) SearchUserCondition *searchUserCondition;
 
@@ -391,6 +392,42 @@ GPB_FINAL @interface SearchCondition : GPBMessage
  * Clears whatever value was set for the oneof 'body'.
  **/
 void SearchCondition_ClearBodyOneOfCase(SearchCondition *message);
+
+#pragma mark - SearchAndCondition
+
+typedef GPB_ENUM(SearchAndCondition_FieldNumber) {
+  SearchAndCondition_FieldNumber_AndQueryArray = 1,
+};
+
+/**
+ * Search AND condion
+ **/
+GPB_FINAL @interface SearchAndCondition : GPBMessage
+
+/** / "And" query */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<SearchCondition*> *andQueryArray;
+/** The number of items in @c andQueryArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger andQueryArray_Count;
+
+@end
+
+#pragma mark - SearchOrCondition
+
+typedef GPB_ENUM(SearchOrCondition_FieldNumber) {
+  SearchOrCondition_FieldNumber_OrQueryArray = 1,
+};
+
+/**
+ * Search OR condition
+ **/
+GPB_FINAL @interface SearchOrCondition : GPBMessage
+
+/** / "Or" query */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<SearchCondition*> *orQueryArray;
+/** The number of items in @c orQueryArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger orQueryArray_Count;
+
+@end
 
 #pragma mark - SearchPeerTypeCondition
 
@@ -434,42 +471,6 @@ GPB_FINAL @interface SearchPieceText : GPBMessage
 
 @end
 
-#pragma mark - SearchAndCondition
-
-typedef GPB_ENUM(SearchAndCondition_FieldNumber) {
-  SearchAndCondition_FieldNumber_AndQueryArray = 1,
-};
-
-/**
- * Search AND condion
- **/
-GPB_FINAL @interface SearchAndCondition : GPBMessage
-
-/** / "And" query */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<SearchCondition*> *andQueryArray;
-/** The number of items in @c andQueryArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger andQueryArray_Count;
-
-@end
-
-#pragma mark - SearchOrCondition
-
-typedef GPB_ENUM(SearchOrCondition_FieldNumber) {
-  SearchOrCondition_FieldNumber_OrQueryArray = 1,
-};
-
-/**
- * Search OR condition
- **/
-GPB_FINAL @interface SearchOrCondition : GPBMessage
-
-/** / "Or" query */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<SearchCondition*> *orQueryArray;
-/** The number of items in @c orQueryArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger orQueryArray_Count;
-
-@end
-
 #pragma mark - SearchPeerCondition
 
 typedef GPB_ENUM(SearchPeerCondition_FieldNumber) {
@@ -477,7 +478,7 @@ typedef GPB_ENUM(SearchPeerCondition_FieldNumber) {
 };
 
 /**
- * Serch Peer condition
+ * Search Peer condition
  **/
 GPB_FINAL @interface SearchPeerCondition : GPBMessage
 
@@ -518,27 +519,68 @@ void SetSearchPeerContentType_ContentType_RawValue(SearchPeerContentType *messag
 
 typedef GPB_ENUM(SearchUserCondition_FieldNumber) {
   SearchUserCondition_FieldNumber_IsBot = 1,
+  SearchUserCondition_FieldNumber_ExtensionConditions = 2,
 };
 
 GPB_FINAL @interface SearchUserCondition : GPBMessage
 
-/** todo: add other fields, like Lifecycle */
 @property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isBot;
 /** Test to see if @c isBot has been set. */
 @property(nonatomic, readwrite) BOOL hasIsBot;
 
+/** / map of extension key -> condition */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, SearchUserCondition_ExtensionCondition*> *extensionConditions;
+/** The number of items in @c extensionConditions without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger extensionConditions_Count;
+
 @end
 
-#pragma mark - SearchSenderIdConfition
+#pragma mark - SearchUserCondition_ExtensionCondition
 
-typedef GPB_ENUM(SearchSenderIdConfition_FieldNumber) {
-  SearchSenderIdConfition_FieldNumber_SenderId = 1,
+typedef GPB_ENUM(SearchUserCondition_ExtensionCondition_FieldNumber) {
+  SearchUserCondition_ExtensionCondition_FieldNumber_StringValueEquality = 1,
+  SearchUserCondition_ExtensionCondition_FieldNumber_BoolValueEquality = 2,
+  SearchUserCondition_ExtensionCondition_FieldNumber_ValueExistence = 3,
+  SearchUserCondition_ExtensionCondition_FieldNumber_ValueAbsence = 4,
+};
+
+typedef GPB_ENUM(SearchUserCondition_ExtensionCondition_Condition_OneOfCase) {
+  SearchUserCondition_ExtensionCondition_Condition_OneOfCase_GPBUnsetOneOfCase = 0,
+  SearchUserCondition_ExtensionCondition_Condition_OneOfCase_StringValueEquality = 1,
+  SearchUserCondition_ExtensionCondition_Condition_OneOfCase_BoolValueEquality = 2,
+  SearchUserCondition_ExtensionCondition_Condition_OneOfCase_ValueExistence = 3,
+  SearchUserCondition_ExtensionCondition_Condition_OneOfCase_ValueAbsence = 4,
+};
+
+GPB_FINAL @interface SearchUserCondition_ExtensionCondition : GPBMessage
+
+@property(nonatomic, readonly) SearchUserCondition_ExtensionCondition_Condition_OneOfCase conditionOneOfCase;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *stringValueEquality;
+
+@property(nonatomic, readwrite) BOOL boolValueEquality;
+
+@property(nonatomic, readwrite) BOOL valueExistence;
+
+@property(nonatomic, readwrite) BOOL valueAbsence;
+
+@end
+
+/**
+ * Clears whatever value was set for the oneof 'condition'.
+ **/
+void SearchUserCondition_ExtensionCondition_ClearConditionOneOfCase(SearchUserCondition_ExtensionCondition *message);
+
+#pragma mark - SearchSenderIdCondition
+
+typedef GPB_ENUM(SearchSenderIdCondition_FieldNumber) {
+  SearchSenderIdCondition_FieldNumber_SenderId = 1,
 };
 
 /**
  * Searching sender uid condition
  **/
-GPB_FINAL @interface SearchSenderIdConfition : GPBMessage
+GPB_FINAL @interface SearchSenderIdCondition : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *senderId;
 
@@ -696,6 +738,7 @@ typedef GPB_ENUM(UserSearchResult_FieldNumber) {
   UserSearchResult_FieldNumber_Peer = 1,
   UserSearchResult_FieldNumber_LastOnlineAt = 2,
   UserSearchResult_FieldNumber_FacetHighlightsArray = 3,
+  UserSearchResult_FieldNumber_Metadata = 4,
 };
 
 GPB_FINAL @interface UserSearchResult : GPBMessage
@@ -711,6 +754,10 @@ GPB_FINAL @interface UserSearchResult : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FacetHighlight*> *facetHighlightsArray;
 /** The number of items in @c facetHighlightsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger facetHighlightsArray_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *metadata;
+/** The number of items in @c metadata without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger metadata_Count;
 
 @end
 

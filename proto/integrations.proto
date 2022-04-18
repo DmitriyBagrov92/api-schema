@@ -15,20 +15,20 @@ option java_package = "im.dlg.grpc.services";
 // Group token response
 message ResponseIntegrationToken {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    string token = 1 [(dlg).log="danger"];
-    string url = 2 [(dlg).log="danger"];
+    string token = 1 [(dlg).log=log_confidential];
+    string url = 2 [(dlg).log=log_confidential];
 }
 
 // Getting current group token
 message RequestGetIntegrationToken {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    OutPeer group_peer = 1 [(dlg).log="visible"];
+    OutPeer group_peer = 1;
 }
 
 // Revoke group token
 message RequestRevokeIntegrationToken {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    OutPeer group_peer = 1 [(dlg).log="visible"];
+    OutPeer group_peer = 1;
 }
 
 service Integrations {

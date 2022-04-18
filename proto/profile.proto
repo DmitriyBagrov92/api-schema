@@ -18,31 +18,31 @@ option java_package = "im.dlg.grpc.services";
 // Changing account's name
 message RequestEditName {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string name = 1 [(dlg).log="hidden"];
+    string name = 1 [(dlg).log=log_sensitive];
 }
 
 // Changing account's nickname
 message RequestEditNickName {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    google.protobuf.StringValue nickname = 1 [(dlg).log="visible"];
+    google.protobuf.StringValue nickname = 1;
 }
 
 // Checking availability of nickname
 message RequestCheckNickName {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string nickname = 1 [(dlg).log="visible"];
+    string nickname = 1;
 }
 
 // Changing about information
 message RequestEditAbout {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    google.protobuf.StringValue about = 1 [(dlg).log="hidden"];
+    google.protobuf.StringValue about = 1 [(dlg).log=log_sensitive];
 }
 
 // Changing account's avatar
 message RequestEditAvatar {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    FileLocation file_location = 1 [(dlg).log="compact"];
+    FileLocation file_location = 1;
 }
 
 message ResponseEditAvatar {
@@ -58,31 +58,31 @@ message RequestRemoveAvatar {
 // Updating user's time zone
 message RequestEditMyTimeZone {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string tz = 1 [(dlg).log="visible"];
+    string tz = 1;
 }
 
 // Changing preffered languages
 message RequestEditMyPreferredLanguages {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    repeated string preferred_languages = 1 [(dlg).log="visible"];
+    repeated string preferred_languages = 1;
 }
 
 // Changing user's sex
 message RequestEditSex {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    Sex sex = 1 [(dlg).log="hidden"];
+    Sex sex = 1;
 }
 
 // Chaning user custom profile based on scheme
 message RequestEditCustomProfile {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string custom_profile = 1 [(dlg).log="visible"];
+    string custom_profile = 1;
 }
 
 // Changing user's status
 message RequestChangeUserStatus {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    UserStatus status = 1 [(dlg).log="visible"];
+    UserStatus status = 1;
 }
 
 service Profile {

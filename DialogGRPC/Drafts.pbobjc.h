@@ -80,14 +80,14 @@ GPB_FINAL @interface LoadDraftsResponse : GPBMessage
 #pragma mark - SaveDraftsRequest
 
 typedef GPB_ENUM(SaveDraftsRequest_FieldNumber) {
-  SaveDraftsRequest_FieldNumber_DraftArray = 1,
+  SaveDraftsRequest_FieldNumber_DraftsArray = 1,
 };
 
 GPB_FINAL @interface SaveDraftsRequest : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Draft*> *draftArray;
-/** The number of items in @c draftArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger draftArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Draft*> *draftsArray;
+/** The number of items in @c draftsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger draftsArray_Count;
 
 @end
 
@@ -106,16 +106,16 @@ GPB_FINAL @interface SaveDraftsResponse : GPBMessage
 #pragma mark - UpdateDraftsChanged
 
 typedef GPB_ENUM(UpdateDraftsChanged_FieldNumber) {
-  UpdateDraftsChanged_FieldNumber_DraftArray = 1,
+  UpdateDraftsChanged_FieldNumber_DraftsArray = 1,
   UpdateDraftsChanged_FieldNumber_Clock = 2,
   UpdateDraftsChanged_FieldNumber_PrevClock = 3,
 };
 
 GPB_FINAL @interface UpdateDraftsChanged : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Draft*> *draftArray;
-/** The number of items in @c draftArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger draftArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Draft*> *draftsArray;
+/** The number of items in @c draftsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger draftsArray_Count;
 
 @property(nonatomic, readwrite) int64_t clock;
 

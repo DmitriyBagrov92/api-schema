@@ -27,17 +27,21 @@
 // Forward declarations of Objective C classes that we can use as
 // static values in struct initializers.
 // We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(Collection);
 GPBObjCClassDeclaration(EnumOptions);
 GPBObjCClassDeclaration(EnumValueOptions);
 GPBObjCClassDeclaration(FieldOptions);
+GPBObjCClassDeclaration(FieldTransformation);
 GPBObjCClassDeclaration(GPBEnumOptions);
 GPBObjCClassDeclaration(GPBEnumValueOptions);
+GPBObjCClassDeclaration(GPBFieldDescriptorProto);
 GPBObjCClassDeclaration(GPBFieldOptions);
 GPBObjCClassDeclaration(GPBFileOptions);
 GPBObjCClassDeclaration(GPBMessageOptions);
 GPBObjCClassDeclaration(GPBOneofOptions);
 GPBObjCClassDeclaration(MessageOptions);
 GPBObjCClassDeclaration(OneofOptions);
+GPBObjCClassDeclaration(PreprocessorOutput);
 GPBObjCClassDeclaration(ScalaPbOptions);
 GPBObjCClassDeclaration(ScalaPbOptions_AuxEnumOptions);
 GPBObjCClassDeclaration(ScalaPbOptions_AuxFieldOptions);
@@ -146,6 +150,43 @@ static GPBFileDescriptor *ScalapbRoot_FileDescriptor(void) {
   return descriptor;
 }
 
+#pragma mark - Enum MatchType
+
+GPBEnumDescriptor *MatchType_EnumDescriptor(void) {
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
+  if (!descriptor) {
+    static const char *valueNames =
+        "Contains\000Exact\000Presence\000";
+    static const int32_t values[] = {
+        MatchType_Contains,
+        MatchType_Exact,
+        MatchType_Presence,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(MatchType)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:MatchType_IsValidValue];
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL MatchType_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case MatchType_Contains:
+    case MatchType_Exact:
+    case MatchType_Presence:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
 #pragma mark - ScalaPbOptions
 
 @implementation ScalaPbOptions
@@ -167,10 +208,14 @@ static GPBFileDescriptor *ScalapbRoot_FileDescriptor(void) {
 @dynamic hasNoDefaultValuesInConstructor, noDefaultValuesInConstructor;
 @dynamic hasEnumValueNaming, enumValueNaming;
 @dynamic hasEnumStripPrefix, enumStripPrefix;
+@dynamic hasBytesType, bytesType;
+@dynamic hasJavaConversions, javaConversions;
 @dynamic auxMessageOptionsArray, auxMessageOptionsArray_Count;
 @dynamic auxFieldOptionsArray, auxFieldOptionsArray_Count;
 @dynamic auxEnumOptionsArray, auxEnumOptionsArray_Count;
-@dynamic hasBytesType, bytesType;
+@dynamic preprocessorsArray, preprocessorsArray_Count;
+@dynamic fieldTransformationsArray, fieldTransformationsArray_Count;
+@dynamic hasIgnoreAllTransformations, ignoreAllTransformations;
 @dynamic hasTestOnlyNoJavaConversions, testOnlyNoJavaConversions;
 
 typedef struct ScalaPbOptions__storage_ {
@@ -187,6 +232,8 @@ typedef struct ScalaPbOptions__storage_ {
   NSMutableArray *auxFieldOptionsArray;
   NSMutableArray *auxEnumOptionsArray;
   NSString *bytesType;
+  NSMutableArray *preprocessorsArray;
+  NSMutableArray *fieldTransformationsArray;
 } ScalaPbOptions__storage_;
 
 // This method is threadsafe because it is initially called
@@ -407,11 +454,51 @@ typedef struct ScalaPbOptions__storage_ {
       },
       {
         .defaultValue.valueBool = NO,
+        .core.name = "javaConversions",
+        .core.dataTypeSpecific.clazz = Nil,
+        .core.number = ScalaPbOptions_FieldNumber_JavaConversions,
+        .core.hasIndex = 25,
+        .core.offset = 26,  // Stored in _has_storage_ to save space.
+        .core.flags = GPBFieldOptional,
+        .core.dataType = GPBDataTypeBool,
+      },
+      {
+        .defaultValue.valueMessage = nil,
+        .core.name = "preprocessorsArray",
+        .core.dataTypeSpecific.clazz = Nil,
+        .core.number = ScalaPbOptions_FieldNumber_PreprocessorsArray,
+        .core.hasIndex = GPBNoHasBit,
+        .core.offset = (uint32_t)offsetof(ScalaPbOptions__storage_, preprocessorsArray),
+        .core.flags = GPBFieldRepeated,
+        .core.dataType = GPBDataTypeString,
+      },
+      {
+        .defaultValue.valueMessage = nil,
+        .core.name = "fieldTransformationsArray",
+        .core.dataTypeSpecific.clazz = GPBObjCClass(FieldTransformation),
+        .core.number = ScalaPbOptions_FieldNumber_FieldTransformationsArray,
+        .core.hasIndex = GPBNoHasBit,
+        .core.offset = (uint32_t)offsetof(ScalaPbOptions__storage_, fieldTransformationsArray),
+        .core.flags = GPBFieldRepeated,
+        .core.dataType = GPBDataTypeMessage,
+      },
+      {
+        .defaultValue.valueBool = NO,
+        .core.name = "ignoreAllTransformations",
+        .core.dataTypeSpecific.clazz = Nil,
+        .core.number = ScalaPbOptions_FieldNumber_IgnoreAllTransformations,
+        .core.hasIndex = 27,
+        .core.offset = 28,  // Stored in _has_storage_ to save space.
+        .core.flags = GPBFieldOptional,
+        .core.dataType = GPBDataTypeBool,
+      },
+      {
+        .defaultValue.valueBool = NO,
         .core.name = "testOnlyNoJavaConversions",
         .core.dataTypeSpecific.clazz = Nil,
         .core.number = ScalaPbOptions_FieldNumber_TestOnlyNoJavaConversions,
-        .core.hasIndex = 25,
-        .core.offset = 26,  // Stored in _has_storage_ to save space.
+        .core.hasIndex = 29,
+        .core.offset = 30,  // Stored in _has_storage_ to save space.
         .core.flags = GPBFieldOptional,
         .core.dataType = GPBDataTypeBool,
       },
@@ -424,6 +511,11 @@ typedef struct ScalaPbOptions__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescriptionWithDefault))
                                    storageSize:sizeof(ScalaPbOptions__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown | GPBDescriptorInitializationFlag_FieldsWithDefault)];
+    static const GPBExtensionRange ranges[] = {
+      { .start = 1000, .end = 536870912 },
+    };
+    [localDescriptor setupExtensionRanges:ranges
+                                    count:(uint32_t)(sizeof(ranges) / sizeof(GPBExtensionRange))];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -686,6 +778,7 @@ typedef struct ScalaPbOptions_AuxEnumOptions__storage_ {
 @dynamic companionAnnotationsArray, companionAnnotationsArray_Count;
 @dynamic sealedOneofExtendsArray, sealedOneofExtendsArray_Count;
 @dynamic hasNoBox, noBox;
+@dynamic unknownFieldsAnnotationsArray, unknownFieldsAnnotationsArray_Count;
 
 typedef struct MessageOptions__storage_ {
   uint32_t _has_storage_[1];
@@ -695,6 +788,7 @@ typedef struct MessageOptions__storage_ {
   NSString *type;
   NSMutableArray *companionAnnotationsArray;
   NSMutableArray *sealedOneofExtendsArray;
+  NSMutableArray *unknownFieldsAnnotationsArray;
 } MessageOptions__storage_;
 
 // This method is threadsafe because it is initially called
@@ -766,6 +860,15 @@ typedef struct MessageOptions__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
+      {
+        .name = "unknownFieldsAnnotationsArray",
+        .dataTypeSpecific.clazz = Nil,
+        .number = MessageOptions_FieldNumber_UnknownFieldsAnnotationsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(MessageOptions__storage_, unknownFieldsAnnotationsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[MessageOptions class]
@@ -774,6 +877,77 @@ typedef struct MessageOptions__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MessageOptions__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    static const GPBExtensionRange ranges[] = {
+      { .start = 1000, .end = 536870912 },
+    };
+    [localDescriptor setupExtensionRanges:ranges
+                                    count:(uint32_t)(sizeof(ranges) / sizeof(GPBExtensionRange))];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - Collection
+
+@implementation Collection
+
+@dynamic hasType, type;
+@dynamic hasNonEmpty, nonEmpty;
+@dynamic hasAdapter, adapter;
+
+typedef struct Collection__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *type;
+  NSString *adapter;
+} Collection__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "type",
+        .dataTypeSpecific.clazz = Nil,
+        .number = Collection_FieldNumber_Type,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(Collection__storage_, type),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "nonEmpty",
+        .dataTypeSpecific.clazz = Nil,
+        .number = Collection_FieldNumber_NonEmpty,
+        .hasIndex = 1,
+        .offset = 2,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "adapter",
+        .dataTypeSpecific.clazz = Nil,
+        .number = Collection_FieldNumber_Adapter,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(Collection__storage_, adapter),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[Collection class]
+                                     rootClass:[ScalapbRoot class]
+                                          file:ScalapbRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(Collection__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -792,11 +966,13 @@ typedef struct MessageOptions__storage_ {
 @dynamic hasType, type;
 @dynamic hasScalaName, scalaName;
 @dynamic hasCollectionType, collectionType;
+@dynamic hasCollection, collection;
 @dynamic hasKeyType, keyType;
 @dynamic hasValueType, valueType;
 @dynamic annotationsArray, annotationsArray_Count;
 @dynamic hasMapType, mapType;
 @dynamic hasNoBox, noBox;
+@dynamic hasRequired, required;
 
 typedef struct FieldOptions__storage_ {
   uint32_t _has_storage_[1];
@@ -807,6 +983,7 @@ typedef struct FieldOptions__storage_ {
   NSString *valueType;
   NSMutableArray *annotationsArray;
   NSString *mapType;
+  Collection *collection;
 } FieldOptions__storage_;
 
 // This method is threadsafe because it is initially called
@@ -846,7 +1023,7 @@ typedef struct FieldOptions__storage_ {
         .name = "keyType",
         .dataTypeSpecific.clazz = Nil,
         .number = FieldOptions_FieldNumber_KeyType,
-        .hasIndex = 3,
+        .hasIndex = 4,
         .offset = (uint32_t)offsetof(FieldOptions__storage_, keyType),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -855,7 +1032,7 @@ typedef struct FieldOptions__storage_ {
         .name = "valueType",
         .dataTypeSpecific.clazz = Nil,
         .number = FieldOptions_FieldNumber_ValueType,
-        .hasIndex = 4,
+        .hasIndex = 5,
         .offset = (uint32_t)offsetof(FieldOptions__storage_, valueType),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
@@ -873,17 +1050,35 @@ typedef struct FieldOptions__storage_ {
         .name = "mapType",
         .dataTypeSpecific.clazz = Nil,
         .number = FieldOptions_FieldNumber_MapType,
-        .hasIndex = 5,
+        .hasIndex = 6,
         .offset = (uint32_t)offsetof(FieldOptions__storage_, mapType),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
       {
+        .name = "collection",
+        .dataTypeSpecific.clazz = GPBObjCClass(Collection),
+        .number = FieldOptions_FieldNumber_Collection,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(FieldOptions__storage_, collection),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
         .name = "noBox",
         .dataTypeSpecific.clazz = Nil,
         .number = FieldOptions_FieldNumber_NoBox,
-        .hasIndex = 6,
-        .offset = 7,  // Stored in _has_storage_ to save space.
+        .hasIndex = 7,
+        .offset = 8,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "required",
+        .dataTypeSpecific.clazz = Nil,
+        .number = FieldOptions_FieldNumber_Required,
+        .hasIndex = 9,
+        .offset = 10,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
@@ -896,6 +1091,11 @@ typedef struct FieldOptions__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FieldOptions__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    static const GPBExtensionRange ranges[] = {
+      { .start = 1000, .end = 536870912 },
+    };
+    [localDescriptor setupExtensionRanges:ranges
+                                    count:(uint32_t)(sizeof(ranges) / sizeof(GPBExtensionRange))];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -963,6 +1163,11 @@ typedef struct EnumOptions__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(EnumOptions__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    static const GPBExtensionRange ranges[] = {
+      { .start = 1000, .end = 536870912 },
+    };
+    [localDescriptor setupExtensionRanges:ranges
+                                    count:(uint32_t)(sizeof(ranges) / sizeof(GPBExtensionRange))];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1019,6 +1224,11 @@ typedef struct EnumValueOptions__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(EnumValueOptions__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    static const GPBExtensionRange ranges[] = {
+      { .start = 1000, .end = 536870912 },
+    };
+    [localDescriptor setupExtensionRanges:ranges
+                                    count:(uint32_t)(sizeof(ranges) / sizeof(GPBExtensionRange))];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -1063,6 +1273,123 @@ typedef struct OneofOptions__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(OneofOptions__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    static const GPBExtensionRange ranges[] = {
+      { .start = 1000, .end = 536870912 },
+    };
+    [localDescriptor setupExtensionRanges:ranges
+                                    count:(uint32_t)(sizeof(ranges) / sizeof(GPBExtensionRange))];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FieldTransformation
+
+@implementation FieldTransformation
+
+@dynamic hasWhen, when;
+@dynamic hasMatchType, matchType;
+@dynamic hasSet, set;
+
+typedef struct FieldTransformation__storage_ {
+  uint32_t _has_storage_[1];
+  MatchType matchType;
+  GPBFieldDescriptorProto *when;
+  GPBFieldOptions *set;
+} FieldTransformation__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "when",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBFieldDescriptorProto),
+        .number = FieldTransformation_FieldNumber_When,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FieldTransformation__storage_, when),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "matchType",
+        .dataTypeSpecific.enumDescFunc = MatchType_EnumDescriptor,
+        .number = FieldTransformation_FieldNumber_MatchType,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FieldTransformation__storage_, matchType),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasDefaultValue | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "set",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBFieldOptions),
+        .number = FieldTransformation_FieldNumber_Set,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(FieldTransformation__storage_, set),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FieldTransformation class]
+                                     rootClass:[ScalapbRoot class]
+                                          file:ScalapbRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FieldTransformation__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - PreprocessorOutput
+
+@implementation PreprocessorOutput
+
+@dynamic optionsByFile, optionsByFile_Count;
+
+typedef struct PreprocessorOutput__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableDictionary *optionsByFile;
+} PreprocessorOutput__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "optionsByFile",
+        .dataTypeSpecific.clazz = GPBObjCClass(ScalaPbOptions),
+        .number = PreprocessorOutput_FieldNumber_OptionsByFile,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(PreprocessorOutput__storage_, optionsByFile),
+        .flags = GPBFieldMapKeyString,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[PreprocessorOutput class]
+                                     rootClass:[ScalapbRoot class]
+                                          file:ScalapbRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(PreprocessorOutput__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");

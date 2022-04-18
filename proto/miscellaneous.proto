@@ -14,7 +14,7 @@ option java_package = "im.dlg.grpc.services";
 // Boolean response
 message ResponseBool {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    bool value = 1 [(dlg).log="visible"];
+    bool value = 1;
 }
 
 
@@ -33,18 +33,18 @@ enum SupportedServerMethodsType {
 // customProfileSchema Custom profile JSON Schema
 // servicePeers Service peers supported interpreted by the client
 message Config {
-    int32 max_group_size = 1 [(dlg).log="visible"];
-    Discover discover = 2 [(dlg).log="visible"];
-    google.protobuf.StringValue share_endpoint = 4 [(dlg).log="visible"];
-    CallsConfig calls_config = 5 [(dlg).log="visible"];
-    InvitesConfig group_invite_config = 6 [(dlg).log="visible"];
-    ServerMetaInfo server_meta_info = 7 [(dlg).log="visible"];
-    string custom_profile_schema = 8 [(dlg).log="visible"];
-    ServicePeers service_peers = 9 [(dlg).log="visible"];
+    int32 max_group_size = 1;
+    Discover discover = 2;
+    google.protobuf.StringValue share_endpoint = 4;
+    CallsConfig calls_config = 5;
+    InvitesConfig group_invite_config = 6;
+    ServerMetaInfo server_meta_info = 7;
+    string custom_profile_schema = 8;
+    ServicePeers service_peers = 9;
     repeated Any extensions = 3;
-    int64 client_keep_alive = 10 [(dlg).log = "visible"];
-    repeated SupportedServerMethodsType supported_methods = 11 [(dlg).log = "visible"];
-    int32 max_channel_size = 12 [(dlg).log="visible"];
+    int64 client_keep_alive = 10;
+    repeated SupportedServerMethodsType supported_methods = 11;
+    int32 max_channel_size = 12;
 }
 
 // Service peers
@@ -58,8 +58,8 @@ message ServicePeers {
 // releaseDate Server release date in milliseconds
 // apiVersion Server api version
 message ServerMetaInfo {
-    int64 release_date = 1 [(dlg).log="visible"];
-    google.protobuf.Int64Value api_version = 2 [(dlg).log="visible"];
+    int64 release_date = 1;
+    google.protobuf.Int64Value api_version = 2;
 }
 
 enum RtcpMuxPolicy {
@@ -77,13 +77,13 @@ enum RtcpMuxPolicy {
 // emojiSecurityEnabled If true then client should send and render emoji security
 // screenSharingEnabled If true then client should enable screen sharing
 message CallsConfig {
-    google.protobuf.BoolValue calls_enabled = 1 [(dlg).log="visible"];
-    google.protobuf.BoolValue video_calls_enabled = 2 [(dlg).log="visible"];
-    google.protobuf.BoolValue group_calls_enabled = 3 [(dlg).log="visible"];
-    google.protobuf.Int32Value group_calls_max_members = 4 [(dlg).log="visible"];
-    RtcpMuxPolicy rtcp_mux_policy = 5 [(dlg).log="visible"];
-    google.protobuf.BoolValue emoji_security_enabled = 6 [(dlg).log="visible"];
-    google.protobuf.BoolValue screen_sharing_enabled = 7 [(dlg).log="visible"];
+    google.protobuf.BoolValue calls_enabled = 1;
+    google.protobuf.BoolValue video_calls_enabled = 2;
+    google.protobuf.BoolValue group_calls_enabled = 3;
+    google.protobuf.Int32Value group_calls_max_members = 4;
+    RtcpMuxPolicy rtcp_mux_policy = 5;
+    google.protobuf.BoolValue emoji_security_enabled = 6;
+    google.protobuf.BoolValue screen_sharing_enabled = 7;
 }
 
 // Group invites configuration
@@ -92,38 +92,38 @@ message CallsConfig {
 // resolveUrlPrefix Prefix for public groups and users link detection
 // shareInviteUrl Independent URL for external app sharing
 message InvitesConfig {
-    google.protobuf.StringValue base_url = 1 [(dlg).log="visible"];
-    google.protobuf.StringValue group_invite_url_prefix = 2 [(dlg).log="visible"];
-    google.protobuf.StringValue resolve_url_prefix = 3 [(dlg).log="visible"];
-    google.protobuf.StringValue share_invite_url = 4 [(dlg).log="visible"];
+    google.protobuf.StringValue base_url = 1;
+    google.protobuf.StringValue group_invite_url_prefix = 2;
+    google.protobuf.StringValue resolve_url_prefix = 3;
+    google.protobuf.StringValue share_invite_url = 4;
 }
 
 // Discover description
 // peers peers
 message Discover {
-    repeated OutPeer peers = 1 [(dlg).log="visible"];
+    repeated OutPeer peers = 1;
 }
 
 // Extention
 // id Extension id
 // data Extension data
 message Extension {
-    int32 id = 1 [(dlg).log="visible"];
-    bytes data = 2 [(dlg).log="visible"];
+    int32 id = 1;
+    bytes data = 2;
 }
 
 // Any
 // typeUrl type url
 // data data
 message Any {
-    string type_url = 1 [(dlg).log="visible"];
-    bytes data = 2 [(dlg).log="hidden"];
+    string type_url = 1;
+    bytes data = 2;
 }
 
 // Update about config change
 message UpdateConfig {
-    Config config = 1 [(dlg).log="visible"];
-    google.protobuf.Int64Value config_hash = 2 [(dlg).log="visible"];
+    Config config = 1;
+    google.protobuf.Int64Value config_hash = 2;
 }
 
 message RecursiveMapValue {
@@ -138,11 +138,11 @@ message RecursiveMapValue {
         }
     }
     message Array {
-        repeated Value values = 1 [(dlg).log="visible"];
+        repeated Value values = 1;
     }
     message Item {
-        string key = 1 [(dlg).log="visible"];
-        Value value = 2 [(dlg).log="visible"];
+        string key = 1;
+        Value value = 2;
     }
-    repeated Item items = 1 [(dlg).log="visible"];
+    repeated Item items = 1;
 }

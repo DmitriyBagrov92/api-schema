@@ -44,17 +44,17 @@ enum EmailActivationType {
 // Start Phone Activation
 message RequestStartPhoneAuth {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    int64 phone_number = 1 [(dlg).log="visible"];
+    int64 phone_number = 1 [(dlg).log=log_sensitive];
     /** Your timezone **/
-    google.protobuf.StringValue time_zone = 2 [(dlg).log="visible"];
+    google.protobuf.StringValue time_zone = 2;
     /** First language from this array will be used for some notifications from server **/
-    repeated string preferred_languages = 3 [(dlg).log="visible"];
+    repeated string preferred_languages = 3;
 }
 
 message ResponseStartPhoneAuth {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     /** Hash of authorization transaction **/
-    string transaction_hash = 1;
+    string transaction_hash = 1 [(dlg).log=log_sensitive];
     bool is_registered = 2;
     /** Code or password - call ValidateCode if code **/
     PhoneActivationType activation_type = 3;
@@ -64,23 +64,23 @@ message ResponseStartPhoneAuth {
 message RequestSendCodeByPhoneCall {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     /// Hash from ResponseStartPhoneAuth
-    string transaction_hash = 1 [(dlg).log="danger"];
+    string transaction_hash = 1 [(dlg).log=log_sensitive];
 }
 
 // Start EMail Activation
 message RequestStartEmailAuth {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string email = 1 [(dlg).log="visible"];
+    string email = 1;
     /** Your timezone **/
-    google.protobuf.StringValue time_zone = 2 [(dlg).log="visible"];
+    google.protobuf.StringValue time_zone = 2;
     /** First language from this array will be used for some notifications from server **/
-    repeated string preferred_languages = 3 [(dlg).log="visible"];
+    repeated string preferred_languages = 3;
 }
 
 message ResponseStartEmailAuth {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     /** Hash of authorization transaction **/
-    string transaction_hash = 1;
+    string transaction_hash = 1 [(dlg).log=log_sensitive];
     bool is_registered = 2;
     /** Code or password - call ValidateCode if code **/
     EmailActivationType activation_type = 3;
@@ -88,42 +88,42 @@ message ResponseStartEmailAuth {
 
 message RequestStartCertificateAuth {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string name = 1 [(dlg).log="visible"];
-    google.protobuf.StringValue time_zone = 2 [(dlg).log="visible"];
-    repeated string preferred_languages = 3 [(dlg).log="visible"];
+    string name = 1;
+    google.protobuf.StringValue time_zone = 2;
+    repeated string preferred_languages = 3;
 }
 
 // Starting token-based login - to authorize bot
 message RequestStartTokenAuth {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     /** Token received from BotFather **/
-    string token = 1 [(dlg).log="visible"];
+    string token = 1 [(dlg).log=log_sensitive];
     /** Your timezone **/
-    google.protobuf.StringValue time_zone = 2 [(dlg).log="visible"];
+    google.protobuf.StringValue time_zone = 2;
     /** First language from this array will be used for some notifications from server **/
-    repeated string preferred_languages = 3 [(dlg).log="visible"];
+    repeated string preferred_languages = 3;
 }
 
 // Starting Login Authentication
 message RequestStartUsernameAuth {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string username = 1 [(dlg).log="visible"];
-    google.protobuf.StringValue time_zone = 2 [(dlg).log="visible"];
+    string username = 1;
+    google.protobuf.StringValue time_zone = 2;
     /** First language from this array will be used for some notifications from server **/
-    repeated string preferred_languages = 3 [(dlg).log="visible"];
+    repeated string preferred_languages = 3;
 }
 
 message ResponseStartUsernameAuth {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     /** Hash of authorization transaction **/
-    string transaction_hash = 1;
+    string transaction_hash = 1 [(dlg).log=log_sensitive];
     bool is_registered = 2;
 }
 
 // Apply external session to authorize user
 message RequestApplyExternalSessionAuth {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string session_id = 1 [(dlg).log="visible"];
+    string session_id = 1 [(dlg).log=log_sensitive];
 }
 
 // Get Id Token for external system
@@ -136,7 +136,7 @@ message RequestGetIdToken {
 // Get Id Token for external system
 message ResponseGetIdToken {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string token = 1;
+    string token = 1 [(dlg).log=log_sensitive];
     /** Unix time stamp **/
     int64 expiration_date = 2;
 }
@@ -145,45 +145,45 @@ message ResponseGetIdToken {
 message RequestStartAuthTransaction {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
      /** Client timezone **/
-    google.protobuf.StringValue time_zone = 1 [(dlg).log="visible"];
+    google.protobuf.StringValue time_zone = 1;
     /** First language from this array will be used for some notifications from server **/
-    repeated string preferred_languages = 2 [(dlg).log="visible"];
+    repeated string preferred_languages = 2;
 }
 
 message ResponseStartAuthTransaction {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     /** Hash of authorization transaction **/
-    string transaction_hash = 1;
+    string transaction_hash = 1 [(dlg).log=log_sensitive];
 }
 
 // Performing user sign in.
 message RequestValidateCode {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     /** Hash of the authorization transaction **/
-    string transaction_hash = 1 [(dlg).log="danger"];
-    string code = 2 [(dlg).log="hidden"]; /// Authorization code
+    string transaction_hash = 1  [(dlg).log=log_sensitive];
+    string code = 2 [(dlg).log=log_confidential]; /// Authorization code
 }
 
 // Performs code resend
 message RequestResendCode {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     /** Hash of the authorization transaction **/
-    string transaction_hash = 1 [(dlg).log="danger"];
+    string transaction_hash = 1 [(dlg).log=log_sensitive];
 }
 
 // Validation of account password
 message RequestValidatePassword {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     /** Hash of the authorization transaction **/
-    string transaction_hash = 1 [(dlg).log="danger"];
-    string password = 2 [(dlg).log="danger"];
+    string transaction_hash = 1 [(dlg).log=log_sensitive];
+    string password = 2 [(dlg).log=log_confidential];
 }
 
 // Loading OAuth2 Parameters
 message RequestGetOAuth2Params {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string transaction_hash = 1 [(dlg).log="danger"];
-    string redirect_url = 2 [(dlg).log="visible"];
+    string transaction_hash = 1 [(dlg).log=log_sensitive];
+    string redirect_url = 2;
 }
 
 /// Redirect url result
@@ -195,19 +195,19 @@ message ResponseGetOAuth2Params {
 // Complete OAuth2 Authentication
 message RequestCompleteOAuth2 {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string transaction_hash = 1 [(dlg).log="danger"];
-    string code = 2 [(dlg).log="danger"];
+    string transaction_hash = 1 [(dlg).log=log_sensitive];
+    string code = 2 [(dlg).log=log_confidential];
 }
 
 // Perform user SignUp
 message RequestSignUp {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     /** Hash of the authorization transaction **/
-    string transaction_hash = 1 [(dlg).log="danger"];
+    string transaction_hash = 1 [(dlg).log=log_sensitive];
     // Your name
-    string name = 2 [(dlg).log="visible"];
-    Sex sex = 3 [(dlg).log="visible"];
-    google.protobuf.StringValue password = 4 [(dlg).log="hidden"];
+    string name = 2;
+    Sex sex = 3;
+    google.protobuf.StringValue password = 4 [(dlg).log=log_confidential];
 }
 
 enum AuthExtraInfoType {
@@ -219,29 +219,29 @@ enum AuthExtraInfoType {
 message ResponseAuth {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     /// Registered/authorized user
-    User user = 2 [(dlg).log="compact"];
+    User user = 2;
     /// Config for that user
-    Config config = 3 [(dlg).log="visible"];
+    Config config = 3;
     /// Hash of config to later usage
-    google.protobuf.Int64Value config_hash = 4 [(dlg).log="visible"];
-    repeated AuthExtraInfoType extra_info = 5 [(dlg).log = "visible"];
+    google.protobuf.Int64Value config_hash = 4;
+    repeated AuthExtraInfoType extra_info = 5;
 }
 
 // Authentication session
 message AuthSession {
-    string id = 1 [(dlg).log="visible"]; /// Unuque ID of session
+    string id = 1; /// Unuque ID of session
     /// holder of session. 1 - this device, 2 - other.
-    AuthHolder auth_holder = 2 [(dlg).log="visible"];
+    AuthHolder auth_holder = 2;
     /// Application Id that you set during authorization
-    int32 app_id = 3 [(dlg).log="visible"];
-    string app_title = 4 [(dlg).log="visible"];
-    string device_title = 5 [(dlg).log="visible"];
+    int32 app_id = 3;
+    string app_title = 4;
+    string device_title = 5;
     /// Time of session creating
-    int32 auth_time = 6 [(dlg).log="visible"];
+    int32 auth_time = 6;
     /// Two-letter country code of session create
-    string auth_location = 7 [(dlg).log="hidden"];
-    google.protobuf.DoubleValue latitude = 8 [(dlg).log="hidden"];
-    google.protobuf.DoubleValue longitude = 9 [(dlg).log="hidden"];
+    string auth_location = 7 [(dlg).log=log_confidential];
+    google.protobuf.DoubleValue latitude = 8 [(dlg).log=log_sensitive];
+    google.protobuf.DoubleValue longitude = 9 [(dlg).log=log_sensitive];
 }
 
 /// Holder of session
@@ -264,7 +264,7 @@ message ResponseGetAuthSessions {
 // SignOut on specified user's session
 message RequestTerminateSession {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string id = 1 [(dlg).log="visible"]; /// Session id
+    string id = 1; /// Session id
 }
 
 // SignOut on all exept current sessions
@@ -300,19 +300,19 @@ message ForceReloadContacts {
 // Tells the client to clear the specified conversation and load it again
 // peer the peer whose history should be reloaded
 message ForceReloadHistory {
-    Peer peer = 1 [(dlg).log="visible"];
+    Peer peer = 1;
 }
 
 message RequestChangePassword {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string old_password = 1 [(dlg).log = "danger"];
-    string new_password = 2 [(dlg).log = "danger"];
+    string old_password = 1 [(dlg).log = log_confidential];
+    string new_password = 2 [(dlg).log = log_confidential];
 }
 
 message ResponseGetSelf {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     /// Registered/authorized user
-    User user = 1 [(dlg).log="compact"];
+    User user = 1;
 }
 
 service Authentication {

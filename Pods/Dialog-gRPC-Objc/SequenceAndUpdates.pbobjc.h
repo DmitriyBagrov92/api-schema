@@ -46,17 +46,22 @@ CF_EXTERN_C_BEGIN
 @class UpdateChatClear;
 @class UpdateChatDelete;
 @class UpdateChatGroupsChanged;
+@class UpdateClearChatError;
 @class UpdateConfig;
 @class UpdateContactRegistered;
 @class UpdateContactsAddTaskSuspended;
 @class UpdateContactsAdded;
 @class UpdateContactsRemoved;
 @class UpdateCountersChanged;
+@class UpdateDeleteChatError;
+@class UpdateDeleteMessageError;
 @class UpdateDialogFavouriteChanged;
 @class UpdateDialogMuteChanged;
 @class UpdateDialogReadLaterChanged;
 @class UpdateDraftsChanged;
+@class UpdateEditMessageError;
 @class UpdateEvent;
+@class UpdateFavouriteDialogError;
 @class UpdateFeatureFlagChanged;
 @class UpdateGroup;
 @class UpdateGroupAboutChanged;
@@ -75,19 +80,23 @@ CF_EXTERN_C_BEGIN
 @class UpdateMessage;
 @class UpdateMessageContentChanged;
 @class UpdateMessageDelete;
-@class UpdateMessageEditRejectedByHook;
 @class UpdateMessageReactions;
 @class UpdateMessageRead;
 @class UpdateMessageReadByMe;
+@class UpdateMessageReadError;
 @class UpdateMessageReceived;
-@class UpdateMessageRejectedByHook;
+@class UpdateMessageReceivedError;
+@class UpdateMessageRemoveReactionError;
 @class UpdateMessageSent;
+@class UpdateMessageSetReactionError;
 @class UpdateMiniApp;
 @class UpdateParameterChanged;
 @class UpdatePermissionsChange;
 @class UpdatePinnedMessagesChanged;
 @class UpdateRawUpdate;
 @class UpdateReactionsUpdate;
+@class UpdateReadDialogLaterError;
+@class UpdateSendMessageError;
 @class UpdateSettingsChanged;
 @class UpdateSpaceMemberModified;
 @class UpdateSpaceModified;
@@ -99,6 +108,7 @@ CF_EXTERN_C_BEGIN
 @class UpdateThreadLifted;
 @class UpdateTyping;
 @class UpdateTypingStop;
+@class UpdateUnfavouriteDialogError;
 @class UpdateUser;
 @class UpdateUserAboutChanged;
 @class UpdateUserAvatarChanged;
@@ -201,8 +211,8 @@ typedef GPB_ENUM(SeqUpdateBody_FieldNumber) {
   SeqUpdateBody_FieldNumber_UpdateConfig = 51,
   SeqUpdateBody_FieldNumber_UpdateSpaceModified = 52,
   SeqUpdateBody_FieldNumber_UpdateSpaceMemberModified = 53,
-  SeqUpdateBody_FieldNumber_UpdateMessageRejectedByHook = 54,
-  SeqUpdateBody_FieldNumber_UpdateMessageEditRejectedByHook = 55,
+  SeqUpdateBody_FieldNumber_UpdateSendMessageError = 54,
+  SeqUpdateBody_FieldNumber_UpdateEditMessageError = 55,
   SeqUpdateBody_FieldNumber_UpdateUser = 56,
   SeqUpdateBody_FieldNumber_UpdateFeatureFlagChanged = 57,
   SeqUpdateBody_FieldNumber_UpdateThreadCreated = 58,
@@ -215,6 +225,16 @@ typedef GPB_ENUM(SeqUpdateBody_FieldNumber) {
   SeqUpdateBody_FieldNumber_UpdateDialogReadLaterChanged = 65,
   SeqUpdateBody_FieldNumber_UpdateDialogMuteChanged = 66,
   SeqUpdateBody_FieldNumber_UpdateSettingsChanged = 67,
+  SeqUpdateBody_FieldNumber_UpdateDeleteMessageError = 68,
+  SeqUpdateBody_FieldNumber_UpdateMessageReadError = 69,
+  SeqUpdateBody_FieldNumber_UpdateMessageReceivedError = 70,
+  SeqUpdateBody_FieldNumber_UpdateMessageRemoveReactionError = 71,
+  SeqUpdateBody_FieldNumber_UpdateMessageSetReactionError = 72,
+  SeqUpdateBody_FieldNumber_UpdateClearChatError = 73,
+  SeqUpdateBody_FieldNumber_UpdateDeleteChatError = 74,
+  SeqUpdateBody_FieldNumber_UpdateFavouriteDialogError = 75,
+  SeqUpdateBody_FieldNumber_UpdateUnfavouriteDialogError = 76,
+  SeqUpdateBody_FieldNumber_UpdateReadDialogLaterError = 77,
 };
 
 typedef GPB_ENUM(SeqUpdateBody_Update_OneOfCase) {
@@ -272,8 +292,8 @@ typedef GPB_ENUM(SeqUpdateBody_Update_OneOfCase) {
   SeqUpdateBody_Update_OneOfCase_UpdateConfig = 51,
   SeqUpdateBody_Update_OneOfCase_UpdateSpaceModified = 52,
   SeqUpdateBody_Update_OneOfCase_UpdateSpaceMemberModified = 53,
-  SeqUpdateBody_Update_OneOfCase_UpdateMessageRejectedByHook = 54,
-  SeqUpdateBody_Update_OneOfCase_UpdateMessageEditRejectedByHook = 55,
+  SeqUpdateBody_Update_OneOfCase_UpdateSendMessageError = 54,
+  SeqUpdateBody_Update_OneOfCase_UpdateEditMessageError = 55,
   SeqUpdateBody_Update_OneOfCase_UpdateUser = 56,
   SeqUpdateBody_Update_OneOfCase_UpdateFeatureFlagChanged = 57,
   SeqUpdateBody_Update_OneOfCase_UpdateThreadCreated = 58,
@@ -286,6 +306,16 @@ typedef GPB_ENUM(SeqUpdateBody_Update_OneOfCase) {
   SeqUpdateBody_Update_OneOfCase_UpdateDialogReadLaterChanged = 65,
   SeqUpdateBody_Update_OneOfCase_UpdateDialogMuteChanged = 66,
   SeqUpdateBody_Update_OneOfCase_UpdateSettingsChanged = 67,
+  SeqUpdateBody_Update_OneOfCase_UpdateDeleteMessageError = 68,
+  SeqUpdateBody_Update_OneOfCase_UpdateMessageReadError = 69,
+  SeqUpdateBody_Update_OneOfCase_UpdateMessageReceivedError = 70,
+  SeqUpdateBody_Update_OneOfCase_UpdateMessageRemoveReactionError = 71,
+  SeqUpdateBody_Update_OneOfCase_UpdateMessageSetReactionError = 72,
+  SeqUpdateBody_Update_OneOfCase_UpdateClearChatError = 73,
+  SeqUpdateBody_Update_OneOfCase_UpdateDeleteChatError = 74,
+  SeqUpdateBody_Update_OneOfCase_UpdateFavouriteDialogError = 75,
+  SeqUpdateBody_Update_OneOfCase_UpdateUnfavouriteDialogError = 76,
+  SeqUpdateBody_Update_OneOfCase_UpdateReadDialogLaterError = 77,
 };
 
 GPB_FINAL @interface SeqUpdateBody : GPBMessage
@@ -398,9 +428,9 @@ GPB_FINAL @interface SeqUpdateBody : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateSpaceMemberModified *updateSpaceMemberModified;
 
-@property(nonatomic, readwrite, strong, null_resettable) UpdateMessageRejectedByHook *updateMessageRejectedByHook;
+@property(nonatomic, readwrite, strong, null_resettable) UpdateSendMessageError *updateSendMessageError;
 
-@property(nonatomic, readwrite, strong, null_resettable) UpdateMessageEditRejectedByHook *updateMessageEditRejectedByHook;
+@property(nonatomic, readwrite, strong, null_resettable) UpdateEditMessageError *updateEditMessageError;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateUser *updateUser;
 
@@ -425,6 +455,26 @@ GPB_FINAL @interface SeqUpdateBody : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UpdateDialogMuteChanged *updateDialogMuteChanged;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateSettingsChanged *updateSettingsChanged;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateDeleteMessageError *updateDeleteMessageError;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateMessageReadError *updateMessageReadError;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateMessageReceivedError *updateMessageReceivedError;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateMessageRemoveReactionError *updateMessageRemoveReactionError;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateMessageSetReactionError *updateMessageSetReactionError;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateClearChatError *updateClearChatError;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateDeleteChatError *updateDeleteChatError;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateFavouriteDialogError *updateFavouriteDialogError;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateUnfavouriteDialogError *updateUnfavouriteDialogError;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateReadDialogLaterError *updateReadDialogLaterError;
 
 @end
 

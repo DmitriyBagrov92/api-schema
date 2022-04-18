@@ -19,14 +19,14 @@ enum Permission {
 message RequestGetPermissions {}
 
 message ResponseGetPermissions {
-    repeated Permission permissions = 1 [(dlg).log="visible"];
-    repeated Permission all_known_permissions = 2 [(dlg).log="visible"];
-    int64 clock = 3 [(dlg).log="visible"];
+    repeated Permission permissions = 1;
+    repeated Permission all_known_permissions = 2;
+    int64 clock = 3;
 }
 
 message UpdatePermissionsChange {
-    repeated Permission permissions = 1 [(dlg).log="visible"];
-    int64 clock = 2 [(dlg).log="visible"];
+    repeated Permission permissions = 1;
+    int64 clock = 2;
 }
 
 service Permissions {

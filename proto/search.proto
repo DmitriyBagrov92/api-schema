@@ -88,63 +88,72 @@ message SearchCondition {
         SearchOrCondition search_or_condition = 4;
         SearchPeerCondition search_peer_condition = 5;
         SearchPeerContentType search_peer_content_type = 6;
-        SearchSenderIdConfition search_sender_id_confition = 7;
+        SearchSenderIdCondition search_sender_id_condition = 7;
         SearchUserCondition search_user_condition = 8;
     }
-}
-
-// Search peer type condition
-message SearchPeerTypeCondition {
-    SearchPeerType peer_type = 1 [(dlg).log="hidden"];
-}
-
-// Search peer name condition
-message SearchPieceText {
-    string query = 1 [(dlg).log="hidden"];
 }
 
 // Search AND condion
 message SearchAndCondition {
     /// "And" query
-    repeated SearchCondition and_query = 1 [(dlg).log="visible"];
+    repeated SearchCondition and_query = 1;
 }
 
 // Search OR condition
 message SearchOrCondition {
     /// "Or" query
-    repeated SearchCondition or_query = 1 [(dlg).log="visible"];
+    repeated SearchCondition or_query = 1;
 }
 
-// Serch Peer condition
+// Search peer type condition
+message SearchPeerTypeCondition {
+    SearchPeerType peer_type = 1;
+}
+
+// Search peer name condition
+message SearchPieceText {
+    string query = 1 [(dlg).log=log_sensitive];
+}
+
+// Search Peer condition
 message SearchPeerCondition {
-    OutPeer peer = 1 [(dlg).log="visible"];
+    OutPeer peer = 1;
 }
 
 // Search content type condition
 message SearchPeerContentType {
-    SearchContentType content_type = 1 [(dlg).log="visible"];
+    SearchContentType content_type = 1;
 }
 
 message SearchUserCondition {
-    google.protobuf.BoolValue is_bot = 1; // todo: add other fields, like Lifecycle
+    message ExtensionCondition {
+        oneof condition {
+            string string_value_equality = 1;
+            bool bool_value_equality = 2;
+            bool value_existence = 3;
+            bool value_absence = 4;
+        }
+    }
+    google.protobuf.BoolValue is_bot = 1;
+    map<string, ExtensionCondition> extension_conditions = 2; /// map of extension key -> condition
 }
 
 // Searching sender uid condition
-message SearchSenderIdConfition {
-    string sender_id = 1 [(dlg).log="visible"];
+message SearchSenderIdCondition {
+    string sender_id = 1;
 }
 
 // Peer search result
 message PeerSearchResult {
-    Peer peer = 1 [(dlg).log="visible"];
-    string title = 2 [(dlg).log="hidden"];
+    Peer peer = 1;
+    string title = 2 [(dlg).log=log_sensitive];
     google.protobuf.StringValue shortname = 3;
-    google.protobuf.StringValue description = 4 [(dlg).log="hidden"];
-    google.protobuf.Int32Value members_count = 5 [(dlg).log="visible"];
+    google.protobuf.StringValue description = 4 [(dlg).log=log_sensitive];
+    google.protobuf.Int32Value members_count = 5;
     /// Group Creation Date
-    int64 date_created = 6 [(dlg).log="visible"];
-    google.protobuf.StringValue creator = 7 [(dlg).log="visible"];
-    google.protobuf.BoolValue is_public = 8 [(dlg).log="visible"];
+    int64 date_created = 6;
+    google.protobuf.StringValue creator = 7;
+    google.protobuf.BoolValue is_public = 8;
     /// Are you joined?
     google.protobuf.BoolValue is_joined = 9;
 }
@@ -152,7 +161,7 @@ message PeerSearchResult {
 // Performing peer search
 message RequestPeerSearch {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    repeated SearchCondition query = 1 [(dlg).log="hidden"];
+    repeated SearchCondition query = 1;
 }
 
 /// Response with related peers and entities
@@ -167,7 +176,7 @@ message ResponsePeerSearch {
 // Resolve peer by shortname
 message RequestResolvePeer {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string shortname = 1 [(dlg).log="visible"];
+    string shortname = 1;
 }
 
 message ResponseResolvePeer {
@@ -185,6 +194,7 @@ message UserSearchResult {
     UserOutPeer peer = 1;
     google.protobuf.Timestamp last_online_at = 2;
     repeated FacetHighlight facet_highlights = 3;
+    map<string, string> metadata = 4;
 }
 
 message GroupSearchResult {
@@ -200,12 +210,12 @@ message ContactSearchResult {
 
 // Message container
 message MessageSearchResult {
-    Peer peer = 1 [(dlg).log="visible"];
+    Peer peer = 1;
     reserved 2; reserved "rid";
-    int64 date = 3 [(dlg).log="visible"];
-    string sender_id = 4 [(dlg).log="visible"];
-    MessageContent content = 5 [(dlg).log="visible"];
-    UUIDValue mid = 6 [(dlg).log="visible"];
+    int64 date = 3;
+    string sender_id = 4;
+    MessageContent content = 5;
+    UUIDValue mid = 6;
     reserved 7; reserved "highlight_tokens";
     repeated FacetHighlight facet_highlights = 8;
 }
@@ -228,23 +238,23 @@ message MessageSearchItem {
 message ResponseMessageSearchResponse {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
 
-    repeated MessageSearchItem search_results = 1 [(dlg).log="visible"];
-    google.protobuf.BytesValue load_more_state = 2 [(dlg).log="hidden"];
-    repeated UserOutPeer user_out_peers = 3 [(dlg).log="visible"];
-    repeated GroupOutPeer group_out_peers = 4 [(dlg).log="visible"];
-    int64 total_count = 5 [(dlg).log="visible"];
+    repeated MessageSearchItem search_results = 1;
+    google.protobuf.BytesValue load_more_state = 2;
+    repeated UserOutPeer user_out_peers = 3;
+    repeated GroupOutPeer group_out_peers = 4;
+    int64 total_count = 5;
 }
 
 // Performing message search
 message RequestMessageSearch {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    SearchCondition query = 1 [(dlg).log="hidden"];
+    SearchCondition query = 1;
 }
 
 // Performing message search paging
 message RequestMessageSearchMore {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    bytes load_more_state = 1 [(dlg).log="hidden"]; /// Cursor
+    bytes load_more_state = 1; /// Cursor
 }
 
 message RequestSimpleSearch {
@@ -260,46 +270,46 @@ message RequestSimpleSearchMore {
 
 message RequestFieldAutocomplete {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string field_name = 1 [(dlg).log = "visible"];
-    string field_value = 2 [(dlg).log = "visible"];
+    string field_name = 1;
+    string field_value = 2;
 }
 
 message ResponseFieldAutocomplete {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    string field_name = 1 [(dlg).log = "visible"];
-    repeated string field_value = 2 [(dlg).log = "visible"];
+    string field_name = 1;
+    repeated string field_value = 2;
 }
 
 message RequestLoadUserSearchByPredicatesResults {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    repeated SearchPredicate predicates = 1 [(dlg).log = "visible"];
-    string group_id = 2 [(dlg).log = "visible"];
-    google.protobuf.StringValue query = 3 [(dlg).log = "visible"];
-    int32 limit = 4 [(dlg).log = "visible"];
-    repeated string required_fields = 5 [(dlg).log = "visible"];
+    repeated SearchPredicate predicates = 1;
+    string group_id = 2;
+    google.protobuf.StringValue query = 3;
+    int32 limit = 4;
+    repeated string required_fields = 5;
 }
 
 message UserMatch {
-    string user_id = 1 [(dlg).log = "visible"];
-    bool match_predicates = 2 [(dlg).log = "visible"];
+    string user_id = 1;
+    bool match_predicates = 2;
 }
 
 message ResponseLoadUserSearchByPredicatesResults {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    repeated UserMatch users = 1 [(dlg).log = "visible"];
-    int32 result_count = 2 [(dlg).log = "visible"];
+    repeated UserMatch users = 1;
+    int32 result_count = 2;
 }
 
 message RequestLoadUserSearchByPredicatesCount {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    repeated SearchPredicate predicates = 1 [(dlg).log = "visible"];
-    string group_id = 2 [(dlg).log = "visible"];
+    repeated SearchPredicate predicates = 1;
+    string group_id = 2;
 }
 
 
 message ResponseLoadUserSearchByPredicatesCount {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    int32 result_count = 1 [(dlg).log = "visible"];
+    int32 result_count = 1;
 }
 
 message RequestGetRecommendations {
