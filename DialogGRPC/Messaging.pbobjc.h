@@ -47,6 +47,7 @@ CF_EXTERN_C_BEGIN
 @class DocumentMessage;
 @class EmptyMessage;
 @class FastThumb;
+@class ForwardSource;
 @class GPBBoolValue;
 @class GPBBytesValue;
 @class GPBDuration;
@@ -2156,7 +2157,6 @@ typedef GPB_ENUM(UpdateMessage_FieldNumber) {
   UpdateMessage_FieldNumber_Mid = 4,
   UpdateMessage_FieldNumber_Message = 5,
   UpdateMessage_FieldNumber_Attributes = 6,
-  UpdateMessage_FieldNumber_Forward = 7,
   UpdateMessage_FieldNumber_Reply = 8,
   UpdateMessage_FieldNumber_PreviousMid = 9,
   UpdateMessage_FieldNumber_PrevMessageDate = 10,
@@ -2166,12 +2166,13 @@ typedef GPB_ENUM(UpdateMessage_FieldNumber) {
   UpdateMessage_FieldNumber_RandomId = 14,
   UpdateMessage_FieldNumber_ModifiedAt = 15,
   UpdateMessage_FieldNumber_PrevEditInPeerAt = 16,
+  UpdateMessage_FieldNumber_ForwardSource = 17,
 };
 
 typedef GPB_ENUM(UpdateMessage_Attach_OneOfCase) {
   UpdateMessage_Attach_OneOfCase_GPBUnsetOneOfCase = 0,
-  UpdateMessage_Attach_OneOfCase_Forward = 7,
   UpdateMessage_Attach_OneOfCase_Reply = 8,
+  UpdateMessage_Attach_OneOfCase_ForwardSource = 17,
 };
 
 /**
@@ -2204,9 +2205,9 @@ GPB_FINAL @interface UpdateMessage : GPBMessage
 
 @property(nonatomic, readonly) UpdateMessage_Attach_OneOfCase attachOneOfCase;
 
-@property(nonatomic, readwrite, strong, null_resettable) ReferencedMessages *forward;
-
 @property(nonatomic, readwrite, strong, null_resettable) ReferencedMessages *reply;
+
+@property(nonatomic, readwrite, strong, null_resettable) ForwardSource *forwardSource;
 
 /** / Message id of previos message from current conversation */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *previousMid;
@@ -2299,14 +2300,14 @@ typedef GPB_ENUM(UpdateMessageSent_FieldNumber) {
   UpdateMessageSent_FieldNumber_UnreadCounterClock = 6,
   UpdateMessageSent_FieldNumber_UnreadCounter = 7,
   UpdateMessageSent_FieldNumber_MyReadDate = 8,
-  UpdateMessageSent_FieldNumber_Forward = 9,
   UpdateMessageSent_FieldNumber_Reply = 10,
+  UpdateMessageSent_FieldNumber_ForwardSource = 11,
 };
 
 typedef GPB_ENUM(UpdateMessageSent_Attach_OneOfCase) {
   UpdateMessageSent_Attach_OneOfCase_GPBUnsetOneOfCase = 0,
-  UpdateMessageSent_Attach_OneOfCase_Forward = 9,
   UpdateMessageSent_Attach_OneOfCase_Reply = 10,
+  UpdateMessageSent_Attach_OneOfCase_ForwardSource = 11,
 };
 
 /**
@@ -2345,9 +2346,9 @@ GPB_FINAL @interface UpdateMessageSent : GPBMessage
 
 @property(nonatomic, readonly) UpdateMessageSent_Attach_OneOfCase attachOneOfCase;
 
-@property(nonatomic, readwrite, strong, null_resettable) ReferencedMessages *forward;
-
 @property(nonatomic, readwrite, strong, null_resettable) ReferencedMessages *reply;
+
+@property(nonatomic, readwrite, strong, null_resettable) ForwardSource *forwardSource;
 
 @end
 
@@ -3036,6 +3037,39 @@ GPB_FINAL @interface ReferencedMessages : GPBMessage
 
 @end
 
+#pragma mark - ForwardSource
+
+typedef GPB_ENUM(ForwardSource_FieldNumber) {
+  ForwardSource_FieldNumber_HostPeer = 1,
+  ForwardSource_FieldNumber_SenderPeer = 2,
+  ForwardSource_FieldNumber_HostPeerName = 3,
+  ForwardSource_FieldNumber_Mid = 4,
+};
+
+/**
+ * pointer to source of forwarded message
+ **/
+GPB_FINAL @interface ForwardSource : GPBMessage
+
+/** empty if viewer has no access to this peer */
+@property(nonatomic, readwrite, strong, null_resettable) OutPeer *hostPeer;
+/** Test to see if @c hostPeer has been set. */
+@property(nonatomic, readwrite) BOOL hasHostPeer;
+
+/** empty if viewer has no access to this peer */
+@property(nonatomic, readwrite, strong, null_resettable) OutPeer *senderPeer;
+/** Test to see if @c senderPeer has been set. */
+@property(nonatomic, readwrite) BOOL hasSenderPeer;
+
+/** used to avoid host_peer/sender_peer resolution */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *hostPeerName;
+
+@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
+/** Test to see if @c mid has been set. */
+@property(nonatomic, readwrite) BOOL hasMid;
+
+@end
+
 #pragma mark - HistoryMessage
 
 typedef GPB_ENUM(HistoryMessage_FieldNumber) {
@@ -3049,16 +3083,16 @@ typedef GPB_ENUM(HistoryMessage_FieldNumber) {
   HistoryMessage_FieldNumber_State = 8,
   HistoryMessage_FieldNumber_ReactionsArray = 9,
   HistoryMessage_FieldNumber_Attribute = 10,
-  HistoryMessage_FieldNumber_Forward = 11,
   HistoryMessage_FieldNumber_Reply = 12,
   HistoryMessage_FieldNumber_EditedAt = 13,
   HistoryMessage_FieldNumber_RandomId = 14,
+  HistoryMessage_FieldNumber_ForwardSource = 15,
 };
 
 typedef GPB_ENUM(HistoryMessage_Attach_OneOfCase) {
   HistoryMessage_Attach_OneOfCase_GPBUnsetOneOfCase = 0,
-  HistoryMessage_Attach_OneOfCase_Forward = 11,
   HistoryMessage_Attach_OneOfCase_Reply = 12,
+  HistoryMessage_Attach_OneOfCase_ForwardSource = 15,
 };
 
 /**
@@ -3103,9 +3137,9 @@ GPB_FINAL @interface HistoryMessage : GPBMessage
 
 @property(nonatomic, readonly) HistoryMessage_Attach_OneOfCase attachOneOfCase;
 
-@property(nonatomic, readwrite, strong, null_resettable) ReferencedMessages *forward;
-
 @property(nonatomic, readwrite, strong, null_resettable) ReferencedMessages *reply;
+
+@property(nonatomic, readwrite, strong, null_resettable) ForwardSource *forwardSource;
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *editedAt;
 /** Test to see if @c editedAt has been set. */
@@ -3254,16 +3288,16 @@ typedef GPB_ENUM(HistoryMessageLight_FieldNumber) {
   HistoryMessageLight_FieldNumber_MessageId = 2,
   HistoryMessageLight_FieldNumber_Date = 3,
   HistoryMessageLight_FieldNumber_Message = 4,
-  HistoryMessageLight_FieldNumber_Forward = 5,
   HistoryMessageLight_FieldNumber_Reply = 6,
   HistoryMessageLight_FieldNumber_EditedAt = 7,
   HistoryMessageLight_FieldNumber_RandomId = 8,
+  HistoryMessageLight_FieldNumber_ForwardSource = 9,
 };
 
 typedef GPB_ENUM(HistoryMessageLight_Attach_OneOfCase) {
   HistoryMessageLight_Attach_OneOfCase_GPBUnsetOneOfCase = 0,
-  HistoryMessageLight_Attach_OneOfCase_Forward = 5,
   HistoryMessageLight_Attach_OneOfCase_Reply = 6,
+  HistoryMessageLight_Attach_OneOfCase_ForwardSource = 9,
 };
 
 GPB_FINAL @interface HistoryMessageLight : GPBMessage
@@ -3283,9 +3317,9 @@ GPB_FINAL @interface HistoryMessageLight : GPBMessage
 
 @property(nonatomic, readonly) HistoryMessageLight_Attach_OneOfCase attachOneOfCase;
 
-@property(nonatomic, readwrite, strong, null_resettable) ReferencedMessages *forward;
-
 @property(nonatomic, readwrite, strong, null_resettable) ReferencedMessages *reply;
+
+@property(nonatomic, readwrite, strong, null_resettable) ForwardSource *forwardSource;
 
 @property(nonatomic, readwrite) int64_t editedAt;
 

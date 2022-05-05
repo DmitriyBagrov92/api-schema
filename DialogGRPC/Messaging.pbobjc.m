@@ -56,6 +56,7 @@ GPBObjCClassDeclaration(DocumentExVoice);
 GPBObjCClassDeclaration(DocumentMessage);
 GPBObjCClassDeclaration(EmptyMessage);
 GPBObjCClassDeclaration(FastThumb);
+GPBObjCClassDeclaration(ForwardSource);
 GPBObjCClassDeclaration(GPBBoolValue);
 GPBObjCClassDeclaration(GPBBytesValue);
 GPBObjCClassDeclaration(GPBDuration);
@@ -5348,8 +5349,8 @@ typedef struct ResponseSendMessage__storage_ {
 @dynamic hasMid, mid;
 @dynamic hasMessage, message;
 @dynamic hasAttributes, attributes;
-@dynamic forward;
 @dynamic reply;
+@dynamic forwardSource;
 @dynamic hasPreviousMid, previousMid;
 @dynamic hasPrevMessageDate, prevMessageDate;
 @dynamic unreadCounterClock;
@@ -5366,13 +5367,13 @@ typedef struct UpdateMessage__storage_ {
   UUIDValue *mid;
   MessageContent *message;
   MessageAttributes *attributes;
-  ReferencedMessages *forward;
   ReferencedMessages *reply;
   UUIDValue *previousMid;
   GPBInt64Value *prevMessageDate;
   GPBInt32Value *counter;
   GPBInt64Value *myReadDate;
   GPBInt64Value *prevEditInPeerAt;
+  ForwardSource *forwardSource;
   int64_t date;
   int64_t unreadCounterClock;
   int64_t randomId;
@@ -5436,15 +5437,6 @@ typedef struct UpdateMessage__storage_ {
         .number = UpdateMessage_FieldNumber_Attributes,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(UpdateMessage__storage_, attributes),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "forward",
-        .dataTypeSpecific.clazz = GPBObjCClass(ReferencedMessages),
-        .number = UpdateMessage_FieldNumber_Forward,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateMessage__storage_, forward),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -5526,6 +5518,15 @@ typedef struct UpdateMessage__storage_ {
         .number = UpdateMessage_FieldNumber_PrevEditInPeerAt,
         .hasIndex = 13,
         .offset = (uint32_t)offsetof(UpdateMessage__storage_, prevEditInPeerAt),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "forwardSource",
+        .dataTypeSpecific.clazz = GPBObjCClass(ForwardSource),
+        .number = UpdateMessage_FieldNumber_ForwardSource,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(UpdateMessage__storage_, forwardSource),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -5672,8 +5673,8 @@ typedef struct UpdateMessageContentChanged__storage_ {
 @dynamic unreadCounterClock;
 @dynamic hasUnreadCounter, unreadCounter;
 @dynamic hasMyReadDate, myReadDate;
-@dynamic forward;
 @dynamic reply;
+@dynamic forwardSource;
 
 typedef struct UpdateMessageSent__storage_ {
   uint32_t _has_storage_[2];
@@ -5682,8 +5683,8 @@ typedef struct UpdateMessageSent__storage_ {
   UUIDValue *prevMid;
   GPBInt32Value *unreadCounter;
   GPBInt64Value *myReadDate;
-  ReferencedMessages *forward;
   ReferencedMessages *reply;
+  ForwardSource *forwardSource;
   int64_t rid;
   int64_t date;
   int64_t unreadCounterClock;
@@ -5768,20 +5769,20 @@ typedef struct UpdateMessageSent__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "forward",
-        .dataTypeSpecific.clazz = GPBObjCClass(ReferencedMessages),
-        .number = UpdateMessageSent_FieldNumber_Forward,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateMessageSent__storage_, forward),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "reply",
         .dataTypeSpecific.clazz = GPBObjCClass(ReferencedMessages),
         .number = UpdateMessageSent_FieldNumber_Reply,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(UpdateMessageSent__storage_, reply),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "forwardSource",
+        .dataTypeSpecific.clazz = GPBObjCClass(ForwardSource),
+        .number = UpdateMessageSent_FieldNumber_ForwardSource,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(UpdateMessageSent__storage_, forwardSource),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -7704,6 +7705,84 @@ typedef struct ReferencedMessages__storage_ {
 
 @end
 
+#pragma mark - ForwardSource
+
+@implementation ForwardSource
+
+@dynamic hasHostPeer, hostPeer;
+@dynamic hasSenderPeer, senderPeer;
+@dynamic hostPeerName;
+@dynamic hasMid, mid;
+
+typedef struct ForwardSource__storage_ {
+  uint32_t _has_storage_[1];
+  OutPeer *hostPeer;
+  OutPeer *senderPeer;
+  NSString *hostPeerName;
+  UUIDValue *mid;
+} ForwardSource__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "hostPeer",
+        .dataTypeSpecific.clazz = GPBObjCClass(OutPeer),
+        .number = ForwardSource_FieldNumber_HostPeer,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(ForwardSource__storage_, hostPeer),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "senderPeer",
+        .dataTypeSpecific.clazz = GPBObjCClass(OutPeer),
+        .number = ForwardSource_FieldNumber_SenderPeer,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(ForwardSource__storage_, senderPeer),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "hostPeerName",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ForwardSource_FieldNumber_HostPeerName,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(ForwardSource__storage_, hostPeerName),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "mid",
+        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
+        .number = ForwardSource_FieldNumber_Mid,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(ForwardSource__storage_, mid),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ForwardSource class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ForwardSource__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - HistoryMessage
 
 @implementation HistoryMessage
@@ -7719,8 +7798,8 @@ typedef struct ReferencedMessages__storage_ {
 @dynamic state;
 @dynamic reactionsArray, reactionsArray_Count;
 @dynamic hasAttribute, attribute;
-@dynamic forward;
 @dynamic reply;
+@dynamic forwardSource;
 @dynamic hasEditedAt, editedAt;
 @dynamic randomId;
 
@@ -7735,9 +7814,9 @@ typedef struct HistoryMessage__storage_ {
   MessageContent *message;
   NSMutableArray *reactionsArray;
   MessageAttributes *attribute;
-  ReferencedMessages *forward;
   ReferencedMessages *reply;
   GPBInt64Value *editedAt;
+  ForwardSource *forwardSource;
   int64_t date;
   int64_t randomId;
 } HistoryMessage__storage_;
@@ -7839,15 +7918,6 @@ typedef struct HistoryMessage__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "forward",
-        .dataTypeSpecific.clazz = GPBObjCClass(ReferencedMessages),
-        .number = HistoryMessage_FieldNumber_Forward,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(HistoryMessage__storage_, forward),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "reply",
         .dataTypeSpecific.clazz = GPBObjCClass(ReferencedMessages),
         .number = HistoryMessage_FieldNumber_Reply,
@@ -7873,6 +7943,15 @@ typedef struct HistoryMessage__storage_ {
         .offset = (uint32_t)offsetof(HistoryMessage__storage_, randomId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "forwardSource",
+        .dataTypeSpecific.clazz = GPBObjCClass(ForwardSource),
+        .number = HistoryMessage_FieldNumber_ForwardSource,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(HistoryMessage__storage_, forwardSource),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -8238,8 +8317,8 @@ typedef struct ResponseHistoryDifference__storage_ {
 @dynamic hasMessageId, messageId;
 @dynamic date;
 @dynamic hasMessage, message;
-@dynamic forward;
 @dynamic reply;
+@dynamic forwardSource;
 @dynamic editedAt;
 @dynamic randomId;
 
@@ -8248,8 +8327,8 @@ typedef struct HistoryMessageLight__storage_ {
   NSString *senderUserId;
   UUIDValue *messageId;
   MessageContent *message;
-  ReferencedMessages *forward;
   ReferencedMessages *reply;
+  ForwardSource *forwardSource;
   int64_t date;
   int64_t editedAt;
   int64_t randomId;
@@ -8298,15 +8377,6 @@ typedef struct HistoryMessageLight__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "forward",
-        .dataTypeSpecific.clazz = GPBObjCClass(ReferencedMessages),
-        .number = HistoryMessageLight_FieldNumber_Forward,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(HistoryMessageLight__storage_, forward),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "reply",
         .dataTypeSpecific.clazz = GPBObjCClass(ReferencedMessages),
         .number = HistoryMessageLight_FieldNumber_Reply,
@@ -8332,6 +8402,15 @@ typedef struct HistoryMessageLight__storage_ {
         .offset = (uint32_t)offsetof(HistoryMessageLight__storage_, randomId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "forwardSource",
+        .dataTypeSpecific.clazz = GPBObjCClass(ForwardSource),
+        .number = HistoryMessageLight_FieldNumber_ForwardSource,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(HistoryMessageLight__storage_, forwardSource),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =

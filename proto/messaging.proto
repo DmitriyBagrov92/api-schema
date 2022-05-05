@@ -618,9 +618,10 @@ message UpdateMessage {
     MessageContent message = 5;
     /// attributes to help reasoning about message
     MessageAttributes attributes = 6;
+    reserved 7;
     oneof attach {
-        ReferencedMessages forward = 7;
         ReferencedMessages reply = 8;
+        ForwardSource forward_source = 17;
     }
     /// Message id of previos message from current conversation
     UUIDValue previous_mid = 9;
@@ -662,9 +663,11 @@ message UpdateMessageSent {
     int64 unread_counter_clock = 6;
     google.protobuf.Int32Value unread_counter = 7;
     google.protobuf.Int64Value my_read_date = 8;
+    
+    reserved 9;
     oneof attach {
-        ReferencedMessages forward = 9;
         ReferencedMessages reply = 10;
+        ForwardSource forward_source = 11;
     }
 }
 
@@ -869,6 +872,14 @@ message ReferencedMessages {
     repeated UUIDValue mids = 1;
 }
 
+// pointer to source of forwarded message
+message ForwardSource {
+    OutPeer host_peer = 1; // empty if viewer has no access to this peer
+    OutPeer sender_peer = 2; // empty if viewer has no access to this peer
+    string host_peer_name = 3; // used to avoid host_peer/sender_peer resolution
+    UUIDValue mid = 4;
+}
+
 // Message from history
 message HistoryMessage {
     string sender_user_id = 1;
@@ -882,9 +893,11 @@ message HistoryMessage {
     MessageState state = 8;
     repeated MessageReaction reactions = 9;
     MessageAttributes attribute = 10;
+    
+    reserved 11; 
     oneof attach {
-        ReferencedMessages forward = 11;
         ReferencedMessages reply = 12;
+        ForwardSource forward_source = 15;
     }
     google.protobuf.Int64Value edited_at = 13;
     int64 random_id = 14;
@@ -941,9 +954,11 @@ message HistoryMessageLight {
     UUIDValue message_id = 2;
     int64 date = 3;
     MessageContent message = 4;
+    
+    reserved 5;
     oneof attach {
-        ReferencedMessages forward = 5;
         ReferencedMessages reply = 6;
+        ForwardSource forward_source = 9;
     }
     int64 edited_at = 7;
     int64 random_id = 8;

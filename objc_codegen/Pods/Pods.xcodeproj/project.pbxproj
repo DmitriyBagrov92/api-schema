@@ -2172,7 +2172,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3EA92DF7E4F9539CF232DA88834B3772 /* libgRPC-RxLibrary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libgRPC-RxLibrary.a"; path = "libgRPC-RxLibrary.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3EA92DF7E4F9539CF232DA88834B3772 /* gRPC-RxLibrary */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "gRPC-RxLibrary"; path = "libgRPC-RxLibrary.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		46EB2E00000130 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		46EB2E00000150 /* bio_ssl.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = bio_ssl.cc; path = src/ssl/bio_ssl.cc; sourceTree = "<group>"; };
 		46EB2E00000160 /* d1_both.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = d1_both.cc; path = src/ssl/d1_both.cc; sourceTree = "<group>"; };
@@ -4243,15 +4243,15 @@
 		46EB2E00010CC0 /* Pods-HelloWorld-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-HelloWorld-acknowledgements.plist"; sourceTree = "<group>"; };
 		46EB2E00010CD0 /* Pods-HelloWorld-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-HelloWorld-acknowledgements.markdown"; sourceTree = "<group>"; };
 		46EB2E00010CE0 /* Pods-HelloWorld-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-HelloWorld-dummy.m"; sourceTree = "<group>"; };
-		514D7742C6CBB0BDBD9984AEE97DDFDE /* libBoringSSL-GRPC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libBoringSSL-GRPC.a"; path = "libBoringSSL-GRPC.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7B2DAFEE98CC2C5D6AB5B86FD08BB139 /* libgRPC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libgRPC.a; path = libgRPC.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		86B9BBE580DC88BA70AE010C027C4F46 /* libDialog-gRPC-Objc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libDialog-gRPC-Objc.a"; path = "libDialog-gRPC-Objc.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A6D968E4040267E3D8E5C6E38F036CF1 /* libgRPC-ProtoRPC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libgRPC-ProtoRPC.a"; path = "libgRPC-ProtoRPC.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B02346B2D76B073163B9B06A9B2922FD /* gRPCCertificates.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = gRPCCertificates.bundle; path = "gRPC-gRPCCertificates.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B471867C535B02FA55D87E260F6480F8 /* libgRPC-Core.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libgRPC-Core.a"; path = "libgRPC-Core.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BF96B57ADE05E8909F823BDF6868B3E3 /* libabseil.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libabseil.a; path = libabseil.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		C2105C94812B6214B154F54DCEDB72AC /* libProtobuf.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libProtobuf.a; path = libProtobuf.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		ECDEAA2273A464F890AC52FDA8026A21 /* libPods-HelloWorld.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-HelloWorld.a"; path = "libPods-HelloWorld.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		514D7742C6CBB0BDBD9984AEE97DDFDE /* BoringSSL-GRPC */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "BoringSSL-GRPC"; path = "libBoringSSL-GRPC.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B2DAFEE98CC2C5D6AB5B86FD08BB139 /* gRPC */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = gRPC; path = libgRPC.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		86B9BBE580DC88BA70AE010C027C4F46 /* Dialog-gRPC-Objc */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "Dialog-gRPC-Objc"; path = "libDialog-gRPC-Objc.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6D968E4040267E3D8E5C6E38F036CF1 /* gRPC-ProtoRPC */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "gRPC-ProtoRPC"; path = "libgRPC-ProtoRPC.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B02346B2D76B073163B9B06A9B2922FD /* gRPC-gRPCCertificates */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "gRPC-gRPCCertificates"; path = gRPCCertificates.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		B471867C535B02FA55D87E260F6480F8 /* gRPC-Core */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "gRPC-Core"; path = "libgRPC-Core.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF96B57ADE05E8909F823BDF6868B3E3 /* abseil */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = abseil; path = libabseil.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2105C94812B6214B154F54DCEDB72AC /* Protobuf */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = Protobuf; path = libProtobuf.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		ECDEAA2273A464F890AC52FDA8026A21 /* Pods-HelloWorld */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "Pods-HelloWorld"; path = "libPods-HelloWorld.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4343,16 +4343,16 @@
 		46EB2E00000020 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B02346B2D76B073163B9B06A9B2922FD /* gRPCCertificates.bundle */,
-				BF96B57ADE05E8909F823BDF6868B3E3 /* libabseil.a */,
-				514D7742C6CBB0BDBD9984AEE97DDFDE /* libBoringSSL-GRPC.a */,
-				86B9BBE580DC88BA70AE010C027C4F46 /* libDialog-gRPC-Objc.a */,
-				7B2DAFEE98CC2C5D6AB5B86FD08BB139 /* libgRPC.a */,
-				B471867C535B02FA55D87E260F6480F8 /* libgRPC-Core.a */,
-				A6D968E4040267E3D8E5C6E38F036CF1 /* libgRPC-ProtoRPC.a */,
-				3EA92DF7E4F9539CF232DA88834B3772 /* libgRPC-RxLibrary.a */,
-				ECDEAA2273A464F890AC52FDA8026A21 /* libPods-HelloWorld.a */,
-				C2105C94812B6214B154F54DCEDB72AC /* libProtobuf.a */,
+				BF96B57ADE05E8909F823BDF6868B3E3 /* abseil */,
+				514D7742C6CBB0BDBD9984AEE97DDFDE /* BoringSSL-GRPC */,
+				86B9BBE580DC88BA70AE010C027C4F46 /* Dialog-gRPC-Objc */,
+				7B2DAFEE98CC2C5D6AB5B86FD08BB139 /* gRPC */,
+				B471867C535B02FA55D87E260F6480F8 /* gRPC-Core */,
+				B02346B2D76B073163B9B06A9B2922FD /* gRPC-gRPCCertificates */,
+				A6D968E4040267E3D8E5C6E38F036CF1 /* gRPC-ProtoRPC */,
+				3EA92DF7E4F9539CF232DA88834B3772 /* gRPC-RxLibrary */,
+				ECDEAA2273A464F890AC52FDA8026A21 /* Pods-HelloWorld */,
+				C2105C94812B6214B154F54DCEDB72AC /* Protobuf */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4749,39 +4749,39 @@
 				46EB2E00001160 /* hpke.c */,
 				46EB2E00001180 /* hrss.c */,
 				46EB2E00001490 /* i2d_pr.c */,
-				46EB2E00000A50 /* internal.h */,
-				46EB2E00000A20 /* internal.h */,
-				46EB2E00000AA0 /* internal.h */,
-				46EB2E000009C0 /* internal.h */,
-				46EB2E00000BA0 /* internal.h */,
-				46EB2E00001290 /* internal.h */,
-				46EB2E00001260 /* internal.h */,
-				46EB2E00000930 /* internal.h */,
-				46EB2E00000900 /* internal.h */,
-				46EB2E000008B0 /* internal.h */,
-				46EB2E00000800 /* internal.h */,
-				46EB2E000007D0 /* internal.h */,
-				46EB2E000012D0 /* internal.h */,
-				46EB2E00000C90 /* internal.h */,
 				46EB2E00000710 /* internal.h */,
+				46EB2E000007D0 /* internal.h */,
+				46EB2E00000800 /* internal.h */,
+				46EB2E000008B0 /* internal.h */,
+				46EB2E00000900 /* internal.h */,
+				46EB2E00000930 /* internal.h */,
+				46EB2E000009C0 /* internal.h */,
+				46EB2E00000A20 /* internal.h */,
+				46EB2E00000A50 /* internal.h */,
+				46EB2E00000AA0 /* internal.h */,
+				46EB2E00000BA0 /* internal.h */,
+				46EB2E00000C90 /* internal.h */,
 				46EB2E00000D80 /* internal.h */,
-				46EB2E00001310 /* internal.h */,
 				46EB2E00000DB0 /* internal.h */,
 				46EB2E00000DE0 /* internal.h */,
-				46EB2E000013D0 /* internal.h */,
 				46EB2E00000E40 /* internal.h */,
-				46EB2E00000430 /* internal.h */,
-				46EB2E000014A0 /* internal.h */,
 				46EB2E00000F70 /* internal.h */,
-				46EB2E00001750 /* internal.h */,
 				46EB2E00000FE0 /* internal.h */,
 				46EB2E00001050 /* internal.h */,
 				46EB2E00001090 /* internal.h */,
-				46EB2E00001190 /* internal.h */,
 				46EB2E000010E0 /* internal.h */,
-				46EB2E00001170 /* internal.h */,
-				46EB2E00000200 /* internal.h */,
 				46EB2E00001130 /* internal.h */,
+				46EB2E00001170 /* internal.h */,
+				46EB2E00001190 /* internal.h */,
+				46EB2E00000430 /* internal.h */,
+				46EB2E00001260 /* internal.h */,
+				46EB2E00001290 /* internal.h */,
+				46EB2E000012D0 /* internal.h */,
+				46EB2E00001310 /* internal.h */,
+				46EB2E000013D0 /* internal.h */,
+				46EB2E000014A0 /* internal.h */,
+				46EB2E00001750 /* internal.h */,
+				46EB2E00000200 /* internal.h */,
 				46EB2E00000F50 /* is_fips.c */,
 				46EB2E00000CA0 /* jacobi.c */,
 				46EB2E00001140 /* kdf.c */,
@@ -6469,8 +6469,8 @@
 				46EB2E00004930 /* hpack_parser.h */,
 				46EB2E00004940 /* hpack_table.cc */,
 				46EB2E00004950 /* hpack_table.h */,
-				46EB2E000051F0 /* http.upb.c */,
 				46EB2E00005110 /* http.upb.c */,
+				46EB2E000051F0 /* http.upb.c */,
 				46EB2E00005120 /* http.upb.h */,
 				46EB2E00005200 /* http.upb.h */,
 				46EB2E00007270 /* http2_errors.h */,
@@ -6528,8 +6528,8 @@
 				46EB2E00006900 /* json_reader.cc */,
 				46EB2E00006BC0 /* json_token.cc */,
 				46EB2E00006BD0 /* json_token.h */,
-				46EB2E00006EF0 /* json_util.cc */,
 				46EB2E00006910 /* json_util.cc */,
+				46EB2E00006EF0 /* json_util.cc */,
 				46EB2E00006920 /* json_util.h */,
 				46EB2E00006F00 /* json_util.h */,
 				46EB2E00006930 /* json_writer.cc */,
@@ -6598,8 +6598,8 @@
 				46EB2E00007290 /* metadata.h */,
 				46EB2E00005010 /* metadata.upb.c */,
 				46EB2E000050D0 /* metadata.upb.c */,
-				46EB2E000050E0 /* metadata.upb.h */,
 				46EB2E00005020 /* metadata.upb.h */,
+				46EB2E000050E0 /* metadata.upb.h */,
 				46EB2E00007170 /* metadata_array.cc */,
 				46EB2E000072A0 /* metadata_batch.cc */,
 				46EB2E000072B0 /* metadata_batch.h */,
@@ -6713,10 +6713,10 @@
 				46EB2E00004420 /* resolver_result_parsing.h */,
 				46EB2E00004430 /* resolving_lb_policy.cc */,
 				46EB2E00004440 /* resolving_lb_policy.h */,
-				46EB2E000054B0 /* resource.upb.c */,
 				46EB2E00004A90 /* resource.upb.c */,
-				46EB2E000054C0 /* resource.upb.h */,
+				46EB2E000054B0 /* resource.upb.c */,
 				46EB2E00004AA0 /* resource.upb.h */,
+				46EB2E000054C0 /* resource.upb.h */,
 				46EB2E000054D0 /* resource_locator.upb.c */,
 				46EB2E000054E0 /* resource_locator.upb.h */,
 				46EB2E000054F0 /* resource_name.upb.c */,
@@ -7038,8 +7038,8 @@
 				46EB2E00007D90 /* atm_gcc_atomic.h */,
 				46EB2E00007BE0 /* atm_gcc_sync.h */,
 				46EB2E00007DA0 /* atm_gcc_sync.h */,
-				46EB2E00007DB0 /* atm_windows.h */,
 				46EB2E00007BF0 /* atm_windows.h */,
+				46EB2E00007DB0 /* atm_windows.h */,
 				46EB2E00007B30 /* byte_buffer.h */,
 				46EB2E00007C00 /* byte_buffer.h */,
 				46EB2E00007B40 /* byte_buffer_reader.h */,
@@ -7049,8 +7049,8 @@
 				46EB2E00007C20 /* compression_types.h */,
 				46EB2E00007C30 /* connectivity_state.h */,
 				46EB2E00007DC0 /* cpu.h */,
-				46EB2E00007C40 /* fork.h */,
 				46EB2E00007B70 /* fork.h */,
+				46EB2E00007C40 /* fork.h */,
 				46EB2E00007C50 /* gpr_slice.h */,
 				46EB2E00007C60 /* gpr_types.h */,
 				46EB2E00007B80 /* grpc.h */,
@@ -7065,14 +7065,14 @@
 				46EB2E00007C90 /* port_platform.h */,
 				46EB2E00007DF0 /* port_platform.h */,
 				46EB2E00007CA0 /* propagation_bits.h */,
-				46EB2E00007D40 /* slice.h */,
 				46EB2E00007CB0 /* slice.h */,
+				46EB2E00007D40 /* slice.h */,
 				46EB2E00007D50 /* slice_buffer.h */,
 				46EB2E00007CC0 /* status.h */,
 				46EB2E00007D60 /* status.h */,
 				46EB2E00007E00 /* string_util.h */,
-				46EB2E00007E10 /* sync.h */,
 				46EB2E00007CD0 /* sync.h */,
+				46EB2E00007E10 /* sync.h */,
 				46EB2E00007CE0 /* sync_abseil.h */,
 				46EB2E00007E20 /* sync_abseil.h */,
 				46EB2E00007CF0 /* sync_custom.h */,
@@ -7081,8 +7081,8 @@
 				46EB2E00007E40 /* sync_generic.h */,
 				46EB2E00007D10 /* sync_posix.h */,
 				46EB2E00007E50 /* sync_posix.h */,
-				46EB2E00007E60 /* sync_windows.h */,
 				46EB2E00007D20 /* sync_windows.h */,
+				46EB2E00007E60 /* sync_windows.h */,
 				46EB2E00007E70 /* thd_id.h */,
 				46EB2E00007E80 /* time.h */,
 				46EB2E00007E90 /* workaround_list.h */,
@@ -7381,8 +7381,8 @@
 				46EB2E00009FF0 /* cmac.h in Headers */,
 				46EB2E0000A000 /* conf.h in Headers */,
 				46EB2E00009BF0 /* conf_def.h in Headers */,
-				46EB2E00009B80 /* cpu-arm-linux.h in Headers */,
 				46EB2E0000A010 /* cpu.h in Headers */,
+				46EB2E00009B80 /* cpu-arm-linux.h in Headers */,
 				46EB2E0000A020 /* crypto.h in Headers */,
 				46EB2E0000A030 /* curve25519.h in Headers */,
 				46EB2E00009E90 /* curve25519_32.h in Headers */,
@@ -7409,8 +7409,6 @@
 				46EB2E0000A120 /* hkdf.h in Headers */,
 				46EB2E0000A130 /* hmac.h in Headers */,
 				46EB2E0000A140 /* hrss.h in Headers */,
-				46EB2E00009D70 /* internal.h in Headers */,
-				46EB2E00009B90 /* internal.h in Headers */,
 				46EB2E00009BB0 /* internal.h in Headers */,
 				46EB2E00009BC0 /* internal.h in Headers */,
 				46EB2E00009BD0 /* internal.h in Headers */,
@@ -7429,12 +7427,13 @@
 				46EB2E00009CF0 /* internal.h in Headers */,
 				46EB2E00009D30 /* internal.h in Headers */,
 				46EB2E00009D40 /* internal.h in Headers */,
-				46EB2E00009B70 /* internal.h in Headers */,
+				46EB2E00009D70 /* internal.h in Headers */,
 				46EB2E00009D80 /* internal.h in Headers */,
 				46EB2E00009D90 /* internal.h in Headers */,
 				46EB2E00009DA0 /* internal.h in Headers */,
 				46EB2E00009DB0 /* internal.h in Headers */,
 				46EB2E00009DC0 /* internal.h in Headers */,
+				46EB2E00009B90 /* internal.h in Headers */,
 				46EB2E00009DE0 /* internal.h in Headers */,
 				46EB2E00009DF0 /* internal.h in Headers */,
 				46EB2E00009E00 /* internal.h in Headers */,
@@ -7442,6 +7441,7 @@
 				46EB2E00009E20 /* internal.h in Headers */,
 				46EB2E00009E40 /* internal.h in Headers */,
 				46EB2E00009E70 /* internal.h in Headers */,
+				46EB2E00009B70 /* internal.h in Headers */,
 				46EB2E0000A150 /* is_boringssl.h in Headers */,
 				46EB2E0000A160 /* lhash.h in Headers */,
 				46EB2E00009CE0 /* md32_common.h in Headers */,
@@ -7456,8 +7456,8 @@
 				46EB2E0000A1E0 /* opensslconf.h in Headers */,
 				46EB2E0000A1F0 /* opensslv.h in Headers */,
 				46EB2E0000A200 /* ossl_typ.h in Headers */,
-				46EB2E00009D00 /* p256-x86_64-table.h in Headers */,
 				46EB2E00009D10 /* p256-x86_64.h in Headers */,
+				46EB2E00009D00 /* p256-x86_64-table.h in Headers */,
 				46EB2E00009EB0 /* p256_32.h in Headers */,
 				46EB2E00009EC0 /* p256_64.h in Headers */,
 				46EB2E00009D20 /* p256_table.h in Headers */,
@@ -7645,8 +7645,8 @@
 				46EB2E0000BCD0 /* charconv_parse.h in Headers */,
 				46EB2E0000BB70 /* checker.h in Headers */,
 				46EB2E0000B950 /* city.h in Headers */,
-				46EB2E0000BEE0 /* civil_time.h in Headers */,
 				46EB2E0000C070 /* civil_time.h in Headers */,
+				46EB2E0000BEE0 /* civil_time.h in Headers */,
 				46EB2E0000BEF0 /* civil_time_detail.h in Headers */,
 				46EB2E0000C080 /* clock.h in Headers */,
 				46EB2E0000B690 /* common.h in Headers */,
@@ -7672,8 +7672,8 @@
 				46EB2E0000B6C0 /* fixed_array.h in Headers */,
 				46EB2E0000B6D0 /* flat_hash_set.h in Headers */,
 				46EB2E0000BB90 /* float_conversion.h in Headers */,
-				46EB2E0000B930 /* function_ref.h in Headers */,
 				46EB2E0000B920 /* function_ref.h in Headers */,
+				46EB2E0000B930 /* function_ref.h in Headers */,
 				46EB2E0000C090 /* get_current_time_chrono.inc in Headers */,
 				46EB2E0000C0A0 /* get_current_time_posix.inc in Headers */,
 				46EB2E0000BDC0 /* graphcycles.h in Headers */,
@@ -7789,6 +7789,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				46EB2E0000C450 /* ChannelArgsUtil.h in Headers */,
+				46EB2E0000C630 /* GRPCCall.h in Headers */,
 				46EB2E0000C580 /* GRPCCall+ChannelArg.h in Headers */,
 				46EB2E0000C590 /* GRPCCall+ChannelCredentials.h in Headers */,
 				46EB2E0000C5A0 /* GRPCCall+Cronet.h in Headers */,
@@ -7796,15 +7797,14 @@
 				46EB2E0000C5B0 /* GRPCCall+OAuth2.h in Headers */,
 				46EB2E0000C5C0 /* GRPCCall+Tests.h in Headers */,
 				46EB2E0000C460 /* GRPCCall+V2API.h in Headers */,
-				46EB2E0000C630 /* GRPCCall.h in Headers */,
 				46EB2E0000C470 /* GRPCCallInternal.h in Headers */,
 				46EB2E0000C6D0 /* GRPCCallLegacy.h in Headers */,
-				46EB2E0000C690 /* GRPCCallOptions+Internal.h in Headers */,
 				46EB2E0000C650 /* GRPCCallOptions.h in Headers */,
+				46EB2E0000C690 /* GRPCCallOptions+Internal.h in Headers */,
 				46EB2E0000C480 /* GRPCChannel.h in Headers */,
 				46EB2E0000C490 /* GRPCChannelFactory.h in Headers */,
-				46EB2E0000C4A0 /* GRPCChannelPool+Test.h in Headers */,
 				46EB2E0000C4B0 /* GRPCChannelPool.h in Headers */,
+				46EB2E0000C4A0 /* GRPCChannelPool+Test.h in Headers */,
 				46EB2E0000C4C0 /* GRPCCompletionQueue.h in Headers */,
 				46EB2E0000C4D0 /* GRPCCoreFactory.h in Headers */,
 				46EB2E0000C660 /* GRPCDispatchable.h in Headers */,
@@ -7815,8 +7815,8 @@
 				46EB2E0000C510 /* GRPCReachabilityFlagNames.xmacro.h in Headers */,
 				46EB2E0000C520 /* GRPCRequestHeaders.h in Headers */,
 				46EB2E0000C530 /* GRPCSecureChannelFactory.h in Headers */,
-				46EB2E0000C6A0 /* GRPCTransport+Private.h in Headers */,
 				46EB2E0000C680 /* GRPCTransport.h in Headers */,
+				46EB2E0000C6A0 /* GRPCTransport+Private.h in Headers */,
 				46EB2E0000C6E0 /* GRPCTypes.h in Headers */,
 				46EB2E0000C540 /* GRPCWrappedCall.h in Headers */,
 				46EB2E0000C550 /* NSData+GRPC.h in Headers */,
@@ -7861,14 +7861,14 @@
 				46EB2E0000F060 /* any.upb.h in Headers */,
 				46EB2E0000EE00 /* api_listener.upb.h in Headers */,
 				46EB2E0000FE80 /* api_trace.h in Headers */,
-				46EB2E0000F4F0 /* arena.h in Headers */,
 				46EB2E0000F420 /* arena.h in Headers */,
-				46EB2E00010670 /* atm.h in Headers */,
+				46EB2E0000F4F0 /* arena.h in Headers */,
 				46EB2E000104B0 /* atm.h in Headers */,
-				46EB2E00010680 /* atm_gcc_atomic.h in Headers */,
+				46EB2E00010670 /* atm.h in Headers */,
 				46EB2E000104C0 /* atm_gcc_atomic.h in Headers */,
-				46EB2E00010690 /* atm_gcc_sync.h in Headers */,
+				46EB2E00010680 /* atm_gcc_atomic.h in Headers */,
 				46EB2E000104D0 /* atm_gcc_sync.h in Headers */,
+				46EB2E00010690 /* atm_gcc_sync.h in Headers */,
 				46EB2E000104E0 /* atm_windows.h in Headers */,
 				46EB2E000106A0 /* atm_windows.h in Headers */,
 				46EB2E0000F500 /* atomic.h in Headers */,
@@ -7893,8 +7893,8 @@
 				46EB2E0000F660 /* buffer_list.h in Headers */,
 				46EB2E00010420 /* byte_buffer.h in Headers */,
 				46EB2E000104F0 /* byte_buffer.h in Headers */,
-				46EB2E00010500 /* byte_buffer_reader.h in Headers */,
 				46EB2E00010430 /* byte_buffer_reader.h in Headers */,
+				46EB2E00010500 /* byte_buffer_reader.h in Headers */,
 				46EB2E0000FF70 /* byte_stream.h in Headers */,
 				46EB2E0000FE90 /* call.h in Headers */,
 				46EB2E0000F670 /* call_combiner.h in Headers */,
@@ -8000,9 +8000,9 @@
 				46EB2E00010300 /* flags.h in Headers */,
 				46EB2E0000FBD0 /* flat_expr_builder.h in Headers */,
 				46EB2E0000EB70 /* flow_control.h in Headers */,
+				46EB2E00010460 /* fork.h in Headers */,
 				46EB2E00010530 /* fork.h in Headers */,
 				46EB2E0000F530 /* fork.h in Headers */,
-				46EB2E00010460 /* fork.h in Headers */,
 				46EB2E0000F620 /* format_request.h in Headers */,
 				46EB2E0000EB80 /* frame.h in Headers */,
 				46EB2E0000EB90 /* frame_data.h in Headers */,
@@ -8077,8 +8077,8 @@
 				46EB2E0000F830 /* is_epollexclusive_available.h in Headers */,
 				46EB2E0000FB30 /* json.h in Headers */,
 				46EB2E0000FC90 /* json_token.h in Headers */,
-				46EB2E0000FE20 /* json_util.h in Headers */,
 				46EB2E0000FB40 /* json_util.h in Headers */,
+				46EB2E0000FE20 /* json_util.h in Headers */,
 				46EB2E0000FCA0 /* jwt_credentials.h in Headers */,
 				46EB2E0000FCB0 /* jwt_verifier.h in Headers */,
 				46EB2E0000FF20 /* lame_client.h in Headers */,
@@ -8115,8 +8115,8 @@
 				46EB2E0000EA90 /* message_decompress_filter.h in Headers */,
 				46EB2E0000EAC0 /* message_size_filter.h in Headers */,
 				46EB2E0000FFB0 /* metadata.h in Headers */,
-				46EB2E0000EFC0 /* metadata.upb.h in Headers */,
 				46EB2E0000EF60 /* metadata.upb.h in Headers */,
+				46EB2E0000EFC0 /* metadata.upb.h in Headers */,
 				46EB2E0000FFC0 /* metadata_batch.h in Headers */,
 				46EB2E0000F130 /* migrate.upb.h in Headers */,
 				46EB2E00010330 /* mix.h in Headers */,
@@ -8150,8 +8150,8 @@
 				46EB2E0000F900 /* pollset_windows.h in Headers */,
 				46EB2E0000F910 /* port.h in Headers */,
 				46EB2E000103D0 /* port_def.inc in Headers */,
-				46EB2E000106E0 /* port_platform.h in Headers */,
 				46EB2E00010580 /* port_platform.h in Headers */,
+				46EB2E000106E0 /* port_platform.h in Headers */,
 				46EB2E000103E0 /* port_undef.inc in Headers */,
 				46EB2E00010230 /* prefilter.h in Headers */,
 				46EB2E00010240 /* prefilter_tree.h in Headers */,
@@ -8200,8 +8200,8 @@
 				46EB2E0000EA00 /* service_config_call_data.h in Headers */,
 				46EB2E0000EA10 /* service_config_parser.h in Headers */,
 				46EB2E00010280 /* set.h in Headers */,
-				46EB2E00010630 /* slice.h in Headers */,
 				46EB2E000105A0 /* slice.h in Headers */,
+				46EB2E00010630 /* slice.h in Headers */,
 				46EB2E00010640 /* slice_buffer.h in Headers */,
 				46EB2E0000FE50 /* slice_internal.h in Headers */,
 				46EB2E0000FE60 /* slice_string_helpers.h in Headers */,
@@ -8256,19 +8256,19 @@
 				46EB2E0000E8C0 /* subchannel_list.h in Headers */,
 				46EB2E0000EA40 /* subchannel_pool_interface.h in Headers */,
 				46EB2E0000EDC0 /* substitution_format_string.upb.h in Headers */,
-				46EB2E0000F600 /* sync.h in Headers */,
 				46EB2E000105C0 /* sync.h in Headers */,
 				46EB2E00010700 /* sync.h in Headers */,
+				46EB2E0000F600 /* sync.h in Headers */,
 				46EB2E000105D0 /* sync_abseil.h in Headers */,
 				46EB2E00010710 /* sync_abseil.h in Headers */,
 				46EB2E000105E0 /* sync_custom.h in Headers */,
 				46EB2E00010720 /* sync_custom.h in Headers */,
-				46EB2E00010730 /* sync_generic.h in Headers */,
 				46EB2E000105F0 /* sync_generic.h in Headers */,
+				46EB2E00010730 /* sync_generic.h in Headers */,
 				46EB2E00010600 /* sync_posix.h in Headers */,
 				46EB2E00010740 /* sync_posix.h in Headers */,
-				46EB2E00010750 /* sync_windows.h in Headers */,
 				46EB2E00010610 /* sync_windows.h in Headers */,
+				46EB2E00010750 /* sync_windows.h in Headers */,
 				46EB2E0000F040 /* syntax.upb.h in Headers */,
 				46EB2E0000FA00 /* sys_epoll_wrapper.h in Headers */,
 				46EB2E000103F0 /* table.int.h in Headers */,
@@ -8371,9 +8371,9 @@
 				46EB2E00010B80 /* GRXNSFastEnumerator.h in Headers */,
 				46EB2E00010B90 /* GRXNSScalarEnumerator.h in Headers */,
 				46EB2E00010B20 /* GRXWriteable.h in Headers */,
+				46EB2E00010B50 /* GRXWriter.h in Headers */,
 				46EB2E00010B30 /* GRXWriter+Immediate.h in Headers */,
 				46EB2E00010B40 /* GRXWriter+Transformations.h in Headers */,
-				46EB2E00010B50 /* GRXWriter.h in Headers */,
 				46EB2E00010B60 /* NSEnumerator+GRXUtil.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8405,7 +8405,7 @@
 			);
 			name = gRPC;
 			productName = gRPC;
-			productReference = 7B2DAFEE98CC2C5D6AB5B86FD08BB139 /* libgRPC.a */;
+			productReference = 7B2DAFEE98CC2C5D6AB5B86FD08BB139 /* gRPC */;
 			productType = "com.apple.product-type.library.static";
 		};
 		445FD4CB16BB7BEE2D1C404951CDE14A /* BoringSSL-GRPC */ = {
@@ -8422,7 +8422,7 @@
 			);
 			name = "BoringSSL-GRPC";
 			productName = "BoringSSL-GRPC";
-			productReference = 514D7742C6CBB0BDBD9984AEE97DDFDE /* libBoringSSL-GRPC.a */;
+			productReference = 514D7742C6CBB0BDBD9984AEE97DDFDE /* BoringSSL-GRPC */;
 			productType = "com.apple.product-type.library.static";
 		};
 		470FE31978DC918618A329D8B55C85FF /* Protobuf */ = {
@@ -8439,7 +8439,7 @@
 			);
 			name = Protobuf;
 			productName = Protobuf;
-			productReference = C2105C94812B6214B154F54DCEDB72AC /* libProtobuf.a */;
+			productReference = C2105C94812B6214B154F54DCEDB72AC /* Protobuf */;
 			productType = "com.apple.product-type.library.static";
 		};
 		50F380A87A4FC4EC7EE3AC9BDADB6D2D /* gRPC-Core */ = {
@@ -8458,7 +8458,7 @@
 			);
 			name = "gRPC-Core";
 			productName = "gRPC-Core";
-			productReference = B471867C535B02FA55D87E260F6480F8 /* libgRPC-Core.a */;
+			productReference = B471867C535B02FA55D87E260F6480F8 /* gRPC-Core */;
 			productType = "com.apple.product-type.library.static";
 		};
 		5C8D8E5A137F8A82A586AEF21A02DAE7 /* Pods-HelloWorld */ = {
@@ -8483,7 +8483,7 @@
 			);
 			name = "Pods-HelloWorld";
 			productName = "Pods-HelloWorld";
-			productReference = ECDEAA2273A464F890AC52FDA8026A21 /* libPods-HelloWorld.a */;
+			productReference = ECDEAA2273A464F890AC52FDA8026A21 /* Pods-HelloWorld */;
 			productType = "com.apple.product-type.library.static";
 		};
 		6ACE59D1174B8848E741EBFD5A8B1803 /* gRPC-gRPCCertificates */ = {
@@ -8499,8 +8499,8 @@
 			dependencies = (
 			);
 			name = "gRPC-gRPCCertificates";
-			productName = "gRPC-gRPCCertificates";
-			productReference = B02346B2D76B073163B9B06A9B2922FD /* gRPCCertificates.bundle */;
+			productName = gRPCCertificates;
+			productReference = B02346B2D76B073163B9B06A9B2922FD /* gRPC-gRPCCertificates */;
 			productType = "com.apple.product-type.bundle";
 		};
 		73CDC3D182DB953135F62609681B443D /* abseil */ = {
@@ -8517,7 +8517,7 @@
 			);
 			name = abseil;
 			productName = abseil;
-			productReference = BF96B57ADE05E8909F823BDF6868B3E3 /* libabseil.a */;
+			productReference = BF96B57ADE05E8909F823BDF6868B3E3 /* abseil */;
 			productType = "com.apple.product-type.library.static";
 		};
 		8693D036FA6D3647075E6C157913F710 /* gRPC-ProtoRPC */ = {
@@ -8537,7 +8537,7 @@
 			);
 			name = "gRPC-ProtoRPC";
 			productName = "gRPC-ProtoRPC";
-			productReference = A6D968E4040267E3D8E5C6E38F036CF1 /* libgRPC-ProtoRPC.a */;
+			productReference = A6D968E4040267E3D8E5C6E38F036CF1 /* gRPC-ProtoRPC */;
 			productType = "com.apple.product-type.library.static";
 		};
 		99B1DE31EF95463C39932B2E06C8F4F7 /* gRPC-RxLibrary */ = {
@@ -8554,7 +8554,7 @@
 			);
 			name = "gRPC-RxLibrary";
 			productName = "gRPC-RxLibrary";
-			productReference = 3EA92DF7E4F9539CF232DA88834B3772 /* libgRPC-RxLibrary.a */;
+			productReference = 3EA92DF7E4F9539CF232DA88834B3772 /* gRPC-RxLibrary */;
 			productType = "com.apple.product-type.library.static";
 		};
 		B27E82E97D0DC29B1ABFBD75FF29B112 /* Dialog-gRPC-Objc */ = {
@@ -8573,7 +8573,7 @@
 			);
 			name = "Dialog-gRPC-Objc";
 			productName = "Dialog-gRPC-Objc";
-			productReference = 86B9BBE580DC88BA70AE010C027C4F46 /* libDialog-gRPC-Objc.a */;
+			productReference = 86B9BBE580DC88BA70AE010C027C4F46 /* Dialog-gRPC-Objc */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -8582,16 +8582,16 @@
 		46EB2E00000000 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1100;
+				LastSwiftUpdateCheck = 1240;
+				LastUpgradeCheck = 1240;
 			};
 			buildConfigurationList = 46EB2E00000030 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				en,
 			);
 			mainGroup = 46EB2E00000010;
 			productRefGroup = 46EB2E00000020 /* Products */;
@@ -8687,8 +8687,8 @@
 				46EB2E00008C40 /* convert.c in Sources */,
 				46EB2E000088B0 /* cpu-aarch64-fuchsia.c in Sources */,
 				46EB2E000088C0 /* cpu-aarch64-linux.c in Sources */,
-				46EB2E000088D0 /* cpu-arm-linux.c in Sources */,
 				46EB2E000088E0 /* cpu-arm.c in Sources */,
+				46EB2E000088D0 /* cpu-arm-linux.c in Sources */,
 				46EB2E000088F0 /* cpu-intel.c in Sources */,
 				46EB2E00008900 /* cpu-ppc64le.c in Sources */,
 				46EB2E00008910 /* crypto.c in Sources */,
@@ -8785,8 +8785,8 @@
 				46EB2E000091E0 /* oct.c in Sources */,
 				46EB2E00009330 /* ofb.c in Sources */,
 				46EB2E000091F0 /* p224-64.c in Sources */,
-				46EB2E00009200 /* p256-x86_64.c in Sources */,
 				46EB2E00009210 /* p256.c in Sources */,
+				46EB2E00009200 /* p256-x86_64.c in Sources */,
 				46EB2E00009530 /* p5_pbev2.c in Sources */,
 				46EB2E00008EF0 /* p_dsa_asn1.c in Sources */,
 				46EB2E00008F00 /* p_ec.c in Sources */,
@@ -8846,8 +8846,8 @@
 				46EB2E00009220 /* scalar.c in Sources */,
 				46EB2E00008F80 /* scrypt.c in Sources */,
 				46EB2E000093D0 /* self_check.c in Sources */,
-				46EB2E000093E0 /* sha1-altivec.c in Sources */,
 				46EB2E000093F0 /* sha1.c in Sources */,
+				46EB2E000093E0 /* sha1-altivec.c in Sources */,
 				46EB2E00009400 /* sha256.c in Sources */,
 				46EB2E00009410 /* sha512.c in Sources */,
 				46EB2E00009110 /* shift.c in Sources */,
@@ -9162,13 +9162,13 @@
 			files = (
 				46EB2E0000C300 /* ChannelArgsUtil.m in Sources */,
 				46EB2E0000C730 /* gRPC-dummy.m in Sources */,
+				46EB2E0000C5D0 /* GRPCCall.m in Sources */,
 				46EB2E0000C3F0 /* GRPCCall+ChannelArg.m in Sources */,
 				46EB2E0000C400 /* GRPCCall+ChannelCredentials.m in Sources */,
 				46EB2E0000C410 /* GRPCCall+Cronet.m in Sources */,
 				46EB2E0000C5E0 /* GRPCCall+Interceptor.m in Sources */,
 				46EB2E0000C420 /* GRPCCall+OAuth2.m in Sources */,
 				46EB2E0000C430 /* GRPCCall+Tests.m in Sources */,
-				46EB2E0000C5D0 /* GRPCCall.m in Sources */,
 				46EB2E0000C310 /* GRPCCallInternal.m in Sources */,
 				46EB2E0000C440 /* GRPCCallLegacy.m in Sources */,
 				46EB2E0000C5F0 /* GRPCCallOptions.m in Sources */,
@@ -9182,8 +9182,8 @@
 				46EB2E0000C380 /* GRPCOpBatchLog.m in Sources */,
 				46EB2E0000C390 /* GRPCRequestHeaders.m in Sources */,
 				46EB2E0000C3A0 /* GRPCSecureChannelFactory.m in Sources */,
-				46EB2E0000C620 /* GRPCTransport+Private.m in Sources */,
 				46EB2E0000C610 /* GRPCTransport.m in Sources */,
+				46EB2E0000C620 /* GRPCTransport+Private.m in Sources */,
 				46EB2E0000C6C0 /* GRPCTypes.m in Sources */,
 				46EB2E0000C3B0 /* GRPCWrappedCall.m in Sources */,
 				46EB2E0000C3C0 /* NSData+GRPC.m in Sources */,
@@ -9454,8 +9454,8 @@
 				46EB2E0000DAA0 /* is_epollexclusive_available.cc in Sources */,
 				46EB2E0000DE40 /* json_reader.cc in Sources */,
 				46EB2E0000DFB0 /* json_token.cc in Sources */,
-				46EB2E0000E150 /* json_util.cc in Sources */,
 				46EB2E0000DE50 /* json_util.cc in Sources */,
+				46EB2E0000E150 /* json_util.cc in Sources */,
 				46EB2E0000DE60 /* json_writer.cc in Sources */,
 				46EB2E0000DFC0 /* jwt_credentials.cc in Sources */,
 				46EB2E0000DFD0 /* jwt_verifier.cc in Sources */,
@@ -9605,8 +9605,8 @@
 				46EB2E0000E380 /* static_metadata.cc in Sources */,
 				46EB2E0000D560 /* stats.cc in Sources */,
 				46EB2E0000D570 /* stats_data.cc in Sources */,
-				46EB2E0000D330 /* status.upb.c in Sources */,
 				46EB2E0000D2A0 /* status.upb.c in Sources */,
+				46EB2E0000D330 /* status.upb.c in Sources */,
 				46EB2E0000E390 /* status_conversion.cc in Sources */,
 				46EB2E0000E3A0 /* status_metadata.cc in Sources */,
 				46EB2E0000D4E0 /* status_util.cc in Sources */,
@@ -9743,9 +9743,9 @@
 				46EB2E00010AA0 /* GRXNSFastEnumerator.m in Sources */,
 				46EB2E00010AB0 /* GRXNSScalarEnumerator.m in Sources */,
 				46EB2E00010A40 /* GRXWriteable.m in Sources */,
+				46EB2E00010A70 /* GRXWriter.m in Sources */,
 				46EB2E00010A50 /* GRXWriter+Immediate.m in Sources */,
 				46EB2E00010A60 /* GRXWriter+Transformations.m in Sources */,
-				46EB2E00010A70 /* GRXWriter.m in Sources */,
 				46EB2E00010A80 /* NSEnumerator+GRXUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
