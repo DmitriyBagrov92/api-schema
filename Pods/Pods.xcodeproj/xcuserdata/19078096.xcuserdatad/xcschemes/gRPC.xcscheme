@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1100"
+   LastUpgradeVersion = "1240"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "32A4F57E782C919E0C91419A49D638D2"
-               BuildableName = "Pods_DialogGRPC.framework"
-               BlueprintName = "Pods-DialogGRPC"
+               BlueprintIdentifier = "39A39D401DF90CA29AA027EE83BA7E80"
+               BuildableName = "GRPCClient.framework"
+               BlueprintName = "gRPC"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

@@ -10,6 +10,7 @@ import "definitions.proto";
 import "miscellaneous.proto";
 import "peers.proto";
 import "media_and_files.proto";
+import "reactions.proto";
 import "scalapb.proto";
 
 option go_package = "dialog";
@@ -481,6 +482,12 @@ message SearchPredicate {
     repeated string values = 2;
 }
 
+// Forwarding messages list item
+message ForwardItem {
+    int64 deduplication_id = 1; /// Id for message deduplication
+    UUIDValue mid = 2; /// Original message id
+}
+
 // Sending plain message
 message RequestSendMessage {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
@@ -490,7 +497,7 @@ message RequestSendMessage {
     /// if not empty, then message will be send to this user only
     google.protobuf.StringValue is_only_for_user = 4;
     /// If current message forwards some other
-    ReferencedMessages forward = 5;
+    repeated ForwardItem forwards = 5;
     /// If current message is a reply on some other
     ReferencedMessages reply = 6;
     repeated SearchPredicate predicates = 7;
@@ -564,40 +571,6 @@ message RequestDeleteChat {
 message RequestArchiveChat {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     OutPeer peer = 1;
-}
-
-// Setting Message reaction
-message RequestMessageSetReaction {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    OutPeer peer = 1;
-    UUIDValue mid = 2; /// Message id
-    string code = 3; /// EMOJI code
-}
-message RequestMessageSetReactionAsync {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    OutPeer peer = 1;
-    UUIDValue mid = 2; /// Message id
-    string code = 3; /// EMOJI code
-}
-
-// Removing Message reaction
-message RequestMessageRemoveReaction {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    OutPeer peer = 1;
-    UUIDValue mid = 2; /// Message id
-    string code = 3; /// EMOJI code
-}
-message RequestMessageRemoveReactionAsync {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    OutPeer peer = 1;
-    UUIDValue mid = 2; /// Message id
-    string code = 3; /// EMOJI code
-}
-
-// Response for reactions change
-message ResponseReactionsResponse {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    repeated MessageReaction reactions = 1;
 }
 
 message ResponseSendMessage {
@@ -731,13 +704,6 @@ message UpdateChatGroupsChanged {
     repeated DialogGroup dialogs = 1;
 }
 
-// Update about reactions change
-message UpdateReactionsUpdate {
-    Peer peer = 1;
-    UUIDValue mid = 2; /// related message id
-    repeated MessageReaction reactions = 3;
-}
-
 // Update about rejection of message send request
 message UpdateSendMessageError {
     reserved 5;
@@ -782,22 +748,6 @@ message UpdateMessageReceivedError {
     UpdateErrorCause cause = 5;
 }
 
-message UpdateMessageRemoveReactionError {
-    Peer peer = 1;
-    UUIDValue mid = 2; // related message id
-    int64 date = 3;
-    string hook_id = 4;
-    UpdateErrorCause cause = 5;
-}
-
-message UpdateMessageSetReactionError {
-    Peer peer = 1;
-    UUIDValue mid = 2; // related message id
-    int64 date = 3;
-    string hook_id = 4;
-    UpdateErrorCause cause = 5;
-}
-
 message UpdateClearChatError {
     Peer peer = 1;
     int64 date = 2;
@@ -831,22 +781,6 @@ message UpdateReadDialogLaterError {
     int64 date = 2;
     string hook_id = 3;
     UpdateErrorCause cause = 4;
-}
-
-message UpdateErrorCause {
-  oneof value  {
-      Rejected rejected = 1;
-      Failed failed = 2;
-  }
-
-  message Rejected {
-     google.protobuf.StringValue reason = 1;
-  }
-
-  message Failed {
-      google.protobuf.StringValue description = 1;
-      google.protobuf.StringValue tag = 2;
-  }
 }
 
 // Update about new thread inside group
@@ -1341,32 +1275,6 @@ service Messaging {
     rpc DeleteChat (RequestDeleteChat) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/DeleteChat"
-            body: "*"
-        };
-    }
-    /// Add reaction on message (emoji)
-    rpc MessageSetReaction (RequestMessageSetReaction) returns (ResponseReactionsResponse) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Messaging/MessageSetReaction"
-            body: "*"
-        };
-    }
-    rpc MessageSetReactionAsync (RequestMessageSetReactionAsync) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Messaging/MessageSetReactionAsync"
-            body: "*"
-        };
-    }
-
-    rpc MessageRemoveReaction (RequestMessageRemoveReaction) returns (ResponseReactionsResponse) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Messaging/MessageRemoveReaction"
-            body: "*"
-        };
-    }
-    rpc MessageRemoveReactionAsync (RequestMessageRemoveReactionAsync) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Messaging/MessageRemoveReactionAsync"
             body: "*"
         };
     }

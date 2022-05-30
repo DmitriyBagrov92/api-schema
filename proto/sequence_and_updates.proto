@@ -41,6 +41,7 @@ option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
 
 message SeqUpdateBody {
+    reserved 33, 62, 71, 72;
     oneof update {
         UpdateUserAvatarChanged update_user_avatar_changed = 1;
         UpdateUserNameChanged update_user_name_changed = 2;
@@ -74,7 +75,6 @@ message SeqUpdateBody {
         UpdateChatDelete update_chat_delete = 30;
         UpdateChatArchive update_chat_archive = 31;
         UpdateChatGroupsChanged update_chat_groups_changed = 32;
-        UpdateReactionsUpdate update_reactions_update = 33;
         UpdateDialogFavouriteChanged update_dialog_favourite_changed = 34;
         UpdatePinnedMessagesChanged update_pinned_messages_changed = 35;
         UpdateGroupTitleChanged update_group_title_changed = 36;
@@ -103,7 +103,6 @@ message SeqUpdateBody {
         UpdateThreadLifted update_thread_lifted = 59;
         UpdateGroup update_group = 60;
         UpdateGroupMemberInvited update_group_member_invited = 61;
-        UpdateMessageReactions message_reactions_update = 62;
         UpdatePermissionsChange update_permissions_change = 63;
         UpdateGroupTyping update_group_typing = 64;
         UpdateDialogReadLaterChanged update_dialog_read_later_changed = 65;
@@ -112,8 +111,6 @@ message SeqUpdateBody {
         UpdateDeleteMessageError update_delete_message_error = 68;
         UpdateMessageReadError update_message_read_error = 69;
         UpdateMessageReceivedError update_message_received_error = 70;
-        UpdateMessageRemoveReactionError update_message_remove_reaction_error = 71;
-        UpdateMessageSetReactionError update_message_set_reaction_error = 72;
         UpdateClearChatError update_clear_chat_error = 73;
         UpdateDeleteChatError update_delete_chat_error = 74;
         UpdateFavouriteDialogError update_favourite_dialog_error = 75;
@@ -259,30 +256,30 @@ message WeakUpdate {
     }
 
     oneof updatebox {
-        UpdateTyping typing                                               = 1;
-        UpdateTypingStop typing_stop                                      = 2;
-        UpdateUserLastSeen user_last_seen                                 = 3;
-        UpdateGroupOnline group_online                                    = 4;
-        UpdateForceReloadState force_reload                               = 5;
-        UpdatePermissionsChange permissions_change                        = 6;
-        UpdateUserStatusChanged user_status_change                        = 7;
-        UpdateMessageReactions message_reaction_update                    = 8;
-        UpdateMessage message                                             = 9;
-        UpdateMessageContentChanged message_content_change                = 10;
-        UpdateMessageRead message_read                                    = 11;
-        UpdateMessageReceived message_received                            = 12;
-        UpdateMessageReadByMe message_read_by_me                          = 13;
-        UpdateGroupTyping group_typing                                    = 15;
-        UpdateMiniApp mini_app                                            = 16;
-        UpdateEvent event                                                 = 17;
-        UpdateContactRegistered update_contact_registered                 = 18;
-        UpdateContactsAdded update_contacts_added                         = 19;
-        UpdateContactsAddTaskSuspended update_contacts_add_task_suspended = 20;
-        UpdateContactsRemoved update_contacts_removed                     = 21;
-        UpdateSuggests update_suggests                                    = 22;
-        UpdateFeatureFlagChanged update_feature_flag_changed              = 23;
-        UpdateDraftsChanged update_drafts_changed                         = 24;
-        UpdateUser update_user                                            = 25;
+        UpdateTyping typing                                                   = 1;
+        UpdateTypingStop typing_stop                                          = 2;
+        UpdateUserLastSeen user_last_seen                                     = 3;
+        UpdateGroupOnline group_online                                        = 4;
+        UpdateForceReloadState force_reload                                   = 5;
+        UpdatePermissionsChange permissions_change                            = 6;
+        UpdateUserStatusChanged user_status_change                            = 7;
+        UpdateMessageReactions message_reaction_update                        = 8;
+        UpdateMessage message                                                 = 9;
+        UpdateMessageContentChanged message_content_change                    = 10;
+        UpdateMessageRead message_read                                        = 11;
+        UpdateMessageReceived message_received                                = 12;
+        UpdateMessageReadByMe message_read_by_me                              = 13;
+        UpdateGroupTyping group_typing                                        = 15;
+        UpdateMiniApp mini_app                                                = 16;
+        UpdateEvent event                                                     = 17;
+        UpdateContactRegistered update_contact_registered                     = 18;
+        UpdateContactsAdded update_contacts_added                             = 19;
+        UpdateContactsAddTaskSuspended update_contacts_add_task_suspended     = 20;
+        UpdateContactsRemoved update_contacts_removed                         = 21;
+        UpdateSuggests update_suggests                                        = 22;
+        UpdateFeatureFlagChanged update_feature_flag_changed                  = 23;
+        UpdateDraftsChanged update_drafts_changed                             = 24;
+        UpdateUser update_user                                                = 25;
     }
 }
 

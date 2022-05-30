@@ -24,6 +24,7 @@
 #import "Miscellaneous.pbobjc.h"
 #import "Peers.pbobjc.h"
 #import "MediaAndFiles.pbobjc.h"
+#import "Reactions.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
@@ -56,6 +57,7 @@ GPBObjCClassDeclaration(DocumentExVoice);
 GPBObjCClassDeclaration(DocumentMessage);
 GPBObjCClassDeclaration(EmptyMessage);
 GPBObjCClassDeclaration(FastThumb);
+GPBObjCClassDeclaration(ForwardItem);
 GPBObjCClassDeclaration(ForwardSource);
 GPBObjCClassDeclaration(GPBBoolValue);
 GPBObjCClassDeclaration(GPBBytesValue);
@@ -125,8 +127,6 @@ GPBObjCClassDeclaration(TextModernMessage);
 GPBObjCClassDeclaration(UUIDValue);
 GPBObjCClassDeclaration(UnsupportedMessage);
 GPBObjCClassDeclaration(UpdateErrorCause);
-GPBObjCClassDeclaration(UpdateErrorCause_Failed);
-GPBObjCClassDeclaration(UpdateErrorCause_Rejected);
 GPBObjCClassDeclaration(UserOutPeer);
 GPBObjCClassDeclaration(WebpageMedia);
 
@@ -4257,6 +4257,62 @@ typedef struct SearchPredicate__storage_ {
 
 @end
 
+#pragma mark - ForwardItem
+
+@implementation ForwardItem
+
+@dynamic deduplicationId;
+@dynamic hasMid, mid;
+
+typedef struct ForwardItem__storage_ {
+  uint32_t _has_storage_[1];
+  UUIDValue *mid;
+  int64_t deduplicationId;
+} ForwardItem__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "deduplicationId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ForwardItem_FieldNumber_DeduplicationId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(ForwardItem__storage_, deduplicationId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "mid",
+        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
+        .number = ForwardItem_FieldNumber_Mid,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(ForwardItem__storage_, mid),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ForwardItem class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ForwardItem__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - RequestSendMessage
 
 @implementation RequestSendMessage
@@ -4265,7 +4321,7 @@ typedef struct SearchPredicate__storage_ {
 @dynamic deduplicationId;
 @dynamic hasMessage, message;
 @dynamic hasIsOnlyForUser, isOnlyForUser;
-@dynamic hasForward, forward;
+@dynamic forwardsArray, forwardsArray_Count;
 @dynamic hasReply, reply;
 @dynamic predicatesArray, predicatesArray_Count;
 @dynamic whiteListArray, whiteListArray_Count;
@@ -4276,7 +4332,7 @@ typedef struct RequestSendMessage__storage_ {
   OutPeer *peer;
   MessageContent *message;
   GPBStringValue *isOnlyForUser;
-  ReferencedMessages *forward;
+  NSMutableArray *forwardsArray;
   ReferencedMessages *reply;
   NSMutableArray *predicatesArray;
   NSMutableArray *whiteListArray;
@@ -4327,19 +4383,19 @@ typedef struct RequestSendMessage__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "forward",
-        .dataTypeSpecific.clazz = GPBObjCClass(ReferencedMessages),
-        .number = RequestSendMessage_FieldNumber_Forward,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(RequestSendMessage__storage_, forward),
-        .flags = GPBFieldOptional,
+        .name = "forwardsArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(ForwardItem),
+        .number = RequestSendMessage_FieldNumber_ForwardsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(RequestSendMessage__storage_, forwardsArray),
+        .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "reply",
         .dataTypeSpecific.clazz = GPBObjCClass(ReferencedMessages),
         .number = RequestSendMessage_FieldNumber_Reply,
-        .hasIndex = 5,
+        .hasIndex = 4,
         .offset = (uint32_t)offsetof(RequestSendMessage__storage_, reply),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -4925,319 +4981,6 @@ typedef struct RequestArchiveChat__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(RequestArchiveChat__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - RequestMessageSetReaction
-
-@implementation RequestMessageSetReaction
-
-@dynamic hasPeer, peer;
-@dynamic hasMid, mid;
-@dynamic code;
-
-typedef struct RequestMessageSetReaction__storage_ {
-  uint32_t _has_storage_[1];
-  OutPeer *peer;
-  UUIDValue *mid;
-  NSString *code;
-} RequestMessageSetReaction__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "peer",
-        .dataTypeSpecific.clazz = GPBObjCClass(OutPeer),
-        .number = RequestMessageSetReaction_FieldNumber_Peer,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestMessageSetReaction__storage_, peer),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "mid",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestMessageSetReaction_FieldNumber_Mid,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestMessageSetReaction__storage_, mid),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "code",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestMessageSetReaction_FieldNumber_Code,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(RequestMessageSetReaction__storage_, code),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestMessageSetReaction class]
-                                     rootClass:[MessagingRoot class]
-                                          file:MessagingRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestMessageSetReaction__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - RequestMessageSetReactionAsync
-
-@implementation RequestMessageSetReactionAsync
-
-@dynamic hasPeer, peer;
-@dynamic hasMid, mid;
-@dynamic code;
-
-typedef struct RequestMessageSetReactionAsync__storage_ {
-  uint32_t _has_storage_[1];
-  OutPeer *peer;
-  UUIDValue *mid;
-  NSString *code;
-} RequestMessageSetReactionAsync__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "peer",
-        .dataTypeSpecific.clazz = GPBObjCClass(OutPeer),
-        .number = RequestMessageSetReactionAsync_FieldNumber_Peer,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestMessageSetReactionAsync__storage_, peer),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "mid",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestMessageSetReactionAsync_FieldNumber_Mid,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestMessageSetReactionAsync__storage_, mid),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "code",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestMessageSetReactionAsync_FieldNumber_Code,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(RequestMessageSetReactionAsync__storage_, code),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestMessageSetReactionAsync class]
-                                     rootClass:[MessagingRoot class]
-                                          file:MessagingRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestMessageSetReactionAsync__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - RequestMessageRemoveReaction
-
-@implementation RequestMessageRemoveReaction
-
-@dynamic hasPeer, peer;
-@dynamic hasMid, mid;
-@dynamic code;
-
-typedef struct RequestMessageRemoveReaction__storage_ {
-  uint32_t _has_storage_[1];
-  OutPeer *peer;
-  UUIDValue *mid;
-  NSString *code;
-} RequestMessageRemoveReaction__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "peer",
-        .dataTypeSpecific.clazz = GPBObjCClass(OutPeer),
-        .number = RequestMessageRemoveReaction_FieldNumber_Peer,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestMessageRemoveReaction__storage_, peer),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "mid",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestMessageRemoveReaction_FieldNumber_Mid,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestMessageRemoveReaction__storage_, mid),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "code",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestMessageRemoveReaction_FieldNumber_Code,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(RequestMessageRemoveReaction__storage_, code),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestMessageRemoveReaction class]
-                                     rootClass:[MessagingRoot class]
-                                          file:MessagingRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestMessageRemoveReaction__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - RequestMessageRemoveReactionAsync
-
-@implementation RequestMessageRemoveReactionAsync
-
-@dynamic hasPeer, peer;
-@dynamic hasMid, mid;
-@dynamic code;
-
-typedef struct RequestMessageRemoveReactionAsync__storage_ {
-  uint32_t _has_storage_[1];
-  OutPeer *peer;
-  UUIDValue *mid;
-  NSString *code;
-} RequestMessageRemoveReactionAsync__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "peer",
-        .dataTypeSpecific.clazz = GPBObjCClass(OutPeer),
-        .number = RequestMessageRemoveReactionAsync_FieldNumber_Peer,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestMessageRemoveReactionAsync__storage_, peer),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "mid",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestMessageRemoveReactionAsync_FieldNumber_Mid,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestMessageRemoveReactionAsync__storage_, mid),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "code",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestMessageRemoveReactionAsync_FieldNumber_Code,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(RequestMessageRemoveReactionAsync__storage_, code),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestMessageRemoveReactionAsync class]
-                                     rootClass:[MessagingRoot class]
-                                          file:MessagingRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestMessageRemoveReactionAsync__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - ResponseReactionsResponse
-
-@implementation ResponseReactionsResponse
-
-@dynamic reactionsArray, reactionsArray_Count;
-
-typedef struct ResponseReactionsResponse__storage_ {
-  uint32_t _has_storage_[1];
-  NSMutableArray *reactionsArray;
-} ResponseReactionsResponse__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "reactionsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(MessageReaction),
-        .number = ResponseReactionsResponse_FieldNumber_ReactionsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponseReactionsResponse__storage_, reactionsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[ResponseReactionsResponse class]
-                                     rootClass:[MessagingRoot class]
-                                          file:MessagingRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(ResponseReactionsResponse__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -6308,73 +6051,6 @@ typedef struct UpdateChatGroupsChanged__storage_ {
 
 @end
 
-#pragma mark - UpdateReactionsUpdate
-
-@implementation UpdateReactionsUpdate
-
-@dynamic hasPeer, peer;
-@dynamic hasMid, mid;
-@dynamic reactionsArray, reactionsArray_Count;
-
-typedef struct UpdateReactionsUpdate__storage_ {
-  uint32_t _has_storage_[1];
-  Peer *peer;
-  UUIDValue *mid;
-  NSMutableArray *reactionsArray;
-} UpdateReactionsUpdate__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "peer",
-        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
-        .number = UpdateReactionsUpdate_FieldNumber_Peer,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateReactionsUpdate__storage_, peer),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "mid",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = UpdateReactionsUpdate_FieldNumber_Mid,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateReactionsUpdate__storage_, mid),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "reactionsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(MessageReaction),
-        .number = UpdateReactionsUpdate_FieldNumber_ReactionsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(UpdateReactionsUpdate__storage_, reactionsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateReactionsUpdate class]
-                                     rootClass:[MessagingRoot class]
-                                          file:MessagingRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateReactionsUpdate__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
 #pragma mark - UpdateSendMessageError
 
 @implementation UpdateSendMessageError
@@ -6820,184 +6496,6 @@ typedef struct UpdateMessageReceivedError__storage_ {
 
 @end
 
-#pragma mark - UpdateMessageRemoveReactionError
-
-@implementation UpdateMessageRemoveReactionError
-
-@dynamic hasPeer, peer;
-@dynamic hasMid, mid;
-@dynamic date;
-@dynamic hookId;
-@dynamic hasCause, cause;
-
-typedef struct UpdateMessageRemoveReactionError__storage_ {
-  uint32_t _has_storage_[1];
-  Peer *peer;
-  UUIDValue *mid;
-  NSString *hookId;
-  UpdateErrorCause *cause;
-  int64_t date;
-} UpdateMessageRemoveReactionError__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "peer",
-        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
-        .number = UpdateMessageRemoveReactionError_FieldNumber_Peer,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateMessageRemoveReactionError__storage_, peer),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "mid",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = UpdateMessageRemoveReactionError_FieldNumber_Mid,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateMessageRemoveReactionError__storage_, mid),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "date",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateMessageRemoveReactionError_FieldNumber_Date,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(UpdateMessageRemoveReactionError__storage_, date),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "hookId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateMessageRemoveReactionError_FieldNumber_HookId,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(UpdateMessageRemoveReactionError__storage_, hookId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "cause",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateErrorCause),
-        .number = UpdateMessageRemoveReactionError_FieldNumber_Cause,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(UpdateMessageRemoveReactionError__storage_, cause),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateMessageRemoveReactionError class]
-                                     rootClass:[MessagingRoot class]
-                                          file:MessagingRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateMessageRemoveReactionError__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - UpdateMessageSetReactionError
-
-@implementation UpdateMessageSetReactionError
-
-@dynamic hasPeer, peer;
-@dynamic hasMid, mid;
-@dynamic date;
-@dynamic hookId;
-@dynamic hasCause, cause;
-
-typedef struct UpdateMessageSetReactionError__storage_ {
-  uint32_t _has_storage_[1];
-  Peer *peer;
-  UUIDValue *mid;
-  NSString *hookId;
-  UpdateErrorCause *cause;
-  int64_t date;
-} UpdateMessageSetReactionError__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "peer",
-        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
-        .number = UpdateMessageSetReactionError_FieldNumber_Peer,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateMessageSetReactionError__storage_, peer),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "mid",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = UpdateMessageSetReactionError_FieldNumber_Mid,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateMessageSetReactionError__storage_, mid),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "date",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateMessageSetReactionError_FieldNumber_Date,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(UpdateMessageSetReactionError__storage_, date),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
-        .name = "hookId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateMessageSetReactionError_FieldNumber_HookId,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(UpdateMessageSetReactionError__storage_, hookId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "cause",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateErrorCause),
-        .number = UpdateMessageSetReactionError_FieldNumber_Cause,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(UpdateMessageSetReactionError__storage_, cause),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateMessageSetReactionError class]
-                                     rootClass:[MessagingRoot class]
-                                          file:MessagingRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateMessageSetReactionError__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
 #pragma mark - UpdateClearChatError
 
 @implementation UpdateClearChatError
@@ -7378,177 +6876,6 @@ typedef struct UpdateReadDialogLaterError__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(UpdateReadDialogLaterError__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - UpdateErrorCause
-
-@implementation UpdateErrorCause
-
-@dynamic valueOneOfCase;
-@dynamic rejected;
-@dynamic failed;
-
-typedef struct UpdateErrorCause__storage_ {
-  uint32_t _has_storage_[2];
-  UpdateErrorCause_Rejected *rejected;
-  UpdateErrorCause_Failed *failed;
-} UpdateErrorCause__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "rejected",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateErrorCause_Rejected),
-        .number = UpdateErrorCause_FieldNumber_Rejected,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateErrorCause__storage_, rejected),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "failed",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateErrorCause_Failed),
-        .number = UpdateErrorCause_FieldNumber_Failed,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(UpdateErrorCause__storage_, failed),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateErrorCause class]
-                                     rootClass:[MessagingRoot class]
-                                          file:MessagingRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateErrorCause__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    static const char *oneofs[] = {
-      "value",
-    };
-    [localDescriptor setupOneofs:oneofs
-                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
-                   firstHasIndex:-1];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-void UpdateErrorCause_ClearValueOneOfCase(UpdateErrorCause *message) {
-  GPBDescriptor *descriptor = [UpdateErrorCause descriptor];
-  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
-  GPBClearOneof(message, oneof);
-}
-#pragma mark - UpdateErrorCause_Rejected
-
-@implementation UpdateErrorCause_Rejected
-
-@dynamic hasReason, reason;
-
-typedef struct UpdateErrorCause_Rejected__storage_ {
-  uint32_t _has_storage_[1];
-  GPBStringValue *reason;
-} UpdateErrorCause_Rejected__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "reason",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
-        .number = UpdateErrorCause_Rejected_FieldNumber_Reason,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateErrorCause_Rejected__storage_, reason),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateErrorCause_Rejected class]
-                                     rootClass:[MessagingRoot class]
-                                          file:MessagingRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateErrorCause_Rejected__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    [localDescriptor setupContainingMessageClass:GPBObjCClass(UpdateErrorCause)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - UpdateErrorCause_Failed
-
-@implementation UpdateErrorCause_Failed
-
-@dynamic hasDescription_p, description_p;
-@dynamic hasTag, tag;
-
-typedef struct UpdateErrorCause_Failed__storage_ {
-  uint32_t _has_storage_[1];
-  GPBStringValue *description_p;
-  GPBStringValue *tag;
-} UpdateErrorCause_Failed__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "description_p",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
-        .number = UpdateErrorCause_Failed_FieldNumber_Description_p,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateErrorCause_Failed__storage_, description_p),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "tag",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
-        .number = UpdateErrorCause_Failed_FieldNumber_Tag,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdateErrorCause_Failed__storage_, tag),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateErrorCause_Failed class]
-                                     rootClass:[MessagingRoot class]
-                                          file:MessagingRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateErrorCause_Failed__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    [localDescriptor setupContainingMessageClass:GPBObjCClass(UpdateErrorCause)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

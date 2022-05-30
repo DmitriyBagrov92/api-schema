@@ -31,10 +31,6 @@
 @class RequestMessageReads;
 @class RequestMessageReceived;
 @class RequestMessageReceives;
-@class RequestMessageRemoveReaction;
-@class RequestMessageRemoveReactionAsync;
-@class RequestMessageSetReaction;
-@class RequestMessageSetReactionAsync;
 @class RequestMuteChat;
 @class RequestNotifyDialogOpened;
 @class RequestPinMessage;
@@ -56,7 +52,6 @@
 @class ResponseLoadHistoryLight;
 @class ResponseMessageReads;
 @class ResponseMessageReceives;
-@class ResponseReactionsResponse;
 @class ResponseSendMessage;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
@@ -68,6 +63,7 @@
   #import "Miscellaneous.pbobjc.h"
   #import "Peers.pbobjc.h"
   #import "MediaAndFiles.pbobjc.h"
+  #import "Reactions.pbobjc.h"
   #import "Scalapb.pbobjc.h"
 #endif
 
@@ -129,25 +125,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark DeleteChat(RequestDeleteChat) returns (Empty)
 
 - (GRPCUnaryProtoCall *)deleteChatWithMessage:(RequestDeleteChat *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark MessageSetReaction(RequestMessageSetReaction) returns (ResponseReactionsResponse)
-
-/**
- * / Add reaction on message (emoji)
- */
-- (GRPCUnaryProtoCall *)messageSetReactionWithMessage:(RequestMessageSetReaction *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark MessageSetReactionAsync(RequestMessageSetReactionAsync) returns (Empty)
-
-- (GRPCUnaryProtoCall *)messageSetReactionAsyncWithMessage:(RequestMessageSetReactionAsync *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark MessageRemoveReaction(RequestMessageRemoveReaction) returns (ResponseReactionsResponse)
-
-- (GRPCUnaryProtoCall *)messageRemoveReactionWithMessage:(RequestMessageRemoveReaction *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark MessageRemoveReactionAsync(RequestMessageRemoveReactionAsync) returns (Empty)
-
-- (GRPCUnaryProtoCall *)messageRemoveReactionAsyncWithMessage:(RequestMessageRemoveReactionAsync *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark LoadHistory(RequestLoadHistory) returns (ResponseLoadHistory)
 
@@ -361,44 +338,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)deleteChatWithRequest:(RequestDeleteChat *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToDeleteChatWithRequest:(RequestDeleteChat *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark MessageSetReaction(RequestMessageSetReaction) returns (ResponseReactionsResponse)
-
-/**
- * / Add reaction on message (emoji)
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)messageSetReactionWithRequest:(RequestMessageSetReaction *)request handler:(void(^)(ResponseReactionsResponse *_Nullable response, NSError *_Nullable error))handler;
-
-/**
- * / Add reaction on message (emoji)
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToMessageSetReactionWithRequest:(RequestMessageSetReaction *)request handler:(void(^)(ResponseReactionsResponse *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark MessageSetReactionAsync(RequestMessageSetReactionAsync) returns (Empty)
-
-- (void)messageSetReactionAsyncWithRequest:(RequestMessageSetReactionAsync *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToMessageSetReactionAsyncWithRequest:(RequestMessageSetReactionAsync *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark MessageRemoveReaction(RequestMessageRemoveReaction) returns (ResponseReactionsResponse)
-
-- (void)messageRemoveReactionWithRequest:(RequestMessageRemoveReaction *)request handler:(void(^)(ResponseReactionsResponse *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToMessageRemoveReactionWithRequest:(RequestMessageRemoveReaction *)request handler:(void(^)(ResponseReactionsResponse *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark MessageRemoveReactionAsync(RequestMessageRemoveReactionAsync) returns (Empty)
-
-- (void)messageRemoveReactionAsyncWithRequest:(RequestMessageRemoveReactionAsync *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToMessageRemoveReactionAsyncWithRequest:(RequestMessageRemoveReactionAsync *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark LoadHistory(RequestLoadHistory) returns (ResponseLoadHistory)

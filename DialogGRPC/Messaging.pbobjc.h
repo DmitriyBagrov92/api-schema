@@ -47,6 +47,7 @@ CF_EXTERN_C_BEGIN
 @class DocumentMessage;
 @class EmptyMessage;
 @class FastThumb;
+@class ForwardItem;
 @class ForwardSource;
 @class GPBBoolValue;
 @class GPBBytesValue;
@@ -114,8 +115,6 @@ CF_EXTERN_C_BEGIN
 @class UUIDValue;
 @class UnsupportedMessage;
 @class UpdateErrorCause;
-@class UpdateErrorCause_Failed;
-@class UpdateErrorCause_Rejected;
 @class UserOutPeer;
 @class WebpageMedia;
 
@@ -1726,6 +1725,28 @@ GPB_FINAL @interface SearchPredicate : GPBMessage
 
 @end
 
+#pragma mark - ForwardItem
+
+typedef GPB_ENUM(ForwardItem_FieldNumber) {
+  ForwardItem_FieldNumber_DeduplicationId = 1,
+  ForwardItem_FieldNumber_Mid = 2,
+};
+
+/**
+ * Forwarding messages list item
+ **/
+GPB_FINAL @interface ForwardItem : GPBMessage
+
+/** / Id for message deduplication */
+@property(nonatomic, readwrite) int64_t deduplicationId;
+
+/** / Original message id */
+@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
+/** Test to see if @c mid has been set. */
+@property(nonatomic, readwrite) BOOL hasMid;
+
+@end
+
 #pragma mark - RequestSendMessage
 
 typedef GPB_ENUM(RequestSendMessage_FieldNumber) {
@@ -1733,7 +1754,7 @@ typedef GPB_ENUM(RequestSendMessage_FieldNumber) {
   RequestSendMessage_FieldNumber_DeduplicationId = 2,
   RequestSendMessage_FieldNumber_Message = 3,
   RequestSendMessage_FieldNumber_IsOnlyForUser = 4,
-  RequestSendMessage_FieldNumber_Forward = 5,
+  RequestSendMessage_FieldNumber_ForwardsArray = 5,
   RequestSendMessage_FieldNumber_Reply = 6,
   RequestSendMessage_FieldNumber_PredicatesArray = 7,
   RequestSendMessage_FieldNumber_WhiteListArray = 8,
@@ -1762,9 +1783,9 @@ GPB_FINAL @interface RequestSendMessage : GPBMessage
 @property(nonatomic, readwrite) BOOL hasIsOnlyForUser;
 
 /** / If current message forwards some other */
-@property(nonatomic, readwrite, strong, null_resettable) ReferencedMessages *forward;
-/** Test to see if @c forward has been set. */
-@property(nonatomic, readwrite) BOOL hasForward;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<ForwardItem*> *forwardsArray;
+/** The number of items in @c forwardsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger forwardsArray_Count;
 
 /** / If current message is a reply on some other */
 @property(nonatomic, readwrite, strong, null_resettable) ReferencedMessages *reply;
@@ -1993,125 +2014,6 @@ GPB_FINAL @interface RequestArchiveChat : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
-
-@end
-
-#pragma mark - RequestMessageSetReaction
-
-typedef GPB_ENUM(RequestMessageSetReaction_FieldNumber) {
-  RequestMessageSetReaction_FieldNumber_Peer = 1,
-  RequestMessageSetReaction_FieldNumber_Mid = 2,
-  RequestMessageSetReaction_FieldNumber_Code = 3,
-};
-
-/**
- * Setting Message reaction
- **/
-GPB_FINAL @interface RequestMessageSetReaction : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-/** / Message id */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
-
-/** / EMOJI code */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *code;
-
-@end
-
-#pragma mark - RequestMessageSetReactionAsync
-
-typedef GPB_ENUM(RequestMessageSetReactionAsync_FieldNumber) {
-  RequestMessageSetReactionAsync_FieldNumber_Peer = 1,
-  RequestMessageSetReactionAsync_FieldNumber_Mid = 2,
-  RequestMessageSetReactionAsync_FieldNumber_Code = 3,
-};
-
-GPB_FINAL @interface RequestMessageSetReactionAsync : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-/** / Message id */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
-
-/** / EMOJI code */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *code;
-
-@end
-
-#pragma mark - RequestMessageRemoveReaction
-
-typedef GPB_ENUM(RequestMessageRemoveReaction_FieldNumber) {
-  RequestMessageRemoveReaction_FieldNumber_Peer = 1,
-  RequestMessageRemoveReaction_FieldNumber_Mid = 2,
-  RequestMessageRemoveReaction_FieldNumber_Code = 3,
-};
-
-/**
- * Removing Message reaction
- **/
-GPB_FINAL @interface RequestMessageRemoveReaction : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-/** / Message id */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
-
-/** / EMOJI code */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *code;
-
-@end
-
-#pragma mark - RequestMessageRemoveReactionAsync
-
-typedef GPB_ENUM(RequestMessageRemoveReactionAsync_FieldNumber) {
-  RequestMessageRemoveReactionAsync_FieldNumber_Peer = 1,
-  RequestMessageRemoveReactionAsync_FieldNumber_Mid = 2,
-  RequestMessageRemoveReactionAsync_FieldNumber_Code = 3,
-};
-
-GPB_FINAL @interface RequestMessageRemoveReactionAsync : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-/** / Message id */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
-
-/** / EMOJI code */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *code;
-
-@end
-
-#pragma mark - ResponseReactionsResponse
-
-typedef GPB_ENUM(ResponseReactionsResponse_FieldNumber) {
-  ResponseReactionsResponse_FieldNumber_ReactionsArray = 1,
-};
-
-/**
- * Response for reactions change
- **/
-GPB_FINAL @interface ResponseReactionsResponse : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MessageReaction*> *reactionsArray;
-/** The number of items in @c reactionsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger reactionsArray_Count;
 
 @end
 
@@ -2545,34 +2447,6 @@ GPB_FINAL @interface UpdateChatGroupsChanged : GPBMessage
 
 @end
 
-#pragma mark - UpdateReactionsUpdate
-
-typedef GPB_ENUM(UpdateReactionsUpdate_FieldNumber) {
-  UpdateReactionsUpdate_FieldNumber_Peer = 1,
-  UpdateReactionsUpdate_FieldNumber_Mid = 2,
-  UpdateReactionsUpdate_FieldNumber_ReactionsArray = 3,
-};
-
-/**
- * Update about reactions change
- **/
-GPB_FINAL @interface UpdateReactionsUpdate : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-/** / related message id */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MessageReaction*> *reactionsArray;
-/** The number of items in @c reactionsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger reactionsArray_Count;
-
-@end
-
 #pragma mark - UpdateSendMessageError
 
 typedef GPB_ENUM(UpdateSendMessageError_FieldNumber) {
@@ -2731,68 +2605,6 @@ GPB_FINAL @interface UpdateMessageReceivedError : GPBMessage
 
 @end
 
-#pragma mark - UpdateMessageRemoveReactionError
-
-typedef GPB_ENUM(UpdateMessageRemoveReactionError_FieldNumber) {
-  UpdateMessageRemoveReactionError_FieldNumber_Peer = 1,
-  UpdateMessageRemoveReactionError_FieldNumber_Mid = 2,
-  UpdateMessageRemoveReactionError_FieldNumber_Date = 3,
-  UpdateMessageRemoveReactionError_FieldNumber_HookId = 4,
-  UpdateMessageRemoveReactionError_FieldNumber_Cause = 5,
-};
-
-GPB_FINAL @interface UpdateMessageRemoveReactionError : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-/** related message id */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
-
-@property(nonatomic, readwrite) int64_t date;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *hookId;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateErrorCause *cause;
-/** Test to see if @c cause has been set. */
-@property(nonatomic, readwrite) BOOL hasCause;
-
-@end
-
-#pragma mark - UpdateMessageSetReactionError
-
-typedef GPB_ENUM(UpdateMessageSetReactionError_FieldNumber) {
-  UpdateMessageSetReactionError_FieldNumber_Peer = 1,
-  UpdateMessageSetReactionError_FieldNumber_Mid = 2,
-  UpdateMessageSetReactionError_FieldNumber_Date = 3,
-  UpdateMessageSetReactionError_FieldNumber_HookId = 4,
-  UpdateMessageSetReactionError_FieldNumber_Cause = 5,
-};
-
-GPB_FINAL @interface UpdateMessageSetReactionError : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-/** related message id */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
-
-@property(nonatomic, readwrite) int64_t date;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *hookId;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateErrorCause *cause;
-/** Test to see if @c cause has been set. */
-@property(nonatomic, readwrite) BOOL hasCause;
-
-@end
-
 #pragma mark - UpdateClearChatError
 
 typedef GPB_ENUM(UpdateClearChatError_FieldNumber) {
@@ -2915,67 +2727,6 @@ GPB_FINAL @interface UpdateReadDialogLaterError : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UpdateErrorCause *cause;
 /** Test to see if @c cause has been set. */
 @property(nonatomic, readwrite) BOOL hasCause;
-
-@end
-
-#pragma mark - UpdateErrorCause
-
-typedef GPB_ENUM(UpdateErrorCause_FieldNumber) {
-  UpdateErrorCause_FieldNumber_Rejected = 1,
-  UpdateErrorCause_FieldNumber_Failed = 2,
-};
-
-typedef GPB_ENUM(UpdateErrorCause_Value_OneOfCase) {
-  UpdateErrorCause_Value_OneOfCase_GPBUnsetOneOfCase = 0,
-  UpdateErrorCause_Value_OneOfCase_Rejected = 1,
-  UpdateErrorCause_Value_OneOfCase_Failed = 2,
-};
-
-GPB_FINAL @interface UpdateErrorCause : GPBMessage
-
-@property(nonatomic, readonly) UpdateErrorCause_Value_OneOfCase valueOneOfCase;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateErrorCause_Rejected *rejected;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateErrorCause_Failed *failed;
-
-@end
-
-/**
- * Clears whatever value was set for the oneof 'value'.
- **/
-void UpdateErrorCause_ClearValueOneOfCase(UpdateErrorCause *message);
-
-#pragma mark - UpdateErrorCause_Rejected
-
-typedef GPB_ENUM(UpdateErrorCause_Rejected_FieldNumber) {
-  UpdateErrorCause_Rejected_FieldNumber_Reason = 1,
-};
-
-GPB_FINAL @interface UpdateErrorCause_Rejected : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *reason;
-/** Test to see if @c reason has been set. */
-@property(nonatomic, readwrite) BOOL hasReason;
-
-@end
-
-#pragma mark - UpdateErrorCause_Failed
-
-typedef GPB_ENUM(UpdateErrorCause_Failed_FieldNumber) {
-  UpdateErrorCause_Failed_FieldNumber_Description_p = 1,
-  UpdateErrorCause_Failed_FieldNumber_Tag = 2,
-};
-
-GPB_FINAL @interface UpdateErrorCause_Failed : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *description_p;
-/** Test to see if @c description_p has been set. */
-@property(nonatomic, readwrite) BOOL hasDescription_p;
-
-@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *tag;
-/** Test to see if @c tag has been set. */
-@property(nonatomic, readwrite) BOOL hasTag;
 
 @end
 

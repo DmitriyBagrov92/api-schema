@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1100"
+   LastUpgradeVersion = "1240"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "50F380A87A4FC4EC7EE3AC9BDADB6D2D"
-               BuildableName = "grpc.framework"
-               BlueprintName = "gRPC-Core"
+               BlueprintIdentifier = "6ACE59D1174B8848E741EBFD5A8B1803"
+               BuildableName = "gRPCCertificates.bundle"
+               BlueprintName = "gRPC-gRPCCertificates"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

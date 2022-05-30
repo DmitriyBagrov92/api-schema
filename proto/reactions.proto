@@ -28,6 +28,22 @@ message UpdateMessageReactions {
     int64 prev_peer_clock = 4;
 }
 
+message UpdateMessageRemoveReactionError {
+    Peer peer = 1;
+    UUIDValue mid = 2; // related message id
+    int64 date = 3;
+    string hook_id = 4;
+    UpdateErrorCause cause = 5;
+}
+
+message UpdateMessageSetReactionError {
+    Peer peer = 1;
+    UUIDValue mid = 2; // related message id
+    int64 date = 3;
+    string hook_id = 4;
+    UpdateErrorCause cause = 5;
+}
+
 message GetReactionsRequest {
     int64 from_clock = 1;
     Peer peer = 2;

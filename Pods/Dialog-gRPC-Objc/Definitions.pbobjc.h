@@ -27,6 +27,10 @@
 
 CF_EXTERN_C_BEGIN
 
+@class GPBStringValue;
+@class UpdateErrorCause_Failed;
+@class UpdateErrorCause_Rejected;
+
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Enum Level
@@ -82,6 +86,67 @@ GPB_FINAL @interface UUIDValue : GPBMessage
 @property(nonatomic, readwrite) int64_t msb;
 
 @property(nonatomic, readwrite) int64_t lsb;
+
+@end
+
+#pragma mark - UpdateErrorCause
+
+typedef GPB_ENUM(UpdateErrorCause_FieldNumber) {
+  UpdateErrorCause_FieldNumber_Rejected = 1,
+  UpdateErrorCause_FieldNumber_Failed = 2,
+};
+
+typedef GPB_ENUM(UpdateErrorCause_Value_OneOfCase) {
+  UpdateErrorCause_Value_OneOfCase_GPBUnsetOneOfCase = 0,
+  UpdateErrorCause_Value_OneOfCase_Rejected = 1,
+  UpdateErrorCause_Value_OneOfCase_Failed = 2,
+};
+
+GPB_FINAL @interface UpdateErrorCause : GPBMessage
+
+@property(nonatomic, readonly) UpdateErrorCause_Value_OneOfCase valueOneOfCase;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateErrorCause_Rejected *rejected;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateErrorCause_Failed *failed;
+
+@end
+
+/**
+ * Clears whatever value was set for the oneof 'value'.
+ **/
+void UpdateErrorCause_ClearValueOneOfCase(UpdateErrorCause *message);
+
+#pragma mark - UpdateErrorCause_Rejected
+
+typedef GPB_ENUM(UpdateErrorCause_Rejected_FieldNumber) {
+  UpdateErrorCause_Rejected_FieldNumber_Reason = 1,
+};
+
+GPB_FINAL @interface UpdateErrorCause_Rejected : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *reason;
+/** Test to see if @c reason has been set. */
+@property(nonatomic, readwrite) BOOL hasReason;
+
+@end
+
+#pragma mark - UpdateErrorCause_Failed
+
+typedef GPB_ENUM(UpdateErrorCause_Failed_FieldNumber) {
+  UpdateErrorCause_Failed_FieldNumber_Description_p = 1,
+  UpdateErrorCause_Failed_FieldNumber_Tag = 2,
+};
+
+GPB_FINAL @interface UpdateErrorCause_Failed : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *description_p;
+/** Test to see if @c description_p has been set. */
+@property(nonatomic, readwrite) BOOL hasDescription_p;
+
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *tag;
+/** Test to see if @c tag has been set. */
+@property(nonatomic, readwrite) BOOL hasTag;
 
 @end
 

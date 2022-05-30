@@ -17,10 +17,12 @@
 
 #import "Definitions.pbobjc.h"
 #import "Descriptor.pbobjc.h"
+#import "Wrappers.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdirect-ivar-access"
 #pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
 
 #pragma mark - Objective C Class declarations
@@ -29,6 +31,10 @@
 // We don't use [Foo class] because it is not a static value.
 GPBObjCClassDeclaration(DialogOptions);
 GPBObjCClassDeclaration(GPBFieldOptions);
+GPBObjCClassDeclaration(GPBStringValue);
+GPBObjCClassDeclaration(UpdateErrorCause);
+GPBObjCClassDeclaration(UpdateErrorCause_Failed);
+GPBObjCClassDeclaration(UpdateErrorCause_Rejected);
 
 #pragma mark - DefinitionsRoot
 
@@ -168,6 +174,177 @@ typedef struct UUIDValue__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(UUIDValue__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - UpdateErrorCause
+
+@implementation UpdateErrorCause
+
+@dynamic valueOneOfCase;
+@dynamic rejected;
+@dynamic failed;
+
+typedef struct UpdateErrorCause__storage_ {
+  uint32_t _has_storage_[2];
+  UpdateErrorCause_Rejected *rejected;
+  UpdateErrorCause_Failed *failed;
+} UpdateErrorCause__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "rejected",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateErrorCause_Rejected),
+        .number = UpdateErrorCause_FieldNumber_Rejected,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(UpdateErrorCause__storage_, rejected),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "failed",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateErrorCause_Failed),
+        .number = UpdateErrorCause_FieldNumber_Failed,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(UpdateErrorCause__storage_, failed),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[UpdateErrorCause class]
+                                     rootClass:[DefinitionsRoot class]
+                                          file:DefinitionsRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(UpdateErrorCause__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    static const char *oneofs[] = {
+      "value",
+    };
+    [localDescriptor setupOneofs:oneofs
+                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
+                   firstHasIndex:-1];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+void UpdateErrorCause_ClearValueOneOfCase(UpdateErrorCause *message) {
+  GPBDescriptor *descriptor = [UpdateErrorCause descriptor];
+  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
+  GPBClearOneof(message, oneof);
+}
+#pragma mark - UpdateErrorCause_Rejected
+
+@implementation UpdateErrorCause_Rejected
+
+@dynamic hasReason, reason;
+
+typedef struct UpdateErrorCause_Rejected__storage_ {
+  uint32_t _has_storage_[1];
+  GPBStringValue *reason;
+} UpdateErrorCause_Rejected__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "reason",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
+        .number = UpdateErrorCause_Rejected_FieldNumber_Reason,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(UpdateErrorCause_Rejected__storage_, reason),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[UpdateErrorCause_Rejected class]
+                                     rootClass:[DefinitionsRoot class]
+                                          file:DefinitionsRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(UpdateErrorCause_Rejected__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(UpdateErrorCause)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - UpdateErrorCause_Failed
+
+@implementation UpdateErrorCause_Failed
+
+@dynamic hasDescription_p, description_p;
+@dynamic hasTag, tag;
+
+typedef struct UpdateErrorCause_Failed__storage_ {
+  uint32_t _has_storage_[1];
+  GPBStringValue *description_p;
+  GPBStringValue *tag;
+} UpdateErrorCause_Failed__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "description_p",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
+        .number = UpdateErrorCause_Failed_FieldNumber_Description_p,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(UpdateErrorCause_Failed__storage_, description_p),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "tag",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
+        .number = UpdateErrorCause_Failed_FieldNumber_Tag,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(UpdateErrorCause_Failed__storage_, tag),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[UpdateErrorCause_Failed class]
+                                     rootClass:[DefinitionsRoot class]
+                                          file:DefinitionsRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(UpdateErrorCause_Failed__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(UpdateErrorCause)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

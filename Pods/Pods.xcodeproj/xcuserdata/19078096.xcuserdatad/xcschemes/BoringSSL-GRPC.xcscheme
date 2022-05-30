@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1100"
+   LastUpgradeVersion = "1240"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "73CDC3D182DB953135F62609681B443D"
-               BuildableName = "absl.framework"
-               BlueprintName = "abseil"
+               BlueprintIdentifier = "445FD4CB16BB7BEE2D1C404951CDE14A"
+               BuildableName = "openssl_grpc.framework"
+               BlueprintName = "BoringSSL-GRPC"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

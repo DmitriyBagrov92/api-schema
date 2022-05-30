@@ -3,6 +3,7 @@ syntax = "proto3";
 package dialog;
 
 import "descriptor.proto";
+import "wrappers.proto";
 
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
@@ -11,6 +12,23 @@ message UUIDValue {
   int64 msb = 1;
   int64 lsb = 2;
 }
+
+message UpdateErrorCause {
+  oneof value  {
+    Rejected rejected = 1;
+    Failed failed = 2;
+  }
+
+  message Rejected {
+    google.protobuf.StringValue reason = 1;
+  }
+
+  message Failed {
+    google.protobuf.StringValue description = 1;
+    google.protobuf.StringValue tag = 2;
+  }
+}
+
 
 message DialogOptions {
   Level log = 1;

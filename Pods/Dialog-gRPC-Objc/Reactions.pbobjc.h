@@ -31,6 +31,7 @@ CF_EXTERN_C_BEGIN
 @class Peer;
 @class Reaction;
 @class UUIDValue;
+@class UpdateErrorCause;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -110,6 +111,68 @@ GPB_FINAL @interface UpdateMessageReactions : GPBMessage
 @property(nonatomic, readwrite) int64_t peerClock;
 
 @property(nonatomic, readwrite) int64_t prevPeerClock;
+
+@end
+
+#pragma mark - UpdateMessageRemoveReactionError
+
+typedef GPB_ENUM(UpdateMessageRemoveReactionError_FieldNumber) {
+  UpdateMessageRemoveReactionError_FieldNumber_Peer = 1,
+  UpdateMessageRemoveReactionError_FieldNumber_Mid = 2,
+  UpdateMessageRemoveReactionError_FieldNumber_Date = 3,
+  UpdateMessageRemoveReactionError_FieldNumber_HookId = 4,
+  UpdateMessageRemoveReactionError_FieldNumber_Cause = 5,
+};
+
+GPB_FINAL @interface UpdateMessageRemoveReactionError : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
+
+/** related message id */
+@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
+/** Test to see if @c mid has been set. */
+@property(nonatomic, readwrite) BOOL hasMid;
+
+@property(nonatomic, readwrite) int64_t date;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *hookId;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateErrorCause *cause;
+/** Test to see if @c cause has been set. */
+@property(nonatomic, readwrite) BOOL hasCause;
+
+@end
+
+#pragma mark - UpdateMessageSetReactionError
+
+typedef GPB_ENUM(UpdateMessageSetReactionError_FieldNumber) {
+  UpdateMessageSetReactionError_FieldNumber_Peer = 1,
+  UpdateMessageSetReactionError_FieldNumber_Mid = 2,
+  UpdateMessageSetReactionError_FieldNumber_Date = 3,
+  UpdateMessageSetReactionError_FieldNumber_HookId = 4,
+  UpdateMessageSetReactionError_FieldNumber_Cause = 5,
+};
+
+GPB_FINAL @interface UpdateMessageSetReactionError : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
+
+/** related message id */
+@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
+/** Test to see if @c mid has been set. */
+@property(nonatomic, readwrite) BOOL hasMid;
+
+@property(nonatomic, readwrite) int64_t date;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *hookId;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateErrorCause *cause;
+/** Test to see if @c cause has been set. */
+@property(nonatomic, readwrite) BOOL hasCause;
 
 @end
 

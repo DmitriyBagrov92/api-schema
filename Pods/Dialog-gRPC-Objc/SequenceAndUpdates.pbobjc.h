@@ -86,15 +86,12 @@ CF_EXTERN_C_BEGIN
 @class UpdateMessageReadError;
 @class UpdateMessageReceived;
 @class UpdateMessageReceivedError;
-@class UpdateMessageRemoveReactionError;
 @class UpdateMessageSent;
-@class UpdateMessageSetReactionError;
 @class UpdateMiniApp;
 @class UpdateParameterChanged;
 @class UpdatePermissionsChange;
 @class UpdatePinnedMessagesChanged;
 @class UpdateRawUpdate;
-@class UpdateReactionsUpdate;
 @class UpdateReadDialogLaterError;
 @class UpdateSendMessageError;
 @class UpdateSettingsChanged;
@@ -190,7 +187,6 @@ typedef GPB_ENUM(SeqUpdateBody_FieldNumber) {
   SeqUpdateBody_FieldNumber_UpdateChatDelete = 30,
   SeqUpdateBody_FieldNumber_UpdateChatArchive = 31,
   SeqUpdateBody_FieldNumber_UpdateChatGroupsChanged = 32,
-  SeqUpdateBody_FieldNumber_UpdateReactionsUpdate = 33,
   SeqUpdateBody_FieldNumber_UpdateDialogFavouriteChanged = 34,
   SeqUpdateBody_FieldNumber_UpdatePinnedMessagesChanged = 35,
   SeqUpdateBody_FieldNumber_UpdateGroupTitleChanged = 36,
@@ -219,7 +215,6 @@ typedef GPB_ENUM(SeqUpdateBody_FieldNumber) {
   SeqUpdateBody_FieldNumber_UpdateThreadLifted = 59,
   SeqUpdateBody_FieldNumber_UpdateGroup = 60,
   SeqUpdateBody_FieldNumber_UpdateGroupMemberInvited = 61,
-  SeqUpdateBody_FieldNumber_MessageReactionsUpdate = 62,
   SeqUpdateBody_FieldNumber_UpdatePermissionsChange = 63,
   SeqUpdateBody_FieldNumber_UpdateGroupTyping = 64,
   SeqUpdateBody_FieldNumber_UpdateDialogReadLaterChanged = 65,
@@ -228,8 +223,6 @@ typedef GPB_ENUM(SeqUpdateBody_FieldNumber) {
   SeqUpdateBody_FieldNumber_UpdateDeleteMessageError = 68,
   SeqUpdateBody_FieldNumber_UpdateMessageReadError = 69,
   SeqUpdateBody_FieldNumber_UpdateMessageReceivedError = 70,
-  SeqUpdateBody_FieldNumber_UpdateMessageRemoveReactionError = 71,
-  SeqUpdateBody_FieldNumber_UpdateMessageSetReactionError = 72,
   SeqUpdateBody_FieldNumber_UpdateClearChatError = 73,
   SeqUpdateBody_FieldNumber_UpdateDeleteChatError = 74,
   SeqUpdateBody_FieldNumber_UpdateFavouriteDialogError = 75,
@@ -271,7 +264,6 @@ typedef GPB_ENUM(SeqUpdateBody_Update_OneOfCase) {
   SeqUpdateBody_Update_OneOfCase_UpdateChatDelete = 30,
   SeqUpdateBody_Update_OneOfCase_UpdateChatArchive = 31,
   SeqUpdateBody_Update_OneOfCase_UpdateChatGroupsChanged = 32,
-  SeqUpdateBody_Update_OneOfCase_UpdateReactionsUpdate = 33,
   SeqUpdateBody_Update_OneOfCase_UpdateDialogFavouriteChanged = 34,
   SeqUpdateBody_Update_OneOfCase_UpdatePinnedMessagesChanged = 35,
   SeqUpdateBody_Update_OneOfCase_UpdateGroupTitleChanged = 36,
@@ -300,7 +292,6 @@ typedef GPB_ENUM(SeqUpdateBody_Update_OneOfCase) {
   SeqUpdateBody_Update_OneOfCase_UpdateThreadLifted = 59,
   SeqUpdateBody_Update_OneOfCase_UpdateGroup = 60,
   SeqUpdateBody_Update_OneOfCase_UpdateGroupMemberInvited = 61,
-  SeqUpdateBody_Update_OneOfCase_MessageReactionsUpdate = 62,
   SeqUpdateBody_Update_OneOfCase_UpdatePermissionsChange = 63,
   SeqUpdateBody_Update_OneOfCase_UpdateGroupTyping = 64,
   SeqUpdateBody_Update_OneOfCase_UpdateDialogReadLaterChanged = 65,
@@ -309,8 +300,6 @@ typedef GPB_ENUM(SeqUpdateBody_Update_OneOfCase) {
   SeqUpdateBody_Update_OneOfCase_UpdateDeleteMessageError = 68,
   SeqUpdateBody_Update_OneOfCase_UpdateMessageReadError = 69,
   SeqUpdateBody_Update_OneOfCase_UpdateMessageReceivedError = 70,
-  SeqUpdateBody_Update_OneOfCase_UpdateMessageRemoveReactionError = 71,
-  SeqUpdateBody_Update_OneOfCase_UpdateMessageSetReactionError = 72,
   SeqUpdateBody_Update_OneOfCase_UpdateClearChatError = 73,
   SeqUpdateBody_Update_OneOfCase_UpdateDeleteChatError = 74,
   SeqUpdateBody_Update_OneOfCase_UpdateFavouriteDialogError = 75,
@@ -386,8 +375,6 @@ GPB_FINAL @interface SeqUpdateBody : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateChatGroupsChanged *updateChatGroupsChanged;
 
-@property(nonatomic, readwrite, strong, null_resettable) UpdateReactionsUpdate *updateReactionsUpdate;
-
 @property(nonatomic, readwrite, strong, null_resettable) UpdateDialogFavouriteChanged *updateDialogFavouriteChanged;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdatePinnedMessagesChanged *updatePinnedMessagesChanged;
@@ -444,8 +431,6 @@ GPB_FINAL @interface SeqUpdateBody : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateGroupMemberInvited *updateGroupMemberInvited;
 
-@property(nonatomic, readwrite, strong, null_resettable) UpdateMessageReactions *messageReactionsUpdate;
-
 @property(nonatomic, readwrite, strong, null_resettable) UpdatePermissionsChange *updatePermissionsChange;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateGroupTyping *updateGroupTyping;
@@ -461,10 +446,6 @@ GPB_FINAL @interface SeqUpdateBody : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UpdateMessageReadError *updateMessageReadError;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateMessageReceivedError *updateMessageReceivedError;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateMessageRemoveReactionError *updateMessageRemoveReactionError;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateMessageSetReactionError *updateMessageSetReactionError;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateClearChatError *updateClearChatError;
 
