@@ -29,8 +29,10 @@
 // static values in struct initializers.
 // We don't use [Foo class] because it is not a static value.
 GPBObjCClassDeclaration(MessageReactions);
+GPBObjCClassDeclaration(MessageReactionsParticipants);
 GPBObjCClassDeclaration(Peer);
 GPBObjCClassDeclaration(Reaction);
+GPBObjCClassDeclaration(ReactionParticipants);
 GPBObjCClassDeclaration(UUIDValue);
 GPBObjCClassDeclaration(UpdateErrorCause);
 
@@ -73,14 +75,13 @@ static GPBFileDescriptor *ReactionsRoot_FileDescriptor(void) {
 @implementation Reaction
 
 @dynamic code;
-@dynamic usersArray, usersArray_Count;
 @dynamic usersAmount;
+@dynamic isSet;
 
 typedef struct Reaction__storage_ {
   uint32_t _has_storage_[1];
   int32_t usersAmount;
   NSString *code;
-  NSMutableArray *usersArray;
 } Reaction__storage_;
 
 // This method is threadsafe because it is initially called
@@ -99,15 +100,6 @@ typedef struct Reaction__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "usersArray",
-        .dataTypeSpecific.clazz = Nil,
-        .number = Reaction_FieldNumber_UsersArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(Reaction__storage_, usersArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeString,
-      },
-      {
         .name = "usersAmount",
         .dataTypeSpecific.clazz = Nil,
         .number = Reaction_FieldNumber_UsersAmount,
@@ -115,6 +107,15 @@ typedef struct Reaction__storage_ {
         .offset = (uint32_t)offsetof(Reaction__storage_, usersAmount),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "isSet",
+        .dataTypeSpecific.clazz = Nil,
+        .number = Reaction_FieldNumber_IsSet,
+        .hasIndex = 2,
+        .offset = 3,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -180,6 +181,139 @@ typedef struct MessageReactions__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MessageReactions__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - ReactionParticipants
+
+@implementation ReactionParticipants
+
+@dynamic code;
+@dynamic usersArray, usersArray_Count;
+@dynamic usersAmount;
+@dynamic isSet;
+
+typedef struct ReactionParticipants__storage_ {
+  uint32_t _has_storage_[1];
+  int32_t usersAmount;
+  NSString *code;
+  NSMutableArray *usersArray;
+} ReactionParticipants__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "code",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ReactionParticipants_FieldNumber_Code,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(ReactionParticipants__storage_, code),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "usersArray",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ReactionParticipants_FieldNumber_UsersArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(ReactionParticipants__storage_, usersArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "usersAmount",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ReactionParticipants_FieldNumber_UsersAmount,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(ReactionParticipants__storage_, usersAmount),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "isSet",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ReactionParticipants_FieldNumber_IsSet,
+        .hasIndex = 2,
+        .offset = 3,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ReactionParticipants class]
+                                     rootClass:[ReactionsRoot class]
+                                          file:ReactionsRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ReactionParticipants__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - MessageReactionsParticipants
+
+@implementation MessageReactionsParticipants
+
+@dynamic hasMid, mid;
+@dynamic reactionsArray, reactionsArray_Count;
+
+typedef struct MessageReactionsParticipants__storage_ {
+  uint32_t _has_storage_[1];
+  UUIDValue *mid;
+  NSMutableArray *reactionsArray;
+} MessageReactionsParticipants__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "mid",
+        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
+        .number = MessageReactionsParticipants_FieldNumber_Mid,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(MessageReactionsParticipants__storage_, mid),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "reactionsArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(ReactionParticipants),
+        .number = MessageReactionsParticipants_FieldNumber_ReactionsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(MessageReactionsParticipants__storage_, reactionsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[MessageReactionsParticipants class]
+                                     rootClass:[ReactionsRoot class]
+                                          file:ReactionsRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(MessageReactionsParticipants__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -629,11 +763,11 @@ typedef struct GetMessageReactionsRequest__storage_ {
 
 @implementation GetMessageReactionsResponse
 
-@dynamic messageReactionsArray, messageReactionsArray_Count;
+@dynamic messageReactionsParticipantsArray, messageReactionsParticipantsArray_Count;
 
 typedef struct GetMessageReactionsResponse__storage_ {
   uint32_t _has_storage_[1];
-  NSMutableArray *messageReactionsArray;
+  NSMutableArray *messageReactionsParticipantsArray;
 } GetMessageReactionsResponse__storage_;
 
 // This method is threadsafe because it is initially called
@@ -643,11 +777,11 @@ typedef struct GetMessageReactionsResponse__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "messageReactionsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(MessageReactions),
-        .number = GetMessageReactionsResponse_FieldNumber_MessageReactionsArray,
+        .name = "messageReactionsParticipantsArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(MessageReactionsParticipants),
+        .number = GetMessageReactionsResponse_FieldNumber_MessageReactionsParticipantsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(GetMessageReactionsResponse__storage_, messageReactionsArray),
+        .offset = (uint32_t)offsetof(GetMessageReactionsResponse__storage_, messageReactionsParticipantsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },

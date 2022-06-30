@@ -12,13 +12,25 @@ option java_package = "im.dlg.grpc.services";
 
 message Reaction {
     string code = 1;
-    repeated string users = 2;
-    int32 users_amount = 3;
+    int32 users_amount = 2;
+    bool is_set = 3;
 }
 
 message MessageReactions {
     UUIDValue mid = 1;
     repeated Reaction reactions = 2;
+}
+
+message ReactionParticipants {
+    string code = 1;
+    repeated string users = 2;
+    int32 users_amount = 3;
+    bool is_set = 4;
+}
+
+message MessageReactionsParticipants {
+    UUIDValue mid = 1;
+    repeated ReactionParticipants reactions = 2;
 }
 
 message UpdateMessageReactions {
@@ -61,7 +73,8 @@ message GetMessageReactionsRequest {
 }
 
 message GetMessageReactionsResponse {
-    repeated MessageReactions message_reactions = 1;
+    reserved 1;
+    repeated MessageReactionsParticipants message_reactions_participants = 2;
 }
 
 message RequestSetMessageReaction {

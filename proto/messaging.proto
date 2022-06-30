@@ -470,12 +470,6 @@ message DialogGroup {
     repeated DialogShort dialogs = 3;
 }
 
-// Reaction to message
-message MessageReaction {
-    repeated string users = 1; /// User's reaction
-    string code = 2; /// Reaction EMOJI code
-}
-
 // Predicate for searching in custom profile
 message SearchPredicate {
     string key = 1;
@@ -825,9 +819,8 @@ message HistoryMessage {
     int64 date = 6;
     MessageContent message = 7;
     MessageState state = 8;
-    repeated MessageReaction reactions = 9;
+    reserved 9;
     MessageAttributes attribute = 10;
-    
     reserved 11; 
     oneof attach {
         ReferencedMessages reply = 12;
@@ -835,6 +828,7 @@ message HistoryMessage {
     }
     google.protobuf.Int64Value edited_at = 13;
     int64 random_id = 14;
+    repeated Reaction reactions = 16;
 }
 
 enum ListLoadMode {

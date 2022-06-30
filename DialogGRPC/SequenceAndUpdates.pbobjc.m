@@ -1050,8 +1050,8 @@ void SeqUpdateBody_ClearUpdateOneOfCase(SeqUpdateBody *message) {
 
 typedef struct SeqUpdate__storage_ {
   uint32_t _has_storage_[1];
-  int32_t seq;
   SeqUpdateBody *body;
+  uint64_t seq;
 } SeqUpdate__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1067,7 +1067,7 @@ typedef struct SeqUpdate__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(SeqUpdate__storage_, seq),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeUInt64,
       },
       {
         .name = "body",
@@ -1106,8 +1106,8 @@ typedef struct SeqUpdate__storage_ {
 
 typedef struct RequestGetDifference__storage_ {
   uint32_t _has_storage_[1];
-  int32_t seq;
   GPBInt64Value *configHash;
+  uint64_t seq;
 } RequestGetDifference__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1123,7 +1123,7 @@ typedef struct RequestGetDifference__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestGetDifference__storage_, seq),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeUInt64,
       },
       {
         .name = "configHash",
@@ -1168,13 +1168,13 @@ typedef struct RequestGetDifference__storage_ {
 
 typedef struct ResponseGetDifference__storage_ {
   uint32_t _has_storage_[1];
-  int32_t seq;
   NSMutableArray *updatesArray;
   NSMutableArray *messagesArray;
   NSMutableArray *usersRefsArray;
   NSMutableArray *groupsRefsArray;
   Config *config;
   GPBInt64Value *configHash;
+  uint64_t seq;
 } ResponseGetDifference__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1190,7 +1190,7 @@ typedef struct ResponseGetDifference__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(ResponseGetDifference__storage_, seq),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeUInt64,
       },
       {
         .name = "updatesArray",
@@ -2636,7 +2636,7 @@ typedef struct RequestGetState__storage_ {
 
 typedef struct ResponseGetState__storage_ {
   uint32_t _has_storage_[1];
-  int32_t seq;
+  uint64_t seq;
   int64_t date;
 } ResponseGetState__storage_;
 
@@ -2653,7 +2653,7 @@ typedef struct ResponseGetState__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(ResponseGetState__storage_, seq),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .dataType = GPBDataTypeUInt64,
       },
       {
         .name = "date",

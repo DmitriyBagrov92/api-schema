@@ -85,12 +85,12 @@ GPBObjCClassDeclaration(MessageAttributes);
 GPBObjCClassDeclaration(MessageContent);
 GPBObjCClassDeclaration(MessageMedia);
 GPBObjCClassDeclaration(MessageOverrides);
-GPBObjCClassDeclaration(MessageReaction);
 GPBObjCClassDeclaration(MessageStatus);
 GPBObjCClassDeclaration(OutPeer);
 GPBObjCClassDeclaration(ParagraphStyle);
 GPBObjCClassDeclaration(Peer);
 GPBObjCClassDeclaration(PinnedMessages);
+GPBObjCClassDeclaration(Reaction);
 GPBObjCClassDeclaration(ReferencedMessages);
 GPBObjCClassDeclaration(ResponseGetLastConversationMessages);
 GPBObjCClassDeclaration(ResponseGetLastConversationMessages_Pair);
@@ -4145,62 +4145,6 @@ typedef struct DialogGroup__storage_ {
 
 @end
 
-#pragma mark - MessageReaction
-
-@implementation MessageReaction
-
-@dynamic usersArray, usersArray_Count;
-@dynamic code;
-
-typedef struct MessageReaction__storage_ {
-  uint32_t _has_storage_[1];
-  NSMutableArray *usersArray;
-  NSString *code;
-} MessageReaction__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "usersArray",
-        .dataTypeSpecific.clazz = Nil,
-        .number = MessageReaction_FieldNumber_UsersArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(MessageReaction__storage_, usersArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "code",
-        .dataTypeSpecific.clazz = Nil,
-        .number = MessageReaction_FieldNumber_Code,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(MessageReaction__storage_, code),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[MessageReaction class]
-                                     rootClass:[MessagingRoot class]
-                                          file:MessagingRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(MessageReaction__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
 #pragma mark - SearchPredicate
 
 @implementation SearchPredicate
@@ -7123,12 +7067,12 @@ typedef struct ForwardSource__storage_ {
 @dynamic date;
 @dynamic hasMessage, message;
 @dynamic state;
-@dynamic reactionsArray, reactionsArray_Count;
 @dynamic hasAttribute, attribute;
 @dynamic reply;
 @dynamic forwardSource;
 @dynamic hasEditedAt, editedAt;
 @dynamic randomId;
+@dynamic reactionsArray, reactionsArray_Count;
 
 typedef struct HistoryMessage__storage_ {
   uint32_t _has_storage_[2];
@@ -7139,11 +7083,11 @@ typedef struct HistoryMessage__storage_ {
   UUIDValue *mid;
   UUIDValue *prevMid;
   MessageContent *message;
-  NSMutableArray *reactionsArray;
   MessageAttributes *attribute;
   ReferencedMessages *reply;
   GPBInt64Value *editedAt;
   ForwardSource *forwardSource;
+  NSMutableArray *reactionsArray;
   int64_t date;
   int64_t randomId;
 } HistoryMessage__storage_;
@@ -7227,15 +7171,6 @@ typedef struct HistoryMessage__storage_ {
         .dataType = GPBDataTypeEnum,
       },
       {
-        .name = "reactionsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(MessageReaction),
-        .number = HistoryMessage_FieldNumber_ReactionsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(HistoryMessage__storage_, reactionsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "attribute",
         .dataTypeSpecific.clazz = GPBObjCClass(MessageAttributes),
         .number = HistoryMessage_FieldNumber_Attribute,
@@ -7278,6 +7213,15 @@ typedef struct HistoryMessage__storage_ {
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(HistoryMessage__storage_, forwardSource),
         .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "reactionsArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(Reaction),
+        .number = HistoryMessage_FieldNumber_ReactionsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(HistoryMessage__storage_, reactionsArray),
+        .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
     };

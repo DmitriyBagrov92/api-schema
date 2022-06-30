@@ -75,12 +75,12 @@ CF_EXTERN_C_BEGIN
 @class MessageContent;
 @class MessageMedia;
 @class MessageOverrides;
-@class MessageReaction;
 @class MessageStatus;
 @class OutPeer;
 @class ParagraphStyle;
 @class Peer;
 @class PinnedMessages;
+@class Reaction;
 @class ReferencedMessages;
 @class ResponseGetLastConversationMessages_Pair;
 @class ResponseGetUpdatedMessages_UpdatedMessage;
@@ -1683,28 +1683,6 @@ GPB_FINAL @interface DialogGroup : GPBMessage
 
 @end
 
-#pragma mark - MessageReaction
-
-typedef GPB_ENUM(MessageReaction_FieldNumber) {
-  MessageReaction_FieldNumber_UsersArray = 1,
-  MessageReaction_FieldNumber_Code = 2,
-};
-
-/**
- * Reaction to message
- **/
-GPB_FINAL @interface MessageReaction : GPBMessage
-
-/** / User's reaction */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *usersArray;
-/** The number of items in @c usersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger usersArray_Count;
-
-/** / Reaction EMOJI code */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *code;
-
-@end
-
 #pragma mark - SearchPredicate
 
 typedef GPB_ENUM(SearchPredicate_FieldNumber) {
@@ -2832,12 +2810,12 @@ typedef GPB_ENUM(HistoryMessage_FieldNumber) {
   HistoryMessage_FieldNumber_Date = 6,
   HistoryMessage_FieldNumber_Message = 7,
   HistoryMessage_FieldNumber_State = 8,
-  HistoryMessage_FieldNumber_ReactionsArray = 9,
   HistoryMessage_FieldNumber_Attribute = 10,
   HistoryMessage_FieldNumber_Reply = 12,
   HistoryMessage_FieldNumber_EditedAt = 13,
   HistoryMessage_FieldNumber_RandomId = 14,
   HistoryMessage_FieldNumber_ForwardSource = 15,
+  HistoryMessage_FieldNumber_ReactionsArray = 16,
 };
 
 typedef GPB_ENUM(HistoryMessage_Attach_OneOfCase) {
@@ -2878,10 +2856,6 @@ GPB_FINAL @interface HistoryMessage : GPBMessage
 
 @property(nonatomic, readwrite) MessageState state;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MessageReaction*> *reactionsArray;
-/** The number of items in @c reactionsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger reactionsArray_Count;
-
 @property(nonatomic, readwrite, strong, null_resettable) MessageAttributes *attribute;
 /** Test to see if @c attribute has been set. */
 @property(nonatomic, readwrite) BOOL hasAttribute;
@@ -2897,6 +2871,10 @@ GPB_FINAL @interface HistoryMessage : GPBMessage
 @property(nonatomic, readwrite) BOOL hasEditedAt;
 
 @property(nonatomic, readwrite) int64_t randomId;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Reaction*> *reactionsArray;
+/** The number of items in @c reactionsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger reactionsArray_Count;
 
 @end
 

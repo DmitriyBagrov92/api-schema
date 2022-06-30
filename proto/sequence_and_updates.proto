@@ -121,14 +121,14 @@ message SeqUpdateBody {
 
 // Sequence update
 message SeqUpdate {
-    int32 seq = 1;
+    uint64 seq = 1;
     SeqUpdateBody body = 2;
 }
 
 // Getting difference of sequence
 message RequestGetDifference {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    int32 seq = 1;
+    uint64 seq = 1;
     google.protobuf.Int64Value config_hash = 2 [deprecated=true];
 }
 
@@ -136,7 +136,7 @@ message RequestGetDifference {
 message ResponseGetDifference {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
 
-    int32 seq = 1; /// seq of the last loaded update
+    uint64 seq = 1; /// seq of the last loaded update
     repeated SeqUpdate updates = 2;
     repeated HistoryMessage messages = 3 [deprecated = true];
     bool need_more = 4; /// false if all updates returned
@@ -285,7 +285,7 @@ message WeakUpdate {
 
 message RequestGetState {}
 message ResponseGetState {
-    int32 seq = 1;
+    uint64 seq = 1;
     int64 date = 2 [deprecated=true];
 }
 

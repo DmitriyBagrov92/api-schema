@@ -476,7 +476,7 @@ typedef GPB_ENUM(SeqUpdate_FieldNumber) {
  **/
 GPB_FINAL @interface SeqUpdate : GPBMessage
 
-@property(nonatomic, readwrite) int32_t seq;
+@property(nonatomic, readwrite) uint64_t seq;
 
 @property(nonatomic, readwrite, strong, null_resettable) SeqUpdateBody *body;
 /** Test to see if @c body has been set. */
@@ -496,7 +496,7 @@ typedef GPB_ENUM(RequestGetDifference_FieldNumber) {
  **/
 GPB_FINAL @interface RequestGetDifference : GPBMessage
 
-@property(nonatomic, readwrite) int32_t seq;
+@property(nonatomic, readwrite) uint64_t seq;
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *configHash GPB_DEPRECATED_MSG("dialog.RequestGetDifference.config_hash is deprecated (see sequence_and_updates.proto).");
 /** Test to see if @c configHash has been set. */
@@ -523,7 +523,7 @@ typedef GPB_ENUM(ResponseGetDifference_FieldNumber) {
 GPB_FINAL @interface ResponseGetDifference : GPBMessage
 
 /** / seq of the last loaded update */
-@property(nonatomic, readwrite) int32_t seq;
+@property(nonatomic, readwrite) uint64_t seq;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<SeqUpdate*> *updatesArray;
 /** The number of items in @c updatesArray without causing the array to be created. */
@@ -1070,7 +1070,7 @@ typedef GPB_ENUM(ResponseGetState_FieldNumber) {
 
 GPB_FINAL @interface ResponseGetState : GPBMessage
 
-@property(nonatomic, readwrite) int32_t seq;
+@property(nonatomic, readwrite) uint64_t seq;
 
 @property(nonatomic, readwrite) int64_t date GPB_DEPRECATED_MSG("dialog.ResponseGetState.date is deprecated (see sequence_and_updates.proto).");
 

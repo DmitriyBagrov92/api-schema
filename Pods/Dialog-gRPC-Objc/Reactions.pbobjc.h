@@ -28,8 +28,10 @@
 CF_EXTERN_C_BEGIN
 
 @class MessageReactions;
+@class MessageReactionsParticipants;
 @class Peer;
 @class Reaction;
+@class ReactionParticipants;
 @class UUIDValue;
 @class UpdateErrorCause;
 
@@ -54,19 +56,17 @@ GPB_FINAL @interface ReactionsRoot : GPBRootObject
 
 typedef GPB_ENUM(Reaction_FieldNumber) {
   Reaction_FieldNumber_Code = 1,
-  Reaction_FieldNumber_UsersArray = 2,
-  Reaction_FieldNumber_UsersAmount = 3,
+  Reaction_FieldNumber_UsersAmount = 2,
+  Reaction_FieldNumber_IsSet = 3,
 };
 
 GPB_FINAL @interface Reaction : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *code;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *usersArray;
-/** The number of items in @c usersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger usersArray_Count;
-
 @property(nonatomic, readwrite) int32_t usersAmount;
+
+@property(nonatomic, readwrite) BOOL isSet;
 
 @end
 
@@ -84,6 +84,48 @@ GPB_FINAL @interface MessageReactions : GPBMessage
 @property(nonatomic, readwrite) BOOL hasMid;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Reaction*> *reactionsArray;
+/** The number of items in @c reactionsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger reactionsArray_Count;
+
+@end
+
+#pragma mark - ReactionParticipants
+
+typedef GPB_ENUM(ReactionParticipants_FieldNumber) {
+  ReactionParticipants_FieldNumber_Code = 1,
+  ReactionParticipants_FieldNumber_UsersArray = 2,
+  ReactionParticipants_FieldNumber_UsersAmount = 3,
+  ReactionParticipants_FieldNumber_IsSet = 4,
+};
+
+GPB_FINAL @interface ReactionParticipants : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *code;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *usersArray;
+/** The number of items in @c usersArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger usersArray_Count;
+
+@property(nonatomic, readwrite) int32_t usersAmount;
+
+@property(nonatomic, readwrite) BOOL isSet;
+
+@end
+
+#pragma mark - MessageReactionsParticipants
+
+typedef GPB_ENUM(MessageReactionsParticipants_FieldNumber) {
+  MessageReactionsParticipants_FieldNumber_Mid = 1,
+  MessageReactionsParticipants_FieldNumber_ReactionsArray = 2,
+};
+
+GPB_FINAL @interface MessageReactionsParticipants : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
+/** Test to see if @c mid has been set. */
+@property(nonatomic, readwrite) BOOL hasMid;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<ReactionParticipants*> *reactionsArray;
 /** The number of items in @c reactionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger reactionsArray_Count;
 
@@ -235,14 +277,14 @@ GPB_FINAL @interface GetMessageReactionsRequest : GPBMessage
 #pragma mark - GetMessageReactionsResponse
 
 typedef GPB_ENUM(GetMessageReactionsResponse_FieldNumber) {
-  GetMessageReactionsResponse_FieldNumber_MessageReactionsArray = 1,
+  GetMessageReactionsResponse_FieldNumber_MessageReactionsParticipantsArray = 2,
 };
 
 GPB_FINAL @interface GetMessageReactionsResponse : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MessageReactions*> *messageReactionsArray;
-/** The number of items in @c messageReactionsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger messageReactionsArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MessageReactionsParticipants*> *messageReactionsParticipantsArray;
+/** The number of items in @c messageReactionsParticipantsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger messageReactionsParticipantsArray_Count;
 
 @end
 
