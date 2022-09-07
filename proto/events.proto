@@ -58,13 +58,13 @@ message UpdateEvent {
     int64 prev_clock = 2; // time of previous event
 }
 
-message LoadEventsRequest {
+message RequestLoadEvents {
     int64 from_clock = 1; // clock to load from
     ListLoadMode load_mode = 2;
     int32 limit = 3; // how much to load
 }
 
-message LoadEventsResponse {
+message ResponseLoadEvents {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     repeated Event events = 1;
     int64 clock = 2; // clock of last event
@@ -72,7 +72,7 @@ message LoadEventsResponse {
 }
 
 service Events {
-    rpc LoadEvents (LoadEventsRequest) returns (LoadEventsResponse) {
+    rpc LoadEvents (RequestLoadEvents) returns (ResponseLoadEvents) {
         option (google.api.http) = {
             post: "/v1/grpc/Events/LoadEvents"
             body: "*"

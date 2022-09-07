@@ -22,15 +22,16 @@
 @class RequestFavouriteDialog;
 @class RequestFetchDialogIndex;
 @class RequestGetLastConversationMessages;
+@class RequestGetMessageReads;
+@class RequestGetMessageReceives;
 @class RequestGetUpdatedMessages;
 @class RequestHistoryDifference;
 @class RequestLoadDialogs;
 @class RequestLoadHistory;
 @class RequestLoadHistoryLight;
+@class RequestLoadMessageHistory;
 @class RequestMessageRead;
-@class RequestMessageReads;
 @class RequestMessageReceived;
-@class RequestMessageReceives;
 @class RequestMuteChat;
 @class RequestNotifyDialogOpened;
 @class RequestPinMessage;
@@ -45,13 +46,13 @@
 @class ResponseDialogListDifference;
 @class ResponseFetchDialogIndex;
 @class ResponseGetLastConversationMessages;
+@class ResponseGetMessageReads;
+@class ResponseGetMessageReceives;
 @class ResponseGetUpdatedMessages;
 @class ResponseHistoryDifference;
 @class ResponseLoadDialogs;
 @class ResponseLoadHistory;
 @class ResponseLoadHistoryLight;
-@class ResponseMessageReads;
-@class ResponseMessageReceives;
 @class ResponseSendMessage;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
@@ -133,6 +134,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (GRPCUnaryProtoCall *)loadHistoryWithMessage:(RequestLoadHistory *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
+#pragma mark LoadMessageHistory(RequestLoadMessageHistory) returns (ResponseLoadHistory)
+
+/**
+ * / Load conversation history
+ */
+- (GRPCUnaryProtoCall *)loadMessageHistoryWithMessage:(RequestLoadMessageHistory *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
 #pragma mark LoadHistoryLight(RequestLoadHistoryLight) returns (ResponseLoadHistoryLight)
 
 /**
@@ -211,19 +219,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (GRPCUnaryProtoCall *)getUpdatedMessagesWithMessage:(RequestGetUpdatedMessages *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark GetMessageReads(RequestMessageReads) returns (ResponseMessageReads)
+#pragma mark GetMessageReads(RequestGetMessageReads) returns (ResponseGetMessageReads)
 
 /**
  * Returns read status of the message per user
  */
-- (GRPCUnaryProtoCall *)getMessageReadsWithMessage:(RequestMessageReads *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)getMessageReadsWithMessage:(RequestGetMessageReads *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark GetMessageReceives(RequestMessageReceives) returns (ResponseMessageReceives)
+#pragma mark GetMessageReceives(RequestGetMessageReceives) returns (ResponseGetMessageReceives)
 
 /**
  * Returns receive status of the message per user
  */
-- (GRPCUnaryProtoCall *)getMessageReceivesWithMessage:(RequestMessageReceives *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)getMessageReceivesWithMessage:(RequestGetMessageReceives *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark ReadDialogLater(RequestReadDialogLater) returns (Empty)
 
@@ -355,6 +363,23 @@ NS_ASSUME_NONNULL_BEGIN
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToLoadHistoryWithRequest:(RequestLoadHistory *)request handler:(void(^)(ResponseLoadHistory *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark LoadMessageHistory(RequestLoadMessageHistory) returns (ResponseLoadHistory)
+
+/**
+ * / Load conversation history
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)loadMessageHistoryWithRequest:(RequestLoadMessageHistory *)request handler:(void(^)(ResponseLoadHistory *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * / Load conversation history
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToLoadMessageHistoryWithRequest:(RequestLoadMessageHistory *)request handler:(void(^)(ResponseLoadHistory *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark LoadHistoryLight(RequestLoadHistoryLight) returns (ResponseLoadHistoryLight)
@@ -522,38 +547,38 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetUpdatedMessagesWithRequest:(RequestGetUpdatedMessages *)request handler:(void(^)(ResponseGetUpdatedMessages *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark GetMessageReads(RequestMessageReads) returns (ResponseMessageReads)
+#pragma mark GetMessageReads(RequestGetMessageReads) returns (ResponseGetMessageReads)
 
 /**
  * Returns read status of the message per user
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)getMessageReadsWithRequest:(RequestMessageReads *)request handler:(void(^)(ResponseMessageReads *_Nullable response, NSError *_Nullable error))handler;
+- (void)getMessageReadsWithRequest:(RequestGetMessageReads *)request handler:(void(^)(ResponseGetMessageReads *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * Returns read status of the message per user
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToGetMessageReadsWithRequest:(RequestMessageReads *)request handler:(void(^)(ResponseMessageReads *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToGetMessageReadsWithRequest:(RequestGetMessageReads *)request handler:(void(^)(ResponseGetMessageReads *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark GetMessageReceives(RequestMessageReceives) returns (ResponseMessageReceives)
-
-/**
- * Returns receive status of the message per user
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)getMessageReceivesWithRequest:(RequestMessageReceives *)request handler:(void(^)(ResponseMessageReceives *_Nullable response, NSError *_Nullable error))handler;
+#pragma mark GetMessageReceives(RequestGetMessageReceives) returns (ResponseGetMessageReceives)
 
 /**
  * Returns receive status of the message per user
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToGetMessageReceivesWithRequest:(RequestMessageReceives *)request handler:(void(^)(ResponseMessageReceives *_Nullable response, NSError *_Nullable error))handler;
+- (void)getMessageReceivesWithRequest:(RequestGetMessageReceives *)request handler:(void(^)(ResponseGetMessageReceives *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * Returns receive status of the message per user
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToGetMessageReceivesWithRequest:(RequestGetMessageReceives *)request handler:(void(^)(ResponseGetMessageReceives *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark ReadDialogLater(RequestReadDialogLater) returns (Empty)

@@ -581,18 +581,18 @@ typedef struct UpdateMessageSetReactionError__storage_ {
 
 @end
 
-#pragma mark - GetReactionsRequest
+#pragma mark - RequestGetReactions
 
-@implementation GetReactionsRequest
+@implementation RequestGetReactions
 
 @dynamic fromClock;
 @dynamic hasPeer, peer;
 
-typedef struct GetReactionsRequest__storage_ {
+typedef struct RequestGetReactions__storage_ {
   uint32_t _has_storage_[1];
   Peer *peer;
   int64_t fromClock;
-} GetReactionsRequest__storage_;
+} RequestGetReactions__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -603,29 +603,29 @@ typedef struct GetReactionsRequest__storage_ {
       {
         .name = "fromClock",
         .dataTypeSpecific.clazz = Nil,
-        .number = GetReactionsRequest_FieldNumber_FromClock,
+        .number = RequestGetReactions_FieldNumber_FromClock,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetReactionsRequest__storage_, fromClock),
+        .offset = (uint32_t)offsetof(RequestGetReactions__storage_, fromClock),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
       {
         .name = "peer",
         .dataTypeSpecific.clazz = GPBObjCClass(Peer),
-        .number = GetReactionsRequest_FieldNumber_Peer,
+        .number = RequestGetReactions_FieldNumber_Peer,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(GetReactionsRequest__storage_, peer),
+        .offset = (uint32_t)offsetof(RequestGetReactions__storage_, peer),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[GetReactionsRequest class]
+        [GPBDescriptor allocDescriptorForClass:[RequestGetReactions class]
                                      rootClass:[ReactionsRoot class]
                                           file:ReactionsRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(GetReactionsRequest__storage_)
+                                   storageSize:sizeof(RequestGetReactions__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -637,19 +637,19 @@ typedef struct GetReactionsRequest__storage_ {
 
 @end
 
-#pragma mark - GetReactionsResponse
+#pragma mark - ResponseGetReactions
 
-@implementation GetReactionsResponse
+@implementation ResponseGetReactions
 
 @dynamic messageReactionsArray, messageReactionsArray_Count;
 @dynamic peerClock;
 @dynamic nextAvailable;
 
-typedef struct GetReactionsResponse__storage_ {
+typedef struct ResponseGetReactions__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *messageReactionsArray;
   int64_t peerClock;
-} GetReactionsResponse__storage_;
+} ResponseGetReactions__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -660,25 +660,25 @@ typedef struct GetReactionsResponse__storage_ {
       {
         .name = "messageReactionsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(MessageReactions),
-        .number = GetReactionsResponse_FieldNumber_MessageReactionsArray,
+        .number = ResponseGetReactions_FieldNumber_MessageReactionsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(GetReactionsResponse__storage_, messageReactionsArray),
+        .offset = (uint32_t)offsetof(ResponseGetReactions__storage_, messageReactionsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "peerClock",
         .dataTypeSpecific.clazz = Nil,
-        .number = GetReactionsResponse_FieldNumber_PeerClock,
+        .number = ResponseGetReactions_FieldNumber_PeerClock,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetReactionsResponse__storage_, peerClock),
+        .offset = (uint32_t)offsetof(ResponseGetReactions__storage_, peerClock),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
       {
         .name = "nextAvailable",
         .dataTypeSpecific.clazz = Nil,
-        .number = GetReactionsResponse_FieldNumber_NextAvailable,
+        .number = ResponseGetReactions_FieldNumber_NextAvailable,
         .hasIndex = 1,
         .offset = 2,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
@@ -686,12 +686,12 @@ typedef struct GetReactionsResponse__storage_ {
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[GetReactionsResponse class]
+        [GPBDescriptor allocDescriptorForClass:[ResponseGetReactions class]
                                      rootClass:[ReactionsRoot class]
                                           file:ReactionsRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(GetReactionsResponse__storage_)
+                                   storageSize:sizeof(ResponseGetReactions__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -703,18 +703,18 @@ typedef struct GetReactionsResponse__storage_ {
 
 @end
 
-#pragma mark - GetMessageReactionsRequest
+#pragma mark - RequestGetMessageReactions
 
-@implementation GetMessageReactionsRequest
+@implementation RequestGetMessageReactions
 
 @dynamic hasPeer, peer;
 @dynamic messageIdsArray, messageIdsArray_Count;
 
-typedef struct GetMessageReactionsRequest__storage_ {
+typedef struct RequestGetMessageReactions__storage_ {
   uint32_t _has_storage_[1];
   Peer *peer;
   NSMutableArray *messageIdsArray;
-} GetMessageReactionsRequest__storage_;
+} RequestGetMessageReactions__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -725,29 +725,29 @@ typedef struct GetMessageReactionsRequest__storage_ {
       {
         .name = "peer",
         .dataTypeSpecific.clazz = GPBObjCClass(Peer),
-        .number = GetMessageReactionsRequest_FieldNumber_Peer,
+        .number = RequestGetMessageReactions_FieldNumber_Peer,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetMessageReactionsRequest__storage_, peer),
+        .offset = (uint32_t)offsetof(RequestGetMessageReactions__storage_, peer),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "messageIdsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = GetMessageReactionsRequest_FieldNumber_MessageIdsArray,
+        .number = RequestGetMessageReactions_FieldNumber_MessageIdsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(GetMessageReactionsRequest__storage_, messageIdsArray),
+        .offset = (uint32_t)offsetof(RequestGetMessageReactions__storage_, messageIdsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[GetMessageReactionsRequest class]
+        [GPBDescriptor allocDescriptorForClass:[RequestGetMessageReactions class]
                                      rootClass:[ReactionsRoot class]
                                           file:ReactionsRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(GetMessageReactionsRequest__storage_)
+                                   storageSize:sizeof(RequestGetMessageReactions__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -759,16 +759,16 @@ typedef struct GetMessageReactionsRequest__storage_ {
 
 @end
 
-#pragma mark - GetMessageReactionsResponse
+#pragma mark - ResponseGetMessageReactions
 
-@implementation GetMessageReactionsResponse
+@implementation ResponseGetMessageReactions
 
 @dynamic messageReactionsParticipantsArray, messageReactionsParticipantsArray_Count;
 
-typedef struct GetMessageReactionsResponse__storage_ {
+typedef struct ResponseGetMessageReactions__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *messageReactionsParticipantsArray;
-} GetMessageReactionsResponse__storage_;
+} ResponseGetMessageReactions__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -779,20 +779,20 @@ typedef struct GetMessageReactionsResponse__storage_ {
       {
         .name = "messageReactionsParticipantsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(MessageReactionsParticipants),
-        .number = GetMessageReactionsResponse_FieldNumber_MessageReactionsParticipantsArray,
+        .number = ResponseGetMessageReactions_FieldNumber_MessageReactionsParticipantsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(GetMessageReactionsResponse__storage_, messageReactionsParticipantsArray),
+        .offset = (uint32_t)offsetof(ResponseGetMessageReactions__storage_, messageReactionsParticipantsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[GetMessageReactionsResponse class]
+        [GPBDescriptor allocDescriptorForClass:[ResponseGetMessageReactions class]
                                      rootClass:[ReactionsRoot class]
                                           file:ReactionsRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(GetMessageReactionsResponse__storage_)
+                                   storageSize:sizeof(ResponseGetMessageReactions__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -804,20 +804,20 @@ typedef struct GetMessageReactionsResponse__storage_ {
 
 @end
 
-#pragma mark - RequestSetMessageReaction
+#pragma mark - RequestMessageSetReaction
 
-@implementation RequestSetMessageReaction
+@implementation RequestMessageSetReaction
 
 @dynamic hasPeer, peer;
 @dynamic hasMid, mid;
 @dynamic code;
 
-typedef struct RequestSetMessageReaction__storage_ {
+typedef struct RequestMessageSetReaction__storage_ {
   uint32_t _has_storage_[1];
   Peer *peer;
   UUIDValue *mid;
   NSString *code;
-} RequestSetMessageReaction__storage_;
+} RequestMessageSetReaction__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -828,38 +828,38 @@ typedef struct RequestSetMessageReaction__storage_ {
       {
         .name = "peer",
         .dataTypeSpecific.clazz = GPBObjCClass(Peer),
-        .number = RequestSetMessageReaction_FieldNumber_Peer,
+        .number = RequestMessageSetReaction_FieldNumber_Peer,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestSetMessageReaction__storage_, peer),
+        .offset = (uint32_t)offsetof(RequestMessageSetReaction__storage_, peer),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "mid",
         .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestSetMessageReaction_FieldNumber_Mid,
+        .number = RequestMessageSetReaction_FieldNumber_Mid,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestSetMessageReaction__storage_, mid),
+        .offset = (uint32_t)offsetof(RequestMessageSetReaction__storage_, mid),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "code",
         .dataTypeSpecific.clazz = Nil,
-        .number = RequestSetMessageReaction_FieldNumber_Code,
+        .number = RequestMessageSetReaction_FieldNumber_Code,
         .hasIndex = 2,
-        .offset = (uint32_t)offsetof(RequestSetMessageReaction__storage_, code),
+        .offset = (uint32_t)offsetof(RequestMessageSetReaction__storage_, code),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestSetMessageReaction class]
+        [GPBDescriptor allocDescriptorForClass:[RequestMessageSetReaction class]
                                      rootClass:[ReactionsRoot class]
                                           file:ReactionsRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestSetMessageReaction__storage_)
+                                   storageSize:sizeof(RequestMessageSetReaction__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -871,20 +871,20 @@ typedef struct RequestSetMessageReaction__storage_ {
 
 @end
 
-#pragma mark - RequestRemoveMessageReaction
+#pragma mark - RequestMessageRemoveReaction
 
-@implementation RequestRemoveMessageReaction
+@implementation RequestMessageRemoveReaction
 
 @dynamic hasPeer, peer;
 @dynamic hasMid, mid;
 @dynamic code;
 
-typedef struct RequestRemoveMessageReaction__storage_ {
+typedef struct RequestMessageRemoveReaction__storage_ {
   uint32_t _has_storage_[1];
   Peer *peer;
   UUIDValue *mid;
   NSString *code;
-} RequestRemoveMessageReaction__storage_;
+} RequestMessageRemoveReaction__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -895,38 +895,38 @@ typedef struct RequestRemoveMessageReaction__storage_ {
       {
         .name = "peer",
         .dataTypeSpecific.clazz = GPBObjCClass(Peer),
-        .number = RequestRemoveMessageReaction_FieldNumber_Peer,
+        .number = RequestMessageRemoveReaction_FieldNumber_Peer,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestRemoveMessageReaction__storage_, peer),
+        .offset = (uint32_t)offsetof(RequestMessageRemoveReaction__storage_, peer),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "mid",
         .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestRemoveMessageReaction_FieldNumber_Mid,
+        .number = RequestMessageRemoveReaction_FieldNumber_Mid,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestRemoveMessageReaction__storage_, mid),
+        .offset = (uint32_t)offsetof(RequestMessageRemoveReaction__storage_, mid),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "code",
         .dataTypeSpecific.clazz = Nil,
-        .number = RequestRemoveMessageReaction_FieldNumber_Code,
+        .number = RequestMessageRemoveReaction_FieldNumber_Code,
         .hasIndex = 2,
-        .offset = (uint32_t)offsetof(RequestRemoveMessageReaction__storage_, code),
+        .offset = (uint32_t)offsetof(RequestMessageRemoveReaction__storage_, code),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestRemoveMessageReaction class]
+        [GPBDescriptor allocDescriptorForClass:[RequestMessageRemoveReaction class]
                                      rootClass:[ReactionsRoot class]
                                           file:ReactionsRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestRemoveMessageReaction__storage_)
+                                   storageSize:sizeof(RequestMessageRemoveReaction__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");

@@ -24,13 +24,11 @@
 #import "Stickers.pbobjc.h"
 #import "Presence.pbobjc.h"
 #import "ConfigSync.pbobjc.h"
-#import "Counters.pbobjc.h"
 #import "Contacts.pbobjc.h"
 #import "Privacy.pbobjc.h"
 #import "Peers.pbobjc.h"
 #import "Messaging.pbobjc.h"
 #import "Users.pbobjc.h"
-#import "Spaces.pbobjc.h"
 #import "Reactions.pbobjc.h"
 #import "Permissions.pbobjc.h"
 #import "Events.pbobjc.h"
@@ -74,7 +72,6 @@ GPBObjCClassDeclaration(UpdateContactRegistered);
 GPBObjCClassDeclaration(UpdateContactsAddTaskSuspended);
 GPBObjCClassDeclaration(UpdateContactsAdded);
 GPBObjCClassDeclaration(UpdateContactsRemoved);
-GPBObjCClassDeclaration(UpdateCountersChanged);
 GPBObjCClassDeclaration(UpdateDeleteChatError);
 GPBObjCClassDeclaration(UpdateDeleteMessageError);
 GPBObjCClassDeclaration(UpdateDialogFavouriteChanged);
@@ -95,7 +92,6 @@ GPBObjCClassDeclaration(UpdateGroupMembersCountChanged);
 GPBObjCClassDeclaration(UpdateGroupMembersUpdated);
 GPBObjCClassDeclaration(UpdateGroupOnline);
 GPBObjCClassDeclaration(UpdateGroupOwnerChanged);
-GPBObjCClassDeclaration(UpdateGroupShortnameChanged);
 GPBObjCClassDeclaration(UpdateGroupTitleChanged);
 GPBObjCClassDeclaration(UpdateGroupTyping);
 GPBObjCClassDeclaration(UpdateInteractiveMediaEvent);
@@ -117,14 +113,10 @@ GPBObjCClassDeclaration(UpdateRawUpdate);
 GPBObjCClassDeclaration(UpdateReadDialogLaterError);
 GPBObjCClassDeclaration(UpdateSendMessageError);
 GPBObjCClassDeclaration(UpdateSettingsChanged);
-GPBObjCClassDeclaration(UpdateSpaceMemberModified);
-GPBObjCClassDeclaration(UpdateSpaceModified);
 GPBObjCClassDeclaration(UpdateStickerCollectionsChanged);
 GPBObjCClassDeclaration(UpdateStickerPackAdded);
 GPBObjCClassDeclaration(UpdateStickerPackRemoved);
 GPBObjCClassDeclaration(UpdateSuggests);
-GPBObjCClassDeclaration(UpdateThreadCreated);
-GPBObjCClassDeclaration(UpdateThreadLifted);
 GPBObjCClassDeclaration(UpdateTyping);
 GPBObjCClassDeclaration(UpdateTypingStop);
 GPBObjCClassDeclaration(UpdateUnfavouriteDialogError);
@@ -239,22 +231,16 @@ static GPBFileDescriptor *SequenceAndUpdatesRoot_FileDescriptor(void) {
 @dynamic updateGroupMemberDiff;
 @dynamic updateGroupMembersCountChanged;
 @dynamic updateGroupMemberPermissionsChanged;
-@dynamic updateGroupShortnameChanged;
 @dynamic updateStickerCollectionsChanged;
 @dynamic updateStickerPackRemoved;
 @dynamic updateStickerPackAdded;
 @dynamic updateParameterChanged;
 @dynamic updateRawUpdate;
-@dynamic updateCountersChanged;
 @dynamic updateConfig;
-@dynamic updateSpaceModified;
-@dynamic updateSpaceMemberModified;
 @dynamic updateSendMessageError;
 @dynamic updateEditMessageError;
 @dynamic updateUser;
 @dynamic updateFeatureFlagChanged;
-@dynamic updateThreadCreated;
-@dynamic updateThreadLifted;
 @dynamic updateGroup;
 @dynamic updateGroupMemberInvited;
 @dynamic updatePermissionsChange;
@@ -315,22 +301,16 @@ typedef struct SeqUpdateBody__storage_ {
   UpdateGroupMemberDiff *updateGroupMemberDiff;
   UpdateGroupMembersCountChanged *updateGroupMembersCountChanged;
   UpdateGroupMemberPermissionsChanged *updateGroupMemberPermissionsChanged;
-  UpdateGroupShortnameChanged *updateGroupShortnameChanged;
   UpdateStickerCollectionsChanged *updateStickerCollectionsChanged;
   UpdateStickerPackRemoved *updateStickerPackRemoved;
   UpdateStickerPackAdded *updateStickerPackAdded;
   UpdateParameterChanged *updateParameterChanged;
   UpdateRawUpdate *updateRawUpdate;
-  UpdateCountersChanged *updateCountersChanged;
   UpdateConfig *updateConfig;
-  UpdateSpaceModified *updateSpaceModified;
-  UpdateSpaceMemberModified *updateSpaceMemberModified;
   UpdateSendMessageError *updateSendMessageError;
   UpdateEditMessageError *updateEditMessageError;
   UpdateUser *updateUser;
   UpdateFeatureFlagChanged *updateFeatureFlagChanged;
-  UpdateThreadCreated *updateThreadCreated;
-  UpdateThreadLifted *updateThreadLifted;
   UpdateGroup *updateGroup;
   UpdateGroupMemberInvited *updateGroupMemberInvited;
   UpdatePermissionsChange *updatePermissionsChange;
@@ -733,15 +713,6 @@ typedef struct SeqUpdateBody__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "updateGroupShortnameChanged",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupShortnameChanged),
-        .number = SeqUpdateBody_FieldNumber_UpdateGroupShortnameChanged,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateGroupShortnameChanged),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "updateStickerCollectionsChanged",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateStickerCollectionsChanged),
         .number = SeqUpdateBody_FieldNumber_UpdateStickerCollectionsChanged,
@@ -787,38 +758,11 @@ typedef struct SeqUpdateBody__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "updateCountersChanged",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateCountersChanged),
-        .number = SeqUpdateBody_FieldNumber_UpdateCountersChanged,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateCountersChanged),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "updateConfig",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateConfig),
         .number = SeqUpdateBody_FieldNumber_UpdateConfig,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateConfig),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateSpaceModified",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateSpaceModified),
-        .number = SeqUpdateBody_FieldNumber_UpdateSpaceModified,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateSpaceModified),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateSpaceMemberModified",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateSpaceMemberModified),
-        .number = SeqUpdateBody_FieldNumber_UpdateSpaceMemberModified,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateSpaceMemberModified),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -855,24 +799,6 @@ typedef struct SeqUpdateBody__storage_ {
         .number = SeqUpdateBody_FieldNumber_UpdateFeatureFlagChanged,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateFeatureFlagChanged),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateThreadCreated",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateThreadCreated),
-        .number = SeqUpdateBody_FieldNumber_UpdateThreadCreated,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateThreadCreated),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateThreadLifted",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateThreadLifted),
-        .number = SeqUpdateBody_FieldNumber_UpdateThreadLifted,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateThreadLifted),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

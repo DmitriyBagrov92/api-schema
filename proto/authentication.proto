@@ -309,6 +309,10 @@ message RequestChangePassword {
     string new_password = 2 [(dlg).log = log_confidential];
 }
 
+message RequestGetSelf {
+    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
+}
+
 message ResponseGetSelf {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     /// Registered/authorized user
@@ -459,7 +463,7 @@ service Authentication {
         };
     }
 
-    rpc GetSelf(google.protobuf.Empty) returns (ResponseGetSelf) {
+    rpc GetSelf (RequestGetSelf) returns (ResponseGetSelf) {
         option (google.api.http) = {
             post: "/v1/grpc/Authentication/GetSelf"
             body: "*"

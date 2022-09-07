@@ -254,15 +254,15 @@ GPB_FINAL @interface UpdateEvent : GPBMessage
 
 @end
 
-#pragma mark - LoadEventsRequest
+#pragma mark - RequestLoadEvents
 
-typedef GPB_ENUM(LoadEventsRequest_FieldNumber) {
-  LoadEventsRequest_FieldNumber_FromClock = 1,
-  LoadEventsRequest_FieldNumber_LoadMode = 2,
-  LoadEventsRequest_FieldNumber_Limit = 3,
+typedef GPB_ENUM(RequestLoadEvents_FieldNumber) {
+  RequestLoadEvents_FieldNumber_FromClock = 1,
+  RequestLoadEvents_FieldNumber_LoadMode = 2,
+  RequestLoadEvents_FieldNumber_Limit = 3,
 };
 
-GPB_FINAL @interface LoadEventsRequest : GPBMessage
+GPB_FINAL @interface RequestLoadEvents : GPBMessage
 
 /** clock to load from */
 @property(nonatomic, readwrite) int64_t fromClock;
@@ -275,26 +275,26 @@ GPB_FINAL @interface LoadEventsRequest : GPBMessage
 @end
 
 /**
- * Fetches the raw value of a @c LoadEventsRequest's @c loadMode property, even
+ * Fetches the raw value of a @c RequestLoadEvents's @c loadMode property, even
  * if the value was not defined by the enum at the time the code was generated.
  **/
-int32_t LoadEventsRequest_LoadMode_RawValue(LoadEventsRequest *message);
+int32_t RequestLoadEvents_LoadMode_RawValue(RequestLoadEvents *message);
 /**
- * Sets the raw value of an @c LoadEventsRequest's @c loadMode property, allowing
+ * Sets the raw value of an @c RequestLoadEvents's @c loadMode property, allowing
  * it to be set to a value that was not defined by the enum at the time the code
  * was generated.
  **/
-void SetLoadEventsRequest_LoadMode_RawValue(LoadEventsRequest *message, int32_t value);
+void SetRequestLoadEvents_LoadMode_RawValue(RequestLoadEvents *message, int32_t value);
 
-#pragma mark - LoadEventsResponse
+#pragma mark - ResponseLoadEvents
 
-typedef GPB_ENUM(LoadEventsResponse_FieldNumber) {
-  LoadEventsResponse_FieldNumber_EventsArray = 1,
-  LoadEventsResponse_FieldNumber_Clock = 2,
-  LoadEventsResponse_FieldNumber_NextAvailable = 3,
+typedef GPB_ENUM(ResponseLoadEvents_FieldNumber) {
+  ResponseLoadEvents_FieldNumber_EventsArray = 1,
+  ResponseLoadEvents_FieldNumber_Clock = 2,
+  ResponseLoadEvents_FieldNumber_NextAvailable = 3,
 };
 
-GPB_FINAL @interface LoadEventsResponse : GPBMessage
+GPB_FINAL @interface ResponseLoadEvents : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Event*> *eventsArray;
 /** The number of items in @c eventsArray without causing the array to be created. */

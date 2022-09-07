@@ -55,37 +55,39 @@ message UpdateMiniApp {
 }
 
 // Request to get list of mini-apps
-message GetAppsRequest {
+message RequestGetApps {
     // return only apps created/modified since given clock
     int64 from_clock = 1;
 }
 
 // List of the mini-app
-message GetAppsResponse {
+message ResponseGetApps {
     repeated MiniApp apps = 1;
     int64 clock = 2;
 }
 
 // Findig mini-app by id
-message FindAppRequest {
+message RequestFindApp {
     string app_id = 1;
 }
 
 // App found by id (or empty)
-message FindAppResponse {
+message ResponseFindApp {
     MiniApp app = 1;
 }
 
 // Issue JWT token for third-party applications
-message IssueAccessTokenRequest {
+message RequestIssueAccessToken {
     UUIDValue app_id = 1;
 }
 
-message AccessTokenResponse {
+message ResponseIssueAccessToken {
     string access_token = 1;
 }
 
-message GetExtensionsResponse {
+message RequestGetExtensions {}
+
+message ResponseGetExtensions {
     repeated ExtensionPoint message_extensions = 1;
     repeated ExtensionPoint chat_extensions = 2;
 }
@@ -124,8 +126,8 @@ message GroupConditions {
 }
 
 service ClientsMiniAppsRegistry {
-    rpc FindApp (FindAppRequest) returns (FindAppResponse);
-    rpc GetApps (GetAppsRequest) returns (GetAppsResponse);
-    rpc GetExtensions (google.protobuf.Empty) returns (GetExtensionsResponse);
-    rpc IssueAccessToken (IssueAccessTokenRequest) returns (AccessTokenResponse);
+    rpc FindApp (RequestFindApp) returns (ResponseFindApp);
+    rpc GetApps (RequestGetApps) returns (ResponseGetApps);
+    rpc GetExtensions (RequestGetExtensions) returns (ResponseGetExtensions);
+    rpc IssueAccessToken (RequestIssueAccessToken) returns (ResponseIssueAccessToken);
 }

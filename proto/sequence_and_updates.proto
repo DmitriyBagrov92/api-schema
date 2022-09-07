@@ -22,13 +22,11 @@ import "groups.proto";
 import "stickers.proto";
 import "presence.proto";
 import "config_sync.proto";
-import "counters.proto";
 import "contacts.proto";
 import "privacy.proto";
 import "peers.proto";
 import "messaging.proto";
 import "users.proto";
-import "spaces.proto";
 import "reactions.proto";
 import "permissions.proto";
 import "events.proto";
@@ -41,7 +39,7 @@ option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
 
 message SeqUpdateBody {
-    reserved 33, 62, 71, 72;
+    reserved 33, 44, 50, 52, 53, 58, 59, 62, 71, 72;
     oneof update {
         UpdateUserAvatarChanged update_user_avatar_changed = 1;
         UpdateUserNameChanged update_user_name_changed = 2;
@@ -85,22 +83,16 @@ message SeqUpdateBody {
         UpdateGroupMemberDiff update_group_member_diff = 41;
         UpdateGroupMembersCountChanged update_group_members_count_changed = 42;
         UpdateGroupMemberPermissionsChanged update_group_member_permissions_changed = 43;
-        UpdateGroupShortnameChanged update_group_shortname_changed = 44;
         UpdateStickerCollectionsChanged update_sticker_collections_changed = 45;
         UpdateStickerPackRemoved update_sticker_pack_removed = 46;
         UpdateStickerPackAdded update_sticker_pack_added = 47;
         UpdateParameterChanged update_parameter_changed = 48;
         UpdateRawUpdate update_raw_update = 49;
-        UpdateCountersChanged update_counters_changed = 50;
         UpdateConfig update_config = 51;
-        UpdateSpaceModified update_space_modified = 52;
-        UpdateSpaceMemberModified update_space_member_modified = 53;
         UpdateSendMessageError update_send_message_error = 54;
         UpdateEditMessageError update_edit_message_error = 55;
         UpdateUser update_user = 56;
         UpdateFeatureFlagChanged update_feature_flag_changed = 57;
-        UpdateThreadCreated update_thread_created = 58;
-        UpdateThreadLifted update_thread_lifted = 59;
         UpdateGroup update_group = 60;
         UpdateGroupMemberInvited update_group_member_invited = 61;
         UpdatePermissionsChange update_permissions_change = 63;

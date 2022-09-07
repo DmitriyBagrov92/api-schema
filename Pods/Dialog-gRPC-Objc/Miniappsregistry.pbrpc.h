@@ -12,14 +12,14 @@
 #import <RxLibrary/GRXWriter.h>
 #endif
 
-@class AccessTokenResponse;
-@class FindAppRequest;
-@class FindAppResponse;
-@class GPBEmpty;
-@class GetAppsRequest;
-@class GetAppsResponse;
-@class GetExtensionsResponse;
-@class IssueAccessTokenRequest;
+@class RequestFindApp;
+@class RequestGetApps;
+@class RequestGetExtensions;
+@class RequestIssueAccessToken;
+@class ResponseFindApp;
+@class ResponseGetApps;
+@class ResponseGetExtensions;
+@class ResponseIssueAccessToken;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Empty.pbobjc.h"
@@ -37,21 +37,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ClientsMiniAppsRegistry2 <NSObject>
 
-#pragma mark FindApp(FindAppRequest) returns (FindAppResponse)
+#pragma mark FindApp(RequestFindApp) returns (ResponseFindApp)
 
-- (GRPCUnaryProtoCall *)findAppWithMessage:(FindAppRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)findAppWithMessage:(RequestFindApp *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark GetApps(GetAppsRequest) returns (GetAppsResponse)
+#pragma mark GetApps(RequestGetApps) returns (ResponseGetApps)
 
-- (GRPCUnaryProtoCall *)getAppsWithMessage:(GetAppsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)getAppsWithMessage:(RequestGetApps *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark GetExtensions(Empty) returns (GetExtensionsResponse)
+#pragma mark GetExtensions(RequestGetExtensions) returns (ResponseGetExtensions)
 
-- (GRPCUnaryProtoCall *)getExtensionsWithMessage:(GPBEmpty *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)getExtensionsWithMessage:(RequestGetExtensions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark IssueAccessToken(IssueAccessTokenRequest) returns (AccessTokenResponse)
+#pragma mark IssueAccessToken(RequestIssueAccessToken) returns (ResponseIssueAccessToken)
 
-- (GRPCUnaryProtoCall *)issueAccessTokenWithMessage:(IssueAccessTokenRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)issueAccessTokenWithMessage:(RequestIssueAccessToken *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 @end
 
@@ -61,32 +61,32 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @protocol ClientsMiniAppsRegistry <NSObject>
 
-#pragma mark FindApp(FindAppRequest) returns (FindAppResponse)
+#pragma mark FindApp(RequestFindApp) returns (ResponseFindApp)
 
-- (void)findAppWithRequest:(FindAppRequest *)request handler:(void(^)(FindAppResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)findAppWithRequest:(RequestFindApp *)request handler:(void(^)(ResponseFindApp *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToFindAppWithRequest:(FindAppRequest *)request handler:(void(^)(FindAppResponse *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark GetApps(GetAppsRequest) returns (GetAppsResponse)
-
-- (void)getAppsWithRequest:(GetAppsRequest *)request handler:(void(^)(GetAppsResponse *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToGetAppsWithRequest:(GetAppsRequest *)request handler:(void(^)(GetAppsResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToFindAppWithRequest:(RequestFindApp *)request handler:(void(^)(ResponseFindApp *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark GetExtensions(Empty) returns (GetExtensionsResponse)
+#pragma mark GetApps(RequestGetApps) returns (ResponseGetApps)
 
-- (void)getExtensionsWithRequest:(GPBEmpty *)request handler:(void(^)(GetExtensionsResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)getAppsWithRequest:(RequestGetApps *)request handler:(void(^)(ResponseGetApps *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToGetExtensionsWithRequest:(GPBEmpty *)request handler:(void(^)(GetExtensionsResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToGetAppsWithRequest:(RequestGetApps *)request handler:(void(^)(ResponseGetApps *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark IssueAccessToken(IssueAccessTokenRequest) returns (AccessTokenResponse)
+#pragma mark GetExtensions(RequestGetExtensions) returns (ResponseGetExtensions)
 
-- (void)issueAccessTokenWithRequest:(IssueAccessTokenRequest *)request handler:(void(^)(AccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)getExtensionsWithRequest:(RequestGetExtensions *)request handler:(void(^)(ResponseGetExtensions *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToIssueAccessTokenWithRequest:(IssueAccessTokenRequest *)request handler:(void(^)(AccessTokenResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToGetExtensionsWithRequest:(RequestGetExtensions *)request handler:(void(^)(ResponseGetExtensions *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark IssueAccessToken(RequestIssueAccessToken) returns (ResponseIssueAccessToken)
+
+- (void)issueAccessTokenWithRequest:(RequestIssueAccessToken *)request handler:(void(^)(ResponseIssueAccessToken *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToIssueAccessTokenWithRequest:(RequestIssueAccessToken *)request handler:(void(^)(ResponseIssueAccessToken *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end

@@ -661,19 +661,19 @@
              responseClass:[GPBEmpty class]];
 }
 
-#pragma mark GetSelf(Empty) returns (ResponseGetSelf)
+#pragma mark GetSelf(RequestGetSelf) returns (ResponseGetSelf)
 
-- (void)getSelfWithRequest:(GPBEmpty *)request handler:(void(^)(ResponseGetSelf *_Nullable response, NSError *_Nullable error))handler{
+- (void)getSelfWithRequest:(RequestGetSelf *)request handler:(void(^)(ResponseGetSelf *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetSelfWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToGetSelfWithRequest:(GPBEmpty *)request handler:(void(^)(ResponseGetSelf *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToGetSelfWithRequest:(RequestGetSelf *)request handler:(void(^)(ResponseGetSelf *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetSelf"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseGetSelf class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-- (GRPCUnaryProtoCall *)getSelfWithMessage:(GPBEmpty *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+- (GRPCUnaryProtoCall *)getSelfWithMessage:(RequestGetSelf *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetSelf"
                    message:message
            responseHandler:handler

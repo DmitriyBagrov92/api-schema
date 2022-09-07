@@ -68,16 +68,16 @@ static GPBFileDescriptor *DraftsRoot_FileDescriptor(void) {
   return descriptor;
 }
 
-#pragma mark - LoadDraftsRequest
+#pragma mark - RequestLoadDrafts
 
-@implementation LoadDraftsRequest
+@implementation RequestLoadDrafts
 
 @dynamic clock;
 
-typedef struct LoadDraftsRequest__storage_ {
+typedef struct RequestLoadDrafts__storage_ {
   uint32_t _has_storage_[1];
   int64_t clock;
-} LoadDraftsRequest__storage_;
+} RequestLoadDrafts__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -88,20 +88,20 @@ typedef struct LoadDraftsRequest__storage_ {
       {
         .name = "clock",
         .dataTypeSpecific.clazz = Nil,
-        .number = LoadDraftsRequest_FieldNumber_Clock,
+        .number = RequestLoadDrafts_FieldNumber_Clock,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(LoadDraftsRequest__storage_, clock),
+        .offset = (uint32_t)offsetof(RequestLoadDrafts__storage_, clock),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[LoadDraftsRequest class]
+        [GPBDescriptor allocDescriptorForClass:[RequestLoadDrafts class]
                                      rootClass:[DraftsRoot class]
                                           file:DraftsRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(LoadDraftsRequest__storage_)
+                                   storageSize:sizeof(RequestLoadDrafts__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -113,18 +113,18 @@ typedef struct LoadDraftsRequest__storage_ {
 
 @end
 
-#pragma mark - LoadDraftsResponse
+#pragma mark - ResponseLoadDrafts
 
-@implementation LoadDraftsResponse
+@implementation ResponseLoadDrafts
 
 @dynamic draftsArray, draftsArray_Count;
 @dynamic clock;
 
-typedef struct LoadDraftsResponse__storage_ {
+typedef struct ResponseLoadDrafts__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *draftsArray;
   int64_t clock;
-} LoadDraftsResponse__storage_;
+} ResponseLoadDrafts__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -135,29 +135,29 @@ typedef struct LoadDraftsResponse__storage_ {
       {
         .name = "draftsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(Draft),
-        .number = LoadDraftsResponse_FieldNumber_DraftsArray,
+        .number = ResponseLoadDrafts_FieldNumber_DraftsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(LoadDraftsResponse__storage_, draftsArray),
+        .offset = (uint32_t)offsetof(ResponseLoadDrafts__storage_, draftsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "clock",
         .dataTypeSpecific.clazz = Nil,
-        .number = LoadDraftsResponse_FieldNumber_Clock,
+        .number = ResponseLoadDrafts_FieldNumber_Clock,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(LoadDraftsResponse__storage_, clock),
+        .offset = (uint32_t)offsetof(ResponseLoadDrafts__storage_, clock),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[LoadDraftsResponse class]
+        [GPBDescriptor allocDescriptorForClass:[ResponseLoadDrafts class]
                                      rootClass:[DraftsRoot class]
                                           file:DraftsRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(LoadDraftsResponse__storage_)
+                                   storageSize:sizeof(ResponseLoadDrafts__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -169,16 +169,16 @@ typedef struct LoadDraftsResponse__storage_ {
 
 @end
 
-#pragma mark - SaveDraftsRequest
+#pragma mark - RequestSaveDrafts
 
-@implementation SaveDraftsRequest
+@implementation RequestSaveDrafts
 
 @dynamic draftsArray, draftsArray_Count;
 
-typedef struct SaveDraftsRequest__storage_ {
+typedef struct RequestSaveDrafts__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *draftsArray;
-} SaveDraftsRequest__storage_;
+} RequestSaveDrafts__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -189,20 +189,20 @@ typedef struct SaveDraftsRequest__storage_ {
       {
         .name = "draftsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(Draft),
-        .number = SaveDraftsRequest_FieldNumber_DraftsArray,
+        .number = RequestSaveDrafts_FieldNumber_DraftsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(SaveDraftsRequest__storage_, draftsArray),
+        .offset = (uint32_t)offsetof(RequestSaveDrafts__storage_, draftsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[SaveDraftsRequest class]
+        [GPBDescriptor allocDescriptorForClass:[RequestSaveDrafts class]
                                      rootClass:[DraftsRoot class]
                                           file:DraftsRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(SaveDraftsRequest__storage_)
+                                   storageSize:sizeof(RequestSaveDrafts__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -214,16 +214,16 @@ typedef struct SaveDraftsRequest__storage_ {
 
 @end
 
-#pragma mark - SaveDraftsResponse
+#pragma mark - ResponseSaveDrafts
 
-@implementation SaveDraftsResponse
+@implementation ResponseSaveDrafts
 
 @dynamic clock;
 
-typedef struct SaveDraftsResponse__storage_ {
+typedef struct ResponseSaveDrafts__storage_ {
   uint32_t _has_storage_[1];
   int64_t clock;
-} SaveDraftsResponse__storage_;
+} ResponseSaveDrafts__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -234,20 +234,20 @@ typedef struct SaveDraftsResponse__storage_ {
       {
         .name = "clock",
         .dataTypeSpecific.clazz = Nil,
-        .number = SaveDraftsResponse_FieldNumber_Clock,
+        .number = ResponseSaveDrafts_FieldNumber_Clock,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(SaveDraftsResponse__storage_, clock),
+        .offset = (uint32_t)offsetof(ResponseSaveDrafts__storage_, clock),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[SaveDraftsResponse class]
+        [GPBDescriptor allocDescriptorForClass:[ResponseSaveDrafts class]
                                      rootClass:[DraftsRoot class]
                                           file:DraftsRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(SaveDraftsResponse__storage_)
+                                   storageSize:sizeof(ResponseSaveDrafts__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");

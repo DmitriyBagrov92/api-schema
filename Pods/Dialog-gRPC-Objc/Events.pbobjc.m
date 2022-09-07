@@ -629,20 +629,20 @@ typedef struct UpdateEvent__storage_ {
 
 @end
 
-#pragma mark - LoadEventsRequest
+#pragma mark - RequestLoadEvents
 
-@implementation LoadEventsRequest
+@implementation RequestLoadEvents
 
 @dynamic fromClock;
 @dynamic loadMode;
 @dynamic limit;
 
-typedef struct LoadEventsRequest__storage_ {
+typedef struct RequestLoadEvents__storage_ {
   uint32_t _has_storage_[1];
   ListLoadMode loadMode;
   int32_t limit;
   int64_t fromClock;
-} LoadEventsRequest__storage_;
+} RequestLoadEvents__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -653,38 +653,38 @@ typedef struct LoadEventsRequest__storage_ {
       {
         .name = "fromClock",
         .dataTypeSpecific.clazz = Nil,
-        .number = LoadEventsRequest_FieldNumber_FromClock,
+        .number = RequestLoadEvents_FieldNumber_FromClock,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(LoadEventsRequest__storage_, fromClock),
+        .offset = (uint32_t)offsetof(RequestLoadEvents__storage_, fromClock),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
       {
         .name = "loadMode",
         .dataTypeSpecific.enumDescFunc = ListLoadMode_EnumDescriptor,
-        .number = LoadEventsRequest_FieldNumber_LoadMode,
+        .number = RequestLoadEvents_FieldNumber_LoadMode,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(LoadEventsRequest__storage_, loadMode),
+        .offset = (uint32_t)offsetof(RequestLoadEvents__storage_, loadMode),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
       },
       {
         .name = "limit",
         .dataTypeSpecific.clazz = Nil,
-        .number = LoadEventsRequest_FieldNumber_Limit,
+        .number = RequestLoadEvents_FieldNumber_Limit,
         .hasIndex = 2,
-        .offset = (uint32_t)offsetof(LoadEventsRequest__storage_, limit),
+        .offset = (uint32_t)offsetof(RequestLoadEvents__storage_, limit),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[LoadEventsRequest class]
+        [GPBDescriptor allocDescriptorForClass:[RequestLoadEvents class]
                                      rootClass:[EventsRoot class]
                                           file:EventsRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(LoadEventsRequest__storage_)
+                                   storageSize:sizeof(RequestLoadEvents__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -696,31 +696,31 @@ typedef struct LoadEventsRequest__storage_ {
 
 @end
 
-int32_t LoadEventsRequest_LoadMode_RawValue(LoadEventsRequest *message) {
-  GPBDescriptor *descriptor = [LoadEventsRequest descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:LoadEventsRequest_FieldNumber_LoadMode];
+int32_t RequestLoadEvents_LoadMode_RawValue(RequestLoadEvents *message) {
+  GPBDescriptor *descriptor = [RequestLoadEvents descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:RequestLoadEvents_FieldNumber_LoadMode];
   return GPBGetMessageRawEnumField(message, field);
 }
 
-void SetLoadEventsRequest_LoadMode_RawValue(LoadEventsRequest *message, int32_t value) {
-  GPBDescriptor *descriptor = [LoadEventsRequest descriptor];
-  GPBFieldDescriptor *field = [descriptor fieldWithNumber:LoadEventsRequest_FieldNumber_LoadMode];
+void SetRequestLoadEvents_LoadMode_RawValue(RequestLoadEvents *message, int32_t value) {
+  GPBDescriptor *descriptor = [RequestLoadEvents descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:RequestLoadEvents_FieldNumber_LoadMode];
   GPBSetMessageRawEnumField(message, field, value);
 }
 
-#pragma mark - LoadEventsResponse
+#pragma mark - ResponseLoadEvents
 
-@implementation LoadEventsResponse
+@implementation ResponseLoadEvents
 
 @dynamic eventsArray, eventsArray_Count;
 @dynamic clock;
 @dynamic nextAvailable;
 
-typedef struct LoadEventsResponse__storage_ {
+typedef struct ResponseLoadEvents__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *eventsArray;
   int64_t clock;
-} LoadEventsResponse__storage_;
+} ResponseLoadEvents__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -731,25 +731,25 @@ typedef struct LoadEventsResponse__storage_ {
       {
         .name = "eventsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(Event),
-        .number = LoadEventsResponse_FieldNumber_EventsArray,
+        .number = ResponseLoadEvents_FieldNumber_EventsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(LoadEventsResponse__storage_, eventsArray),
+        .offset = (uint32_t)offsetof(ResponseLoadEvents__storage_, eventsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "clock",
         .dataTypeSpecific.clazz = Nil,
-        .number = LoadEventsResponse_FieldNumber_Clock,
+        .number = ResponseLoadEvents_FieldNumber_Clock,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(LoadEventsResponse__storage_, clock),
+        .offset = (uint32_t)offsetof(ResponseLoadEvents__storage_, clock),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
       {
         .name = "nextAvailable",
         .dataTypeSpecific.clazz = Nil,
-        .number = LoadEventsResponse_FieldNumber_NextAvailable,
+        .number = ResponseLoadEvents_FieldNumber_NextAvailable,
         .hasIndex = 1,
         .offset = 2,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
@@ -757,12 +757,12 @@ typedef struct LoadEventsResponse__storage_ {
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[LoadEventsResponse class]
+        [GPBDescriptor allocDescriptorForClass:[ResponseLoadEvents class]
                                      rootClass:[EventsRoot class]
                                           file:EventsRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(LoadEventsResponse__storage_)
+                                   storageSize:sizeof(ResponseLoadEvents__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");

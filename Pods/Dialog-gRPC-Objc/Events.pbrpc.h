@@ -12,8 +12,8 @@
 #import <RxLibrary/GRXWriter.h>
 #endif
 
-@class LoadEventsRequest;
-@class LoadEventsResponse;
+@class RequestLoadEvents;
+@class ResponseLoadEvents;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Annotations.pbobjc.h"
@@ -34,9 +34,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol Events2 <NSObject>
 
-#pragma mark LoadEvents(LoadEventsRequest) returns (LoadEventsResponse)
+#pragma mark LoadEvents(RequestLoadEvents) returns (ResponseLoadEvents)
 
-- (GRPCUnaryProtoCall *)loadEventsWithMessage:(LoadEventsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)loadEventsWithMessage:(RequestLoadEvents *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 @end
 
@@ -46,11 +46,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @protocol Events <NSObject>
 
-#pragma mark LoadEvents(LoadEventsRequest) returns (LoadEventsResponse)
+#pragma mark LoadEvents(RequestLoadEvents) returns (ResponseLoadEvents)
 
-- (void)loadEventsWithRequest:(LoadEventsRequest *)request handler:(void(^)(LoadEventsResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)loadEventsWithRequest:(RequestLoadEvents *)request handler:(void(^)(ResponseLoadEvents *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToLoadEventsWithRequest:(LoadEventsRequest *)request handler:(void(^)(LoadEventsResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToLoadEventsWithRequest:(RequestLoadEvents *)request handler:(void(^)(ResponseLoadEvents *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end

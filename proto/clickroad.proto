@@ -65,5 +65,5 @@ message ResponseTrackEvent {
 }
 
 service ClickRoad {
-  rpc TrackEvent(RequestTrackEvent) returns (ResponseTrackEvent) {}
+  rpc TrackEvent (RequestTrackEvent) returns (ResponseTrackEvent) {}
 }

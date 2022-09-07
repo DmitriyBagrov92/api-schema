@@ -394,16 +394,16 @@ BOOL UpdateMiniApp_AppLifecycle_IsValidValue(int32_t value__) {
   }
 }
 
-#pragma mark - GetAppsRequest
+#pragma mark - RequestGetApps
 
-@implementation GetAppsRequest
+@implementation RequestGetApps
 
 @dynamic fromClock;
 
-typedef struct GetAppsRequest__storage_ {
+typedef struct RequestGetApps__storage_ {
   uint32_t _has_storage_[1];
   int64_t fromClock;
-} GetAppsRequest__storage_;
+} RequestGetApps__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -414,20 +414,20 @@ typedef struct GetAppsRequest__storage_ {
       {
         .name = "fromClock",
         .dataTypeSpecific.clazz = Nil,
-        .number = GetAppsRequest_FieldNumber_FromClock,
+        .number = RequestGetApps_FieldNumber_FromClock,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetAppsRequest__storage_, fromClock),
+        .offset = (uint32_t)offsetof(RequestGetApps__storage_, fromClock),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[GetAppsRequest class]
+        [GPBDescriptor allocDescriptorForClass:[RequestGetApps class]
                                      rootClass:[MiniappsregistryRoot class]
                                           file:MiniappsregistryRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(GetAppsRequest__storage_)
+                                   storageSize:sizeof(RequestGetApps__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -439,18 +439,18 @@ typedef struct GetAppsRequest__storage_ {
 
 @end
 
-#pragma mark - GetAppsResponse
+#pragma mark - ResponseGetApps
 
-@implementation GetAppsResponse
+@implementation ResponseGetApps
 
 @dynamic appsArray, appsArray_Count;
 @dynamic clock;
 
-typedef struct GetAppsResponse__storage_ {
+typedef struct ResponseGetApps__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *appsArray;
   int64_t clock;
-} GetAppsResponse__storage_;
+} ResponseGetApps__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -461,29 +461,29 @@ typedef struct GetAppsResponse__storage_ {
       {
         .name = "appsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(MiniApp),
-        .number = GetAppsResponse_FieldNumber_AppsArray,
+        .number = ResponseGetApps_FieldNumber_AppsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(GetAppsResponse__storage_, appsArray),
+        .offset = (uint32_t)offsetof(ResponseGetApps__storage_, appsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "clock",
         .dataTypeSpecific.clazz = Nil,
-        .number = GetAppsResponse_FieldNumber_Clock,
+        .number = ResponseGetApps_FieldNumber_Clock,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GetAppsResponse__storage_, clock),
+        .offset = (uint32_t)offsetof(ResponseGetApps__storage_, clock),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[GetAppsResponse class]
+        [GPBDescriptor allocDescriptorForClass:[ResponseGetApps class]
                                      rootClass:[MiniappsregistryRoot class]
                                           file:MiniappsregistryRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(GetAppsResponse__storage_)
+                                   storageSize:sizeof(ResponseGetApps__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -495,16 +495,16 @@ typedef struct GetAppsResponse__storage_ {
 
 @end
 
-#pragma mark - FindAppRequest
+#pragma mark - RequestFindApp
 
-@implementation FindAppRequest
+@implementation RequestFindApp
 
 @dynamic appId;
 
-typedef struct FindAppRequest__storage_ {
+typedef struct RequestFindApp__storage_ {
   uint32_t _has_storage_[1];
   NSString *appId;
-} FindAppRequest__storage_;
+} RequestFindApp__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -515,20 +515,20 @@ typedef struct FindAppRequest__storage_ {
       {
         .name = "appId",
         .dataTypeSpecific.clazz = Nil,
-        .number = FindAppRequest_FieldNumber_AppId,
+        .number = RequestFindApp_FieldNumber_AppId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(FindAppRequest__storage_, appId),
+        .offset = (uint32_t)offsetof(RequestFindApp__storage_, appId),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[FindAppRequest class]
+        [GPBDescriptor allocDescriptorForClass:[RequestFindApp class]
                                      rootClass:[MiniappsregistryRoot class]
                                           file:MiniappsregistryRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(FindAppRequest__storage_)
+                                   storageSize:sizeof(RequestFindApp__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -540,16 +540,16 @@ typedef struct FindAppRequest__storage_ {
 
 @end
 
-#pragma mark - FindAppResponse
+#pragma mark - ResponseFindApp
 
-@implementation FindAppResponse
+@implementation ResponseFindApp
 
 @dynamic hasApp, app;
 
-typedef struct FindAppResponse__storage_ {
+typedef struct ResponseFindApp__storage_ {
   uint32_t _has_storage_[1];
   MiniApp *app;
-} FindAppResponse__storage_;
+} ResponseFindApp__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -560,20 +560,20 @@ typedef struct FindAppResponse__storage_ {
       {
         .name = "app",
         .dataTypeSpecific.clazz = GPBObjCClass(MiniApp),
-        .number = FindAppResponse_FieldNumber_App,
+        .number = ResponseFindApp_FieldNumber_App,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(FindAppResponse__storage_, app),
+        .offset = (uint32_t)offsetof(ResponseFindApp__storage_, app),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[FindAppResponse class]
+        [GPBDescriptor allocDescriptorForClass:[ResponseFindApp class]
                                      rootClass:[MiniappsregistryRoot class]
                                           file:MiniappsregistryRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(FindAppResponse__storage_)
+                                   storageSize:sizeof(ResponseFindApp__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -585,16 +585,16 @@ typedef struct FindAppResponse__storage_ {
 
 @end
 
-#pragma mark - IssueAccessTokenRequest
+#pragma mark - RequestIssueAccessToken
 
-@implementation IssueAccessTokenRequest
+@implementation RequestIssueAccessToken
 
 @dynamic hasAppId, appId;
 
-typedef struct IssueAccessTokenRequest__storage_ {
+typedef struct RequestIssueAccessToken__storage_ {
   uint32_t _has_storage_[1];
   UUIDValue *appId;
-} IssueAccessTokenRequest__storage_;
+} RequestIssueAccessToken__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -605,20 +605,20 @@ typedef struct IssueAccessTokenRequest__storage_ {
       {
         .name = "appId",
         .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = IssueAccessTokenRequest_FieldNumber_AppId,
+        .number = RequestIssueAccessToken_FieldNumber_AppId,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(IssueAccessTokenRequest__storage_, appId),
+        .offset = (uint32_t)offsetof(RequestIssueAccessToken__storage_, appId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[IssueAccessTokenRequest class]
+        [GPBDescriptor allocDescriptorForClass:[RequestIssueAccessToken class]
                                      rootClass:[MiniappsregistryRoot class]
                                           file:MiniappsregistryRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(IssueAccessTokenRequest__storage_)
+                                   storageSize:sizeof(RequestIssueAccessToken__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -630,16 +630,16 @@ typedef struct IssueAccessTokenRequest__storage_ {
 
 @end
 
-#pragma mark - AccessTokenResponse
+#pragma mark - ResponseIssueAccessToken
 
-@implementation AccessTokenResponse
+@implementation ResponseIssueAccessToken
 
 @dynamic accessToken;
 
-typedef struct AccessTokenResponse__storage_ {
+typedef struct ResponseIssueAccessToken__storage_ {
   uint32_t _has_storage_[1];
   NSString *accessToken;
-} AccessTokenResponse__storage_;
+} ResponseIssueAccessToken__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -650,20 +650,20 @@ typedef struct AccessTokenResponse__storage_ {
       {
         .name = "accessToken",
         .dataTypeSpecific.clazz = Nil,
-        .number = AccessTokenResponse_FieldNumber_AccessToken,
+        .number = ResponseIssueAccessToken_FieldNumber_AccessToken,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(AccessTokenResponse__storage_, accessToken),
+        .offset = (uint32_t)offsetof(ResponseIssueAccessToken__storage_, accessToken),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[AccessTokenResponse class]
+        [GPBDescriptor allocDescriptorForClass:[ResponseIssueAccessToken class]
                                      rootClass:[MiniappsregistryRoot class]
                                           file:MiniappsregistryRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(AccessTokenResponse__storage_)
+                                   storageSize:sizeof(ResponseIssueAccessToken__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -675,18 +675,50 @@ typedef struct AccessTokenResponse__storage_ {
 
 @end
 
-#pragma mark - GetExtensionsResponse
+#pragma mark - RequestGetExtensions
 
-@implementation GetExtensionsResponse
+@implementation RequestGetExtensions
+
+
+typedef struct RequestGetExtensions__storage_ {
+  uint32_t _has_storage_[1];
+} RequestGetExtensions__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestGetExtensions class]
+                                     rootClass:[MiniappsregistryRoot class]
+                                          file:MiniappsregistryRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(RequestGetExtensions__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - ResponseGetExtensions
+
+@implementation ResponseGetExtensions
 
 @dynamic messageExtensionsArray, messageExtensionsArray_Count;
 @dynamic chatExtensionsArray, chatExtensionsArray_Count;
 
-typedef struct GetExtensionsResponse__storage_ {
+typedef struct ResponseGetExtensions__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *messageExtensionsArray;
   NSMutableArray *chatExtensionsArray;
-} GetExtensionsResponse__storage_;
+} ResponseGetExtensions__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -697,29 +729,29 @@ typedef struct GetExtensionsResponse__storage_ {
       {
         .name = "messageExtensionsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(ExtensionPoint),
-        .number = GetExtensionsResponse_FieldNumber_MessageExtensionsArray,
+        .number = ResponseGetExtensions_FieldNumber_MessageExtensionsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(GetExtensionsResponse__storage_, messageExtensionsArray),
+        .offset = (uint32_t)offsetof(ResponseGetExtensions__storage_, messageExtensionsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "chatExtensionsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(ExtensionPoint),
-        .number = GetExtensionsResponse_FieldNumber_ChatExtensionsArray,
+        .number = ResponseGetExtensions_FieldNumber_ChatExtensionsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(GetExtensionsResponse__storage_, chatExtensionsArray),
+        .offset = (uint32_t)offsetof(ResponseGetExtensions__storage_, chatExtensionsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[GetExtensionsResponse class]
+        [GPBDescriptor allocDescriptorForClass:[ResponseGetExtensions class]
                                      rootClass:[MiniappsregistryRoot class]
                                           file:MiniappsregistryRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(GetExtensionsResponse__storage_)
+                                   storageSize:sizeof(ResponseGetExtensions__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");

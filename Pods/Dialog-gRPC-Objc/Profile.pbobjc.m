@@ -207,6 +207,50 @@ typedef struct RequestCheckNickName__storage_ {
 
 @end
 
+#pragma mark - ResponseCheckNickName
+
+@implementation ResponseCheckNickName
+
+@dynamic isFree;
+
+typedef struct ResponseCheckNickName__storage_ {
+  uint32_t _has_storage_[1];
+} ResponseCheckNickName__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "isFree",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ResponseCheckNickName_FieldNumber_IsFree,
+        .hasIndex = 0,
+        .offset = 1,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ResponseCheckNickName class]
+                                     rootClass:[ProfileRoot class]
+                                          file:ProfileRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ResponseCheckNickName__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - RequestEditAbout
 
 @implementation RequestEditAbout

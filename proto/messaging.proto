@@ -267,13 +267,13 @@ message ServiceMessage {
 }
 
 message ServiceEx {
+    reserved 6;
     oneof body {
         ServiceExUserInvited user_invited = 1;
         ServiceExUserJoined user_joined = 2;
         ServiceExUserKicked user_kicked = 3;
         ServiceExUserLeft user_left = 4;
         ServiceExGroupCreated group_created = 5;
-        ServiceExChangedShortname changed_shortname = 6;
         ServiceExChangedTitle changed_title = 7;
         ServiceExChangedTopic changed_topic = 8;
         ServiceExChangedAbout changed_about = 9;
@@ -285,36 +285,32 @@ message ServiceEx {
         ServiceExChatArchived chat_archived = 15;
         ServiceExChatRestored chat_restored = 16;
         ServiceExConferenceStatus conference_status = 17;
+        ServiceExGroupPublicityChanged publicity_changed = 18;
     }
 }
 
 // Service message about adding user to group
 message ServiceExUserInvited {
-    string invited_user_id = 1; /// added user id
+    repeated string invited_user_ids = 1; /// added user ids
 }
 
 // Service message about user join to group
 message ServiceExUserJoined {
-    string joined_user_id = 1;
+    repeated string joined_user_ids = 1;
 }
 
 // Service message about kicking user from group
 message ServiceExUserKicked {
-    string kicked_user_id = 1;
+    repeated string kicked_user_ids = 1;
 }
 
 // Service message about user left group
 message ServiceExUserLeft {
-    string left_user_id = 1;
+    repeated string left_user_ids = 1;
 }
 
 // Service message about group creating
 message ServiceExGroupCreated {
-}
-
-// Service message about group shortname change
-message ServiceExChangedShortname {
-    string shortname = 1 [(dlg).log=log_sensitive]; /// New group shortname
 }
 
 // Service message about group title change
@@ -369,6 +365,12 @@ message ServiceExChatRestored {
 message ServiceExConferenceStatus {
     string conference_id = 1;
     string conference_status = 2;
+}
+
+// Message about group becoming private or public
+message ServiceExGroupPublicityChanged {
+    bool previous_publicity = 1;
+    bool current_publicity = 2;
 }
 
 // File message
@@ -848,6 +850,16 @@ message RequestLoadHistory {
     int32 limit = 4;
 }
 
+// Loading history of chat
+message RequestLoadMessageHistory {
+    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    OutPeer peer = 1 [(dlg).required=true];
+    UUIDValue from_mid = 2 [(dlg).required=true];
+    /// forward, backward or both
+    ListLoadMode load_mode = 3;
+    int32 limit = 4;
+}
+
 message ResponseLoadHistory {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     repeated HistoryMessage history = 1;
@@ -1159,7 +1171,7 @@ message MessageStatus {
 }
 
 // Load message statuses for every user in conversation reads
-message RequestMessageReads {
+message RequestGetMessageReads {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     UUIDValue mid = 1; /// Message id
     int32 limit = 2; // limit of selection
@@ -1167,7 +1179,7 @@ message RequestMessageReads {
 }
 
 // Load message statuses for every user in conversation receives
-message RequestMessageReceives {
+message RequestGetMessageReceives {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     UUIDValue mid = 1; /// Message id
     int32 limit = 2; // limit of selection
@@ -1175,7 +1187,7 @@ message RequestMessageReceives {
 }
 
 // Response with the list of message statuses reads
-message ResponseMessageReads {
+message ResponseGetMessageReads {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     repeated MessageStatus status = 1;
     int64 timestamp_till = 2; // max time of returned entries, or requested time if empty
@@ -1184,7 +1196,7 @@ message ResponseMessageReads {
 }
 
 // Response with the list of message statuses receives
-message ResponseMessageReceives {
+message ResponseGetMessageReceives {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     repeated MessageStatus status = 1;
     int64 timestamp_till = 2; // max time of returned entries, or requested time if empty
@@ -1276,6 +1288,13 @@ service Messaging {
     rpc LoadHistory (RequestLoadHistory) returns (ResponseLoadHistory) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/LoadHistory"
+            body: "*"
+        };
+    }
+    /// Load conversation history
+    rpc LoadMessageHistory (RequestLoadMessageHistory) returns (ResponseLoadHistory) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Messaging/LoadMessageHistory"
             body: "*"
         };
     }
@@ -1378,7 +1397,7 @@ service Messaging {
     }
 
     // Returns read status of the message per user
-    rpc GetMessageReads (RequestMessageReads) returns (ResponseMessageReads) {
+    rpc GetMessageReads (RequestGetMessageReads) returns (ResponseGetMessageReads) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/GetMessageReads"
             body: "*"
@@ -1386,7 +1405,7 @@ service Messaging {
     }
 
     // Returns receive status of the message per user
-    rpc GetMessageReceives (RequestMessageReceives) returns (ResponseMessageReceives) {
+    rpc GetMessageReceives (RequestGetMessageReceives) returns (ResponseGetMessageReceives) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/GetMessageReceives"
             body: "*"

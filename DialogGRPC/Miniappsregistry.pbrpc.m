@@ -57,84 +57,84 @@
 
 #pragma mark - Method Implementations
 
-#pragma mark FindApp(FindAppRequest) returns (FindAppResponse)
+#pragma mark FindApp(RequestFindApp) returns (ResponseFindApp)
 
-- (void)findAppWithRequest:(FindAppRequest *)request handler:(void(^)(FindAppResponse *_Nullable response, NSError *_Nullable error))handler{
+- (void)findAppWithRequest:(RequestFindApp *)request handler:(void(^)(ResponseFindApp *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToFindAppWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToFindAppWithRequest:(FindAppRequest *)request handler:(void(^)(FindAppResponse *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToFindAppWithRequest:(RequestFindApp *)request handler:(void(^)(ResponseFindApp *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"FindApp"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[FindAppResponse class]
+             responseClass:[ResponseFindApp class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-- (GRPCUnaryProtoCall *)findAppWithMessage:(FindAppRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+- (GRPCUnaryProtoCall *)findAppWithMessage:(RequestFindApp *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"FindApp"
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[FindAppResponse class]];
+             responseClass:[ResponseFindApp class]];
 }
 
-#pragma mark GetApps(GetAppsRequest) returns (GetAppsResponse)
+#pragma mark GetApps(RequestGetApps) returns (ResponseGetApps)
 
-- (void)getAppsWithRequest:(GetAppsRequest *)request handler:(void(^)(GetAppsResponse *_Nullable response, NSError *_Nullable error))handler{
+- (void)getAppsWithRequest:(RequestGetApps *)request handler:(void(^)(ResponseGetApps *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetAppsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToGetAppsWithRequest:(GetAppsRequest *)request handler:(void(^)(GetAppsResponse *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToGetAppsWithRequest:(RequestGetApps *)request handler:(void(^)(ResponseGetApps *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetApps"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[GetAppsResponse class]
+             responseClass:[ResponseGetApps class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-- (GRPCUnaryProtoCall *)getAppsWithMessage:(GetAppsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+- (GRPCUnaryProtoCall *)getAppsWithMessage:(RequestGetApps *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetApps"
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[GetAppsResponse class]];
+             responseClass:[ResponseGetApps class]];
 }
 
-#pragma mark GetExtensions(Empty) returns (GetExtensionsResponse)
+#pragma mark GetExtensions(RequestGetExtensions) returns (ResponseGetExtensions)
 
-- (void)getExtensionsWithRequest:(GPBEmpty *)request handler:(void(^)(GetExtensionsResponse *_Nullable response, NSError *_Nullable error))handler{
+- (void)getExtensionsWithRequest:(RequestGetExtensions *)request handler:(void(^)(ResponseGetExtensions *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetExtensionsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToGetExtensionsWithRequest:(GPBEmpty *)request handler:(void(^)(GetExtensionsResponse *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToGetExtensionsWithRequest:(RequestGetExtensions *)request handler:(void(^)(ResponseGetExtensions *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetExtensions"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[GetExtensionsResponse class]
+             responseClass:[ResponseGetExtensions class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-- (GRPCUnaryProtoCall *)getExtensionsWithMessage:(GPBEmpty *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+- (GRPCUnaryProtoCall *)getExtensionsWithMessage:(RequestGetExtensions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetExtensions"
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[GetExtensionsResponse class]];
+             responseClass:[ResponseGetExtensions class]];
 }
 
-#pragma mark IssueAccessToken(IssueAccessTokenRequest) returns (AccessTokenResponse)
+#pragma mark IssueAccessToken(RequestIssueAccessToken) returns (ResponseIssueAccessToken)
 
-- (void)issueAccessTokenWithRequest:(IssueAccessTokenRequest *)request handler:(void(^)(AccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+- (void)issueAccessTokenWithRequest:(RequestIssueAccessToken *)request handler:(void(^)(ResponseIssueAccessToken *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToIssueAccessTokenWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToIssueAccessTokenWithRequest:(IssueAccessTokenRequest *)request handler:(void(^)(AccessTokenResponse *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToIssueAccessTokenWithRequest:(RequestIssueAccessToken *)request handler:(void(^)(ResponseIssueAccessToken *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"IssueAccessToken"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[AccessTokenResponse class]
+             responseClass:[ResponseIssueAccessToken class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-- (GRPCUnaryProtoCall *)issueAccessTokenWithMessage:(IssueAccessTokenRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+- (GRPCUnaryProtoCall *)issueAccessTokenWithMessage:(RequestIssueAccessToken *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"IssueAccessToken"
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[AccessTokenResponse class]];
+             responseClass:[ResponseIssueAccessToken class]];
 }
 
 @end

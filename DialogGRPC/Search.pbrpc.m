@@ -117,14 +117,14 @@
              responseClass:[ResponseResolvePeer class]];
 }
 
-#pragma mark MessageSearch(RequestMessageSearch) returns (ResponseMessageSearchResponse)
+#pragma mark MessageSearch(RequestMessageSearch) returns (ResponseMessageSearch)
 
 /**
  * / Search by messages
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)messageSearchWithRequest:(RequestMessageSearch *)request handler:(void(^)(ResponseMessageSearchResponse *_Nullable response, NSError *_Nullable error))handler{
+- (void)messageSearchWithRequest:(RequestMessageSearch *)request handler:(void(^)(ResponseMessageSearch *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToMessageSearchWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
@@ -133,10 +133,10 @@
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToMessageSearchWithRequest:(RequestMessageSearch *)request handler:(void(^)(ResponseMessageSearchResponse *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToMessageSearchWithRequest:(RequestMessageSearch *)request handler:(void(^)(ResponseMessageSearch *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"MessageSearch"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseMessageSearchResponse class]
+             responseClass:[ResponseMessageSearch class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
@@ -147,19 +147,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseMessageSearchResponse class]];
+             responseClass:[ResponseMessageSearch class]];
 }
 
-#pragma mark MessageSearchMore(RequestMessageSearchMore) returns (ResponseMessageSearchResponse)
+#pragma mark MessageSearchMore(RequestMessageSearchMore) returns (ResponseMessageSearch)
 
-- (void)messageSearchMoreWithRequest:(RequestMessageSearchMore *)request handler:(void(^)(ResponseMessageSearchResponse *_Nullable response, NSError *_Nullable error))handler{
+- (void)messageSearchMoreWithRequest:(RequestMessageSearchMore *)request handler:(void(^)(ResponseMessageSearch *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToMessageSearchMoreWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToMessageSearchMoreWithRequest:(RequestMessageSearchMore *)request handler:(void(^)(ResponseMessageSearchResponse *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToMessageSearchMoreWithRequest:(RequestMessageSearchMore *)request handler:(void(^)(ResponseMessageSearch *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"MessageSearchMore"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseMessageSearchResponse class]
+             responseClass:[ResponseMessageSearch class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)messageSearchMoreWithMessage:(RequestMessageSearchMore *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -167,17 +167,17 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseMessageSearchResponse class]];
+             responseClass:[ResponseMessageSearch class]];
 }
 
-#pragma mark SimpleSearch(RequestSimpleSearch) returns (ResponseMessageSearchResponse)
+#pragma mark SimpleSearch(RequestSimpleSearch) returns (ResponseMessageSearch)
 
 /**
  * / Custom search by conditions
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)simpleSearchWithRequest:(RequestSimpleSearch *)request handler:(void(^)(ResponseMessageSearchResponse *_Nullable response, NSError *_Nullable error))handler{
+- (void)simpleSearchWithRequest:(RequestSimpleSearch *)request handler:(void(^)(ResponseMessageSearch *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToSimpleSearchWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
@@ -186,10 +186,10 @@
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToSimpleSearchWithRequest:(RequestSimpleSearch *)request handler:(void(^)(ResponseMessageSearchResponse *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToSimpleSearchWithRequest:(RequestSimpleSearch *)request handler:(void(^)(ResponseMessageSearch *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"SimpleSearch"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseMessageSearchResponse class]
+             responseClass:[ResponseMessageSearch class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
@@ -200,19 +200,19 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseMessageSearchResponse class]];
+             responseClass:[ResponseMessageSearch class]];
 }
 
-#pragma mark SimpleSearchMore(RequestSimpleSearchMore) returns (ResponseMessageSearchResponse)
+#pragma mark SimpleSearchMore(RequestSimpleSearchMore) returns (ResponseMessageSearch)
 
-- (void)simpleSearchMoreWithRequest:(RequestSimpleSearchMore *)request handler:(void(^)(ResponseMessageSearchResponse *_Nullable response, NSError *_Nullable error))handler{
+- (void)simpleSearchMoreWithRequest:(RequestSimpleSearchMore *)request handler:(void(^)(ResponseMessageSearch *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToSimpleSearchMoreWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToSimpleSearchMoreWithRequest:(RequestSimpleSearchMore *)request handler:(void(^)(ResponseMessageSearchResponse *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToSimpleSearchMoreWithRequest:(RequestSimpleSearchMore *)request handler:(void(^)(ResponseMessageSearch *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"SimpleSearchMore"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseMessageSearchResponse class]
+             responseClass:[ResponseMessageSearch class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)simpleSearchMoreWithMessage:(RequestSimpleSearchMore *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -220,17 +220,17 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseMessageSearchResponse class]];
+             responseClass:[ResponseMessageSearch class]];
 }
 
-#pragma mark AutocompleteSuggestions(RequestFieldAutocomplete) returns (ResponseFieldAutocomplete)
+#pragma mark AutocompleteSuggestions(RequestAutocompleteSuggestions) returns (ResponseAutocompleteSuggestions)
 
 /**
  * / Search for autocomplete suggestions among custom user profile
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)autocompleteSuggestionsWithRequest:(RequestFieldAutocomplete *)request handler:(void(^)(ResponseFieldAutocomplete *_Nullable response, NSError *_Nullable error))handler{
+- (void)autocompleteSuggestionsWithRequest:(RequestAutocompleteSuggestions *)request handler:(void(^)(ResponseAutocompleteSuggestions *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToAutocompleteSuggestionsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
@@ -239,21 +239,21 @@
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToAutocompleteSuggestionsWithRequest:(RequestFieldAutocomplete *)request handler:(void(^)(ResponseFieldAutocomplete *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToAutocompleteSuggestionsWithRequest:(RequestAutocompleteSuggestions *)request handler:(void(^)(ResponseAutocompleteSuggestions *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"AutocompleteSuggestions"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseFieldAutocomplete class]
+             responseClass:[ResponseAutocompleteSuggestions class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
  * / Search for autocomplete suggestions among custom user profile
  */
-- (GRPCUnaryProtoCall *)autocompleteSuggestionsWithMessage:(RequestFieldAutocomplete *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+- (GRPCUnaryProtoCall *)autocompleteSuggestionsWithMessage:(RequestAutocompleteSuggestions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"AutocompleteSuggestions"
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseFieldAutocomplete class]];
+             responseClass:[ResponseAutocompleteSuggestions class]];
 }
 
 #pragma mark LoadUserSearchByPredicatesResults(RequestLoadUserSearchByPredicatesResults) returns (ResponseLoadUserSearchByPredicatesResults)

@@ -97,6 +97,18 @@ GPB_FINAL @interface RequestCheckNickName : GPBMessage
 
 @end
 
+#pragma mark - ResponseCheckNickName
+
+typedef GPB_ENUM(ResponseCheckNickName_FieldNumber) {
+  ResponseCheckNickName_FieldNumber_IsFree = 1,
+};
+
+GPB_FINAL @interface ResponseCheckNickName : GPBMessage
+
+@property(nonatomic, readwrite) BOOL isFree;
+
+@end
+
 #pragma mark - RequestEditAbout
 
 typedef GPB_ENUM(RequestEditAbout_FieldNumber) {

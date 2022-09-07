@@ -863,16 +863,16 @@ typedef struct RequestGetUserLastPresence__storage_ {
 
 @end
 
-#pragma mark - ResponseUserLastPresence
+#pragma mark - ResponseGetUserLastPresence
 
-@implementation ResponseUserLastPresence
+@implementation ResponseGetUserLastPresence
 
 @dynamic hasLastOnlineAt, lastOnlineAt;
 
-typedef struct ResponseUserLastPresence__storage_ {
+typedef struct ResponseGetUserLastPresence__storage_ {
   uint32_t _has_storage_[1];
   GPBTimestamp *lastOnlineAt;
-} ResponseUserLastPresence__storage_;
+} ResponseGetUserLastPresence__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -883,20 +883,20 @@ typedef struct ResponseUserLastPresence__storage_ {
       {
         .name = "lastOnlineAt",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBTimestamp),
-        .number = ResponseUserLastPresence_FieldNumber_LastOnlineAt,
+        .number = ResponseGetUserLastPresence_FieldNumber_LastOnlineAt,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(ResponseUserLastPresence__storage_, lastOnlineAt),
+        .offset = (uint32_t)offsetof(ResponseGetUserLastPresence__storage_, lastOnlineAt),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[ResponseUserLastPresence class]
+        [GPBDescriptor allocDescriptorForClass:[ResponseGetUserLastPresence class]
                                      rootClass:[PresenceRoot class]
                                           file:PresenceRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(ResponseUserLastPresence__storage_)
+                                   storageSize:sizeof(ResponseGetUserLastPresence__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");

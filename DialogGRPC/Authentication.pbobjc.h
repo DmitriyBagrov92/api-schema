@@ -846,6 +846,12 @@ GPB_FINAL @interface RequestChangePassword : GPBMessage
 
 @end
 
+#pragma mark - RequestGetSelf
+
+GPB_FINAL @interface RequestGetSelf : GPBMessage
+
+@end
+
 #pragma mark - ResponseGetSelf
 
 typedef GPB_ENUM(ResponseGetSelf_FieldNumber) {

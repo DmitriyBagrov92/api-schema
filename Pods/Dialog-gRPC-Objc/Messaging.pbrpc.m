@@ -330,6 +330,39 @@
              responseClass:[ResponseLoadHistory class]];
 }
 
+#pragma mark LoadMessageHistory(RequestLoadMessageHistory) returns (ResponseLoadHistory)
+
+/**
+ * / Load conversation history
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)loadMessageHistoryWithRequest:(RequestLoadMessageHistory *)request handler:(void(^)(ResponseLoadHistory *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToLoadMessageHistoryWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * / Load conversation history
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToLoadMessageHistoryWithRequest:(RequestLoadMessageHistory *)request handler:(void(^)(ResponseLoadHistory *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"LoadMessageHistory"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[ResponseLoadHistory class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * / Load conversation history
+ */
+- (GRPCUnaryProtoCall *)loadMessageHistoryWithMessage:(RequestLoadMessageHistory *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"LoadMessageHistory"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[ResponseLoadHistory class]];
+}
+
 #pragma mark LoadHistoryLight(RequestLoadHistoryLight) returns (ResponseLoadHistoryLight)
 
 /**
@@ -708,14 +741,14 @@
              responseClass:[ResponseGetUpdatedMessages class]];
 }
 
-#pragma mark GetMessageReads(RequestMessageReads) returns (ResponseMessageReads)
+#pragma mark GetMessageReads(RequestGetMessageReads) returns (ResponseGetMessageReads)
 
 /**
  * Returns read status of the message per user
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)getMessageReadsWithRequest:(RequestMessageReads *)request handler:(void(^)(ResponseMessageReads *_Nullable response, NSError *_Nullable error))handler{
+- (void)getMessageReadsWithRequest:(RequestGetMessageReads *)request handler:(void(^)(ResponseGetMessageReads *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetMessageReadsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
@@ -724,31 +757,31 @@
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToGetMessageReadsWithRequest:(RequestMessageReads *)request handler:(void(^)(ResponseMessageReads *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToGetMessageReadsWithRequest:(RequestGetMessageReads *)request handler:(void(^)(ResponseGetMessageReads *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetMessageReads"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseMessageReads class]
+             responseClass:[ResponseGetMessageReads class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
  * Returns read status of the message per user
  */
-- (GRPCUnaryProtoCall *)getMessageReadsWithMessage:(RequestMessageReads *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+- (GRPCUnaryProtoCall *)getMessageReadsWithMessage:(RequestGetMessageReads *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetMessageReads"
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseMessageReads class]];
+             responseClass:[ResponseGetMessageReads class]];
 }
 
-#pragma mark GetMessageReceives(RequestMessageReceives) returns (ResponseMessageReceives)
+#pragma mark GetMessageReceives(RequestGetMessageReceives) returns (ResponseGetMessageReceives)
 
 /**
  * Returns receive status of the message per user
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)getMessageReceivesWithRequest:(RequestMessageReceives *)request handler:(void(^)(ResponseMessageReceives *_Nullable response, NSError *_Nullable error))handler{
+- (void)getMessageReceivesWithRequest:(RequestGetMessageReceives *)request handler:(void(^)(ResponseGetMessageReceives *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetMessageReceivesWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
@@ -757,21 +790,21 @@
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToGetMessageReceivesWithRequest:(RequestMessageReceives *)request handler:(void(^)(ResponseMessageReceives *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToGetMessageReceivesWithRequest:(RequestGetMessageReceives *)request handler:(void(^)(ResponseGetMessageReceives *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetMessageReceives"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseMessageReceives class]
+             responseClass:[ResponseGetMessageReceives class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
  * Returns receive status of the message per user
  */
-- (GRPCUnaryProtoCall *)getMessageReceivesWithMessage:(RequestMessageReceives *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+- (GRPCUnaryProtoCall *)getMessageReceivesWithMessage:(RequestGetMessageReceives *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetMessageReceives"
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseMessageReceives class]];
+             responseClass:[ResponseGetMessageReceives class]];
 }
 
 #pragma mark ReadDialogLater(RequestReadDialogLater) returns (Empty)

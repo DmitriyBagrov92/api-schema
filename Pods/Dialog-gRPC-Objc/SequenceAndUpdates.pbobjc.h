@@ -52,7 +52,6 @@ CF_EXTERN_C_BEGIN
 @class UpdateContactsAddTaskSuspended;
 @class UpdateContactsAdded;
 @class UpdateContactsRemoved;
-@class UpdateCountersChanged;
 @class UpdateDeleteChatError;
 @class UpdateDeleteMessageError;
 @class UpdateDialogFavouriteChanged;
@@ -73,7 +72,6 @@ CF_EXTERN_C_BEGIN
 @class UpdateGroupMembersUpdated;
 @class UpdateGroupOnline;
 @class UpdateGroupOwnerChanged;
-@class UpdateGroupShortnameChanged;
 @class UpdateGroupTitleChanged;
 @class UpdateGroupTyping;
 @class UpdateInteractiveMediaEvent;
@@ -95,14 +93,10 @@ CF_EXTERN_C_BEGIN
 @class UpdateReadDialogLaterError;
 @class UpdateSendMessageError;
 @class UpdateSettingsChanged;
-@class UpdateSpaceMemberModified;
-@class UpdateSpaceModified;
 @class UpdateStickerCollectionsChanged;
 @class UpdateStickerPackAdded;
 @class UpdateStickerPackRemoved;
 @class UpdateSuggests;
-@class UpdateThreadCreated;
-@class UpdateThreadLifted;
 @class UpdateTyping;
 @class UpdateTypingStop;
 @class UpdateUnfavouriteDialogError;
@@ -197,22 +191,16 @@ typedef GPB_ENUM(SeqUpdateBody_FieldNumber) {
   SeqUpdateBody_FieldNumber_UpdateGroupMemberDiff = 41,
   SeqUpdateBody_FieldNumber_UpdateGroupMembersCountChanged = 42,
   SeqUpdateBody_FieldNumber_UpdateGroupMemberPermissionsChanged = 43,
-  SeqUpdateBody_FieldNumber_UpdateGroupShortnameChanged = 44,
   SeqUpdateBody_FieldNumber_UpdateStickerCollectionsChanged = 45,
   SeqUpdateBody_FieldNumber_UpdateStickerPackRemoved = 46,
   SeqUpdateBody_FieldNumber_UpdateStickerPackAdded = 47,
   SeqUpdateBody_FieldNumber_UpdateParameterChanged = 48,
   SeqUpdateBody_FieldNumber_UpdateRawUpdate = 49,
-  SeqUpdateBody_FieldNumber_UpdateCountersChanged = 50,
   SeqUpdateBody_FieldNumber_UpdateConfig = 51,
-  SeqUpdateBody_FieldNumber_UpdateSpaceModified = 52,
-  SeqUpdateBody_FieldNumber_UpdateSpaceMemberModified = 53,
   SeqUpdateBody_FieldNumber_UpdateSendMessageError = 54,
   SeqUpdateBody_FieldNumber_UpdateEditMessageError = 55,
   SeqUpdateBody_FieldNumber_UpdateUser = 56,
   SeqUpdateBody_FieldNumber_UpdateFeatureFlagChanged = 57,
-  SeqUpdateBody_FieldNumber_UpdateThreadCreated = 58,
-  SeqUpdateBody_FieldNumber_UpdateThreadLifted = 59,
   SeqUpdateBody_FieldNumber_UpdateGroup = 60,
   SeqUpdateBody_FieldNumber_UpdateGroupMemberInvited = 61,
   SeqUpdateBody_FieldNumber_UpdatePermissionsChange = 63,
@@ -274,22 +262,16 @@ typedef GPB_ENUM(SeqUpdateBody_Update_OneOfCase) {
   SeqUpdateBody_Update_OneOfCase_UpdateGroupMemberDiff = 41,
   SeqUpdateBody_Update_OneOfCase_UpdateGroupMembersCountChanged = 42,
   SeqUpdateBody_Update_OneOfCase_UpdateGroupMemberPermissionsChanged = 43,
-  SeqUpdateBody_Update_OneOfCase_UpdateGroupShortnameChanged = 44,
   SeqUpdateBody_Update_OneOfCase_UpdateStickerCollectionsChanged = 45,
   SeqUpdateBody_Update_OneOfCase_UpdateStickerPackRemoved = 46,
   SeqUpdateBody_Update_OneOfCase_UpdateStickerPackAdded = 47,
   SeqUpdateBody_Update_OneOfCase_UpdateParameterChanged = 48,
   SeqUpdateBody_Update_OneOfCase_UpdateRawUpdate = 49,
-  SeqUpdateBody_Update_OneOfCase_UpdateCountersChanged = 50,
   SeqUpdateBody_Update_OneOfCase_UpdateConfig = 51,
-  SeqUpdateBody_Update_OneOfCase_UpdateSpaceModified = 52,
-  SeqUpdateBody_Update_OneOfCase_UpdateSpaceMemberModified = 53,
   SeqUpdateBody_Update_OneOfCase_UpdateSendMessageError = 54,
   SeqUpdateBody_Update_OneOfCase_UpdateEditMessageError = 55,
   SeqUpdateBody_Update_OneOfCase_UpdateUser = 56,
   SeqUpdateBody_Update_OneOfCase_UpdateFeatureFlagChanged = 57,
-  SeqUpdateBody_Update_OneOfCase_UpdateThreadCreated = 58,
-  SeqUpdateBody_Update_OneOfCase_UpdateThreadLifted = 59,
   SeqUpdateBody_Update_OneOfCase_UpdateGroup = 60,
   SeqUpdateBody_Update_OneOfCase_UpdateGroupMemberInvited = 61,
   SeqUpdateBody_Update_OneOfCase_UpdatePermissionsChange = 63,
@@ -395,8 +377,6 @@ GPB_FINAL @interface SeqUpdateBody : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateGroupMemberPermissionsChanged *updateGroupMemberPermissionsChanged;
 
-@property(nonatomic, readwrite, strong, null_resettable) UpdateGroupShortnameChanged *updateGroupShortnameChanged;
-
 @property(nonatomic, readwrite, strong, null_resettable) UpdateStickerCollectionsChanged *updateStickerCollectionsChanged;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateStickerPackRemoved *updateStickerPackRemoved;
@@ -407,13 +387,7 @@ GPB_FINAL @interface SeqUpdateBody : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateRawUpdate *updateRawUpdate;
 
-@property(nonatomic, readwrite, strong, null_resettable) UpdateCountersChanged *updateCountersChanged;
-
 @property(nonatomic, readwrite, strong, null_resettable) UpdateConfig *updateConfig;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateSpaceModified *updateSpaceModified;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateSpaceMemberModified *updateSpaceMemberModified;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateSendMessageError *updateSendMessageError;
 
@@ -422,10 +396,6 @@ GPB_FINAL @interface SeqUpdateBody : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UpdateUser *updateUser;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateFeatureFlagChanged *updateFeatureFlagChanged;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateThreadCreated *updateThreadCreated;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateThreadLifted *updateThreadLifted;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateGroup *updateGroup;
 

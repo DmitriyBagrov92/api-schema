@@ -893,20 +893,20 @@ GPB_FINAL @interface MessageSearchItem : GPBMessage
 
 @end
 
-#pragma mark - ResponseMessageSearchResponse
+#pragma mark - ResponseMessageSearch
 
-typedef GPB_ENUM(ResponseMessageSearchResponse_FieldNumber) {
-  ResponseMessageSearchResponse_FieldNumber_SearchResultsArray = 1,
-  ResponseMessageSearchResponse_FieldNumber_LoadMoreState = 2,
-  ResponseMessageSearchResponse_FieldNumber_UserOutPeersArray = 3,
-  ResponseMessageSearchResponse_FieldNumber_GroupOutPeersArray = 4,
-  ResponseMessageSearchResponse_FieldNumber_TotalCount = 5,
+typedef GPB_ENUM(ResponseMessageSearch_FieldNumber) {
+  ResponseMessageSearch_FieldNumber_SearchResultsArray = 1,
+  ResponseMessageSearch_FieldNumber_LoadMoreState = 2,
+  ResponseMessageSearch_FieldNumber_UserOutPeersArray = 3,
+  ResponseMessageSearch_FieldNumber_GroupOutPeersArray = 4,
+  ResponseMessageSearch_FieldNumber_TotalCount = 5,
 };
 
 /**
  * Search Result with related peers and entities
  **/
-GPB_FINAL @interface ResponseMessageSearchResponse : GPBMessage
+GPB_FINAL @interface ResponseMessageSearch : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MessageSearchItem*> *searchResultsArray;
 /** The number of items in @c searchResultsArray without causing the array to be created. */
@@ -988,14 +988,14 @@ GPB_FINAL @interface RequestSimpleSearchMore : GPBMessage
 
 @end
 
-#pragma mark - RequestFieldAutocomplete
+#pragma mark - RequestAutocompleteSuggestions
 
-typedef GPB_ENUM(RequestFieldAutocomplete_FieldNumber) {
-  RequestFieldAutocomplete_FieldNumber_FieldName = 1,
-  RequestFieldAutocomplete_FieldNumber_FieldValue = 2,
+typedef GPB_ENUM(RequestAutocompleteSuggestions_FieldNumber) {
+  RequestAutocompleteSuggestions_FieldNumber_FieldName = 1,
+  RequestAutocompleteSuggestions_FieldNumber_FieldValue = 2,
 };
 
-GPB_FINAL @interface RequestFieldAutocomplete : GPBMessage
+GPB_FINAL @interface RequestAutocompleteSuggestions : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *fieldName;
 
@@ -1003,14 +1003,14 @@ GPB_FINAL @interface RequestFieldAutocomplete : GPBMessage
 
 @end
 
-#pragma mark - ResponseFieldAutocomplete
+#pragma mark - ResponseAutocompleteSuggestions
 
-typedef GPB_ENUM(ResponseFieldAutocomplete_FieldNumber) {
-  ResponseFieldAutocomplete_FieldNumber_FieldName = 1,
-  ResponseFieldAutocomplete_FieldNumber_FieldValueArray = 2,
+typedef GPB_ENUM(ResponseAutocompleteSuggestions_FieldNumber) {
+  ResponseAutocompleteSuggestions_FieldNumber_FieldName = 1,
+  ResponseAutocompleteSuggestions_FieldNumber_FieldValueArray = 2,
 };
 
-GPB_FINAL @interface ResponseFieldAutocomplete : GPBMessage
+GPB_FINAL @interface ResponseAutocompleteSuggestions : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *fieldName;
 

@@ -9,24 +9,24 @@ option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
 
 service DraftsService {
-  rpc LoadDrafts(LoadDraftsRequest) returns (LoadDraftsResponse);
-  rpc SaveDrafts(SaveDraftsRequest) returns (SaveDraftsResponse);
+  rpc LoadDrafts(RequestLoadDrafts) returns (ResponseLoadDrafts);
+  rpc SaveDrafts(RequestSaveDrafts) returns (ResponseSaveDrafts);
 }
 
-message LoadDraftsRequest {
+message RequestLoadDrafts {
   int64 clock = 1;
 }
 
-message LoadDraftsResponse {
+message ResponseLoadDrafts {
   repeated Draft drafts = 1;
   int64 clock = 2;
 }
 
-message SaveDraftsRequest {
+message RequestSaveDrafts {
   repeated Draft drafts = 1;
 }
 
-message SaveDraftsResponse {
+message ResponseSaveDrafts {
   int64 clock = 1;
 }
 

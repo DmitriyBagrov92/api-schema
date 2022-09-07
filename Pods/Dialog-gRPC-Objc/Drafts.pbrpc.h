@@ -12,10 +12,10 @@
 #import <RxLibrary/GRXWriter.h>
 #endif
 
-@class LoadDraftsRequest;
-@class LoadDraftsResponse;
-@class SaveDraftsRequest;
-@class SaveDraftsResponse;
+@class RequestLoadDrafts;
+@class RequestSaveDrafts;
+@class ResponseLoadDrafts;
+@class ResponseSaveDrafts;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Messaging.pbobjc.h"
@@ -33,13 +33,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol DraftsService2 <NSObject>
 
-#pragma mark LoadDrafts(LoadDraftsRequest) returns (LoadDraftsResponse)
+#pragma mark LoadDrafts(RequestLoadDrafts) returns (ResponseLoadDrafts)
 
-- (GRPCUnaryProtoCall *)loadDraftsWithMessage:(LoadDraftsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)loadDraftsWithMessage:(RequestLoadDrafts *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark SaveDrafts(SaveDraftsRequest) returns (SaveDraftsResponse)
+#pragma mark SaveDrafts(RequestSaveDrafts) returns (ResponseSaveDrafts)
 
-- (GRPCUnaryProtoCall *)saveDraftsWithMessage:(SaveDraftsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)saveDraftsWithMessage:(RequestSaveDrafts *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 @end
 
@@ -49,18 +49,18 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @protocol DraftsService <NSObject>
 
-#pragma mark LoadDrafts(LoadDraftsRequest) returns (LoadDraftsResponse)
+#pragma mark LoadDrafts(RequestLoadDrafts) returns (ResponseLoadDrafts)
 
-- (void)loadDraftsWithRequest:(LoadDraftsRequest *)request handler:(void(^)(LoadDraftsResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)loadDraftsWithRequest:(RequestLoadDrafts *)request handler:(void(^)(ResponseLoadDrafts *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToLoadDraftsWithRequest:(LoadDraftsRequest *)request handler:(void(^)(LoadDraftsResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToLoadDraftsWithRequest:(RequestLoadDrafts *)request handler:(void(^)(ResponseLoadDrafts *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark SaveDrafts(SaveDraftsRequest) returns (SaveDraftsResponse)
+#pragma mark SaveDrafts(RequestSaveDrafts) returns (ResponseSaveDrafts)
 
-- (void)saveDraftsWithRequest:(SaveDraftsRequest *)request handler:(void(^)(SaveDraftsResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)saveDraftsWithRequest:(RequestSaveDrafts *)request handler:(void(^)(ResponseSaveDrafts *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToSaveDraftsWithRequest:(SaveDraftsRequest *)request handler:(void(^)(SaveDraftsResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToSaveDraftsWithRequest:(RequestSaveDrafts *)request handler:(void(^)(ResponseSaveDrafts *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end

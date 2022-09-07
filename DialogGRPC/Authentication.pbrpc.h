@@ -19,6 +19,7 @@
 @class RequestGetAuthSessions;
 @class RequestGetIdToken;
 @class RequestGetOAuth2Params;
+@class RequestGetSelf;
 @class RequestResendCode;
 @class RequestSendCodeByPhoneCall;
 @class RequestSignOut;
@@ -191,9 +192,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (GRPCUnaryProtoCall *)changePasswordWithMessage:(RequestChangePassword *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark GetSelf(Empty) returns (ResponseGetSelf)
+#pragma mark GetSelf(RequestGetSelf) returns (ResponseGetSelf)
 
-- (GRPCUnaryProtoCall *)getSelfWithMessage:(GPBEmpty *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)getSelfWithMessage:(RequestGetSelf *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 @end
 
@@ -495,11 +496,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToChangePasswordWithRequest:(RequestChangePassword *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark GetSelf(Empty) returns (ResponseGetSelf)
+#pragma mark GetSelf(RequestGetSelf) returns (ResponseGetSelf)
 
-- (void)getSelfWithRequest:(GPBEmpty *)request handler:(void(^)(ResponseGetSelf *_Nullable response, NSError *_Nullable error))handler;
+- (void)getSelfWithRequest:(RequestGetSelf *)request handler:(void(^)(ResponseGetSelf *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToGetSelfWithRequest:(GPBEmpty *)request handler:(void(^)(ResponseGetSelf *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToGetSelfWithRequest:(RequestGetSelf *)request handler:(void(^)(ResponseGetSelf *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end

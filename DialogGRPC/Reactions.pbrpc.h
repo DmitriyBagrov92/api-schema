@@ -13,12 +13,12 @@
 #endif
 
 @class GPBEmpty;
-@class GetMessageReactionsRequest;
-@class GetMessageReactionsResponse;
-@class GetReactionsRequest;
-@class GetReactionsResponse;
-@class RequestRemoveMessageReaction;
-@class RequestSetMessageReaction;
+@class RequestGetMessageReactions;
+@class RequestGetReactions;
+@class RequestMessageRemoveReaction;
+@class RequestMessageSetReaction;
+@class ResponseGetMessageReactions;
+@class ResponseGetReactions;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Empty.pbobjc.h"
@@ -38,21 +38,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol Reactions2 <NSObject>
 
-#pragma mark GetReactions(GetReactionsRequest) returns (GetReactionsResponse)
+#pragma mark GetReactions(RequestGetReactions) returns (ResponseGetReactions)
 
-- (GRPCUnaryProtoCall *)getReactionsWithMessage:(GetReactionsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)getReactionsWithMessage:(RequestGetReactions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark GetMessageReactions(GetMessageReactionsRequest) returns (GetMessageReactionsResponse)
+#pragma mark GetMessageReactions(RequestGetMessageReactions) returns (ResponseGetMessageReactions)
 
-- (GRPCUnaryProtoCall *)getMessageReactionsWithMessage:(GetMessageReactionsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)getMessageReactionsWithMessage:(RequestGetMessageReactions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark MessageSetReaction(RequestSetMessageReaction) returns (Empty)
+#pragma mark MessageSetReaction(RequestMessageSetReaction) returns (Empty)
 
-- (GRPCUnaryProtoCall *)messageSetReactionWithMessage:(RequestSetMessageReaction *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)messageSetReactionWithMessage:(RequestMessageSetReaction *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark MessageRemoveReaction(RequestRemoveMessageReaction) returns (Empty)
+#pragma mark MessageRemoveReaction(RequestMessageRemoveReaction) returns (Empty)
 
-- (GRPCUnaryProtoCall *)messageRemoveReactionWithMessage:(RequestRemoveMessageReaction *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)messageRemoveReactionWithMessage:(RequestMessageRemoveReaction *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 @end
 
@@ -62,32 +62,32 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @protocol Reactions <NSObject>
 
-#pragma mark GetReactions(GetReactionsRequest) returns (GetReactionsResponse)
+#pragma mark GetReactions(RequestGetReactions) returns (ResponseGetReactions)
 
-- (void)getReactionsWithRequest:(GetReactionsRequest *)request handler:(void(^)(GetReactionsResponse *_Nullable response, NSError *_Nullable error))handler;
+- (void)getReactionsWithRequest:(RequestGetReactions *)request handler:(void(^)(ResponseGetReactions *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToGetReactionsWithRequest:(GetReactionsRequest *)request handler:(void(^)(GetReactionsResponse *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark GetMessageReactions(GetMessageReactionsRequest) returns (GetMessageReactionsResponse)
-
-- (void)getMessageReactionsWithRequest:(GetMessageReactionsRequest *)request handler:(void(^)(GetMessageReactionsResponse *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToGetMessageReactionsWithRequest:(GetMessageReactionsRequest *)request handler:(void(^)(GetMessageReactionsResponse *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToGetReactionsWithRequest:(RequestGetReactions *)request handler:(void(^)(ResponseGetReactions *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark MessageSetReaction(RequestSetMessageReaction) returns (Empty)
+#pragma mark GetMessageReactions(RequestGetMessageReactions) returns (ResponseGetMessageReactions)
 
-- (void)messageSetReactionWithRequest:(RequestSetMessageReaction *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+- (void)getMessageReactionsWithRequest:(RequestGetMessageReactions *)request handler:(void(^)(ResponseGetMessageReactions *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToMessageSetReactionWithRequest:(RequestSetMessageReaction *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToGetMessageReactionsWithRequest:(RequestGetMessageReactions *)request handler:(void(^)(ResponseGetMessageReactions *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark MessageRemoveReaction(RequestRemoveMessageReaction) returns (Empty)
+#pragma mark MessageSetReaction(RequestMessageSetReaction) returns (Empty)
 
-- (void)messageRemoveReactionWithRequest:(RequestRemoveMessageReaction *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+- (void)messageSetReactionWithRequest:(RequestMessageSetReaction *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToMessageRemoveReactionWithRequest:(RequestRemoveMessageReaction *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToMessageSetReactionWithRequest:(RequestMessageSetReaction *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark MessageRemoveReaction(RequestMessageRemoveReaction) returns (Empty)
+
+- (void)messageRemoveReactionWithRequest:(RequestMessageRemoveReaction *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToMessageRemoveReactionWithRequest:(RequestMessageRemoveReaction *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end

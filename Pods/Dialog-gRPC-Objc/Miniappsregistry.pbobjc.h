@@ -207,33 +207,33 @@ int32_t UpdateMiniApp_AppLifecycle_RawValue(UpdateMiniApp *message);
  **/
 void SetUpdateMiniApp_AppLifecycle_RawValue(UpdateMiniApp *message, int32_t value);
 
-#pragma mark - GetAppsRequest
+#pragma mark - RequestGetApps
 
-typedef GPB_ENUM(GetAppsRequest_FieldNumber) {
-  GetAppsRequest_FieldNumber_FromClock = 1,
+typedef GPB_ENUM(RequestGetApps_FieldNumber) {
+  RequestGetApps_FieldNumber_FromClock = 1,
 };
 
 /**
  * Request to get list of mini-apps
  **/
-GPB_FINAL @interface GetAppsRequest : GPBMessage
+GPB_FINAL @interface RequestGetApps : GPBMessage
 
 /** return only apps created/modified since given clock */
 @property(nonatomic, readwrite) int64_t fromClock;
 
 @end
 
-#pragma mark - GetAppsResponse
+#pragma mark - ResponseGetApps
 
-typedef GPB_ENUM(GetAppsResponse_FieldNumber) {
-  GetAppsResponse_FieldNumber_AppsArray = 1,
-  GetAppsResponse_FieldNumber_Clock = 2,
+typedef GPB_ENUM(ResponseGetApps_FieldNumber) {
+  ResponseGetApps_FieldNumber_AppsArray = 1,
+  ResponseGetApps_FieldNumber_Clock = 2,
 };
 
 /**
  * List of the mini-app
  **/
-GPB_FINAL @interface GetAppsResponse : GPBMessage
+GPB_FINAL @interface ResponseGetApps : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MiniApp*> *appsArray;
 /** The number of items in @c appsArray without causing the array to be created. */
@@ -243,31 +243,31 @@ GPB_FINAL @interface GetAppsResponse : GPBMessage
 
 @end
 
-#pragma mark - FindAppRequest
+#pragma mark - RequestFindApp
 
-typedef GPB_ENUM(FindAppRequest_FieldNumber) {
-  FindAppRequest_FieldNumber_AppId = 1,
+typedef GPB_ENUM(RequestFindApp_FieldNumber) {
+  RequestFindApp_FieldNumber_AppId = 1,
 };
 
 /**
  * Findig mini-app by id
  **/
-GPB_FINAL @interface FindAppRequest : GPBMessage
+GPB_FINAL @interface RequestFindApp : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *appId;
 
 @end
 
-#pragma mark - FindAppResponse
+#pragma mark - ResponseFindApp
 
-typedef GPB_ENUM(FindAppResponse_FieldNumber) {
-  FindAppResponse_FieldNumber_App = 1,
+typedef GPB_ENUM(ResponseFindApp_FieldNumber) {
+  ResponseFindApp_FieldNumber_App = 1,
 };
 
 /**
  * App found by id (or empty)
  **/
-GPB_FINAL @interface FindAppResponse : GPBMessage
+GPB_FINAL @interface ResponseFindApp : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) MiniApp *app;
 /** Test to see if @c app has been set. */
@@ -275,16 +275,16 @@ GPB_FINAL @interface FindAppResponse : GPBMessage
 
 @end
 
-#pragma mark - IssueAccessTokenRequest
+#pragma mark - RequestIssueAccessToken
 
-typedef GPB_ENUM(IssueAccessTokenRequest_FieldNumber) {
-  IssueAccessTokenRequest_FieldNumber_AppId = 1,
+typedef GPB_ENUM(RequestIssueAccessToken_FieldNumber) {
+  RequestIssueAccessToken_FieldNumber_AppId = 1,
 };
 
 /**
  * Issue JWT token for third-party applications
  **/
-GPB_FINAL @interface IssueAccessTokenRequest : GPBMessage
+GPB_FINAL @interface RequestIssueAccessToken : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *appId;
 /** Test to see if @c appId has been set. */
@@ -292,26 +292,32 @@ GPB_FINAL @interface IssueAccessTokenRequest : GPBMessage
 
 @end
 
-#pragma mark - AccessTokenResponse
+#pragma mark - ResponseIssueAccessToken
 
-typedef GPB_ENUM(AccessTokenResponse_FieldNumber) {
-  AccessTokenResponse_FieldNumber_AccessToken = 1,
+typedef GPB_ENUM(ResponseIssueAccessToken_FieldNumber) {
+  ResponseIssueAccessToken_FieldNumber_AccessToken = 1,
 };
 
-GPB_FINAL @interface AccessTokenResponse : GPBMessage
+GPB_FINAL @interface ResponseIssueAccessToken : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *accessToken;
 
 @end
 
-#pragma mark - GetExtensionsResponse
+#pragma mark - RequestGetExtensions
 
-typedef GPB_ENUM(GetExtensionsResponse_FieldNumber) {
-  GetExtensionsResponse_FieldNumber_MessageExtensionsArray = 1,
-  GetExtensionsResponse_FieldNumber_ChatExtensionsArray = 2,
+GPB_FINAL @interface RequestGetExtensions : GPBMessage
+
+@end
+
+#pragma mark - ResponseGetExtensions
+
+typedef GPB_ENUM(ResponseGetExtensions_FieldNumber) {
+  ResponseGetExtensions_FieldNumber_MessageExtensionsArray = 1,
+  ResponseGetExtensions_FieldNumber_ChatExtensionsArray = 2,
 };
 
-GPB_FINAL @interface GetExtensionsResponse : GPBMessage
+GPB_FINAL @interface ResponseGetExtensions : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<ExtensionPoint*> *messageExtensionsArray;
 /** The number of items in @c messageExtensionsArray without causing the array to be created. */

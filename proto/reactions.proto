@@ -56,62 +56,62 @@ message UpdateMessageSetReactionError {
     UpdateErrorCause cause = 5;
 }
 
-message GetReactionsRequest {
+message RequestGetReactions {
     int64 from_clock = 1;
     Peer peer = 2;
 }
 
-message GetReactionsResponse {
+message ResponseGetReactions {
     repeated MessageReactions message_reactions = 1;
     int64 peer_clock = 2;
     bool next_available = 3;
 }
 
-message GetMessageReactionsRequest {
+message RequestGetMessageReactions {
     Peer peer = 1 [(dlg).required=true];
     repeated UUIDValue message_ids = 2;
 }
 
-message GetMessageReactionsResponse {
+message ResponseGetMessageReactions {
     reserved 1;
     repeated MessageReactionsParticipants message_reactions_participants = 2;
 }
 
-message RequestSetMessageReaction {
+message RequestMessageSetReaction {
     Peer peer = 1;
     UUIDValue mid = 2;
     string code = 3;
 }
 
-message RequestRemoveMessageReaction {
+message RequestMessageRemoveReaction {
     Peer peer = 1;
     UUIDValue mid = 2;
     string code = 3;
 }
 
 service Reactions {
-    rpc GetReactions (GetReactionsRequest) returns (GetReactionsResponse) {
+    rpc GetReactions (RequestGetReactions) returns (ResponseGetReactions) {
         option (google.api.http) = {
             post: "/v1/grpc/Reactions/GetReactions"
             body: "*"
         };
     }
 
-    rpc GetMessageReactions (GetMessageReactionsRequest) returns (GetMessageReactionsResponse) {
+    rpc GetMessageReactions (RequestGetMessageReactions) returns (ResponseGetMessageReactions) {
         option (google.api.http) = {
             post: "/v1/grpc/Reactions/GetReactions"
             body: "*"
         };
     }
 
-    rpc MessageSetReaction (RequestSetMessageReaction) returns (google.protobuf.Empty) {
+    rpc MessageSetReaction (RequestMessageSetReaction) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Reactions/MessageSetReaction"
             body: "*"
         };
     }
 
-    rpc MessageRemoveReaction (RequestRemoveMessageReaction) returns (google.protobuf.Empty) {
+    rpc MessageRemoveReaction (RequestMessageRemoveReaction) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Reactions/MessageRemoveReaction"
             body: "*"

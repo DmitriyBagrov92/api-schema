@@ -103,16 +103,16 @@
              responseClass:[GPBEmpty class]];
 }
 
-#pragma mark CheckNickName(RequestCheckNickName) returns (ResponseBool)
+#pragma mark CheckNickName(RequestCheckNickName) returns (ResponseCheckNickName)
 
-- (void)checkNickNameWithRequest:(RequestCheckNickName *)request handler:(void(^)(ResponseBool *_Nullable response, NSError *_Nullable error))handler{
+- (void)checkNickNameWithRequest:(RequestCheckNickName *)request handler:(void(^)(ResponseCheckNickName *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCheckNickNameWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToCheckNickNameWithRequest:(RequestCheckNickName *)request handler:(void(^)(ResponseBool *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToCheckNickNameWithRequest:(RequestCheckNickName *)request handler:(void(^)(ResponseCheckNickName *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CheckNickName"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseBool class]
+             responseClass:[ResponseCheckNickName class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)checkNickNameWithMessage:(RequestCheckNickName *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -120,7 +120,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseBool class]];
+             responseClass:[ResponseCheckNickName class]];
 }
 
 #pragma mark EditAbout(RequestEditAbout) returns (Empty)

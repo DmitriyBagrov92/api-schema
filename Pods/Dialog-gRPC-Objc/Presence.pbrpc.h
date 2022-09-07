@@ -17,7 +17,7 @@
 @class RequestSetOnline;
 @class RequestStartTyping;
 @class RequestStopTyping;
-@class ResponseUserLastPresence;
+@class ResponseGetUserLastPresence;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Timestamp.pbobjc.h"
@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (GRPCUnaryProtoCall *)setOnlineWithMessage:(RequestSetOnline *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark GetUserLastPresence(RequestGetUserLastPresence) returns (ResponseUserLastPresence)
+#pragma mark GetUserLastPresence(RequestGetUserLastPresence) returns (ResponseGetUserLastPresence)
 
 - (GRPCUnaryProtoCall *)getUserLastPresenceWithMessage:(RequestGetUserLastPresence *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
@@ -84,11 +84,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToSetOnlineWithRequest:(RequestSetOnline *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark GetUserLastPresence(RequestGetUserLastPresence) returns (ResponseUserLastPresence)
+#pragma mark GetUserLastPresence(RequestGetUserLastPresence) returns (ResponseGetUserLastPresence)
 
-- (void)getUserLastPresenceWithRequest:(RequestGetUserLastPresence *)request handler:(void(^)(ResponseUserLastPresence *_Nullable response, NSError *_Nullable error))handler;
+- (void)getUserLastPresenceWithRequest:(RequestGetUserLastPresence *)request handler:(void(^)(ResponseGetUserLastPresence *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToGetUserLastPresenceWithRequest:(RequestGetUserLastPresence *)request handler:(void(^)(ResponseUserLastPresence *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToGetUserLastPresenceWithRequest:(RequestGetUserLastPresence *)request handler:(void(^)(ResponseGetUserLastPresence *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end

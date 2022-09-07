@@ -14,6 +14,7 @@
 
 @class GPBEmpty;
 @class GroupPartialInfo;
+@class RequestChangeGroupPublicity;
 @class RequestCreateGroup;
 @class RequestDeleteGroup;
 @class RequestEditGroupAbout;
@@ -34,7 +35,6 @@
 @class RequestMakeUserAdmin;
 @class RequestRemoveGroupAvatar;
 @class RequestRevokeInviteUrl;
-@class RequestSetGroupShortname;
 @class RequestTransferOwnership;
 @class ResponseCreateGroup;
 @class ResponseGetGroupInviteUrlBase;
@@ -77,10 +77,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark EditGroupTitle(RequestEditGroupTitle) returns (Empty)
 
 - (GRPCUnaryProtoCall *)editGroupTitleWithMessage:(RequestEditGroupTitle *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark SetGroupShortname(RequestSetGroupShortname) returns (Empty)
-
-- (GRPCUnaryProtoCall *)setGroupShortnameWithMessage:(RequestSetGroupShortname *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark EditGroupAvatar(RequestEditGroupAvatar) returns (Empty)
 
@@ -154,6 +150,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (GRPCUnaryProtoCall *)getGroupPartialInfoWithMessage:(RequestGetGroupPartialInfo *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
+#pragma mark ChangeGroupPublicity(RequestChangeGroupPublicity) returns (Empty)
+
+- (GRPCUnaryProtoCall *)changeGroupPublicityWithMessage:(RequestChangeGroupPublicity *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
 @end
 
 @protocol GroupsAsync2 <NSObject>
@@ -165,10 +165,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark EditGroupTitle(RequestEditGroupTitle) returns (Empty)
 
 - (GRPCUnaryProtoCall *)editGroupTitleWithMessage:(RequestEditGroupTitle *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark SetGroupShortname(RequestSetGroupShortname) returns (Empty)
-
-- (GRPCUnaryProtoCall *)setGroupShortnameWithMessage:(RequestSetGroupShortname *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark EditGroupAvatar(RequestEditGroupAvatar) returns (Empty)
 
@@ -249,13 +245,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)editGroupTitleWithRequest:(RequestEditGroupTitle *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToEditGroupTitleWithRequest:(RequestEditGroupTitle *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark SetGroupShortname(RequestSetGroupShortname) returns (Empty)
-
-- (void)setGroupShortnameWithRequest:(RequestSetGroupShortname *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToSetGroupShortnameWithRequest:(RequestSetGroupShortname *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark EditGroupAvatar(RequestEditGroupAvatar) returns (Empty)
@@ -384,6 +373,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetGroupPartialInfoWithRequest:(RequestGetGroupPartialInfo *)request handler:(void(^)(GroupPartialInfo *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark ChangeGroupPublicity(RequestChangeGroupPublicity) returns (Empty)
+
+- (void)changeGroupPublicityWithRequest:(RequestChangeGroupPublicity *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToChangeGroupPublicityWithRequest:(RequestChangeGroupPublicity *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
 @end
 
 /**
@@ -404,13 +400,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)editGroupTitleWithRequest:(RequestEditGroupTitle *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToEditGroupTitleWithRequest:(RequestEditGroupTitle *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark SetGroupShortname(RequestSetGroupShortname) returns (Empty)
-
-- (void)setGroupShortnameWithRequest:(RequestSetGroupShortname *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToSetGroupShortnameWithRequest:(RequestSetGroupShortname *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark EditGroupAvatar(RequestEditGroupAvatar) returns (Empty)

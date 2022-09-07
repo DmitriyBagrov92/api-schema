@@ -33,6 +33,10 @@ message RequestCheckNickName {
     string nickname = 1;
 }
 
+message ResponseCheckNickName {
+    bool is_free = 1;
+}
+
 // Changing about information
 message RequestEditAbout {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
@@ -98,7 +102,7 @@ service Profile {
             body: "*"
         };
     }
-    rpc CheckNickName (RequestCheckNickName) returns (ResponseBool) {
+    rpc CheckNickName (RequestCheckNickName) returns (ResponseCheckNickName) {
         option (google.api.http) = {
             post: "/v1/grpc/Profile/CheckNickName"
             body: "*"

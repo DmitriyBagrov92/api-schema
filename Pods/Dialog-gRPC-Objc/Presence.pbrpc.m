@@ -121,16 +121,16 @@
              responseClass:[GPBEmpty class]];
 }
 
-#pragma mark GetUserLastPresence(RequestGetUserLastPresence) returns (ResponseUserLastPresence)
+#pragma mark GetUserLastPresence(RequestGetUserLastPresence) returns (ResponseGetUserLastPresence)
 
-- (void)getUserLastPresenceWithRequest:(RequestGetUserLastPresence *)request handler:(void(^)(ResponseUserLastPresence *_Nullable response, NSError *_Nullable error))handler{
+- (void)getUserLastPresenceWithRequest:(RequestGetUserLastPresence *)request handler:(void(^)(ResponseGetUserLastPresence *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetUserLastPresenceWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToGetUserLastPresenceWithRequest:(RequestGetUserLastPresence *)request handler:(void(^)(ResponseUserLastPresence *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToGetUserLastPresenceWithRequest:(RequestGetUserLastPresence *)request handler:(void(^)(ResponseGetUserLastPresence *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetUserLastPresence"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseUserLastPresence class]
+             responseClass:[ResponseGetUserLastPresence class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 - (GRPCUnaryProtoCall *)getUserLastPresenceWithMessage:(RequestGetUserLastPresence *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
@@ -138,7 +138,7 @@
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseUserLastPresence class]];
+             responseClass:[ResponseGetUserLastPresence class]];
 }
 
 @end

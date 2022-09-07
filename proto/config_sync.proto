@@ -97,13 +97,13 @@ message RequestChangeSettings {
 }
 
 service ConfigSync {
-    rpc GetSettings(RequestGetSettings) returns (ResponseGetSettings) {
+    rpc GetSettings (RequestGetSettings) returns (ResponseGetSettings) {
         option (google.api.http) = {
             post: "/v1/grpc/ConfigSync/GetSettings"
             body: "*"
         };
     }
-    rpc ChangeSettings(RequestChangeSettings) returns (google.protobuf.Empty) {
+    rpc ChangeSettings (RequestChangeSettings) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/ConfigSync/ChangeSettings"
             body: "*"

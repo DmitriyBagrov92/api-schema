@@ -88,7 +88,6 @@ CF_EXTERN_C_BEGIN
 @class ServiceEx;
 @class ServiceExChangedAbout;
 @class ServiceExChangedAvatar;
-@class ServiceExChangedShortname;
 @class ServiceExChangedTitle;
 @class ServiceExChangedTopic;
 @class ServiceExChatArchived;
@@ -96,6 +95,7 @@ CF_EXTERN_C_BEGIN
 @class ServiceExConferenceStatus;
 @class ServiceExContactRegistered;
 @class ServiceExGroupCreated;
+@class ServiceExGroupPublicityChanged;
 @class ServiceExPhoneCall;
 @class ServiceExPhoneMissed;
 @class ServiceExPhoneRejected;
@@ -1045,7 +1045,6 @@ typedef GPB_ENUM(ServiceEx_FieldNumber) {
   ServiceEx_FieldNumber_UserKicked = 3,
   ServiceEx_FieldNumber_UserLeft = 4,
   ServiceEx_FieldNumber_GroupCreated = 5,
-  ServiceEx_FieldNumber_ChangedShortname = 6,
   ServiceEx_FieldNumber_ChangedTitle = 7,
   ServiceEx_FieldNumber_ChangedTopic = 8,
   ServiceEx_FieldNumber_ChangedAbout = 9,
@@ -1057,6 +1056,7 @@ typedef GPB_ENUM(ServiceEx_FieldNumber) {
   ServiceEx_FieldNumber_ChatArchived = 15,
   ServiceEx_FieldNumber_ChatRestored = 16,
   ServiceEx_FieldNumber_ConferenceStatus = 17,
+  ServiceEx_FieldNumber_PublicityChanged = 18,
 };
 
 typedef GPB_ENUM(ServiceEx_Body_OneOfCase) {
@@ -1066,7 +1066,6 @@ typedef GPB_ENUM(ServiceEx_Body_OneOfCase) {
   ServiceEx_Body_OneOfCase_UserKicked = 3,
   ServiceEx_Body_OneOfCase_UserLeft = 4,
   ServiceEx_Body_OneOfCase_GroupCreated = 5,
-  ServiceEx_Body_OneOfCase_ChangedShortname = 6,
   ServiceEx_Body_OneOfCase_ChangedTitle = 7,
   ServiceEx_Body_OneOfCase_ChangedTopic = 8,
   ServiceEx_Body_OneOfCase_ChangedAbout = 9,
@@ -1078,6 +1077,7 @@ typedef GPB_ENUM(ServiceEx_Body_OneOfCase) {
   ServiceEx_Body_OneOfCase_ChatArchived = 15,
   ServiceEx_Body_OneOfCase_ChatRestored = 16,
   ServiceEx_Body_OneOfCase_ConferenceStatus = 17,
+  ServiceEx_Body_OneOfCase_PublicityChanged = 18,
 };
 
 GPB_FINAL @interface ServiceEx : GPBMessage
@@ -1093,8 +1093,6 @@ GPB_FINAL @interface ServiceEx : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) ServiceExUserLeft *userLeft;
 
 @property(nonatomic, readwrite, strong, null_resettable) ServiceExGroupCreated *groupCreated;
-
-@property(nonatomic, readwrite, strong, null_resettable) ServiceExChangedShortname *changedShortname;
 
 @property(nonatomic, readwrite, strong, null_resettable) ServiceExChangedTitle *changedTitle;
 
@@ -1118,6 +1116,8 @@ GPB_FINAL @interface ServiceEx : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) ServiceExConferenceStatus *conferenceStatus;
 
+@property(nonatomic, readwrite, strong, null_resettable) ServiceExGroupPublicityChanged *publicityChanged;
+
 @end
 
 /**
@@ -1128,7 +1128,7 @@ void ServiceEx_ClearBodyOneOfCase(ServiceEx *message);
 #pragma mark - ServiceExUserInvited
 
 typedef GPB_ENUM(ServiceExUserInvited_FieldNumber) {
-  ServiceExUserInvited_FieldNumber_InvitedUserId = 1,
+  ServiceExUserInvited_FieldNumber_InvitedUserIdsArray = 1,
 };
 
 /**
@@ -1136,15 +1136,17 @@ typedef GPB_ENUM(ServiceExUserInvited_FieldNumber) {
  **/
 GPB_FINAL @interface ServiceExUserInvited : GPBMessage
 
-/** / added user id */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *invitedUserId;
+/** / added user ids */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *invitedUserIdsArray;
+/** The number of items in @c invitedUserIdsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger invitedUserIdsArray_Count;
 
 @end
 
 #pragma mark - ServiceExUserJoined
 
 typedef GPB_ENUM(ServiceExUserJoined_FieldNumber) {
-  ServiceExUserJoined_FieldNumber_JoinedUserId = 1,
+  ServiceExUserJoined_FieldNumber_JoinedUserIdsArray = 1,
 };
 
 /**
@@ -1152,14 +1154,16 @@ typedef GPB_ENUM(ServiceExUserJoined_FieldNumber) {
  **/
 GPB_FINAL @interface ServiceExUserJoined : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *joinedUserId;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *joinedUserIdsArray;
+/** The number of items in @c joinedUserIdsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger joinedUserIdsArray_Count;
 
 @end
 
 #pragma mark - ServiceExUserKicked
 
 typedef GPB_ENUM(ServiceExUserKicked_FieldNumber) {
-  ServiceExUserKicked_FieldNumber_KickedUserId = 1,
+  ServiceExUserKicked_FieldNumber_KickedUserIdsArray = 1,
 };
 
 /**
@@ -1167,14 +1171,16 @@ typedef GPB_ENUM(ServiceExUserKicked_FieldNumber) {
  **/
 GPB_FINAL @interface ServiceExUserKicked : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *kickedUserId;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *kickedUserIdsArray;
+/** The number of items in @c kickedUserIdsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger kickedUserIdsArray_Count;
 
 @end
 
 #pragma mark - ServiceExUserLeft
 
 typedef GPB_ENUM(ServiceExUserLeft_FieldNumber) {
-  ServiceExUserLeft_FieldNumber_LeftUserId = 1,
+  ServiceExUserLeft_FieldNumber_LeftUserIdsArray = 1,
 };
 
 /**
@@ -1182,7 +1188,9 @@ typedef GPB_ENUM(ServiceExUserLeft_FieldNumber) {
  **/
 GPB_FINAL @interface ServiceExUserLeft : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *leftUserId;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *leftUserIdsArray;
+/** The number of items in @c leftUserIdsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger leftUserIdsArray_Count;
 
 @end
 
@@ -1192,22 +1200,6 @@ GPB_FINAL @interface ServiceExUserLeft : GPBMessage
  * Service message about group creating
  **/
 GPB_FINAL @interface ServiceExGroupCreated : GPBMessage
-
-@end
-
-#pragma mark - ServiceExChangedShortname
-
-typedef GPB_ENUM(ServiceExChangedShortname_FieldNumber) {
-  ServiceExChangedShortname_FieldNumber_Shortname = 1,
-};
-
-/**
- * Service message about group shortname change
- **/
-GPB_FINAL @interface ServiceExChangedShortname : GPBMessage
-
-/** / New group shortname */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *shortname;
 
 @end
 
@@ -1364,6 +1356,24 @@ GPB_FINAL @interface ServiceExConferenceStatus : GPBMessage
 @property(nonatomic, readwrite, copy, null_resettable) NSString *conferenceId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *conferenceStatus;
+
+@end
+
+#pragma mark - ServiceExGroupPublicityChanged
+
+typedef GPB_ENUM(ServiceExGroupPublicityChanged_FieldNumber) {
+  ServiceExGroupPublicityChanged_FieldNumber_PreviousPublicity = 1,
+  ServiceExGroupPublicityChanged_FieldNumber_CurrentPublicity = 2,
+};
+
+/**
+ * Message about group becoming private or public
+ **/
+GPB_FINAL @interface ServiceExGroupPublicityChanged : GPBMessage
+
+@property(nonatomic, readwrite) BOOL previousPublicity;
+
+@property(nonatomic, readwrite) BOOL currentPublicity;
 
 @end
 
@@ -2934,6 +2944,47 @@ int32_t RequestLoadHistory_LoadMode_RawValue(RequestLoadHistory *message);
  **/
 void SetRequestLoadHistory_LoadMode_RawValue(RequestLoadHistory *message, int32_t value);
 
+#pragma mark - RequestLoadMessageHistory
+
+typedef GPB_ENUM(RequestLoadMessageHistory_FieldNumber) {
+  RequestLoadMessageHistory_FieldNumber_Peer = 1,
+  RequestLoadMessageHistory_FieldNumber_FromMid = 2,
+  RequestLoadMessageHistory_FieldNumber_LoadMode = 3,
+  RequestLoadMessageHistory_FieldNumber_Limit = 4,
+};
+
+/**
+ * Loading history of chat
+ **/
+GPB_FINAL @interface RequestLoadMessageHistory : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
+
+@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *fromMid;
+/** Test to see if @c fromMid has been set. */
+@property(nonatomic, readwrite) BOOL hasFromMid;
+
+/** / forward, backward or both */
+@property(nonatomic, readwrite) ListLoadMode loadMode;
+
+@property(nonatomic, readwrite) int32_t limit;
+
+@end
+
+/**
+ * Fetches the raw value of a @c RequestLoadMessageHistory's @c loadMode property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t RequestLoadMessageHistory_LoadMode_RawValue(RequestLoadMessageHistory *message);
+/**
+ * Sets the raw value of an @c RequestLoadMessageHistory's @c loadMode property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetRequestLoadMessageHistory_LoadMode_RawValue(RequestLoadMessageHistory *message, int32_t value);
+
 #pragma mark - ResponseLoadHistory
 
 typedef GPB_ENUM(ResponseLoadHistory_FieldNumber) {
@@ -3812,18 +3863,18 @@ GPB_FINAL @interface MessageStatus : GPBMessage
 
 @end
 
-#pragma mark - RequestMessageReads
+#pragma mark - RequestGetMessageReads
 
-typedef GPB_ENUM(RequestMessageReads_FieldNumber) {
-  RequestMessageReads_FieldNumber_Mid = 1,
-  RequestMessageReads_FieldNumber_Limit = 2,
-  RequestMessageReads_FieldNumber_TimestampFrom = 3,
+typedef GPB_ENUM(RequestGetMessageReads_FieldNumber) {
+  RequestGetMessageReads_FieldNumber_Mid = 1,
+  RequestGetMessageReads_FieldNumber_Limit = 2,
+  RequestGetMessageReads_FieldNumber_TimestampFrom = 3,
 };
 
 /**
  * Load message statuses for every user in conversation reads
  **/
-GPB_FINAL @interface RequestMessageReads : GPBMessage
+GPB_FINAL @interface RequestGetMessageReads : GPBMessage
 
 /** / Message id */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
@@ -3838,18 +3889,18 @@ GPB_FINAL @interface RequestMessageReads : GPBMessage
 
 @end
 
-#pragma mark - RequestMessageReceives
+#pragma mark - RequestGetMessageReceives
 
-typedef GPB_ENUM(RequestMessageReceives_FieldNumber) {
-  RequestMessageReceives_FieldNumber_Mid = 1,
-  RequestMessageReceives_FieldNumber_Limit = 2,
-  RequestMessageReceives_FieldNumber_TimestampFrom = 3,
+typedef GPB_ENUM(RequestGetMessageReceives_FieldNumber) {
+  RequestGetMessageReceives_FieldNumber_Mid = 1,
+  RequestGetMessageReceives_FieldNumber_Limit = 2,
+  RequestGetMessageReceives_FieldNumber_TimestampFrom = 3,
 };
 
 /**
  * Load message statuses for every user in conversation receives
  **/
-GPB_FINAL @interface RequestMessageReceives : GPBMessage
+GPB_FINAL @interface RequestGetMessageReceives : GPBMessage
 
 /** / Message id */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
@@ -3864,19 +3915,19 @@ GPB_FINAL @interface RequestMessageReceives : GPBMessage
 
 @end
 
-#pragma mark - ResponseMessageReads
+#pragma mark - ResponseGetMessageReads
 
-typedef GPB_ENUM(ResponseMessageReads_FieldNumber) {
-  ResponseMessageReads_FieldNumber_StatusArray = 1,
-  ResponseMessageReads_FieldNumber_TimestampTill = 2,
-  ResponseMessageReads_FieldNumber_LastReadDate = 3,
-  ResponseMessageReads_FieldNumber_Counter = 4,
+typedef GPB_ENUM(ResponseGetMessageReads_FieldNumber) {
+  ResponseGetMessageReads_FieldNumber_StatusArray = 1,
+  ResponseGetMessageReads_FieldNumber_TimestampTill = 2,
+  ResponseGetMessageReads_FieldNumber_LastReadDate = 3,
+  ResponseGetMessageReads_FieldNumber_Counter = 4,
 };
 
 /**
  * Response with the list of message statuses reads
  **/
-GPB_FINAL @interface ResponseMessageReads : GPBMessage
+GPB_FINAL @interface ResponseGetMessageReads : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MessageStatus*> *statusArray;
 /** The number of items in @c statusArray without causing the array to be created. */
@@ -3891,17 +3942,17 @@ GPB_FINAL @interface ResponseMessageReads : GPBMessage
 
 @end
 
-#pragma mark - ResponseMessageReceives
+#pragma mark - ResponseGetMessageReceives
 
-typedef GPB_ENUM(ResponseMessageReceives_FieldNumber) {
-  ResponseMessageReceives_FieldNumber_StatusArray = 1,
-  ResponseMessageReceives_FieldNumber_TimestampTill = 2,
+typedef GPB_ENUM(ResponseGetMessageReceives_FieldNumber) {
+  ResponseGetMessageReceives_FieldNumber_StatusArray = 1,
+  ResponseGetMessageReceives_FieldNumber_TimestampTill = 2,
 };
 
 /**
  * Response with the list of message statuses receives
  **/
-GPB_FINAL @interface ResponseMessageReceives : GPBMessage
+GPB_FINAL @interface ResponseGetMessageReceives : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MessageStatus*> *statusArray;
 /** The number of items in @c statusArray without causing the array to be created. */

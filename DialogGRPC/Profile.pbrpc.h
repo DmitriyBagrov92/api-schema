@@ -24,7 +24,7 @@
 @class RequestEditNickName;
 @class RequestEditSex;
 @class RequestRemoveAvatar;
-@class ResponseBool;
+@class ResponseCheckNickName;
 @class ResponseEditAvatar;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
@@ -57,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (GRPCUnaryProtoCall *)editNickNameWithMessage:(RequestEditNickName *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark CheckNickName(RequestCheckNickName) returns (ResponseBool)
+#pragma mark CheckNickName(RequestCheckNickName) returns (ResponseCheckNickName)
 
 - (GRPCUnaryProtoCall *)checkNickNameWithMessage:(RequestCheckNickName *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
@@ -115,11 +115,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToEditNickNameWithRequest:(RequestEditNickName *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark CheckNickName(RequestCheckNickName) returns (ResponseBool)
+#pragma mark CheckNickName(RequestCheckNickName) returns (ResponseCheckNickName)
 
-- (void)checkNickNameWithRequest:(RequestCheckNickName *)request handler:(void(^)(ResponseBool *_Nullable response, NSError *_Nullable error))handler;
+- (void)checkNickNameWithRequest:(RequestCheckNickName *)request handler:(void(^)(ResponseCheckNickName *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToCheckNickNameWithRequest:(RequestCheckNickName *)request handler:(void(^)(ResponseBool *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToCheckNickNameWithRequest:(RequestCheckNickName *)request handler:(void(^)(ResponseCheckNickName *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark EditAbout(RequestEditAbout) returns (Empty)

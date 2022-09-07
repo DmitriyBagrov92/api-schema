@@ -60,24 +60,24 @@
 
 #pragma mark - Method Implementations
 
-#pragma mark LoadEvents(LoadEventsRequest) returns (LoadEventsResponse)
+#pragma mark LoadEvents(RequestLoadEvents) returns (ResponseLoadEvents)
 
-- (void)loadEventsWithRequest:(LoadEventsRequest *)request handler:(void(^)(LoadEventsResponse *_Nullable response, NSError *_Nullable error))handler{
+- (void)loadEventsWithRequest:(RequestLoadEvents *)request handler:(void(^)(ResponseLoadEvents *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToLoadEventsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToLoadEventsWithRequest:(LoadEventsRequest *)request handler:(void(^)(LoadEventsResponse *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToLoadEventsWithRequest:(RequestLoadEvents *)request handler:(void(^)(ResponseLoadEvents *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"LoadEvents"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[LoadEventsResponse class]
+             responseClass:[ResponseLoadEvents class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-- (GRPCUnaryProtoCall *)loadEventsWithMessage:(LoadEventsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+- (GRPCUnaryProtoCall *)loadEventsWithMessage:(RequestLoadEvents *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"LoadEvents"
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[LoadEventsResponse class]];
+             responseClass:[ResponseLoadEvents class]];
 }
 
 @end

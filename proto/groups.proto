@@ -39,7 +39,7 @@ message Group {
 }
 
 message GroupData {
-    reserved 1;
+    reserved 1, 9;
     string title = 2 [(dlg).log=log_sensitive]; /// Title of group
     Avatar avatar = 3; /// Avatar of group
     /// Number of members
@@ -50,26 +50,26 @@ message GroupData {
     google.protobuf.Timestamp created_at = 7; /// Date of creation
     /// About of group
     google.protobuf.StringValue about = 8 [(dlg).log=log_sensitive];
-    /// Group short name
-    google.protobuf.StringValue shortname = 9;
     repeated GroupAdminPermission base_permissions = 10;
     int64 clock = 11;
     google.protobuf.Int64Value pinned_at = 12;
     google.protobuf.StringValue conference_link = 13;
     google.protobuf.Int32Value members_count_limit = 14;
     google.protobuf.Int64Value deleted_at = 15;
+    bool is_public = 16;
 }
 
 message GroupPartialInfo {
+    reserved 6;
     string id = 1;
     int64 access_hash = 2 [(dlg).log=log_confidential];
     int64 clock = 3;
     GroupType type = 4;
     string title = 5;
-    google.protobuf.StringValue shortname = 6;
     Avatar avatar = 7;
     Member self_member = 8;
     google.protobuf.Int64Value pinned_at = 9;
+    bool is_public = 10;
 }
 
 // Update about group data changed
@@ -147,16 +147,14 @@ message UpdateGroupMembersCountChanged {
 message RequestCreateGroup {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     int64 rid = 1; /// Id for query deduplication
-    reserved 2;
+    reserved 2, 6;
     string title = 3 [(dlg).log=log_sensitive];
     repeated UserOutPeer users = 4; /// members
     GroupType group_type = 5; /// group or channel
 
-    /// optional shortname of a group, group will be public if set
-    google.protobuf.StringValue username = 6;
-
     /// Base permissions for invited members
     repeated GroupAdminPermission base_permissions = 7;
+    bool is_public = 8;
 }
 
 message ResponseCreateGroup {
@@ -171,14 +169,6 @@ message RequestEditGroupTitle {
     GroupOutPeer group_peer = 1;
     int64 rid = 2; /// Id for query deduplication
     string title = 3 [(dlg).log=log_sensitive];
-}
-
-// Sets group short name
-message RequestSetGroupShortname {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    GroupOutPeer peer = 1;
-    /// if shortname was empty, then group will become public
-    string shortname = 2;
 }
 
 // Changing group avatar
@@ -251,7 +241,7 @@ message RequestKickUser {
 /// Possible permissions on a group
 enum GroupAdminPermission {
     GROUP_ADMIN_PERMISSION_UNKNOWN = 0;
-    GROUP_ADMIN_PERMISSION_EDITSHORTNAME = 1;
+    reserved 1;
     GROUP_ADMIN_PERMISSION_INVITE = 2;
     GROUP_ADMIN_PERMISSION_KICK = 3;
     GROUP_ADMIN_PERMISSION_UPDATEINFO = 4;
@@ -368,19 +358,18 @@ message RequestGetGroupPartialInfo {
     string token = 1;
 }
 
+message RequestChangeGroupPublicity {
+    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    string group_id = 1;
+    bool is_public = 2;
+}
+
 /**
  * Update notifies that some user got invited to the group
  */
  message UpdateGroupMemberInvited {
     string group_id = 1;
     Member member = 2;
-}
-
-// Update group short name
-message UpdateGroupShortnameChanged {
-    string group_id = 1;
-    string shortname = 2;
-    string user_id = 3;
 }
 
 service Groups {
@@ -399,12 +388,6 @@ service Groups {
     rpc EditGroupTitle (RequestEditGroupTitle) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/EditGroupTitle"
-            body: "*"
-        };
-    }
-    rpc SetGroupShortname (RequestSetGroupShortname) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Groups/SetGroupShortname"
             body: "*"
         };
     }
@@ -510,10 +493,15 @@ service Groups {
             body: "*"
         };
     }
-
     rpc GetGroupPartialInfo (RequestGetGroupPartialInfo) returns (GroupPartialInfo) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/GetGrpoupPartialInfo"
+            body: "*"
+        };
+    }
+    rpc ChangeGroupPublicity (RequestChangeGroupPublicity) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Groups/ChangeGroupPublicity"
             body: "*"
         };
     }
@@ -522,7 +510,6 @@ service Groups {
 service GroupsAsync {
     rpc CreateGroup (RequestCreateGroup) returns (google.protobuf.Empty);
     rpc EditGroupTitle (RequestEditGroupTitle) returns (google.protobuf.Empty);
-    rpc SetGroupShortname (RequestSetGroupShortname) returns (google.protobuf.Empty);
     rpc EditGroupAvatar (RequestEditGroupAvatar) returns (google.protobuf.Empty);
     rpc RemoveGroupAvatar (RequestRemoveGroupAvatar) returns (google.protobuf.Empty);
     rpc EditGroupAbout (RequestEditGroupAbout) returns (google.protobuf.Empty);

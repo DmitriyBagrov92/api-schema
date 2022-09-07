@@ -218,14 +218,14 @@ GPB_FINAL @interface UpdateMessageSetReactionError : GPBMessage
 
 @end
 
-#pragma mark - GetReactionsRequest
+#pragma mark - RequestGetReactions
 
-typedef GPB_ENUM(GetReactionsRequest_FieldNumber) {
-  GetReactionsRequest_FieldNumber_FromClock = 1,
-  GetReactionsRequest_FieldNumber_Peer = 2,
+typedef GPB_ENUM(RequestGetReactions_FieldNumber) {
+  RequestGetReactions_FieldNumber_FromClock = 1,
+  RequestGetReactions_FieldNumber_Peer = 2,
 };
 
-GPB_FINAL @interface GetReactionsRequest : GPBMessage
+GPB_FINAL @interface RequestGetReactions : GPBMessage
 
 @property(nonatomic, readwrite) int64_t fromClock;
 
@@ -235,15 +235,15 @@ GPB_FINAL @interface GetReactionsRequest : GPBMessage
 
 @end
 
-#pragma mark - GetReactionsResponse
+#pragma mark - ResponseGetReactions
 
-typedef GPB_ENUM(GetReactionsResponse_FieldNumber) {
-  GetReactionsResponse_FieldNumber_MessageReactionsArray = 1,
-  GetReactionsResponse_FieldNumber_PeerClock = 2,
-  GetReactionsResponse_FieldNumber_NextAvailable = 3,
+typedef GPB_ENUM(ResponseGetReactions_FieldNumber) {
+  ResponseGetReactions_FieldNumber_MessageReactionsArray = 1,
+  ResponseGetReactions_FieldNumber_PeerClock = 2,
+  ResponseGetReactions_FieldNumber_NextAvailable = 3,
 };
 
-GPB_FINAL @interface GetReactionsResponse : GPBMessage
+GPB_FINAL @interface ResponseGetReactions : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MessageReactions*> *messageReactionsArray;
 /** The number of items in @c messageReactionsArray without causing the array to be created. */
@@ -255,14 +255,14 @@ GPB_FINAL @interface GetReactionsResponse : GPBMessage
 
 @end
 
-#pragma mark - GetMessageReactionsRequest
+#pragma mark - RequestGetMessageReactions
 
-typedef GPB_ENUM(GetMessageReactionsRequest_FieldNumber) {
-  GetMessageReactionsRequest_FieldNumber_Peer = 1,
-  GetMessageReactionsRequest_FieldNumber_MessageIdsArray = 2,
+typedef GPB_ENUM(RequestGetMessageReactions_FieldNumber) {
+  RequestGetMessageReactions_FieldNumber_Peer = 1,
+  RequestGetMessageReactions_FieldNumber_MessageIdsArray = 2,
 };
 
-GPB_FINAL @interface GetMessageReactionsRequest : GPBMessage
+GPB_FINAL @interface RequestGetMessageReactions : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
@@ -274,13 +274,13 @@ GPB_FINAL @interface GetMessageReactionsRequest : GPBMessage
 
 @end
 
-#pragma mark - GetMessageReactionsResponse
+#pragma mark - ResponseGetMessageReactions
 
-typedef GPB_ENUM(GetMessageReactionsResponse_FieldNumber) {
-  GetMessageReactionsResponse_FieldNumber_MessageReactionsParticipantsArray = 2,
+typedef GPB_ENUM(ResponseGetMessageReactions_FieldNumber) {
+  ResponseGetMessageReactions_FieldNumber_MessageReactionsParticipantsArray = 2,
 };
 
-GPB_FINAL @interface GetMessageReactionsResponse : GPBMessage
+GPB_FINAL @interface ResponseGetMessageReactions : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MessageReactionsParticipants*> *messageReactionsParticipantsArray;
 /** The number of items in @c messageReactionsParticipantsArray without causing the array to be created. */
@@ -288,15 +288,15 @@ GPB_FINAL @interface GetMessageReactionsResponse : GPBMessage
 
 @end
 
-#pragma mark - RequestSetMessageReaction
+#pragma mark - RequestMessageSetReaction
 
-typedef GPB_ENUM(RequestSetMessageReaction_FieldNumber) {
-  RequestSetMessageReaction_FieldNumber_Peer = 1,
-  RequestSetMessageReaction_FieldNumber_Mid = 2,
-  RequestSetMessageReaction_FieldNumber_Code = 3,
+typedef GPB_ENUM(RequestMessageSetReaction_FieldNumber) {
+  RequestMessageSetReaction_FieldNumber_Peer = 1,
+  RequestMessageSetReaction_FieldNumber_Mid = 2,
+  RequestMessageSetReaction_FieldNumber_Code = 3,
 };
 
-GPB_FINAL @interface RequestSetMessageReaction : GPBMessage
+GPB_FINAL @interface RequestMessageSetReaction : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
@@ -310,15 +310,15 @@ GPB_FINAL @interface RequestSetMessageReaction : GPBMessage
 
 @end
 
-#pragma mark - RequestRemoveMessageReaction
+#pragma mark - RequestMessageRemoveReaction
 
-typedef GPB_ENUM(RequestRemoveMessageReaction_FieldNumber) {
-  RequestRemoveMessageReaction_FieldNumber_Peer = 1,
-  RequestRemoveMessageReaction_FieldNumber_Mid = 2,
-  RequestRemoveMessageReaction_FieldNumber_Code = 3,
+typedef GPB_ENUM(RequestMessageRemoveReaction_FieldNumber) {
+  RequestMessageRemoveReaction_FieldNumber_Peer = 1,
+  RequestMessageRemoveReaction_FieldNumber_Mid = 2,
+  RequestMessageRemoveReaction_FieldNumber_Code = 3,
 };
 
-GPB_FINAL @interface RequestRemoveMessageReaction : GPBMessage
+GPB_FINAL @interface RequestMessageRemoveReaction : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */

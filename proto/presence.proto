@@ -101,7 +101,7 @@ message RequestGetUserLastPresence {
 }
 
 // Response for RequestGetUserLastPresence
-message ResponseUserLastPresence {
+message ResponseGetUserLastPresence {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     google.protobuf.Timestamp last_online_at = 1;
 }
@@ -125,7 +125,7 @@ service Presence {
             body: "*"
         };
     }
-    rpc GetUserLastPresence (RequestGetUserLastPresence) returns (ResponseUserLastPresence) {
+    rpc GetUserLastPresence (RequestGetUserLastPresence) returns (ResponseGetUserLastPresence) {
         option (google.api.http) = {
             post: "/v1/grpc/Presence/GetUserLastPresence"
             body: "*"

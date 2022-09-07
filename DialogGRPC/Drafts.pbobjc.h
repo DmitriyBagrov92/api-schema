@@ -48,26 +48,26 @@ NS_ASSUME_NONNULL_BEGIN
 GPB_FINAL @interface DraftsRoot : GPBRootObject
 @end
 
-#pragma mark - LoadDraftsRequest
+#pragma mark - RequestLoadDrafts
 
-typedef GPB_ENUM(LoadDraftsRequest_FieldNumber) {
-  LoadDraftsRequest_FieldNumber_Clock = 1,
+typedef GPB_ENUM(RequestLoadDrafts_FieldNumber) {
+  RequestLoadDrafts_FieldNumber_Clock = 1,
 };
 
-GPB_FINAL @interface LoadDraftsRequest : GPBMessage
+GPB_FINAL @interface RequestLoadDrafts : GPBMessage
 
 @property(nonatomic, readwrite) int64_t clock;
 
 @end
 
-#pragma mark - LoadDraftsResponse
+#pragma mark - ResponseLoadDrafts
 
-typedef GPB_ENUM(LoadDraftsResponse_FieldNumber) {
-  LoadDraftsResponse_FieldNumber_DraftsArray = 1,
-  LoadDraftsResponse_FieldNumber_Clock = 2,
+typedef GPB_ENUM(ResponseLoadDrafts_FieldNumber) {
+  ResponseLoadDrafts_FieldNumber_DraftsArray = 1,
+  ResponseLoadDrafts_FieldNumber_Clock = 2,
 };
 
-GPB_FINAL @interface LoadDraftsResponse : GPBMessage
+GPB_FINAL @interface ResponseLoadDrafts : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Draft*> *draftsArray;
 /** The number of items in @c draftsArray without causing the array to be created. */
@@ -77,13 +77,13 @@ GPB_FINAL @interface LoadDraftsResponse : GPBMessage
 
 @end
 
-#pragma mark - SaveDraftsRequest
+#pragma mark - RequestSaveDrafts
 
-typedef GPB_ENUM(SaveDraftsRequest_FieldNumber) {
-  SaveDraftsRequest_FieldNumber_DraftsArray = 1,
+typedef GPB_ENUM(RequestSaveDrafts_FieldNumber) {
+  RequestSaveDrafts_FieldNumber_DraftsArray = 1,
 };
 
-GPB_FINAL @interface SaveDraftsRequest : GPBMessage
+GPB_FINAL @interface RequestSaveDrafts : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Draft*> *draftsArray;
 /** The number of items in @c draftsArray without causing the array to be created. */
@@ -91,13 +91,13 @@ GPB_FINAL @interface SaveDraftsRequest : GPBMessage
 
 @end
 
-#pragma mark - SaveDraftsResponse
+#pragma mark - ResponseSaveDrafts
 
-typedef GPB_ENUM(SaveDraftsResponse_FieldNumber) {
-  SaveDraftsResponse_FieldNumber_Clock = 1,
+typedef GPB_ENUM(ResponseSaveDrafts_FieldNumber) {
+  ResponseSaveDrafts_FieldNumber_Clock = 1,
 };
 
-GPB_FINAL @interface SaveDraftsResponse : GPBMessage
+GPB_FINAL @interface ResponseSaveDrafts : GPBMessage
 
 @property(nonatomic, readwrite) int64_t clock;
 

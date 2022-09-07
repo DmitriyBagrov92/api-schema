@@ -390,16 +390,16 @@ GPB_FINAL @interface RequestGetUserLastPresence : GPBMessage
 
 @end
 
-#pragma mark - ResponseUserLastPresence
+#pragma mark - ResponseGetUserLastPresence
 
-typedef GPB_ENUM(ResponseUserLastPresence_FieldNumber) {
-  ResponseUserLastPresence_FieldNumber_LastOnlineAt = 1,
+typedef GPB_ENUM(ResponseGetUserLastPresence_FieldNumber) {
+  ResponseGetUserLastPresence_FieldNumber_LastOnlineAt = 1,
 };
 
 /**
  * Response for RequestGetUserLastPresence
  **/
-GPB_FINAL @interface ResponseUserLastPresence : GPBMessage
+GPB_FINAL @interface ResponseGetUserLastPresence : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBTimestamp *lastOnlineAt;
 /** Test to see if @c lastOnlineAt has been set. */

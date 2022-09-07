@@ -123,26 +123,6 @@
              responseClass:[GPBEmpty class]];
 }
 
-#pragma mark SetGroupShortname(RequestSetGroupShortname) returns (Empty)
-
-- (void)setGroupShortnameWithRequest:(RequestSetGroupShortname *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToSetGroupShortnameWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToSetGroupShortnameWithRequest:(RequestSetGroupShortname *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"SetGroupShortname"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[GPBEmpty class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-- (GRPCUnaryProtoCall *)setGroupShortnameWithMessage:(RequestSetGroupShortname *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"SetGroupShortname"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[GPBEmpty class]];
-}
-
 #pragma mark EditGroupAvatar(RequestEditGroupAvatar) returns (Empty)
 
 - (void)editGroupAvatarWithRequest:(RequestEditGroupAvatar *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
@@ -503,6 +483,26 @@
              responseClass:[GroupPartialInfo class]];
 }
 
+#pragma mark ChangeGroupPublicity(RequestChangeGroupPublicity) returns (Empty)
+
+- (void)changeGroupPublicityWithRequest:(RequestChangeGroupPublicity *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToChangeGroupPublicityWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+- (GRPCProtoCall *)RPCToChangeGroupPublicityWithRequest:(RequestChangeGroupPublicity *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"ChangeGroupPublicity"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GPBEmpty class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+- (GRPCUnaryProtoCall *)changeGroupPublicityWithMessage:(RequestChangeGroupPublicity *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"ChangeGroupPublicity"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[GPBEmpty class]];
+}
+
 @end
 @implementation GroupsAsync
 
@@ -585,26 +585,6 @@
 }
 - (GRPCUnaryProtoCall *)editGroupTitleWithMessage:(RequestEditGroupTitle *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"EditGroupTitle"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[GPBEmpty class]];
-}
-
-#pragma mark SetGroupShortname(RequestSetGroupShortname) returns (Empty)
-
-- (void)setGroupShortnameWithRequest:(RequestSetGroupShortname *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToSetGroupShortnameWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToSetGroupShortnameWithRequest:(RequestSetGroupShortname *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"SetGroupShortname"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[GPBEmpty class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-- (GRPCUnaryProtoCall *)setGroupShortnameWithMessage:(RequestSetGroupShortname *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"SetGroupShortname"
                    message:message
            responseHandler:handler
                callOptions:callOptions

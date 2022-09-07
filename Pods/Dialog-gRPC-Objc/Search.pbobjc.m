@@ -2156,9 +2156,9 @@ typedef struct MessageSearchItem__storage_ {
 
 @end
 
-#pragma mark - ResponseMessageSearchResponse
+#pragma mark - ResponseMessageSearch
 
-@implementation ResponseMessageSearchResponse
+@implementation ResponseMessageSearch
 
 @dynamic searchResultsArray, searchResultsArray_Count;
 @dynamic hasLoadMoreState, loadMoreState;
@@ -2166,14 +2166,14 @@ typedef struct MessageSearchItem__storage_ {
 @dynamic groupOutPeersArray, groupOutPeersArray_Count;
 @dynamic totalCount;
 
-typedef struct ResponseMessageSearchResponse__storage_ {
+typedef struct ResponseMessageSearch__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *searchResultsArray;
   GPBBytesValue *loadMoreState;
   NSMutableArray *userOutPeersArray;
   NSMutableArray *groupOutPeersArray;
   int64_t totalCount;
-} ResponseMessageSearchResponse__storage_;
+} ResponseMessageSearch__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -2184,56 +2184,56 @@ typedef struct ResponseMessageSearchResponse__storage_ {
       {
         .name = "searchResultsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(MessageSearchItem),
-        .number = ResponseMessageSearchResponse_FieldNumber_SearchResultsArray,
+        .number = ResponseMessageSearch_FieldNumber_SearchResultsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponseMessageSearchResponse__storage_, searchResultsArray),
+        .offset = (uint32_t)offsetof(ResponseMessageSearch__storage_, searchResultsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "loadMoreState",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBBytesValue),
-        .number = ResponseMessageSearchResponse_FieldNumber_LoadMoreState,
+        .number = ResponseMessageSearch_FieldNumber_LoadMoreState,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(ResponseMessageSearchResponse__storage_, loadMoreState),
+        .offset = (uint32_t)offsetof(ResponseMessageSearch__storage_, loadMoreState),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "userOutPeersArray",
         .dataTypeSpecific.clazz = GPBObjCClass(UserOutPeer),
-        .number = ResponseMessageSearchResponse_FieldNumber_UserOutPeersArray,
+        .number = ResponseMessageSearch_FieldNumber_UserOutPeersArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponseMessageSearchResponse__storage_, userOutPeersArray),
+        .offset = (uint32_t)offsetof(ResponseMessageSearch__storage_, userOutPeersArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "groupOutPeersArray",
         .dataTypeSpecific.clazz = GPBObjCClass(GroupOutPeer),
-        .number = ResponseMessageSearchResponse_FieldNumber_GroupOutPeersArray,
+        .number = ResponseMessageSearch_FieldNumber_GroupOutPeersArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponseMessageSearchResponse__storage_, groupOutPeersArray),
+        .offset = (uint32_t)offsetof(ResponseMessageSearch__storage_, groupOutPeersArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "totalCount",
         .dataTypeSpecific.clazz = Nil,
-        .number = ResponseMessageSearchResponse_FieldNumber_TotalCount,
+        .number = ResponseMessageSearch_FieldNumber_TotalCount,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(ResponseMessageSearchResponse__storage_, totalCount),
+        .offset = (uint32_t)offsetof(ResponseMessageSearch__storage_, totalCount),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[ResponseMessageSearchResponse class]
+        [GPBDescriptor allocDescriptorForClass:[ResponseMessageSearch class]
                                      rootClass:[SearchRoot class]
                                           file:SearchRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(ResponseMessageSearchResponse__storage_)
+                                   storageSize:sizeof(ResponseMessageSearch__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -2425,18 +2425,18 @@ typedef struct RequestSimpleSearchMore__storage_ {
 
 @end
 
-#pragma mark - RequestFieldAutocomplete
+#pragma mark - RequestAutocompleteSuggestions
 
-@implementation RequestFieldAutocomplete
+@implementation RequestAutocompleteSuggestions
 
 @dynamic fieldName;
 @dynamic fieldValue;
 
-typedef struct RequestFieldAutocomplete__storage_ {
+typedef struct RequestAutocompleteSuggestions__storage_ {
   uint32_t _has_storage_[1];
   NSString *fieldName;
   NSString *fieldValue;
-} RequestFieldAutocomplete__storage_;
+} RequestAutocompleteSuggestions__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -2447,29 +2447,29 @@ typedef struct RequestFieldAutocomplete__storage_ {
       {
         .name = "fieldName",
         .dataTypeSpecific.clazz = Nil,
-        .number = RequestFieldAutocomplete_FieldNumber_FieldName,
+        .number = RequestAutocompleteSuggestions_FieldNumber_FieldName,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestFieldAutocomplete__storage_, fieldName),
+        .offset = (uint32_t)offsetof(RequestAutocompleteSuggestions__storage_, fieldName),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "fieldValue",
         .dataTypeSpecific.clazz = Nil,
-        .number = RequestFieldAutocomplete_FieldNumber_FieldValue,
+        .number = RequestAutocompleteSuggestions_FieldNumber_FieldValue,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestFieldAutocomplete__storage_, fieldValue),
+        .offset = (uint32_t)offsetof(RequestAutocompleteSuggestions__storage_, fieldValue),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestFieldAutocomplete class]
+        [GPBDescriptor allocDescriptorForClass:[RequestAutocompleteSuggestions class]
                                      rootClass:[SearchRoot class]
                                           file:SearchRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestFieldAutocomplete__storage_)
+                                   storageSize:sizeof(RequestAutocompleteSuggestions__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -2481,18 +2481,18 @@ typedef struct RequestFieldAutocomplete__storage_ {
 
 @end
 
-#pragma mark - ResponseFieldAutocomplete
+#pragma mark - ResponseAutocompleteSuggestions
 
-@implementation ResponseFieldAutocomplete
+@implementation ResponseAutocompleteSuggestions
 
 @dynamic fieldName;
 @dynamic fieldValueArray, fieldValueArray_Count;
 
-typedef struct ResponseFieldAutocomplete__storage_ {
+typedef struct ResponseAutocompleteSuggestions__storage_ {
   uint32_t _has_storage_[1];
   NSString *fieldName;
   NSMutableArray *fieldValueArray;
-} ResponseFieldAutocomplete__storage_;
+} ResponseAutocompleteSuggestions__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -2503,29 +2503,29 @@ typedef struct ResponseFieldAutocomplete__storage_ {
       {
         .name = "fieldName",
         .dataTypeSpecific.clazz = Nil,
-        .number = ResponseFieldAutocomplete_FieldNumber_FieldName,
+        .number = ResponseAutocompleteSuggestions_FieldNumber_FieldName,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(ResponseFieldAutocomplete__storage_, fieldName),
+        .offset = (uint32_t)offsetof(ResponseAutocompleteSuggestions__storage_, fieldName),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
       {
         .name = "fieldValueArray",
         .dataTypeSpecific.clazz = Nil,
-        .number = ResponseFieldAutocomplete_FieldNumber_FieldValueArray,
+        .number = ResponseAutocompleteSuggestions_FieldNumber_FieldValueArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponseFieldAutocomplete__storage_, fieldValueArray),
+        .offset = (uint32_t)offsetof(ResponseAutocompleteSuggestions__storage_, fieldValueArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[ResponseFieldAutocomplete class]
+        [GPBDescriptor allocDescriptorForClass:[ResponseAutocompleteSuggestions class]
                                      rootClass:[SearchRoot class]
                                           file:SearchRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(ResponseFieldAutocomplete__storage_)
+                                   storageSize:sizeof(ResponseAutocompleteSuggestions__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");

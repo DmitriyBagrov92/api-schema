@@ -77,7 +77,6 @@ typedef GPB_ENUM(GroupAdminPermission) {
    **/
   GroupAdminPermission_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   GroupAdminPermission_GroupAdminPermissionUnknown = 0,
-  GroupAdminPermission_GroupAdminPermissionEditshortname = 1,
   GroupAdminPermission_GroupAdminPermissionInvite = 2,
   GroupAdminPermission_GroupAdminPermissionKick = 3,
   GroupAdminPermission_GroupAdminPermissionUpdateinfo = 4,
@@ -192,13 +191,13 @@ typedef GPB_ENUM(GroupData_FieldNumber) {
   GroupData_FieldNumber_OwnerUserId = 6,
   GroupData_FieldNumber_CreatedAt = 7,
   GroupData_FieldNumber_About = 8,
-  GroupData_FieldNumber_Shortname = 9,
   GroupData_FieldNumber_BasePermissionsArray = 10,
   GroupData_FieldNumber_Clock = 11,
   GroupData_FieldNumber_PinnedAt = 12,
   GroupData_FieldNumber_ConferenceLink = 13,
   GroupData_FieldNumber_MembersCountLimit = 14,
   GroupData_FieldNumber_DeletedAt = 15,
+  GroupData_FieldNumber_IsPublic = 16,
 };
 
 GPB_FINAL @interface GroupData : GPBMessage
@@ -230,11 +229,6 @@ GPB_FINAL @interface GroupData : GPBMessage
 /** Test to see if @c about has been set. */
 @property(nonatomic, readwrite) BOOL hasAbout;
 
-/** / Group short name */
-@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *shortname;
-/** Test to see if @c shortname has been set. */
-@property(nonatomic, readwrite) BOOL hasShortname;
-
 // |basePermissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *basePermissionsArray;
 /** The number of items in @c basePermissionsArray without causing the array to be created. */
@@ -258,6 +252,8 @@ GPB_FINAL @interface GroupData : GPBMessage
 /** Test to see if @c deletedAt has been set. */
 @property(nonatomic, readwrite) BOOL hasDeletedAt;
 
+@property(nonatomic, readwrite) BOOL isPublic;
+
 @end
 
 /**
@@ -280,10 +276,10 @@ typedef GPB_ENUM(GroupPartialInfo_FieldNumber) {
   GroupPartialInfo_FieldNumber_Clock = 3,
   GroupPartialInfo_FieldNumber_Type = 4,
   GroupPartialInfo_FieldNumber_Title = 5,
-  GroupPartialInfo_FieldNumber_Shortname = 6,
   GroupPartialInfo_FieldNumber_Avatar = 7,
   GroupPartialInfo_FieldNumber_SelfMember = 8,
   GroupPartialInfo_FieldNumber_PinnedAt = 9,
+  GroupPartialInfo_FieldNumber_IsPublic = 10,
 };
 
 GPB_FINAL @interface GroupPartialInfo : GPBMessage
@@ -298,10 +294,6 @@ GPB_FINAL @interface GroupPartialInfo : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *title;
 
-@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *shortname;
-/** Test to see if @c shortname has been set. */
-@property(nonatomic, readwrite) BOOL hasShortname;
-
 @property(nonatomic, readwrite, strong, null_resettable) Avatar *avatar;
 /** Test to see if @c avatar has been set. */
 @property(nonatomic, readwrite) BOOL hasAvatar;
@@ -313,6 +305,8 @@ GPB_FINAL @interface GroupPartialInfo : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *pinnedAt;
 /** Test to see if @c pinnedAt has been set. */
 @property(nonatomic, readwrite) BOOL hasPinnedAt;
+
+@property(nonatomic, readwrite) BOOL isPublic;
 
 @end
 
@@ -565,8 +559,8 @@ typedef GPB_ENUM(RequestCreateGroup_FieldNumber) {
   RequestCreateGroup_FieldNumber_Title = 3,
   RequestCreateGroup_FieldNumber_UsersArray = 4,
   RequestCreateGroup_FieldNumber_GroupType = 5,
-  RequestCreateGroup_FieldNumber_Username = 6,
   RequestCreateGroup_FieldNumber_BasePermissionsArray = 7,
+  RequestCreateGroup_FieldNumber_IsPublic = 8,
 };
 
 /**
@@ -587,16 +581,13 @@ GPB_FINAL @interface RequestCreateGroup : GPBMessage
 /** / group or channel */
 @property(nonatomic, readwrite) GroupType groupType;
 
-/** / optional shortname of a group, group will be public if set */
-@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *username;
-/** Test to see if @c username has been set. */
-@property(nonatomic, readwrite) BOOL hasUsername;
-
 /** / Base permissions for invited members */
 // |basePermissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *basePermissionsArray;
 /** The number of items in @c basePermissionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger basePermissionsArray_Count;
+
+@property(nonatomic, readwrite) BOOL isPublic;
 
 @end
 
@@ -654,27 +645,6 @@ GPB_FINAL @interface RequestEditGroupTitle : GPBMessage
 @property(nonatomic, readwrite) int64_t rid;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *title;
-
-@end
-
-#pragma mark - RequestSetGroupShortname
-
-typedef GPB_ENUM(RequestSetGroupShortname_FieldNumber) {
-  RequestSetGroupShortname_FieldNumber_Peer = 1,
-  RequestSetGroupShortname_FieldNumber_Shortname = 2,
-};
-
-/**
- * Sets group short name
- **/
-GPB_FINAL @interface RequestSetGroupShortname : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-/** / if shortname was empty, then group will become public */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *shortname;
 
 @end
 
@@ -1177,6 +1147,21 @@ GPB_FINAL @interface RequestGetGroupPartialInfo : GPBMessage
 
 @end
 
+#pragma mark - RequestChangeGroupPublicity
+
+typedef GPB_ENUM(RequestChangeGroupPublicity_FieldNumber) {
+  RequestChangeGroupPublicity_FieldNumber_GroupId = 1,
+  RequestChangeGroupPublicity_FieldNumber_IsPublic = 2,
+};
+
+GPB_FINAL @interface RequestChangeGroupPublicity : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
+
+@property(nonatomic, readwrite) BOOL isPublic;
+
+@end
+
 #pragma mark - UpdateGroupMemberInvited
 
 typedef GPB_ENUM(UpdateGroupMemberInvited_FieldNumber) {
@@ -1195,27 +1180,6 @@ GPB_FINAL @interface UpdateGroupMemberInvited : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) Member *member;
 /** Test to see if @c member has been set. */
 @property(nonatomic, readwrite) BOOL hasMember;
-
-@end
-
-#pragma mark - UpdateGroupShortnameChanged
-
-typedef GPB_ENUM(UpdateGroupShortnameChanged_FieldNumber) {
-  UpdateGroupShortnameChanged_FieldNumber_GroupId = 1,
-  UpdateGroupShortnameChanged_FieldNumber_Shortname = 2,
-  UpdateGroupShortnameChanged_FieldNumber_UserId = 3,
-};
-
-/**
- * Update group short name
- **/
-GPB_FINAL @interface UpdateGroupShortnameChanged : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *shortname;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @end
 

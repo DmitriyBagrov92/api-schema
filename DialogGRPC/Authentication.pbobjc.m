@@ -2139,6 +2139,38 @@ typedef struct RequestChangePassword__storage_ {
 
 @end
 
+#pragma mark - RequestGetSelf
+
+@implementation RequestGetSelf
+
+
+typedef struct RequestGetSelf__storage_ {
+  uint32_t _has_storage_[1];
+} RequestGetSelf__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestGetSelf class]
+                                     rootClass:[AuthenticationRoot class]
+                                          file:AuthenticationRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(RequestGetSelf__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - ResponseGetSelf
 
 @implementation ResponseGetSelf

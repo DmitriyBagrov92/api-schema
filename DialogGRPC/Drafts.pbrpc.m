@@ -57,44 +57,44 @@
 
 #pragma mark - Method Implementations
 
-#pragma mark LoadDrafts(LoadDraftsRequest) returns (LoadDraftsResponse)
+#pragma mark LoadDrafts(RequestLoadDrafts) returns (ResponseLoadDrafts)
 
-- (void)loadDraftsWithRequest:(LoadDraftsRequest *)request handler:(void(^)(LoadDraftsResponse *_Nullable response, NSError *_Nullable error))handler{
+- (void)loadDraftsWithRequest:(RequestLoadDrafts *)request handler:(void(^)(ResponseLoadDrafts *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToLoadDraftsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToLoadDraftsWithRequest:(LoadDraftsRequest *)request handler:(void(^)(LoadDraftsResponse *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToLoadDraftsWithRequest:(RequestLoadDrafts *)request handler:(void(^)(ResponseLoadDrafts *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"LoadDrafts"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[LoadDraftsResponse class]
+             responseClass:[ResponseLoadDrafts class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-- (GRPCUnaryProtoCall *)loadDraftsWithMessage:(LoadDraftsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+- (GRPCUnaryProtoCall *)loadDraftsWithMessage:(RequestLoadDrafts *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"LoadDrafts"
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[LoadDraftsResponse class]];
+             responseClass:[ResponseLoadDrafts class]];
 }
 
-#pragma mark SaveDrafts(SaveDraftsRequest) returns (SaveDraftsResponse)
+#pragma mark SaveDrafts(RequestSaveDrafts) returns (ResponseSaveDrafts)
 
-- (void)saveDraftsWithRequest:(SaveDraftsRequest *)request handler:(void(^)(SaveDraftsResponse *_Nullable response, NSError *_Nullable error))handler{
+- (void)saveDraftsWithRequest:(RequestSaveDrafts *)request handler:(void(^)(ResponseSaveDrafts *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToSaveDraftsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToSaveDraftsWithRequest:(SaveDraftsRequest *)request handler:(void(^)(SaveDraftsResponse *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToSaveDraftsWithRequest:(RequestSaveDrafts *)request handler:(void(^)(ResponseSaveDrafts *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"SaveDrafts"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[SaveDraftsResponse class]
+             responseClass:[ResponseSaveDrafts class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-- (GRPCUnaryProtoCall *)saveDraftsWithMessage:(SaveDraftsRequest *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+- (GRPCUnaryProtoCall *)saveDraftsWithMessage:(RequestSaveDrafts *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"SaveDrafts"
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[SaveDraftsResponse class]];
+             responseClass:[ResponseSaveDrafts class]];
 }
 
 @end
