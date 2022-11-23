@@ -24,7 +24,6 @@
 #import "Users.pbobjc.h"
 #import "Reactions.pbobjc.h"
 #import "Permissions.pbobjc.h"
-#import "Events.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 #import "Miniappsregistry.pbobjc.h"
 #import "Suggests.pbobjc.h"
@@ -141,39 +140,6 @@
            responseHandler:handler
                callOptions:callOptions
              responseClass:[ResponseGetDifference class]];
-}
-
-#pragma mark GetDialogsDifference(RequestGetDialogsDifference) returns (ResponseGetDialogsDifference)
-
-/**
- * / Load all dialogs that changed after given date
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)getDialogsDifferenceWithRequest:(RequestGetDialogsDifference *)request handler:(void(^)(ResponseGetDialogsDifference *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToGetDialogsDifferenceWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * / Load all dialogs that changed after given date
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToGetDialogsDifferenceWithRequest:(RequestGetDialogsDifference *)request handler:(void(^)(ResponseGetDialogsDifference *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"GetDialogsDifference"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseGetDialogsDifference class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * / Load all dialogs that changed after given date
- */
-- (GRPCUnaryProtoCall *)getDialogsDifferenceWithMessage:(RequestGetDialogsDifference *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"GetDialogsDifference"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseGetDialogsDifference class]];
 }
 
 #pragma mark GetReferencedEntities(RequestGetReferencedEntities) returns (ResponseGetReferencedEntities)

@@ -35,10 +35,7 @@ CF_EXTERN_C_BEGIN
 @class Color;
 @class DeletedMessage;
 @class Dialog;
-@class DialogData;
 @class DialogGroup;
-@class DialogIndex;
-@class DialogListEntry;
 @class DialogShort;
 @class DocumentEx;
 @class DocumentExPhoto;
@@ -57,7 +54,6 @@ CF_EXTERN_C_BEGIN
 @class GPBStringValue;
 @class GroupOutPeer;
 @class HistoryMessage;
-@class HistoryMessageLight;
 @class ImageLocation;
 @class ImageMedia;
 @class InteractiveMedia;
@@ -82,8 +78,6 @@ CF_EXTERN_C_BEGIN
 @class PinnedMessages;
 @class Reaction;
 @class ReferencedMessages;
-@class ResponseGetLastConversationMessages_Pair;
-@class ResponseGetUpdatedMessages_UpdatedMessage;
 @class SearchPredicate;
 @class ServiceEx;
 @class ServiceExChangedAbout;
@@ -142,29 +136,6 @@ GPBEnumDescriptor *InteractiveMediaStyle_EnumDescriptor(void);
  * the time this source was generated.
  **/
 BOOL InteractiveMediaStyle_IsValidValue(int32_t value);
-
-#pragma mark - Enum MessageState
-
-typedef GPB_ENUM(MessageState) {
-  /**
-   * Value used if any message's field encounters a value that is not defined
-   * by this enum. The message will also have C functions to get/set the rawValue
-   * of the field.
-   **/
-  MessageState_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  MessageState_MessageStateUnknown = 0,
-  MessageState_MessageStateSent = 1,
-  MessageState_MessageStateReceived = 2,
-  MessageState_MessageStateRead = 3,
-};
-
-GPBEnumDescriptor *MessageState_EnumDescriptor(void);
-
-/**
- * Checks to see if the given value is defined by the enum or was not known at
- * the time this source was generated.
- **/
-BOOL MessageState_IsValidValue(int32_t value);
 
 #pragma mark - Enum ListLoadMode
 
@@ -1726,7 +1697,7 @@ typedef GPB_ENUM(ForwardItem_FieldNumber) {
 GPB_FINAL @interface ForwardItem : GPBMessage
 
 /** / Id for message deduplication */
-@property(nonatomic, readwrite) int64_t deduplicationId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *deduplicationId;
 
 /** / Original message id */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
@@ -1759,7 +1730,7 @@ GPB_FINAL @interface RequestSendMessage : GPBMessage
 @property(nonatomic, readwrite) BOOL hasPeer;
 
 /** / Id for message deduplication */
-@property(nonatomic, readwrite) int64_t deduplicationId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *deduplicationId;
 
 @property(nonatomic, readwrite, strong, null_resettable) MessageContent *message;
 /** Test to see if @c message has been set. */
@@ -1815,7 +1786,7 @@ GPB_FINAL @interface RequestSendMessageAsync : GPBMessage
 @property(nonatomic, readwrite) BOOL hasPeer;
 
 /** / Id for message deduplication */
-@property(nonatomic, readwrite) int64_t deduplicationId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *deduplicationId;
 
 @property(nonatomic, readwrite, strong, null_resettable) MessageContent *message;
 /** Test to see if @c message has been set. */
@@ -2122,7 +2093,7 @@ GPB_FINAL @interface UpdateMessage : GPBMessage
 /** Test to see if @c myReadDate has been set. */
 @property(nonatomic, readwrite) BOOL hasMyReadDate;
 
-@property(nonatomic, readwrite) int64_t randomId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *randomId;
 
 /** when greater than date, then message is edited */
 @property(nonatomic, readwrite) int64_t modifiedAt;
@@ -2209,7 +2180,7 @@ GPB_FINAL @interface UpdateMessageSent : GPBMessage
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-@property(nonatomic, readwrite) int64_t rid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
 @property(nonatomic, readwrite) int64_t date;
 
@@ -2454,7 +2425,7 @@ GPB_FINAL @interface UpdateSendMessageError : GPBMessage
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-@property(nonatomic, readwrite) int64_t rid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
 @property(nonatomic, readwrite) int64_t date;
 
@@ -2813,19 +2784,17 @@ GPB_FINAL @interface ForwardSource : GPBMessage
 
 typedef GPB_ENUM(HistoryMessage_FieldNumber) {
   HistoryMessage_FieldNumber_SenderUserId = 1,
-  HistoryMessage_FieldNumber_SenderPeer = 2,
-  HistoryMessage_FieldNumber_HostPeer = 3,
   HistoryMessage_FieldNumber_Mid = 4,
   HistoryMessage_FieldNumber_PrevMid = 5,
-  HistoryMessage_FieldNumber_Date = 6,
+  HistoryMessage_FieldNumber_CreatedAt = 6,
   HistoryMessage_FieldNumber_Message = 7,
-  HistoryMessage_FieldNumber_State = 8,
   HistoryMessage_FieldNumber_Attribute = 10,
   HistoryMessage_FieldNumber_Reply = 12,
   HistoryMessage_FieldNumber_EditedAt = 13,
   HistoryMessage_FieldNumber_RandomId = 14,
   HistoryMessage_FieldNumber_ForwardSource = 15,
   HistoryMessage_FieldNumber_ReactionsArray = 16,
+  HistoryMessage_FieldNumber_Peer = 17,
 };
 
 typedef GPB_ENUM(HistoryMessage_Attach_OneOfCase) {
@@ -2841,13 +2810,9 @@ GPB_FINAL @interface HistoryMessage : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *senderUserId;
 
-@property(nonatomic, readwrite, strong, null_resettable) OutPeer *senderPeer;
-/** Test to see if @c senderPeer has been set. */
-@property(nonatomic, readwrite) BOOL hasSenderPeer;
-
-@property(nonatomic, readwrite, strong, null_resettable) OutPeer *hostPeer;
-/** Test to see if @c hostPeer has been set. */
-@property(nonatomic, readwrite) BOOL hasHostPeer;
+@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
 
 /** / Message id generated by server */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
@@ -2858,13 +2823,11 @@ GPB_FINAL @interface HistoryMessage : GPBMessage
 /** Test to see if @c prevMid has been set. */
 @property(nonatomic, readwrite) BOOL hasPrevMid;
 
-@property(nonatomic, readwrite) int64_t date;
+@property(nonatomic, readwrite) int64_t createdAt;
 
 @property(nonatomic, readwrite, strong, null_resettable) MessageContent *message;
 /** Test to see if @c message has been set. */
 @property(nonatomic, readwrite) BOOL hasMessage;
-
-@property(nonatomic, readwrite) MessageState state;
 
 @property(nonatomic, readwrite, strong, null_resettable) MessageAttributes *attribute;
 /** Test to see if @c attribute has been set. */
@@ -2880,7 +2843,7 @@ GPB_FINAL @interface HistoryMessage : GPBMessage
 /** Test to see if @c editedAt has been set. */
 @property(nonatomic, readwrite) BOOL hasEditedAt;
 
-@property(nonatomic, readwrite) int64_t randomId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *randomId;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Reaction*> *reactionsArray;
 /** The number of items in @c reactionsArray without causing the array to be created. */
@@ -2889,60 +2852,9 @@ GPB_FINAL @interface HistoryMessage : GPBMessage
 @end
 
 /**
- * Fetches the raw value of a @c HistoryMessage's @c state property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
-int32_t HistoryMessage_State_RawValue(HistoryMessage *message);
-/**
- * Sets the raw value of an @c HistoryMessage's @c state property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
-void SetHistoryMessage_State_RawValue(HistoryMessage *message, int32_t value);
-
-/**
  * Clears whatever value was set for the oneof 'attach'.
  **/
 void HistoryMessage_ClearAttachOneOfCase(HistoryMessage *message);
-
-#pragma mark - RequestLoadHistory
-
-typedef GPB_ENUM(RequestLoadHistory_FieldNumber) {
-  RequestLoadHistory_FieldNumber_Peer = 1,
-  RequestLoadHistory_FieldNumber_Date = 2,
-  RequestLoadHistory_FieldNumber_LoadMode = 3,
-  RequestLoadHistory_FieldNumber_Limit = 4,
-};
-
-/**
- * Loading history of chat
- **/
-GPB_FINAL @interface RequestLoadHistory : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-@property(nonatomic, readwrite) int64_t date;
-
-/** / forward, backward or both */
-@property(nonatomic, readwrite) ListLoadMode loadMode;
-
-@property(nonatomic, readwrite) int32_t limit;
-
-@end
-
-/**
- * Fetches the raw value of a @c RequestLoadHistory's @c loadMode property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
-int32_t RequestLoadHistory_LoadMode_RawValue(RequestLoadHistory *message);
-/**
- * Sets the raw value of an @c RequestLoadHistory's @c loadMode property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
-void SetRequestLoadHistory_LoadMode_RawValue(RequestLoadHistory *message, int32_t value);
 
 #pragma mark - RequestLoadMessageHistory
 
@@ -2990,11 +2902,8 @@ void SetRequestLoadMessageHistory_LoadMode_RawValue(RequestLoadMessageHistory *m
 typedef GPB_ENUM(ResponseLoadHistory_FieldNumber) {
   ResponseLoadHistory_FieldNumber_HistoryArray = 1,
   ResponseLoadHistory_FieldNumber_UserPeersArray = 2,
-  ResponseLoadHistory_FieldNumber_GroupPeersArray = 3,
-  ResponseLoadHistory_FieldNumber_Counter = 4,
-  ResponseLoadHistory_FieldNumber_CounterDate = 5,
   ResponseLoadHistory_FieldNumber_LastConversationMessageDate = 6,
-  ResponseLoadHistory_FieldNumber_CountForeignAfterLastReturned = 7,
+  ResponseLoadHistory_FieldNumber_UnreadCount = 8,
 };
 
 GPB_FINAL @interface ResponseLoadHistory : GPBMessage
@@ -3007,192 +2916,13 @@ GPB_FINAL @interface ResponseLoadHistory : GPBMessage
 /** The number of items in @c userPeersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userPeersArray_Count;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupPeersArray;
-/** The number of items in @c groupPeersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger groupPeersArray_Count;
-
 /** / counter of unread messages */
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *counter;
-/** Test to see if @c counter has been set. */
-@property(nonatomic, readwrite) BOOL hasCounter;
-
-/** / date, related to this unread counter */
-@property(nonatomic, readwrite) int64_t counterDate;
+@property(nonatomic, readwrite) int32_t unreadCount;
 
 /** / last conversation message date */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *lastConversationMessageDate;
 /** Test to see if @c lastConversationMessageDate has been set. */
 @property(nonatomic, readwrite) BOOL hasLastConversationMessageDate;
-
-/** / counter of the messages between last conversation message (including it) and last returned in this response */
-@property(nonatomic, readwrite) int32_t countForeignAfterLastReturned;
-
-@end
-
-#pragma mark - RequestHistoryDifference
-
-typedef GPB_ENUM(RequestHistoryDifference_FieldNumber) {
-  RequestHistoryDifference_FieldNumber_Clock = 1,
-};
-
-GPB_FINAL @interface RequestHistoryDifference : GPBMessage
-
-@property(nonatomic, readwrite) int64_t clock;
-
-@end
-
-#pragma mark - ResponseHistoryDifference
-
-typedef GPB_ENUM(ResponseHistoryDifference_FieldNumber) {
-  ResponseHistoryDifference_FieldNumber_HistoryArray = 1,
-  ResponseHistoryDifference_FieldNumber_FromClock = 2,
-  ResponseHistoryDifference_FieldNumber_Clock = 3,
-};
-
-GPB_FINAL @interface ResponseHistoryDifference : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<HistoryMessage*> *historyArray;
-/** The number of items in @c historyArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger historyArray_Count;
-
-@property(nonatomic, readwrite) int64_t fromClock;
-
-@property(nonatomic, readwrite) int64_t clock;
-
-@end
-
-#pragma mark - HistoryMessageLight
-
-typedef GPB_ENUM(HistoryMessageLight_FieldNumber) {
-  HistoryMessageLight_FieldNumber_SenderUserId = 1,
-  HistoryMessageLight_FieldNumber_MessageId = 2,
-  HistoryMessageLight_FieldNumber_Date = 3,
-  HistoryMessageLight_FieldNumber_Message = 4,
-  HistoryMessageLight_FieldNumber_Reply = 6,
-  HistoryMessageLight_FieldNumber_EditedAt = 7,
-  HistoryMessageLight_FieldNumber_RandomId = 8,
-  HistoryMessageLight_FieldNumber_ForwardSource = 9,
-};
-
-typedef GPB_ENUM(HistoryMessageLight_Attach_OneOfCase) {
-  HistoryMessageLight_Attach_OneOfCase_GPBUnsetOneOfCase = 0,
-  HistoryMessageLight_Attach_OneOfCase_Reply = 6,
-  HistoryMessageLight_Attach_OneOfCase_ForwardSource = 9,
-};
-
-GPB_FINAL @interface HistoryMessageLight : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *senderUserId;
-
-/** / Message id generated by server */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *messageId;
-/** Test to see if @c messageId has been set. */
-@property(nonatomic, readwrite) BOOL hasMessageId;
-
-@property(nonatomic, readwrite) int64_t date;
-
-@property(nonatomic, readwrite, strong, null_resettable) MessageContent *message;
-/** Test to see if @c message has been set. */
-@property(nonatomic, readwrite) BOOL hasMessage;
-
-@property(nonatomic, readonly) HistoryMessageLight_Attach_OneOfCase attachOneOfCase;
-
-@property(nonatomic, readwrite, strong, null_resettable) ReferencedMessages *reply;
-
-@property(nonatomic, readwrite, strong, null_resettable) ForwardSource *forwardSource;
-
-@property(nonatomic, readwrite) int64_t editedAt;
-
-@property(nonatomic, readwrite) int64_t randomId;
-
-@end
-
-/**
- * Clears whatever value was set for the oneof 'attach'.
- **/
-void HistoryMessageLight_ClearAttachOneOfCase(HistoryMessageLight *message);
-
-#pragma mark - RequestLoadHistoryLight
-
-typedef GPB_ENUM(RequestLoadHistoryLight_FieldNumber) {
-  RequestLoadHistoryLight_FieldNumber_Peer = 1,
-  RequestLoadHistoryLight_FieldNumber_Date = 2,
-  RequestLoadHistoryLight_FieldNumber_LoadMode = 3,
-  RequestLoadHistoryLight_FieldNumber_Limit = 4,
-};
-
-GPB_FINAL @interface RequestLoadHistoryLight : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-@property(nonatomic, readwrite) int64_t date;
-
-/** / forward, backward or both */
-@property(nonatomic, readwrite) ListLoadMode loadMode;
-
-@property(nonatomic, readwrite) int32_t limit;
-
-@end
-
-/**
- * Fetches the raw value of a @c RequestLoadHistoryLight's @c loadMode property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
-int32_t RequestLoadHistoryLight_LoadMode_RawValue(RequestLoadHistoryLight *message);
-/**
- * Sets the raw value of an @c RequestLoadHistoryLight's @c loadMode property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
-void SetRequestLoadHistoryLight_LoadMode_RawValue(RequestLoadHistoryLight *message, int32_t value);
-
-#pragma mark - ResponseLoadHistoryLight
-
-typedef GPB_ENUM(ResponseLoadHistoryLight_FieldNumber) {
-  ResponseLoadHistoryLight_FieldNumber_HistoryArray = 1,
-};
-
-GPB_FINAL @interface ResponseLoadHistoryLight : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<HistoryMessageLight*> *historyArray;
-/** The number of items in @c historyArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger historyArray_Count;
-
-@end
-
-#pragma mark - RequestCountForeignMessages
-
-typedef GPB_ENUM(RequestCountForeignMessages_FieldNumber) {
-  RequestCountForeignMessages_FieldNumber_Peer = 1,
-  RequestCountForeignMessages_FieldNumber_FromDate = 2,
-};
-
-GPB_FINAL @interface RequestCountForeignMessages : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-@property(nonatomic, readwrite) int64_t fromDate;
-
-@end
-
-#pragma mark - ResponseCountForeignMessages
-
-typedef GPB_ENUM(ResponseCountForeignMessages_FieldNumber) {
-  ResponseCountForeignMessages_FieldNumber_LastConversationMessageDate = 1,
-  ResponseCountForeignMessages_FieldNumber_Count = 2,
-};
-
-GPB_FINAL @interface ResponseCountForeignMessages : GPBMessage
-
-/** / last conversation message date */
-@property(nonatomic, readwrite) int64_t lastConversationMessageDate;
-
-/** / counter of the messages between last conversation message (including it) and last returned in this response */
-@property(nonatomic, readwrite) int32_t count;
 
 @end
 
@@ -3201,23 +2931,15 @@ GPB_FINAL @interface ResponseCountForeignMessages : GPBMessage
 typedef GPB_ENUM(Dialog_FieldNumber) {
   Dialog_FieldNumber_Peer = 1,
   Dialog_FieldNumber_UnreadCount = 2,
-  Dialog_FieldNumber_SortDate = 3,
-  Dialog_FieldNumber_SenderUserId = 4,
-  Dialog_FieldNumber_IsFavourite = 5,
-  Dialog_FieldNumber_Mid = 6,
-  Dialog_FieldNumber_Date = 7,
-  Dialog_FieldNumber_Message = 8,
-  Dialog_FieldNumber_State = 9,
-  Dialog_FieldNumber_FirstUnreadDate = 10,
-  Dialog_FieldNumber_Attributes = 11,
+  Dialog_FieldNumber_ModifiedAt = 7,
   Dialog_FieldNumber_PinnedMessages = 12,
   Dialog_FieldNumber_HistoryMessage = 13,
   Dialog_FieldNumber_LastReceive = 14,
   Dialog_FieldNumber_LastRead = 15,
   Dialog_FieldNumber_LastReactionAt = 16,
   Dialog_FieldNumber_ReadLater = 17,
-  Dialog_FieldNumber_DialogType = 18,
   Dialog_FieldNumber_IsMuted = 19,
+  Dialog_FieldNumber_IsFavourite = 20,
 };
 
 /**
@@ -3246,35 +2968,8 @@ GPB_FINAL @interface Dialog : GPBMessage
 /** / counter of unread messages */
 @property(nonatomic, readwrite) int32_t unreadCount;
 
-/** / deprecated */
-@property(nonatomic, readwrite) int64_t sortDate;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *senderUserId;
-
-@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isFavourite;
-/** Test to see if @c isFavourite has been set. */
-@property(nonatomic, readwrite) BOOL hasIsFavourite;
-
-/** / Message id */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
-
-/** / last action date */
-@property(nonatomic, readwrite) int64_t date;
-
-/** / last message content */
-@property(nonatomic, readwrite, strong, null_resettable) MessageContent *message;
-/** Test to see if @c message has been set. */
-@property(nonatomic, readwrite) BOOL hasMessage;
-
-@property(nonatomic, readwrite) MessageState state;
-
-@property(nonatomic, readwrite) int64_t firstUnreadDate;
-
-@property(nonatomic, readwrite, strong, null_resettable) MessageAttributes *attributes;
-/** Test to see if @c attributes has been set. */
-@property(nonatomic, readwrite) BOOL hasAttributes;
+/** / last dialog modification date */
+@property(nonatomic, readwrite) int64_t modifiedAt;
 
 @property(nonatomic, readwrite, strong, null_resettable) PinnedMessages *pinnedMessages;
 /** Test to see if @c pinnedMessages has been set. */
@@ -3293,28 +2988,16 @@ GPB_FINAL @interface Dialog : GPBMessage
 
 @property(nonatomic, readwrite) BOOL readLater;
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *dialogType;
-
 @property(nonatomic, readwrite) BOOL isMuted;
 
-@end
+@property(nonatomic, readwrite) BOOL isFavourite;
 
-/**
- * Fetches the raw value of a @c Dialog's @c state property, even
- * if the value was not defined by the enum at the time the code was generated.
- **/
-int32_t Dialog_State_RawValue(Dialog *message);
-/**
- * Sets the raw value of an @c Dialog's @c state property, allowing
- * it to be set to a value that was not defined by the enum at the time the code
- * was generated.
- **/
-void SetDialog_State_RawValue(Dialog *message, int32_t value);
+@end
 
 #pragma mark - RequestLoadDialogs
 
 typedef GPB_ENUM(RequestLoadDialogs_FieldNumber) {
-  RequestLoadDialogs_FieldNumber_MinDate = 1,
+  RequestLoadDialogs_FieldNumber_FromDate = 1,
   RequestLoadDialogs_FieldNumber_Limit = 2,
   RequestLoadDialogs_FieldNumber_FiltersArray = 3,
   RequestLoadDialogs_FieldNumber_PeersToLoadArray = 4,
@@ -3325,7 +3008,7 @@ typedef GPB_ENUM(RequestLoadDialogs_FieldNumber) {
  **/
 GPB_FINAL @interface RequestLoadDialogs : GPBMessage
 
-@property(nonatomic, readwrite) int64_t minDate;
+@property(nonatomic, readwrite) int64_t fromDate;
 
 @property(nonatomic, readwrite) int32_t limit;
 
@@ -3346,6 +3029,7 @@ typedef GPB_ENUM(ResponseLoadDialogs_FieldNumber) {
   ResponseLoadDialogs_FieldNumber_DialogsArray = 1,
   ResponseLoadDialogs_FieldNumber_UserPeersArray = 2,
   ResponseLoadDialogs_FieldNumber_GroupPeersArray = 3,
+  ResponseLoadDialogs_FieldNumber_TotalDialogsCount = 4,
 };
 
 /**
@@ -3365,238 +3049,7 @@ GPB_FINAL @interface ResponseLoadDialogs : GPBMessage
 /** The number of items in @c groupPeersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger groupPeersArray_Count;
 
-@end
-
-#pragma mark - DialogData
-
-typedef GPB_ENUM(DialogData_FieldNumber) {
-  DialogData_FieldNumber_IsFavourite = 1,
-  DialogData_FieldNumber_CreatedAt = 2,
-  DialogData_FieldNumber_Clock = 3,
-  DialogData_FieldNumber_IsMuted = 4,
-};
-
-/**
- * Data related to dialog entity
- **/
-GPB_FINAL @interface DialogData : GPBMessage
-
-@property(nonatomic, readwrite) BOOL isFavourite;
-
-@property(nonatomic, readwrite) int64_t createdAt;
-
-/** / When dialog was changed last time */
-@property(nonatomic, readwrite) int64_t clock;
-
-@property(nonatomic, readwrite) BOOL isMuted;
-
-@end
-
-#pragma mark - DialogIndex
-
-typedef GPB_ENUM(DialogIndex_FieldNumber) {
-  DialogIndex_FieldNumber_Peer = 1,
-  DialogIndex_FieldNumber_LastMessageDate = 2,
-  DialogIndex_FieldNumber_Data_p = 3,
-};
-
-GPB_FINAL @interface DialogIndex : GPBMessage
-
-/** / The peer for the conversation */
-@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-/** / Last message date of a dialog */
-@property(nonatomic, readwrite) int64_t lastMessageDate;
-
-@property(nonatomic, readwrite, strong, null_resettable) DialogData *data_p;
-/** Test to see if @c data_p has been set. */
-@property(nonatomic, readwrite) BOOL hasData_p;
-
-@end
-
-#pragma mark - DialogListEntry
-
-typedef GPB_ENUM(DialogListEntry_FieldNumber) {
-  DialogListEntry_FieldNumber_Peer = 1,
-  DialogListEntry_FieldNumber_UnreadCounterClock = 2,
-  DialogListEntry_FieldNumber_UnreadCount = 3,
-  DialogListEntry_FieldNumber_MyReadDate = 4,
-  DialogListEntry_FieldNumber_LastMessageDate = 5,
-  DialogListEntry_FieldNumber_ReceiveDate = 6,
-  DialogListEntry_FieldNumber_ReadDate = 7,
-  DialogListEntry_FieldNumber_EntryClock = 8,
-  DialogListEntry_FieldNumber_LastUpdateOfMessageDate = 9,
-  DialogListEntry_FieldNumber_LastReactionDate = 10,
-  DialogListEntry_FieldNumber_ReadLater = 11,
-  DialogListEntry_FieldNumber_DialogType = 12,
-  DialogListEntry_FieldNumber_Data_p = 13,
-};
-
-/**
- * Compound info of a one of the dialogs in dialog list SDK 2.0
- *
- * peer
- * unread_count count of the unread messages in dialog
- * my_read_date date of the last own read
- * last_message_date date of the last message
- * receive_date date of the last received message
- * read_date date of the last read message
- * entry_clock shared clock across all datas which required for making a dialog entry
- * data data related to dialog itself
- **/
-GPB_FINAL @interface DialogListEntry : GPBMessage
-
-/** / Peer of conversation */
-@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-@property(nonatomic, readwrite) int64_t unreadCounterClock;
-
-@property(nonatomic, readwrite) int32_t unreadCount;
-
-@property(nonatomic, readwrite) int64_t myReadDate;
-
-@property(nonatomic, readwrite) int64_t lastMessageDate;
-
-@property(nonatomic, readwrite) int64_t receiveDate;
-
-@property(nonatomic, readwrite) int64_t readDate;
-
-@property(nonatomic, readwrite) int64_t entryClock;
-
-@property(nonatomic, readwrite) int64_t lastUpdateOfMessageDate;
-
-@property(nonatomic, readwrite) int64_t lastReactionDate;
-
-@property(nonatomic, readwrite) BOOL readLater;
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *dialogType;
-
-@property(nonatomic, readwrite, strong, null_resettable) DialogData *data_p;
-/** Test to see if @c data_p has been set. */
-@property(nonatomic, readwrite) BOOL hasData_p;
-
-@end
-
-#pragma mark - RequestFetchDialogIndex
-
-/**
- * *
- * Fetches dialog index (short info about all user's dialogs).
- * Used in client side pagination.
- **/
-GPB_FINAL @interface RequestFetchDialogIndex : GPBMessage
-
-@end
-
-#pragma mark - ResponseFetchDialogIndex
-
-typedef GPB_ENUM(ResponseFetchDialogIndex_FieldNumber) {
-  ResponseFetchDialogIndex_FieldNumber_DialogIndicesArray = 1,
-};
-
-GPB_FINAL @interface ResponseFetchDialogIndex : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<DialogIndex*> *dialogIndicesArray;
-/** The number of items in @c dialogIndicesArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger dialogIndicesArray_Count;
-
-@end
-
-#pragma mark - RequestDialogListDifference
-
-typedef GPB_ENUM(RequestDialogListDifference_FieldNumber) {
-  RequestDialogListDifference_FieldNumber_FromClock = 1,
-};
-
-/**
- * Loading compound difference (all dialogs after from_clock) as DialogListEntries
- * Use it to request difference in dialog list
- **/
-GPB_FINAL @interface RequestDialogListDifference : GPBMessage
-
-/**
- * / Shared clock across all states which required for making a dialog entry (e.g. max clock among those dates)
- * / Conceptually you have to set this to sync all including datas after reconnect or authorization
- **/
-@property(nonatomic, readwrite) int64_t fromClock;
-
-@end
-
-#pragma mark - ResponseDialogListDifference
-
-typedef GPB_ENUM(ResponseDialogListDifference_FieldNumber) {
-  ResponseDialogListDifference_FieldNumber_EntriesArray = 1,
-  ResponseDialogListDifference_FieldNumber_Clock = 2,
-  ResponseDialogListDifference_FieldNumber_PrevClock = 3,
-};
-
-/**
- * / Contains dialogs that was change after from_clock
- **/
-GPB_FINAL @interface ResponseDialogListDifference : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<DialogListEntry*> *entriesArray;
-/** The number of items in @c entriesArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger entriesArray_Count;
-
-/** / Start and the end of the compound history data interval */
-@property(nonatomic, readwrite) int64_t clock;
-
-@property(nonatomic, readwrite) int64_t prevClock;
-
-@end
-
-#pragma mark - RequestGetLastConversationMessages
-
-typedef GPB_ENUM(RequestGetLastConversationMessages_FieldNumber) {
-  RequestGetLastConversationMessages_FieldNumber_PeersArray = 1,
-};
-
-/**
- * Use it to receive messages for visible dialogs after FetchDialogsIndex
- **/
-GPB_FINAL @interface RequestGetLastConversationMessages : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Peer*> *peersArray;
-/** The number of items in @c peersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger peersArray_Count;
-
-@end
-
-#pragma mark - ResponseGetLastConversationMessages
-
-typedef GPB_ENUM(ResponseGetLastConversationMessages_FieldNumber) {
-  ResponseGetLastConversationMessages_FieldNumber_MessagesArray = 1,
-};
-
-GPB_FINAL @interface ResponseGetLastConversationMessages : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<ResponseGetLastConversationMessages_Pair*> *messagesArray;
-/** The number of items in @c messagesArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger messagesArray_Count;
-
-@end
-
-#pragma mark - ResponseGetLastConversationMessages_Pair
-
-typedef GPB_ENUM(ResponseGetLastConversationMessages_Pair_FieldNumber) {
-  ResponseGetLastConversationMessages_Pair_FieldNumber_Peer = 1,
-  ResponseGetLastConversationMessages_Pair_FieldNumber_Message = 2,
-};
-
-GPB_FINAL @interface ResponseGetLastConversationMessages_Pair : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-@property(nonatomic, readwrite, strong, null_resettable) HistoryMessage *message;
-/** Test to see if @c message has been set. */
-@property(nonatomic, readwrite) BOOL hasMessage;
+@property(nonatomic, readwrite) int32_t totalDialogsCount;
 
 @end
 
@@ -3670,23 +3123,6 @@ GPB_FINAL @interface UpdateDialogMuteChanged : GPBMessage
 @property(nonatomic, readwrite) BOOL hasPeer;
 
 @property(nonatomic, readwrite) BOOL isMuted;
-
-@end
-
-#pragma mark - RequestNotifyDialogOpened
-
-typedef GPB_ENUM(RequestNotifyDialogOpened_FieldNumber) {
-  RequestNotifyDialogOpened_FieldNumber_Peer = 1,
-};
-
-/**
- * Notifying about dialog open
- **/
-GPB_FINAL @interface RequestNotifyDialogOpened : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
 
 @end
 
@@ -3765,7 +3201,7 @@ GPB_FINAL @interface RequestUnpinMessage : GPBMessage
 typedef GPB_ENUM(UpdatePinnedMessagesChanged_FieldNumber) {
   UpdatePinnedMessagesChanged_FieldNumber_Peer = 1,
   UpdatePinnedMessagesChanged_FieldNumber_PinnedMessages = 2,
-  UpdatePinnedMessagesChanged_FieldNumber_ActionDate = 3,
+  UpdatePinnedMessagesChanged_FieldNumber_LastPinDate = 3,
 };
 
 /**
@@ -3781,66 +3217,7 @@ GPB_FINAL @interface UpdatePinnedMessagesChanged : GPBMessage
 /** Test to see if @c pinnedMessages has been set. */
 @property(nonatomic, readwrite) BOOL hasPinnedMessages;
 
-@property(nonatomic, readwrite) int64_t actionDate;
-
-@end
-
-#pragma mark - RequestGetUpdatedMessages
-
-typedef GPB_ENUM(RequestGetUpdatedMessages_FieldNumber) {
-  RequestGetUpdatedMessages_FieldNumber_Peer = 1,
-  RequestGetUpdatedMessages_FieldNumber_FromClock = 2,
-};
-
-GPB_FINAL @interface RequestGetUpdatedMessages : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-@property(nonatomic, readwrite) int64_t fromClock;
-
-@end
-
-#pragma mark - ResponseGetUpdatedMessages
-
-typedef GPB_ENUM(ResponseGetUpdatedMessages_FieldNumber) {
-  ResponseGetUpdatedMessages_FieldNumber_MessagesArray = 1,
-  ResponseGetUpdatedMessages_FieldNumber_PeerClock = 2,
-  ResponseGetUpdatedMessages_FieldNumber_NextAvailable = 3,
-};
-
-GPB_FINAL @interface ResponseGetUpdatedMessages : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<ResponseGetUpdatedMessages_UpdatedMessage*> *messagesArray;
-/** The number of items in @c messagesArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger messagesArray_Count;
-
-@property(nonatomic, readwrite) int64_t peerClock;
-
-@property(nonatomic, readwrite) BOOL nextAvailable;
-
-@end
-
-#pragma mark - ResponseGetUpdatedMessages_UpdatedMessage
-
-typedef GPB_ENUM(ResponseGetUpdatedMessages_UpdatedMessage_FieldNumber) {
-  ResponseGetUpdatedMessages_UpdatedMessage_FieldNumber_Mid = 1,
-  ResponseGetUpdatedMessages_UpdatedMessage_FieldNumber_Message = 2,
-  ResponseGetUpdatedMessages_UpdatedMessage_FieldNumber_ModifiedAt = 3,
-};
-
-GPB_FINAL @interface ResponseGetUpdatedMessages_UpdatedMessage : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
-
-@property(nonatomic, readwrite, strong, null_resettable) MessageContent *message;
-/** Test to see if @c message has been set. */
-@property(nonatomic, readwrite) BOOL hasMessage;
-
-@property(nonatomic, readwrite) int64_t modifiedAt;
+@property(nonatomic, readwrite) int64_t lastPinDate;
 
 @end
 
@@ -3869,6 +3246,7 @@ typedef GPB_ENUM(RequestGetMessageReads_FieldNumber) {
   RequestGetMessageReads_FieldNumber_Mid = 1,
   RequestGetMessageReads_FieldNumber_Limit = 2,
   RequestGetMessageReads_FieldNumber_TimestampFrom = 3,
+  RequestGetMessageReads_FieldNumber_Peer = 4,
 };
 
 /**
@@ -3887,6 +3265,10 @@ GPB_FINAL @interface RequestGetMessageReads : GPBMessage
 /** time selection starts from */
 @property(nonatomic, readwrite) int64_t timestampFrom;
 
+@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
+
 @end
 
 #pragma mark - RequestGetMessageReceives
@@ -3895,6 +3277,7 @@ typedef GPB_ENUM(RequestGetMessageReceives_FieldNumber) {
   RequestGetMessageReceives_FieldNumber_Mid = 1,
   RequestGetMessageReceives_FieldNumber_Limit = 2,
   RequestGetMessageReceives_FieldNumber_TimestampFrom = 3,
+  RequestGetMessageReceives_FieldNumber_Peer = 4,
 };
 
 /**
@@ -3913,6 +3296,10 @@ GPB_FINAL @interface RequestGetMessageReceives : GPBMessage
 /** time selection starts from */
 @property(nonatomic, readwrite) int64_t timestampFrom;
 
+@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
+
 @end
 
 #pragma mark - ResponseGetMessageReads
@@ -3920,8 +3307,6 @@ GPB_FINAL @interface RequestGetMessageReceives : GPBMessage
 typedef GPB_ENUM(ResponseGetMessageReads_FieldNumber) {
   ResponseGetMessageReads_FieldNumber_StatusArray = 1,
   ResponseGetMessageReads_FieldNumber_TimestampTill = 2,
-  ResponseGetMessageReads_FieldNumber_LastReadDate = 3,
-  ResponseGetMessageReads_FieldNumber_Counter = 4,
 };
 
 /**
@@ -3935,10 +3320,6 @@ GPB_FINAL @interface ResponseGetMessageReads : GPBMessage
 
 /** max time of returned entries, or requested time if empty */
 @property(nonatomic, readwrite) int64_t timestampTill;
-
-@property(nonatomic, readwrite) int64_t lastReadDate;
-
-@property(nonatomic, readwrite) int32_t counter;
 
 @end
 

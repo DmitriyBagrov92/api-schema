@@ -8,15 +8,12 @@
 
 #import <DialogGRPC/Annotations.pbobjc.h>
 #import <DialogGRPC/Authentication.pbobjc.h>
-#import <DialogGRPC/Clickroad.pbobjc.h>
 #import <DialogGRPC/ConfigSync.pbobjc.h>
 #import <DialogGRPC/Contacts.pbobjc.h>
-#import <DialogGRPC/Counters.pbobjc.h>
 #import <DialogGRPC/Crypto.pbobjc.h>
 #import <DialogGRPC/Definitions.pbobjc.h>
 #import <DialogGRPC/Descriptor.pbobjc.h>
 #import <DialogGRPC/DeviceInfo.pbobjc.h>
-#import <DialogGRPC/GatewayService.pbobjc.h>
 #import <DialogGRPC/Groups.pbobjc.h>
 #import <DialogGRPC/HTTP.pbobjc.h>
 #import <DialogGRPC/Integrations.pbobjc.h>
@@ -37,12 +34,9 @@
 #import <DialogGRPC/Scalapb.pbobjc.h>
 #import <DialogGRPC/Search.pbobjc.h>
 #import <DialogGRPC/SequenceAndUpdates.pbobjc.h>
-#import <DialogGRPC/Spaces.pbobjc.h>
 #import <DialogGRPC/Stickers.pbobjc.h>
-#import <DialogGRPC/Threads.pbobjc.h>
 #import <DialogGRPC/Users.pbobjc.h>
 #import <DialogGRPC/Authentication.pbrpc.h>
-#import <DialogGRPC/Clickroad.pbrpc.h>
 #import <DialogGRPC/ConfigSync.pbrpc.h>
 #import <DialogGRPC/Contacts.pbrpc.h>
 #import <DialogGRPC/Crypto.pbrpc.h>
@@ -62,9 +56,7 @@
 #import <DialogGRPC/Registration.pbrpc.h>
 #import <DialogGRPC/Search.pbrpc.h>
 #import <DialogGRPC/SequenceAndUpdates.pbrpc.h>
-#import <DialogGRPC/Spaces.pbrpc.h>
 #import <DialogGRPC/Stickers.pbrpc.h>
-#import <DialogGRPC/Threads.pbrpc.h>
 #import <DialogGRPC/Users.pbrpc.h>
 #import <DialogGRPC/Suggests.pbobjc.h>
 #import <DialogGRPC/Suggests.pbrpc.h>

@@ -297,39 +297,6 @@
              responseClass:[GPBEmpty class]];
 }
 
-#pragma mark LoadHistory(RequestLoadHistory) returns (ResponseLoadHistory)
-
-/**
- * / Load conversation history
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)loadHistoryWithRequest:(RequestLoadHistory *)request handler:(void(^)(ResponseLoadHistory *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToLoadHistoryWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * / Load conversation history
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToLoadHistoryWithRequest:(RequestLoadHistory *)request handler:(void(^)(ResponseLoadHistory *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"LoadHistory"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseLoadHistory class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * / Load conversation history
- */
-- (GRPCUnaryProtoCall *)loadHistoryWithMessage:(RequestLoadHistory *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"LoadHistory"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseLoadHistory class]];
-}
-
 #pragma mark LoadMessageHistory(RequestLoadMessageHistory) returns (ResponseLoadHistory)
 
 /**
@@ -363,92 +330,6 @@
              responseClass:[ResponseLoadHistory class]];
 }
 
-#pragma mark LoadHistoryLight(RequestLoadHistoryLight) returns (ResponseLoadHistoryLight)
-
-/**
- * / Load conversation history
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)loadHistoryLightWithRequest:(RequestLoadHistoryLight *)request handler:(void(^)(ResponseLoadHistoryLight *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToLoadHistoryLightWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * / Load conversation history
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToLoadHistoryLightWithRequest:(RequestLoadHistoryLight *)request handler:(void(^)(ResponseLoadHistoryLight *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"LoadHistoryLight"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseLoadHistoryLight class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * / Load conversation history
- */
-- (GRPCUnaryProtoCall *)loadHistoryLightWithMessage:(RequestLoadHistoryLight *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"LoadHistoryLight"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseLoadHistoryLight class]];
-}
-
-#pragma mark CountForeignMessages(RequestCountForeignMessages) returns (ResponseCountForeignMessages)
-
-- (void)countForeignMessagesWithRequest:(RequestCountForeignMessages *)request handler:(void(^)(ResponseCountForeignMessages *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToCountForeignMessagesWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToCountForeignMessagesWithRequest:(RequestCountForeignMessages *)request handler:(void(^)(ResponseCountForeignMessages *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"CountForeignMessages"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseCountForeignMessages class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-- (GRPCUnaryProtoCall *)countForeignMessagesWithMessage:(RequestCountForeignMessages *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"CountForeignMessages"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseCountForeignMessages class]];
-}
-
-#pragma mark HistoryDifference(RequestHistoryDifference) returns (ResponseHistoryDifference)
-
-/**
- * / Load total history difference for all user's conversations
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)historyDifferenceWithRequest:(RequestHistoryDifference *)request handler:(void(^)(ResponseHistoryDifference *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToHistoryDifferenceWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * / Load total history difference for all user's conversations
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToHistoryDifferenceWithRequest:(RequestHistoryDifference *)request handler:(void(^)(ResponseHistoryDifference *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"HistoryDifference"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseHistoryDifference class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * / Load total history difference for all user's conversations
- */
-- (GRPCUnaryProtoCall *)historyDifferenceWithMessage:(RequestHistoryDifference *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"HistoryDifference"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseHistoryDifference class]];
-}
-
 #pragma mark LoadDialogs(RequestLoadDialogs) returns (ResponseLoadDialogs)
 
 /**
@@ -480,105 +361,6 @@
            responseHandler:handler
                callOptions:callOptions
              responseClass:[ResponseLoadDialogs class]];
-}
-
-#pragma mark FetchDialogIndex(RequestFetchDialogIndex) returns (ResponseFetchDialogIndex)
-
-/**
- * / Load short info about all user's dialogs
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)fetchDialogIndexWithRequest:(RequestFetchDialogIndex *)request handler:(void(^)(ResponseFetchDialogIndex *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToFetchDialogIndexWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * / Load short info about all user's dialogs
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToFetchDialogIndexWithRequest:(RequestFetchDialogIndex *)request handler:(void(^)(ResponseFetchDialogIndex *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"FetchDialogIndex"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseFetchDialogIndex class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * / Load short info about all user's dialogs
- */
-- (GRPCUnaryProtoCall *)fetchDialogIndexWithMessage:(RequestFetchDialogIndex *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"FetchDialogIndex"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseFetchDialogIndex class]];
-}
-
-#pragma mark DialogListDifference(RequestDialogListDifference) returns (ResponseDialogListDifference)
-
-/**
- * / Load dialogs by peers
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)dialogListDifferenceWithRequest:(RequestDialogListDifference *)request handler:(void(^)(ResponseDialogListDifference *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToDialogListDifferenceWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * / Load dialogs by peers
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToDialogListDifferenceWithRequest:(RequestDialogListDifference *)request handler:(void(^)(ResponseDialogListDifference *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"DialogListDifference"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseDialogListDifference class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * / Load dialogs by peers
- */
-- (GRPCUnaryProtoCall *)dialogListDifferenceWithMessage:(RequestDialogListDifference *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"DialogListDifference"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseDialogListDifference class]];
-}
-
-#pragma mark GetLastConversationMessages(RequestGetLastConversationMessages) returns (ResponseGetLastConversationMessages)
-
-/**
- * / Load last messages of the given conversations
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)getLastConversationMessagesWithRequest:(RequestGetLastConversationMessages *)request handler:(void(^)(ResponseGetLastConversationMessages *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToGetLastConversationMessagesWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * / Load last messages of the given conversations
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToGetLastConversationMessagesWithRequest:(RequestGetLastConversationMessages *)request handler:(void(^)(ResponseGetLastConversationMessages *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"GetLastConversationMessages"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseGetLastConversationMessages class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * / Load last messages of the given conversations
- */
-- (GRPCUnaryProtoCall *)getLastConversationMessagesWithMessage:(RequestGetLastConversationMessages *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"GetLastConversationMessages"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseGetLastConversationMessages class]];
 }
 
 #pragma mark FavouriteDialog(RequestFavouriteDialog) returns (Empty)
@@ -615,26 +397,6 @@
 }
 - (GRPCUnaryProtoCall *)unfavouriteDialogWithMessage:(RequestUnfavouriteDialog *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"UnfavouriteDialog"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[GPBEmpty class]];
-}
-
-#pragma mark NotifyDialogOpened(RequestNotifyDialogOpened) returns (Empty)
-
-- (void)notifyDialogOpenedWithRequest:(RequestNotifyDialogOpened *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToNotifyDialogOpenedWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToNotifyDialogOpenedWithRequest:(RequestNotifyDialogOpened *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"NotifyDialogOpened"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[GPBEmpty class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-- (GRPCUnaryProtoCall *)notifyDialogOpenedWithMessage:(RequestNotifyDialogOpened *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"NotifyDialogOpened"
                    message:message
            responseHandler:handler
                callOptions:callOptions
@@ -719,26 +481,6 @@
            responseHandler:handler
                callOptions:callOptions
              responseClass:[GPBEmpty class]];
-}
-
-#pragma mark GetUpdatedMessages(RequestGetUpdatedMessages) returns (ResponseGetUpdatedMessages)
-
-- (void)getUpdatedMessagesWithRequest:(RequestGetUpdatedMessages *)request handler:(void(^)(ResponseGetUpdatedMessages *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToGetUpdatedMessagesWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToGetUpdatedMessagesWithRequest:(RequestGetUpdatedMessages *)request handler:(void(^)(ResponseGetUpdatedMessages *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"GetUpdatedMessages"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseGetUpdatedMessages class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-- (GRPCUnaryProtoCall *)getUpdatedMessagesWithMessage:(RequestGetUpdatedMessages *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"GetUpdatedMessages"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[ResponseGetUpdatedMessages class]];
 }
 
 #pragma mark GetMessageReads(RequestGetMessageReads) returns (ResponseGetMessageReads)

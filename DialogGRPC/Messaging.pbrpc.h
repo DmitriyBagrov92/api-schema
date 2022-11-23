@@ -14,26 +14,17 @@
 
 @class GPBEmpty;
 @class RequestClearChat;
-@class RequestCountForeignMessages;
 @class RequestDeleteChat;
 @class RequestDeleteMessage;
-@class RequestDialogListDifference;
 @class RequestDoInteractiveMediaAction;
 @class RequestFavouriteDialog;
-@class RequestFetchDialogIndex;
-@class RequestGetLastConversationMessages;
 @class RequestGetMessageReads;
 @class RequestGetMessageReceives;
-@class RequestGetUpdatedMessages;
-@class RequestHistoryDifference;
 @class RequestLoadDialogs;
-@class RequestLoadHistory;
-@class RequestLoadHistoryLight;
 @class RequestLoadMessageHistory;
 @class RequestMessageRead;
 @class RequestMessageReceived;
 @class RequestMuteChat;
-@class RequestNotifyDialogOpened;
 @class RequestPinMessage;
 @class RequestReadDialogLater;
 @class RequestSendMessage;
@@ -42,17 +33,10 @@
 @class RequestUnmuteChat;
 @class RequestUnpinMessage;
 @class RequestUpdateMessage;
-@class ResponseCountForeignMessages;
-@class ResponseDialogListDifference;
-@class ResponseFetchDialogIndex;
-@class ResponseGetLastConversationMessages;
 @class ResponseGetMessageReads;
 @class ResponseGetMessageReceives;
-@class ResponseGetUpdatedMessages;
-@class ResponseHistoryDifference;
 @class ResponseLoadDialogs;
 @class ResponseLoadHistory;
-@class ResponseLoadHistoryLight;
 @class ResponseSendMessage;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
@@ -127,37 +111,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (GRPCUnaryProtoCall *)deleteChatWithMessage:(RequestDeleteChat *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark LoadHistory(RequestLoadHistory) returns (ResponseLoadHistory)
-
-/**
- * / Load conversation history
- */
-- (GRPCUnaryProtoCall *)loadHistoryWithMessage:(RequestLoadHistory *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
 #pragma mark LoadMessageHistory(RequestLoadMessageHistory) returns (ResponseLoadHistory)
 
 /**
  * / Load conversation history
  */
 - (GRPCUnaryProtoCall *)loadMessageHistoryWithMessage:(RequestLoadMessageHistory *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark LoadHistoryLight(RequestLoadHistoryLight) returns (ResponseLoadHistoryLight)
-
-/**
- * / Load conversation history
- */
-- (GRPCUnaryProtoCall *)loadHistoryLightWithMessage:(RequestLoadHistoryLight *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark CountForeignMessages(RequestCountForeignMessages) returns (ResponseCountForeignMessages)
-
-- (GRPCUnaryProtoCall *)countForeignMessagesWithMessage:(RequestCountForeignMessages *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark HistoryDifference(RequestHistoryDifference) returns (ResponseHistoryDifference)
-
-/**
- * / Load total history difference for all user's conversations
- */
-- (GRPCUnaryProtoCall *)historyDifferenceWithMessage:(RequestHistoryDifference *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark LoadDialogs(RequestLoadDialogs) returns (ResponseLoadDialogs)
 
@@ -166,27 +125,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (GRPCUnaryProtoCall *)loadDialogsWithMessage:(RequestLoadDialogs *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark FetchDialogIndex(RequestFetchDialogIndex) returns (ResponseFetchDialogIndex)
-
-/**
- * / Load short info about all user's dialogs
- */
-- (GRPCUnaryProtoCall *)fetchDialogIndexWithMessage:(RequestFetchDialogIndex *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark DialogListDifference(RequestDialogListDifference) returns (ResponseDialogListDifference)
-
-/**
- * / Load dialogs by peers
- */
-- (GRPCUnaryProtoCall *)dialogListDifferenceWithMessage:(RequestDialogListDifference *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark GetLastConversationMessages(RequestGetLastConversationMessages) returns (ResponseGetLastConversationMessages)
-
-/**
- * / Load last messages of the given conversations
- */
-- (GRPCUnaryProtoCall *)getLastConversationMessagesWithMessage:(RequestGetLastConversationMessages *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
 #pragma mark FavouriteDialog(RequestFavouriteDialog) returns (Empty)
 
 - (GRPCUnaryProtoCall *)favouriteDialogWithMessage:(RequestFavouriteDialog *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
@@ -194,10 +132,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark UnfavouriteDialog(RequestUnfavouriteDialog) returns (Empty)
 
 - (GRPCUnaryProtoCall *)unfavouriteDialogWithMessage:(RequestUnfavouriteDialog *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark NotifyDialogOpened(RequestNotifyDialogOpened) returns (Empty)
-
-- (GRPCUnaryProtoCall *)notifyDialogOpenedWithMessage:(RequestNotifyDialogOpened *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark PinMessage(RequestPinMessage) returns (Empty)
 
@@ -214,10 +148,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark UnmuteChat(RequestUnmuteChat) returns (Empty)
 
 - (GRPCUnaryProtoCall *)unmuteChatWithMessage:(RequestUnmuteChat *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark GetUpdatedMessages(RequestGetUpdatedMessages) returns (ResponseGetUpdatedMessages)
-
-- (GRPCUnaryProtoCall *)getUpdatedMessagesWithMessage:(RequestGetUpdatedMessages *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetMessageReads(RequestGetMessageReads) returns (ResponseGetMessageReads)
 
@@ -348,23 +278,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToDeleteChatWithRequest:(RequestDeleteChat *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark LoadHistory(RequestLoadHistory) returns (ResponseLoadHistory)
-
-/**
- * / Load conversation history
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)loadHistoryWithRequest:(RequestLoadHistory *)request handler:(void(^)(ResponseLoadHistory *_Nullable response, NSError *_Nullable error))handler;
-
-/**
- * / Load conversation history
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToLoadHistoryWithRequest:(RequestLoadHistory *)request handler:(void(^)(ResponseLoadHistory *_Nullable response, NSError *_Nullable error))handler;
-
-
 #pragma mark LoadMessageHistory(RequestLoadMessageHistory) returns (ResponseLoadHistory)
 
 /**
@@ -380,47 +293,6 @@ NS_ASSUME_NONNULL_BEGIN
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToLoadMessageHistoryWithRequest:(RequestLoadMessageHistory *)request handler:(void(^)(ResponseLoadHistory *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark LoadHistoryLight(RequestLoadHistoryLight) returns (ResponseLoadHistoryLight)
-
-/**
- * / Load conversation history
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)loadHistoryLightWithRequest:(RequestLoadHistoryLight *)request handler:(void(^)(ResponseLoadHistoryLight *_Nullable response, NSError *_Nullable error))handler;
-
-/**
- * / Load conversation history
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToLoadHistoryLightWithRequest:(RequestLoadHistoryLight *)request handler:(void(^)(ResponseLoadHistoryLight *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark CountForeignMessages(RequestCountForeignMessages) returns (ResponseCountForeignMessages)
-
-- (void)countForeignMessagesWithRequest:(RequestCountForeignMessages *)request handler:(void(^)(ResponseCountForeignMessages *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToCountForeignMessagesWithRequest:(RequestCountForeignMessages *)request handler:(void(^)(ResponseCountForeignMessages *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark HistoryDifference(RequestHistoryDifference) returns (ResponseHistoryDifference)
-
-/**
- * / Load total history difference for all user's conversations
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)historyDifferenceWithRequest:(RequestHistoryDifference *)request handler:(void(^)(ResponseHistoryDifference *_Nullable response, NSError *_Nullable error))handler;
-
-/**
- * / Load total history difference for all user's conversations
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToHistoryDifferenceWithRequest:(RequestHistoryDifference *)request handler:(void(^)(ResponseHistoryDifference *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark LoadDialogs(RequestLoadDialogs) returns (ResponseLoadDialogs)
@@ -440,57 +312,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToLoadDialogsWithRequest:(RequestLoadDialogs *)request handler:(void(^)(ResponseLoadDialogs *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark FetchDialogIndex(RequestFetchDialogIndex) returns (ResponseFetchDialogIndex)
-
-/**
- * / Load short info about all user's dialogs
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)fetchDialogIndexWithRequest:(RequestFetchDialogIndex *)request handler:(void(^)(ResponseFetchDialogIndex *_Nullable response, NSError *_Nullable error))handler;
-
-/**
- * / Load short info about all user's dialogs
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToFetchDialogIndexWithRequest:(RequestFetchDialogIndex *)request handler:(void(^)(ResponseFetchDialogIndex *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark DialogListDifference(RequestDialogListDifference) returns (ResponseDialogListDifference)
-
-/**
- * / Load dialogs by peers
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)dialogListDifferenceWithRequest:(RequestDialogListDifference *)request handler:(void(^)(ResponseDialogListDifference *_Nullable response, NSError *_Nullable error))handler;
-
-/**
- * / Load dialogs by peers
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToDialogListDifferenceWithRequest:(RequestDialogListDifference *)request handler:(void(^)(ResponseDialogListDifference *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark GetLastConversationMessages(RequestGetLastConversationMessages) returns (ResponseGetLastConversationMessages)
-
-/**
- * / Load last messages of the given conversations
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)getLastConversationMessagesWithRequest:(RequestGetLastConversationMessages *)request handler:(void(^)(ResponseGetLastConversationMessages *_Nullable response, NSError *_Nullable error))handler;
-
-/**
- * / Load last messages of the given conversations
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToGetLastConversationMessagesWithRequest:(RequestGetLastConversationMessages *)request handler:(void(^)(ResponseGetLastConversationMessages *_Nullable response, NSError *_Nullable error))handler;
-
-
 #pragma mark FavouriteDialog(RequestFavouriteDialog) returns (Empty)
 
 - (void)favouriteDialogWithRequest:(RequestFavouriteDialog *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
@@ -503,13 +324,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)unfavouriteDialogWithRequest:(RequestUnfavouriteDialog *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToUnfavouriteDialogWithRequest:(RequestUnfavouriteDialog *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark NotifyDialogOpened(RequestNotifyDialogOpened) returns (Empty)
-
-- (void)notifyDialogOpenedWithRequest:(RequestNotifyDialogOpened *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToNotifyDialogOpenedWithRequest:(RequestNotifyDialogOpened *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark PinMessage(RequestPinMessage) returns (Empty)
@@ -538,13 +352,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)unmuteChatWithRequest:(RequestUnmuteChat *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToUnmuteChatWithRequest:(RequestUnmuteChat *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark GetUpdatedMessages(RequestGetUpdatedMessages) returns (ResponseGetUpdatedMessages)
-
-- (void)getUpdatedMessagesWithRequest:(RequestGetUpdatedMessages *)request handler:(void(^)(ResponseGetUpdatedMessages *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToGetUpdatedMessagesWithRequest:(RequestGetUpdatedMessages *)request handler:(void(^)(ResponseGetUpdatedMessages *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetMessageReads(RequestGetMessageReads) returns (ResponseGetMessageReads)

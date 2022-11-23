@@ -31,7 +31,6 @@
 #import "Users.pbobjc.h"
 #import "Reactions.pbobjc.h"
 #import "Permissions.pbobjc.h"
-#import "Events.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 #import "Miniappsregistry.pbobjc.h"
 #import "Suggests.pbobjc.h"
@@ -48,7 +47,6 @@
 // static values in struct initializers.
 // We don't use [Foo class] because it is not a static value.
 GPBObjCClassDeclaration(Config);
-GPBObjCClassDeclaration(Dialog);
 GPBObjCClassDeclaration(GPBEmpty);
 GPBObjCClassDeclaration(GPBInt64Value);
 GPBObjCClassDeclaration(GPBStringValue);
@@ -79,7 +77,6 @@ GPBObjCClassDeclaration(UpdateDialogMuteChanged);
 GPBObjCClassDeclaration(UpdateDialogReadLaterChanged);
 GPBObjCClassDeclaration(UpdateDraftsChanged);
 GPBObjCClassDeclaration(UpdateEditMessageError);
-GPBObjCClassDeclaration(UpdateEvent);
 GPBObjCClassDeclaration(UpdateFavouriteDialogError);
 GPBObjCClassDeclaration(UpdateFeatureFlagChanged);
 GPBObjCClassDeclaration(UpdateGroup);
@@ -1200,118 +1197,6 @@ typedef struct ResponseGetDifference__storage_ {
 
 @end
 
-#pragma mark - RequestGetDialogsDifference
-
-@implementation RequestGetDialogsDifference
-
-@dynamic clock;
-
-typedef struct RequestGetDialogsDifference__storage_ {
-  uint32_t _has_storage_[1];
-  int64_t clock;
-} RequestGetDialogsDifference__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "clock",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestGetDialogsDifference_FieldNumber_Clock,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestGetDialogsDifference__storage_, clock),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestGetDialogsDifference class]
-                                     rootClass:[SequenceAndUpdatesRoot class]
-                                          file:SequenceAndUpdatesRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestGetDialogsDifference__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - ResponseGetDialogsDifference
-
-@implementation ResponseGetDialogsDifference
-
-@dynamic dialogsArray, dialogsArray_Count;
-@dynamic groupPeersArray, groupPeersArray_Count;
-@dynamic userPeersArray, userPeersArray_Count;
-
-typedef struct ResponseGetDialogsDifference__storage_ {
-  uint32_t _has_storage_[1];
-  NSMutableArray *dialogsArray;
-  NSMutableArray *groupPeersArray;
-  NSMutableArray *userPeersArray;
-} ResponseGetDialogsDifference__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "dialogsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(Dialog),
-        .number = ResponseGetDialogsDifference_FieldNumber_DialogsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponseGetDialogsDifference__storage_, dialogsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "groupPeersArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(GroupOutPeer),
-        .number = ResponseGetDialogsDifference_FieldNumber_GroupPeersArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponseGetDialogsDifference__storage_, groupPeersArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "userPeersArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(UserOutPeer),
-        .number = ResponseGetDialogsDifference_FieldNumber_UserPeersArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponseGetDialogsDifference__storage_, userPeersArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[ResponseGetDialogsDifference class]
-                                     rootClass:[SequenceAndUpdatesRoot class]
-                                          file:SequenceAndUpdatesRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(ResponseGetDialogsDifference__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
 #pragma mark - GroupMembersSubset
 
 @implementation GroupMembersSubset
@@ -2095,17 +1980,10 @@ void SetWeakUpdateCommand_ChangeMyTyping_Type_RawValue(WeakUpdateCommand_ChangeM
 @dynamic userLastSeen;
 @dynamic groupOnline;
 @dynamic forceReload;
-@dynamic permissionsChange;
 @dynamic userStatusChange;
 @dynamic messageReactionUpdate;
-@dynamic message;
-@dynamic messageContentChange;
-@dynamic messageRead;
-@dynamic messageReceived;
-@dynamic messageReadByMe;
 @dynamic groupTyping;
 @dynamic miniApp;
-@dynamic event;
 @dynamic updateContactRegistered;
 @dynamic updateContactsAdded;
 @dynamic updateContactsAddTaskSuspended;
@@ -2113,7 +1991,6 @@ void SetWeakUpdateCommand_ChangeMyTyping_Type_RawValue(WeakUpdateCommand_ChangeM
 @dynamic updateSuggests;
 @dynamic updateFeatureFlagChanged;
 @dynamic updateDraftsChanged;
-@dynamic updateUser;
 
 typedef struct WeakUpdate__storage_ {
   uint32_t _has_storage_[2];
@@ -2122,17 +1999,10 @@ typedef struct WeakUpdate__storage_ {
   UpdateUserLastSeen *userLastSeen;
   UpdateGroupOnline *groupOnline;
   WeakUpdate_UpdateForceReloadState *forceReload;
-  UpdatePermissionsChange *permissionsChange;
   UpdateUserStatusChanged *userStatusChange;
   UpdateMessageReactions *messageReactionUpdate;
-  UpdateMessage *message;
-  UpdateMessageContentChanged *messageContentChange;
-  UpdateMessageRead *messageRead;
-  UpdateMessageReceived *messageReceived;
-  UpdateMessageReadByMe *messageReadByMe;
   UpdateGroupTyping *groupTyping;
   UpdateMiniApp *miniApp;
-  UpdateEvent *event;
   UpdateContactRegistered *updateContactRegistered;
   UpdateContactsAdded *updateContactsAdded;
   UpdateContactsAddTaskSuspended *updateContactsAddTaskSuspended;
@@ -2140,7 +2010,6 @@ typedef struct WeakUpdate__storage_ {
   UpdateSuggests *updateSuggests;
   UpdateFeatureFlagChanged *updateFeatureFlagChanged;
   UpdateDraftsChanged *updateDraftsChanged;
-  UpdateUser *updateUser;
 } WeakUpdate__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2195,15 +2064,6 @@ typedef struct WeakUpdate__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "permissionsChange",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdatePermissionsChange),
-        .number = WeakUpdate_FieldNumber_PermissionsChange,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdate__storage_, permissionsChange),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "userStatusChange",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateUserStatusChanged),
         .number = WeakUpdate_FieldNumber_UserStatusChange,
@@ -2222,51 +2082,6 @@ typedef struct WeakUpdate__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "message",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessage),
-        .number = WeakUpdate_FieldNumber_Message,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdate__storage_, message),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "messageContentChange",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageContentChanged),
-        .number = WeakUpdate_FieldNumber_MessageContentChange,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdate__storage_, messageContentChange),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "messageRead",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageRead),
-        .number = WeakUpdate_FieldNumber_MessageRead,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdate__storage_, messageRead),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "messageReceived",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageReceived),
-        .number = WeakUpdate_FieldNumber_MessageReceived,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdate__storage_, messageReceived),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "messageReadByMe",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageReadByMe),
-        .number = WeakUpdate_FieldNumber_MessageReadByMe,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdate__storage_, messageReadByMe),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "groupTyping",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupTyping),
         .number = WeakUpdate_FieldNumber_GroupTyping,
@@ -2281,15 +2096,6 @@ typedef struct WeakUpdate__storage_ {
         .number = WeakUpdate_FieldNumber_MiniApp,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(WeakUpdate__storage_, miniApp),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "event",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateEvent),
-        .number = WeakUpdate_FieldNumber_Event,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdate__storage_, event),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -2353,15 +2159,6 @@ typedef struct WeakUpdate__storage_ {
         .number = WeakUpdate_FieldNumber_UpdateDraftsChanged,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(WeakUpdate__storage_, updateDraftsChanged),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateUser",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateUser),
-        .number = WeakUpdate_FieldNumber_UpdateUser,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(WeakUpdate__storage_, updateUser),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -2558,12 +2355,10 @@ typedef struct RequestGetState__storage_ {
 @implementation ResponseGetState
 
 @dynamic seq;
-@dynamic date;
 
 typedef struct ResponseGetState__storage_ {
   uint32_t _has_storage_[1];
   uint64_t seq;
-  int64_t date;
 } ResponseGetState__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2580,15 +2375,6 @@ typedef struct ResponseGetState__storage_ {
         .offset = (uint32_t)offsetof(ResponseGetState__storage_, seq),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeUInt64,
-      },
-      {
-        .name = "date",
-        .dataTypeSpecific.clazz = Nil,
-        .number = ResponseGetState_FieldNumber_Date,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(ResponseGetState__storage_, date),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =

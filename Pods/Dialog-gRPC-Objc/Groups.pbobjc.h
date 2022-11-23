@@ -37,7 +37,6 @@ CF_EXTERN_C_BEGIN
 @class Group;
 @class GroupData;
 @class GroupMemberPermission;
-@class GroupOutPeer;
 @class Member;
 @class UserOutPeer;
 
@@ -271,7 +270,7 @@ void SetGroupData_GroupType_RawValue(GroupData *message, int32_t value);
 #pragma mark - GroupPartialInfo
 
 typedef GPB_ENUM(GroupPartialInfo_FieldNumber) {
-  GroupPartialInfo_FieldNumber_Id_p = 1,
+  GroupPartialInfo_FieldNumber_GroupId = 1,
   GroupPartialInfo_FieldNumber_AccessHash = 2,
   GroupPartialInfo_FieldNumber_Clock = 3,
   GroupPartialInfo_FieldNumber_Type = 4,
@@ -284,7 +283,7 @@ typedef GPB_ENUM(GroupPartialInfo_FieldNumber) {
 
 GPB_FINAL @interface GroupPartialInfo : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @property(nonatomic, readwrite) int64_t accessHash;
 
@@ -325,7 +324,7 @@ void SetGroupPartialInfo_Type_RawValue(GroupPartialInfo *message, int32_t value)
 #pragma mark - UpdateGroup
 
 typedef GPB_ENUM(UpdateGroup_FieldNumber) {
-  UpdateGroup_FieldNumber_Id_p = 1,
+  UpdateGroup_FieldNumber_GroupId = 1,
   UpdateGroup_FieldNumber_Data_p = 2,
 };
 
@@ -334,7 +333,7 @@ typedef GPB_ENUM(UpdateGroup_FieldNumber) {
  **/
 GPB_FINAL @interface UpdateGroup : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @property(nonatomic, readwrite, strong, null_resettable) GroupData *data_p;
 /** Test to see if @c data_p has been set. */
@@ -345,9 +344,9 @@ GPB_FINAL @interface UpdateGroup : GPBMessage
 #pragma mark - RequestLoadMembers
 
 typedef GPB_ENUM(RequestLoadMembers_FieldNumber) {
-  RequestLoadMembers_FieldNumber_Group = 1,
   RequestLoadMembers_FieldNumber_Limit = 2,
   RequestLoadMembers_FieldNumber_Next = 3,
+  RequestLoadMembers_FieldNumber_GroupId = 4,
 };
 
 /**
@@ -355,9 +354,7 @@ typedef GPB_ENUM(RequestLoadMembers_FieldNumber) {
  **/
 GPB_FINAL @interface RequestLoadMembers : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *group;
-/** Test to see if @c group has been set. */
-@property(nonatomic, readwrite) BOOL hasGroup;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @property(nonatomic, readwrite) int32_t limit;
 
@@ -627,9 +624,9 @@ GPB_FINAL @interface ResponseCreateGroup : GPBMessage
 #pragma mark - RequestEditGroupTitle
 
 typedef GPB_ENUM(RequestEditGroupTitle_FieldNumber) {
-  RequestEditGroupTitle_FieldNumber_GroupPeer = 1,
   RequestEditGroupTitle_FieldNumber_Rid = 2,
   RequestEditGroupTitle_FieldNumber_Title = 3,
+  RequestEditGroupTitle_FieldNumber_GroupId = 4,
 };
 
 /**
@@ -637,9 +634,7 @@ typedef GPB_ENUM(RequestEditGroupTitle_FieldNumber) {
  **/
 GPB_FINAL @interface RequestEditGroupTitle : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *groupPeer;
-/** Test to see if @c groupPeer has been set. */
-@property(nonatomic, readwrite) BOOL hasGroupPeer;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 /** / Id for query deduplication */
 @property(nonatomic, readwrite) int64_t rid;
@@ -651,9 +646,9 @@ GPB_FINAL @interface RequestEditGroupTitle : GPBMessage
 #pragma mark - RequestEditGroupAvatar
 
 typedef GPB_ENUM(RequestEditGroupAvatar_FieldNumber) {
-  RequestEditGroupAvatar_FieldNumber_GroupPeer = 1,
   RequestEditGroupAvatar_FieldNumber_Rid = 2,
   RequestEditGroupAvatar_FieldNumber_FileLocation = 3,
+  RequestEditGroupAvatar_FieldNumber_GroupId = 4,
 };
 
 /**
@@ -661,9 +656,7 @@ typedef GPB_ENUM(RequestEditGroupAvatar_FieldNumber) {
  **/
 GPB_FINAL @interface RequestEditGroupAvatar : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *groupPeer;
-/** Test to see if @c groupPeer has been set. */
-@property(nonatomic, readwrite) BOOL hasGroupPeer;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 /** / Id for query deduplication */
 @property(nonatomic, readwrite) int64_t rid;
@@ -677,8 +670,8 @@ GPB_FINAL @interface RequestEditGroupAvatar : GPBMessage
 #pragma mark - RequestRemoveGroupAvatar
 
 typedef GPB_ENUM(RequestRemoveGroupAvatar_FieldNumber) {
-  RequestRemoveGroupAvatar_FieldNumber_GroupPeer = 1,
   RequestRemoveGroupAvatar_FieldNumber_Rid = 2,
+  RequestRemoveGroupAvatar_FieldNumber_GroupId = 3,
 };
 
 /**
@@ -686,9 +679,7 @@ typedef GPB_ENUM(RequestRemoveGroupAvatar_FieldNumber) {
  **/
 GPB_FINAL @interface RequestRemoveGroupAvatar : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *groupPeer;
-/** Test to see if @c groupPeer has been set. */
-@property(nonatomic, readwrite) BOOL hasGroupPeer;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 /** / Id for query deduplication */
 @property(nonatomic, readwrite) int64_t rid;
@@ -698,9 +689,9 @@ GPB_FINAL @interface RequestRemoveGroupAvatar : GPBMessage
 #pragma mark - RequestEditGroupAbout
 
 typedef GPB_ENUM(RequestEditGroupAbout_FieldNumber) {
-  RequestEditGroupAbout_FieldNumber_GroupPeer = 1,
   RequestEditGroupAbout_FieldNumber_Rid = 2,
   RequestEditGroupAbout_FieldNumber_About = 3,
+  RequestEditGroupAbout_FieldNumber_GroupId = 4,
 };
 
 /**
@@ -708,9 +699,7 @@ typedef GPB_ENUM(RequestEditGroupAbout_FieldNumber) {
  **/
 GPB_FINAL @interface RequestEditGroupAbout : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *groupPeer;
-/** Test to see if @c groupPeer has been set. */
-@property(nonatomic, readwrite) BOOL hasGroupPeer;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 /** / Id for query deduplication */
 @property(nonatomic, readwrite) int64_t rid;
@@ -724,20 +713,18 @@ GPB_FINAL @interface RequestEditGroupAbout : GPBMessage
 #pragma mark - RequestEditGroupBasePermissions
 
 typedef GPB_ENUM(RequestEditGroupBasePermissions_FieldNumber) {
-  RequestEditGroupBasePermissions_FieldNumber_GroupPeer = 1,
   RequestEditGroupBasePermissions_FieldNumber_RandomId = 2,
   RequestEditGroupBasePermissions_FieldNumber_GrantedPermissionsArray = 3,
   RequestEditGroupBasePermissions_FieldNumber_RevokedPermissionsArray = 4,
+  RequestEditGroupBasePermissions_FieldNumber_GroupId = 5,
 };
 
 GPB_FINAL @interface RequestEditGroupBasePermissions : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *groupPeer;
-/** Test to see if @c groupPeer has been set. */
-@property(nonatomic, readwrite) BOOL hasGroupPeer;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 /** / Id for query deduplication */
-@property(nonatomic, readwrite) int64_t randomId;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *randomId;
 
 // |grantedPermissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *grantedPermissionsArray;
@@ -754,21 +741,17 @@ GPB_FINAL @interface RequestEditGroupBasePermissions : GPBMessage
 #pragma mark - RequestEditMemberPermissions
 
 typedef GPB_ENUM(RequestEditMemberPermissions_FieldNumber) {
-  RequestEditMemberPermissions_FieldNumber_GroupPeer = 1,
-  RequestEditMemberPermissions_FieldNumber_UserPeer = 2,
   RequestEditMemberPermissions_FieldNumber_GrantedPermissionsArray = 3,
   RequestEditMemberPermissions_FieldNumber_RevokedPermissionsArray = 4,
+  RequestEditMemberPermissions_FieldNumber_GroupId = 5,
+  RequestEditMemberPermissions_FieldNumber_UserId = 6,
 };
 
 GPB_FINAL @interface RequestEditMemberPermissions : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *groupPeer;
-/** Test to see if @c groupPeer has been set. */
-@property(nonatomic, readwrite) BOOL hasGroupPeer;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
-@property(nonatomic, readwrite, strong, null_resettable) UserOutPeer *userPeer;
-/** Test to see if @c userPeer has been set. */
-@property(nonatomic, readwrite) BOOL hasUserPeer;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 // |grantedPermissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *grantedPermissionsArray;
@@ -799,9 +782,9 @@ GPB_FINAL @interface ResponseMember : GPBMessage
 #pragma mark - RequestInviteUser
 
 typedef GPB_ENUM(RequestInviteUser_FieldNumber) {
-  RequestInviteUser_FieldNumber_GroupPeer = 1,
   RequestInviteUser_FieldNumber_Rid = 2,
   RequestInviteUser_FieldNumber_User = 3,
+  RequestInviteUser_FieldNumber_GroupId = 4,
 };
 
 /**
@@ -809,9 +792,7 @@ typedef GPB_ENUM(RequestInviteUser_FieldNumber) {
  **/
 GPB_FINAL @interface RequestInviteUser : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *groupPeer;
-/** Test to see if @c groupPeer has been set. */
-@property(nonatomic, readwrite) BOOL hasGroupPeer;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 /** / Id for query deduplication */
 @property(nonatomic, readwrite) int64_t rid;
@@ -825,8 +806,8 @@ GPB_FINAL @interface RequestInviteUser : GPBMessage
 #pragma mark - RequestLeaveGroup
 
 typedef GPB_ENUM(RequestLeaveGroup_FieldNumber) {
-  RequestLeaveGroup_FieldNumber_GroupPeer = 1,
   RequestLeaveGroup_FieldNumber_Rid = 2,
+  RequestLeaveGroup_FieldNumber_GroupId = 3,
 };
 
 /**
@@ -834,9 +815,7 @@ typedef GPB_ENUM(RequestLeaveGroup_FieldNumber) {
  **/
 GPB_FINAL @interface RequestLeaveGroup : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *groupPeer;
-/** Test to see if @c groupPeer has been set. */
-@property(nonatomic, readwrite) BOOL hasGroupPeer;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 /** / Id for query deduplication */
 @property(nonatomic, readwrite) int64_t rid;
@@ -846,9 +825,9 @@ GPB_FINAL @interface RequestLeaveGroup : GPBMessage
 #pragma mark - RequestKickUser
 
 typedef GPB_ENUM(RequestKickUser_FieldNumber) {
-  RequestKickUser_FieldNumber_GroupPeer = 1,
   RequestKickUser_FieldNumber_Rid = 2,
-  RequestKickUser_FieldNumber_User = 3,
+  RequestKickUser_FieldNumber_GroupId = 4,
+  RequestKickUser_FieldNumber_UserId = 5,
 };
 
 /**
@@ -856,25 +835,21 @@ typedef GPB_ENUM(RequestKickUser_FieldNumber) {
  **/
 GPB_FINAL @interface RequestKickUser : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *groupPeer;
-/** Test to see if @c groupPeer has been set. */
-@property(nonatomic, readwrite) BOOL hasGroupPeer;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 /** / Id for query deduplication */
 @property(nonatomic, readwrite) int64_t rid;
 
-@property(nonatomic, readwrite, strong, null_resettable) UserOutPeer *user;
-/** Test to see if @c user has been set. */
-@property(nonatomic, readwrite) BOOL hasUser;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @end
 
 #pragma mark - RequestMakeUserAdmin
 
 typedef GPB_ENUM(RequestMakeUserAdmin_FieldNumber) {
-  RequestMakeUserAdmin_FieldNumber_GroupPeer = 1,
-  RequestMakeUserAdmin_FieldNumber_UserPeer = 2,
   RequestMakeUserAdmin_FieldNumber_PermissionsArray = 3,
+  RequestMakeUserAdmin_FieldNumber_GroupId = 4,
+  RequestMakeUserAdmin_FieldNumber_UserId = 5,
 };
 
 /**
@@ -882,13 +857,9 @@ typedef GPB_ENUM(RequestMakeUserAdmin_FieldNumber) {
  **/
 GPB_FINAL @interface RequestMakeUserAdmin : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *groupPeer;
-/** Test to see if @c groupPeer has been set. */
-@property(nonatomic, readwrite) BOOL hasGroupPeer;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
-@property(nonatomic, readwrite, strong, null_resettable) UserOutPeer *userPeer;
-/** Test to see if @c userPeer has been set. */
-@property(nonatomic, readwrite) BOOL hasUserPeer;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 // |permissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *permissionsArray;
@@ -981,8 +952,8 @@ GPB_FINAL @interface UpdateGroupMemberPermissionsChanged : GPBMessage
 #pragma mark - RequestTransferOwnership
 
 typedef GPB_ENUM(RequestTransferOwnership_FieldNumber) {
-  RequestTransferOwnership_FieldNumber_GroupPeer = 1,
   RequestTransferOwnership_FieldNumber_NewOwner = 2,
+  RequestTransferOwnership_FieldNumber_GroupId = 3,
 };
 
 /**
@@ -990,9 +961,7 @@ typedef GPB_ENUM(RequestTransferOwnership_FieldNumber) {
  **/
 GPB_FINAL @interface RequestTransferOwnership : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *groupPeer;
-/** Test to see if @c groupPeer has been set. */
-@property(nonatomic, readwrite) BOOL hasGroupPeer;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *newOwner NS_RETURNS_NOT_RETAINED;
 
@@ -1016,7 +985,7 @@ GPB_FINAL @interface ResponseInviteUrl : GPBMessage
 #pragma mark - RequestGetGroupInviteUrl
 
 typedef GPB_ENUM(RequestGetGroupInviteUrl_FieldNumber) {
-  RequestGetGroupInviteUrl_FieldNumber_GroupPeer = 1,
+  RequestGetGroupInviteUrl_FieldNumber_GroupId = 2,
 };
 
 /**
@@ -1024,9 +993,7 @@ typedef GPB_ENUM(RequestGetGroupInviteUrl_FieldNumber) {
  **/
 GPB_FINAL @interface RequestGetGroupInviteUrl : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *groupPeer;
-/** Test to see if @c groupPeer has been set. */
-@property(nonatomic, readwrite) BOOL hasGroupPeer;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @end
 
@@ -1054,7 +1021,7 @@ GPB_FINAL @interface ResponseGetGroupInviteUrlBase : GPBMessage
 #pragma mark - RequestRevokeInviteUrl
 
 typedef GPB_ENUM(RequestRevokeInviteUrl_FieldNumber) {
-  RequestRevokeInviteUrl_FieldNumber_GroupPeer = 1,
+  RequestRevokeInviteUrl_FieldNumber_GroupId = 2,
 };
 
 /**
@@ -1062,9 +1029,7 @@ typedef GPB_ENUM(RequestRevokeInviteUrl_FieldNumber) {
  **/
 GPB_FINAL @interface RequestRevokeInviteUrl : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *groupPeer;
-/** Test to see if @c groupPeer has been set. */
-@property(nonatomic, readwrite) BOOL hasGroupPeer;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @end
 
@@ -1106,7 +1071,7 @@ GPB_FINAL @interface ResponseJoinGroup : GPBMessage
 #pragma mark - RequestJoinGroupByPeer
 
 typedef GPB_ENUM(RequestJoinGroupByPeer_FieldNumber) {
-  RequestJoinGroupByPeer_FieldNumber_Peer = 1,
+  RequestJoinGroupByPeer_FieldNumber_GroupId = 2,
 };
 
 /**
@@ -1114,9 +1079,7 @@ typedef GPB_ENUM(RequestJoinGroupByPeer_FieldNumber) {
  **/
 GPB_FINAL @interface RequestJoinGroupByPeer : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @end
 

@@ -28,7 +28,6 @@
 CF_EXTERN_C_BEGIN
 
 @class Config;
-@class Dialog;
 @class GPBEmpty;
 @class GPBInt64Value;
 @class GPBStringValue;
@@ -59,7 +58,6 @@ CF_EXTERN_C_BEGIN
 @class UpdateDialogReadLaterChanged;
 @class UpdateDraftsChanged;
 @class UpdateEditMessageError;
-@class UpdateEvent;
 @class UpdateFavouriteDialogError;
 @class UpdateFeatureFlagChanged;
 @class UpdateGroup;
@@ -525,49 +523,6 @@ GPB_FINAL @interface ResponseGetDifference : GPBMessage
 
 @end
 
-#pragma mark - RequestGetDialogsDifference
-
-typedef GPB_ENUM(RequestGetDialogsDifference_FieldNumber) {
-  RequestGetDialogsDifference_FieldNumber_Clock = 1,
-};
-
-/**
- * Getting difference of dialogs
- **/
-GPB_FINAL @interface RequestGetDialogsDifference : GPBMessage
-
-/** / max of the last action dates among all user's dialogs */
-@property(nonatomic, readwrite) int64_t clock;
-
-@end
-
-#pragma mark - ResponseGetDialogsDifference
-
-typedef GPB_ENUM(ResponseGetDialogsDifference_FieldNumber) {
-  ResponseGetDialogsDifference_FieldNumber_DialogsArray = 1,
-  ResponseGetDialogsDifference_FieldNumber_GroupPeersArray = 2,
-  ResponseGetDialogsDifference_FieldNumber_UserPeersArray = 3,
-};
-
-/**
- * / Dialogs + peers and entities
- **/
-GPB_FINAL @interface ResponseGetDialogsDifference : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Dialog*> *dialogsArray;
-/** The number of items in @c dialogsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger dialogsArray_Count;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupPeersArray;
-/** The number of items in @c groupPeersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger groupPeersArray_Count;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *userPeersArray;
-/** The number of items in @c userPeersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger userPeersArray_Count;
-
-@end
-
 #pragma mark - GroupMembersSubset
 
 typedef GPB_ENUM(GroupMembersSubset_FieldNumber) {
@@ -871,17 +826,10 @@ typedef GPB_ENUM(WeakUpdate_FieldNumber) {
   WeakUpdate_FieldNumber_UserLastSeen = 3,
   WeakUpdate_FieldNumber_GroupOnline = 4,
   WeakUpdate_FieldNumber_ForceReload = 5,
-  WeakUpdate_FieldNumber_PermissionsChange = 6,
   WeakUpdate_FieldNumber_UserStatusChange = 7,
   WeakUpdate_FieldNumber_MessageReactionUpdate = 8,
-  WeakUpdate_FieldNumber_Message = 9,
-  WeakUpdate_FieldNumber_MessageContentChange = 10,
-  WeakUpdate_FieldNumber_MessageRead = 11,
-  WeakUpdate_FieldNumber_MessageReceived = 12,
-  WeakUpdate_FieldNumber_MessageReadByMe = 13,
   WeakUpdate_FieldNumber_GroupTyping = 15,
   WeakUpdate_FieldNumber_MiniApp = 16,
-  WeakUpdate_FieldNumber_Event = 17,
   WeakUpdate_FieldNumber_UpdateContactRegistered = 18,
   WeakUpdate_FieldNumber_UpdateContactsAdded = 19,
   WeakUpdate_FieldNumber_UpdateContactsAddTaskSuspended = 20,
@@ -889,7 +837,6 @@ typedef GPB_ENUM(WeakUpdate_FieldNumber) {
   WeakUpdate_FieldNumber_UpdateSuggests = 22,
   WeakUpdate_FieldNumber_UpdateFeatureFlagChanged = 23,
   WeakUpdate_FieldNumber_UpdateDraftsChanged = 24,
-  WeakUpdate_FieldNumber_UpdateUser = 25,
 };
 
 typedef GPB_ENUM(WeakUpdate_Updatebox_OneOfCase) {
@@ -899,17 +846,10 @@ typedef GPB_ENUM(WeakUpdate_Updatebox_OneOfCase) {
   WeakUpdate_Updatebox_OneOfCase_UserLastSeen = 3,
   WeakUpdate_Updatebox_OneOfCase_GroupOnline = 4,
   WeakUpdate_Updatebox_OneOfCase_ForceReload = 5,
-  WeakUpdate_Updatebox_OneOfCase_PermissionsChange = 6,
   WeakUpdate_Updatebox_OneOfCase_UserStatusChange = 7,
   WeakUpdate_Updatebox_OneOfCase_MessageReactionUpdate = 8,
-  WeakUpdate_Updatebox_OneOfCase_Message = 9,
-  WeakUpdate_Updatebox_OneOfCase_MessageContentChange = 10,
-  WeakUpdate_Updatebox_OneOfCase_MessageRead = 11,
-  WeakUpdate_Updatebox_OneOfCase_MessageReceived = 12,
-  WeakUpdate_Updatebox_OneOfCase_MessageReadByMe = 13,
   WeakUpdate_Updatebox_OneOfCase_GroupTyping = 15,
   WeakUpdate_Updatebox_OneOfCase_MiniApp = 16,
-  WeakUpdate_Updatebox_OneOfCase_Event = 17,
   WeakUpdate_Updatebox_OneOfCase_UpdateContactRegistered = 18,
   WeakUpdate_Updatebox_OneOfCase_UpdateContactsAdded = 19,
   WeakUpdate_Updatebox_OneOfCase_UpdateContactsAddTaskSuspended = 20,
@@ -917,7 +857,6 @@ typedef GPB_ENUM(WeakUpdate_Updatebox_OneOfCase) {
   WeakUpdate_Updatebox_OneOfCase_UpdateSuggests = 22,
   WeakUpdate_Updatebox_OneOfCase_UpdateFeatureFlagChanged = 23,
   WeakUpdate_Updatebox_OneOfCase_UpdateDraftsChanged = 24,
-  WeakUpdate_Updatebox_OneOfCase_UpdateUser = 25,
 };
 
 GPB_FINAL @interface WeakUpdate : GPBMessage
@@ -934,27 +873,13 @@ GPB_FINAL @interface WeakUpdate : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) WeakUpdate_UpdateForceReloadState *forceReload;
 
-@property(nonatomic, readwrite, strong, null_resettable) UpdatePermissionsChange *permissionsChange;
-
 @property(nonatomic, readwrite, strong, null_resettable) UpdateUserStatusChanged *userStatusChange;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateMessageReactions *messageReactionUpdate;
 
-@property(nonatomic, readwrite, strong, null_resettable) UpdateMessage *message;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateMessageContentChanged *messageContentChange;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateMessageRead *messageRead;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateMessageReceived *messageReceived;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateMessageReadByMe *messageReadByMe;
-
 @property(nonatomic, readwrite, strong, null_resettable) UpdateGroupTyping *groupTyping;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateMiniApp *miniApp;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateEvent *event;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateContactRegistered *updateContactRegistered;
 
@@ -969,8 +894,6 @@ GPB_FINAL @interface WeakUpdate : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UpdateFeatureFlagChanged *updateFeatureFlagChanged;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateDraftsChanged *updateDraftsChanged;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateUser *updateUser;
 
 @end
 
@@ -1035,14 +958,11 @@ GPB_FINAL @interface RequestGetState : GPBMessage
 
 typedef GPB_ENUM(ResponseGetState_FieldNumber) {
   ResponseGetState_FieldNumber_Seq = 1,
-  ResponseGetState_FieldNumber_Date = 2,
 };
 
 GPB_FINAL @interface ResponseGetState : GPBMessage
 
 @property(nonatomic, readwrite) uint64_t seq;
-
-@property(nonatomic, readwrite) int64_t date GPB_DEPRECATED_MSG("dialog.ResponseGetState.date is deprecated (see sequence_and_updates.proto).");
 
 @end
 

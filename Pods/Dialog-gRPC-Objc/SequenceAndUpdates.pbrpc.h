@@ -13,12 +13,10 @@
 #endif
 
 @class GPBEmpty;
-@class RequestGetDialogsDifference;
 @class RequestGetDifference;
 @class RequestGetPartialPeerInfo;
 @class RequestGetReferencedEntities;
 @class RequestGetState;
-@class ResponseGetDialogsDifference;
 @class ResponseGetDifference;
 @class ResponseGetPartialPeerInfo;
 @class ResponseGetReferencedEntities;
@@ -45,7 +43,6 @@
   #import "Users.pbobjc.h"
   #import "Reactions.pbobjc.h"
   #import "Permissions.pbobjc.h"
-  #import "Events.pbobjc.h"
   #import "Scalapb.pbobjc.h"
   #import "Miniappsregistry.pbobjc.h"
   #import "Suggests.pbobjc.h"
@@ -76,13 +73,6 @@ NS_ASSUME_NONNULL_BEGIN
  * / Get all update that happens after given seq number
  */
 - (GRPCUnaryProtoCall *)getDifferenceWithMessage:(RequestGetDifference *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark GetDialogsDifference(RequestGetDialogsDifference) returns (ResponseGetDialogsDifference)
-
-/**
- * / Load all dialogs that changed after given date
- */
-- (GRPCUnaryProtoCall *)getDialogsDifferenceWithMessage:(RequestGetDialogsDifference *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetReferencedEntities(RequestGetReferencedEntities) returns (ResponseGetReferencedEntities)
 
@@ -146,23 +136,6 @@ NS_ASSUME_NONNULL_BEGIN
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetDifferenceWithRequest:(RequestGetDifference *)request handler:(void(^)(ResponseGetDifference *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark GetDialogsDifference(RequestGetDialogsDifference) returns (ResponseGetDialogsDifference)
-
-/**
- * / Load all dialogs that changed after given date
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)getDialogsDifferenceWithRequest:(RequestGetDialogsDifference *)request handler:(void(^)(ResponseGetDialogsDifference *_Nullable response, NSError *_Nullable error))handler;
-
-/**
- * / Load all dialogs that changed after given date
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToGetDialogsDifferenceWithRequest:(RequestGetDialogsDifference *)request handler:(void(^)(ResponseGetDialogsDifference *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetReferencedEntities(RequestGetReferencedEntities) returns (ResponseGetReferencedEntities)

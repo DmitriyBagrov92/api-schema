@@ -29,7 +29,6 @@ import "messaging.proto";
 import "users.proto";
 import "reactions.proto";
 import "permissions.proto";
-import "events.proto";
 import "scalapb.proto";
 import "miniappsregistry.proto";
 import "suggests.proto";
@@ -138,21 +137,6 @@ message ResponseGetDifference {
     google.protobuf.Int64Value config_hash = 8 [deprecated = true];
 }
 
-// Getting difference of dialogs
-message RequestGetDialogsDifference {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    /// max of the last action dates among all user's dialogs
-    int64 clock = 1;
-}
-
-/// Dialogs + peers and entities
-message ResponseGetDialogsDifference {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    repeated Dialog dialogs = 1;
-    repeated GroupOutPeer group_peers = 2;
-    repeated UserOutPeer user_peers = 3;
-}
-
 // Represents subset of group members
 message GroupMembersSubset {
     GroupOutPeer group_peer = 1;
@@ -247,23 +231,17 @@ message WeakUpdate {
         repeated ForceReloadField fields = 1;
     }
 
+    reserved 6, 9, 10, 11, 12, 13, 17, 25;
     oneof updatebox {
         UpdateTyping typing                                                   = 1;
         UpdateTypingStop typing_stop                                          = 2;
         UpdateUserLastSeen user_last_seen                                     = 3;
         UpdateGroupOnline group_online                                        = 4;
         UpdateForceReloadState force_reload                                   = 5;
-        UpdatePermissionsChange permissions_change                            = 6;
         UpdateUserStatusChanged user_status_change                            = 7;
         UpdateMessageReactions message_reaction_update                        = 8;
-        UpdateMessage message                                                 = 9;
-        UpdateMessageContentChanged message_content_change                    = 10;
-        UpdateMessageRead message_read                                        = 11;
-        UpdateMessageReceived message_received                                = 12;
-        UpdateMessageReadByMe message_read_by_me                              = 13;
         UpdateGroupTyping group_typing                                        = 15;
         UpdateMiniApp mini_app                                                = 16;
-        UpdateEvent event                                                     = 17;
         UpdateContactRegistered update_contact_registered                     = 18;
         UpdateContactsAdded update_contacts_added                             = 19;
         UpdateContactsAddTaskSuspended update_contacts_add_task_suspended     = 20;
@@ -271,14 +249,13 @@ message WeakUpdate {
         UpdateSuggests update_suggests                                        = 22;
         UpdateFeatureFlagChanged update_feature_flag_changed                  = 23;
         UpdateDraftsChanged update_drafts_changed                             = 24;
-        UpdateUser update_user                                                = 25;
     }
 }
 
 message RequestGetState {}
 message ResponseGetState {
     uint64 seq = 1;
-    int64 date = 2 [deprecated=true];
+    reserved 2;
 }
 
 service SequenceAndUpdates {
@@ -293,13 +270,6 @@ service SequenceAndUpdates {
     rpc GetDifference (RequestGetDifference) returns (ResponseGetDifference) {
         option (google.api.http) = {
             post: "/v1/grpc/SequenceAndUpdates/GetDifference"
-            body: "*"
-        };
-    }
-    /// Load all dialogs that changed after given date
-    rpc GetDialogsDifference (RequestGetDialogsDifference) returns (ResponseGetDialogsDifference) {
-        option (google.api.http) = {
-            post: "/v1/grpc/SequenceAndUpdates/GetDialogsDifference"
             body: "*"
         };
     }
