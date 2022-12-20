@@ -95,6 +95,8 @@ CF_EXTERN_C_BEGIN
 @class UpdateStickerPackAdded;
 @class UpdateStickerPackRemoved;
 @class UpdateSuggests;
+@class UpdateThreadFollowing;
+@class UpdateThreadInfos;
 @class UpdateTyping;
 @class UpdateTypingStop;
 @class UpdateUnfavouriteDialogError;
@@ -214,6 +216,7 @@ typedef GPB_ENUM(SeqUpdateBody_FieldNumber) {
   SeqUpdateBody_FieldNumber_UpdateFavouriteDialogError = 75,
   SeqUpdateBody_FieldNumber_UpdateUnfavouriteDialogError = 76,
   SeqUpdateBody_FieldNumber_UpdateReadDialogLaterError = 77,
+  SeqUpdateBody_FieldNumber_UpdateThreadFollowing = 78,
 };
 
 typedef GPB_ENUM(SeqUpdateBody_Update_OneOfCase) {
@@ -285,6 +288,7 @@ typedef GPB_ENUM(SeqUpdateBody_Update_OneOfCase) {
   SeqUpdateBody_Update_OneOfCase_UpdateFavouriteDialogError = 75,
   SeqUpdateBody_Update_OneOfCase_UpdateUnfavouriteDialogError = 76,
   SeqUpdateBody_Update_OneOfCase_UpdateReadDialogLaterError = 77,
+  SeqUpdateBody_Update_OneOfCase_UpdateThreadFollowing = 78,
 };
 
 GPB_FINAL @interface SeqUpdateBody : GPBMessage
@@ -424,6 +428,8 @@ GPB_FINAL @interface SeqUpdateBody : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UpdateUnfavouriteDialogError *updateUnfavouriteDialogError;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateReadDialogLaterError *updateReadDialogLaterError;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateThreadFollowing *updateThreadFollowing;
 
 @end
 
@@ -837,6 +843,7 @@ typedef GPB_ENUM(WeakUpdate_FieldNumber) {
   WeakUpdate_FieldNumber_UpdateSuggests = 22,
   WeakUpdate_FieldNumber_UpdateFeatureFlagChanged = 23,
   WeakUpdate_FieldNumber_UpdateDraftsChanged = 24,
+  WeakUpdate_FieldNumber_UpdateThreadInfos = 26,
 };
 
 typedef GPB_ENUM(WeakUpdate_Updatebox_OneOfCase) {
@@ -857,6 +864,7 @@ typedef GPB_ENUM(WeakUpdate_Updatebox_OneOfCase) {
   WeakUpdate_Updatebox_OneOfCase_UpdateSuggests = 22,
   WeakUpdate_Updatebox_OneOfCase_UpdateFeatureFlagChanged = 23,
   WeakUpdate_Updatebox_OneOfCase_UpdateDraftsChanged = 24,
+  WeakUpdate_Updatebox_OneOfCase_UpdateThreadInfos = 26,
 };
 
 GPB_FINAL @interface WeakUpdate : GPBMessage
@@ -894,6 +902,8 @@ GPB_FINAL @interface WeakUpdate : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UpdateFeatureFlagChanged *updateFeatureFlagChanged;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateDraftsChanged *updateDraftsChanged;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateThreadInfos *updateThreadInfos;
 
 @end
 

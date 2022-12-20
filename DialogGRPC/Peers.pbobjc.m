@@ -28,7 +28,7 @@
 // Forward declarations of Objective C classes that we can use as
 // static values in struct initializers.
 // We don't use [Foo class] because it is not a static value.
-GPBObjCClassDeclaration(GPBStringValue);
+GPBObjCClassDeclaration(UUIDValue);
 
 #pragma mark - PeersRoot
 
@@ -70,14 +70,11 @@ GPBEnumDescriptor *PeerType_EnumDescriptor(void) {
   if (!descriptor) {
     static const char *valueNames =
         "PeerTypeUnknown\000PeerTypePrivate\000PeerType"
-        "Group\000PeerTypeEncryptedprivate\000PeerTypeS"
-        "ip\000";
+        "Group\000";
     static const int32_t values[] = {
         PeerType_PeerTypeUnknown,
         PeerType_PeerTypePrivate,
         PeerType_PeerTypeGroup,
-        PeerType_PeerTypeEncryptedprivate,
-        PeerType_PeerTypeSip,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(PeerType)
@@ -98,8 +95,6 @@ BOOL PeerType_IsValidValue(int32_t value__) {
     case PeerType_PeerTypeUnknown:
     case PeerType_PeerTypePrivate:
     case PeerType_PeerTypeGroup:
-    case PeerType_PeerTypeEncryptedprivate:
-    case PeerType_PeerTypeSip:
       return YES;
     default:
       return NO;
@@ -112,13 +107,13 @@ BOOL PeerType_IsValidValue(int32_t value__) {
 
 @dynamic type;
 @dynamic id_p;
-@dynamic hasStrId, strId;
+@dynamic hasParentMid, parentMid;
 
 typedef struct Peer__storage_ {
   uint32_t _has_storage_[1];
   PeerType type;
   NSString *id_p;
-  GPBStringValue *strId;
+  UUIDValue *parentMid;
 } Peer__storage_;
 
 // This method is threadsafe because it is initially called
@@ -146,11 +141,11 @@ typedef struct Peer__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "strId",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
-        .number = Peer_FieldNumber_StrId,
+        .name = "parentMid",
+        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
+        .number = Peer_FieldNumber_ParentMid,
         .hasIndex = 2,
-        .offset = (uint32_t)offsetof(Peer__storage_, strId),
+        .offset = (uint32_t)offsetof(Peer__storage_, parentMid),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -192,13 +187,13 @@ void SetPeer_Type_RawValue(Peer *message, int32_t value) {
 @dynamic type;
 @dynamic id_p;
 @dynamic accessHash;
-@dynamic hasStrId, strId;
+@dynamic hasParentMid, parentMid;
 
 typedef struct OutPeer__storage_ {
   uint32_t _has_storage_[1];
   PeerType type;
   NSString *id_p;
-  GPBStringValue *strId;
+  UUIDValue *parentMid;
   int64_t accessHash;
 } OutPeer__storage_;
 
@@ -236,11 +231,11 @@ typedef struct OutPeer__storage_ {
         .dataType = GPBDataTypeInt64,
       },
       {
-        .name = "strId",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
-        .number = OutPeer_FieldNumber_StrId,
+        .name = "parentMid",
+        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
+        .number = OutPeer_FieldNumber_ParentMid,
         .hasIndex = 3,
-        .offset = (uint32_t)offsetof(OutPeer__storage_, strId),
+        .offset = (uint32_t)offsetof(OutPeer__storage_, parentMid),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

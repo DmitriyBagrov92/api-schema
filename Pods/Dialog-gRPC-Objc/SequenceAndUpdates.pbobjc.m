@@ -29,6 +29,7 @@
 #import "Peers.pbobjc.h"
 #import "Messaging.pbobjc.h"
 #import "Users.pbobjc.h"
+#import "Threads.pbobjc.h"
 #import "Reactions.pbobjc.h"
 #import "Permissions.pbobjc.h"
 #import "Scalapb.pbobjc.h"
@@ -114,6 +115,8 @@ GPBObjCClassDeclaration(UpdateStickerCollectionsChanged);
 GPBObjCClassDeclaration(UpdateStickerPackAdded);
 GPBObjCClassDeclaration(UpdateStickerPackRemoved);
 GPBObjCClassDeclaration(UpdateSuggests);
+GPBObjCClassDeclaration(UpdateThreadFollowing);
+GPBObjCClassDeclaration(UpdateThreadInfos);
 GPBObjCClassDeclaration(UpdateTyping);
 GPBObjCClassDeclaration(UpdateTypingStop);
 GPBObjCClassDeclaration(UpdateUnfavouriteDialogError);
@@ -253,6 +256,7 @@ static GPBFileDescriptor *SequenceAndUpdatesRoot_FileDescriptor(void) {
 @dynamic updateFavouriteDialogError;
 @dynamic updateUnfavouriteDialogError;
 @dynamic updateReadDialogLaterError;
+@dynamic updateThreadFollowing;
 
 typedef struct SeqUpdateBody__storage_ {
   uint32_t _has_storage_[2];
@@ -323,6 +327,7 @@ typedef struct SeqUpdateBody__storage_ {
   UpdateFavouriteDialogError *updateFavouriteDialogError;
   UpdateUnfavouriteDialogError *updateUnfavouriteDialogError;
   UpdateReadDialogLaterError *updateReadDialogLaterError;
+  UpdateThreadFollowing *updateThreadFollowing;
 } SeqUpdateBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -931,6 +936,15 @@ typedef struct SeqUpdateBody__storage_ {
         .number = SeqUpdateBody_FieldNumber_UpdateReadDialogLaterError,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateReadDialogLaterError),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateThreadFollowing",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateThreadFollowing),
+        .number = SeqUpdateBody_FieldNumber_UpdateThreadFollowing,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateThreadFollowing),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -1991,6 +2005,7 @@ void SetWeakUpdateCommand_ChangeMyTyping_Type_RawValue(WeakUpdateCommand_ChangeM
 @dynamic updateSuggests;
 @dynamic updateFeatureFlagChanged;
 @dynamic updateDraftsChanged;
+@dynamic updateThreadInfos;
 
 typedef struct WeakUpdate__storage_ {
   uint32_t _has_storage_[2];
@@ -2010,6 +2025,7 @@ typedef struct WeakUpdate__storage_ {
   UpdateSuggests *updateSuggests;
   UpdateFeatureFlagChanged *updateFeatureFlagChanged;
   UpdateDraftsChanged *updateDraftsChanged;
+  UpdateThreadInfos *updateThreadInfos;
 } WeakUpdate__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2159,6 +2175,15 @@ typedef struct WeakUpdate__storage_ {
         .number = WeakUpdate_FieldNumber_UpdateDraftsChanged,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(WeakUpdate__storage_, updateDraftsChanged),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateThreadInfos",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateThreadInfos),
+        .number = WeakUpdate_FieldNumber_UpdateThreadInfos,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(WeakUpdate__storage_, updateThreadInfos),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

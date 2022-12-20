@@ -45,6 +45,7 @@ GPBObjCClassDeclaration(Group);
 GPBObjCClassDeclaration(GroupData);
 GPBObjCClassDeclaration(GroupMemberPermission);
 GPBObjCClassDeclaration(Member);
+GPBObjCClassDeclaration(Peer);
 GPBObjCClassDeclaration(UserOutPeer);
 
 #pragma mark - GroupsRoot
@@ -89,12 +90,12 @@ GPBEnumDescriptor *GroupType_EnumDescriptor(void) {
   if (!descriptor) {
     static const char *valueNames =
         "GroupTypeUnknown\000GroupTypeGroup\000GroupTyp"
-        "eChannel\000GroupTypeThread\000";
+        "eChannel\000GroupTypeImportantTopic\000";
     static const int32_t values[] = {
         GroupType_GroupTypeUnknown,
         GroupType_GroupTypeGroup,
         GroupType_GroupTypeChannel,
-        GroupType_GroupTypeThread,
+        GroupType_GroupTypeImportantTopic,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(GroupType)
@@ -115,7 +116,7 @@ BOOL GroupType_IsValidValue(int32_t value__) {
     case GroupType_GroupTypeUnknown:
     case GroupType_GroupTypeGroup:
     case GroupType_GroupTypeChannel:
-    case GroupType_GroupTypeThread:
+    case GroupType_GroupTypeImportantTopic:
       return YES;
     default:
       return NO;
@@ -139,7 +140,8 @@ GPBEnumDescriptor *GroupAdminPermission_EnumDescriptor(void) {
         "AdminPermissionViewmembers\000GroupAdminPer"
         "missionLeave\000GroupAdminPermissionTargeti"
         "ng\000GroupAdminPermissionDelete\000GroupAdmin"
-        "PermissionManageConference\000";
+        "PermissionManageConference\000GroupAdminPer"
+        "missionOpenAndClose\000";
     static const int32_t values[] = {
         GroupAdminPermission_GroupAdminPermissionUnknown,
         GroupAdminPermission_GroupAdminPermissionInvite,
@@ -156,6 +158,7 @@ GPBEnumDescriptor *GroupAdminPermission_EnumDescriptor(void) {
         GroupAdminPermission_GroupAdminPermissionTargeting,
         GroupAdminPermission_GroupAdminPermissionDelete,
         GroupAdminPermission_GroupAdminPermissionManageConference,
+        GroupAdminPermission_GroupAdminPermissionOpenAndClose,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(GroupAdminPermission)
@@ -188,6 +191,7 @@ BOOL GroupAdminPermission_IsValidValue(int32_t value__) {
     case GroupAdminPermission_GroupAdminPermissionTargeting:
     case GroupAdminPermission_GroupAdminPermissionDelete:
     case GroupAdminPermission_GroupAdminPermissionManageConference:
+    case GroupAdminPermission_GroupAdminPermissionOpenAndClose:
       return YES;
     default:
       return NO;
@@ -375,10 +379,13 @@ typedef struct Group__storage_ {
 @dynamic basePermissionsArray, basePermissionsArray_Count;
 @dynamic clock;
 @dynamic hasPinnedAt, pinnedAt;
-@dynamic hasConferenceLink, conferenceLink;
 @dynamic hasMembersCountLimit, membersCountLimit;
 @dynamic hasDeletedAt, deletedAt;
 @dynamic isPublic;
+@dynamic isClosed;
+@dynamic hasSource, source;
+@dynamic linkedGroupIdsArray, linkedGroupIdsArray_Count;
+@dynamic hasDueDate, dueDate;
 
 typedef struct GroupData__storage_ {
   uint32_t _has_storage_[1];
@@ -391,9 +398,11 @@ typedef struct GroupData__storage_ {
   GPBStringValue *about;
   GPBEnumArray *basePermissionsArray;
   GPBInt64Value *pinnedAt;
-  GPBStringValue *conferenceLink;
   GPBInt32Value *membersCountLimit;
   GPBInt64Value *deletedAt;
+  Peer *source;
+  NSMutableArray *linkedGroupIdsArray;
+  GPBTimestamp *dueDate;
   int64_t clock;
 } GroupData__storage_;
 
@@ -494,19 +503,10 @@ typedef struct GroupData__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "conferenceLink",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
-        .number = GroupData_FieldNumber_ConferenceLink,
-        .hasIndex = 9,
-        .offset = (uint32_t)offsetof(GroupData__storage_, conferenceLink),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "membersCountLimit",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBInt32Value),
         .number = GroupData_FieldNumber_MembersCountLimit,
-        .hasIndex = 10,
+        .hasIndex = 9,
         .offset = (uint32_t)offsetof(GroupData__storage_, membersCountLimit),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -515,7 +515,7 @@ typedef struct GroupData__storage_ {
         .name = "deletedAt",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBInt64Value),
         .number = GroupData_FieldNumber_DeletedAt,
-        .hasIndex = 11,
+        .hasIndex = 10,
         .offset = (uint32_t)offsetof(GroupData__storage_, deletedAt),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -524,10 +524,46 @@ typedef struct GroupData__storage_ {
         .name = "isPublic",
         .dataTypeSpecific.clazz = Nil,
         .number = GroupData_FieldNumber_IsPublic,
-        .hasIndex = 12,
-        .offset = 13,  // Stored in _has_storage_ to save space.
+        .hasIndex = 11,
+        .offset = 12,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "isClosed",
+        .dataTypeSpecific.clazz = Nil,
+        .number = GroupData_FieldNumber_IsClosed,
+        .hasIndex = 13,
+        .offset = 14,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "source",
+        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
+        .number = GroupData_FieldNumber_Source,
+        .hasIndex = 15,
+        .offset = (uint32_t)offsetof(GroupData__storage_, source),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "linkedGroupIdsArray",
+        .dataTypeSpecific.clazz = Nil,
+        .number = GroupData_FieldNumber_LinkedGroupIdsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(GroupData__storage_, linkedGroupIdsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "dueDate",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBTimestamp),
+        .number = GroupData_FieldNumber_DueDate,
+        .hasIndex = 16,
+        .offset = (uint32_t)offsetof(GroupData__storage_, dueDate),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1363,14 +1399,18 @@ typedef struct UpdateGroupMembersCountChanged__storage_ {
 @dynamic groupType;
 @dynamic basePermissionsArray, basePermissionsArray_Count;
 @dynamic isPublic;
+@dynamic hasSource, source;
+@dynamic hasDueDate, dueDate;
 
 typedef struct RequestCreateGroup__storage_ {
   uint32_t _has_storage_[1];
   GroupType groupType;
+  NSString *rid;
   NSString *title;
   NSMutableArray *usersArray;
   GPBEnumArray *basePermissionsArray;
-  int64_t rid;
+  Peer *source;
+  GPBTimestamp *dueDate;
 } RequestCreateGroup__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1386,7 +1426,7 @@ typedef struct RequestCreateGroup__storage_ {
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestCreateGroup__storage_, rid),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "title",
@@ -1432,6 +1472,24 @@ typedef struct RequestCreateGroup__storage_ {
         .offset = 4,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "source",
+        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
+        .number = RequestCreateGroup_FieldNumber_Source,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(RequestCreateGroup__storage_, source),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "dueDate",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBTimestamp),
+        .number = RequestCreateGroup_FieldNumber_DueDate,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(RequestCreateGroup__storage_, dueDate),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1530,9 +1588,9 @@ typedef struct ResponseCreateGroup__storage_ {
 
 typedef struct RequestEditGroupTitle__storage_ {
   uint32_t _has_storage_[1];
+  NSString *rid;
   NSString *title;
   NSString *groupId;
-  int64_t rid;
 } RequestEditGroupTitle__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1548,7 +1606,7 @@ typedef struct RequestEditGroupTitle__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(RequestEditGroupTitle__storage_, rid),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "title",
@@ -1597,9 +1655,9 @@ typedef struct RequestEditGroupTitle__storage_ {
 
 typedef struct RequestEditGroupAvatar__storage_ {
   uint32_t _has_storage_[1];
+  NSString *rid;
   FileLocation *fileLocation;
   NSString *groupId;
-  int64_t rid;
 } RequestEditGroupAvatar__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1615,7 +1673,7 @@ typedef struct RequestEditGroupAvatar__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(RequestEditGroupAvatar__storage_, rid),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "fileLocation",
@@ -1663,8 +1721,8 @@ typedef struct RequestEditGroupAvatar__storage_ {
 
 typedef struct RequestRemoveGroupAvatar__storage_ {
   uint32_t _has_storage_[1];
+  NSString *rid;
   NSString *groupId;
-  int64_t rid;
 } RequestRemoveGroupAvatar__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1680,7 +1738,7 @@ typedef struct RequestRemoveGroupAvatar__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(RequestRemoveGroupAvatar__storage_, rid),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "groupId",
@@ -1720,9 +1778,9 @@ typedef struct RequestRemoveGroupAvatar__storage_ {
 
 typedef struct RequestEditGroupAbout__storage_ {
   uint32_t _has_storage_[1];
+  NSString *rid;
   GPBStringValue *about;
   NSString *groupId;
-  int64_t rid;
 } RequestEditGroupAbout__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1738,7 +1796,7 @@ typedef struct RequestEditGroupAbout__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(RequestEditGroupAbout__storage_, rid),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "about",
@@ -1988,9 +2046,9 @@ typedef struct ResponseMember__storage_ {
 
 typedef struct RequestInviteUser__storage_ {
   uint32_t _has_storage_[1];
+  NSString *rid;
   UserOutPeer *user;
   NSString *groupId;
-  int64_t rid;
 } RequestInviteUser__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2006,7 +2064,7 @@ typedef struct RequestInviteUser__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(RequestInviteUser__storage_, rid),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "user",
@@ -2054,8 +2112,8 @@ typedef struct RequestInviteUser__storage_ {
 
 typedef struct RequestLeaveGroup__storage_ {
   uint32_t _has_storage_[1];
+  NSString *rid;
   NSString *groupId;
-  int64_t rid;
 } RequestLeaveGroup__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2071,7 +2129,7 @@ typedef struct RequestLeaveGroup__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(RequestLeaveGroup__storage_, rid),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "groupId",
@@ -2101,6 +2159,140 @@ typedef struct RequestLeaveGroup__storage_ {
 
 @end
 
+#pragma mark - RequestCloseGroup
+
+@implementation RequestCloseGroup
+
+@dynamic groupId;
+@dynamic rid;
+@dynamic hasReason, reason;
+
+typedef struct RequestCloseGroup__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *groupId;
+  NSString *rid;
+  GPBStringValue *reason;
+} RequestCloseGroup__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "groupId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestCloseGroup_FieldNumber_GroupId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(RequestCloseGroup__storage_, groupId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "rid",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestCloseGroup_FieldNumber_Rid,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(RequestCloseGroup__storage_, rid),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "reason",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
+        .number = RequestCloseGroup_FieldNumber_Reason,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(RequestCloseGroup__storage_, reason),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestCloseGroup class]
+                                     rootClass:[GroupsRoot class]
+                                          file:GroupsRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RequestCloseGroup__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - RequestOpenGroup
+
+@implementation RequestOpenGroup
+
+@dynamic groupId;
+@dynamic rid;
+@dynamic hasReason, reason;
+
+typedef struct RequestOpenGroup__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *groupId;
+  NSString *rid;
+  GPBStringValue *reason;
+} RequestOpenGroup__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "groupId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestOpenGroup_FieldNumber_GroupId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(RequestOpenGroup__storage_, groupId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "rid",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestOpenGroup_FieldNumber_Rid,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(RequestOpenGroup__storage_, rid),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "reason",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
+        .number = RequestOpenGroup_FieldNumber_Reason,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(RequestOpenGroup__storage_, reason),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestOpenGroup class]
+                                     rootClass:[GroupsRoot class]
+                                          file:GroupsRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RequestOpenGroup__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - RequestKickUser
 
 @implementation RequestKickUser
@@ -2111,9 +2303,9 @@ typedef struct RequestLeaveGroup__storage_ {
 
 typedef struct RequestKickUser__storage_ {
   uint32_t _has_storage_[1];
+  NSString *rid;
   NSString *groupId;
   NSString *userId;
-  int64_t rid;
 } RequestKickUser__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2129,7 +2321,7 @@ typedef struct RequestKickUser__storage_ {
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(RequestKickUser__storage_, rid),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
+        .dataType = GPBDataTypeString,
       },
       {
         .name = "groupId",

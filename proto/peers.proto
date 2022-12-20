@@ -14,15 +14,15 @@ enum PeerType {
     PEER_TYPE_UNKNOWN = 0;
     PEER_TYPE_PRIVATE = 1;
     PEER_TYPE_GROUP = 2;
-    PEER_TYPE_ENCRYPTEDPRIVATE = 3;
-    PEER_TYPE_SIP = 4;
+    reserved 3, 4;
 }
 
 // Peer
 message Peer {
     PeerType type = 1;
     string id = 2;
-    google.protobuf.StringValue str_id = 3;
+    reserved 3;
+    UUIDValue parent_mid = 4; // if set, Peer is treated as ThreadPeer
 }
 
 // Out peer with access hash
@@ -30,7 +30,8 @@ message OutPeer {
     PeerType type = 1;
     string id = 2;
     int64 access_hash = 3 [(dlg).log=log_confidential];
-    google.protobuf.StringValue str_id = 4;
+    reserved 4;
+    UUIDValue parent_mid = 5; // if set, Peer is treated as ThreadPeer
 }
 
 // User's out peer

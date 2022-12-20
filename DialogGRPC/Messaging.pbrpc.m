@@ -17,6 +17,8 @@
 #import "MediaAndFiles.pbobjc.h"
 #import "Reactions.pbobjc.h"
 #import "Scalapb.pbobjc.h"
+#import "Groups.pbobjc.h"
+#import "Threads.pbobjc.h"
 
 @implementation Messaging
 

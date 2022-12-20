@@ -27,7 +27,7 @@
 
 CF_EXTERN_C_BEGIN
 
-@class GPBStringValue;
+@class UUIDValue;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -43,8 +43,6 @@ typedef GPB_ENUM(PeerType) {
   PeerType_PeerTypeUnknown = 0,
   PeerType_PeerTypePrivate = 1,
   PeerType_PeerTypeGroup = 2,
-  PeerType_PeerTypeEncryptedprivate = 3,
-  PeerType_PeerTypeSip = 4,
 };
 
 GPBEnumDescriptor *PeerType_EnumDescriptor(void);
@@ -75,7 +73,7 @@ GPB_FINAL @interface PeersRoot : GPBRootObject
 typedef GPB_ENUM(Peer_FieldNumber) {
   Peer_FieldNumber_Type = 1,
   Peer_FieldNumber_Id_p = 2,
-  Peer_FieldNumber_StrId = 3,
+  Peer_FieldNumber_ParentMid = 4,
 };
 
 /**
@@ -87,9 +85,10 @@ GPB_FINAL @interface Peer : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
-@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *strId;
-/** Test to see if @c strId has been set. */
-@property(nonatomic, readwrite) BOOL hasStrId;
+/** if set, Peer is treated as ThreadPeer */
+@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *parentMid;
+/** Test to see if @c parentMid has been set. */
+@property(nonatomic, readwrite) BOOL hasParentMid;
 
 @end
 
@@ -111,7 +110,7 @@ typedef GPB_ENUM(OutPeer_FieldNumber) {
   OutPeer_FieldNumber_Type = 1,
   OutPeer_FieldNumber_Id_p = 2,
   OutPeer_FieldNumber_AccessHash = 3,
-  OutPeer_FieldNumber_StrId = 4,
+  OutPeer_FieldNumber_ParentMid = 5,
 };
 
 /**
@@ -125,9 +124,10 @@ GPB_FINAL @interface OutPeer : GPBMessage
 
 @property(nonatomic, readwrite) int64_t accessHash;
 
-@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *strId;
-/** Test to see if @c strId has been set. */
-@property(nonatomic, readwrite) BOOL hasStrId;
+/** if set, Peer is treated as ThreadPeer */
+@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *parentMid;
+/** Test to see if @c parentMid has been set. */
+@property(nonatomic, readwrite) BOOL hasParentMid;
 
 @end
 

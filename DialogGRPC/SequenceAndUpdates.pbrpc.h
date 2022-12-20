@@ -41,6 +41,7 @@
   #import "Peers.pbobjc.h"
   #import "Messaging.pbobjc.h"
   #import "Users.pbobjc.h"
+  #import "Threads.pbobjc.h"
   #import "Reactions.pbobjc.h"
   #import "Permissions.pbobjc.h"
   #import "Scalapb.pbobjc.h"

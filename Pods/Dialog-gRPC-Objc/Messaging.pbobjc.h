@@ -52,6 +52,7 @@ CF_EXTERN_C_BEGIN
 @class GPBInt32Value;
 @class GPBInt64Value;
 @class GPBStringValue;
+@class GroupData;
 @class GroupOutPeer;
 @class HistoryMessage;
 @class ImageLocation;
@@ -90,6 +91,9 @@ CF_EXTERN_C_BEGIN
 @class ServiceExContactRegistered;
 @class ServiceExGroupCreated;
 @class ServiceExGroupPublicityChanged;
+@class ServiceExImportantTopicClosed;
+@class ServiceExImportantTopicForked;
+@class ServiceExImportantTopicReopened;
 @class ServiceExPhoneCall;
 @class ServiceExPhoneMissed;
 @class ServiceExPhoneRejected;
@@ -106,6 +110,7 @@ CF_EXTERN_C_BEGIN
 @class TextModernAttach;
 @class TextModernField;
 @class TextModernMessage;
+@class ThreadInfo;
 @class UUIDValue;
 @class UnsupportedMessage;
 @class UpdateErrorCause;
@@ -170,8 +175,9 @@ typedef GPB_ENUM(DialogsFilter) {
    **/
   DialogsFilter_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   DialogsFilter_DialogsFilterUnknown = 0,
-  DialogsFilter_DialogsFilterExcludefavourites = 1,
-  DialogsFilter_DialogsFilterExcludearchived = 2,
+  DialogsFilter_DialogsFilterExcludeFavourites = 1,
+  DialogsFilter_DialogsFilterExcludeArchived = 2,
+  DialogsFilter_DialogsFilterExcludeThreads = 3,
 };
 
 GPBEnumDescriptor *DialogsFilter_EnumDescriptor(void);
@@ -1028,6 +1034,9 @@ typedef GPB_ENUM(ServiceEx_FieldNumber) {
   ServiceEx_FieldNumber_ChatRestored = 16,
   ServiceEx_FieldNumber_ConferenceStatus = 17,
   ServiceEx_FieldNumber_PublicityChanged = 18,
+  ServiceEx_FieldNumber_ImportantTopicForked = 19,
+  ServiceEx_FieldNumber_ImportantTopicClosed = 20,
+  ServiceEx_FieldNumber_ImportantTopicReopened = 21,
 };
 
 typedef GPB_ENUM(ServiceEx_Body_OneOfCase) {
@@ -1049,6 +1058,9 @@ typedef GPB_ENUM(ServiceEx_Body_OneOfCase) {
   ServiceEx_Body_OneOfCase_ChatRestored = 16,
   ServiceEx_Body_OneOfCase_ConferenceStatus = 17,
   ServiceEx_Body_OneOfCase_PublicityChanged = 18,
+  ServiceEx_Body_OneOfCase_ImportantTopicForked = 19,
+  ServiceEx_Body_OneOfCase_ImportantTopicClosed = 20,
+  ServiceEx_Body_OneOfCase_ImportantTopicReopened = 21,
 };
 
 GPB_FINAL @interface ServiceEx : GPBMessage
@@ -1088,6 +1100,12 @@ GPB_FINAL @interface ServiceEx : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) ServiceExConferenceStatus *conferenceStatus;
 
 @property(nonatomic, readwrite, strong, null_resettable) ServiceExGroupPublicityChanged *publicityChanged;
+
+@property(nonatomic, readwrite, strong, null_resettable) ServiceExImportantTopicForked *importantTopicForked;
+
+@property(nonatomic, readwrite, strong, null_resettable) ServiceExImportantTopicClosed *importantTopicClosed;
+
+@property(nonatomic, readwrite, strong, null_resettable) ServiceExImportantTopicReopened *importantTopicReopened;
 
 @end
 
@@ -1345,6 +1363,44 @@ GPB_FINAL @interface ServiceExGroupPublicityChanged : GPBMessage
 @property(nonatomic, readwrite) BOOL previousPublicity;
 
 @property(nonatomic, readwrite) BOOL currentPublicity;
+
+@end
+
+#pragma mark - ServiceExImportantTopicForked
+
+typedef GPB_ENUM(ServiceExImportantTopicForked_FieldNumber) {
+  ServiceExImportantTopicForked_FieldNumber_TopicGroup = 1,
+};
+
+GPB_FINAL @interface ServiceExImportantTopicForked : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) GroupData *topicGroup;
+/** Test to see if @c topicGroup has been set. */
+@property(nonatomic, readwrite) BOOL hasTopicGroup;
+
+@end
+
+#pragma mark - ServiceExImportantTopicClosed
+
+typedef GPB_ENUM(ServiceExImportantTopicClosed_FieldNumber) {
+  ServiceExImportantTopicClosed_FieldNumber_ClosedByUserId = 1,
+};
+
+GPB_FINAL @interface ServiceExImportantTopicClosed : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *closedByUserId;
+
+@end
+
+#pragma mark - ServiceExImportantTopicReopened
+
+typedef GPB_ENUM(ServiceExImportantTopicReopened_FieldNumber) {
+  ServiceExImportantTopicReopened_FieldNumber_ReopenedByUserId = 1,
+};
+
+GPB_FINAL @interface ServiceExImportantTopicReopened : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *reopenedByUserId;
 
 @end
 
@@ -2689,47 +2745,6 @@ GPB_FINAL @interface UpdateReadDialogLaterError : GPBMessage
 
 @end
 
-#pragma mark - UpdateThreadCreated
-
-typedef GPB_ENUM(UpdateThreadCreated_FieldNumber) {
-  UpdateThreadCreated_FieldNumber_Peer = 1,
-  UpdateThreadCreated_FieldNumber_StartMessage = 2,
-};
-
-/**
- * Update about new thread inside group
- **/
-GPB_FINAL @interface UpdateThreadCreated : GPBMessage
-
-/** peer representing thread */
-@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-/** messageId from parent group where thread starts */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *startMessage;
-/** Test to see if @c startMessage has been set. */
-@property(nonatomic, readwrite) BOOL hasStartMessage;
-
-@end
-
-#pragma mark - UpdateThreadLifted
-
-typedef GPB_ENUM(UpdateThreadLifted_FieldNumber) {
-  UpdateThreadLifted_FieldNumber_Peer = 1,
-};
-
-/**
- * Update about thread converted to group
- **/
-GPB_FINAL @interface UpdateThreadLifted : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-@end
-
 #pragma mark - ReferencedMessages
 
 typedef GPB_ENUM(ReferencedMessages_FieldNumber) {
@@ -2795,6 +2810,7 @@ typedef GPB_ENUM(HistoryMessage_FieldNumber) {
   HistoryMessage_FieldNumber_ForwardSource = 15,
   HistoryMessage_FieldNumber_ReactionsArray = 16,
   HistoryMessage_FieldNumber_Peer = 17,
+  HistoryMessage_FieldNumber_ThreadInfo = 18,
 };
 
 typedef GPB_ENUM(HistoryMessage_Attach_OneOfCase) {
@@ -2848,6 +2864,10 @@ GPB_FINAL @interface HistoryMessage : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Reaction*> *reactionsArray;
 /** The number of items in @c reactionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger reactionsArray_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) ThreadInfo *threadInfo;
+/** Test to see if @c threadInfo has been set. */
+@property(nonatomic, readwrite) BOOL hasThreadInfo;
 
 @end
 
@@ -2940,6 +2960,7 @@ typedef GPB_ENUM(Dialog_FieldNumber) {
   Dialog_FieldNumber_ReadLater = 17,
   Dialog_FieldNumber_IsMuted = 19,
   Dialog_FieldNumber_IsFavourite = 20,
+  Dialog_FieldNumber_IsArchived = 21,
 };
 
 /**
@@ -2991,6 +3012,8 @@ GPB_FINAL @interface Dialog : GPBMessage
 @property(nonatomic, readwrite) BOOL isMuted;
 
 @property(nonatomic, readwrite) BOOL isFavourite;
+
+@property(nonatomic, readwrite) BOOL isArchived;
 
 @end
 

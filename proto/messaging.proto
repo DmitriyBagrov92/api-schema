@@ -12,6 +12,8 @@ import "peers.proto";
 import "media_and_files.proto";
 import "reactions.proto";
 import "scalapb.proto";
+import "groups.proto";
+import "threads.proto";
 
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
@@ -286,6 +288,9 @@ message ServiceEx {
         ServiceExChatRestored chat_restored = 16;
         ServiceExConferenceStatus conference_status = 17;
         ServiceExGroupPublicityChanged publicity_changed = 18;
+        ServiceExImportantTopicForked important_topic_forked = 19;
+        ServiceExImportantTopicClosed important_topic_closed = 20;
+        ServiceExImportantTopicReopened important_topic_reopened = 21;
     }
 }
 
@@ -371,6 +376,18 @@ message ServiceExConferenceStatus {
 message ServiceExGroupPublicityChanged {
     bool previous_publicity = 1;
     bool current_publicity = 2;
+}
+
+message ServiceExImportantTopicForked {
+    dialog.GroupData topic_group = 1;
+}
+
+message ServiceExImportantTopicClosed {
+    string closed_by_user_id = 1;
+}
+
+message ServiceExImportantTopicReopened {
+    string reopened_by_user_id = 1;
 }
 
 // File message
@@ -779,17 +796,6 @@ message UpdateReadDialogLaterError {
     UpdateErrorCause cause = 4;
 }
 
-// Update about new thread inside group
-message UpdateThreadCreated {
-    GroupOutPeer peer = 1; // peer representing thread
-    UUIDValue start_message = 2; // messageId from parent group where thread starts
-}
-
-// Update about thread converted to group
-message UpdateThreadLifted {
-    GroupOutPeer peer = 1;
-}
-
 // mids Referenced message ids
 message ReferencedMessages {
     repeated UUIDValue mids = 1;
@@ -824,6 +830,7 @@ message HistoryMessage {
     google.protobuf.Int64Value edited_at = 13;
     string random_id = 14;
     repeated Reaction reactions = 16;
+    ThreadInfo thread_info = 18;
 }
 
 enum ListLoadMode {
@@ -884,12 +891,14 @@ message Dialog {
     bool read_later = 17;
     bool is_muted = 19;
     bool is_favourite = 20;
+    bool is_archived = 21;
 }
 
 enum DialogsFilter {
     DIALOGS_FILTER_UNKNOWN = 0;
-    DIALOGS_FILTER_EXCLUDEFAVOURITES = 1;
-    DIALOGS_FILTER_EXCLUDEARCHIVED = 2;
+    DIALOGS_FILTER_EXCLUDE_FAVOURITES = 1;
+    DIALOGS_FILTER_EXCLUDE_ARCHIVED = 2;
+    DIALOGS_FILTER_EXCLUDE_THREADS = 3;
 }
 
 // Loading conversation history
@@ -1132,6 +1141,7 @@ service Messaging {
             body: "*"
         };
     }
+
     // Returns read status of the message per user
     rpc GetMessageReads (RequestGetMessageReads) returns (ResponseGetMessageReads) {
         option (google.api.http) = {
@@ -1147,6 +1157,7 @@ service Messaging {
             body: "*"
         };
     }
+
     rpc ReadDialogLater (RequestReadDialogLater) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/ReadDialogLater"

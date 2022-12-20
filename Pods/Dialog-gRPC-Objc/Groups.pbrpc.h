@@ -15,6 +15,7 @@
 @class GPBEmpty;
 @class GroupPartialInfo;
 @class RequestChangeGroupPublicity;
+@class RequestCloseGroup;
 @class RequestCreateGroup;
 @class RequestDeleteGroup;
 @class RequestEditGroupAbout;
@@ -33,6 +34,7 @@
 @class RequestLeaveGroup;
 @class RequestLoadMembers;
 @class RequestMakeUserAdmin;
+@class RequestOpenGroup;
 @class RequestRemoveGroupAvatar;
 @class RequestRevokeInviteUrl;
 @class RequestTransferOwnership;
@@ -101,6 +103,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark LeaveGroup(RequestLeaveGroup) returns (Empty)
 
 - (GRPCUnaryProtoCall *)leaveGroupWithMessage:(RequestLeaveGroup *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark CloseGroup(RequestCloseGroup) returns (Empty)
+
+- (GRPCUnaryProtoCall *)closeGroupWithMessage:(RequestCloseGroup *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark OpenGroup(RequestOpenGroup) returns (Empty)
+
+- (GRPCUnaryProtoCall *)openGroupWithMessage:(RequestOpenGroup *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark KickUser(RequestKickUser) returns (Empty)
 
@@ -287,6 +297,20 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)leaveGroupWithRequest:(RequestLeaveGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 - (GRPCProtoCall *)RPCToLeaveGroupWithRequest:(RequestLeaveGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark CloseGroup(RequestCloseGroup) returns (Empty)
+
+- (void)closeGroupWithRequest:(RequestCloseGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToCloseGroupWithRequest:(RequestCloseGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark OpenGroup(RequestOpenGroup) returns (Empty)
+
+- (void)openGroupWithRequest:(RequestOpenGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToOpenGroupWithRequest:(RequestOpenGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark KickUser(RequestKickUser) returns (Empty)

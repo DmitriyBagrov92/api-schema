@@ -27,6 +27,7 @@ import "privacy.proto";
 import "peers.proto";
 import "messaging.proto";
 import "users.proto";
+import "threads.proto";
 import "reactions.proto";
 import "permissions.proto";
 import "scalapb.proto";
@@ -107,6 +108,7 @@ message SeqUpdateBody {
         UpdateFavouriteDialogError update_favourite_dialog_error = 75;
         UpdateUnfavouriteDialogError update_unfavourite_dialog_error = 76;
         UpdateReadDialogLaterError update_read_dialog_later_error = 77;
+        UpdateThreadFollowing update_thread_following = 78;
     }
 }
 
@@ -249,6 +251,7 @@ message WeakUpdate {
         UpdateSuggests update_suggests                                        = 22;
         UpdateFeatureFlagChanged update_feature_flag_changed                  = 23;
         UpdateDraftsChanged update_drafts_changed                             = 24;
+        UpdateThreadInfos update_thread_infos                                 = 26;
     }
 }
 

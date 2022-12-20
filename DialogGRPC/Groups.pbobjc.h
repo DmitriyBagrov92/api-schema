@@ -38,6 +38,7 @@ CF_EXTERN_C_BEGIN
 @class GroupData;
 @class GroupMemberPermission;
 @class Member;
+@class Peer;
 @class UserOutPeer;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -54,7 +55,7 @@ typedef GPB_ENUM(GroupType) {
   GroupType_GroupTypeUnknown = 0,
   GroupType_GroupTypeGroup = 1,
   GroupType_GroupTypeChannel = 2,
-  GroupType_GroupTypeThread = 3,
+  GroupType_GroupTypeImportantTopic = 4,
 };
 
 GPBEnumDescriptor *GroupType_EnumDescriptor(void);
@@ -92,6 +93,9 @@ typedef GPB_ENUM(GroupAdminPermission) {
   GroupAdminPermission_GroupAdminPermissionTargeting = 13,
   GroupAdminPermission_GroupAdminPermissionDelete = 14,
   GroupAdminPermission_GroupAdminPermissionManageConference = 15,
+
+  /** _FROZEN ? */
+  GroupAdminPermission_GroupAdminPermissionOpenAndClose = 16,
 };
 
 GPBEnumDescriptor *GroupAdminPermission_EnumDescriptor(void);
@@ -193,10 +197,13 @@ typedef GPB_ENUM(GroupData_FieldNumber) {
   GroupData_FieldNumber_BasePermissionsArray = 10,
   GroupData_FieldNumber_Clock = 11,
   GroupData_FieldNumber_PinnedAt = 12,
-  GroupData_FieldNumber_ConferenceLink = 13,
   GroupData_FieldNumber_MembersCountLimit = 14,
   GroupData_FieldNumber_DeletedAt = 15,
   GroupData_FieldNumber_IsPublic = 16,
+  GroupData_FieldNumber_IsClosed = 17,
+  GroupData_FieldNumber_Source = 18,
+  GroupData_FieldNumber_LinkedGroupIdsArray = 19,
+  GroupData_FieldNumber_DueDate = 20,
 };
 
 GPB_FINAL @interface GroupData : GPBMessage
@@ -239,10 +246,6 @@ GPB_FINAL @interface GroupData : GPBMessage
 /** Test to see if @c pinnedAt has been set. */
 @property(nonatomic, readwrite) BOOL hasPinnedAt;
 
-@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *conferenceLink;
-/** Test to see if @c conferenceLink has been set. */
-@property(nonatomic, readwrite) BOOL hasConferenceLink;
-
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *membersCountLimit;
 /** Test to see if @c membersCountLimit has been set. */
 @property(nonatomic, readwrite) BOOL hasMembersCountLimit;
@@ -252,6 +255,24 @@ GPB_FINAL @interface GroupData : GPBMessage
 @property(nonatomic, readwrite) BOOL hasDeletedAt;
 
 @property(nonatomic, readwrite) BOOL isPublic;
+
+/** closure of group is more like freezing -- everything (including history) becomes immutable */
+@property(nonatomic, readwrite) BOOL isClosed;
+
+/** source peer&message for this group (will be first message in history after service message about group creation) */
+@property(nonatomic, readwrite, strong, null_resettable) Peer *source;
+/** Test to see if @c source has been set. */
+@property(nonatomic, readwrite) BOOL hasSource;
+
+/** linked groups */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *linkedGroupIdsArray;
+/** The number of items in @c linkedGroupIdsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger linkedGroupIdsArray_Count;
+
+/** if set this group will be "closed" after specified date */
+@property(nonatomic, readwrite, strong, null_resettable) GPBTimestamp *dueDate;
+/** Test to see if @c dueDate has been set. */
+@property(nonatomic, readwrite) BOOL hasDueDate;
 
 @end
 
@@ -558,6 +579,8 @@ typedef GPB_ENUM(RequestCreateGroup_FieldNumber) {
   RequestCreateGroup_FieldNumber_GroupType = 5,
   RequestCreateGroup_FieldNumber_BasePermissionsArray = 7,
   RequestCreateGroup_FieldNumber_IsPublic = 8,
+  RequestCreateGroup_FieldNumber_Source = 9,
+  RequestCreateGroup_FieldNumber_DueDate = 10,
 };
 
 /**
@@ -566,7 +589,7 @@ typedef GPB_ENUM(RequestCreateGroup_FieldNumber) {
 GPB_FINAL @interface RequestCreateGroup : GPBMessage
 
 /** / Id for query deduplication */
-@property(nonatomic, readwrite) int64_t rid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *title;
 
@@ -585,6 +608,14 @@ GPB_FINAL @interface RequestCreateGroup : GPBMessage
 @property(nonatomic, readonly) NSUInteger basePermissionsArray_Count;
 
 @property(nonatomic, readwrite) BOOL isPublic;
+
+@property(nonatomic, readwrite, strong, null_resettable) Peer *source;
+/** Test to see if @c source has been set. */
+@property(nonatomic, readwrite) BOOL hasSource;
+
+@property(nonatomic, readwrite, strong, null_resettable) GPBTimestamp *dueDate;
+/** Test to see if @c dueDate has been set. */
+@property(nonatomic, readwrite) BOOL hasDueDate;
 
 @end
 
@@ -637,7 +668,7 @@ GPB_FINAL @interface RequestEditGroupTitle : GPBMessage
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 /** / Id for query deduplication */
-@property(nonatomic, readwrite) int64_t rid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *title;
 
@@ -659,7 +690,7 @@ GPB_FINAL @interface RequestEditGroupAvatar : GPBMessage
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 /** / Id for query deduplication */
-@property(nonatomic, readwrite) int64_t rid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
 @property(nonatomic, readwrite, strong, null_resettable) FileLocation *fileLocation;
 /** Test to see if @c fileLocation has been set. */
@@ -682,7 +713,7 @@ GPB_FINAL @interface RequestRemoveGroupAvatar : GPBMessage
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 /** / Id for query deduplication */
-@property(nonatomic, readwrite) int64_t rid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
 @end
 
@@ -702,7 +733,7 @@ GPB_FINAL @interface RequestEditGroupAbout : GPBMessage
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 /** / Id for query deduplication */
-@property(nonatomic, readwrite) int64_t rid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *about;
 /** Test to see if @c about has been set. */
@@ -795,7 +826,7 @@ GPB_FINAL @interface RequestInviteUser : GPBMessage
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 /** / Id for query deduplication */
-@property(nonatomic, readwrite) int64_t rid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
 @property(nonatomic, readwrite, strong, null_resettable) UserOutPeer *user;
 /** Test to see if @c user has been set. */
@@ -818,7 +849,51 @@ GPB_FINAL @interface RequestLeaveGroup : GPBMessage
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 /** / Id for query deduplication */
-@property(nonatomic, readwrite) int64_t rid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
+
+@end
+
+#pragma mark - RequestCloseGroup
+
+typedef GPB_ENUM(RequestCloseGroup_FieldNumber) {
+  RequestCloseGroup_FieldNumber_GroupId = 1,
+  RequestCloseGroup_FieldNumber_Rid = 2,
+  RequestCloseGroup_FieldNumber_Reason = 3,
+};
+
+GPB_FINAL @interface RequestCloseGroup : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
+
+/** / Id for query deduplication */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
+
+/** will be sent as text message on behalf of closing user right before the service message */
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *reason;
+/** Test to see if @c reason has been set. */
+@property(nonatomic, readwrite) BOOL hasReason;
+
+@end
+
+#pragma mark - RequestOpenGroup
+
+typedef GPB_ENUM(RequestOpenGroup_FieldNumber) {
+  RequestOpenGroup_FieldNumber_GroupId = 1,
+  RequestOpenGroup_FieldNumber_Rid = 2,
+  RequestOpenGroup_FieldNumber_Reason = 3,
+};
+
+GPB_FINAL @interface RequestOpenGroup : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
+
+/** / Id for query deduplication */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
+
+/** will be sent as text message on behaolf of opening user right after the service message */
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *reason;
+/** Test to see if @c reason has been set. */
+@property(nonatomic, readwrite) BOOL hasReason;
 
 @end
 
@@ -838,7 +913,7 @@ GPB_FINAL @interface RequestKickUser : GPBMessage
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 /** / Id for query deduplication */
-@property(nonatomic, readwrite) int64_t rid;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 

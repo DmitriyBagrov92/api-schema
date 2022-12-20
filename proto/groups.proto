@@ -27,7 +27,8 @@ enum GroupType {
     GROUP_TYPE_UNKNOWN = 0;
     GROUP_TYPE_GROUP = 1;
     GROUP_TYPE_CHANNEL = 2;
-    GROUP_TYPE_THREAD = 3;
+    reserved 3;
+    GROUP_TYPE_IMPORTANT_TOPIC = 4;
 }
 
 // Group information
@@ -39,7 +40,7 @@ message Group {
 }
 
 message GroupData {
-    reserved 1, 9;
+    reserved 1, 9, 13;
     string title = 2 [(dlg).log=log_sensitive]; /// Title of group
     Avatar avatar = 3; /// Avatar of group
     /// Number of members
@@ -53,10 +54,13 @@ message GroupData {
     repeated GroupAdminPermission base_permissions = 10;
     int64 clock = 11;
     google.protobuf.Int64Value pinned_at = 12;
-    google.protobuf.StringValue conference_link = 13;
     google.protobuf.Int32Value members_count_limit = 14;
     google.protobuf.Int64Value deleted_at = 15;
     bool is_public = 16;
+    bool is_closed = 17; // closure of group is more like freezing -- everything (including history) becomes immutable
+    Peer source = 18; // source peer&message for this group (will be first message in history after service message about group creation)
+    repeated string linked_group_ids = 19; // linked groups
+    google.protobuf.Timestamp due_date = 20; // if set this group will be "closed" after specified date
 }
 
 message GroupPartialInfo {
@@ -147,7 +151,7 @@ message UpdateGroupMembersCountChanged {
 // Creating group chat
 message RequestCreateGroup {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    int64 rid = 1; /// Id for query deduplication
+    string rid = 1; /// Id for query deduplication
     reserved 2, 6;
     string title = 3 [(dlg).log=log_sensitive];
     repeated UserOutPeer users = 4; /// members
@@ -156,6 +160,8 @@ message RequestCreateGroup {
     /// Base permissions for invited members
     repeated GroupAdminPermission base_permissions = 7;
     bool is_public = 8;
+    Peer source = 9;
+    google.protobuf.Timestamp due_date = 10;
 }
 
 message ResponseCreateGroup {
@@ -170,7 +176,7 @@ message RequestEditGroupTitle {
     reserved 1;
 
     string group_id = 4;
-    int64 rid = 2; /// Id for query deduplication
+    string rid = 2; /// Id for query deduplication
     string title = 3 [(dlg).log=log_sensitive];
 }
 
@@ -180,7 +186,7 @@ message RequestEditGroupAvatar {
     reserved 1;
 
     string group_id = 4;
-    int64 rid = 2; /// Id for query deduplication
+    string rid = 2; /// Id for query deduplication
     FileLocation file_location = 3;
 }
 
@@ -190,7 +196,7 @@ message RequestRemoveGroupAvatar {
     reserved 1;
 
     string group_id = 3;
-    int64 rid = 2; /// Id for query deduplication
+    string rid = 2; /// Id for query deduplication
 }
 
 // Edit Group About
@@ -199,7 +205,7 @@ message RequestEditGroupAbout {
     reserved 1;
 
     string group_id = 4;
-    int64 rid = 2; /// Id for query deduplication
+    string rid = 2; /// Id for query deduplication
     google.protobuf.StringValue about = 3 [(dlg).log=log_sensitive];
 }
 
@@ -233,7 +239,7 @@ message RequestInviteUser {
     reserved 1;
 
     string group_id = 4;
-    int64 rid = 2; /// Id for query deduplication
+    string rid = 2; /// Id for query deduplication
     UserOutPeer user = 3;
 }
 
@@ -243,7 +249,21 @@ message RequestLeaveGroup {
     reserved 1;
 
     string group_id = 3;
-    int64 rid = 2; /// Id for query deduplication
+    string rid = 2; /// Id for query deduplication
+}
+
+message RequestCloseGroup {
+    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    string group_id = 1;
+    string rid = 2; /// Id for query deduplication
+    google.protobuf.StringValue reason = 3; // will be sent as text message on behalf of closing user right before the service message
+}
+
+message RequestOpenGroup {
+    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    string group_id = 1;
+    string rid = 2; /// Id for query deduplication
+    google.protobuf.StringValue reason = 3; // will be sent as text message on behaolf of opening user right after the service message
 }
 
 // Kicking user from group
@@ -252,7 +272,7 @@ message RequestKickUser {
     reserved 1, 3;
 
     string group_id = 4;
-    int64 rid = 2; /// Id for query deduplication
+    string rid = 2; /// Id for query deduplication
     string user_id = 5;
 }
 
@@ -274,6 +294,7 @@ enum GroupAdminPermission {
     GROUP_ADMIN_PERMISSION_TARGETING = 13;
     GROUP_ADMIN_PERMISSION_DELETE = 14;
     GROUP_ADMIN_PERMISSION_MANAGE_CONFERENCE = 15;
+    GROUP_ADMIN_PERMISSION_OPEN_AND_CLOSE = 16; // _FROZEN ?
 }
 
 // Make user admin
@@ -450,6 +471,18 @@ service Groups {
     rpc LeaveGroup (RequestLeaveGroup) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/LeaveGroup"
+            body: "*"
+        };
+    }
+    rpc CloseGroup (RequestCloseGroup) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Groups/CloseGroup"
+            body: "*"
+        };
+    }
+    rpc OpenGroup (RequestOpenGroup) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Groups/OpenGroup"
             body: "*"
         };
     }

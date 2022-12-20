@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package dialog;
+
+import "wrappers.proto";
+import "empty.proto";
+import "annotations.proto";
+import "scalapb.proto";
+import "definitions.proto";
+import "peers.proto";
+
+option go_package = "dialog";
+option java_package = "im.dlg.grpc.services";
+
+message ThreadInfo {
+    uint32 messages_count = 1;
+    repeated string latest_active_user_ids = 2;
+    uint64 last_activity_date = 3;
+}
+
+message RequestLoadPeerThreads {
+    Peer peer = 1;
+    oneof direction {
+        UUIDValue from_mid = 2;
+        UUIDValue upto_mid = 3;
+    }
+    int32 limit = 4;
+}
+
+message PeerThread {
+    UUIDValue parent_mid = 1;
+    ThreadInfo info = 2;
+}
+
+message ResponseLoadPeerThreads {
+    repeated PeerThread threads = 1;
+}
+
+message RequestFollowThread {
+    Peer peer = 1;
+}
+
+message RequestUnfollowThread {
+    Peer peer = 1;
+}
+
+message UpdateThreadInfos {
+    repeated PeerThread infos = 1;
+}
+
+message UpdateThreadFollowing {
+    Peer peer = 1;
+    bool is_following = 2;
+}
+
+service Threads {
+    rpc LoadPeerThreads (RequestLoadPeerThreads) returns (ResponseLoadPeerThreads) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Threads/LoadPeerThreads"
+            body: "*"
+        };
+    }
+    rpc FollowThread (RequestFollowThread) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Threads/FollowThread"
+            body: "*"
+        };
+    }
+    rpc UnfollowThread (RequestUnfollowThread) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Threads/UnfollowThread"
+            body: "*"
+        };
+    }
+}
