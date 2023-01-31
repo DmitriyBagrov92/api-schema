@@ -28,6 +28,7 @@
 CF_EXTERN_C_BEGIN
 
 @class Avatar;
+@class ConversationLink;
 @class FileLocation;
 @class GPBBytesValue;
 @class GPBInt32Value;
@@ -38,7 +39,6 @@ CF_EXTERN_C_BEGIN
 @class GroupData;
 @class GroupMemberPermission;
 @class Member;
-@class Peer;
 @class UserOutPeer;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -202,8 +202,7 @@ typedef GPB_ENUM(GroupData_FieldNumber) {
   GroupData_FieldNumber_IsPublic = 16,
   GroupData_FieldNumber_IsClosed = 17,
   GroupData_FieldNumber_Source = 18,
-  GroupData_FieldNumber_LinkedGroupIdsArray = 19,
-  GroupData_FieldNumber_DueDate = 20,
+  GroupData_FieldNumber_DueDate = 19,
 };
 
 GPB_FINAL @interface GroupData : GPBMessage
@@ -260,14 +259,9 @@ GPB_FINAL @interface GroupData : GPBMessage
 @property(nonatomic, readwrite) BOOL isClosed;
 
 /** source peer&message for this group (will be first message in history after service message about group creation) */
-@property(nonatomic, readwrite, strong, null_resettable) Peer *source;
+@property(nonatomic, readwrite, strong, null_resettable) ConversationLink *source;
 /** Test to see if @c source has been set. */
 @property(nonatomic, readwrite) BOOL hasSource;
-
-/** linked groups */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *linkedGroupIdsArray;
-/** The number of items in @c linkedGroupIdsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger linkedGroupIdsArray_Count;
 
 /** if set this group will be "closed" after specified date */
 @property(nonatomic, readwrite, strong, null_resettable) GPBTimestamp *dueDate;
@@ -609,7 +603,7 @@ GPB_FINAL @interface RequestCreateGroup : GPBMessage
 
 @property(nonatomic, readwrite) BOOL isPublic;
 
-@property(nonatomic, readwrite, strong, null_resettable) Peer *source;
+@property(nonatomic, readwrite, strong, null_resettable) ConversationLink *source;
 /** Test to see if @c source has been set. */
 @property(nonatomic, readwrite) BOOL hasSource;
 

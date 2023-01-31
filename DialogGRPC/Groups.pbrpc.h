@@ -55,6 +55,7 @@
   #import "Peers.pbobjc.h"
   #import "MediaAndFiles.pbobjc.h"
   #import "Scalapb.pbobjc.h"
+  #import "Miscellaneous.pbobjc.h"
 #endif
 
 @class GRPCUnaryProtoCall;

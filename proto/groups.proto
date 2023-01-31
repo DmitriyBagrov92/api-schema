@@ -10,6 +10,7 @@ import "definitions.proto";
 import "peers.proto";
 import "media_and_files.proto";
 import "scalapb.proto";
+import "miscellaneous.proto";
 
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
@@ -58,9 +59,8 @@ message GroupData {
     google.protobuf.Int64Value deleted_at = 15;
     bool is_public = 16;
     bool is_closed = 17; // closure of group is more like freezing -- everything (including history) becomes immutable
-    Peer source = 18; // source peer&message for this group (will be first message in history after service message about group creation)
-    repeated string linked_group_ids = 19; // linked groups
-    google.protobuf.Timestamp due_date = 20; // if set this group will be "closed" after specified date
+    ConversationLink source = 18; // source peer&message for this group (will be first message in history after service message about group creation)
+    google.protobuf.Timestamp due_date = 19; // if set this group will be "closed" after specified date
 }
 
 message GroupPartialInfo {
@@ -160,7 +160,7 @@ message RequestCreateGroup {
     /// Base permissions for invited members
     repeated GroupAdminPermission base_permissions = 7;
     bool is_public = 8;
-    Peer source = 9;
+    ConversationLink source = 9;
     google.protobuf.Timestamp due_date = 10;
 }
 

@@ -24,6 +24,7 @@
 #import "Peers.pbobjc.h"
 #import "MediaAndFiles.pbobjc.h"
 #import "Scalapb.pbobjc.h"
+#import "Miscellaneous.pbobjc.h"
 // @@protoc_insertion_point(imports)
 
 #pragma clang diagnostic push
@@ -35,6 +36,7 @@
 // static values in struct initializers.
 // We don't use [Foo class] because it is not a static value.
 GPBObjCClassDeclaration(Avatar);
+GPBObjCClassDeclaration(ConversationLink);
 GPBObjCClassDeclaration(FileLocation);
 GPBObjCClassDeclaration(GPBBytesValue);
 GPBObjCClassDeclaration(GPBInt32Value);
@@ -45,7 +47,6 @@ GPBObjCClassDeclaration(Group);
 GPBObjCClassDeclaration(GroupData);
 GPBObjCClassDeclaration(GroupMemberPermission);
 GPBObjCClassDeclaration(Member);
-GPBObjCClassDeclaration(Peer);
 GPBObjCClassDeclaration(UserOutPeer);
 
 #pragma mark - GroupsRoot
@@ -384,7 +385,6 @@ typedef struct Group__storage_ {
 @dynamic isPublic;
 @dynamic isClosed;
 @dynamic hasSource, source;
-@dynamic linkedGroupIdsArray, linkedGroupIdsArray_Count;
 @dynamic hasDueDate, dueDate;
 
 typedef struct GroupData__storage_ {
@@ -400,8 +400,7 @@ typedef struct GroupData__storage_ {
   GPBInt64Value *pinnedAt;
   GPBInt32Value *membersCountLimit;
   GPBInt64Value *deletedAt;
-  Peer *source;
-  NSMutableArray *linkedGroupIdsArray;
+  ConversationLink *source;
   GPBTimestamp *dueDate;
   int64_t clock;
 } GroupData__storage_;
@@ -540,21 +539,12 @@ typedef struct GroupData__storage_ {
       },
       {
         .name = "source",
-        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
+        .dataTypeSpecific.clazz = GPBObjCClass(ConversationLink),
         .number = GroupData_FieldNumber_Source,
         .hasIndex = 15,
         .offset = (uint32_t)offsetof(GroupData__storage_, source),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "linkedGroupIdsArray",
-        .dataTypeSpecific.clazz = Nil,
-        .number = GroupData_FieldNumber_LinkedGroupIdsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(GroupData__storage_, linkedGroupIdsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeString,
       },
       {
         .name = "dueDate",
@@ -1409,7 +1399,7 @@ typedef struct RequestCreateGroup__storage_ {
   NSString *title;
   NSMutableArray *usersArray;
   GPBEnumArray *basePermissionsArray;
-  Peer *source;
+  ConversationLink *source;
   GPBTimestamp *dueDate;
 } RequestCreateGroup__storage_;
 
@@ -1475,7 +1465,7 @@ typedef struct RequestCreateGroup__storage_ {
       },
       {
         .name = "source",
-        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
+        .dataTypeSpecific.clazz = GPBObjCClass(ConversationLink),
         .number = RequestCreateGroup_FieldNumber_Source,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(RequestCreateGroup__storage_, source),

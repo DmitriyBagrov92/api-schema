@@ -11,6 +11,11 @@ import "scalapb.proto";
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
 
+message ConversationLink {
+    Peer peer = 1;
+    UUIDValue mid = 2;
+}
+
 // Boolean response
 message ResponseBool {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";

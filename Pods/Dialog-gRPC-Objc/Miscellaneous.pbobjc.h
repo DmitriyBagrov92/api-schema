@@ -38,12 +38,14 @@ CF_EXTERN_C_BEGIN
 @class GPBStringValue;
 @class InvitesConfig;
 @class OutPeer;
+@class Peer;
 @class RecursiveMapValue;
 @class RecursiveMapValue_Array;
 @class RecursiveMapValue_Item;
 @class RecursiveMapValue_Value;
 @class ServerMetaInfo;
 @class ServicePeers;
+@class UUIDValue;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -103,6 +105,25 @@ BOOL RtcpMuxPolicy_IsValidValue(int32_t value);
  * this file and all files that it depends on.
  **/
 GPB_FINAL @interface MiscellaneousRoot : GPBRootObject
+@end
+
+#pragma mark - ConversationLink
+
+typedef GPB_ENUM(ConversationLink_FieldNumber) {
+  ConversationLink_FieldNumber_Peer = 1,
+  ConversationLink_FieldNumber_Mid = 2,
+};
+
+GPB_FINAL @interface ConversationLink : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
+
+@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
+/** Test to see if @c mid has been set. */
+@property(nonatomic, readwrite) BOOL hasMid;
+
 @end
 
 #pragma mark - ResponseBool

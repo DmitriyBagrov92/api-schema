@@ -42,12 +42,14 @@ GPBObjCClassDeclaration(GPBInt64Value);
 GPBObjCClassDeclaration(GPBStringValue);
 GPBObjCClassDeclaration(InvitesConfig);
 GPBObjCClassDeclaration(OutPeer);
+GPBObjCClassDeclaration(Peer);
 GPBObjCClassDeclaration(RecursiveMapValue);
 GPBObjCClassDeclaration(RecursiveMapValue_Array);
 GPBObjCClassDeclaration(RecursiveMapValue_Item);
 GPBObjCClassDeclaration(RecursiveMapValue_Value);
 GPBObjCClassDeclaration(ServerMetaInfo);
 GPBObjCClassDeclaration(ServicePeers);
+GPBObjCClassDeclaration(UUIDValue);
 
 #pragma mark - MiscellaneousRoot
 
@@ -156,6 +158,62 @@ BOOL RtcpMuxPolicy_IsValidValue(int32_t value__) {
       return NO;
   }
 }
+
+#pragma mark - ConversationLink
+
+@implementation ConversationLink
+
+@dynamic hasPeer, peer;
+@dynamic hasMid, mid;
+
+typedef struct ConversationLink__storage_ {
+  uint32_t _has_storage_[1];
+  Peer *peer;
+  UUIDValue *mid;
+} ConversationLink__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "peer",
+        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
+        .number = ConversationLink_FieldNumber_Peer,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(ConversationLink__storage_, peer),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "mid",
+        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
+        .number = ConversationLink_FieldNumber_Mid,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(ConversationLink__storage_, mid),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ConversationLink class]
+                                     rootClass:[MiscellaneousRoot class]
+                                          file:MiscellaneousRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ConversationLink__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
 
 #pragma mark - ResponseBool
 
