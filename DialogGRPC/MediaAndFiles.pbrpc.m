@@ -62,7 +62,7 @@
 #pragma mark GetFileUrl(RequestGetFileUrl) returns (ResponseGetFileUrl)
 
 /**
- * / Get link to file for downloading
+ * / Метод получения ссылки для скачивания файла
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -71,7 +71,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Get link to file for downloading
+ * / Метод получения ссылки для скачивания файла
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -82,7 +82,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Get link to file for downloading
+ * / Метод получения ссылки для скачивания файла
  */
 - (GRPCUnaryProtoCall *)getFileUrlWithMessage:(RequestGetFileUrl *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetFileUrl"
@@ -95,7 +95,7 @@
 #pragma mark GetFileUrls(RequestGetFileUrls) returns (ResponseGetFileUrls)
 
 /**
- * / Get link to files for downloading
+ * / Метод получения ссылок для скачивания файлов
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -104,7 +104,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Get link to files for downloading
+ * / Метод получения ссылок для скачивания файлов
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -115,7 +115,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Get link to files for downloading
+ * / Метод получения ссылок для скачивания файлов
  */
 - (GRPCUnaryProtoCall *)getFileUrlsWithMessage:(RequestGetFileUrls *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetFileUrls"
@@ -128,7 +128,7 @@
 #pragma mark GetFileUrlBuilder(RequestGetFileUrlBuilder) returns (ResponseGetFileUrlBuilder)
 
 /**
- * / Create builder for file url
+ * / deprecated
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -137,7 +137,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Create builder for file url
+ * / deprecated
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -148,7 +148,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Create builder for file url
+ * / deprecated
  */
 - (GRPCUnaryProtoCall *)getFileUrlBuilderWithMessage:(RequestGetFileUrlBuilder *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetFileUrlBuilder"
@@ -161,7 +161,7 @@
 #pragma mark GetFileUploadUrl(RequestGetFileUploadUrl) returns (ResponseGetFileUploadUrl)
 
 /**
- * / Get url for uploading
+ * / Метод получения ссылки для загрузки файла
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -170,7 +170,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Get url for uploading
+ * / Метод получения ссылки для загрузки файла
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -181,7 +181,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Get url for uploading
+ * / Метод получения ссылки для загрузки файла
  */
 - (GRPCUnaryProtoCall *)getFileUploadUrlWithMessage:(RequestGetFileUploadUrl *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetFileUploadUrl"
@@ -194,7 +194,7 @@
 #pragma mark CommitFileUpload(RequestCommitFileUpload) returns (ResponseCommitFileUpload)
 
 /**
- * / Finish uploading a file
+ * / Метод завершения загрузки файла
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -203,7 +203,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Finish uploading a file
+ * / Метод завершения загрузки файла
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -214,7 +214,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Finish uploading a file
+ * / Метод завершения загрузки файла
  */
 - (GRPCUnaryProtoCall *)commitFileUploadWithMessage:(RequestCommitFileUpload *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"CommitFileUpload"
@@ -227,7 +227,7 @@
 #pragma mark GetFileUploadPartUrl(RequestGetFileUploadPartUrl) returns (ResponseGetFileUploadPartUrl)
 
 /**
- * / Get url for uploading chunk of file
+ * / Метод получения ссылки для загрузки части файла
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -236,7 +236,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Get url for uploading chunk of file
+ * / Метод получения ссылки для загрузки части файла
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -247,7 +247,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Get url for uploading chunk of file
+ * / Метод получения ссылки для загрузки части файла
  */
 - (GRPCUnaryProtoCall *)getFileUploadPartUrlWithMessage:(RequestGetFileUploadPartUrl *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetFileUploadPartUrl"

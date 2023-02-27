@@ -10,37 +10,58 @@ import "definitions.proto";
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
 
+/// Тип пира
 enum PeerType {
     PEER_TYPE_UNKNOWN = 0;
+
+    /// Пир личного чата
     PEER_TYPE_PRIVATE = 1;
+    
+    /// Пир группового чата
     PEER_TYPE_GROUP = 2;
     reserved 3, 4;
 }
 
-// Peer
+// Структура пира
 message Peer {
+    /// Тип  пира
     PeerType type = 1;
+
+    /// Идентификатор пира
     string id = 2;
     reserved 3;
-    UUIDValue parent_mid = 4; // if set, Peer is treated as ThreadPeer
+
+    /// Сообщение в рамках родительского пира Peer(type, id), указывающее что данный пир это тред в родительском пире
+    UUIDValue parent_mid = 4;
 }
 
-// Out peer with access hash
+/// Внешний пир
 message OutPeer {
+    /// Тип  пира
     PeerType type = 1;
+
+    /// Идентификатор пира
     string id = 2;
+
+    /// Ключ доступа к пиру
     int64 access_hash = 3 [(dlg).log=log_confidential];
     reserved 4;
-    UUIDValue parent_mid = 5; // if set, Peer is treated as ThreadPeer
+
+    /// Сообщение в рамках родительского пира Peer(type, id), указывающее что данный пир это тред в родительском пире
+    UUIDValue parent_mid = 5;
 }
 
 // User's out peer
 message UserOutPeer {
-    string user_id = 1; /// User's id
+    /// Идентификатор учетной записи пользователя
+    string user_id = 1;
+
+    /// Ключ доступа к пользователю
     int64 access_hash = 2 [(dlg).log=log_confidential];
 }
 
 // Group's out peer
+/// deprecated
 message GroupOutPeer {
     string group_id = 1;
     int64 access_hash = 2 [(dlg).log=log_confidential];

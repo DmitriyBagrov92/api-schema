@@ -7,6 +7,7 @@
 #import <ProtoRPC/ProtoRPCLegacy.h>
 #import <RxLibrary/GRXWriter+Immediate.h>
 
+#import "Annotations.pbobjc.h"
 #import "Messaging.pbobjc.h"
 #import "Peers.pbobjc.h"
 
@@ -59,16 +60,29 @@
 
 #pragma mark LoadDrafts(RequestLoadDrafts) returns (ResponseLoadDrafts)
 
+/**
+ * / Метод загрузки списка черновиков
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)loadDraftsWithRequest:(RequestLoadDrafts *)request handler:(void(^)(ResponseLoadDrafts *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToLoadDraftsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Метод загрузки списка черновиков
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToLoadDraftsWithRequest:(RequestLoadDrafts *)request handler:(void(^)(ResponseLoadDrafts *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"LoadDrafts"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseLoadDrafts class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Метод загрузки списка черновиков
+ */
 - (GRPCUnaryProtoCall *)loadDraftsWithMessage:(RequestLoadDrafts *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"LoadDrafts"
                    message:message
@@ -79,16 +93,29 @@
 
 #pragma mark SaveDrafts(RequestSaveDrafts) returns (ResponseSaveDrafts)
 
+/**
+ * / Метод сохранения списка черновиков
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)saveDraftsWithRequest:(RequestSaveDrafts *)request handler:(void(^)(ResponseSaveDrafts *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToSaveDraftsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Метод сохранения списка черновиков
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToSaveDraftsWithRequest:(RequestSaveDrafts *)request handler:(void(^)(ResponseSaveDrafts *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"SaveDrafts"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseSaveDrafts class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Метод сохранения списка черновиков
+ */
 - (GRPCUnaryProtoCall *)saveDraftsWithMessage:(RequestSaveDrafts *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"SaveDrafts"
                    message:message

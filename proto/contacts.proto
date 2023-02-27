@@ -2,20 +2,6 @@ syntax = "proto3";
 
 package dialog;
 
-// Before working with contact list is is useful to import contacts from phone first by calling
-// method ImportContacts.
-//
-// All phone numbers MUST be preprocessed before import by some library (like libphonenumber)
-// and build international phone number depending on current users phone and/or locale.
-//
-// For loading contact list from server use GetContacts.
-// If during this call there are some updates about contact list change
-// it is recommended to call it again. Also applications need to sync contacts on application start.
-//
-// For searching for users without adding to contacts list use method FindContacts.
-//
-// For adding/deleting contacts AddContact and DeleteContact.
-
 import "wrappers.proto";
 import "empty.proto";
 import "annotations.proto";
@@ -26,166 +12,195 @@ import "scalapb.proto";
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
 
-// Phone for import
+/// Структура задачи на импорт телефона контакта
 message PhoneToImport {
-    /// phone number for import in international format
+    /// Номер телефона для импорта (в международном формате)
     int64 phone_number = 1 [(dlg).log=log_confidential];
-    /// optional name for contact
+
+    /// Имя контакта, связанного с этим телефонным номером
     google.protobuf.StringValue name = 2 [(dlg).log=log_confidential];
 }
 
-// Email for import
+/// Структура задачи на импорт электронной почты контакта
 message EmailToImport {
-    /// email for importing
+    /// Электронная почта для импорта
     string email = 1 [(dlg).log=log_sensitive];
-    /// optional name for contact
+
+    /// Имя контакта, связанного с этой электронной почтой
     google.protobuf.StringValue name = 2 [(dlg).log=log_sensitive];
 }
 
+/// Структура связи учетной записи пользователя с номером телефона
 message UserPhoneHashContact {
+    /// Идентификатор учетной записи пользователя
     string user_id = 1;
+
+    /// Номер телефона пользвателя
     string phone_hash = 2 [(dlg).log=log_sensitive];
+
+    /// Имя пользователя в рамках привязки по номеру телефона
     string name = 3 [(dlg).log=log_sensitive];
 }
 
-// Importing phones and emails for building contact list
-// Maximum amount of items for import per method call equals to 100.
+/// Запрос на импорт контактов
 message RequestImportContacts {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Список задач на импорт телефонных контактов
     repeated PhoneToImport phones = 1;
+
+    /// Список задач на импорта контактов по электронной почте
     repeated EmailToImport emails = 2;
 }
 
+
+/// Ответ на запрос на импорт контактов
 message ResponseImportContacts {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    /// Optimizations drop some info from response to decrease traffic and latency
+    /// Список внешних пиров пользователей, отвечающих импортированных контактам
     repeated UserOutPeer user_peers = 1;
 }
 
-// Importing hashed phones and contact names for building contact list
-// Import evaluated lazily, response does not contain any info
-// Maximum amount of items for import per method call equals to 100.
+/// Запрос на отложенный импорт контактов
 message RequestDeferredImportContacts {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-
+    /// Структура телефонного контакта
     message PhoneContact {
-        // hash of phone number in format: name-of-hash-function:hashed-phone-number
-        // name of the hash function is optional (if not present, the default function will be used)
+        /// Номер телефона контакта
         string phone_hash = 1 [(dlg).log=log_sensitive];
-        // name of contact as is on the device
+        /// Локальное имя контакта
         string contact_name = 2 [(dlg).log=log_sensitive];
     }
 
-    // some stable device identifier
+    /// Идентификатор устройства, с которого производится импорт
     string device_id = 1;
-    // list of hashed phone contacts from the device
+
+    /// Список телефонных контактов для импорта
     repeated PhoneContact phone_contacts = 2;
 }
 
+/// Ответ на запрос на отложенный импорт контактов
 message ResponseDeferredImportContacts {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
+    /// Идентификатор задачи на импорт
     string task_id = 1;
 }
 
-// Getting current contact list
-// SHA256 hash of list of a comma-separated list of contact UIDs in ascending
-// order may be passed in contactsHash parameter.
-// If the contact list was not changed, isNotChanged will be true.
+/// Запрос на получение списка контактов пользователя
 message RequestGetContacts {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Хэш списка контактов, известных на устройстве
     string contacts_hash = 1;
 }
 
+/// Ответ на запрос на получение списка контактов пользователя
 message ResponseGetContacts {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
+    /// Флаг о соответствии хэша списка контактов из запроса и хэша списка контактов на сервере
     bool is_not_changed = 1;
+
+    /// Список внешних пиров пользователей для контактов на сервере
     repeated UserOutPeer user_peers = 2;
+
+    /// Список телефонных контактов пользователя на сервере
     repeated UserPhoneHashContact phone_contacts = 3;
 }
 
-// Removing contact from contact list
+/// Запрос на удаление из контактов
 message RequestRemoveContact {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Идентификатор учетной записи пользователя, удаляемого из контактов
     string user_id = 1;
+
+    /// Ключ доступа к учетной записи пользователя, удаляемого из контактов
     int64 access_hash = 2 [(dlg).log=log_confidential];
 }
 
-// Adding contact to contact list
+/// Запрос на добавление в контакты
 message RequestAddContact {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Идентификатор учетной записи пользователя, добавляемого в контакты
     string user_id = 1;
+
+    /// Ключ доступа к учетной записи пользователя, добавляемого в контакты
     int64 access_hash = 2 [(dlg).log=log_confidential];
 }
 
-// Searching contacts by user's query
+/// Запрос на поиск среди контактов на сервере
 message RequestSearchContacts {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Поисковый запрос (уточнить алгоритм поиска)
     string request = 1;
 }
 
+/// Ответ на запрос на поиск среди контактов на сервере
 message ResponseSearchContacts {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
+    /// Список внешних пиров пользователей, найденных по поисковому запросу
     repeated UserOutPeer user_peers = 1;
 }
 
-// Update about contact registration
+/// Структура оповещения о регистрации контакта в системе
 message UpdateContactRegistered {
-    string user_id = 1; /// User id of a registered contact
+    /// Идентификатор учетной записи пользователя, зарегистрировавшегося в системе
+    string user_id = 1;
 }
 
-// Update about contacts added
+/// Структура оповещения о добавлении пользователей в контакты
 message UpdateContactsAdded {
-    /// User ids of the registered contacts
+    /// Список идентификаторов учетных записей пользователей, добавленных в контакты
     repeated string user_ids = 1;
-    /// Id of the task that finished
+
+    /// Идентификатор задачи на импорт, в рамках которой было произведено добавление в контакты
     google.protobuf.StringValue task_id = 2;
+
+    /// Спиок добавленных связок пользователей и телефонных контактов
     repeated UserPhoneHashContact phone_contacts = 3;
 }
 
-// Update about suspending task - normally it should be ignored
+/// Структура уведомления о приостановке задачи на импорт контактов
 message UpdateContactsAddTaskSuspended {
+    /// Идентификатор задачи на импорт контактов
     string task_id = 1;
 }
 
-// Update about contacts removed
+/// Структура уведомления об удалении пользователей из контактов
 message UpdateContactsRemoved {
+    /// Список идентификаторов учетных записей пользователей, удаленных из контактов
     repeated string user_ids = 1;
 }
 
 service Contacts {
-    /// Import contacts and wait while query is not finished
+    /// Метод синхронного импорта контактов
     rpc ImportContacts (RequestImportContacts) returns (ResponseImportContacts) {
         option (google.api.http) = {
             post: "/v1/grpc/Contacts/ImportContacts"
             body: "*"
         };
     }
-    /// Same as above, but without waiting response
+
+    /// Метод асинхронного (отложенного) импорта контактов
     rpc DeferredImportContacts (RequestDeferredImportContacts) returns (ResponseDeferredImportContacts) {
         option (google.api.http) = {
             post: "/v1/grpc/Contacts/DeferredImportContacts"
             body: "*"
         };
     }
+
+    /// Метод получения списка контактов
     rpc GetContacts (RequestGetContacts) returns (ResponseGetContacts) {
         option (google.api.http) = {
             post: "/v1/grpc/Contacts/GetContacts"
             body: "*"
         };
     }
+
+    /// Метод удаления пользователя из контактов
     rpc RemoveContact (RequestRemoveContact) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Contacts/RemoveContact"
             body: "*"
         };
     }
+
+    /// Метод добавления пользователя в контакты
     rpc AddContact (RequestAddContact) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Contacts/AddContact"
             body: "*"
         };
     }
-    /// Search contacts by query string
+
+    /// Метод поиска по контактам
     rpc SearchContacts (RequestSearchContacts) returns (ResponseSearchContacts) {
         option (google.api.http) = {
             post: "/v1/grpc/Contacts/SearchContacts"

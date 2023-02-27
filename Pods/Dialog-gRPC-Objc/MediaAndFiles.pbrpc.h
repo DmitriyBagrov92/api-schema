@@ -46,42 +46,42 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark GetFileUrl(RequestGetFileUrl) returns (ResponseGetFileUrl)
 
 /**
- * / Get link to file for downloading
+ * / Метод получения ссылки для скачивания файла
  */
 - (GRPCUnaryProtoCall *)getFileUrlWithMessage:(RequestGetFileUrl *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetFileUrls(RequestGetFileUrls) returns (ResponseGetFileUrls)
 
 /**
- * / Get link to files for downloading
+ * / Метод получения ссылок для скачивания файлов
  */
 - (GRPCUnaryProtoCall *)getFileUrlsWithMessage:(RequestGetFileUrls *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetFileUrlBuilder(RequestGetFileUrlBuilder) returns (ResponseGetFileUrlBuilder)
 
 /**
- * / Create builder for file url
+ * / deprecated
  */
 - (GRPCUnaryProtoCall *)getFileUrlBuilderWithMessage:(RequestGetFileUrlBuilder *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetFileUploadUrl(RequestGetFileUploadUrl) returns (ResponseGetFileUploadUrl)
 
 /**
- * / Get url for uploading
+ * / Метод получения ссылки для загрузки файла
  */
 - (GRPCUnaryProtoCall *)getFileUploadUrlWithMessage:(RequestGetFileUploadUrl *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark CommitFileUpload(RequestCommitFileUpload) returns (ResponseCommitFileUpload)
 
 /**
- * / Finish uploading a file
+ * / Метод завершения загрузки файла
  */
 - (GRPCUnaryProtoCall *)commitFileUploadWithMessage:(RequestCommitFileUpload *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetFileUploadPartUrl(RequestGetFileUploadPartUrl) returns (ResponseGetFileUploadPartUrl)
 
 /**
- * / Get url for uploading chunk of file
+ * / Метод получения ссылки для загрузки части файла
  */
 - (GRPCUnaryProtoCall *)getFileUploadPartUrlWithMessage:(RequestGetFileUploadPartUrl *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
@@ -96,14 +96,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark GetFileUrl(RequestGetFileUrl) returns (ResponseGetFileUrl)
 
 /**
- * / Get link to file for downloading
+ * / Метод получения ссылки для скачивания файла
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getFileUrlWithRequest:(RequestGetFileUrl *)request handler:(void(^)(ResponseGetFileUrl *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Get link to file for downloading
+ * / Метод получения ссылки для скачивания файла
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -113,14 +113,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark GetFileUrls(RequestGetFileUrls) returns (ResponseGetFileUrls)
 
 /**
- * / Get link to files for downloading
+ * / Метод получения ссылок для скачивания файлов
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getFileUrlsWithRequest:(RequestGetFileUrls *)request handler:(void(^)(ResponseGetFileUrls *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Get link to files for downloading
+ * / Метод получения ссылок для скачивания файлов
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -130,14 +130,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark GetFileUrlBuilder(RequestGetFileUrlBuilder) returns (ResponseGetFileUrlBuilder)
 
 /**
- * / Create builder for file url
+ * / deprecated
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getFileUrlBuilderWithRequest:(RequestGetFileUrlBuilder *)request handler:(void(^)(ResponseGetFileUrlBuilder *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Create builder for file url
+ * / deprecated
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -147,14 +147,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark GetFileUploadUrl(RequestGetFileUploadUrl) returns (ResponseGetFileUploadUrl)
 
 /**
- * / Get url for uploading
+ * / Метод получения ссылки для загрузки файла
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getFileUploadUrlWithRequest:(RequestGetFileUploadUrl *)request handler:(void(^)(ResponseGetFileUploadUrl *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Get url for uploading
+ * / Метод получения ссылки для загрузки файла
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -164,14 +164,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark CommitFileUpload(RequestCommitFileUpload) returns (ResponseCommitFileUpload)
 
 /**
- * / Finish uploading a file
+ * / Метод завершения загрузки файла
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)commitFileUploadWithRequest:(RequestCommitFileUpload *)request handler:(void(^)(ResponseCommitFileUpload *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Finish uploading a file
+ * / Метод завершения загрузки файла
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -181,14 +181,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark GetFileUploadPartUrl(RequestGetFileUploadPartUrl) returns (ResponseGetFileUploadPartUrl)
 
 /**
- * / Get url for uploading chunk of file
+ * / Метод получения ссылки для загрузки части файла
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getFileUploadPartUrlWithRequest:(RequestGetFileUploadPartUrl *)request handler:(void(^)(ResponseGetFileUploadPartUrl *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Get url for uploading chunk of file
+ * / Метод получения ссылки для загрузки части файла
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */

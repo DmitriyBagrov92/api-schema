@@ -64,37 +64,43 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark GetState(RequestGetState) returns (ResponseGetState)
 
 /**
- * / Get last sequence number
+ * / Метод получения текущего состояния потока seq-апдейтов пользователя
  */
 - (GRPCUnaryProtoCall *)getStateWithMessage:(RequestGetState *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetDifference(RequestGetDifference) returns (ResponseGetDifference)
 
 /**
- * / Get all update that happens after given seq number
+ * / Метод полчения разницы в сек-апдейтах между клиентом и сервером
  */
 - (GRPCUnaryProtoCall *)getDifferenceWithMessage:(RequestGetDifference *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetReferencedEntities(RequestGetReferencedEntities) returns (ResponseGetReferencedEntities)
 
 /**
- * / Load some required entities
+ * / Метод загрузки дополнительных сущностей
  */
 - (GRPCUnaryProtoCall *)getReferencedEntitiesWithMessage:(RequestGetReferencedEntities *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetPartialPeerInfo(RequestGetPartialPeerInfo) returns (ResponseGetPartialPeerInfo)
 
+/**
+ * / deprecated
+ */
 - (GRPCUnaryProtoCall *)getPartialPeerInfoWithMessage:(RequestGetPartialPeerInfo *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark SeqUpdates(Empty) returns (stream SeqUpdate)
 
 /**
- * / Get stream of the user's updates
+ * / Метод открытия подписки на поток сек-апдейтов пользователя
  */
 - (GRPCUnaryProtoCall *)seqUpdatesWithMessage:(GPBEmpty *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark WeakUpdates(stream WeakUpdateCommand) returns (stream WeakUpdate)
 
+/**
+ * / Метод открытия подписки на поток weak-апдейтов пользователя
+ */
 - (GRPCStreamingProtoCall *)weakUpdatesWithResponseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 @end
@@ -108,14 +114,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark GetState(RequestGetState) returns (ResponseGetState)
 
 /**
- * / Get last sequence number
+ * / Метод получения текущего состояния потока seq-апдейтов пользователя
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getStateWithRequest:(RequestGetState *)request handler:(void(^)(ResponseGetState *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Get last sequence number
+ * / Метод получения текущего состояния потока seq-апдейтов пользователя
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -125,14 +131,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark GetDifference(RequestGetDifference) returns (ResponseGetDifference)
 
 /**
- * / Get all update that happens after given seq number
+ * / Метод полчения разницы в сек-апдейтах между клиентом и сервером
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getDifferenceWithRequest:(RequestGetDifference *)request handler:(void(^)(ResponseGetDifference *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Get all update that happens after given seq number
+ * / Метод полчения разницы в сек-апдейтах между клиентом и сервером
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -142,14 +148,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark GetReferencedEntities(RequestGetReferencedEntities) returns (ResponseGetReferencedEntities)
 
 /**
- * / Load some required entities
+ * / Метод загрузки дополнительных сущностей
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getReferencedEntitiesWithRequest:(RequestGetReferencedEntities *)request handler:(void(^)(ResponseGetReferencedEntities *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Load some required entities
+ * / Метод загрузки дополнительных сущностей
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -158,22 +164,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark GetPartialPeerInfo(RequestGetPartialPeerInfo) returns (ResponseGetPartialPeerInfo)
 
+/**
+ * / deprecated
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)getPartialPeerInfoWithRequest:(RequestGetPartialPeerInfo *)request handler:(void(^)(ResponseGetPartialPeerInfo *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / deprecated
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToGetPartialPeerInfoWithRequest:(RequestGetPartialPeerInfo *)request handler:(void(^)(ResponseGetPartialPeerInfo *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark SeqUpdates(Empty) returns (stream SeqUpdate)
 
 /**
- * / Get stream of the user's updates
+ * / Метод открытия подписки на поток сек-апдейтов пользователя
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)seqUpdatesWithRequest:(GPBEmpty *)request eventHandler:(void(^)(BOOL done, SeqUpdate *_Nullable response, NSError *_Nullable error))eventHandler;
 
 /**
- * / Get stream of the user's updates
+ * / Метод открытия подписки на поток сек-апдейтов пользователя
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -182,8 +198,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark WeakUpdates(stream WeakUpdateCommand) returns (stream WeakUpdate)
 
+/**
+ * / Метод открытия подписки на поток weak-апдейтов пользователя
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)weakUpdatesWithRequestsWriter:(GRXWriter *)requestWriter eventHandler:(void(^)(BOOL done, WeakUpdate *_Nullable response, NSError *_Nullable error))eventHandler;
 
+/**
+ * / Метод открытия подписки на поток weak-апдейтов пользователя
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToWeakUpdatesWithRequestsWriter:(GRXWriter *)requestWriter eventHandler:(void(^)(BOOL done, WeakUpdate *_Nullable response, NSError *_Nullable error))eventHandler;
 
 

@@ -66,7 +66,7 @@
 #pragma mark StartPhoneAuth(RequestStartPhoneAuth) returns (ResponseStartPhoneAuth)
 
 /**
- * / Start authorization by phone
+ * / Метод начала авторизации по телефону
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -75,7 +75,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Start authorization by phone
+ * / Метод начала авторизации по телефону
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -86,7 +86,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Start authorization by phone
+ * / Метод начала авторизации по телефону
  */
 - (GRPCUnaryProtoCall *)startPhoneAuthWithMessage:(RequestStartPhoneAuth *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"StartPhoneAuth"
@@ -99,7 +99,7 @@
 #pragma mark SendCodeByPhoneCall(RequestSendCodeByPhoneCall) returns (Empty)
 
 /**
- * / Resend code by transaction hash
+ * / Метод посылки телефонного кода активации с помощью звонка
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -108,7 +108,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Resend code by transaction hash
+ * / Метод посылки телефонного кода активации с помощью звонка
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -119,7 +119,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Resend code by transaction hash
+ * / Метод посылки телефонного кода активации с помощью звонка
  */
 - (GRPCUnaryProtoCall *)sendCodeByPhoneCallWithMessage:(RequestSendCodeByPhoneCall *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"SendCodeByPhoneCall"
@@ -132,7 +132,7 @@
 #pragma mark StartEmailAuth(RequestStartEmailAuth) returns (ResponseStartEmailAuth)
 
 /**
- * / Start email authorization process
+ * / Метод начала авторизации по электронной почте
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -141,7 +141,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Start email authorization process
+ * / Метод начала авторизации по электронной почте
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -152,7 +152,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Start email authorization process
+ * / Метод начала авторизации по электронной почте
  */
 - (GRPCUnaryProtoCall *)startEmailAuthWithMessage:(RequestStartEmailAuth *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"StartEmailAuth"
@@ -164,16 +164,29 @@
 
 #pragma mark StartCertificateAuth(RequestStartCertificateAuth) returns (ResponseAuth)
 
+/**
+ * / Метод начала авторизации по сертификату
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)startCertificateAuthWithRequest:(RequestStartCertificateAuth *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToStartCertificateAuthWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Метод начала авторизации по сертификату
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToStartCertificateAuthWithRequest:(RequestStartCertificateAuth *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"StartCertificateAuth"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseAuth class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Метод начала авторизации по сертификату
+ */
 - (GRPCUnaryProtoCall *)startCertificateAuthWithMessage:(RequestStartCertificateAuth *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"StartCertificateAuth"
                    message:message
@@ -185,7 +198,7 @@
 #pragma mark StartTokenAuth(RequestStartTokenAuth) returns (ResponseAuth)
 
 /**
- * / Start token auth authorization (actual for bots)
+ * / Метод начала авторизации по токену (для ботов)
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -194,7 +207,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Start token auth authorization (actual for bots)
+ * / Метод начала авторизации по токену (для ботов)
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -205,7 +218,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Start token auth authorization (actual for bots)
+ * / Метод начала авторизации по токену (для ботов)
  */
 - (GRPCUnaryProtoCall *)startTokenAuthWithMessage:(RequestStartTokenAuth *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"StartTokenAuth"
@@ -218,7 +231,7 @@
 #pragma mark StartUsernameAuth(RequestStartUsernameAuth) returns (ResponseStartUsernameAuth)
 
 /**
- * / Start login/password authorization process
+ * / Метод начала авторизации по паре логин-пароль
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -227,7 +240,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Start login/password authorization process
+ * / Метод начала авторизации по паре логин-пароль
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -238,7 +251,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Start login/password authorization process
+ * / Метод начала авторизации по паре логин-пароль
  */
 - (GRPCUnaryProtoCall *)startUsernameAuthWithMessage:(RequestStartUsernameAuth *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"StartUsernameAuth"
@@ -250,16 +263,29 @@
 
 #pragma mark ApplyExternalSessionAuth(RequestApplyExternalSessionAuth) returns (ResponseAuth)
 
+/**
+ * / Метод начала авторизации переносом авторизованной сессии с внешней доверенной системы
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)applyExternalSessionAuthWithRequest:(RequestApplyExternalSessionAuth *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToApplyExternalSessionAuthWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Метод начала авторизации переносом авторизованной сессии с внешней доверенной системы
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToApplyExternalSessionAuthWithRequest:(RequestApplyExternalSessionAuth *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"ApplyExternalSessionAuth"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseAuth class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Метод начала авторизации переносом авторизованной сессии с внешней доверенной системы
+ */
 - (GRPCUnaryProtoCall *)applyExternalSessionAuthWithMessage:(RequestApplyExternalSessionAuth *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"ApplyExternalSessionAuth"
                    message:message
@@ -271,7 +297,7 @@
 #pragma mark GetIdToken(RequestGetIdToken) returns (ResponseGetIdToken)
 
 /**
- * Get Id Token for external system
+ * / Метод получения токена сессии для внешней системы
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -280,7 +306,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * Get Id Token for external system
+ * / Метод получения токена сессии для внешней системы
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -291,7 +317,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * Get Id Token for external system
+ * / Метод получения токена сессии для внешней системы
  */
 - (GRPCUnaryProtoCall *)getIdTokenWithMessage:(RequestGetIdToken *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetIdToken"
@@ -303,16 +329,29 @@
 
 #pragma mark StartAuthTransaction(RequestStartAuthTransaction) returns (ResponseStartAuthTransaction)
 
+/**
+ * / Метод начала обобщенной авторизации
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)startAuthTransactionWithRequest:(RequestStartAuthTransaction *)request handler:(void(^)(ResponseStartAuthTransaction *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToStartAuthTransactionWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Метод начала обобщенной авторизации
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToStartAuthTransactionWithRequest:(RequestStartAuthTransaction *)request handler:(void(^)(ResponseStartAuthTransaction *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"StartAuthTransaction"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseStartAuthTransaction class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Метод начала обобщенной авторизации
+ */
 - (GRPCUnaryProtoCall *)startAuthTransactionWithMessage:(RequestStartAuthTransaction *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"StartAuthTransaction"
                    message:message
@@ -324,8 +363,7 @@
 #pragma mark ValidateCode(RequestValidateCode) returns (ResponseAuth)
 
 /**
- * * Validate code received by phone or email
- * Returns error if user does not exist
+ * / Методя валидации активационного кода
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -334,8 +372,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * * Validate code received by phone or email
- * Returns error if user does not exist
+ * / Методя валидации активационного кода
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -346,8 +383,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * * Validate code received by phone or email
- * Returns error if user does not exist
+ * / Методя валидации активационного кода
  */
 - (GRPCUnaryProtoCall *)validateCodeWithMessage:(RequestValidateCode *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"ValidateCode"
@@ -360,7 +396,7 @@
 #pragma mark ResendCode(RequestResendCode) returns (Empty)
 
 /**
- * / Resend code if you don't receive it with first attempt
+ * / Метод перепосылки активационного кода
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -369,7 +405,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Resend code if you don't receive it with first attempt
+ * / Метод перепосылки активационного кода
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -380,7 +416,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Resend code if you don't receive it with first attempt
+ * / Метод перепосылки активационного кода
  */
 - (GRPCUnaryProtoCall *)resendCodeWithMessage:(RequestResendCode *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"ResendCode"
@@ -393,7 +429,7 @@
 #pragma mark ValidatePassword(RequestValidatePassword) returns (ResponseAuth)
 
 /**
- * / Validate your passwword
+ * / Метод валидации пароля
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -402,7 +438,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Validate your passwword
+ * / Метод валидации пароля
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -413,7 +449,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Validate your passwword
+ * / Метод валидации пароля
  */
 - (GRPCUnaryProtoCall *)validatePasswordWithMessage:(RequestValidatePassword *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"ValidatePassword"
@@ -426,7 +462,7 @@
 #pragma mark GetOAuth2Params(RequestGetOAuth2Params) returns (ResponseGetOAuth2Params)
 
 /**
- * / Get redirect url
+ * / Метод получения параметров OAuth2-платформы
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -435,7 +471,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Get redirect url
+ * / Метод получения параметров OAuth2-платформы
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -446,7 +482,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Get redirect url
+ * / Метод получения параметров OAuth2-платформы
  */
 - (GRPCUnaryProtoCall *)getOAuth2ParamsWithMessage:(RequestGetOAuth2Params *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetOAuth2Params"
@@ -459,7 +495,7 @@
 #pragma mark CompleteOAuth2(RequestCompleteOAuth2) returns (ResponseAuth)
 
 /**
- * / Complete OAuth2 Authentication
+ * / Метод финализации аутентификации на OAuth2-платформе
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -468,7 +504,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Complete OAuth2 Authentication
+ * / Метод финализации аутентификации на OAuth2-платформе
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -479,7 +515,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Complete OAuth2 Authentication
+ * / Метод финализации аутентификации на OAuth2-платформе
  */
 - (GRPCUnaryProtoCall *)completeOAuth2WithMessage:(RequestCompleteOAuth2 *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"CompleteOAuth2"
@@ -492,7 +528,7 @@
 #pragma mark SignUp(RequestSignUp) returns (ResponseAuth)
 
 /**
- * / Sign up existed user
+ * / Метод регистрации пользователя
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -501,7 +537,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Sign up existed user
+ * / Метод регистрации пользователя
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -512,7 +548,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Sign up existed user
+ * / Метод регистрации пользователя
  */
 - (GRPCUnaryProtoCall *)signUpWithMessage:(RequestSignUp *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"SignUp"
@@ -525,7 +561,7 @@
 #pragma mark GetAuthSessions(RequestGetAuthSessions) returns (ResponseGetAuthSessions)
 
 /**
- * / Returns all authorized user's sessions
+ * / Метод получения авторизованных сессий
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -534,7 +570,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Returns all authorized user's sessions
+ * / Метод получения авторизованных сессий
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -545,7 +581,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Returns all authorized user's sessions
+ * / Метод получения авторизованных сессий
  */
 - (GRPCUnaryProtoCall *)getAuthSessionsWithMessage:(RequestGetAuthSessions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetAuthSessions"
@@ -557,16 +593,29 @@
 
 #pragma mark TerminateSession(RequestTerminateSession) returns (Empty)
 
+/**
+ * / Метод завершения сессии
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)terminateSessionWithRequest:(RequestTerminateSession *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToTerminateSessionWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Метод завершения сессии
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToTerminateSessionWithRequest:(RequestTerminateSession *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"TerminateSession"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Метод завершения сессии
+ */
 - (GRPCUnaryProtoCall *)terminateSessionWithMessage:(RequestTerminateSession *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"TerminateSession"
                    message:message
@@ -578,7 +627,7 @@
 #pragma mark TerminateAllSessions(RequestTerminateAllSessions) returns (Empty)
 
 /**
- * / Log out user
+ * / Метод завершения всех сессий пользователя кроме текущей
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -587,7 +636,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Log out user
+ * / Метод завершения всех сессий пользователя кроме текущей
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -598,7 +647,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Log out user
+ * / Метод завершения всех сессий пользователя кроме текущей
  */
 - (GRPCUnaryProtoCall *)terminateAllSessionsWithMessage:(RequestTerminateAllSessions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"TerminateAllSessions"
@@ -611,7 +660,7 @@
 #pragma mark SignOut(RequestSignOut) returns (Empty)
 
 /**
- * / Log out current session
+ * / Метод завершения текущей сессии
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -620,7 +669,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Log out current session
+ * / Метод завершения текущей сессии
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -631,7 +680,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Log out current session
+ * / Метод завершения текущей сессии
  */
 - (GRPCUnaryProtoCall *)signOutWithMessage:(RequestSignOut *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"SignOut"
@@ -643,16 +692,29 @@
 
 #pragma mark ChangePassword(RequestChangePassword) returns (Empty)
 
+/**
+ * / Мтеод изменения пароля пользователя
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)changePasswordWithRequest:(RequestChangePassword *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToChangePasswordWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Мтеод изменения пароля пользователя
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToChangePasswordWithRequest:(RequestChangePassword *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"ChangePassword"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Мтеод изменения пароля пользователя
+ */
 - (GRPCUnaryProtoCall *)changePasswordWithMessage:(RequestChangePassword *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"ChangePassword"
                    message:message
@@ -663,16 +725,29 @@
 
 #pragma mark GetSelf(RequestGetSelf) returns (ResponseGetSelf)
 
+/**
+ * / Метод получения структуры текущего пользователя
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)getSelfWithRequest:(RequestGetSelf *)request handler:(void(^)(ResponseGetSelf *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetSelfWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Метод получения структуры текущего пользователя
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToGetSelfWithRequest:(RequestGetSelf *)request handler:(void(^)(ResponseGetSelf *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetSelf"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseGetSelf class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Метод получения структуры текущего пользователя
+ */
 - (GRPCUnaryProtoCall *)getSelfWithMessage:(RequestGetSelf *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetSelf"
                    message:message

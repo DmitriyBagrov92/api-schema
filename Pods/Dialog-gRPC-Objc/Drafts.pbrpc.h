@@ -18,6 +18,7 @@
 @class ResponseSaveDrafts;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
+  #import "Annotations.pbobjc.h"
   #import "Messaging.pbobjc.h"
   #import "Peers.pbobjc.h"
 #endif
@@ -35,10 +36,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark LoadDrafts(RequestLoadDrafts) returns (ResponseLoadDrafts)
 
+/**
+ * / Метод загрузки списка черновиков
+ */
 - (GRPCUnaryProtoCall *)loadDraftsWithMessage:(RequestLoadDrafts *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark SaveDrafts(RequestSaveDrafts) returns (ResponseSaveDrafts)
 
+/**
+ * / Метод сохранения списка черновиков
+ */
 - (GRPCUnaryProtoCall *)saveDraftsWithMessage:(RequestSaveDrafts *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 @end
@@ -51,15 +58,35 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark LoadDrafts(RequestLoadDrafts) returns (ResponseLoadDrafts)
 
+/**
+ * / Метод загрузки списка черновиков
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)loadDraftsWithRequest:(RequestLoadDrafts *)request handler:(void(^)(ResponseLoadDrafts *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод загрузки списка черновиков
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToLoadDraftsWithRequest:(RequestLoadDrafts *)request handler:(void(^)(ResponseLoadDrafts *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark SaveDrafts(RequestSaveDrafts) returns (ResponseSaveDrafts)
 
+/**
+ * / Метод сохранения списка черновиков
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)saveDraftsWithRequest:(RequestSaveDrafts *)request handler:(void(^)(ResponseSaveDrafts *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод сохранения списка черновиков
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToSaveDraftsWithRequest:(RequestSaveDrafts *)request handler:(void(^)(ResponseSaveDrafts *_Nullable response, NSError *_Nullable error))handler;
 
 

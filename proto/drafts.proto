@@ -2,41 +2,74 @@ syntax = "proto3";
 
 package dialog;
 
+import "annotations.proto";
 import "messaging.proto";
 import "peers.proto";
 
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
 
-service DraftsService {
-  rpc LoadDrafts(RequestLoadDrafts) returns (ResponseLoadDrafts);
-  rpc SaveDrafts(RequestSaveDrafts) returns (ResponseSaveDrafts);
-}
-
+/// Запрос на получение списка черновиков
 message RequestLoadDrafts {
+  /// Минимальная версия черновиков требуемая в ответе
   int64 clock = 1;
 }
 
+/// Ответ на запрос на получение списка черновиков
 message ResponseLoadDrafts {
+  /// Список черновиков
   repeated Draft drafts = 1;
+
+  // Версия списка черновиков
   int64 clock = 2;
 }
 
+/// Запрос на сохранение списка черновиков
 message RequestSaveDrafts {
   repeated Draft drafts = 1;
 }
 
+/// Ответ на запрос на сохранение списка черновков
 message ResponseSaveDrafts {
+  /// Версия сохраненного списка черновиков
   int64 clock = 1;
 }
 
+/// Структура уведомления об измении списка черновиков
 message UpdateDraftsChanged {
+  /// Актуальный список черновиков
   repeated Draft drafts = 1;
+
+  /// Актуальная версия списка черновиков
   int64 clock = 2;
+
+  /// deprecated
   int64 prev_clock = 3;
 }
 
+/// Структура черновика
 message Draft {
+  /// Пир чата, в котором сохраняется черновик
   Peer peer = 1;
+
+  /// Содержание сообщения
   MessageContent content = 2;
+}
+
+service DraftsService {
+  /// Метод загрузки списка черновиков
+  rpc LoadDrafts(RequestLoadDrafts) returns (ResponseLoadDrafts) {
+    option (google.api.http) = {
+      post: "/v1/grpc/DraftsService/LoadDrafts"
+      body: "*"
+    };
+  };
+
+  /// Метод сохранения списка черновиков
+  rpc SaveDrafts(RequestSaveDrafts) returns (ResponseSaveDrafts) {
+    option (google.api.http) = {
+      post: "/v1/grpc/DraftsService/SaveDrafts"
+      body: "*"
+    };
+  };
 }

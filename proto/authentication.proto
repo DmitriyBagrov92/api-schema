@@ -2,20 +2,6 @@ syntax = "proto3";
 
 package dialog;
 
-// <p>Actor now support only one way for authentication - by SMS or phone call.</p>
-// <p>Authorization steps:
-// <ol>
-// <li>Request SMS Code by calling RequestAuthCode</li>
-// <li>If SMS arrives than send Authorization code in SignIn/SignUp</li>
-// <li>If sms doesn't arrive for a long time - request phone activation by
-// calling AuthCodeCall</li>
-// </ol>
-// </p>
-// Some rules<br/>
-// If RequestAuthCode return isRegistered = false than use SignUp method else SignIn.<br/>
-// If on any step API return PHONE_CODE_EXPIRED than application MUST start
-// authorization process from begining.<br/>
-
 import "empty.proto";
 import "wrappers.proto";
 import "annotations.proto";
@@ -28,445 +14,536 @@ import "scalapb.proto";
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
 
+/// Способ активации при регистрации по телефону
 enum PhoneActivationType {
-    PHONE_ACTIVATION_TYPE_UNKNOWN = 0;
-    PHONE_ACTIVATION_TYPE_CODE = 1;
-    PHONE_ACTIVATION_TYPE_PASSWORD = 2;
+  PHONE_ACTIVATION_TYPE_UNKNOWN = 0;
+
+  /// Активация по коду
+  PHONE_ACTIVATION_TYPE_CODE = 1;
+
+  /// Активация по паролю
+  PHONE_ACTIVATION_TYPE_PASSWORD = 2;
 }
 
+/// Способ активации при регистрации по email
 enum EmailActivationType {
-    EMAIL_ACTIVATION_TYPE_UNKNOWN = 0;
-    EMAIL_ACTIVATION_TYPE_CODE = 1;
-    EMAIL_ACTIVATION_TYPE_OAUTH2 = 2;
-    EMAIL_ACTIVATION_TYPE_PASSWORD = 3;
+  EMAIL_ACTIVATION_TYPE_UNKNOWN = 0;
+
+  /// Активация по коду
+  EMAIL_ACTIVATION_TYPE_CODE = 1;
+
+  /// Активация по OAuth2
+  EMAIL_ACTIVATION_TYPE_OAUTH2 = 2;
+
+  /// Активация по паролю
+  EMAIL_ACTIVATION_TYPE_PASSWORD = 3;
 }
 
-// Start Phone Activation
+/// Запрос на начало телефонной авторизации
 message RequestStartPhoneAuth {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    int64 phone_number = 1 [(dlg).log=log_sensitive];
-    /** Your timezone **/
-    google.protobuf.StringValue time_zone = 2;
-    /** First language from this array will be used for some notifications from server **/
-    repeated string preferred_languages = 3;
+  /// Номер телефона использующегося для авторизации
+  int64 phone_number = 1 [(dlg).log = log_sensitive];
+
+  /// Часовой пояс пользователя
+  google.protobuf.StringValue time_zone = 2;
+
+  /// Список предпочтительных локалей пользователя (в формате ^[a-z]{2}(?:[-_][A-Z]{2})?$)
+  repeated string preferred_languages = 3;
 }
 
+/// Ответ на запрос на начало телефонной авторизации
 message ResponseStartPhoneAuth {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    /** Hash of authorization transaction **/
-    string transaction_hash = 1 [(dlg).log=log_sensitive];
-    bool is_registered = 2;
-    /** Code or password - call ValidateCode if code **/
-    PhoneActivationType activation_type = 3;
+  /// Хэш транзакции -- идентифицирует авторизационную транзакцию начатую вызовом метода RequestStartPhoneAuth
+  /// этот хэш необходимо использовать во всех дальнейших вызовах до момента успешной авторизации
+  string transaction_hash = 1 [(dlg).log = log_sensitive];
+
+  /// Соответствует ли переданный телефонный номер какому-либо активному пользователю (зарегистрирован ли он)
+  bool is_registered = 2;
+
+  /// Способ активации авторизации предлагаемый сервером клиенту
+  PhoneActivationType activation_type = 3;
 }
 
-// Dial phone and dictate auth code
+/// Активация авторизации с помощью телефонного звонка
 message RequestSendCodeByPhoneCall {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    /// Hash from ResponseStartPhoneAuth
-    string transaction_hash = 1 [(dlg).log=log_sensitive];
+  /// Хэш транзакции, полученный на предыдущем шаге из ответа ResponseStartPhoneAuth
+  string transaction_hash = 1 [(dlg).log = log_sensitive];
 }
 
-// Start EMail Activation
+/// Запрос на начало авторизации по электронной почте
 message RequestStartEmailAuth {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string email = 1;
-    /** Your timezone **/
-    google.protobuf.StringValue time_zone = 2;
-    /** First language from this array will be used for some notifications from server **/
-    repeated string preferred_languages = 3;
+  /// Электронная почта использующаяся для авторизации
+  string email = 1;
+
+  /// Часовой пояс пользователя
+  google.protobuf.StringValue time_zone = 2;
+
+  /// Список предпочтительных локалей пользователя (в формате ^[a-z]{2}(?:[-_][A-Z]{2})?$)
+  repeated string preferred_languages = 3;
 }
 
+/// Ответ на запрос на начало авторизации по электронной почте
 message ResponseStartEmailAuth {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    /** Hash of authorization transaction **/
-    string transaction_hash = 1 [(dlg).log=log_sensitive];
-    bool is_registered = 2;
-    /** Code or password - call ValidateCode if code **/
-    EmailActivationType activation_type = 3;
+  /// Хэш транзакции -- идентифицирует авторизационную транзакцию начатую вызовом метода RequestStartEmailAuth
+  /// этот хэш необходимо использовать во всех дальнейших вызовах до момента успешной авторизации
+  string transaction_hash = 1 [(dlg).log = log_sensitive];
+
+  /// Соответствует ли переданная электронная почта какому-либо активному пользователю (зарегистрирован ли он)
+  bool is_registered = 2;
+
+  /// Способ активации авторизации предлагаемый сервером клиенту
+  EmailActivationType activation_type = 3;
 }
 
+/// Запрос на начало авторизации с помощью сертификата
 message RequestStartCertificateAuth {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string name = 1;
-    google.protobuf.StringValue time_zone = 2;
-    repeated string preferred_languages = 3;
+  /// Предполагаемое имя пользователя, в случае если соответствие сертификата существующему на сервере пользователю не выявлено
+  string name = 1;
+
+  /// Часовой пояс пользователя
+  google.protobuf.StringValue time_zone = 2;
+
+  /// Список предпочтительных локалей пользователя (в формате ^[a-z]{2}(?:[-_][A-Z]{2})?$)
+  repeated string preferred_languages = 3;
 }
 
-// Starting token-based login - to authorize bot
+/// Запрос на начало авторизаци с помощью бот-токена
 message RequestStartTokenAuth {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    /** Token received from BotFather **/
-    string token = 1 [(dlg).log=log_sensitive];
-    /** Your timezone **/
-    google.protobuf.StringValue time_zone = 2;
-    /** First language from this array will be used for some notifications from server **/
-    repeated string preferred_languages = 3;
+  /// Токен выданный при регистрации бота
+  string token = 1 [(dlg).log = log_sensitive];
+
+  /// Часовой пояс бота
+  google.protobuf.StringValue time_zone = 2;
+
+  /// Список предпочтительных локалей бота (в формате ^[a-z]{2}(?:[-_][A-Z]{2})?$)
+  repeated string preferred_languages = 3;
 }
 
-// Starting Login Authentication
+/// Запрос на начало авторизации по паре логин-пароль
 message RequestStartUsernameAuth {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string username = 1;
-    google.protobuf.StringValue time_zone = 2;
-    /** First language from this array will be used for some notifications from server **/
-    repeated string preferred_languages = 3;
+  /// Логин пользователя
+  string username = 1;
+
+  /// Часовой пояс пользователя
+  google.protobuf.StringValue time_zone = 2;
+
+  /// Список предпочтительных локалей пользователя (в формате ^[a-z]{2}(?:[-_][A-Z]{2})?$)
+  repeated string preferred_languages = 3;
 }
 
+/// Ответ на запрос на начало авторизации по паре логин-пароль
 message ResponseStartUsernameAuth {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    /** Hash of authorization transaction **/
-    string transaction_hash = 1 [(dlg).log=log_sensitive];
-    bool is_registered = 2;
+  /// Хэш транзакции -- идентифицирует авторизационную транзакцию начатую вызовом метода RequestStartUsernameAuth
+  /// этот хэш необходимо использовать во всех дальнейших вызовах до момента успешной авторизации
+  string transaction_hash = 1 [(dlg).log = log_sensitive];
+
+  /// Соответствует ли переданный логин какому-либо активному пользователю (зарегистрирован ли он)
+  bool is_registered = 2;
 }
 
-// Apply external session to authorize user
+/// Запрос на перенос авторизованной сессии из внешней доверенной системы
 message RequestApplyExternalSessionAuth {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string session_id = 1 [(dlg).log=log_sensitive];
+  /// Идентификатор сессии во внешней доверенной системе
+  string session_id = 1 [(dlg).log = log_sensitive];
 }
 
-// Get Id Token for external system
+/// Запрос на получение токена сессии для внешней системы
 message RequestGetIdToken {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-     /** service alias token is intended for **/
-    string service = 1;
+  /// Название (идентификатор) внешней системы
+  string service = 1;
 }
 
-// Get Id Token for external system
+/// Ответ на запрос на получение токена сессии для внешней системы
 message ResponseGetIdToken {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string token = 1 [(dlg).log=log_sensitive];
-    /** Unix time stamp **/
-    int64 expiration_date = 2;
+  /// Токен сессии
+  string token = 1 [(dlg).log = log_sensitive];
+
+  /// Срок действия токена сессии
+  int64 expiration_date = 2;
 }
 
-// Start Authentication/Authorization via external oAuth2/OpenID SSO Provider
+/// Запрос на начало обобщенной авторизации, без указания предпочтительного способа активации
+/// используется для вариантов OAuth и других подобных механизмов
 message RequestStartAuthTransaction {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-     /** Client timezone **/
-    google.protobuf.StringValue time_zone = 1;
-    /** First language from this array will be used for some notifications from server **/
-    repeated string preferred_languages = 2;
+  /// Часовой пояс пользователя
+  google.protobuf.StringValue time_zone = 1;
+
+  /// Список предпочтительных локалей пользователя (в формате ^[a-z]{2}(?:[-_][A-Z]{2})?$)
+  repeated string preferred_languages = 2;
 }
 
+/// Ответ на запрос на начало обобщенной авторизаци
 message ResponseStartAuthTransaction {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    /** Hash of authorization transaction **/
-    string transaction_hash = 1 [(dlg).log=log_sensitive];
+  /// Хэш транзакции -- идентифицирует авторизационную транзакцию начатую вызовом метода RequestStartAuthTransaction
+  /// этот хэш необходимо использовать во всех дальнейших вызовах до момента успешной авторизации
+  string transaction_hash = 1 [(dlg).log = log_sensitive];
 }
 
-// Performing user sign in.
+/// Запрос на валидацию кода внешней активации
 message RequestValidateCode {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    /** Hash of the authorization transaction **/
-    string transaction_hash = 1  [(dlg).log=log_sensitive];
-    string code = 2 [(dlg).log=log_confidential]; /// Authorization code
+  /// Полученный ранее хэш транзакции
+  string transaction_hash = 1  [(dlg).log = log_sensitive];
+
+  /// Код, передаваемый серверу в качестве подтверждения прохождения внешней активации
+  string code = 2 [(dlg).log = log_confidential];
 }
 
-// Performs code resend
+/// Запрос на перепосылку кода внешней активации
 message RequestResendCode {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    /** Hash of the authorization transaction **/
-    string transaction_hash = 1 [(dlg).log=log_sensitive];
+  /// Полученный ранее хэш транзакции
+  string transaction_hash = 1 [(dlg).log = log_sensitive];
 }
 
-// Validation of account password
+/// Запрос на прохождение активации по паре логин-пароль
 message RequestValidatePassword {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    /** Hash of the authorization transaction **/
-    string transaction_hash = 1 [(dlg).log=log_sensitive];
-    string password = 2 [(dlg).log=log_confidential];
+  /// Полученный ранее хэш транзакции
+  string transaction_hash = 1 [(dlg).log = log_sensitive];
+
+  /// Пароль
+  string password = 2 [(dlg).log = log_confidential];
 }
 
-// Loading OAuth2 Parameters
+/// Запрос на загрузку параметров OAuth2-платформы
 message RequestGetOAuth2Params {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string transaction_hash = 1 [(dlg).log=log_sensitive];
-    string redirect_url = 2;
+  /// Полученный ранее хэш транзакции
+  string transaction_hash = 1 [(dlg).log = log_sensitive];
+
+  /// URL для редиректа после успешной авторизации на OAuth2-платформе
+  string redirect_url = 2;
 }
 
-/// Redirect url result
+/// Ответ на запрос на загрузку параметров OAuth2-платформы
 message ResponseGetOAuth2Params {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    string auth_url = 1;
+  /// Сформированный URL для аутентификации на OAuth2-платформе
+  string auth_url = 1;
 }
 
-// Complete OAuth2 Authentication
+/// Запрос на финализацию аутентификации на OAuth2-платформе
 message RequestCompleteOAuth2 {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string transaction_hash = 1 [(dlg).log=log_sensitive];
-    string code = 2 [(dlg).log=log_confidential];
+  /// Полученный ранее хэш транзакции
+  string transaction_hash = 1 [(dlg).log = log_sensitive];
+
+  /// Код активации, полученный после успешной авторизации на OAuth2-платформе
+  string code = 2 [(dlg).log = log_confidential];
 }
 
-// Perform user SignUp
+/// Запрос на регистрацию пользователя
 message RequestSignUp {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    /** Hash of the authorization transaction **/
-    string transaction_hash = 1 [(dlg).log=log_sensitive];
-    // Your name
-    string name = 2;
-    Sex sex = 3;
-    google.protobuf.StringValue password = 4 [(dlg).log=log_confidential];
+  /// Полученный ранее хэш транзакции
+  string transaction_hash = 1 [(dlg).log = log_sensitive];
+
+  /// Имя пользователя
+  string name = 2;
+
+  /// Пол пользователя
+  Sex sex = 3;
+
+  /// Желаемый пароль пользователя
+  google.protobuf.StringValue password = 4 [(dlg).log = log_confidential];
 }
 
+/// Дополнительные данные о завершенной авторизации
 enum AuthExtraInfoType {
-    AUTH_EXTRA_INFO_TYPE_NONE = 0;
-    AUTH_EXTRA_INFO_TYPE_NEED_CHANGE_PASSWORD = 1;
+  AUTH_EXTRA_INFO_TYPE_NONE = 0;
+
+  /// Пароль, использованный при авторизации, должен быть изменён до следующей авторизации
+  AUTH_EXTRA_INFO_TYPE_NEED_CHANGE_PASSWORD = 1;
 }
 
-// Authentication result
+/// Результат авторизации
 message ResponseAuth {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    /// Registered/authorized user
-    User user = 2;
-    /// Config for that user
-    Config config = 3;
-    /// Hash of config to later usage
-    google.protobuf.Int64Value config_hash = 4;
-    repeated AuthExtraInfoType extra_info = 5;
+  /// Структура авторизованного пользователя
+  User user = 2;
+
+  /// Конфигруация для авторизованного пользователя
+  Config config = 3;
+
+  /// Хэш конфигурации
+  google.protobuf.Int64Value config_hash = 4;
+
+  /// Дополнительная информация о завершенной авторизации
+  repeated AuthExtraInfoType extra_info = 5;
 }
 
-// Authentication session
+/// Авторизованная сессия
 message AuthSession {
-    string id = 1; /// Unuque ID of session
-    /// holder of session. 1 - this device, 2 - other.
-    AuthHolder auth_holder = 2;
-    /// Application Id that you set during authorization
-    int32 app_id = 3;
-    string app_title = 4;
-    string device_title = 5;
-    /// Time of session creating
-    int32 auth_time = 6;
-    /// Two-letter country code of session create
-    string auth_location = 7 [(dlg).log=log_confidential];
-    google.protobuf.DoubleValue latitude = 8 [(dlg).log=log_sensitive];
-    google.protobuf.DoubleValue longitude = 9 [(dlg).log=log_sensitive];
+  /// Идентификатор сессии
+  string id = 1;
+
+  /// Держатель сессии
+  AuthHolder auth_holder = 2;
+
+  /// Идентификатор приложения связанного с сессией
+  int32 app_id = 3;
+
+  /// Название приложения связанного с сессией
+  string app_title = 4;
+
+  /// Название устройства связанного с сессией
+  string device_title = 5;
+
+  /// Время создания сессии (от Unix epoch в секундах)
+  int32 auth_time = 6;
+
+  /// Двубуквенное обозначение страны, из которой была создана сессия
+  string auth_location = 7 [(dlg).log = log_confidential];
+
+  /// Географическая широта, из которой была создана сессия
+  google.protobuf.DoubleValue latitude = 8 [(dlg).log = log_sensitive];
+
+  /// Географическая долгота, из которой была создана сессия
+  google.protobuf.DoubleValue longitude = 9 [(dlg).log = log_sensitive];
 }
 
-/// Holder of session
+/// Держатель сессии
 enum AuthHolder {
-    AUTH_HOLDER_UNKNOWN = 0;
-    AUTH_HOLDER_THISDEVICE = 1;
-    AUTH_HOLDER_OTHERDEVICE = 2;
+  AUTH_HOLDER_UNKNOWN = 0;
+
+  // Держатель сессии -- текущее устройство пользователя
+  AUTH_HOLDER_THISDEVICE = 1;
+
+  /// Держатель сессии -- другое устройство пользователя
+  AUTH_HOLDER_OTHERDEVICE = 2;
 }
 
-// Getting of all active user's authentication sessions
+/// Запрос на получение списка сессий
 message RequestGetAuthSessions {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
 }
 
+/// Ответ на запрос на получение списка сессий
 message ResponseGetAuthSessions {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    repeated AuthSession user_auths = 1; /// Active user's sessions
+  /// Список активных сессий пользователя
+  repeated AuthSession user_auths = 1;
 }
 
-// SignOut on specified user's session
+/// Запрос на завершение сессии
 message RequestTerminateSession {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string id = 1; /// Session id
+  /// Идентификатор сессии, которую необходимо завершить
+  string id = 1;
 }
 
-// SignOut on all exept current sessions
+/// Запрос на завершение всех сессий пользователя кроме текущей
 message RequestTerminateAllSessions {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
 }
 
-// SignOut current session
+/// Запрос на завершение текущей сессии
 message RequestSignOut {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
 }
 
-/**
- * Notification to force client to reload some entities from server
- * Just for old clients. Should be ignore.
- */
+/// Состояние клиента для принудительного обновления -- при получении WeakUpdate-а UpdateForceReloadState
+/// все соотвтетствующие элементы состояния клиента должны быть перезагружены с сервера
 message ForceReloadField {
-    oneof body {
-        ForceReloadDialogs force_reload_dialogs = 1;
-        ForceReloadContacts force_reload_contacts = 2;
-        ForceReloadHistory force_reload_history = 3;
-    }
+  oneof body {
+    /// Принудительное обновление списка диалогов
+    ForceReloadDialogs force_reload_dialogs = 1;
+
+    /// Принудительное обновления списка контактов
+    ForceReloadContacts force_reload_contacts = 2;
+
+    /// Принудительное обновление истории чата
+    ForceReloadHistory force_reload_history = 3;
+  }
 }
 
-// Tells the client to clear dialogs and load them again
+/// см. ForceReloadField
 message ForceReloadDialogs {
 }
 
-// Tells the client to clear contacts and load them again
+/// см. ForceReloadField
 message ForceReloadContacts {
 }
 
-// Tells the client to clear the specified conversation and load it again
-// peer the peer whose history should be reloaded
+/// см. ForceReloadField
 message ForceReloadHistory {
-    Peer peer = 1;
+  /// Пир чата, историю которого необходимо обновить
+  Peer peer = 1;
 }
 
+/// Запрос на изменение пароля пользователя
 message RequestChangePassword {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string old_password = 1 [(dlg).log = log_confidential];
-    string new_password = 2 [(dlg).log = log_confidential];
+  /// Старый пароль
+  string old_password = 1 [(dlg).log = log_confidential];
+
+  /// Новый пароль
+  string new_password = 2 [(dlg).log = log_confidential];
 }
 
+/// Запрос на получение структуры текущего пользователя
 message RequestGetSelf {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
 }
 
+/// Ответ на запрос на получение структуры текущего пользователя
 message ResponseGetSelf {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    /// Registered/authorized user
-    User user = 1;
+  /// Структура текущего пользователя
+  User user = 1;
 }
 
 service Authentication {
-    /// Start authorization by phone
-    rpc StartPhoneAuth (RequestStartPhoneAuth) returns (ResponseStartPhoneAuth) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/StartPhoneAuth"
-            body: "*"
-        };
-    }
-    /// Resend code by transaction hash
-    rpc SendCodeByPhoneCall (RequestSendCodeByPhoneCall) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/SendCodeByPhoneCall"
-            body: "*"
-        };
-    }
-    /// Start email authorization process
-    rpc StartEmailAuth (RequestStartEmailAuth) returns (ResponseStartEmailAuth) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/StartEmailAuth"
-            body: "*"
-        };
-    }
+  /// Метод начала авторизации по телефону
+  rpc StartPhoneAuth (RequestStartPhoneAuth) returns (ResponseStartPhoneAuth) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/StartPhoneAuth"
+      body: "*"
+    };
+  }
 
-    rpc StartCertificateAuth (RequestStartCertificateAuth) returns (ResponseAuth) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/StartCertificateAuth"
-            body: "*"
-        };
-    }
+  /// Метод посылки телефонного кода активации с помощью звонка
+  rpc SendCodeByPhoneCall (RequestSendCodeByPhoneCall) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/SendCodeByPhoneCall"
+      body: "*"
+    };
+  }
 
-    /// Start token auth authorization (actual for bots)
-    rpc StartTokenAuth (RequestStartTokenAuth) returns (ResponseAuth) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/StartTokenAuth"
-            body: "*"
-        };
-    }
-    /// Start login/password authorization process
-    rpc StartUsernameAuth (RequestStartUsernameAuth) returns (ResponseStartUsernameAuth) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/StartUsernameAuth"
-            body: "*"
-        };
-    }
-    rpc ApplyExternalSessionAuth (RequestApplyExternalSessionAuth) returns (ResponseAuth) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/ApplyExternalSessionAuth"
-            body: "*"
-        };
-    }
+  /// Метод начала авторизации по электронной почте
+  rpc StartEmailAuth (RequestStartEmailAuth) returns (ResponseStartEmailAuth) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/StartEmailAuth"
+      body: "*"
+    };
+  }
 
-    // Get Id Token for external system
-    rpc GetIdToken (RequestGetIdToken) returns (ResponseGetIdToken) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/RequestGetIdToken"
-            body: "*"
-        };
-    }
+  /// Метод начала авторизации по сертификату
+  rpc StartCertificateAuth (RequestStartCertificateAuth) returns (ResponseAuth) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/StartCertificateAuth"
+      body: "*"
+    };
+  }
 
-    rpc StartAuthTransaction (RequestStartAuthTransaction) returns (ResponseStartAuthTransaction) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/RequestStartAuthTransaction"
-            body: "*"
-        };
-    }
-    /** Validate code received by phone or email
-     *  Returns error if user does not exist
-     */
-    rpc ValidateCode (RequestValidateCode) returns (ResponseAuth) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/ValidateCode"
-            body: "*"
-        };
-    }
-    /// Resend code if you don't receive it with first attempt
-    rpc ResendCode (RequestResendCode) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/ResendCode"
-            body: "*"
-        };
-    }
-    /// Validate your passwword
-    rpc ValidatePassword (RequestValidatePassword) returns (ResponseAuth) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/ValidatePassword"
-            body: "*"
-        };
-    }
-    /// Get redirect url
-    rpc GetOAuth2Params (RequestGetOAuth2Params) returns (ResponseGetOAuth2Params) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/GetOAuth2Params"
-            body: "*"
-        };
-    }
-    /// Complete OAuth2 Authentication
-    rpc CompleteOAuth2 (RequestCompleteOAuth2) returns (ResponseAuth) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/CompleteOAuth2"
-            body: "*"
-        };
-    }
-    /// Sign up existed user
-    rpc SignUp (RequestSignUp) returns (ResponseAuth) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/SignUp"
-            body: "*"
-        };
-    }
-    /// Returns all authorized user's sessions
-    rpc GetAuthSessions (RequestGetAuthSessions) returns (ResponseGetAuthSessions) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/GetAuthSessions"
-            body: "*"
-        };
-    }
-    
-    rpc TerminateSession (RequestTerminateSession) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/TerminateSession"
-            body: "*"
-        };
-    }
-    /// Log out user
-    rpc TerminateAllSessions (RequestTerminateAllSessions) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/TerminateAllSessions"
-            body: "*"
-        };
-    }
-    /// Log out current session
-    rpc SignOut (RequestSignOut) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/SignOut"
-            body: "*"
-        };
-    }
-    rpc ChangePassword (RequestChangePassword) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/ChangePassword"
-            body: "*"
-        };
-    }
+  /// Метод начала авторизации по токену (для ботов)
+  rpc StartTokenAuth (RequestStartTokenAuth) returns (ResponseAuth) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/StartTokenAuth"
+      body: "*"
+    };
+  }
 
-    rpc GetSelf (RequestGetSelf) returns (ResponseGetSelf) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Authentication/GetSelf"
-            body: "*"
-        };
-    }
+  /// Метод начала авторизации по паре логин-пароль
+  rpc StartUsernameAuth (RequestStartUsernameAuth) returns (ResponseStartUsernameAuth) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/StartUsernameAuth"
+      body: "*"
+    };
+  }
+
+  /// Метод начала авторизации переносом авторизованной сессии с внешней доверенной системы
+  rpc ApplyExternalSessionAuth (RequestApplyExternalSessionAuth) returns (ResponseAuth) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/ApplyExternalSessionAuth"
+      body: "*"
+    };
+  }
+
+  /// Метод получения токена сессии для внешней системы
+  rpc GetIdToken (RequestGetIdToken) returns (ResponseGetIdToken) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/RequestGetIdToken"
+      body: "*"
+    };
+  }
+
+  /// Метод начала обобщенной авторизации
+  rpc StartAuthTransaction (RequestStartAuthTransaction) returns (ResponseStartAuthTransaction) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/RequestStartAuthTransaction"
+      body: "*"
+    };
+  }
+
+  /// Методя валидации активационного кода
+  rpc ValidateCode (RequestValidateCode) returns (ResponseAuth) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/ValidateCode"
+      body: "*"
+    };
+  }
+
+  /// Метод перепосылки активационного кода
+  rpc ResendCode (RequestResendCode) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/ResendCode"
+      body: "*"
+    };
+  }
+
+  /// Метод валидации пароля
+  rpc ValidatePassword (RequestValidatePassword) returns (ResponseAuth) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/ValidatePassword"
+      body: "*"
+    };
+  }
+
+  /// Метод получения параметров OAuth2-платформы
+  rpc GetOAuth2Params (RequestGetOAuth2Params) returns (ResponseGetOAuth2Params) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/GetOAuth2Params"
+      body: "*"
+    };
+  }
+
+  /// Метод финализации аутентификации на OAuth2-платформе
+  rpc CompleteOAuth2 (RequestCompleteOAuth2) returns (ResponseAuth) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/CompleteOAuth2"
+      body: "*"
+    };
+  }
+
+  /// Метод регистрации пользователя
+  rpc SignUp (RequestSignUp) returns (ResponseAuth) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/SignUp"
+      body: "*"
+    };
+  }
+
+  /// Метод получения авторизованных сессий
+  rpc GetAuthSessions (RequestGetAuthSessions) returns (ResponseGetAuthSessions) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/GetAuthSessions"
+      body: "*"
+    };
+  }
+
+  /// Метод завершения сессии
+  rpc TerminateSession (RequestTerminateSession) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/TerminateSession"
+      body: "*"
+    };
+  }
+
+  /// Метод завершения всех сессий пользователя кроме текущей
+  rpc TerminateAllSessions (RequestTerminateAllSessions) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/TerminateAllSessions"
+      body: "*"
+    };
+  }
+
+  /// Метод завершения текущей сессии
+  rpc SignOut (RequestSignOut) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/SignOut"
+      body: "*"
+    };
+  }
+
+  /// Мтеод изменения пароля пользователя
+  rpc ChangePassword (RequestChangePassword) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/ChangePassword"
+      body: "*"
+    };
+  }
+
+  /// Метод получения структуры текущего пользователя
+  rpc GetSelf (RequestGetSelf) returns (ResponseGetSelf) {
+    option (google.api.http) = {
+      post: "/v1/grpc/Authentication/GetSelf"
+      body: "*"
+    };
+  }
 }

@@ -16,15 +16,14 @@ message ThreadInfo {
     uint32 messages_count = 1;
     repeated string latest_active_user_ids = 2;
     uint64 last_activity_date = 3;
+    // Если поле пустое, значит информации о фолловинге треда в данный момент нет, и её надо получить другими способами (загрузкой тредов GetThreadInfos, загрузкой истории и тп)
+    // Пустым в данный момент будет приходить при получении вик-апдейта UpdateThreadInfos
+    google.protobuf.BoolValue is_following = 5;
 }
 
-message RequestLoadPeerThreads {
-    Peer peer = 1;
-    oneof direction {
-        UUIDValue from_mid = 2;
-        UUIDValue upto_mid = 3;
-    }
-    int32 limit = 4;
+message RequestGetThreadInfos {
+    int64 from_clock = 1;
+    Peer peer = 2;
 }
 
 message PeerThread {
@@ -32,8 +31,10 @@ message PeerThread {
     ThreadInfo info = 2;
 }
 
-message ResponseLoadPeerThreads {
+message ResponseGetThreadInfos {
     repeated PeerThread threads = 1;
+    int64 peer_clock = 2;
+    bool next_available = 3;
 }
 
 message RequestFollowThread {
@@ -45,7 +46,10 @@ message RequestUnfollowThread {
 }
 
 message UpdateThreadInfos {
-    repeated PeerThread infos = 1;
+    Peer peer = 1;
+    repeated PeerThread infos = 2;
+    int64 peer_clock = 3;
+    int64 prev_peer_clock = 4;
 }
 
 message UpdateThreadFollowing {
@@ -54,9 +58,9 @@ message UpdateThreadFollowing {
 }
 
 service Threads {
-    rpc LoadPeerThreads (RequestLoadPeerThreads) returns (ResponseLoadPeerThreads) {
+    rpc GetThreadInfos (RequestGetThreadInfos) returns (ResponseGetThreadInfos) {
         option (google.api.http) = {
-            post: "/v1/grpc/Threads/LoadPeerThreads"
+            post: "/v1/grpc/Threads/GetThreadInfos"
             body: "*"
         };
     }

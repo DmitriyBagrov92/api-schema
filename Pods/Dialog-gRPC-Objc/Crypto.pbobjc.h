@@ -53,10 +53,11 @@ typedef GPB_ENUM(RequestKeyExchange_FieldNumber) {
 };
 
 /**
- * Exchange public keys
+ * / Запрос на обмен публичными ключами
  **/
 GPB_FINAL @interface RequestKeyExchange : GPBMessage
 
+/** / Публичный ключ клиента */
 @property(nonatomic, readwrite, strong, null_resettable) GPBBytesValue *clientKey;
 /** Test to see if @c clientKey has been set. */
 @property(nonatomic, readwrite) BOOL hasClientKey;
@@ -69,8 +70,12 @@ typedef GPB_ENUM(ResponseKeyExchange_FieldNumber) {
   ResponseKeyExchange_FieldNumber_ServerKey = 1,
 };
 
+/**
+ * / Ответ на запрос на обмен публичными ключами
+ **/
 GPB_FINAL @interface ResponseKeyExchange : GPBMessage
 
+/** / Публичный ключ сервера */
 @property(nonatomic, readwrite, strong, null_resettable) GPBBytesValue *serverKey;
 /** Test to see if @c serverKey has been set. */
 @property(nonatomic, readwrite) BOOL hasServerKey;

@@ -64,7 +64,7 @@
 #pragma mark ImportContacts(RequestImportContacts) returns (ResponseImportContacts)
 
 /**
- * / Import contacts and wait while query is not finished
+ * / Метод синхронного импорта контактов
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -73,7 +73,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Import contacts and wait while query is not finished
+ * / Метод синхронного импорта контактов
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -84,7 +84,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Import contacts and wait while query is not finished
+ * / Метод синхронного импорта контактов
  */
 - (GRPCUnaryProtoCall *)importContactsWithMessage:(RequestImportContacts *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"ImportContacts"
@@ -97,7 +97,7 @@
 #pragma mark DeferredImportContacts(RequestDeferredImportContacts) returns (ResponseDeferredImportContacts)
 
 /**
- * / Same as above, but without waiting response
+ * / Метод асинхронного (отложенного) импорта контактов
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -106,7 +106,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Same as above, but without waiting response
+ * / Метод асинхронного (отложенного) импорта контактов
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -117,7 +117,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Same as above, but without waiting response
+ * / Метод асинхронного (отложенного) импорта контактов
  */
 - (GRPCUnaryProtoCall *)deferredImportContactsWithMessage:(RequestDeferredImportContacts *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"DeferredImportContacts"
@@ -129,16 +129,29 @@
 
 #pragma mark GetContacts(RequestGetContacts) returns (ResponseGetContacts)
 
+/**
+ * / Метод получения списка контактов
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)getContactsWithRequest:(RequestGetContacts *)request handler:(void(^)(ResponseGetContacts *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetContactsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Метод получения списка контактов
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToGetContactsWithRequest:(RequestGetContacts *)request handler:(void(^)(ResponseGetContacts *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetContacts"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseGetContacts class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Метод получения списка контактов
+ */
 - (GRPCUnaryProtoCall *)getContactsWithMessage:(RequestGetContacts *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetContacts"
                    message:message
@@ -149,16 +162,29 @@
 
 #pragma mark RemoveContact(RequestRemoveContact) returns (Empty)
 
+/**
+ * / Метод удаления пользователя из контактов
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)removeContactWithRequest:(RequestRemoveContact *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToRemoveContactWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Метод удаления пользователя из контактов
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToRemoveContactWithRequest:(RequestRemoveContact *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"RemoveContact"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Метод удаления пользователя из контактов
+ */
 - (GRPCUnaryProtoCall *)removeContactWithMessage:(RequestRemoveContact *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"RemoveContact"
                    message:message
@@ -169,16 +195,29 @@
 
 #pragma mark AddContact(RequestAddContact) returns (Empty)
 
+/**
+ * / Метод добавления пользователя в контакты
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)addContactWithRequest:(RequestAddContact *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToAddContactWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Метод добавления пользователя в контакты
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToAddContactWithRequest:(RequestAddContact *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"AddContact"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Метод добавления пользователя в контакты
+ */
 - (GRPCUnaryProtoCall *)addContactWithMessage:(RequestAddContact *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"AddContact"
                    message:message
@@ -190,7 +229,7 @@
 #pragma mark SearchContacts(RequestSearchContacts) returns (ResponseSearchContacts)
 
 /**
- * / Search contacts by query string
+ * / Метод поиска по контактам
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -199,7 +238,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Search contacts by query string
+ * / Метод поиска по контактам
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -210,7 +249,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Search contacts by query string
+ * / Метод поиска по контактам
  */
 - (GRPCUnaryProtoCall *)searchContactsWithMessage:(RequestSearchContacts *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"SearchContacts"

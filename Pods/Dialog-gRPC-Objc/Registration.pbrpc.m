@@ -61,7 +61,7 @@
 #pragma mark RegisterDevice(RequestRegisterDevice) returns (ResponseDeviceRequest)
 
 /**
- * / register device to get auth token
+ * / Метод регистрация устройства (сессии)
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -70,7 +70,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / register device to get auth token
+ * / Метод регистрация устройства (сессии)
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -81,7 +81,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / register device to get auth token
+ * / Метод регистрация устройства (сессии)
  */
 - (GRPCUnaryProtoCall *)registerDeviceWithMessage:(RequestRegisterDevice *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"RegisterDevice"

@@ -2697,6 +2697,51 @@ typedef struct RequestTransferOwnership__storage_ {
 
 @end
 
+#pragma mark - RequestGetGroupInviteUrl
+
+@implementation RequestGetGroupInviteUrl
+
+@dynamic groupId;
+
+typedef struct RequestGetGroupInviteUrl__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *groupId;
+} RequestGetGroupInviteUrl__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "groupId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestGetGroupInviteUrl_FieldNumber_GroupId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(RequestGetGroupInviteUrl__storage_, groupId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestGetGroupInviteUrl class]
+                                     rootClass:[GroupsRoot class]
+                                          file:GroupsRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RequestGetGroupInviteUrl__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - ResponseInviteUrl
 
 @implementation ResponseInviteUrl
@@ -2737,51 +2782,6 @@ typedef struct ResponseInviteUrl__storage_ {
         "\001\001!!!\000";
     [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
 #endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - RequestGetGroupInviteUrl
-
-@implementation RequestGetGroupInviteUrl
-
-@dynamic groupId;
-
-typedef struct RequestGetGroupInviteUrl__storage_ {
-  uint32_t _has_storage_[1];
-  NSString *groupId;
-} RequestGetGroupInviteUrl__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "groupId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestGetGroupInviteUrl_FieldNumber_GroupId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestGetGroupInviteUrl__storage_, groupId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestGetGroupInviteUrl class]
-                                     rootClass:[GroupsRoot class]
-                                          file:GroupsRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestGetGroupInviteUrl__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

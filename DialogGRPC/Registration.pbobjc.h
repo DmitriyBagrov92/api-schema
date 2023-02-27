@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Enum AuthorizationMethod
 
+/** / Набор методов авторизации */
 typedef GPB_ENUM(AuthorizationMethod) {
   /**
    * Value used if any message's field encounters a value that is not defined
@@ -39,10 +40,20 @@ typedef GPB_ENUM(AuthorizationMethod) {
    **/
   AuthorizationMethod_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   AuthorizationMethod_AuthorizationMethodNothing = 0,
+
+  /** / Авторизация по паре логин-пароль */
   AuthorizationMethod_AuthorizationMethodUsername = 1,
+
+  /** / Авторизация по телефону */
   AuthorizationMethod_AuthorizationMethodPhone = 2,
+
+  /** / Авторизация по электронной почте */
   AuthorizationMethod_AuthorizationMethodEmail = 3,
+
+  /** / Авторизация по сертификату */
   AuthorizationMethod_AuthorizationMethodCertificate = 4,
+
+  /** / OAuth2-авторизация */
   AuthorizationMethod_AuthorizationMethodOauth = 5,
 };
 
@@ -78,14 +89,21 @@ typedef GPB_ENUM(RequestRegisterDevice_FieldNumber) {
   RequestRegisterDevice_FieldNumber_DeviceTitle = 4,
 };
 
+/**
+ * / Запрос на регистрацию устройства (сессии)
+ **/
 GPB_FINAL @interface RequestRegisterDevice : GPBMessage
 
+/** / Публичный ключ клиента */
 @property(nonatomic, readwrite, copy, null_resettable) NSData *clientPk;
 
+/** / Идентификатор клиентского приложения */
 @property(nonatomic, readwrite) int32_t appId;
 
+/** / Название клиентского приложения */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *appTitle;
 
+/** / Название клиентского устройства */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *deviceTitle;
 
 @end
@@ -98,13 +116,18 @@ typedef GPB_ENUM(ResponseDeviceRequest_FieldNumber) {
   ResponseDeviceRequest_FieldNumber_AuthMethodSeqArray = 3,
 };
 
+/**
+ * / Ответ на запрос на регистрацию устройства (сессии)
+ **/
 GPB_FINAL @interface ResponseDeviceRequest : GPBMessage
 
+/** / Публичный ключ сервера */
 @property(nonatomic, readwrite, copy, null_resettable) NSData *serverPk;
 
+/** / Авторизационный токен -- идентификатор сессии */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *token;
 
-/** / Sequence of the required authorization methods */
+/** / Набор обязательных методов авторизации */
 // |authMethodSeqArray| contains |AuthorizationMethod|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *authMethodSeqArray;
 /** The number of items in @c authMethodSeqArray without causing the array to be created. */

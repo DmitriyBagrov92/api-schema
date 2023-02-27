@@ -81,10 +81,15 @@ typedef GPB_ENUM(UUIDValue_FieldNumber) {
   UUIDValue_FieldNumber_Lsb = 2,
 };
 
+/**
+ * / Структура UUID
+ **/
 GPB_FINAL @interface UUIDValue : GPBMessage
 
+/** / Старшие биты UUID */
 @property(nonatomic, readwrite) int64_t msb;
 
+/** / Младшие биты UUID */
 @property(nonatomic, readwrite) int64_t lsb;
 
 @end
@@ -102,8 +107,12 @@ typedef GPB_ENUM(UpdateErrorCause_Value_OneOfCase) {
   UpdateErrorCause_Value_OneOfCase_Failed = 2,
 };
 
+/**
+ * / Структура обобщенного оповещения об ошибке
+ **/
 GPB_FINAL @interface UpdateErrorCause : GPBMessage
 
+/** / Вид ошибки */
 @property(nonatomic, readonly) UpdateErrorCause_Value_OneOfCase valueOneOfCase;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateErrorCause_Rejected *rejected;
@@ -123,6 +132,9 @@ typedef GPB_ENUM(UpdateErrorCause_Rejected_FieldNumber) {
   UpdateErrorCause_Rejected_FieldNumber_Reason = 1,
 };
 
+/**
+ * / Структура, описывающая мотивированный отказ от выполнения какого-либо действия
+ **/
 GPB_FINAL @interface UpdateErrorCause_Rejected : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *reason;
@@ -138,6 +150,9 @@ typedef GPB_ENUM(UpdateErrorCause_Failed_FieldNumber) {
   UpdateErrorCause_Failed_FieldNumber_Tag = 2,
 };
 
+/**
+ * / Структура, описывающая сбой при выполнении какого-либо действия
+ **/
 GPB_FINAL @interface UpdateErrorCause_Failed : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *description_p;

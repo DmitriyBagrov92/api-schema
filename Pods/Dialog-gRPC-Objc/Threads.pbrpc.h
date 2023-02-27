@@ -14,9 +14,9 @@
 
 @class GPBEmpty;
 @class RequestFollowThread;
-@class RequestLoadPeerThreads;
+@class RequestGetThreadInfos;
 @class RequestUnfollowThread;
-@class ResponseLoadPeerThreads;
+@class ResponseGetThreadInfos;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Wrappers.pbobjc.h"
@@ -38,9 +38,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol Threads2 <NSObject>
 
-#pragma mark LoadPeerThreads(RequestLoadPeerThreads) returns (ResponseLoadPeerThreads)
+#pragma mark GetThreadInfos(RequestGetThreadInfos) returns (ResponseGetThreadInfos)
 
-- (GRPCUnaryProtoCall *)loadPeerThreadsWithMessage:(RequestLoadPeerThreads *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)getThreadInfosWithMessage:(RequestGetThreadInfos *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark FollowThread(RequestFollowThread) returns (Empty)
 
@@ -58,11 +58,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @protocol Threads <NSObject>
 
-#pragma mark LoadPeerThreads(RequestLoadPeerThreads) returns (ResponseLoadPeerThreads)
+#pragma mark GetThreadInfos(RequestGetThreadInfos) returns (ResponseGetThreadInfos)
 
-- (void)loadPeerThreadsWithRequest:(RequestLoadPeerThreads *)request handler:(void(^)(ResponseLoadPeerThreads *_Nullable response, NSError *_Nullable error))handler;
+- (void)getThreadInfosWithRequest:(RequestGetThreadInfos *)request handler:(void(^)(ResponseGetThreadInfos *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToLoadPeerThreadsWithRequest:(RequestLoadPeerThreads *)request handler:(void(^)(ResponseLoadPeerThreads *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToGetThreadInfosWithRequest:(RequestGetThreadInfos *)request handler:(void(^)(ResponseGetThreadInfos *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark FollowThread(RequestFollowThread) returns (Empty)

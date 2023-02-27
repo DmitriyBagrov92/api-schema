@@ -54,8 +54,12 @@ typedef GPB_ENUM(RequestLoadDrafts_FieldNumber) {
   RequestLoadDrafts_FieldNumber_Clock = 1,
 };
 
+/**
+ * / Запрос на получение списка черновиков
+ **/
 GPB_FINAL @interface RequestLoadDrafts : GPBMessage
 
+/** / Минимальная версия черновиков требуемая в ответе */
 @property(nonatomic, readwrite) int64_t clock;
 
 @end
@@ -67,12 +71,17 @@ typedef GPB_ENUM(ResponseLoadDrafts_FieldNumber) {
   ResponseLoadDrafts_FieldNumber_Clock = 2,
 };
 
+/**
+ * / Ответ на запрос на получение списка черновиков
+ **/
 GPB_FINAL @interface ResponseLoadDrafts : GPBMessage
 
+/** / Список черновиков */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Draft*> *draftsArray;
 /** The number of items in @c draftsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger draftsArray_Count;
 
+/** Версия списка черновиков */
 @property(nonatomic, readwrite) int64_t clock;
 
 @end
@@ -83,6 +92,9 @@ typedef GPB_ENUM(RequestSaveDrafts_FieldNumber) {
   RequestSaveDrafts_FieldNumber_DraftsArray = 1,
 };
 
+/**
+ * / Запрос на сохранение списка черновиков
+ **/
 GPB_FINAL @interface RequestSaveDrafts : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Draft*> *draftsArray;
@@ -97,8 +109,12 @@ typedef GPB_ENUM(ResponseSaveDrafts_FieldNumber) {
   ResponseSaveDrafts_FieldNumber_Clock = 1,
 };
 
+/**
+ * / Ответ на запрос на сохранение списка черновков
+ **/
 GPB_FINAL @interface ResponseSaveDrafts : GPBMessage
 
+/** / Версия сохраненного списка черновиков */
 @property(nonatomic, readwrite) int64_t clock;
 
 @end
@@ -111,14 +127,20 @@ typedef GPB_ENUM(UpdateDraftsChanged_FieldNumber) {
   UpdateDraftsChanged_FieldNumber_PrevClock = 3,
 };
 
+/**
+ * / Структура уведомления об измении списка черновиков
+ **/
 GPB_FINAL @interface UpdateDraftsChanged : GPBMessage
 
+/** / Актуальный список черновиков */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Draft*> *draftsArray;
 /** The number of items in @c draftsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger draftsArray_Count;
 
+/** / Актуальная версия списка черновиков */
 @property(nonatomic, readwrite) int64_t clock;
 
+/** / deprecated */
 @property(nonatomic, readwrite) int64_t prevClock;
 
 @end
@@ -130,12 +152,17 @@ typedef GPB_ENUM(Draft_FieldNumber) {
   Draft_FieldNumber_Content = 2,
 };
 
+/**
+ * / Структура черновика
+ **/
 GPB_FINAL @interface Draft : GPBMessage
 
+/** / Пир чата, в котором сохраняется черновик */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Содержание сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) MessageContent *content;
 /** Test to see if @c content has been set. */
 @property(nonatomic, readwrite) BOOL hasContent;

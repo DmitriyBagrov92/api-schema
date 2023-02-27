@@ -291,8 +291,12 @@ typedef GPB_ENUM(SeqUpdateBody_Update_OneOfCase) {
   SeqUpdateBody_Update_OneOfCase_UpdateThreadFollowing = 78,
 };
 
+/**
+ * / Структура тела сек-апдейта
+ **/
 GPB_FINAL @interface SeqUpdateBody : GPBMessage
 
+/** / Вид сек-апдейта */
 @property(nonatomic, readonly) SeqUpdateBody_Update_OneOfCase updateOneOfCase;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateUserAvatarChanged *updateUserAvatarChanged;
@@ -446,12 +450,14 @@ typedef GPB_ENUM(SeqUpdate_FieldNumber) {
 };
 
 /**
- * Sequence update
+ * / Структура сек-апдейта
  **/
 GPB_FINAL @interface SeqUpdate : GPBMessage
 
+/** / Порядковый номер сек-апдейта */
 @property(nonatomic, readwrite) uint64_t seq;
 
+/** / Тело сек-апдейта */
 @property(nonatomic, readwrite, strong, null_resettable) SeqUpdateBody *body;
 /** Test to see if @c body has been set. */
 @property(nonatomic, readwrite) BOOL hasBody;
@@ -466,12 +472,14 @@ typedef GPB_ENUM(RequestGetDifference_FieldNumber) {
 };
 
 /**
- * Getting difference of sequence
+ * / Запрос на полчение разницы в сек-апдейтах между клиентом и сервером
  **/
 GPB_FINAL @interface RequestGetDifference : GPBMessage
 
+/** / Порядковый номер, с которого (не включая его) необходимо получить недостающие апдейты */
 @property(nonatomic, readwrite) uint64_t seq;
 
+/** / deprecated */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *configHash GPB_DEPRECATED_MSG("dialog.RequestGetDifference.config_hash is deprecated (see sequence_and_updates.proto).");
 /** Test to see if @c configHash has been set. */
 @property(nonatomic, readwrite) BOOL hasConfigHash GPB_DEPRECATED_MSG("dialog.RequestGetDifference.config_hash is deprecated (see sequence_and_updates.proto).");
@@ -492,37 +500,45 @@ typedef GPB_ENUM(ResponseGetDifference_FieldNumber) {
 };
 
 /**
- * / Updates happens after requested seq number + related peers and entities
+ * / Ответ на запрос на полчение разницы в сек-апдейтах между клиентом и сервером
  **/
 GPB_FINAL @interface ResponseGetDifference : GPBMessage
 
-/** / seq of the last loaded update */
+/** / Последний порядковый номер в ответе */
 @property(nonatomic, readwrite) uint64_t seq;
 
+/** / Список апдейтов */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<SeqUpdate*> *updatesArray;
 /** The number of items in @c updatesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger updatesArray_Count;
 
+/**
+ * / Флаг, определяющий что на полученные в списке апдейты не исчерпывают разницы между клиентом и сервером
+ * / и необходимо сделать повторный запрос на получение разницы после применения полученного списка (уже с новым seq-номером в запросе)
+ **/
+@property(nonatomic, readwrite) BOOL needMore;
+
+/** / deprecated */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<HistoryMessage*> *messagesArray GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.messages is deprecated (see sequence_and_updates.proto).");
 /** The number of items in @c messagesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger messagesArray_Count GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.messages is deprecated (see sequence_and_updates.proto).");
 
-/** / false if all updates returned */
-@property(nonatomic, readwrite) BOOL needMore;
-
+/** / deprecated */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *usersRefsArray GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.users_refs is deprecated (see sequence_and_updates.proto).");
 /** The number of items in @c usersRefsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger usersRefsArray_Count GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.users_refs is deprecated (see sequence_and_updates.proto).");
 
+/** / deprecated */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupsRefsArray GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.groups_refs is deprecated (see sequence_and_updates.proto).");
 /** The number of items in @c groupsRefsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger groupsRefsArray_Count GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.groups_refs is deprecated (see sequence_and_updates.proto).");
 
-/** / user's config */
+/** / deprecated */
 @property(nonatomic, readwrite, strong, null_resettable) Config *config GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.config is deprecated (see sequence_and_updates.proto).");
 /** Test to see if @c config has been set. */
 @property(nonatomic, readwrite) BOOL hasConfig GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.config is deprecated (see sequence_and_updates.proto).");
 
+/** / deprecated */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *configHash GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.config_hash is deprecated (see sequence_and_updates.proto).");
 /** Test to see if @c configHash has been set. */
 @property(nonatomic, readwrite) BOOL hasConfigHash GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.config_hash is deprecated (see sequence_and_updates.proto).");
@@ -537,14 +553,16 @@ typedef GPB_ENUM(GroupMembersSubset_FieldNumber) {
 };
 
 /**
- * Represents subset of group members
+ * / Подмножетсво членов группового чата
  **/
 GPB_FINAL @interface GroupMembersSubset : GPBMessage
 
+/** / Внешний пир группового чата [здесь достаточно group_id] */
 @property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *groupPeer;
 /** Test to see if @c groupPeer has been set. */
 @property(nonatomic, readwrite) BOOL hasGroupPeer;
 
+/** / Список идентификаторов учетных записей пользователей-членов группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *memberIdsArray;
 /** The number of items in @c memberIdsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger memberIdsArray_Count;
@@ -561,30 +579,26 @@ typedef GPB_ENUM(RequestGetReferencedEntities_FieldNumber) {
 };
 
 /**
- * Loading referenced entities
+ * / Запрос на дополнительных загрузку сущностей
  **/
 GPB_FINAL @interface RequestGetReferencedEntities : GPBMessage
 
-/** / users needed */
+/** / Список внешний пиров пользователей для загрузки */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *usersArray;
 /** The number of items in @c usersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger usersArray_Count;
 
-/** / messages needed */
+/** / Список идфентификаторов сообщений для загрузки */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UUIDValue*> *midsArray;
 /** The number of items in @c midsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger midsArray_Count;
 
-/**
- * *
- * Group + subset of members to return.
- * For loading members of big groups by chunks.
- **/
+/** / Список подмножеств членов групповых чатов */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupMembersSubset*> *groupMembersArray;
 /** The number of items in @c groupMembersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger groupMembersArray_Count;
 
-/** / groups needed */
+/** / Список внешний приов групп [тут достаточно group_id] */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupsArray;
 /** The number of items in @c groupsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger groupsArray_Count;
@@ -599,16 +613,22 @@ typedef GPB_ENUM(ResponseGetReferencedEntities_FieldNumber) {
   ResponseGetReferencedEntities_FieldNumber_MessagesArray = 3,
 };
 
+/**
+ * / Ответ на запрос на дополнительных загрузку сущностей
+ **/
 GPB_FINAL @interface ResponseGetReferencedEntities : GPBMessage
 
+/** / Список данных о пользователях */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<User*> *usersArray;
 /** The number of items in @c usersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger usersArray_Count;
 
+/** / Список данных о группах */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Group*> *groupsArray;
 /** The number of items in @c groupsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger groupsArray_Count;
 
+/** / Список сообщений */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<HistoryMessage*> *messagesArray;
 /** The number of items in @c messagesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger messagesArray_Count;
@@ -623,6 +643,9 @@ typedef GPB_ENUM(RequestGetPartialPeerInfo_FieldNumber) {
   RequestGetPartialPeerInfo_FieldNumber_GroupMembersArray = 3,
 };
 
+/**
+ * / deprecated
+ **/
 GPB_FINAL @interface RequestGetPartialPeerInfo : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *usersArray;
@@ -646,6 +669,9 @@ typedef GPB_ENUM(ResponseGetPartialPeerInfo_FieldNumber) {
   ResponseGetPartialPeerInfo_FieldNumber_GroupsArray = 2,
 };
 
+/**
+ * / deprecated
+ **/
 GPB_FINAL @interface ResponseGetPartialPeerInfo : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserPartialInfo*> *usersArray;
@@ -666,7 +692,7 @@ typedef GPB_ENUM(UpdateRawUpdate_FieldNumber) {
 };
 
 /**
- * Custom Raw Update
+ * Структура уведомления о событии без явного типа апдейта, используется для передачи апдейтов от внешних систем
  **/
 GPB_FINAL @interface UpdateRawUpdate : GPBMessage
 
@@ -684,6 +710,9 @@ typedef GPB_ENUM(PeersList_FieldNumber) {
   PeersList_FieldNumber_PeersArray = 1,
 };
 
+/**
+ * / Список пиров
+ **/
 GPB_FINAL @interface PeersList : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Peer*> *peersArray;
@@ -717,24 +746,35 @@ typedef GPB_ENUM(WeakUpdateCommand_Command_OneOfCase) {
   WeakUpdateCommand_Command_OneOfCase_UnsubscribeFromAllTypings = 8,
 };
 
+/**
+ * / Команда для weak-стрима
+ **/
 GPB_FINAL @interface WeakUpdateCommand : GPBMessage
 
 @property(nonatomic, readonly) WeakUpdateCommand_Command_OneOfCase commandOneOfCase;
 
+/** / Команда на изменение статуса онлайна текущего пользователя */
 @property(nonatomic, readwrite, strong, null_resettable) WeakUpdateCommand_ChangeMyOnline *changeMyOnline;
 
+/** / Команда подписки на статусы онлайнов других пользователей */
 @property(nonatomic, readwrite, strong, null_resettable) WeakUpdateCommand_SubscribeToOnlines *subscribeToOnlines;
 
+/** / Команда отписки от статусов онлайнов других пользователей */
 @property(nonatomic, readwrite, strong, null_resettable) PeersList *unsubscribeFromOnlines;
 
+/** / Команда отписки от всех статусов онлайнов */
 @property(nonatomic, readwrite, strong, null_resettable) GPBEmpty *unsubscribeFromAllOnlines;
 
+/** / Команда на изменение статуса тайпинга текущего пользователя */
 @property(nonatomic, readwrite, strong, null_resettable) WeakUpdateCommand_ChangeMyTyping *changeMyTyping;
 
+/** / Команда подписки на статусы тайпингов других пользователей */
 @property(nonatomic, readwrite, strong, null_resettable) PeersList *subscribeToTypings;
 
+/** / Команда отписки от статусов тайпингов других пользователей */
 @property(nonatomic, readwrite, strong, null_resettable) PeersList *unsubscribeFromTypings;
 
+/** / Команда отписки от всех статусов тайпингов */
 @property(nonatomic, readwrite, strong, null_resettable) GPBEmpty *unsubscribeFromAllTypings;
 
 @end
@@ -752,13 +792,21 @@ typedef GPB_ENUM(WeakUpdateCommand_ChangeMyOnline_FieldNumber) {
   WeakUpdateCommand_ChangeMyOnline_FieldNumber_DeviceType = 3,
 };
 
+/**
+ * / Команда на изменение статуса онлайна текущего пользователя
+ **/
 GPB_FINAL @interface WeakUpdateCommand_ChangeMyOnline : GPBMessage
 
+/** / Флаг, определяющий состояние онлайна */
 @property(nonatomic, readwrite) BOOL online;
 
-/** / offline after timeout */
+/**
+ * / Время в миллисекундах, через которое этот статус утратит своё действие.
+ * / Действует только, если online == true
+ **/
 @property(nonatomic, readwrite) int64_t timeout;
 
+/** / Тип устройства пользователя */
 @property(nonatomic, readwrite) enum DeviceType deviceType;
 
 @end
@@ -782,12 +830,17 @@ typedef GPB_ENUM(WeakUpdateCommand_SubscribeToOnlines_FieldNumber) {
   WeakUpdateCommand_SubscribeToOnlines_FieldNumber_SendUsersId = 2,
 };
 
+/**
+ * / Команда подписки на статусы онлайнов в чатах
+ **/
 GPB_FINAL @interface WeakUpdateCommand_SubscribeToOnlines : GPBMessage
 
+/** / Список пиров, статусы в которых необходимо доводить до клиента в рамках текущего weak-стрима */
 @property(nonatomic, readwrite, strong, null_resettable) PeersList *peers;
 /** Test to see if @c peers has been set. */
 @property(nonatomic, readwrite) BOOL hasPeers;
 
+/** / Досылать ли список идентификаторов учетных записей пользователей в статусах групповых чатов */
 @property(nonatomic, readwrite) BOOL sendUsersId;
 
 @end
@@ -800,14 +853,20 @@ typedef GPB_ENUM(WeakUpdateCommand_ChangeMyTyping_FieldNumber) {
   WeakUpdateCommand_ChangeMyTyping_FieldNumber_Start = 3,
 };
 
+/**
+ * / Команда на изменение статуса тайпинга текущего пользователя
+ **/
 GPB_FINAL @interface WeakUpdateCommand_ChangeMyTyping : GPBMessage
 
+/** / Пир чата, в котором происходит смена статуса тайпинга */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Тип тайпинга */
 @property(nonatomic, readwrite) enum TypingType type;
 
+/** / Флаг начала тайпинга */
 @property(nonatomic, readwrite) BOOL start;
 
 @end
@@ -867,6 +926,9 @@ typedef GPB_ENUM(WeakUpdate_Updatebox_OneOfCase) {
   WeakUpdate_Updatebox_OneOfCase_UpdateThreadInfos = 26,
 };
 
+/**
+ * / Структура weak-уведомления
+ **/
 GPB_FINAL @interface WeakUpdate : GPBMessage
 
 @property(nonatomic, readonly) WeakUpdate_Updatebox_OneOfCase updateboxOneOfCase;
@@ -918,6 +980,9 @@ typedef GPB_ENUM(WeakUpdate_UpdateForceReloadState_FieldNumber) {
   WeakUpdate_UpdateForceReloadState_FieldNumber_FieldsArray = 1,
 };
 
+/**
+ * / Уведомление о необходимости сброса частей состояния клиентского приложеиня
+ **/
 GPB_FINAL @interface WeakUpdate_UpdateForceReloadState : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<WeakUpdate_UpdateForceReloadState_ForceReloadField*> *fieldsArray;
@@ -960,6 +1025,9 @@ void WeakUpdate_UpdateForceReloadState_ForceReloadField_ClearFieldOneOfCase(Weak
 
 #pragma mark - RequestGetState
 
+/**
+ * / Запрос на получение текущего состояния потока seq-апдейтов пользователя
+ **/
 GPB_FINAL @interface RequestGetState : GPBMessage
 
 @end
@@ -970,8 +1038,12 @@ typedef GPB_ENUM(ResponseGetState_FieldNumber) {
   ResponseGetState_FieldNumber_Seq = 1,
 };
 
+/**
+ * / Ответ на запрос на получение текущего состояния потока seq-апдейтов пользователя
+ **/
 GPB_FINAL @interface ResponseGetState : GPBMessage
 
+/** / Текущий последний сек-номер апдейта в потоке пользователя на момент запроса */
 @property(nonatomic, readwrite) uint64_t seq;
 
 @end

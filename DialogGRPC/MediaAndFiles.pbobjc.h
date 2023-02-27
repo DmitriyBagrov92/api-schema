@@ -40,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Enum Colors
 
+/** / Набор вариантов цветов */
 typedef GPB_ENUM(Colors) {
   /**
    * Value used if any message's field encounters a value that is not defined
@@ -48,8 +49,14 @@ typedef GPB_ENUM(Colors) {
    **/
   Colors_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   Colors_ColorsUnknown = 0,
+
+  /** Красный */
   Colors_ColorsRed = 1,
+
+  /** Желтый */
   Colors_ColorsYellow = 2,
+
+  /** Зелёный */
   Colors_ColorsGreen = 3,
 };
 
@@ -63,6 +70,7 @@ BOOL Colors_IsValidValue(int32_t value);
 
 #pragma mark - Enum FileUrlErrorTag
 
+/** / Набор ошибок при операциях с файловым URL */
 typedef GPB_ENUM(FileUrlErrorTag) {
   /**
    * Value used if any message's field encounters a value that is not defined
@@ -71,7 +79,11 @@ typedef GPB_ENUM(FileUrlErrorTag) {
    **/
   FileUrlErrorTag_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   FileUrlErrorTag_FileURLErrorTagUnknown = 0,
+
+  /** / Ошибка хранилища */
   FileUrlErrorTag_FileURLErrorTagStorageError = 1,
+
+  /** / Ошибка доступа в хранилище */
   FileUrlErrorTag_FileURLErrorTagStorageForbiddenError = 2,
 };
 
@@ -106,14 +118,14 @@ typedef GPB_ENUM(FileLocation_FieldNumber) {
 };
 
 /**
- * Location of file on server
+ * / Координаты файла
  **/
 GPB_FINAL @interface FileLocation : GPBMessage
 
-/** / Unique Id of file */
+/** / Идентификатор файла */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *fileId;
 
-/** / Access hash of file */
+/** / Ключ доступа к файлу */
 @property(nonatomic, readwrite) int64_t accessHash;
 
 @end
@@ -128,22 +140,22 @@ typedef GPB_ENUM(ImageLocation_FieldNumber) {
 };
 
 /**
- * Image location
+ * / Координаты изображения
  **/
 GPB_FINAL @interface ImageLocation : GPBMessage
 
-/** / Location of file */
+/** / Координаты файла с изображением */
 @property(nonatomic, readwrite, strong, null_resettable) FileLocation *fileLocation;
 /** Test to see if @c fileLocation has been set. */
 @property(nonatomic, readwrite) BOOL hasFileLocation;
 
-/** / Width of avatar image */
+/** / Ширина изображения в пикселях */
 @property(nonatomic, readwrite) int32_t width;
 
-/** / Height of avatar image */
+/** / Высота изображения в пикселях */
 @property(nonatomic, readwrite) int32_t height;
 
-/** / Size of file */
+/** / Размер файла с изображением в байтах */
 @property(nonatomic, readwrite) int32_t fileSize;
 
 @end
@@ -158,22 +170,22 @@ typedef GPB_ENUM(AudioLocation_FieldNumber) {
 };
 
 /**
- * Audio location
+ * / Координаты аудио-файла
  **/
 GPB_FINAL @interface AudioLocation : GPBMessage
 
-/** / File location */
+/** / Координаты файла с аудио */
 @property(nonatomic, readwrite, strong, null_resettable) FileLocation *fileLocation;
 /** Test to see if @c fileLocation has been set. */
 @property(nonatomic, readwrite) BOOL hasFileLocation;
 
-/** / audio duration in seconds */
+/** / Длительность аудио-файла в секундах */
 @property(nonatomic, readwrite) int32_t durationSeconds;
 
-/** / mime type */
+/** / MIME-тип аудио-файла */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *mimeType;
 
-/** / file size */
+/** / Размер аудио-файла в байтах */
 @property(nonatomic, readwrite) int32_t fileSizeBytes;
 
 @end
@@ -188,22 +200,22 @@ typedef GPB_ENUM(AvatarImage_FieldNumber) {
 };
 
 /**
- * Avatar Image
+ * / Структура изображения-аватара
  **/
 GPB_FINAL @interface AvatarImage : GPBMessage
 
-/** / Location of file */
+/** / Координаты файла с аватаром */
 @property(nonatomic, readwrite, strong, null_resettable) FileLocation *fileLocation;
 /** Test to see if @c fileLocation has been set. */
 @property(nonatomic, readwrite) BOOL hasFileLocation;
 
-/** / Width of avatar image */
+/** / Ширина изображения в пикселях */
 @property(nonatomic, readwrite) int32_t width;
 
-/** / Height of avatar image */
+/** / Высота изображения в пикселях */
 @property(nonatomic, readwrite) int32_t height;
 
-/** / Size of file */
+/** / Размер изображения в байтах */
 @property(nonatomic, readwrite) int32_t fileSizeBytes;
 
 @end
@@ -217,21 +229,21 @@ typedef GPB_ENUM(Avatar_FieldNumber) {
 };
 
 /**
- * Avatar of User or Group
+ * / Структура автара
  **/
 GPB_FINAL @interface Avatar : GPBMessage
 
-/** / Optional small image of avatar box in 100x100 */
+/** / Изображение-аватар в размере 100x100 */
 @property(nonatomic, readwrite, strong, null_resettable) AvatarImage *smallImage;
 /** Test to see if @c smallImage has been set. */
 @property(nonatomic, readwrite) BOOL hasSmallImage;
 
-/** / Optional large image of avatar box in 200x200 */
+/** / Изображение-аватар в размере 200x200 */
 @property(nonatomic, readwrite, strong, null_resettable) AvatarImage *largeImage;
 /** Test to see if @c largeImage has been set. */
 @property(nonatomic, readwrite) BOOL hasLargeImage;
 
-/** / Optional full screen image of avatar */
+/** / Оригинальное изображение-аватар */
 @property(nonatomic, readwrite, strong, null_resettable) AvatarImage *fullImage;
 /** Test to see if @c fullImage has been set. */
 @property(nonatomic, readwrite) BOOL hasFullImage;
@@ -247,17 +259,17 @@ typedef GPB_ENUM(FastThumb_FieldNumber) {
 };
 
 /**
- * Fast thumb of media messages. Less than 90x90 and compressed by JPEG with low quality
+ * / Структура для быстрого предпросмотра изображений, должна содержать изображние размером не более 90x90 пикселей и быть сжатой в JPEG с минимальным качеством
  **/
 GPB_FINAL @interface FastThumb : GPBMessage
 
-/** / Width of thumb */
+/** / Ширина изображения-предпросмотра в пикселях */
 @property(nonatomic, readwrite) int32_t w;
 
-/** / Height of thump */
+/** / Высота изображения-предпросмотра в пикселях */
 @property(nonatomic, readwrite) int32_t h;
 
-/** / compressed image data */
+/** / Байты, представляющие собой изображение в формате JPEG */
 @property(nonatomic, readwrite, copy, null_resettable) NSData *thumb;
 
 @end
@@ -275,6 +287,9 @@ typedef GPB_ENUM(Color_Body_OneOfCase) {
   Color_Body_OneOfCase_Predefined = 2,
 };
 
+/**
+ * / Структура цвета
+ **/
 GPB_FINAL @interface Color : GPBMessage
 
 @property(nonatomic, readonly) Color_Body_OneOfCase bodyOneOfCase;
@@ -297,11 +312,11 @@ typedef GPB_ENUM(RgbColor_FieldNumber) {
 };
 
 /**
- * RGB Color
+ * / Структура цвета в формате RGB
  **/
 GPB_FINAL @interface RgbColor : GPBMessage
 
-/** / RGB color value */
+/** / Представление цвета в 8-битном формате RGBa (по 8 бит на цвет + альфа канал) */
 @property(nonatomic, readwrite) int32_t rgb;
 
 @end
@@ -313,11 +328,11 @@ typedef GPB_ENUM(PredefinedColor_FieldNumber) {
 };
 
 /**
- * Predefined color
+ * / Структура предпоределенного цвета
  **/
 GPB_FINAL @interface PredefinedColor : GPBMessage
 
-/** / Predefined color value */
+/** / Цвет */
 @property(nonatomic, readwrite) Colors color;
 
 @end
@@ -342,14 +357,14 @@ typedef GPB_ENUM(HTTPHeader_FieldNumber) {
 };
 
 /**
- * HTTP Header record
+ * / HTTP-заголовок
  **/
 GPB_FINAL @interface HTTPHeader : GPBMessage
 
-/** / HTTP Header name */
+/** / Наименование заголовка */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *key;
 
-/** / HTTP Header value */
+/** / Значение заголовка */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *value;
 
 @end
@@ -366,29 +381,30 @@ typedef GPB_ENUM(FileUrlDescription_FieldNumber) {
 };
 
 /**
- * File url description
+ * / Структура URL файла
  **/
 GPB_FINAL @interface FileUrlDescription : GPBMessage
 
-/** / File id of url */
+/** / Идентификатор файла */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *fileId;
 
-/** / Url for downloading */
+/** / URL по котором файл доступен для скачивания */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *URL;
 
-/** / Timeout of url */
+/** / Время жизни URL в секундах с момента получения этой структуры */
 @property(nonatomic, readwrite) int32_t timeout;
 
-/** / Unsigned URL (used to honor web caches) */
+/** / Неподписанный URL файла */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *unsignedURL;
 /** Test to see if @c unsignedURL has been set. */
 @property(nonatomic, readwrite) BOOL hasUnsignedURL;
 
-/** / Headers that is required to download files with unsigned url */
+/** / HTTP-заголовки, которые необходимо предоставить для скачивания файла по неподписанному URL */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<HTTPHeader*> *unsignedURLHeadersArray;
 /** The number of items in @c unsignedURLHeadersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger unsignedURLHeadersArray_Count;
 
+/** / MD5-хэш содержимого файла */
 @property(nonatomic, readwrite, copy, null_resettable) NSData *md5Hash;
 
 @end
@@ -403,20 +419,20 @@ typedef GPB_ENUM(FileUrlError_FieldNumber) {
 };
 
 /**
- * Error, that describes failure of specific file
+ * / Ошибка операции с файлом по URL
  **/
 GPB_FINAL @interface FileUrlError : GPBMessage
 
-/** / the id of file */
+/** / Идентификатор файла */
 @property(nonatomic, readwrite) int64_t fileId;
 
-/** / error to handle on client */
+/** / Предпопределенная ошибка */
 @property(nonatomic, readwrite) FileUrlErrorTag tag;
 
-/** / text fallback */
+/** / Расширенное описание ошибки */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *reason;
 
-/** / client should retry or not */
+/** / Флаг возможности повторение запроса приведшего к данной ошибке */
 @property(nonatomic, readwrite) BOOL retryable;
 
 @end
@@ -440,10 +456,11 @@ typedef GPB_ENUM(RequestGetFileUrl_FieldNumber) {
 };
 
 /**
- * Requesting file URL for downloading
+ * / Запрос на получение URL файла
  **/
 GPB_FINAL @interface RequestGetFileUrl : GPBMessage
 
+/** / Координаты файла */
 @property(nonatomic, readwrite, strong, null_resettable) FileLocation *file;
 /** Test to see if @c file has been set. */
 @property(nonatomic, readwrite) BOOL hasFile;
@@ -460,20 +477,28 @@ typedef GPB_ENUM(ResponseGetFileUrl_FieldNumber) {
   ResponseGetFileUrl_FieldNumber_Md5Hash = 5,
 };
 
+/**
+ * / Ответ на запрос на получение URL файла
+ **/
 GPB_FINAL @interface ResponseGetFileUrl : GPBMessage
 
+/** / URL файла */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *URL;
 
+/** / Время жизни URL в секундах с момента получения URL */
 @property(nonatomic, readwrite) int32_t timeoutSeconds;
 
+/** / Неподписанный URL файла */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *unsignedURL;
 /** Test to see if @c unsignedURL has been set. */
 @property(nonatomic, readwrite) BOOL hasUnsignedURL;
 
+/** / HTTP-заголовки, которые необходимо предоставить для скачивания файла по неподписанному URL */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<HTTPHeader*> *unsignedURLHeadersArray;
 /** The number of items in @c unsignedURLHeadersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger unsignedURLHeadersArray_Count;
 
+/** / MD5-хэш файла */
 @property(nonatomic, readwrite, copy, null_resettable) NSData *md5Hash;
 
 @end
@@ -485,10 +510,11 @@ typedef GPB_ENUM(RequestGetFileUrls_FieldNumber) {
 };
 
 /**
- * Requesting multiple fle URL for downloading
+ * / Запрос на получение URL набора файлов
  **/
 GPB_FINAL @interface RequestGetFileUrls : GPBMessage
 
+/** / Список координат файлов */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FileLocation*> *filesArray;
 /** The number of items in @c filesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger filesArray_Count;
@@ -502,12 +528,17 @@ typedef GPB_ENUM(ResponseGetFileUrls_FieldNumber) {
   ResponseGetFileUrls_FieldNumber_ErrorsArray = 2,
 };
 
+/**
+ * / Ответ на запрос на получение URL набора файлов
+ **/
 GPB_FINAL @interface ResponseGetFileUrls : GPBMessage
 
+/** / Список структур с URL файлов */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FileUrlDescription*> *fileUrlsArray;
 /** The number of items in @c fileUrlsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger fileUrlsArray_Count;
 
+/** / Список ошибок получения URL */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FileUrlError*> *errorsArray;
 /** The number of items in @c errorsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger errorsArray_Count;
@@ -521,7 +552,7 @@ typedef GPB_ENUM(RequestGetFileUrlBuilder_FieldNumber) {
 };
 
 /**
- * Get File URL Builder that allows to build file urls from client side
+ * / deprecated
  **/
 GPB_FINAL @interface RequestGetFileUrlBuilder : GPBMessage
 
@@ -541,6 +572,9 @@ typedef GPB_ENUM(ResponseGetFileUrlBuilder_FieldNumber) {
   ResponseGetFileUrlBuilder_FieldNumber_Seed = 5,
 };
 
+/**
+ * / deprecated
+ **/
 GPB_FINAL @interface ResponseGetFileUrlBuilder : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *baseURL;
@@ -562,10 +596,11 @@ typedef GPB_ENUM(RequestGetFileUploadUrl_FieldNumber) {
 };
 
 /**
- * Requesting pload url
+ * / Запрос на получение URL для загрузки файла
  **/
 GPB_FINAL @interface RequestGetFileUploadUrl : GPBMessage
 
+/** / Ожидаемый размер файла в байтах */
 @property(nonatomic, readwrite) int32_t expectedSize;
 
 @end
@@ -576,8 +611,12 @@ typedef GPB_ENUM(ResponseGetFileUploadUrl_FieldNumber) {
   ResponseGetFileUploadUrl_FieldNumber_UploadKey = 2,
 };
 
+/**
+ * / Ответ на запрос на получение URL для загрузки файла
+ **/
 GPB_FINAL @interface ResponseGetFileUploadUrl : GPBMessage
 
+/** / Ключ загрузки */
 @property(nonatomic, readwrite, copy, null_resettable) NSData *uploadKey;
 
 @end
@@ -591,14 +630,17 @@ typedef GPB_ENUM(RequestCommitFileUpload_FieldNumber) {
 };
 
 /**
- * Comminting uploaded file to storage
+ * / Запрос на завершение загрузки файла
  **/
 GPB_FINAL @interface RequestCommitFileUpload : GPBMessage
 
+/** / Ключ загрузки */
 @property(nonatomic, readwrite, copy, null_resettable) NSData *uploadKey;
 
+/** / Имя файла */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *fileName;
 
+/** / MD5-хэш файла */
 @property(nonatomic, readwrite, copy, null_resettable) NSData *md5Hash;
 
 @end
@@ -609,8 +651,12 @@ typedef GPB_ENUM(ResponseCommitFileUpload_FieldNumber) {
   ResponseCommitFileUpload_FieldNumber_UploadedFileLocation = 1,
 };
 
+/**
+ * / Ответ на запрос на завершение загрузки файла
+ **/
 GPB_FINAL @interface ResponseCommitFileUpload : GPBMessage
 
+/** / Координаты загруженного файла */
 @property(nonatomic, readwrite, strong, null_resettable) FileLocation *uploadedFileLocation;
 /** Test to see if @c uploadedFileLocation has been set. */
 @property(nonatomic, readwrite) BOOL hasUploadedFileLocation;
@@ -626,14 +672,17 @@ typedef GPB_ENUM(RequestGetFileUploadPartUrl_FieldNumber) {
 };
 
 /**
- * Upload file part
+ * / Запрос на загрузку части файла
  **/
 GPB_FINAL @interface RequestGetFileUploadPartUrl : GPBMessage
 
+/** / Порядковый номер части файла */
 @property(nonatomic, readwrite) int32_t partNumber;
 
+/** / Размер части файла в байтах */
 @property(nonatomic, readwrite) int32_t partSize;
 
+/** / Ключ загрузки */
 @property(nonatomic, readwrite, copy, null_resettable) NSData *uploadKey;
 
 @end
@@ -644,8 +693,12 @@ typedef GPB_ENUM(ResponseGetFileUploadPartUrl_FieldNumber) {
   ResponseGetFileUploadPartUrl_FieldNumber_URL = 1,
 };
 
+/**
+ * / Ответ на запрос на загрузку части файла
+ **/
 GPB_FINAL @interface ResponseGetFileUploadPartUrl : GPBMessage
 
+/** / URL для загрузки */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *URL;
 
 @end

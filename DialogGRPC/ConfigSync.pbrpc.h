@@ -43,22 +43,37 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark GetSettings(RequestGetSettings) returns (ResponseGetSettings)
 
+/**
+ * / Метод получения настроек клиентских приложений
+ */
 - (GRPCUnaryProtoCall *)getSettingsWithMessage:(RequestGetSettings *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark ChangeSettings(RequestChangeSettings) returns (Empty)
 
+/**
+ * / Метод изменения настроек клиентских приложений
+ */
 - (GRPCUnaryProtoCall *)changeSettingsWithMessage:(RequestChangeSettings *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetParameters(RequestGetParameters) returns (ResponseGetParameters)
 
+/**
+ * / Метод получения списка пользовательских параметров
+ */
 - (GRPCUnaryProtoCall *)getParametersWithMessage:(RequestGetParameters *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark EditParameter(RequestEditParameter) returns (Empty)
 
+/**
+ * / Метод изменения пользовательских параметров
+ */
 - (GRPCUnaryProtoCall *)editParameterWithMessage:(RequestEditParameter *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark FeatureFlags(RequestFeatureFlags) returns (ResponseFeatureFlags)
 
+/**
+ * / Метод получения флагов конфигурации сервера
+ */
 - (GRPCUnaryProtoCall *)featureFlagsWithMessage:(RequestFeatureFlags *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 @end
@@ -71,36 +86,86 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark GetSettings(RequestGetSettings) returns (ResponseGetSettings)
 
+/**
+ * / Метод получения настроек клиентских приложений
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)getSettingsWithRequest:(RequestGetSettings *)request handler:(void(^)(ResponseGetSettings *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод получения настроек клиентских приложений
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToGetSettingsWithRequest:(RequestGetSettings *)request handler:(void(^)(ResponseGetSettings *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark ChangeSettings(RequestChangeSettings) returns (Empty)
 
+/**
+ * / Метод изменения настроек клиентских приложений
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)changeSettingsWithRequest:(RequestChangeSettings *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод изменения настроек клиентских приложений
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToChangeSettingsWithRequest:(RequestChangeSettings *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetParameters(RequestGetParameters) returns (ResponseGetParameters)
 
+/**
+ * / Метод получения списка пользовательских параметров
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)getParametersWithRequest:(RequestGetParameters *)request handler:(void(^)(ResponseGetParameters *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод получения списка пользовательских параметров
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToGetParametersWithRequest:(RequestGetParameters *)request handler:(void(^)(ResponseGetParameters *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark EditParameter(RequestEditParameter) returns (Empty)
 
+/**
+ * / Метод изменения пользовательских параметров
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)editParameterWithRequest:(RequestEditParameter *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод изменения пользовательских параметров
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToEditParameterWithRequest:(RequestEditParameter *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark FeatureFlags(RequestFeatureFlags) returns (ResponseFeatureFlags)
 
+/**
+ * / Метод получения флагов конфигурации сервера
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)featureFlagsWithRequest:(RequestFeatureFlags *)request handler:(void(^)(ResponseFeatureFlags *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод получения флагов конфигурации сервера
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToFeatureFlagsWithRequest:(RequestFeatureFlags *)request handler:(void(^)(ResponseFeatureFlags *_Nullable response, NSError *_Nullable error))handler;
 
 

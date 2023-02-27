@@ -66,16 +66,29 @@
 
 #pragma mark LoadMembers(RequestLoadMembers) returns (ResponseLoadMembers)
 
+/**
+ * / Запрос на загрузку списка членов группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)loadMembersWithRequest:(RequestLoadMembers *)request handler:(void(^)(ResponseLoadMembers *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToLoadMembersWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на загрузку списка членов группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToLoadMembersWithRequest:(RequestLoadMembers *)request handler:(void(^)(ResponseLoadMembers *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"LoadMembers"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseLoadMembers class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на загрузку списка членов группового чата
+ */
 - (GRPCUnaryProtoCall *)loadMembersWithMessage:(RequestLoadMembers *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"LoadMembers"
                    message:message
@@ -86,16 +99,29 @@
 
 #pragma mark CreateGroup(RequestCreateGroup) returns (ResponseCreateGroup)
 
+/**
+ * / Запрос на создание группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)createGroupWithRequest:(RequestCreateGroup *)request handler:(void(^)(ResponseCreateGroup *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCreateGroupWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на создание группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToCreateGroupWithRequest:(RequestCreateGroup *)request handler:(void(^)(ResponseCreateGroup *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CreateGroup"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseCreateGroup class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на создание группового чата
+ */
 - (GRPCUnaryProtoCall *)createGroupWithMessage:(RequestCreateGroup *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"CreateGroup"
                    message:message
@@ -106,16 +132,29 @@
 
 #pragma mark EditGroupTitle(RequestEditGroupTitle) returns (Empty)
 
+/**
+ * / Запрос на изменение названия группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)editGroupTitleWithRequest:(RequestEditGroupTitle *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToEditGroupTitleWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на изменение названия группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToEditGroupTitleWithRequest:(RequestEditGroupTitle *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"EditGroupTitle"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на изменение названия группового чата
+ */
 - (GRPCUnaryProtoCall *)editGroupTitleWithMessage:(RequestEditGroupTitle *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"EditGroupTitle"
                    message:message
@@ -126,16 +165,29 @@
 
 #pragma mark EditGroupAvatar(RequestEditGroupAvatar) returns (Empty)
 
+/**
+ * / Запрос на изменение аватара группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)editGroupAvatarWithRequest:(RequestEditGroupAvatar *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToEditGroupAvatarWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на изменение аватара группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToEditGroupAvatarWithRequest:(RequestEditGroupAvatar *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"EditGroupAvatar"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на изменение аватара группового чата
+ */
 - (GRPCUnaryProtoCall *)editGroupAvatarWithMessage:(RequestEditGroupAvatar *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"EditGroupAvatar"
                    message:message
@@ -146,16 +198,29 @@
 
 #pragma mark RemoveGroupAvatar(RequestRemoveGroupAvatar) returns (Empty)
 
+/**
+ * / Запрос на удаление аватара группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)removeGroupAvatarWithRequest:(RequestRemoveGroupAvatar *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToRemoveGroupAvatarWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на удаление аватара группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToRemoveGroupAvatarWithRequest:(RequestRemoveGroupAvatar *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"RemoveGroupAvatar"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на удаление аватара группового чата
+ */
 - (GRPCUnaryProtoCall *)removeGroupAvatarWithMessage:(RequestRemoveGroupAvatar *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"RemoveGroupAvatar"
                    message:message
@@ -166,16 +231,29 @@
 
 #pragma mark EditGroupAbout(RequestEditGroupAbout) returns (Empty)
 
+/**
+ * / Запрос на изменение описания группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)editGroupAboutWithRequest:(RequestEditGroupAbout *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToEditGroupAboutWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на изменение описания группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToEditGroupAboutWithRequest:(RequestEditGroupAbout *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"EditGroupAbout"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на изменение описания группового чата
+ */
 - (GRPCUnaryProtoCall *)editGroupAboutWithMessage:(RequestEditGroupAbout *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"EditGroupAbout"
                    message:message
@@ -186,16 +264,29 @@
 
 #pragma mark EditGroupBasePermissions(RequestEditGroupBasePermissions) returns (Empty)
 
+/**
+ * / Запрос на изменение базовых прав новых членов группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)editGroupBasePermissionsWithRequest:(RequestEditGroupBasePermissions *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToEditGroupBasePermissionsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на изменение базовых прав новых членов группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToEditGroupBasePermissionsWithRequest:(RequestEditGroupBasePermissions *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"EditGroupBasePermissions"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на изменение базовых прав новых членов группового чата
+ */
 - (GRPCUnaryProtoCall *)editGroupBasePermissionsWithMessage:(RequestEditGroupBasePermissions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"EditGroupBasePermissions"
                    message:message
@@ -206,16 +297,29 @@
 
 #pragma mark InviteUser(RequestInviteUser) returns (Empty)
 
+/**
+ * / Запрос на приглашение пользователей в групповой чат
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)inviteUserWithRequest:(RequestInviteUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToInviteUserWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на приглашение пользователей в групповой чат
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToInviteUserWithRequest:(RequestInviteUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"InviteUser"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на приглашение пользователей в групповой чат
+ */
 - (GRPCUnaryProtoCall *)inviteUserWithMessage:(RequestInviteUser *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"InviteUser"
                    message:message
@@ -226,16 +330,29 @@
 
 #pragma mark LeaveGroup(RequestLeaveGroup) returns (Empty)
 
+/**
+ * / Запрос на выход из группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)leaveGroupWithRequest:(RequestLeaveGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToLeaveGroupWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на выход из группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToLeaveGroupWithRequest:(RequestLeaveGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"LeaveGroup"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на выход из группового чата
+ */
 - (GRPCUnaryProtoCall *)leaveGroupWithMessage:(RequestLeaveGroup *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"LeaveGroup"
                    message:message
@@ -246,16 +363,29 @@
 
 #pragma mark CloseGroup(RequestCloseGroup) returns (Empty)
 
+/**
+ * / Запрос на закрытие группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)closeGroupWithRequest:(RequestCloseGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToCloseGroupWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на закрытие группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToCloseGroupWithRequest:(RequestCloseGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"CloseGroup"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на закрытие группового чата
+ */
 - (GRPCUnaryProtoCall *)closeGroupWithMessage:(RequestCloseGroup *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"CloseGroup"
                    message:message
@@ -266,16 +396,29 @@
 
 #pragma mark OpenGroup(RequestOpenGroup) returns (Empty)
 
+/**
+ * / Запрос на открытие ранее закрытого группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)openGroupWithRequest:(RequestOpenGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToOpenGroupWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на открытие ранее закрытого группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToOpenGroupWithRequest:(RequestOpenGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"OpenGroup"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на открытие ранее закрытого группового чата
+ */
 - (GRPCUnaryProtoCall *)openGroupWithMessage:(RequestOpenGroup *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"OpenGroup"
                    message:message
@@ -286,16 +429,29 @@
 
 #pragma mark KickUser(RequestKickUser) returns (Empty)
 
+/**
+ * / Запрос на исключение члена группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)kickUserWithRequest:(RequestKickUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToKickUserWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на исключение члена группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToKickUserWithRequest:(RequestKickUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"KickUser"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на исключение члена группового чата
+ */
 - (GRPCUnaryProtoCall *)kickUserWithMessage:(RequestKickUser *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"KickUser"
                    message:message
@@ -306,16 +462,29 @@
 
 #pragma mark MakeUserAdmin(RequestMakeUserAdmin) returns (Empty)
 
+/**
+ * / Запрос на передачу члену группового чата прав администратора
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)makeUserAdminWithRequest:(RequestMakeUserAdmin *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToMakeUserAdminWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на передачу члену группового чата прав администратора
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToMakeUserAdminWithRequest:(RequestMakeUserAdmin *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"MakeUserAdmin"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на передачу члену группового чата прав администратора
+ */
 - (GRPCUnaryProtoCall *)makeUserAdminWithMessage:(RequestMakeUserAdmin *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"MakeUserAdmin"
                    message:message
@@ -326,16 +495,29 @@
 
 #pragma mark GetGroupMemberPermissions(RequestGetGroupMemberPermissions) returns (ResponseGetGroupMemberPermissions)
 
+/**
+ * / Запрос на получение списка соответствий членов группового чата и их прав
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)getGroupMemberPermissionsWithRequest:(RequestGetGroupMemberPermissions *)request handler:(void(^)(ResponseGetGroupMemberPermissions *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetGroupMemberPermissionsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на получение списка соответствий членов группового чата и их прав
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToGetGroupMemberPermissionsWithRequest:(RequestGetGroupMemberPermissions *)request handler:(void(^)(ResponseGetGroupMemberPermissions *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetGroupMemberPermissions"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseGetGroupMemberPermissions class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на получение списка соответствий членов группового чата и их прав
+ */
 - (GRPCUnaryProtoCall *)getGroupMemberPermissionsWithMessage:(RequestGetGroupMemberPermissions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetGroupMemberPermissions"
                    message:message
@@ -346,16 +528,29 @@
 
 #pragma mark EditMemberPermissions(RequestEditMemberPermissions) returns (ResponseMember)
 
+/**
+ * / Запрос на изменение прав члена группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)editMemberPermissionsWithRequest:(RequestEditMemberPermissions *)request handler:(void(^)(ResponseMember *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToEditMemberPermissionsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на изменение прав члена группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToEditMemberPermissionsWithRequest:(RequestEditMemberPermissions *)request handler:(void(^)(ResponseMember *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"EditMemberPermissions"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseMember class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на изменение прав члена группового чата
+ */
 - (GRPCUnaryProtoCall *)editMemberPermissionsWithMessage:(RequestEditMemberPermissions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"EditMemberPermissions"
                    message:message
@@ -366,16 +561,29 @@
 
 #pragma mark TransferOwnership(RequestTransferOwnership) returns (Empty)
 
+/**
+ * / Запрос на перенос владения групповым чатом
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)transferOwnershipWithRequest:(RequestTransferOwnership *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToTransferOwnershipWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на перенос владения групповым чатом
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToTransferOwnershipWithRequest:(RequestTransferOwnership *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"TransferOwnership"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на перенос владения групповым чатом
+ */
 - (GRPCUnaryProtoCall *)transferOwnershipWithMessage:(RequestTransferOwnership *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"TransferOwnership"
                    message:message
@@ -386,16 +594,29 @@
 
 #pragma mark GetGroupInviteUrl(RequestGetGroupInviteUrl) returns (ResponseInviteUrl)
 
+/**
+ * / Запрос на получение ссылки-приглашения в групповой чат
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)getGroupInviteUrlWithRequest:(RequestGetGroupInviteUrl *)request handler:(void(^)(ResponseInviteUrl *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetGroupInviteUrlWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на получение ссылки-приглашения в групповой чат
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToGetGroupInviteUrlWithRequest:(RequestGetGroupInviteUrl *)request handler:(void(^)(ResponseInviteUrl *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetGroupInviteUrl"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseInviteUrl class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на получение ссылки-приглашения в групповой чат
+ */
 - (GRPCUnaryProtoCall *)getGroupInviteUrlWithMessage:(RequestGetGroupInviteUrl *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetGroupInviteUrl"
                    message:message
@@ -406,16 +627,29 @@
 
 #pragma mark GetGroupInviteUrlBase(RequestGetGroupInviteUrlBase) returns (ResponseGetGroupInviteUrlBase)
 
+/**
+ * / Запрос на получение базового URL ссылок-приглашений в групповые чаты
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)getGroupInviteUrlBaseWithRequest:(RequestGetGroupInviteUrlBase *)request handler:(void(^)(ResponseGetGroupInviteUrlBase *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetGroupInviteUrlBaseWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на получение базового URL ссылок-приглашений в групповые чаты
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToGetGroupInviteUrlBaseWithRequest:(RequestGetGroupInviteUrlBase *)request handler:(void(^)(ResponseGetGroupInviteUrlBase *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetGroupInviteUrlBase"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseGetGroupInviteUrlBase class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на получение базового URL ссылок-приглашений в групповые чаты
+ */
 - (GRPCUnaryProtoCall *)getGroupInviteUrlBaseWithMessage:(RequestGetGroupInviteUrlBase *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetGroupInviteUrlBase"
                    message:message
@@ -426,16 +660,29 @@
 
 #pragma mark RevokeInviteUrl(RequestRevokeInviteUrl) returns (ResponseInviteUrl)
 
+/**
+ * / Запрос на отзыв ссылки-приглашения в групповой чат
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)revokeInviteUrlWithRequest:(RequestRevokeInviteUrl *)request handler:(void(^)(ResponseInviteUrl *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToRevokeInviteUrlWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на отзыв ссылки-приглашения в групповой чат
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToRevokeInviteUrlWithRequest:(RequestRevokeInviteUrl *)request handler:(void(^)(ResponseInviteUrl *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"RevokeInviteUrl"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseInviteUrl class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на отзыв ссылки-приглашения в групповой чат
+ */
 - (GRPCUnaryProtoCall *)revokeInviteUrlWithMessage:(RequestRevokeInviteUrl *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"RevokeInviteUrl"
                    message:message
@@ -446,16 +693,29 @@
 
 #pragma mark JoinGroup(RequestJoinGroup) returns (ResponseJoinGroup)
 
+/**
+ * / Запрос на получение присоединение к групповому чату по токену
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)joinGroupWithRequest:(RequestJoinGroup *)request handler:(void(^)(ResponseJoinGroup *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToJoinGroupWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на получение присоединение к групповому чату по токену
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToJoinGroupWithRequest:(RequestJoinGroup *)request handler:(void(^)(ResponseJoinGroup *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"JoinGroup"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseJoinGroup class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на получение присоединение к групповому чату по токену
+ */
 - (GRPCUnaryProtoCall *)joinGroupWithMessage:(RequestJoinGroup *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"JoinGroup"
                    message:message
@@ -466,16 +726,29 @@
 
 #pragma mark JoinGroupByPeer(RequestJoinGroupByPeer) returns (Empty)
 
+/**
+ * / Запрос на получение присоединение к групповому чату по идентификатору
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)joinGroupByPeerWithRequest:(RequestJoinGroupByPeer *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToJoinGroupByPeerWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на получение присоединение к групповому чату по идентификатору
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToJoinGroupByPeerWithRequest:(RequestJoinGroupByPeer *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"JoinGroupByPeer"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на получение присоединение к групповому чату по идентификатору
+ */
 - (GRPCUnaryProtoCall *)joinGroupByPeerWithMessage:(RequestJoinGroupByPeer *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"JoinGroupByPeer"
                    message:message
@@ -486,16 +759,29 @@
 
 #pragma mark DeleteGroup(RequestDeleteGroup) returns (Empty)
 
+/**
+ * / Запрос на удаление группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)deleteGroupWithRequest:(RequestDeleteGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToDeleteGroupWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на удаление группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToDeleteGroupWithRequest:(RequestDeleteGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"DeleteGroup"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на удаление группового чата
+ */
 - (GRPCUnaryProtoCall *)deleteGroupWithMessage:(RequestDeleteGroup *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"DeleteGroup"
                    message:message
@@ -506,16 +792,29 @@
 
 #pragma mark GetGroupPartialInfo(RequestGetGroupPartialInfo) returns (GroupPartialInfo)
 
+/**
+ * / Запрос на получение частичных данных о групповом чате
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)getGroupPartialInfoWithRequest:(RequestGetGroupPartialInfo *)request handler:(void(^)(GroupPartialInfo *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetGroupPartialInfoWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на получение частичных данных о групповом чате
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToGetGroupPartialInfoWithRequest:(RequestGetGroupPartialInfo *)request handler:(void(^)(GroupPartialInfo *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetGroupPartialInfo"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GroupPartialInfo class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на получение частичных данных о групповом чате
+ */
 - (GRPCUnaryProtoCall *)getGroupPartialInfoWithMessage:(RequestGetGroupPartialInfo *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetGroupPartialInfo"
                    message:message
@@ -526,16 +825,29 @@
 
 #pragma mark ChangeGroupPublicity(RequestChangeGroupPublicity) returns (Empty)
 
+/**
+ * / Запрос на изменение публичности группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)changeGroupPublicityWithRequest:(RequestChangeGroupPublicity *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToChangeGroupPublicityWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Запрос на изменение публичности группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToChangeGroupPublicityWithRequest:(RequestChangeGroupPublicity *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"ChangeGroupPublicity"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Запрос на изменение публичности группового чата
+ */
 - (GRPCUnaryProtoCall *)changeGroupPublicityWithMessage:(RequestChangeGroupPublicity *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"ChangeGroupPublicity"
                    message:message

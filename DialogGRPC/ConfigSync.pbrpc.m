@@ -62,16 +62,29 @@
 
 #pragma mark GetSettings(RequestGetSettings) returns (ResponseGetSettings)
 
+/**
+ * / Метод получения настроек клиентских приложений
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)getSettingsWithRequest:(RequestGetSettings *)request handler:(void(^)(ResponseGetSettings *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetSettingsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Метод получения настроек клиентских приложений
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToGetSettingsWithRequest:(RequestGetSettings *)request handler:(void(^)(ResponseGetSettings *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetSettings"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseGetSettings class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Метод получения настроек клиентских приложений
+ */
 - (GRPCUnaryProtoCall *)getSettingsWithMessage:(RequestGetSettings *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetSettings"
                    message:message
@@ -82,16 +95,29 @@
 
 #pragma mark ChangeSettings(RequestChangeSettings) returns (Empty)
 
+/**
+ * / Метод изменения настроек клиентских приложений
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)changeSettingsWithRequest:(RequestChangeSettings *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToChangeSettingsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Метод изменения настроек клиентских приложений
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToChangeSettingsWithRequest:(RequestChangeSettings *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"ChangeSettings"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Метод изменения настроек клиентских приложений
+ */
 - (GRPCUnaryProtoCall *)changeSettingsWithMessage:(RequestChangeSettings *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"ChangeSettings"
                    message:message
@@ -102,16 +128,29 @@
 
 #pragma mark GetParameters(RequestGetParameters) returns (ResponseGetParameters)
 
+/**
+ * / Метод получения списка пользовательских параметров
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)getParametersWithRequest:(RequestGetParameters *)request handler:(void(^)(ResponseGetParameters *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetParametersWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Метод получения списка пользовательских параметров
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToGetParametersWithRequest:(RequestGetParameters *)request handler:(void(^)(ResponseGetParameters *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetParameters"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseGetParameters class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Метод получения списка пользовательских параметров
+ */
 - (GRPCUnaryProtoCall *)getParametersWithMessage:(RequestGetParameters *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetParameters"
                    message:message
@@ -122,16 +161,29 @@
 
 #pragma mark EditParameter(RequestEditParameter) returns (Empty)
 
+/**
+ * / Метод изменения пользовательских параметров
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)editParameterWithRequest:(RequestEditParameter *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToEditParameterWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Метод изменения пользовательских параметров
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToEditParameterWithRequest:(RequestEditParameter *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"EditParameter"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Метод изменения пользовательских параметров
+ */
 - (GRPCUnaryProtoCall *)editParameterWithMessage:(RequestEditParameter *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"EditParameter"
                    message:message
@@ -142,16 +194,29 @@
 
 #pragma mark FeatureFlags(RequestFeatureFlags) returns (ResponseFeatureFlags)
 
+/**
+ * / Метод получения флагов конфигурации сервера
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)featureFlagsWithRequest:(RequestFeatureFlags *)request handler:(void(^)(ResponseFeatureFlags *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToFeatureFlagsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Метод получения флагов конфигурации сервера
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToFeatureFlagsWithRequest:(RequestFeatureFlags *)request handler:(void(^)(ResponseFeatureFlags *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"FeatureFlags"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseFeatureFlags class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Метод получения флагов конфигурации сервера
+ */
 - (GRPCUnaryProtoCall *)featureFlagsWithMessage:(RequestFeatureFlags *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"FeatureFlags"
                    message:message

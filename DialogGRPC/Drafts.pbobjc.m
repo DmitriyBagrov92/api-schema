@@ -14,9 +14,9 @@
 #endif
 
 #import "Drafts.pbobjc.h"
+#import "Annotations.pbobjc.h"
 #import "Messaging.pbobjc.h"
 #import "Peers.pbobjc.h"
-#import "Annotations.pbobjc.h"
 #import "Definitions.pbobjc.h"
 #import "Scalapb.pbobjc.h"
 // @@protoc_insertion_point(imports)

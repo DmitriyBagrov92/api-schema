@@ -43,6 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Enum PhoneActivationType
 
+/** / Способ активации при регистрации по телефону */
 typedef GPB_ENUM(PhoneActivationType) {
   /**
    * Value used if any message's field encounters a value that is not defined
@@ -51,7 +52,11 @@ typedef GPB_ENUM(PhoneActivationType) {
    **/
   PhoneActivationType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   PhoneActivationType_PhoneActivationTypeUnknown = 0,
+
+  /** / Активация по коду */
   PhoneActivationType_PhoneActivationTypeCode = 1,
+
+  /** / Активация по паролю */
   PhoneActivationType_PhoneActivationTypePassword = 2,
 };
 
@@ -65,6 +70,7 @@ BOOL PhoneActivationType_IsValidValue(int32_t value);
 
 #pragma mark - Enum EmailActivationType
 
+/** / Способ активации при регистрации по email */
 typedef GPB_ENUM(EmailActivationType) {
   /**
    * Value used if any message's field encounters a value that is not defined
@@ -73,8 +79,14 @@ typedef GPB_ENUM(EmailActivationType) {
    **/
   EmailActivationType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   EmailActivationType_EmailActivationTypeUnknown = 0,
+
+  /** / Активация по коду */
   EmailActivationType_EmailActivationTypeCode = 1,
+
+  /** / Активация по OAuth2 */
   EmailActivationType_EmailActivationTypeOauth2 = 2,
+
+  /** / Активация по паролю */
   EmailActivationType_EmailActivationTypePassword = 3,
 };
 
@@ -88,6 +100,7 @@ BOOL EmailActivationType_IsValidValue(int32_t value);
 
 #pragma mark - Enum AuthExtraInfoType
 
+/** / Дополнительные данные о завершенной авторизации */
 typedef GPB_ENUM(AuthExtraInfoType) {
   /**
    * Value used if any message's field encounters a value that is not defined
@@ -96,6 +109,8 @@ typedef GPB_ENUM(AuthExtraInfoType) {
    **/
   AuthExtraInfoType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   AuthExtraInfoType_AuthExtraInfoTypeNone = 0,
+
+  /** / Пароль, использованный при авторизации, должен быть изменён до следующей авторизации */
   AuthExtraInfoType_AuthExtraInfoTypeNeedChangePassword = 1,
 };
 
@@ -109,7 +124,7 @@ BOOL AuthExtraInfoType_IsValidValue(int32_t value);
 
 #pragma mark - Enum AuthHolder
 
-/** / Holder of session */
+/** / Держатель сессии */
 typedef GPB_ENUM(AuthHolder) {
   /**
    * Value used if any message's field encounters a value that is not defined
@@ -118,7 +133,11 @@ typedef GPB_ENUM(AuthHolder) {
    **/
   AuthHolder_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   AuthHolder_AuthHolderUnknown = 0,
+
+  /** Держатель сессии -- текущее устройство пользователя */
   AuthHolder_AuthHolderThisdevice = 1,
+
+  /** / Держатель сессии -- другое устройство пользователя */
   AuthHolder_AuthHolderOtherdevice = 2,
 };
 
@@ -154,18 +173,19 @@ typedef GPB_ENUM(RequestStartPhoneAuth_FieldNumber) {
 };
 
 /**
- * Start Phone Activation
+ * / Запрос на начало телефонной авторизации
  **/
 GPB_FINAL @interface RequestStartPhoneAuth : GPBMessage
 
+/** / Номер телефона использующегося для авторизации */
 @property(nonatomic, readwrite) int64_t phoneNumber;
 
-/** * Your timezone * */
+/** / Часовой пояс пользователя */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *timeZone;
 /** Test to see if @c timeZone has been set. */
 @property(nonatomic, readwrite) BOOL hasTimeZone;
 
-/** * First language from this array will be used for some notifications from server * */
+/** / Список предпочтительных локалей пользователя (в формате ^[a-z]{2}(?:[-_][A-Z]{2})?$) */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *preferredLanguagesArray;
 /** The number of items in @c preferredLanguagesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger preferredLanguagesArray_Count;
@@ -180,14 +200,21 @@ typedef GPB_ENUM(ResponseStartPhoneAuth_FieldNumber) {
   ResponseStartPhoneAuth_FieldNumber_ActivationType = 3,
 };
 
+/**
+ * / Ответ на запрос на начало телефонной авторизации
+ **/
 GPB_FINAL @interface ResponseStartPhoneAuth : GPBMessage
 
-/** * Hash of authorization transaction * */
+/**
+ * / Хэш транзакции -- идентифицирует авторизационную транзакцию начатую вызовом метода RequestStartPhoneAuth
+ * / этот хэш необходимо использовать во всех дальнейших вызовах до момента успешной авторизации
+ **/
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transactionHash;
 
+/** / Соответствует ли переданный телефонный номер какому-либо активному пользователю (зарегистрирован ли он) */
 @property(nonatomic, readwrite) BOOL isRegistered;
 
-/** * Code or password - call ValidateCode if code * */
+/** / Способ активации авторизации предлагаемый сервером клиенту */
 @property(nonatomic, readwrite) PhoneActivationType activationType;
 
 @end
@@ -211,11 +238,11 @@ typedef GPB_ENUM(RequestSendCodeByPhoneCall_FieldNumber) {
 };
 
 /**
- * Dial phone and dictate auth code
+ * / Активация авторизации с помощью телефонного звонка
  **/
 GPB_FINAL @interface RequestSendCodeByPhoneCall : GPBMessage
 
-/** / Hash from ResponseStartPhoneAuth */
+/** / Хэш транзакции, полученный на предыдущем шаге из ответа ResponseStartPhoneAuth */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transactionHash;
 
 @end
@@ -229,18 +256,19 @@ typedef GPB_ENUM(RequestStartEmailAuth_FieldNumber) {
 };
 
 /**
- * Start EMail Activation
+ * / Запрос на начало авторизации по электронной почте
  **/
 GPB_FINAL @interface RequestStartEmailAuth : GPBMessage
 
+/** / Электронная почта использующаяся для авторизации */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *email;
 
-/** * Your timezone * */
+/** / Часовой пояс пользователя */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *timeZone;
 /** Test to see if @c timeZone has been set. */
 @property(nonatomic, readwrite) BOOL hasTimeZone;
 
-/** * First language from this array will be used for some notifications from server * */
+/** / Список предпочтительных локалей пользователя (в формате ^[a-z]{2}(?:[-_][A-Z]{2})?$) */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *preferredLanguagesArray;
 /** The number of items in @c preferredLanguagesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger preferredLanguagesArray_Count;
@@ -255,14 +283,21 @@ typedef GPB_ENUM(ResponseStartEmailAuth_FieldNumber) {
   ResponseStartEmailAuth_FieldNumber_ActivationType = 3,
 };
 
+/**
+ * / Ответ на запрос на начало авторизации по электронной почте
+ **/
 GPB_FINAL @interface ResponseStartEmailAuth : GPBMessage
 
-/** * Hash of authorization transaction * */
+/**
+ * / Хэш транзакции -- идентифицирует авторизационную транзакцию начатую вызовом метода RequestStartEmailAuth
+ * / этот хэш необходимо использовать во всех дальнейших вызовах до момента успешной авторизации
+ **/
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transactionHash;
 
+/** / Соответствует ли переданная электронная почта какому-либо активному пользователю (зарегистрирован ли он) */
 @property(nonatomic, readwrite) BOOL isRegistered;
 
-/** * Code or password - call ValidateCode if code * */
+/** / Способ активации авторизации предлагаемый сервером клиенту */
 @property(nonatomic, readwrite) EmailActivationType activationType;
 
 @end
@@ -287,14 +322,20 @@ typedef GPB_ENUM(RequestStartCertificateAuth_FieldNumber) {
   RequestStartCertificateAuth_FieldNumber_PreferredLanguagesArray = 3,
 };
 
+/**
+ * / Запрос на начало авторизации с помощью сертификата
+ **/
 GPB_FINAL @interface RequestStartCertificateAuth : GPBMessage
 
+/** / Предполагаемое имя пользователя, в случае если соответствие сертификата существующему на сервере пользователю не выявлено */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
+/** / Часовой пояс пользователя */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *timeZone;
 /** Test to see if @c timeZone has been set. */
 @property(nonatomic, readwrite) BOOL hasTimeZone;
 
+/** / Список предпочтительных локалей пользователя (в формате ^[a-z]{2}(?:[-_][A-Z]{2})?$) */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *preferredLanguagesArray;
 /** The number of items in @c preferredLanguagesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger preferredLanguagesArray_Count;
@@ -310,19 +351,19 @@ typedef GPB_ENUM(RequestStartTokenAuth_FieldNumber) {
 };
 
 /**
- * Starting token-based login - to authorize bot
+ * / Запрос на начало авторизаци с помощью бот-токена
  **/
 GPB_FINAL @interface RequestStartTokenAuth : GPBMessage
 
-/** * Token received from BotFather * */
+/** / Токен выданный при регистрации бота */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *token;
 
-/** * Your timezone * */
+/** / Часовой пояс бота */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *timeZone;
 /** Test to see if @c timeZone has been set. */
 @property(nonatomic, readwrite) BOOL hasTimeZone;
 
-/** * First language from this array will be used for some notifications from server * */
+/** / Список предпочтительных локалей бота (в формате ^[a-z]{2}(?:[-_][A-Z]{2})?$) */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *preferredLanguagesArray;
 /** The number of items in @c preferredLanguagesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger preferredLanguagesArray_Count;
@@ -338,17 +379,19 @@ typedef GPB_ENUM(RequestStartUsernameAuth_FieldNumber) {
 };
 
 /**
- * Starting Login Authentication
+ * / Запрос на начало авторизации по паре логин-пароль
  **/
 GPB_FINAL @interface RequestStartUsernameAuth : GPBMessage
 
+/** / Логин пользователя */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *username;
 
+/** / Часовой пояс пользователя */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *timeZone;
 /** Test to see if @c timeZone has been set. */
 @property(nonatomic, readwrite) BOOL hasTimeZone;
 
-/** * First language from this array will be used for some notifications from server * */
+/** / Список предпочтительных локалей пользователя (в формате ^[a-z]{2}(?:[-_][A-Z]{2})?$) */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *preferredLanguagesArray;
 /** The number of items in @c preferredLanguagesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger preferredLanguagesArray_Count;
@@ -362,11 +405,18 @@ typedef GPB_ENUM(ResponseStartUsernameAuth_FieldNumber) {
   ResponseStartUsernameAuth_FieldNumber_IsRegistered = 2,
 };
 
+/**
+ * / Ответ на запрос на начало авторизации по паре логин-пароль
+ **/
 GPB_FINAL @interface ResponseStartUsernameAuth : GPBMessage
 
-/** * Hash of authorization transaction * */
+/**
+ * / Хэш транзакции -- идентифицирует авторизационную транзакцию начатую вызовом метода RequestStartUsernameAuth
+ * / этот хэш необходимо использовать во всех дальнейших вызовах до момента успешной авторизации
+ **/
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transactionHash;
 
+/** / Соответствует ли переданный логин какому-либо активному пользователю (зарегистрирован ли он) */
 @property(nonatomic, readwrite) BOOL isRegistered;
 
 @end
@@ -378,10 +428,11 @@ typedef GPB_ENUM(RequestApplyExternalSessionAuth_FieldNumber) {
 };
 
 /**
- * Apply external session to authorize user
+ * / Запрос на перенос авторизованной сессии из внешней доверенной системы
  **/
 GPB_FINAL @interface RequestApplyExternalSessionAuth : GPBMessage
 
+/** / Идентификатор сессии во внешней доверенной системе */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *sessionId;
 
 @end
@@ -393,11 +444,11 @@ typedef GPB_ENUM(RequestGetIdToken_FieldNumber) {
 };
 
 /**
- * Get Id Token for external system
+ * / Запрос на получение токена сессии для внешней системы
  **/
 GPB_FINAL @interface RequestGetIdToken : GPBMessage
 
-/** * service alias token is intended for * */
+/** / Название (идентификатор) внешней системы */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *service;
 
 @end
@@ -410,13 +461,14 @@ typedef GPB_ENUM(ResponseGetIdToken_FieldNumber) {
 };
 
 /**
- * Get Id Token for external system
+ * / Ответ на запрос на получение токена сессии для внешней системы
  **/
 GPB_FINAL @interface ResponseGetIdToken : GPBMessage
 
+/** / Токен сессии */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *token;
 
-/** * Unix time stamp * */
+/** / Срок действия токена сессии */
 @property(nonatomic, readwrite) int64_t expirationDate;
 
 @end
@@ -429,16 +481,17 @@ typedef GPB_ENUM(RequestStartAuthTransaction_FieldNumber) {
 };
 
 /**
- * Start Authentication/Authorization via external oAuth2/OpenID SSO Provider
+ * / Запрос на начало обобщенной авторизации, без указания предпочтительного способа активации
+ * / используется для вариантов OAuth и других подобных механизмов
  **/
 GPB_FINAL @interface RequestStartAuthTransaction : GPBMessage
 
-/** * Client timezone * */
+/** / Часовой пояс пользователя */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *timeZone;
 /** Test to see if @c timeZone has been set. */
 @property(nonatomic, readwrite) BOOL hasTimeZone;
 
-/** * First language from this array will be used for some notifications from server * */
+/** / Список предпочтительных локалей пользователя (в формате ^[a-z]{2}(?:[-_][A-Z]{2})?$) */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *preferredLanguagesArray;
 /** The number of items in @c preferredLanguagesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger preferredLanguagesArray_Count;
@@ -451,9 +504,15 @@ typedef GPB_ENUM(ResponseStartAuthTransaction_FieldNumber) {
   ResponseStartAuthTransaction_FieldNumber_TransactionHash = 1,
 };
 
+/**
+ * / Ответ на запрос на начало обобщенной авторизаци
+ **/
 GPB_FINAL @interface ResponseStartAuthTransaction : GPBMessage
 
-/** * Hash of authorization transaction * */
+/**
+ * / Хэш транзакции -- идентифицирует авторизационную транзакцию начатую вызовом метода RequestStartAuthTransaction
+ * / этот хэш необходимо использовать во всех дальнейших вызовах до момента успешной авторизации
+ **/
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transactionHash;
 
 @end
@@ -466,14 +525,14 @@ typedef GPB_ENUM(RequestValidateCode_FieldNumber) {
 };
 
 /**
- * Performing user sign in.
+ * / Запрос на валидацию кода внешней активации
  **/
 GPB_FINAL @interface RequestValidateCode : GPBMessage
 
-/** * Hash of the authorization transaction * */
+/** / Полученный ранее хэш транзакции */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transactionHash;
 
-/** / Authorization code */
+/** / Код, передаваемый серверу в качестве подтверждения прохождения внешней активации */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *code;
 
 @end
@@ -485,11 +544,11 @@ typedef GPB_ENUM(RequestResendCode_FieldNumber) {
 };
 
 /**
- * Performs code resend
+ * / Запрос на перепосылку кода внешней активации
  **/
 GPB_FINAL @interface RequestResendCode : GPBMessage
 
-/** * Hash of the authorization transaction * */
+/** / Полученный ранее хэш транзакции */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transactionHash;
 
 @end
@@ -502,13 +561,14 @@ typedef GPB_ENUM(RequestValidatePassword_FieldNumber) {
 };
 
 /**
- * Validation of account password
+ * / Запрос на прохождение активации по паре логин-пароль
  **/
 GPB_FINAL @interface RequestValidatePassword : GPBMessage
 
-/** * Hash of the authorization transaction * */
+/** / Полученный ранее хэш транзакции */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transactionHash;
 
+/** / Пароль */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *password;
 
 @end
@@ -521,12 +581,14 @@ typedef GPB_ENUM(RequestGetOAuth2Params_FieldNumber) {
 };
 
 /**
- * Loading OAuth2 Parameters
+ * / Запрос на загрузку параметров OAuth2-платформы
  **/
 GPB_FINAL @interface RequestGetOAuth2Params : GPBMessage
 
+/** / Полученный ранее хэш транзакции */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transactionHash;
 
+/** / URL для редиректа после успешной авторизации на OAuth2-платформе */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *redirectURL;
 
 @end
@@ -538,10 +600,11 @@ typedef GPB_ENUM(ResponseGetOAuth2Params_FieldNumber) {
 };
 
 /**
- * / Redirect url result
+ * / Ответ на запрос на загрузку параметров OAuth2-платформы
  **/
 GPB_FINAL @interface ResponseGetOAuth2Params : GPBMessage
 
+/** / Сформированный URL для аутентификации на OAuth2-платформе */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *authURL;
 
 @end
@@ -554,12 +617,14 @@ typedef GPB_ENUM(RequestCompleteOAuth2_FieldNumber) {
 };
 
 /**
- * Complete OAuth2 Authentication
+ * / Запрос на финализацию аутентификации на OAuth2-платформе
  **/
 GPB_FINAL @interface RequestCompleteOAuth2 : GPBMessage
 
+/** / Полученный ранее хэш транзакции */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transactionHash;
 
+/** / Код активации, полученный после успешной авторизации на OAuth2-платформе */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *code;
 
 @end
@@ -574,18 +639,20 @@ typedef GPB_ENUM(RequestSignUp_FieldNumber) {
 };
 
 /**
- * Perform user SignUp
+ * / Запрос на регистрацию пользователя
  **/
 GPB_FINAL @interface RequestSignUp : GPBMessage
 
-/** * Hash of the authorization transaction * */
+/** / Полученный ранее хэш транзакции */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *transactionHash;
 
-/** Your name */
+/** / Имя пользователя */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
+/** / Пол пользователя */
 @property(nonatomic, readwrite) enum Sex sex;
 
+/** / Желаемый пароль пользователя */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *password;
 /** Test to see if @c password has been set. */
 @property(nonatomic, readwrite) BOOL hasPassword;
@@ -614,25 +681,26 @@ typedef GPB_ENUM(ResponseAuth_FieldNumber) {
 };
 
 /**
- * Authentication result
+ * / Результат авторизации
  **/
 GPB_FINAL @interface ResponseAuth : GPBMessage
 
-/** / Registered/authorized user */
+/** / Структура авторизованного пользователя */
 @property(nonatomic, readwrite, strong, null_resettable) User *user;
 /** Test to see if @c user has been set. */
 @property(nonatomic, readwrite) BOOL hasUser;
 
-/** / Config for that user */
+/** / Конфигруация для авторизованного пользователя */
 @property(nonatomic, readwrite, strong, null_resettable) Config *config;
 /** Test to see if @c config has been set. */
 @property(nonatomic, readwrite) BOOL hasConfig;
 
-/** / Hash of config to later usage */
+/** / Хэш конфигурации */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *configHash;
 /** Test to see if @c configHash has been set. */
 @property(nonatomic, readwrite) BOOL hasConfigHash;
 
+/** / Дополнительная информация о завершенной авторизации */
 // |extraInfoArray| contains |AuthExtraInfoType|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *extraInfoArray;
 /** The number of items in @c extraInfoArray without causing the array to be created. */
@@ -655,33 +723,37 @@ typedef GPB_ENUM(AuthSession_FieldNumber) {
 };
 
 /**
- * Authentication session
+ * / Авторизованная сессия
  **/
 GPB_FINAL @interface AuthSession : GPBMessage
 
-/** / Unuque ID of session */
+/** / Идентификатор сессии */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
-/** / holder of session. 1 - this device, 2 - other. */
+/** / Держатель сессии */
 @property(nonatomic, readwrite) AuthHolder authHolder;
 
-/** / Application Id that you set during authorization */
+/** / Идентификатор приложения связанного с сессией */
 @property(nonatomic, readwrite) int32_t appId;
 
+/** / Название приложения связанного с сессией */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *appTitle;
 
+/** / Название устройства связанного с сессией */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *deviceTitle;
 
-/** / Time of session creating */
+/** / Время создания сессии (от Unix epoch в секундах) */
 @property(nonatomic, readwrite) int32_t authTime;
 
-/** / Two-letter country code of session create */
+/** / Двубуквенное обозначение страны, из которой была создана сессия */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *authLocation;
 
+/** / Географическая широта, из которой была создана сессия */
 @property(nonatomic, readwrite, strong, null_resettable) GPBDoubleValue *latitude;
 /** Test to see if @c latitude has been set. */
 @property(nonatomic, readwrite) BOOL hasLatitude;
 
+/** / Географическая долгота, из которой была создана сессия */
 @property(nonatomic, readwrite, strong, null_resettable) GPBDoubleValue *longitude;
 /** Test to see if @c longitude has been set. */
 @property(nonatomic, readwrite) BOOL hasLongitude;
@@ -703,7 +775,7 @@ void SetAuthSession_AuthHolder_RawValue(AuthSession *message, int32_t value);
 #pragma mark - RequestGetAuthSessions
 
 /**
- * Getting of all active user's authentication sessions
+ * / Запрос на получение списка сессий
  **/
 GPB_FINAL @interface RequestGetAuthSessions : GPBMessage
 
@@ -715,9 +787,12 @@ typedef GPB_ENUM(ResponseGetAuthSessions_FieldNumber) {
   ResponseGetAuthSessions_FieldNumber_UserAuthsArray = 1,
 };
 
+/**
+ * / Ответ на запрос на получение списка сессий
+ **/
 GPB_FINAL @interface ResponseGetAuthSessions : GPBMessage
 
-/** / Active user's sessions */
+/** / Список активных сессий пользователя */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<AuthSession*> *userAuthsArray;
 /** The number of items in @c userAuthsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userAuthsArray_Count;
@@ -731,11 +806,11 @@ typedef GPB_ENUM(RequestTerminateSession_FieldNumber) {
 };
 
 /**
- * SignOut on specified user's session
+ * / Запрос на завершение сессии
  **/
 GPB_FINAL @interface RequestTerminateSession : GPBMessage
 
-/** / Session id */
+/** / Идентификатор сессии, которую необходимо завершить */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
 @end
@@ -743,7 +818,7 @@ GPB_FINAL @interface RequestTerminateSession : GPBMessage
 #pragma mark - RequestTerminateAllSessions
 
 /**
- * SignOut on all exept current sessions
+ * / Запрос на завершение всех сессий пользователя кроме текущей
  **/
 GPB_FINAL @interface RequestTerminateAllSessions : GPBMessage
 
@@ -752,7 +827,7 @@ GPB_FINAL @interface RequestTerminateAllSessions : GPBMessage
 #pragma mark - RequestSignOut
 
 /**
- * SignOut current session
+ * / Запрос на завершение текущей сессии
  **/
 GPB_FINAL @interface RequestSignOut : GPBMessage
 
@@ -774,18 +849,20 @@ typedef GPB_ENUM(ForceReloadField_Body_OneOfCase) {
 };
 
 /**
- * *
- * Notification to force client to reload some entities from server
- * Just for old clients. Should be ignore.
+ * / Состояние клиента для принудительного обновления -- при получении WeakUpdate-а UpdateForceReloadState
+ * / все соотвтетствующие элементы состояния клиента должны быть перезагружены с сервера
  **/
 GPB_FINAL @interface ForceReloadField : GPBMessage
 
 @property(nonatomic, readonly) ForceReloadField_Body_OneOfCase bodyOneOfCase;
 
+/** / Принудительное обновление списка диалогов */
 @property(nonatomic, readwrite, strong, null_resettable) ForceReloadDialogs *forceReloadDialogs;
 
+/** / Принудительное обновления списка контактов */
 @property(nonatomic, readwrite, strong, null_resettable) ForceReloadContacts *forceReloadContacts;
 
+/** / Принудительное обновление истории чата */
 @property(nonatomic, readwrite, strong, null_resettable) ForceReloadHistory *forceReloadHistory;
 
 @end
@@ -798,7 +875,7 @@ void ForceReloadField_ClearBodyOneOfCase(ForceReloadField *message);
 #pragma mark - ForceReloadDialogs
 
 /**
- * Tells the client to clear dialogs and load them again
+ * / см. ForceReloadField
  **/
 GPB_FINAL @interface ForceReloadDialogs : GPBMessage
 
@@ -807,7 +884,7 @@ GPB_FINAL @interface ForceReloadDialogs : GPBMessage
 #pragma mark - ForceReloadContacts
 
 /**
- * Tells the client to clear contacts and load them again
+ * / см. ForceReloadField
  **/
 GPB_FINAL @interface ForceReloadContacts : GPBMessage
 
@@ -820,11 +897,11 @@ typedef GPB_ENUM(ForceReloadHistory_FieldNumber) {
 };
 
 /**
- * Tells the client to clear the specified conversation and load it again
- * peer the peer whose history should be reloaded
+ * / см. ForceReloadField
  **/
 GPB_FINAL @interface ForceReloadHistory : GPBMessage
 
+/** / Пир чата, историю которого необходимо обновить */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
@@ -838,16 +915,24 @@ typedef GPB_ENUM(RequestChangePassword_FieldNumber) {
   RequestChangePassword_FieldNumber_NewPassword = 2,
 };
 
+/**
+ * / Запрос на изменение пароля пользователя
+ **/
 GPB_FINAL @interface RequestChangePassword : GPBMessage
 
+/** / Старый пароль */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *oldPassword;
 
+/** / Новый пароль */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *newPassword NS_RETURNS_NOT_RETAINED;
 
 @end
 
 #pragma mark - RequestGetSelf
 
+/**
+ * / Запрос на получение структуры текущего пользователя
+ **/
 GPB_FINAL @interface RequestGetSelf : GPBMessage
 
 @end
@@ -858,9 +943,12 @@ typedef GPB_ENUM(ResponseGetSelf_FieldNumber) {
   ResponseGetSelf_FieldNumber_User = 1,
 };
 
+/**
+ * / Ответ на запрос на получение структуры текущего пользователя
+ **/
 GPB_FINAL @interface ResponseGetSelf : GPBMessage
 
-/** / Registered/authorized user */
+/** / Структура текущего пользователя */
 @property(nonatomic, readwrite, strong, null_resettable) User *user;
 /** Test to see if @c user has been set. */
 @property(nonatomic, readwrite) BOOL hasUser;

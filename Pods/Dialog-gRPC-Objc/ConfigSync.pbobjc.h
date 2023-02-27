@@ -60,17 +60,17 @@ typedef GPB_ENUM(Parameter_FieldNumber) {
 };
 
 /**
- * Syncing Parameter
+ * / Пользовательский параметр
  **/
 GPB_FINAL @interface Parameter : GPBMessage
 
-/** / Key of parameter */
+/** / Ключ параметра */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *key;
 
-/** / Value of parameter */
+/** / Значение параметра */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *value;
 
-/** / last modification date */
+/** / Номер версии последнего изменения параметра */
 @property(nonatomic, readwrite) int64_t clock;
 
 @end
@@ -82,10 +82,11 @@ typedef GPB_ENUM(RequestGetParameters_FieldNumber) {
 };
 
 /**
- * Getting Parameters
+ * / Запрос на получение пользовательских параметров
  **/
 GPB_FINAL @interface RequestGetParameters : GPBMessage
 
+/** / Минимальная версия последнего изменения параметров, необходимых в ответе */
 @property(nonatomic, readwrite) int64_t fromClock;
 
 @end
@@ -96,8 +97,12 @@ typedef GPB_ENUM(ResponseGetParameters_FieldNumber) {
   ResponseGetParameters_FieldNumber_ParametersArray = 1,
 };
 
+/**
+ * / Ответ на запрос на получение пользовательских параметров
+ **/
 GPB_FINAL @interface ResponseGetParameters : GPBMessage
 
+/** / Список параметров */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Parameter*> *parametersArray;
 /** The number of items in @c parametersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger parametersArray_Count;
@@ -113,17 +118,19 @@ typedef GPB_ENUM(RequestEditParameter_FieldNumber) {
 };
 
 /**
- * Change parameter value
+ * / Запрос на изменение пользовательского параметра
  **/
 GPB_FINAL @interface RequestEditParameter : GPBMessage
 
+/** / Ключ параметра */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *key;
 
+/** / Требуемое значение -- в случае отсутствия такового ключ помечается удалённым */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *value;
 /** Test to see if @c value has been set. */
 @property(nonatomic, readwrite) BOOL hasValue;
 
-/** / current known clock */
+/** / Последняя известная версия параметра */
 @property(nonatomic, readwrite) int64_t clock;
 
 @end
@@ -136,12 +143,18 @@ typedef GPB_ENUM(FeatureFlag_FieldNumber) {
   FeatureFlag_FieldNumber_Clock = 3,
 };
 
+/**
+ * / Флаг конфиграции сервера
+ **/
 GPB_FINAL @interface FeatureFlag : GPBMessage
 
+/** / Ключ флага конфигурации сервера */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *key;
 
+/** / Значение флага конфигурации сервера */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *value;
 
+/** / Версия флага конфигурации сервера */
 @property(nonatomic, readwrite) int64_t clock;
 
 @end
@@ -152,8 +165,12 @@ typedef GPB_ENUM(RequestFeatureFlags_FieldNumber) {
   RequestFeatureFlags_FieldNumber_FromClock = 1,
 };
 
+/**
+ * / Запрос на получение флагов конфигурации сервера
+ **/
 GPB_FINAL @interface RequestFeatureFlags : GPBMessage
 
+/** / Минимальная версия последнего изменения флагов конфигурации сервера, необходимых в ответе */
 @property(nonatomic, readwrite) int64_t fromClock;
 
 @end
@@ -164,8 +181,12 @@ typedef GPB_ENUM(ResponseFeatureFlags_FieldNumber) {
   ResponseFeatureFlags_FieldNumber_FeatureConfigArray = 1,
 };
 
+/**
+ * / Ответ на запрос на получение флагов конфигурации сервера
+ **/
 GPB_FINAL @interface ResponseFeatureFlags : GPBMessage
 
+/** / Список флагов конфигурации сервера */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FeatureFlag*> *featureConfigArray;
 /** The number of items in @c featureConfigArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger featureConfigArray_Count;
@@ -178,8 +199,12 @@ typedef GPB_ENUM(UpdateFeatureFlagChanged_FieldNumber) {
   UpdateFeatureFlagChanged_FieldNumber_Feature = 1,
 };
 
+/**
+ * / Структура оповещения об изменении флага конфигурации сервера
+ **/
 GPB_FINAL @interface UpdateFeatureFlagChanged : GPBMessage
 
+/** / Изменившийся флаг конфигурации сервера */
 @property(nonatomic, readwrite, strong, null_resettable) FeatureFlag *feature;
 /** Test to see if @c feature has been set. */
 @property(nonatomic, readwrite) BOOL hasFeature;
@@ -193,11 +218,11 @@ typedef GPB_ENUM(UpdateParameterChanged_FieldNumber) {
 };
 
 /**
- * Update about parameter change
+ * / Структура оповещения об изменении пользовательского параметра
  **/
 GPB_FINAL @interface UpdateParameterChanged : GPBMessage
 
-/** / changed parameter */
+/** / Изменившийся пользовательский параметр */
 @property(nonatomic, readwrite, strong, null_resettable) Parameter *parameter;
 /** Test to see if @c parameter has been set. */
 @property(nonatomic, readwrite) BOOL hasParameter;
@@ -210,8 +235,12 @@ typedef GPB_ENUM(Settings_FieldNumber) {
   Settings_FieldNumber_Notifications = 1,
 };
 
+/**
+ * / Структура настроек клиентских приложений
+ **/
 GPB_FINAL @interface Settings : GPBMessage
 
+/** / Настройки уведомлений */
 @property(nonatomic, readwrite, strong, null_resettable) Settings_NotificationsSettings *notifications;
 /** Test to see if @c notifications has been set. */
 @property(nonatomic, readwrite) BOOL hasNotifications;
@@ -227,14 +256,21 @@ typedef GPB_ENUM(Settings_NotificationsSettings_FieldNumber) {
   Settings_NotificationsSettings_FieldNumber_Mutes = 4,
 };
 
+/**
+ * / Структура настроек уведомлений
+ **/
 GPB_FINAL @interface Settings_NotificationsSettings : GPBMessage
 
+/** / Флаг пробития глушения уведомлений при наличии в сообщении явного упоминания пользователя */
 @property(nonatomic, readwrite) BOOL pierceMuteOnMention;
 
+/** / Флаг показа текста сообщения в уведомлении о новом сообщении */
 @property(nonatomic, readwrite) BOOL showText;
 
+/** / Флага показа имени отправителя в уведомлении о новом сообщении */
 @property(nonatomic, readwrite) BOOL showNames;
 
+/** / Настройки глушения уведомлений */
 @property(nonatomic, readwrite, strong, null_resettable) Settings_NotificationsSettings_MuteSettings *mutes;
 /** Test to see if @c mutes has been set. */
 @property(nonatomic, readwrite) BOOL hasMutes;
@@ -249,12 +285,18 @@ typedef GPB_ENUM(Settings_NotificationsSettings_MuteSettings_FieldNumber) {
   Settings_NotificationsSettings_MuteSettings_FieldNumber_MuteChannels = 3,
 };
 
+/**
+ * / Структура настроек глушения уведомлений
+ **/
 GPB_FINAL @interface Settings_NotificationsSettings_MuteSettings : GPBMessage
 
+/** / Флаг включения глушения уведомлений о сообщениях в личных чатах */
 @property(nonatomic, readwrite) BOOL mutePrivates;
 
+/** / Флаг включения глушения уведомлений о сообщениях в групповых чатах */
 @property(nonatomic, readwrite) BOOL muteGroups;
 
+/** / Флаг включения глушения уведомлений о сообщениях в каналах */
 @property(nonatomic, readwrite) BOOL muteChannels;
 
 @end
@@ -265,8 +307,12 @@ typedef GPB_ENUM(UpdateSettingsChanged_FieldNumber) {
   UpdateSettingsChanged_FieldNumber_Settings = 1,
 };
 
+/**
+ * / Структура оповещение об измении настроек клиентских приложений
+ **/
 GPB_FINAL @interface UpdateSettingsChanged : GPBMessage
 
+/** / Обновлённые настройки клиентских приложений */
 @property(nonatomic, readwrite, strong, null_resettable) Settings *settings;
 /** Test to see if @c settings has been set. */
 @property(nonatomic, readwrite) BOOL hasSettings;
@@ -275,6 +321,9 @@ GPB_FINAL @interface UpdateSettingsChanged : GPBMessage
 
 #pragma mark - RequestGetSettings
 
+/**
+ * / Запрос на получение настроек клиентских приложений
+ **/
 GPB_FINAL @interface RequestGetSettings : GPBMessage
 
 @end
@@ -285,8 +334,12 @@ typedef GPB_ENUM(ResponseGetSettings_FieldNumber) {
   ResponseGetSettings_FieldNumber_Settings = 1,
 };
 
+/**
+ * / Ответ на запрос на получение настроек клиентских приложений
+ **/
 GPB_FINAL @interface ResponseGetSettings : GPBMessage
 
+/** / Настройки клиентских приложений */
 @property(nonatomic, readwrite, strong, null_resettable) Settings *settings;
 /** Test to see if @c settings has been set. */
 @property(nonatomic, readwrite) BOOL hasSettings;
@@ -299,6 +352,9 @@ typedef GPB_ENUM(RequestChangeSettings_FieldNumber) {
   RequestChangeSettings_FieldNumber_Settings = 1,
 };
 
+/**
+ * / Запрос на изменение настроек клиентских приложений
+ **/
 GPB_FINAL @interface RequestChangeSettings : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) Settings *settings;

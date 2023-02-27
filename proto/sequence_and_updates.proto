@@ -2,16 +2,6 @@ syntax = "proto3";
 
 package dialog;
 
-// Each device has it's own update sequence. At the begining application request initial sequence state by
-// calling GetState. On each application restart or NewSessionCreated application calls GetDifference for receiving
-// updates in update sequence.
-// GetState and GetDifference automatically subscribes session to receiving updates in session.
-// Each update has seq and state. Seq is sequental index of updated and used for detecting of holes in update sequence
-// (because of server failure or session die) on client side.
-// All updates needed to be processed in partucular order according to seq values.
-// In some updates there can be references to users that are not available at client yet. In this case application need
-// to ignore such update and init getting difference.
-
 import "wrappers.proto";
 import "empty.proto";
 import "annotations.proto";
@@ -38,8 +28,11 @@ import "drafts.proto";
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
 
+
+/// Структура тела сек-апдейта
 message SeqUpdateBody {
     reserved 33, 44, 50, 52, 53, 58, 59, 62, 71, 72;
+    /// Вид сек-апдейта
     oneof update {
         UpdateUserAvatarChanged update_user_avatar_changed = 1;
         UpdateUserNameChanged update_user_name_changed = 2;
@@ -112,62 +105,89 @@ message SeqUpdateBody {
     }
 }
 
-// Sequence update
+/// Структура сек-апдейта
 message SeqUpdate {
+    /// Порядковый номер сек-апдейта
     uint64 seq = 1;
+
+    /// Тело сек-апдейта
     SeqUpdateBody body = 2;
 }
 
-// Getting difference of sequence
+/// Запрос на полчение разницы в сек-апдейтах между клиентом и сервером
 message RequestGetDifference {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Порядковый номер, с которого (не включая его) необходимо получить недостающие апдейты
     uint64 seq = 1;
+
+    /// deprecated
     google.protobuf.Int64Value config_hash = 2 [deprecated=true];
 }
 
-/// Updates happens after requested seq number + related peers and entities
+/// Ответ на запрос на полчение разницы в сек-апдейтах между клиентом и сервером
 message ResponseGetDifference {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-
-    uint64 seq = 1; /// seq of the last loaded update
+    /// Последний порядковый номер в ответе
+    uint64 seq = 1;
+    
+    /// Список апдейтов
     repeated SeqUpdate updates = 2;
+
+    /// Флаг, определяющий что на полученные в списке апдейты не исчерпывают разницы между клиентом и сервером 
+    /// и необходимо сделать повторный запрос на получение разницы после применения полученного списка (уже с новым seq-номером в запросе)
+    bool need_more = 4;
+
+    /// deprecated
     repeated HistoryMessage messages = 3 [deprecated = true];
-    bool need_more = 4; /// false if all updates returned
+    
+    /// deprecated
     repeated UserOutPeer users_refs = 5 [deprecated = true];
+    
+    /// deprecated
     repeated GroupOutPeer groups_refs = 6 [deprecated = true];
-    Config config = 7 [deprecated = true]; /// user's config
+    
+    /// deprecated
+    Config config = 7 [deprecated = true];
+
+    /// deprecated
     google.protobuf.Int64Value config_hash = 8 [deprecated = true];
 }
 
-// Represents subset of group members
+/// Подмножетсво членов группового чата
 message GroupMembersSubset {
+    /// Внешний пир группового чата [здесь достаточно group_id]
     GroupOutPeer group_peer = 1;
+
+    /// Список идентификаторов учетных записей пользователей-членов группового чата
     repeated string member_ids = 2;
 }
 
-// Loading referenced entities
+/// Запрос на дополнительных загрузку сущностей
 message RequestGetReferencedEntities {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    /// users needed
+    /// Список внешний пиров пользователей для загрузки
     repeated UserOutPeer users = 1;
-    /// messages needed
+    
+    /// Список идфентификаторов сообщений для загрузки
     repeated UUIDValue mids = 2;
-    /**
-     * Group + subset of members to return.
-     * For loading members of big groups by chunks.
-     */
+    
+    /// Список подмножеств членов групповых чатов 
     repeated GroupMembersSubset group_members = 3;
-    /// groups needed
+    
+    /// Список внешний приов групп [тут достаточно group_id]
     repeated GroupOutPeer groups = 4;
 }
 
+/// Ответ на запрос на дополнительных загрузку сущностей
 message ResponseGetReferencedEntities {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
+    /// Список данных о пользователях
     repeated User users = 1;
+
+    /// Список данных о группах
     repeated Group groups = 2;
+
+    /// Список сообщений
     repeated HistoryMessage messages = 3;
 }
 
+/// deprecated
 message RequestGetPartialPeerInfo {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     repeated UserOutPeer users = 1;
@@ -175,53 +195,90 @@ message RequestGetPartialPeerInfo {
     repeated GroupMembersSubset group_members = 3;
 }
 
+/// deprecated
 message ResponseGetPartialPeerInfo {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     repeated UserPartialInfo users = 1;
     repeated GroupPartialInfo groups = 2;
 }
 
-// Custom Raw Update
+// Структура уведомления о событии без явного типа апдейта, используется для передачи апдейтов от внешних систем
 message UpdateRawUpdate {
     google.protobuf.StringValue type = 1;
     bytes bytes = 2;
 }
 
+/// Список пиров
 message PeersList {
     repeated Peer peers = 1;
 }
 
+/// Команда для weak-стрима
 message WeakUpdateCommand {
+    /// Команда на изменение статуса онлайна текущего пользователя
     message ChangeMyOnline {
+        /// Флаг, определяющий состояние онлайна
         bool online = 1;
-        int64 timeout = 2; /// offline after timeout
+
+        /// Время в миллисекундах, через которое этот статус утратит своё действие.
+        /// Действует только, если online == true
+        int64 timeout = 2;
+
+        /// Тип устройства пользователя
         DeviceType device_type = 3;
     }
 
+    /// Команда подписки на статусы онлайнов в чатах
     message SubscribeToOnlines {
+        /// Список пиров, статусы в которых необходимо доводить до клиента в рамках текущего weak-стрима
         PeersList peers = 1;
+
+        /// Досылать ли список идентификаторов учетных записей пользователей в статусах групповых чатов
         bool send_users_id = 2;
     }
 
+    /// Команда на изменение статуса тайпинга текущего пользователя
     message ChangeMyTyping {
+        /// Пир чата, в котором происходит смена статуса тайпинга
         Peer peer       = 1;
+
+        /// Тип тайпинга
         TypingType type = 2;
+
+        /// Флаг начала тайпинга
         bool start      = 3;
     }
 
     oneof command {
+        /// Команда на изменение статуса онлайна текущего пользователя
         ChangeMyOnline change_my_online                    = 1;
+
+        /// Команда подписки на статусы онлайнов других пользователей
         SubscribeToOnlines subscribe_to_onlines            = 2;
+
+        /// Команда отписки от статусов онлайнов других пользователей
         PeersList unsubscribe_from_onlines                 = 3;
+
+        /// Команда отписки от всех статусов онлайнов
         google.protobuf.Empty unsubscribe_from_all_onlines = 4;
+
+        /// Команда на изменение статуса тайпинга текущего пользователя
         ChangeMyTyping change_my_typing                    = 5;
+
+        /// Команда подписки на статусы тайпингов других пользователей
         PeersList subscribe_to_typings                     = 6;
+
+        /// Команда отписки от статусов тайпингов других пользователей
         PeersList unsubscribe_from_typings                 = 7;
+
+        /// Команда отписки от всех статусов тайпингов
         google.protobuf.Empty unsubscribe_from_all_typings = 8;
     }
 }
 
+/// Структура weak-уведомления
 message WeakUpdate {
+    /// Уведомление о необходимости сброса частей состояния клиентского приложеиня
     message UpdateForceReloadState {
         message ForceReloadField {
             oneof field {
@@ -234,6 +291,7 @@ message WeakUpdate {
     }
 
     reserved 6, 9, 10, 11, 12, 13, 17, 25;
+
     oneof updatebox {
         UpdateTyping typing                                                   = 1;
         UpdateTypingStop typing_stop                                          = 2;
@@ -255,28 +313,34 @@ message WeakUpdate {
     }
 }
 
+/// Запрос на получение текущего состояния потока seq-апдейтов пользователя
 message RequestGetState {}
+
+/// Ответ на запрос на получение текущего состояния потока seq-апдейтов пользователя
 message ResponseGetState {
+    /// Текущий последний сек-номер апдейта в потоке пользователя на момент запроса
     uint64 seq = 1;
     reserved 2;
 }
 
 service SequenceAndUpdates {
-    /// Get last sequence number
+    /// Метод получения текущего состояния потока seq-апдейтов пользователя
     rpc GetState(RequestGetState) returns (ResponseGetState) {
         option (google.api.http) = {
             post: "/v1/grpc/SequenceAndUpdates/GetState"
             body: "*"
         };
     }
-    /// Get all update that happens after given seq number
+
+    /// Метод полчения разницы в сек-апдейтах между клиентом и сервером
     rpc GetDifference (RequestGetDifference) returns (ResponseGetDifference) {
         option (google.api.http) = {
             post: "/v1/grpc/SequenceAndUpdates/GetDifference"
             body: "*"
         };
     }
-    /// Load some required entities
+    
+    /// Метод загрузки дополнительных сущностей
     rpc GetReferencedEntities (RequestGetReferencedEntities) returns (ResponseGetReferencedEntities) {
         option (google.api.http) = {
             post: "/v1/grpc/SequenceAndUpdates/GetReferencedEntitites"
@@ -284,15 +348,18 @@ service SequenceAndUpdates {
         };
     }
 
+    /// deprecated
     rpc GetPartialPeerInfo (RequestGetPartialPeerInfo) returns (ResponseGetPartialPeerInfo) {}
 
-    /// Get stream of the user's updates
+    /// Метод открытия подписки на поток сек-апдейтов пользователя
     rpc SeqUpdates (google.protobuf.Empty) returns (stream SeqUpdate) {
         option (google.api.http) = {
             post: "/v1/grpc/SequenceAndUpdates/SeqUpdates"
             body: "*"
         };
     }
+
+    /// Метод открытия подписки на поток weak-апдейтов пользователя
     rpc WeakUpdates (stream WeakUpdateCommand) returns (stream WeakUpdate) {
         option (google.api.http) = {
             post: "/v1/grpc/SequenceAndUpdates/WeakUpdates"

@@ -9,32 +9,55 @@ import "definitions.proto";
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
 
+/// Набор методов авторизации
 enum AuthorizationMethod {
     AUTHORIZATION_METHOD_NOTHING = 0;
+
+    /// Авторизация по паре логин-пароль
     AUTHORIZATION_METHOD_USERNAME = 1;
+
+    /// Авторизация по телефону
     AUTHORIZATION_METHOD_PHONE = 2;
+
+    /// Авторизация по электронной почте
     AUTHORIZATION_METHOD_EMAIL = 3;
+
+    /// Авторизация по сертификату
     AUTHORIZATION_METHOD_CERTIFICATE = 4;
+
+    /// OAuth2-авторизация
     AUTHORIZATION_METHOD_OAUTH = 5;
 }
 
+/// Запрос на регистрацию устройства (сессии)
 message RequestRegisterDevice {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Публичный ключ клиента
     bytes client_pk = 1;
+
+    /// Идентификатор клиентского приложения
     int32 app_id = 2;
+
+    /// Название клиентского приложения
     string app_title = 3;
+
+    /// Название клиентского устройства
     string device_title = 4;
 }
 
+/// Ответ на запрос на регистрацию устройства (сессии)
 message ResponseDeviceRequest {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
+    /// Публичный ключ сервера
     bytes server_pk = 1;
+
+    /// Авторизационный токен -- идентификатор сессии
     string token = 2 [(dialog.dlg).log=log_sensitive];
-    repeated AuthorizationMethod auth_method_seq = 3; /// Sequence of the required authorization methods
+
+    /// Набор обязательных методов авторизации
+    repeated AuthorizationMethod auth_method_seq = 3;
 }
 
 service Registration {
-  /// register device to get auth token
+  /// Метод регистрация устройства (сессии)
   rpc RegisterDevice (RequestRegisterDevice) returns (ResponseDeviceRequest) {
       option (google.api.http) = {
           post: "/v1/grpc/Registration/RegisterDevice"

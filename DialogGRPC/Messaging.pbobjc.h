@@ -121,6 +121,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Enum InteractiveMediaStyle
 
+/** / Стиль интерактивного элемента */
 typedef GPB_ENUM(InteractiveMediaStyle) {
   /**
    * Value used if any message's field encounters a value that is not defined
@@ -144,6 +145,7 @@ BOOL InteractiveMediaStyle_IsValidValue(int32_t value);
 
 #pragma mark - Enum ListLoadMode
 
+/** / Набор параметров режима загрузки истории сообощений */
 typedef GPB_ENUM(ListLoadMode) {
   /**
    * Value used if any message's field encounters a value that is not defined
@@ -152,8 +154,17 @@ typedef GPB_ENUM(ListLoadMode) {
    **/
   ListLoadMode_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   ListLoadMode_ListLoadModeUnknown = 0,
+
+  /** / режим загрузки вперед во времени НАЧИНАЯ ОТ сообщения (не включая отправную точку поиска) */
   ListLoadMode_ListLoadModeForward = 1,
+
+  /** / режим загрузки назад во времени ДОХОДЯ ДО сообщения (включая отправную точку поиска) */
   ListLoadMode_ListLoadModeBackward = 2,
+
+  /**
+   * / режим загрузки совмещающий оба предыдущих способа в одном
+   * / эквивалентно двум запросам: с LIST_LOAD_MODE_FORWARD и с LIST_LOAD_MODE_BACKWARD с одинаковыми точками поиска
+   **/
   ListLoadMode_ListLoadModeBoth = 3,
 };
 
@@ -167,6 +178,7 @@ BOOL ListLoadMode_IsValidValue(int32_t value);
 
 #pragma mark - Enum DialogsFilter
 
+/** / Набор фильтров для загрузки чатов */
 typedef GPB_ENUM(DialogsFilter) {
   /**
    * Value used if any message's field encounters a value that is not defined
@@ -175,8 +187,14 @@ typedef GPB_ENUM(DialogsFilter) {
    **/
   DialogsFilter_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   DialogsFilter_DialogsFilterUnknown = 0,
+
+  /** / Не включать избранные чаты в выдачу */
   DialogsFilter_DialogsFilterExcludeFavourites = 1,
+
+  /** / Не включать архивированные чаты в выдачу */
   DialogsFilter_DialogsFilterExcludeArchived = 2,
+
+  /** / Не включать треды в выдачу */
   DialogsFilter_DialogsFilterExcludeThreads = 3,
 };
 
@@ -211,36 +229,43 @@ typedef GPB_ENUM(MessageAttributes_FieldNumber) {
   MessageAttributes_FieldNumber_IsNotified = 3,
   MessageAttributes_FieldNumber_IsOnlyForYou = 4,
   MessageAttributes_FieldNumber_Unclassified = 5,
+  MessageAttributes_FieldNumber_LinkedPeersArray = 6,
 };
 
 /**
- * Message Attributes
+ * / Атрибуты сообщения
  **/
 GPB_FINAL @interface MessageAttributes : GPBMessage
 
-/** / Is mentioned. If set overrides built-in value. */
+/** / Признак упоминания пользователя в сообщении */
 @property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isMentioned;
 /** Test to see if @c isMentioned has been set. */
 @property(nonatomic, readwrite) BOOL hasIsMentioned;
 
-/** / Is message highlighted. Default is false. */
+/** / Признак подсвеченности сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isHighlighted;
 /** Test to see if @c isHighlighted has been set. */
 @property(nonatomic, readwrite) BOOL hasIsHighlighted;
 
-/** / Is notified. If set overrides built-in settings. */
+/** / Признак того, что пользователь уведомлён о сообщении */
 @property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isNotified;
 /** Test to see if @c isNotified has been set. */
 @property(nonatomic, readwrite) BOOL hasIsNotified;
 
-/** / If this message is only for you. Default is false */
+/** / Признак того, что сообщение предназначено только для данного пользователя */
 @property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isOnlyForYou;
 /** Test to see if @c isOnlyForYou has been set. */
 @property(nonatomic, readwrite) BOOL hasIsOnlyForYou;
 
+/** / Дополнительные признаки */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *unclassified;
 /** The number of items in @c unclassified without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger unclassified_Count;
+
+/** / Чаты, связанные с этим сообщением */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<OutPeer*> *linkedPeersArray;
+/** The number of items in @c linkedPeersArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger linkedPeersArray_Count;
 
 @end
 
@@ -254,22 +279,26 @@ typedef GPB_ENUM(MessageMedia_FieldNumber) {
 };
 
 /**
- * Message media
+ * / Медиа-содержимое сообщения
  **/
 GPB_FINAL @interface MessageMedia : GPBMessage
 
+/** / Веб-страница */
 @property(nonatomic, readwrite, strong, null_resettable) WebpageMedia *webpage;
 /** Test to see if @c webpage has been set. */
 @property(nonatomic, readwrite) BOOL hasWebpage;
 
+/** / Изображение */
 @property(nonatomic, readwrite, strong, null_resettable) ImageMedia *image;
 /** Test to see if @c image has been set. */
 @property(nonatomic, readwrite) BOOL hasImage;
 
+/** / Аудио-файл */
 @property(nonatomic, readwrite, strong, null_resettable) AudioMedia *audio;
 /** Test to see if @c audio has been set. */
 @property(nonatomic, readwrite) BOOL hasAudio;
 
+/** / Набор интерактивных элементов */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<InteractiveMediaGroup*> *actionsArray;
 /** The number of items in @c actionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger actionsArray_Count;
@@ -286,22 +315,26 @@ typedef GPB_ENUM(WebpageMedia_FieldNumber) {
 };
 
 /**
- * Webpage media
+ * / Веб-страница
  **/
 GPB_FINAL @interface WebpageMedia : GPBMessage
 
+/** / URL старницы */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *URL;
 /** Test to see if @c URL has been set. */
 @property(nonatomic, readwrite) BOOL hasURL;
 
+/** / Заголовок страницы */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *title;
 /** Test to see if @c title has been set. */
 @property(nonatomic, readwrite) BOOL hasTitle;
 
+/** / Описание страницы */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *description_p;
 /** Test to see if @c description_p has been set. */
 @property(nonatomic, readwrite) BOOL hasDescription_p;
 
+/** / Краткое превью страницы */
 @property(nonatomic, readwrite, strong, null_resettable) ImageLocation *image;
 /** Test to see if @c image has been set. */
 @property(nonatomic, readwrite) BOOL hasImage;
@@ -315,11 +348,11 @@ typedef GPB_ENUM(ImageMedia_FieldNumber) {
 };
 
 /**
- * Image media
- * image image
+ * / Изображение
  **/
 GPB_FINAL @interface ImageMedia : GPBMessage
 
+/** / Координаты изображения */
 @property(nonatomic, readwrite, strong, null_resettable) ImageLocation *image;
 /** Test to see if @c image has been set. */
 @property(nonatomic, readwrite) BOOL hasImage;
@@ -333,10 +366,11 @@ typedef GPB_ENUM(AudioMedia_FieldNumber) {
 };
 
 /**
- * Audio media
+ * / Аудио-файл
  **/
 GPB_FINAL @interface AudioMedia : GPBMessage
 
+/** / Координаты аудио-файла */
 @property(nonatomic, readwrite, strong, null_resettable) AudioLocation *audio;
 /** Test to see if @c audio has been set. */
 @property(nonatomic, readwrite) BOOL hasAudio;
@@ -357,7 +391,7 @@ typedef GPB_ENUM(InteractiveMediaWidget_Body_OneOfCase) {
 };
 
 /**
- * / Some interactive element inside a message
+ * / Интерактивный виджет
  **/
 GPB_FINAL @interface InteractiveMediaWidget : GPBMessage
 
@@ -382,14 +416,14 @@ typedef GPB_ENUM(InteractiveMediaButton_FieldNumber) {
 };
 
 /**
- * A 'Button' widget
+ * / Интерактивная кнопка
  **/
 GPB_FINAL @interface InteractiveMediaButton : GPBMessage
 
-/** / A value for this button */
+/** / Значение, уникально идентифицирующее кнопку для отправки на сервер */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *value;
 
-/** / A user-visible description of this button */
+/** / Видимый пользователю текст на кнопке */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *label;
 /** Test to see if @c label has been set. */
 @property(nonatomic, readwrite) BOOL hasLabel;
@@ -405,21 +439,21 @@ typedef GPB_ENUM(InteractiveMediaSelect_FieldNumber) {
 };
 
 /**
- * A select from multiple values widget
+ * / Виджет многовариантного выбора
  **/
 GPB_FINAL @interface InteractiveMediaSelect : GPBMessage
 
-/** / list of values to present to user */
+/** / Список доступных вариантов выбора */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<InteractiveMediaSelectOption*> *optionsArray;
 /** The number of items in @c optionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger optionsArray_Count;
 
-/** / A user-visible descripton of this select */
+/** / Видимое пользователю название виджета */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *label;
 /** Test to see if @c label has been set. */
 @property(nonatomic, readwrite) BOOL hasLabel;
 
-/** / A value that will be selected by default */
+/** / Выбранное по-умолчанию значение */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *defaultValue;
 /** Test to see if @c defaultValue has been set. */
 @property(nonatomic, readwrite) BOOL hasDefaultValue;
@@ -434,14 +468,14 @@ typedef GPB_ENUM(InteractiveMediaSelectOption_FieldNumber) {
 };
 
 /**
- * A row in the select widget
+ * / Вариант выбора в виджете многовариантного выбора
  **/
 GPB_FINAL @interface InteractiveMediaSelectOption : GPBMessage
 
-/** / id of the row */
+/** / Идентификатор вариант выбора */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *value;
 
-/** / a user visible text for this row */
+/** / Видимое пользователю описание вариант выбора */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *label;
 
 @end
@@ -456,27 +490,22 @@ typedef GPB_ENUM(InteractiveMedia_FieldNumber) {
 };
 
 /**
- * A text message extension representing an interactive action.
- * Can be used to add widgets (such as buttons, selects, etc) to messages.
+ * / Интерактивный виджет
  **/
 GPB_FINAL @interface InteractiveMedia : GPBMessage
 
-/** / identifier of the media action */
+/** / Идентификатор группы */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
-/** / a widget to be shown to user */
+/** / Корневой виджет */
 @property(nonatomic, readwrite, strong, null_resettable) InteractiveMediaWidget *widget;
 /** Test to see if @c widget has been set. */
 @property(nonatomic, readwrite) BOOL hasWidget;
 
-/** / a style of the widget, which is interpreted by the client */
+/** / Стиль корневого виджета */
 @property(nonatomic, readwrite) InteractiveMediaStyle style;
 
-/**
- * *
- * A content of the alert dialog that will be show to user
- * when they perform the media action
- **/
+/** / Диалог подтверждения, который необходимо показать пользователю после действия в корневом виджете */
 @property(nonatomic, readwrite, strong, null_resettable) InteractiveMediaConfirm *confirm;
 /** Test to see if @c confirm has been set. */
 @property(nonatomic, readwrite) BOOL hasConfirm;
@@ -502,10 +531,15 @@ typedef GPB_ENUM(InteractiveMediaTranslation_FieldNumber) {
   InteractiveMediaTranslation_FieldNumber_Value = 2,
 };
 
+/**
+ * / Соответствие перевода
+ **/
 GPB_FINAL @interface InteractiveMediaTranslation : GPBMessage
 
+/** / Идентификатор переводимого элемента */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
+/** / Перевод */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *value;
 
 @end
@@ -517,12 +551,15 @@ typedef GPB_ENUM(InteractiveMediaTranslationGroup_FieldNumber) {
   InteractiveMediaTranslationGroup_FieldNumber_MessagesArray = 2,
 };
 
+/**
+ * / Группа элементов перевода виджета
+ **/
 GPB_FINAL @interface InteractiveMediaTranslationGroup : GPBMessage
 
-/** / a translation group language */
+/** / Язык перевода */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *language;
 
-/** / a list of translation mesages */
+/** / Соответствия перевода */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<InteractiveMediaTranslation*> *messagesArray;
 /** The number of items in @c messagesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger messagesArray_Count;
@@ -539,26 +576,26 @@ typedef GPB_ENUM(InteractiveMediaGroup_FieldNumber) {
 };
 
 /**
- * A group of interactive media actions
+ * / Группа виджетов
  **/
 GPB_FINAL @interface InteractiveMediaGroup : GPBMessage
 
-/** / the list of actions */
+/** / Список интерактивных виджетов */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<InteractiveMedia*> *actionsArray;
 /** The number of items in @c actionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger actionsArray_Count;
 
-/** / an optional title of the group */
+/** / Название группы виджетов */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *title;
 /** Test to see if @c title has been set. */
 @property(nonatomic, readwrite) BOOL hasTitle;
 
-/** / an optional description of the group */
+/** / Описание группы виджетов */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *description_p;
 /** Test to see if @c description_p has been set. */
 @property(nonatomic, readwrite) BOOL hasDescription_p;
 
-/** / a media content translations */
+/** / Список переводов для данной группы виджетов */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<InteractiveMediaTranslationGroup*> *translationsArray;
 /** The number of items in @c translationsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger translationsArray_Count;
@@ -575,26 +612,26 @@ typedef GPB_ENUM(InteractiveMediaConfirm_FieldNumber) {
 };
 
 /**
- * An alert dialog content to show to user
+ * / Диалог подтверждения
  **/
 GPB_FINAL @interface InteractiveMediaConfirm : GPBMessage
 
-/** / the optional alert dialog prompt */
+/** / Текст подтверждения */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *text;
 /** Test to see if @c text has been set. */
 @property(nonatomic, readwrite) BOOL hasText;
 
-/** / the optional alert dialog title */
+/** / Заголовок диалога */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *title;
 /** Test to see if @c title has been set. */
 @property(nonatomic, readwrite) BOOL hasTitle;
 
-/** / the optional confirm button text */
+/** / Текст кнопки подтверждения */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *ok;
 /** Test to see if @c ok has been set. */
 @property(nonatomic, readwrite) BOOL hasOk;
 
-/** / the optional cancel button text */
+/** / Текст кнопки отмены */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *dismiss;
 /** Test to see if @c dismiss has been set. */
 @property(nonatomic, readwrite) BOOL hasDismiss;
@@ -611,22 +648,22 @@ typedef GPB_ENUM(UpdateInteractiveMediaEvent_FieldNumber) {
 };
 
 /**
- * The update which will be received when the action is performed. Duplicated on all clients.
+ * / Структура уведомления о действии с интерактивным виджетом
  **/
 GPB_FINAL @interface UpdateInteractiveMediaEvent : GPBMessage
 
-/** / Message id of the message that contains interactive media */
+/** / Идетификатор сообщения, содрежащего интерактивный виджет */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
 
-/** / identifier of the media action */
+/** / Идентификатор медиа-виджета, в котором произведено действие */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
-/** / selected value of that action */
+/** / Выбранное в действии значение */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *value;
 
-/** / who interacted with that media */
+/** / Идентификатор учетной записи пользователя, совершившего действие */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @end
@@ -640,19 +677,19 @@ typedef GPB_ENUM(RequestDoInteractiveMediaAction_FieldNumber) {
 };
 
 /**
- * Sends a request to do interactive media message
+ * / Запрос на посылку действия с интерактивным виджетом
  **/
 GPB_FINAL @interface RequestDoInteractiveMediaAction : GPBMessage
 
-/** / Message id of the enclosed message */
+/** / Идетификатор сообщения, содержащего интерактивный виджет */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
 
-/** / Media id */
+/** / Идетификатор медиа-виджета, в котором производится действие */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
-/** / selected value */
+/** / Выбранное в действии значение */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *value;
 
 @end
@@ -665,16 +702,22 @@ typedef GPB_ENUM(MessageOverrides_FieldNumber) {
   MessageOverrides_FieldNumber_SenderPhotoURLOverride = 3,
 };
 
+/**
+ * / Переопределения свойств сообщения
+ **/
 GPB_FINAL @interface MessageOverrides : GPBMessage
 
+/** / Замена имени отправителя */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *senderNameOverride;
 /** Test to see if @c senderNameOverride has been set. */
 @property(nonatomic, readwrite) BOOL hasSenderNameOverride;
 
+/** / Замена аватара отправителя */
 @property(nonatomic, readwrite, strong, null_resettable) Avatar *senderPhotoOverride;
 /** Test to see if @c senderPhotoOverride has been set. */
 @property(nonatomic, readwrite) BOOL hasSenderPhotoOverride;
 
+/** / Замена аватара отправителя на проивзольный URL */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *senderPhotoURLOverride;
 /** Test to see if @c senderPhotoURLOverride has been set. */
 @property(nonatomic, readwrite) BOOL hasSenderPhotoURLOverride;
@@ -711,8 +754,12 @@ typedef GPB_ENUM(MessageContent_Body_OneOfCase) {
   MessageContent_Body_OneOfCase_DeletedMessage = 9,
 };
 
+/**
+ * / Содержимое сообщения
+ **/
 GPB_FINAL @interface MessageContent : GPBMessage
 
+/** / Вид содержимого */
 @property(nonatomic, readonly) MessageContent_Body_OneOfCase bodyOneOfCase;
 
 @property(nonatomic, readwrite, strong, null_resettable) TextMessage *textMessage;
@@ -733,14 +780,17 @@ GPB_FINAL @interface MessageContent : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) DeletedMessage *deletedMessage;
 
+/** / Переопределенные свойства сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) MessageOverrides *overrides;
 /** Test to see if @c overrides has been set. */
 @property(nonatomic, readwrite) BOOL hasOverrides;
 
+/** / Дополнительные расширения сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Any*> *extensionsArray;
 /** The number of items in @c extensionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger extensionsArray_Count;
 
+/** / Флаг отключения уведомлений о сообщении */
 @property(nonatomic, readwrite) BOOL disableNotifications;
 
 @end
@@ -761,26 +811,29 @@ typedef GPB_ENUM(TextMessage_FieldNumber) {
 };
 
 /**
- * Text message
+ * / Текстовое сообщение
  **/
 GPB_FINAL @interface TextMessage : GPBMessage
 
+/** / Текст сообщения */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *text;
 
-/** / Optional bytes of extension */
+/** / Дополнительные свойства текстового сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) TextMessageEx *ext;
 /** Test to see if @c ext has been set. */
 @property(nonatomic, readwrite) BOOL hasExt;
 
+/** / Список медиа-вложений */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MessageMedia*> *mediaArray;
 /** The number of items in @c mediaArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger mediaArray_Count;
 
+/** / Дополнительные расширения текстового сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Any*> *extensionsArray;
 /** The number of items in @c extensionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger extensionsArray_Count;
 
-/** / Mentions in message */
+/** / Список упоминаний пиров в сообщении */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Mention*> *mentionsArray;
 /** The number of items in @c mentionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger mentionsArray_Count;
@@ -794,12 +847,17 @@ typedef GPB_ENUM(Mention_FieldNumber) {
   Mention_FieldNumber_All = 2,
 };
 
+/**
+ * / Структура упоминания
+ **/
 GPB_FINAL @interface Mention : GPBMessage
 
+/** / Пир упомянутого чата (пользователя, группового чата) */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Упоминание относится ко всем участникам пира */
 @property(nonatomic, readwrite) BOOL all;
 
 @end
@@ -819,6 +877,9 @@ typedef GPB_ENUM(TextMessageEx_Body_OneOfCase) {
   TextMessageEx_Body_OneOfCase_TextCommand = 3,
 };
 
+/**
+ * / Дополнительное свойство текстового сообщения
+ **/
 GPB_FINAL @interface TextMessageEx : GPBMessage
 
 @property(nonatomic, readonly) TextMessageEx_Body_OneOfCase bodyOneOfCase;
@@ -843,11 +904,10 @@ typedef GPB_ENUM(TextExMarkdown_FieldNumber) {
 };
 
 /**
- * Markdown extension
+ * / Текст в формате markdown
  **/
 GPB_FINAL @interface TextExMarkdown : GPBMessage
 
-/** / Markdown text */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *markdown;
 
 @end
@@ -861,18 +921,21 @@ typedef GPB_ENUM(TextModernMessage_FieldNumber) {
 };
 
 /**
- * Modern text message
+ * / Стилизованный текст
  **/
 GPB_FINAL @interface TextModernMessage : GPBMessage
 
+/** / Текст для стилизации */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *text;
 /** Test to see if @c text has been set. */
 @property(nonatomic, readwrite) BOOL hasText;
 
+/** / Стиль параграфа текста */
 @property(nonatomic, readwrite, strong, null_resettable) ParagraphStyle *style;
 /** Test to see if @c style has been set. */
 @property(nonatomic, readwrite) BOOL hasStyle;
 
+/** / Приложенния к стилизованному тексту */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TextModernAttach*> *attachesArray;
 /** The number of items in @c attachesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger attachesArray_Count;
@@ -888,21 +951,21 @@ typedef GPB_ENUM(ParagraphStyle_FieldNumber) {
 };
 
 /**
- * Paragraph style
+ * / Стиль параграфа
  **/
 GPB_FINAL @interface ParagraphStyle : GPBMessage
 
-/** / Show quote-like paragraph? */
+/** / Флаг наличия значка параграфа */
 @property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *showParagraph;
 /** Test to see if @c showParagraph has been set. */
 @property(nonatomic, readwrite) BOOL hasShowParagraph;
 
-/** / Override paragraph color */
+/** / Цвет текста параграфа */
 @property(nonatomic, readwrite, strong, null_resettable) Color *paragraphColor;
 /** Test to see if @c paragraphColor has been set. */
 @property(nonatomic, readwrite) BOOL hasParagraphColor;
 
-/** / Override background color */
+/** / Цвета фона текста параграфа */
 @property(nonatomic, readwrite, strong, null_resettable) Color *bgColor;
 /** Test to see if @c bgColor has been set. */
 @property(nonatomic, readwrite) BOOL hasBgColor;
@@ -921,30 +984,36 @@ typedef GPB_ENUM(TextModernAttach_FieldNumber) {
 };
 
 /**
- * Attaches to message
+ * / Вложение в текстовое сообщение
  **/
 GPB_FINAL @interface TextModernAttach : GPBMessage
 
+/** / Заголовок вложения */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *title;
 /** Test to see if @c title has been set. */
 @property(nonatomic, readwrite) BOOL hasTitle;
 
+/** / URL для заголовка */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *titleURL;
 /** Test to see if @c titleURL has been set. */
 @property(nonatomic, readwrite) BOOL hasTitleURL;
 
+/** / Иконка для заголовка */
 @property(nonatomic, readwrite, strong, null_resettable) ImageLocation *titleIcon;
 /** Test to see if @c titleIcon has been set. */
 @property(nonatomic, readwrite) BOOL hasTitleIcon;
 
+/** / Текст вложения текстового сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *text;
 /** Test to see if @c text has been set. */
 @property(nonatomic, readwrite) BOOL hasText;
 
+/** / Стиль вложения текстового сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) ParagraphStyle *style;
 /** Test to see if @c style has been set. */
 @property(nonatomic, readwrite) BOOL hasStyle;
 
+/** / Список полей вложения текстового сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<TextModernField*> *fieldsArray;
 /** The number of items in @c fieldsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger fieldsArray_Count;
@@ -960,15 +1029,17 @@ typedef GPB_ENUM(TextModernField_FieldNumber) {
 };
 
 /**
- * Modern message fields
+ * / Поле вложения текстового сообщения
  **/
 GPB_FINAL @interface TextModernField : GPBMessage
 
+/** / Заголовок поля */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *title;
 
+/** / Текст поля */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *value;
 
-/** / Is field can be shown in compact way (default is TRUE) */
+/** / Поле должно быть показано в компактном (свернутом) виде */
 @property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isShort;
 /** Test to see if @c isShort has been set. */
 @property(nonatomic, readwrite) BOOL hasIsShort;
@@ -983,13 +1054,14 @@ typedef GPB_ENUM(TextCommand_FieldNumber) {
 };
 
 /**
- * Text Command Message for bots
+ * / Текстовая команда боту
  **/
 GPB_FINAL @interface TextCommand : GPBMessage
 
-/** / Slash-Command For execution */
+/** / Название команды */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *command;
 
+/** Аргумент команды */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *args;
 
 @end
@@ -1002,12 +1074,14 @@ typedef GPB_ENUM(ServiceMessage_FieldNumber) {
 };
 
 /**
- * Service message
+ * / Служебное сообщение
  **/
 GPB_FINAL @interface ServiceMessage : GPBMessage
 
+/** / Текст служебного сообщения */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *text;
 
+/** / Тип служебного сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) ServiceEx *ext;
 /** Test to see if @c ext has been set. */
 @property(nonatomic, readwrite) BOOL hasExt;
@@ -1063,6 +1137,9 @@ typedef GPB_ENUM(ServiceEx_Body_OneOfCase) {
   ServiceEx_Body_OneOfCase_ImportantTopicReopened = 21,
 };
 
+/**
+ * / Типы служебных сообщений
+ **/
 GPB_FINAL @interface ServiceEx : GPBMessage
 
 @property(nonatomic, readonly) ServiceEx_Body_OneOfCase bodyOneOfCase;
@@ -1121,11 +1198,11 @@ typedef GPB_ENUM(ServiceExUserInvited_FieldNumber) {
 };
 
 /**
- * Service message about adding user to group
+ * / Сервисное сообщение о добавлении пользователей в групповой чат
  **/
 GPB_FINAL @interface ServiceExUserInvited : GPBMessage
 
-/** / added user ids */
+/** / Список идентификаторов учетных записей пользователей добавленных в групповой чат */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *invitedUserIdsArray;
 /** The number of items in @c invitedUserIdsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger invitedUserIdsArray_Count;
@@ -1139,10 +1216,11 @@ typedef GPB_ENUM(ServiceExUserJoined_FieldNumber) {
 };
 
 /**
- * Service message about user join to group
+ * / Сервисное сообщение о присоединении пользователей к групповому чату
  **/
 GPB_FINAL @interface ServiceExUserJoined : GPBMessage
 
+/** / Список идентификаторов учетных записей пользователей присоединившихся к групповому чату */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *joinedUserIdsArray;
 /** The number of items in @c joinedUserIdsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger joinedUserIdsArray_Count;
@@ -1156,10 +1234,11 @@ typedef GPB_ENUM(ServiceExUserKicked_FieldNumber) {
 };
 
 /**
- * Service message about kicking user from group
+ * / Сервисное сообщение об исключении пользователей из группового чата
  **/
 GPB_FINAL @interface ServiceExUserKicked : GPBMessage
 
+/** / Список идентификаторов учетных записей пользователей исключенных из группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *kickedUserIdsArray;
 /** The number of items in @c kickedUserIdsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger kickedUserIdsArray_Count;
@@ -1173,10 +1252,11 @@ typedef GPB_ENUM(ServiceExUserLeft_FieldNumber) {
 };
 
 /**
- * Service message about user left group
+ * / Сервисное сообщение о выходе пользователей из группового чата
  **/
 GPB_FINAL @interface ServiceExUserLeft : GPBMessage
 
+/** / Список идентификаторов учетных записей пользователей вышедших из группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *leftUserIdsArray;
 /** The number of items in @c leftUserIdsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger leftUserIdsArray_Count;
@@ -1186,7 +1266,7 @@ GPB_FINAL @interface ServiceExUserLeft : GPBMessage
 #pragma mark - ServiceExGroupCreated
 
 /**
- * Service message about group creating
+ * / Сервисное сообщение о создании группового чата
  **/
 GPB_FINAL @interface ServiceExGroupCreated : GPBMessage
 
@@ -1199,11 +1279,11 @@ typedef GPB_ENUM(ServiceExChangedTitle_FieldNumber) {
 };
 
 /**
- * Service message about group title change
+ * / Сервисное сообщение об изменении названия группового чата
  **/
 GPB_FINAL @interface ServiceExChangedTitle : GPBMessage
 
-/** / New group title */
+/** / Новое название группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *title;
 
 @end
@@ -1215,11 +1295,11 @@ typedef GPB_ENUM(ServiceExChangedTopic_FieldNumber) {
 };
 
 /**
- * Service message on group topic change
+ * / Сервисное сообщение об изменении тематики группового чата
  **/
 GPB_FINAL @interface ServiceExChangedTopic : GPBMessage
 
-/** / New group topic */
+/** / Новая тематика */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *topic;
 /** Test to see if @c topic has been set. */
 @property(nonatomic, readwrite) BOOL hasTopic;
@@ -1233,11 +1313,11 @@ typedef GPB_ENUM(ServiceExChangedAbout_FieldNumber) {
 };
 
 /**
- * Service message on group about change
+ * / Сервисное сообщение об изменении описания группового чата
  **/
 GPB_FINAL @interface ServiceExChangedAbout : GPBMessage
 
-/** / New group about */
+/** / Новое описание */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *about;
 /** Test to see if @c about has been set. */
 @property(nonatomic, readwrite) BOOL hasAbout;
@@ -1251,11 +1331,11 @@ typedef GPB_ENUM(ServiceExChangedAvatar_FieldNumber) {
 };
 
 /**
- * Service message about avatar change
+ * / Сервисное сообщение об изменении аватара группового чата
  **/
 GPB_FINAL @interface ServiceExChangedAvatar : GPBMessage
 
-/** / Updated avatar */
+/** / Новый аватар */
 @property(nonatomic, readwrite, strong, null_resettable) Avatar *avatar;
 /** Test to see if @c avatar has been set. */
 @property(nonatomic, readwrite) BOOL hasAvatar;
@@ -1269,11 +1349,11 @@ typedef GPB_ENUM(ServiceExContactRegistered_FieldNumber) {
 };
 
 /**
- * Service message about user registration
+ * / Сервисное сообщение о регистрации контакта
  **/
 GPB_FINAL @interface ServiceExContactRegistered : GPBMessage
 
-/** / User Id */
+/** / Идентификатор учетной записи зарегистрировавшегося пользователя */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @end
@@ -1281,7 +1361,7 @@ GPB_FINAL @interface ServiceExContactRegistered : GPBMessage
 #pragma mark - ServiceExPhoneMissed
 
 /**
- * Update about missing phone call
+ * / Сервисное сообщение о пропущенном звонке
  **/
 GPB_FINAL @interface ServiceExPhoneMissed : GPBMessage
 
@@ -1294,11 +1374,11 @@ typedef GPB_ENUM(ServiceExPhoneCall_FieldNumber) {
 };
 
 /**
- * Update about phone call
+ * / Сервисное сообщение о завершенном звонке
  **/
 GPB_FINAL @interface ServiceExPhoneCall : GPBMessage
 
-/** / Duration of a phone call */
+/** / Длительность звонка в секундах */
 @property(nonatomic, readwrite) int32_t durationSeconds;
 
 @end
@@ -1306,7 +1386,7 @@ GPB_FINAL @interface ServiceExPhoneCall : GPBMessage
 #pragma mark - ServiceExPhoneRejected
 
 /**
- * Update about phone call rejected
+ * / Сервисное сообщение о сброшенном звонке
  **/
 GPB_FINAL @interface ServiceExPhoneRejected : GPBMessage
 
@@ -1315,7 +1395,8 @@ GPB_FINAL @interface ServiceExPhoneRejected : GPBMessage
 #pragma mark - ServiceExChatArchived
 
 /**
- * Message about chat archived
+ * / Сервисное сообщение об архивации чата
+ * / deprecated
  **/
 GPB_FINAL @interface ServiceExChatArchived : GPBMessage
 
@@ -1324,7 +1405,8 @@ GPB_FINAL @interface ServiceExChatArchived : GPBMessage
 #pragma mark - ServiceExChatRestored
 
 /**
- * Message about chat restored
+ * / Сервисное сообщение о разархивации чата
+ * / deprecated
  **/
 GPB_FINAL @interface ServiceExChatRestored : GPBMessage
 
@@ -1338,12 +1420,14 @@ typedef GPB_ENUM(ServiceExConferenceStatus_FieldNumber) {
 };
 
 /**
- * Message about conference call state
+ * / Сервисное сообщение о состоянии конференции
  **/
 GPB_FINAL @interface ServiceExConferenceStatus : GPBMessage
 
+/** / Идентификатор конференции */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *conferenceId;
 
+/** / Текстовое представление состояния конференции */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *conferenceStatus;
 
 @end
@@ -1356,12 +1440,14 @@ typedef GPB_ENUM(ServiceExGroupPublicityChanged_FieldNumber) {
 };
 
 /**
- * Message about group becoming private or public
+ * / Сервисное сообщение об изменении публичности группового чата
  **/
 GPB_FINAL @interface ServiceExGroupPublicityChanged : GPBMessage
 
+/** / Флаг предыдущей публичности */
 @property(nonatomic, readwrite) BOOL previousPublicity;
 
+/** / Флаг текущей публичности */
 @property(nonatomic, readwrite) BOOL currentPublicity;
 
 @end
@@ -1372,8 +1458,12 @@ typedef GPB_ENUM(ServiceExImportantTopicForked_FieldNumber) {
   ServiceExImportantTopicForked_FieldNumber_TopicGroup = 1,
 };
 
+/**
+ * / Сервисное сообщение о создании из данного чата другого группового чата (путём указания ссылки на данный чат)
+ **/
 GPB_FINAL @interface ServiceExImportantTopicForked : GPBMessage
 
+/** / Данные о созданном групповом чате */
 @property(nonatomic, readwrite, strong, null_resettable) GroupData *topicGroup;
 /** Test to see if @c topicGroup has been set. */
 @property(nonatomic, readwrite) BOOL hasTopicGroup;
@@ -1386,8 +1476,12 @@ typedef GPB_ENUM(ServiceExImportantTopicClosed_FieldNumber) {
   ServiceExImportantTopicClosed_FieldNumber_ClosedByUserId = 1,
 };
 
+/**
+ * / Сервисное сообщение о закрытии группового чата
+ **/
 GPB_FINAL @interface ServiceExImportantTopicClosed : GPBMessage
 
+/** / Идентификатор учетной записи пользователя, закрывшего групповой чат */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *closedByUserId;
 
 @end
@@ -1398,8 +1492,12 @@ typedef GPB_ENUM(ServiceExImportantTopicReopened_FieldNumber) {
   ServiceExImportantTopicReopened_FieldNumber_ReopenedByUserId = 1,
 };
 
+/**
+ * / Сервисное сообщение об открытии группового чата
+ **/
 GPB_FINAL @interface ServiceExImportantTopicReopened : GPBMessage
 
+/** / Идентификатор учетной записи пользователя, открывшего групповой чат */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *reopenedByUserId;
 
 @end
@@ -1419,33 +1517,41 @@ typedef GPB_ENUM(DocumentMessage_FieldNumber) {
 };
 
 /**
- * File message
+ * / Сообщение содержащее документ (файл)
  **/
 GPB_FINAL @interface DocumentMessage : GPBMessage
 
+/** / Идентификатор файла */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *fileId;
 
+/** / Ключ доступа к файлу */
 @property(nonatomic, readwrite) int64_t accessHash;
 
+/** / Размер файла в байтах */
 @property(nonatomic, readwrite) int32_t fileSize;
 
+/** / Имя файла */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
+/** / MIME-тип файла */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *mimeType;
 
-/** / optional thumb of file. JPEG less that 90x90 with 60-70 quality. */
+/** / Миниатюра изображения, JPEG 90x90 пикселей с минимальным качеством */
 @property(nonatomic, readwrite, strong, null_resettable) FastThumb *thumb;
 /** Test to see if @c thumb has been set. */
 @property(nonatomic, readwrite) BOOL hasThumb;
 
+/** / Дополнительные свойства документа */
 @property(nonatomic, readwrite, strong, null_resettable) DocumentEx *ext;
 /** Test to see if @c ext has been set. */
 @property(nonatomic, readwrite) BOOL hasExt;
 
+/** / Заголовок документа */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *caption;
 /** Test to see if @c caption has been set. */
 @property(nonatomic, readwrite) BOOL hasCaption;
 
+/** / Список упоминаний пиров в сообщении */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Mention*> *mentionsArray;
 /** The number of items in @c mentionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger mentionsArray_Count;
@@ -1467,6 +1573,9 @@ typedef GPB_ENUM(DocumentEx_Body_OneOfCase) {
   DocumentEx_Body_OneOfCase_Voice = 3,
 };
 
+/**
+ * / Дополнительное свойство сообщения
+ **/
 GPB_FINAL @interface DocumentEx : GPBMessage
 
 @property(nonatomic, readonly) DocumentEx_Body_OneOfCase bodyOneOfCase;
@@ -1492,14 +1601,14 @@ typedef GPB_ENUM(DocumentExPhoto_FieldNumber) {
 };
 
 /**
- * File photo extension
+ * / Сведения об изображении
  **/
 GPB_FINAL @interface DocumentExPhoto : GPBMessage
 
-/** / image width */
+/** / Ширина изображения в пикселях */
 @property(nonatomic, readwrite) int32_t w;
 
-/** / image height */
+/** / Высота изображения в пикселях */
 @property(nonatomic, readwrite) int32_t h;
 
 @end
@@ -1513,16 +1622,17 @@ typedef GPB_ENUM(DocumentExVideo_FieldNumber) {
 };
 
 /**
- * File video extension
+ * / Сведения о видео
  **/
 GPB_FINAL @interface DocumentExVideo : GPBMessage
 
-/** / video width */
+/** / Ширина видео в пикселях */
 @property(nonatomic, readwrite) int32_t w;
 
-/** / video height */
+/** / Высота видео в пикселях */
 @property(nonatomic, readwrite) int32_t h;
 
+/** / Длительность видео в секундах */
 @property(nonatomic, readwrite) int32_t duration;
 
 @end
@@ -1534,10 +1644,11 @@ typedef GPB_ENUM(DocumentExVoice_FieldNumber) {
 };
 
 /**
- * File voice extension
+ * / Сведения об аудио-файле
  **/
 GPB_FINAL @interface DocumentExVoice : GPBMessage
 
+/** / Длительность аудио в секундах */
 @property(nonatomic, readwrite) int32_t duration;
 
 @end
@@ -1549,10 +1660,11 @@ typedef GPB_ENUM(JsonMessage_FieldNumber) {
 };
 
 /**
- * Custom-data JsonMessage
+ * / Сообщение содержащее JSON
  **/
 GPB_FINAL @interface JsonMessage : GPBMessage
 
+/** / JSON-тело сообщения */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *rawJson;
 
 @end
@@ -1560,7 +1672,7 @@ GPB_FINAL @interface JsonMessage : GPBMessage
 #pragma mark - UnsupportedMessage
 
 /**
- * Explicit type for unsupported message
+ * / Неподдерживаемое сообщение
  **/
 GPB_FINAL @interface UnsupportedMessage : GPBMessage
 
@@ -1580,46 +1692,46 @@ typedef GPB_ENUM(StickerMessage_FieldNumber) {
 };
 
 /**
- * Sticker message
+ * / Сообщение содержащее стикер
  **/
 GPB_FINAL @interface StickerMessage : GPBMessage
 
-/** / Optional Unique ID of sticker */
+/** / Идентификатор стикера */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *stickerId;
 /** Test to see if @c stickerId has been set. */
 @property(nonatomic, readwrite) BOOL hasStickerId;
 
-/** / Optional Fast preview of sticker in webp format */
+/** / Превью стикера в формате WEBP */
 @property(nonatomic, readwrite, strong, null_resettable) GPBBytesValue *fastPreview;
 /** Test to see if @c fastPreview has been set. */
 @property(nonatomic, readwrite) BOOL hasFastPreview;
 
-/** / Optional 512x512 sticker image in webp format */
+/** / Стикер в формате 512x512 пикселей */
 @property(nonatomic, readwrite, strong, null_resettable) ImageLocation *image512;
 /** Test to see if @c image512 has been set. */
 @property(nonatomic, readwrite) BOOL hasImage512;
 
-/** / Optional 256x256 sticker image in webp format */
+/** / Стикер в формате 256x256 пикселей */
 @property(nonatomic, readwrite, strong, null_resettable) ImageLocation *image256;
 /** Test to see if @c image256 has been set. */
 @property(nonatomic, readwrite) BOOL hasImage256;
 
-/** / Optional Collection ID */
+/** / Идентификатор стикерпака */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *stickerCollectionId;
 /** Test to see if @c stickerCollectionId has been set. */
 @property(nonatomic, readwrite) BOOL hasStickerCollectionId;
 
-/** / Optional Collection Access Hash */
+/** / Ключ доступа к стикерпаку */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *stickerCollectionAccessHash;
 /** Test to see if @c stickerCollectionAccessHash has been set. */
 @property(nonatomic, readwrite) BOOL hasStickerCollectionAccessHash;
 
-/** / Sticker emoji */
+/** / Эмодзи стикера */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *emoji;
 /** Test to see if @c emoji has been set. */
 @property(nonatomic, readwrite) BOOL hasEmoji;
 
-/** / Animated sticker json payload */
+/** / Анимационный JSON */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *animatedStickerJson;
 /** Test to see if @c animatedStickerJson has been set. */
 @property(nonatomic, readwrite) BOOL hasAnimatedStickerJson;
@@ -1634,12 +1746,14 @@ typedef GPB_ENUM(BinaryMessage_FieldNumber) {
 };
 
 /**
- * Binary Message. Useful for implementing your own content types
+ * / Двоичное сообщение
  **/
 GPB_FINAL @interface BinaryMessage : GPBMessage
 
+/** / Тэг контента */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *contentTag;
 
+/** / Тело двоичного сообщения */
 @property(nonatomic, readwrite, copy, null_resettable) NSData *msg;
 
 @end
@@ -1647,7 +1761,7 @@ GPB_FINAL @interface BinaryMessage : GPBMessage
 #pragma mark - EmptyMessage
 
 /**
- * Empty Message
+ * / Пустое сообщение
  **/
 GPB_FINAL @interface EmptyMessage : GPBMessage
 
@@ -1660,11 +1774,11 @@ typedef GPB_ENUM(DeletedMessage_FieldNumber) {
 };
 
 /**
- * Deleted message
+ * / Удаленное сообщение
  **/
 GPB_FINAL @interface DeletedMessage : GPBMessage
 
-/** / Deleted locally message */
+/** / Флаг локальности удаления */
 @property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isLocal;
 /** Test to see if @c isLocal has been set. */
 @property(nonatomic, readwrite) BOOL hasIsLocal;
@@ -1680,19 +1794,16 @@ typedef GPB_ENUM(DialogShort_FieldNumber) {
 };
 
 /**
- * Short Dialog from grouped conversation list
+ * / deprecated
  **/
 GPB_FINAL @interface DialogShort : GPBMessage
 
-/** / Peer of conversation */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/** / Conversation unread count */
 @property(nonatomic, readwrite) int32_t counter;
 
-/** / Conversation top message date */
 @property(nonatomic, readwrite) int64_t date;
 
 @end
@@ -1706,7 +1817,7 @@ typedef GPB_ENUM(DialogGroup_FieldNumber) {
 };
 
 /**
- * Grouped dialog list
+ * / deprecated
  **/
 GPB_FINAL @interface DialogGroup : GPBMessage
 
@@ -1728,7 +1839,7 @@ typedef GPB_ENUM(SearchPredicate_FieldNumber) {
 };
 
 /**
- * Predicate for searching in custom profile
+ * / deprecated
  **/
 GPB_FINAL @interface SearchPredicate : GPBMessage
 
@@ -1748,14 +1859,14 @@ typedef GPB_ENUM(ForwardItem_FieldNumber) {
 };
 
 /**
- * Forwarding messages list item
+ * / Описание элемента списка пересылаемых сообщений
  **/
 GPB_FINAL @interface ForwardItem : GPBMessage
 
-/** / Id for message deduplication */
+/** / Дедуплицирующий идентификатор (клиентский идентификатор) */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *deduplicationId;
 
-/** / Original message id */
+/** / Идентификатор пересылаемого сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
@@ -1777,44 +1888,52 @@ typedef GPB_ENUM(RequestSendMessage_FieldNumber) {
 };
 
 /**
- * Sending plain message
+ * / Запрос на посылку сообщения
  **/
 GPB_FINAL @interface RequestSendMessage : GPBMessage
 
+/** / Внешний пир чата, в который отправляется сообщение */
 @property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/** / Id for message deduplication */
+/** / Дедуплицирующий идентификатор */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *deduplicationId;
 
+/** / Содержимое сообщения (может быть пустым при наличии непустого списка сообщений для пересылки) */
 @property(nonatomic, readwrite, strong, null_resettable) MessageContent *message;
 /** Test to see if @c message has been set. */
 @property(nonatomic, readwrite) BOOL hasMessage;
 
-/** / if not empty, then message will be send to this user only */
+/**
+ * / Ограничение на получателя -- при указании значения, сообщение в рамках чата-приемника будет направлено только указанному пользователю
+ * / deprecated
+ **/
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *isOnlyForUser;
 /** Test to see if @c isOnlyForUser has been set. */
 @property(nonatomic, readwrite) BOOL hasIsOnlyForUser;
 
-/** / If current message forwards some other */
+/** / Список сообщений для пересылки совместно с отправкой этого сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<ForwardItem*> *forwardsArray;
 /** The number of items in @c forwardsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger forwardsArray_Count;
 
-/** / If current message is a reply on some other */
+/** / Ссылка на сообщения, ответом на которые является это сообщение */
 @property(nonatomic, readwrite, strong, null_resettable) ReferencedMessages *reply;
 /** Test to see if @c reply has been set. */
 @property(nonatomic, readwrite) BOOL hasReply;
 
+/** / deprecated */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<SearchPredicate*> *predicatesArray;
 /** The number of items in @c predicatesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger predicatesArray_Count;
 
+/** / deprecated */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *whiteListArray;
 /** The number of items in @c whiteListArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger whiteListArray_Count;
 
+/** / deprecated */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *blackListArray;
 /** The number of items in @c blackListArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger blackListArray_Count;
@@ -1828,49 +1947,60 @@ typedef GPB_ENUM(RequestSendMessageAsync_FieldNumber) {
   RequestSendMessageAsync_FieldNumber_DeduplicationId = 2,
   RequestSendMessageAsync_FieldNumber_Message = 3,
   RequestSendMessageAsync_FieldNumber_IsOnlyForUser = 4,
-  RequestSendMessageAsync_FieldNumber_Forward = 5,
+  RequestSendMessageAsync_FieldNumber_ForwardsArray = 5,
   RequestSendMessageAsync_FieldNumber_Reply = 6,
   RequestSendMessageAsync_FieldNumber_PredicatesArray = 7,
   RequestSendMessageAsync_FieldNumber_WhiteListArray = 8,
   RequestSendMessageAsync_FieldNumber_BlackListArray = 9,
 };
 
+/**
+ * / Запрос на асинхронную отправку сообщения
+ **/
 GPB_FINAL @interface RequestSendMessageAsync : GPBMessage
 
+/** / Внешний пир чата, в который отправляется сообщение */
 @property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/** / Id for message deduplication */
+/** / Дедуплицирующий идентификатор */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *deduplicationId;
 
+/** / Содержимое сообщения (может быть пустым при наличии непустого списка сообщений для пересылки) */
 @property(nonatomic, readwrite, strong, null_resettable) MessageContent *message;
 /** Test to see if @c message has been set. */
 @property(nonatomic, readwrite) BOOL hasMessage;
 
-/** / if not empty, then message will be send to this user only */
+/**
+ * / Ограничение на получателя -- при указании значения, сообщение в рамках чата-приемника будет направлено только указанному пользователю
+ * / deprecated
+ **/
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *isOnlyForUser;
 /** Test to see if @c isOnlyForUser has been set. */
 @property(nonatomic, readwrite) BOOL hasIsOnlyForUser;
 
-/** / If current message forwards some other */
-@property(nonatomic, readwrite, strong, null_resettable) ReferencedMessages *forward;
-/** Test to see if @c forward has been set. */
-@property(nonatomic, readwrite) BOOL hasForward;
+/** / Список сообщений для пересылки совместно с отправкой этого сообщения */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<ForwardItem*> *forwardsArray;
+/** The number of items in @c forwardsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger forwardsArray_Count;
 
-/** / If current message is a reply on some other */
+/** / Ссылка на сообщения, ответом на которые является это сообщение */
 @property(nonatomic, readwrite, strong, null_resettable) ReferencedMessages *reply;
 /** Test to see if @c reply has been set. */
 @property(nonatomic, readwrite) BOOL hasReply;
 
+/** / deprecated */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<SearchPredicate*> *predicatesArray;
 /** The number of items in @c predicatesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger predicatesArray_Count;
 
+/** / deprecated */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *whiteListArray;
 /** The number of items in @c whiteListArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger whiteListArray_Count;
 
+/** / deprecated */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *blackListArray;
 /** The number of items in @c blackListArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger blackListArray_Count;
@@ -1887,25 +2017,30 @@ typedef GPB_ENUM(RequestUpdateMessage_FieldNumber) {
 };
 
 /**
- * Changing Message content
+ * / Запрос на изменение сообщения
  **/
 GPB_FINAL @interface RequestUpdateMessage : GPBMessage
 
-/** / Message id */
+/** / Пир чата, который содержит редактируемое сообщение */
+@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
+
+/** / Идентификатор изменяемого сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
 
+/** / Обновленное содержимое сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) MessageContent *updatedMessage;
 /** Test to see if @c updatedMessage has been set. */
 @property(nonatomic, readwrite) BOOL hasUpdatedMessage;
 
-/** / Date from this message when it was changed last time */
+/**
+ * / Дата последней известной клиенту даты модификации изменяемого сообщения
+ * / (используется для упорядочивания совместных редактур)
+ **/
 @property(nonatomic, readwrite) int64_t lastEditedAt;
-
-@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
 
 @end
 
@@ -1917,14 +2052,19 @@ typedef GPB_ENUM(RequestMessageReceived_FieldNumber) {
 };
 
 /**
- * Confirmation of plain message receive by device
+ * / Запрос на уведомление о получении сообщений в чате
  **/
 GPB_FINAL @interface RequestMessageReceived : GPBMessage
 
+/** / Внешний пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/**
+ * / Дата, до которой включительно получены сообщения из лента сообщений пира
+ * / (извлекается из даты отправки сообщений в ленте)
+ **/
 @property(nonatomic, readwrite) int64_t date;
 
 @end
@@ -1937,14 +2077,19 @@ typedef GPB_ENUM(RequestMessageRead_FieldNumber) {
 };
 
 /**
- * Marking plain messages as read
+ * / Запрос на уведомление о прочтении сообщений в чате
  **/
 GPB_FINAL @interface RequestMessageRead : GPBMessage
 
+/** / Внешний пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/**
+ * / Дата, до которой включительно дочитаны сообщения из лента сообщений пира
+ * / (извлекается из даты отправки сообщений в ленте)
+ **/
 @property(nonatomic, readwrite) int64_t date;
 
 @end
@@ -1958,19 +2103,21 @@ typedef GPB_ENUM(RequestDeleteMessage_FieldNumber) {
 };
 
 /**
- * Deleting message
+ * / Запрос на удаление сообщения
  **/
 GPB_FINAL @interface RequestDeleteMessage : GPBMessage
 
+/** / Пир чата содержащего сообщение для удаления */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/** / Message id */
+/** / Идентификатор сообщения для удаления */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *messageId;
 /** Test to see if @c messageId has been set. */
 @property(nonatomic, readwrite) BOOL hasMessageId;
 
+/** / Флаг локальности удаления */
 @property(nonatomic, readwrite) BOOL deleteForUserOnly;
 
 @end
@@ -1983,14 +2130,16 @@ typedef GPB_ENUM(RequestClearChat_FieldNumber) {
 };
 
 /**
- * Clearing of conversation (without removing dialog from dialogs list)
+ * / Запрос на очистку ленты чата
  **/
 GPB_FINAL @interface RequestClearChat : GPBMessage
 
+/** / Внешний пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Дата последнего известного на клиенте сообщения из ленты чата */
 @property(nonatomic, readwrite) int64_t lastMessageDate;
 
 @end
@@ -2003,14 +2152,17 @@ typedef GPB_ENUM(RequestDeleteChat_FieldNumber) {
 };
 
 /**
- * Deleting of conversation (also leave group for group conversations)
+ * / Запрос на удаление чата
+ * / deprecated
  **/
 GPB_FINAL @interface RequestDeleteChat : GPBMessage
 
+/** / Внешний пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Дата последнего известного на клиенте сообщения из ленты чата */
 @property(nonatomic, readwrite) int64_t lastMessageDate;
 
 @end
@@ -2022,10 +2174,11 @@ typedef GPB_ENUM(RequestArchiveChat_FieldNumber) {
 };
 
 /**
- * Archiving chat
+ * / Запрос на архивирование чата
  **/
 GPB_FINAL @interface RequestArchiveChat : GPBMessage
 
+/** / Внешний пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
@@ -2042,25 +2195,28 @@ typedef GPB_ENUM(ResponseSendMessage_FieldNumber) {
   ResponseSendMessage_FieldNumber_Clock = 5,
 };
 
+/**
+ * / Ответ на запрос на посылку сообщения в чат
+ **/
 GPB_FINAL @interface ResponseSendMessage : GPBMessage
 
-/** / Message id */
+/** / deprecated */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *messageId;
 /** Test to see if @c messageId has been set. */
 @property(nonatomic, readwrite) BOOL hasMessageId;
 
-/** / Message creation date from server */
+/** / deprecated */
 @property(nonatomic, readwrite) int64_t messageDate;
 
-/** / Previous message id */
+/** / deprecated */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *previousMessageId;
 /** Test to see if @c previousMessageId has been set. */
 @property(nonatomic, readwrite) BOOL hasPreviousMessageId;
 
-/** Message creator */
+/** / deprecated */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *creatorUserId;
 
-/** Clock of this message (initially equals the message_date field) */
+/** / deprecated */
 @property(nonatomic, readwrite) int64_t clock;
 
 @end
@@ -2093,68 +2249,80 @@ typedef GPB_ENUM(UpdateMessage_Attach_OneOfCase) {
 };
 
 /**
- * Update about plain message
+ * / Структура уведомления о получении нового сообщения
  **/
 GPB_FINAL @interface UpdateMessage : GPBMessage
 
+/** / Пир чата, в который добавлено сообщение */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Идентификатор учетной записи пользователя-отправителя сообщения */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *senderUserId;
 
-/** message creation date (interval end) */
+/** / Дата создания сообщения (в миллисекундах от unix epoch) */
 @property(nonatomic, readwrite) int64_t date;
 
-/** / Message id */
+/** / Идентификатор сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
 
+/** / Содержание сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) MessageContent *message;
 /** Test to see if @c message has been set. */
 @property(nonatomic, readwrite) BOOL hasMessage;
 
-/** / attributes to help reasoning about message */
+/** / Атрибуты сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) MessageAttributes *attributes;
 /** Test to see if @c attributes has been set. */
 @property(nonatomic, readwrite) BOOL hasAttributes;
 
 @property(nonatomic, readonly) UpdateMessage_Attach_OneOfCase attachOneOfCase;
 
+/** / Ссылка на сообщения, ответом на которые является это сообщение */
 @property(nonatomic, readwrite, strong, null_resettable) ReferencedMessages *reply;
 
+/** / Ссылка на сообщение-оригинал, если данное сообщение было переслано из другого чата */
 @property(nonatomic, readwrite, strong, null_resettable) ForwardSource *forwardSource;
 
-/** / Message id of previos message from current conversation */
+/** / Идентификатор предыдущего сообщения в этом чате */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *previousMid;
 /** Test to see if @c previousMid has been set. */
 @property(nonatomic, readwrite) BOOL hasPreviousMid;
 
-/** interval start */
+/** / Дата создания предыдущего сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *prevMessageDate;
 /** Test to see if @c prevMessageDate has been set. */
 @property(nonatomic, readwrite) BOOL hasPrevMessageDate;
 
-/** / counter clock of the unread messages */
+/** / Версия (дата) последнего изменения чата */
 @property(nonatomic, readwrite) int64_t unreadCounterClock;
 
-/** / counter of the unread messages */
+/** / Количество непрочитанных сообщений в чате */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *counter;
 /** Test to see if @c counter has been set. */
 @property(nonatomic, readwrite) BOOL hasCounter;
 
-/** / date of my own read */
+/**
+ * / Дата последней прочитки, посланной пользователем-получателем уведомления, в этот чат
+ * / (в миллисекундах от unix epoch)
+ **/
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *myReadDate;
 /** Test to see if @c myReadDate has been set. */
 @property(nonatomic, readwrite) BOOL hasMyReadDate;
 
+/**
+ * / Дедуплицирующий идентификатор сообщения
+ * / [тут его слать не нужно, он имеет смысл только в UpdateMessageSent, может запутать клиентских разработчиков]
+ **/
 @property(nonatomic, readwrite, copy, null_resettable) NSString *randomId;
 
-/** when greater than date, then message is edited */
+/** / Дата последней модификации сообщения */
 @property(nonatomic, readwrite) int64_t modifiedAt;
 
-/** make sense for edited message only (modified_at > date) */
+/** / deprecated */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *prevEditInPeerAt;
 /** Test to see if @c prevEditInPeerAt has been set. */
 @property(nonatomic, readwrite) BOOL hasPrevEditInPeerAt;
@@ -2175,34 +2343,44 @@ typedef GPB_ENUM(UpdateMessageContentChanged_FieldNumber) {
   UpdateMessageContentChanged_FieldNumber_EditedAt = 4,
   UpdateMessageContentChanged_FieldNumber_PrevEditInPeerAt = 5,
   UpdateMessageContentChanged_FieldNumber_IsSilent = 6,
+  UpdateMessageContentChanged_FieldNumber_Attributes = 7,
 };
 
 /**
- * Update about message change
+ * / Структура уведомления об изменении сообщения
  **/
 GPB_FINAL @interface UpdateMessageContentChanged : GPBMessage
 
+/** / Пир чата, в котором изменилось сообщение */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/** / Message id */
+/** / Идентификатор измененного сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
 
+/** / Содржание измененного сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) MessageContent *message;
 /** Test to see if @c message has been set. */
 @property(nonatomic, readwrite) BOOL hasMessage;
 
+/** / Дата последней модификации измененного сообщения */
 @property(nonatomic, readwrite) int64_t editedAt;
 
+/** / deprecated */
 @property(nonatomic, readwrite) int64_t prevEditInPeerAt;
 
-/** Update on behalf of a system, should not be displayed as edited. */
+/** / Сообщение не должно содержать признаков редактирования на клиенте (edited и других приписок) */
 @property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isSilent;
 /** Test to see if @c isSilent has been set. */
 @property(nonatomic, readwrite) BOOL hasIsSilent;
+
+/** / Аттрибуты сообщения */
+@property(nonatomic, readwrite, strong, null_resettable) MessageAttributes *attributes;
+/** Test to see if @c attributes has been set. */
+@property(nonatomic, readwrite) BOOL hasAttributes;
 
 @end
 
@@ -2219,6 +2397,7 @@ typedef GPB_ENUM(UpdateMessageSent_FieldNumber) {
   UpdateMessageSent_FieldNumber_MyReadDate = 8,
   UpdateMessageSent_FieldNumber_Reply = 10,
   UpdateMessageSent_FieldNumber_ForwardSource = 11,
+  UpdateMessageSent_FieldNumber_Attributes = 12,
 };
 
 typedef GPB_ENUM(UpdateMessageSent_Attach_OneOfCase) {
@@ -2228,44 +2407,56 @@ typedef GPB_ENUM(UpdateMessageSent_Attach_OneOfCase) {
 };
 
 /**
- * Update about message sent
+ * / Уведомление о доставке сообщения на сервер (посылается только отправителю сообщения)
  **/
 GPB_FINAL @interface UpdateMessageSent : GPBMessage
 
+/** / Пир чата, в который добавилось сообщение */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Дедуплицирующий идентификатор */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
+/** / Дата отправки сообщения */
 @property(nonatomic, readwrite) int64_t date;
 
-/** / Message id */
+/** / Идентификатор сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
 
-/** / Previous message id in current conversation */
+/** / Идентификатор предыдущего сообщения в чате */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *prevMid;
 /** Test to see if @c prevMid has been set. */
 @property(nonatomic, readwrite) BOOL hasPrevMid;
 
-/** / counter of unread messages */
+/** / Версия (дата) последнего изменения чата */
 @property(nonatomic, readwrite) int64_t unreadCounterClock;
 
+/** / Число непрочитанных сообщений в чате */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *unreadCounter;
 /** Test to see if @c unreadCounter has been set. */
 @property(nonatomic, readwrite) BOOL hasUnreadCounter;
 
+/** / Дата последней присланной текущим пользователем прочитки сообщений в ленте чата */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *myReadDate;
 /** Test to see if @c myReadDate has been set. */
 @property(nonatomic, readwrite) BOOL hasMyReadDate;
 
 @property(nonatomic, readonly) UpdateMessageSent_Attach_OneOfCase attachOneOfCase;
 
+/** / Ссылка на сообщения, ответом на которые является это сообщение */
 @property(nonatomic, readwrite, strong, null_resettable) ReferencedMessages *reply;
 
+/** / Ссылка на сообщение-оригинал, если данное сообщение было переслано из другого чата */
 @property(nonatomic, readwrite, strong, null_resettable) ForwardSource *forwardSource;
+
+/** / Аттрибуты сообщения */
+@property(nonatomic, readwrite, strong, null_resettable) MessageAttributes *attributes;
+/** Test to see if @c attributes has been set. */
+@property(nonatomic, readwrite) BOOL hasAttributes;
 
 @end
 
@@ -2283,15 +2474,19 @@ typedef GPB_ENUM(UpdateMessageReceived_FieldNumber) {
 };
 
 /**
- * Update about message received
+ * / Структура уведомления о получении сообщения
  **/
 GPB_FINAL @interface UpdateMessageReceived : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/** / when message was receive */
+/**
+ * / Дата в миллисекундах от unix epoch, до которой все сообщения считаются полученными
+ * / [переименовать]
+ **/
 @property(nonatomic, readwrite) int64_t startDate;
 
 /** / deprecated */
@@ -2308,15 +2503,19 @@ typedef GPB_ENUM(UpdateMessageRead_FieldNumber) {
 };
 
 /**
- * Update about message read
+ * / Структура уведомления о прочитке сообщения
  **/
 GPB_FINAL @interface UpdateMessageRead : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/** / when message was read */
+/**
+ * / Дата в миллисекундах от unix epoch, до которой все сообщения считаются прочитанными
+ * / [переименовать]
+ **/
 @property(nonatomic, readwrite) int64_t startDate;
 
 /** / deprecated */
@@ -2334,21 +2533,25 @@ typedef GPB_ENUM(UpdateMessageReadByMe_FieldNumber) {
 };
 
 /**
- * Update about message read by me
+ * / Структура уведомления о прочитке сообщения текущим пользователем
  **/
 GPB_FINAL @interface UpdateMessageReadByMe : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/** / date of the read message */
+/**
+ * / Дата в миллисекундах от unix epoch, до которой все сообщения считаются прочитанными текущим пользователем
+ * / [переименовать]
+ **/
 @property(nonatomic, readwrite) int64_t startDate;
 
-/** / when message was read */
+/** / Дата последнего изменения чата */
 @property(nonatomic, readwrite) int64_t unreadCounterClock;
 
-/** / counter of unread messages */
+/** / Количество непрочитанных сообщений */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *unreadCounter;
 /** Test to see if @c unreadCounter has been set. */
 @property(nonatomic, readwrite) BOOL hasUnreadCounter;
@@ -2365,7 +2568,8 @@ typedef GPB_ENUM(UpdateMessageDelete_FieldNumber) {
 };
 
 /**
- * Update about message delete
+ * / Структура уведомления об удаленном сообщении
+ * / deprecated
  **/
 GPB_FINAL @interface UpdateMessageDelete : GPBMessage
 
@@ -2373,17 +2577,14 @@ GPB_FINAL @interface UpdateMessageDelete : GPBMessage
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/** / Deleted messages */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UUIDValue*> *midsArray;
 /** The number of items in @c midsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger midsArray_Count;
 
-/** / counter of unread messages */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *counter;
 /** Test to see if @c counter has been set. */
 @property(nonatomic, readwrite) BOOL hasCounter;
 
-/** / date? related for this unread counter */
 @property(nonatomic, readwrite) int64_t actionDate;
 
 @end
@@ -2396,14 +2597,16 @@ typedef GPB_ENUM(UpdateChatClear_FieldNumber) {
 };
 
 /**
- * Update about chat clear
+ * / Структура уведомления об очистке ленты чата
  **/
 GPB_FINAL @interface UpdateChatClear : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Дата очистки в миллисекундах от unix epoch */
 @property(nonatomic, readwrite) int64_t actionDate;
 
 @end
@@ -2416,14 +2619,16 @@ typedef GPB_ENUM(UpdateChatDelete_FieldNumber) {
 };
 
 /**
- * Update about chat delete
+ * / Структура уведомления об далении чата
  **/
 GPB_FINAL @interface UpdateChatDelete : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** Дата удаления в миллисекундах от unix epoch */
 @property(nonatomic, readwrite) int64_t actionDate;
 
 @end
@@ -2435,10 +2640,11 @@ typedef GPB_ENUM(UpdateChatArchive_FieldNumber) {
 };
 
 /**
- * Update about chat archive
+ * / Структура уведомлени об архивировании чата
  **/
 GPB_FINAL @interface UpdateChatArchive : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
@@ -2452,7 +2658,7 @@ typedef GPB_ENUM(UpdateChatGroupsChanged_FieldNumber) {
 };
 
 /**
- * Update about chat groups changed. Called only when adding, removing and reordering of grouped dialog.
+ * / deprecated
  **/
 GPB_FINAL @interface UpdateChatGroupsChanged : GPBMessage
 
@@ -2473,20 +2679,26 @@ typedef GPB_ENUM(UpdateSendMessageError_FieldNumber) {
 };
 
 /**
- * Update about rejection of message send request
+ * / Структура уведомления об отказе в отправке сообщения
+ * / (посылается, если отказ произошел за пределами запроса-ответа на отправку)
  **/
 GPB_FINAL @interface UpdateSendMessageError : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Дедуплицирующий идентификатор */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
+/** / Дата отправки сообщения в миллисекундах от unix epoch */
 @property(nonatomic, readwrite) int64_t date;
 
+/** / Название подсистемы, отказавшей в отправке сообщения */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *hookId;
 
+/** / Причина отказа в отправке сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) UpdateErrorCause *cause;
 /** Test to see if @c cause has been set. */
 @property(nonatomic, readwrite) BOOL hasCause;
@@ -2504,23 +2716,28 @@ typedef GPB_ENUM(UpdateEditMessageError_FieldNumber) {
 };
 
 /**
- * Update about rejection of message update request
+ * / Структура уведомления об отказе в редактировании сообщения
+ * / (посылается, если отказ произошел за пределами запроса-ответа на редактирование)
  **/
 GPB_FINAL @interface UpdateEditMessageError : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/** related message id */
+/** / Идентификатор сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
 
+/** / Дата отправки события на изменение сообщения в миллисекундах от unix epoch */
 @property(nonatomic, readwrite) int64_t date;
 
+/** / Название подсистемы, отказавшей в редактировании сообщения */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *hookId;
 
+/** / Причина отказа в редакировании сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) UpdateErrorCause *cause;
 /** Test to see if @c cause has been set. */
 @property(nonatomic, readwrite) BOOL hasCause;
@@ -2537,21 +2754,29 @@ typedef GPB_ENUM(UpdateDeleteMessageError_FieldNumber) {
   UpdateDeleteMessageError_FieldNumber_Cause = 5,
 };
 
+/**
+ * / Структура уведомления об отказе в удалении сообщения
+ * / (посылается, если отказ произошел за пределами запроса-ответа на удаление)
+ **/
 GPB_FINAL @interface UpdateDeleteMessageError : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/** related message id */
+/** / Идентификатор сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
 
+/** / Дата отправки запроса на удаление в миллисекундах от unix epoch */
 @property(nonatomic, readwrite) int64_t date;
 
+/** / Название подсистемы, отказавшей в удалении сообщения */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *hookId;
 
+/** / Причина отказа в удалении сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) UpdateErrorCause *cause;
 /** Test to see if @c cause has been set. */
 @property(nonatomic, readwrite) BOOL hasCause;
@@ -2568,21 +2793,29 @@ typedef GPB_ENUM(UpdateMessageReadError_FieldNumber) {
   UpdateMessageReadError_FieldNumber_Cause = 5,
 };
 
+/**
+ * / Структура уведомления об отказе в прочитке ленты сообщений
+ * / (посылается, если отказ произошел за пределами запроса-ответа о прочитке)
+ **/
 GPB_FINAL @interface UpdateMessageReadError : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/** related message id */
+/** / Идентификатор сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
 
+/** / Дата отправки запроса на прочитку в миллисекундах от unix epoch */
 @property(nonatomic, readwrite) int64_t date;
 
+/** / Название подсистемы, отказавшей в прочитке */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *hookId;
 
+/** / Причина отказа в прочитке */
 @property(nonatomic, readwrite, strong, null_resettable) UpdateErrorCause *cause;
 /** Test to see if @c cause has been set. */
 @property(nonatomic, readwrite) BOOL hasCause;
@@ -2599,21 +2832,29 @@ typedef GPB_ENUM(UpdateMessageReceivedError_FieldNumber) {
   UpdateMessageReceivedError_FieldNumber_Cause = 5,
 };
 
+/**
+ * / Структура уведомления об отказе в получении сообщений
+ * / (посылается, если отказ произошел за пределами запроса-ответа о получении сообщений)
+ **/
 GPB_FINAL @interface UpdateMessageReceivedError : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/** related message id */
+/** / Идентификатор сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
 
+/** / Дата отправки запроса о получении сообщений в миллисекундах от unix epoch */
 @property(nonatomic, readwrite) int64_t date;
 
+/** / Название подсистемы, отказавшей в запросе о получении сообщений */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *hookId;
 
+/** / Причина отказа в запросе о получении сообщений */
 @property(nonatomic, readwrite, strong, null_resettable) UpdateErrorCause *cause;
 /** Test to see if @c cause has been set. */
 @property(nonatomic, readwrite) BOOL hasCause;
@@ -2629,16 +2870,24 @@ typedef GPB_ENUM(UpdateClearChatError_FieldNumber) {
   UpdateClearChatError_FieldNumber_Cause = 4,
 };
 
+/**
+ * / Структура уведомления об отказе в очистке чата
+ * / (посылается, если отказ произошел за пределами запроса-ответа об очистке чата)
+ **/
 GPB_FINAL @interface UpdateClearChatError : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Дата отправки запроса об очистке чата в миллисекундах от unix epoch */
 @property(nonatomic, readwrite) int64_t date;
 
+/** / Название подсистемы, отказавшей в запросе об очистке чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *hookId;
 
+/** / Причина отказа в запросе об очистке чата */
 @property(nonatomic, readwrite, strong, null_resettable) UpdateErrorCause *cause;
 /** Test to see if @c cause has been set. */
 @property(nonatomic, readwrite) BOOL hasCause;
@@ -2654,16 +2903,24 @@ typedef GPB_ENUM(UpdateDeleteChatError_FieldNumber) {
   UpdateDeleteChatError_FieldNumber_Cause = 4,
 };
 
+/**
+ * / Структура уведомления об отказе в удалении чата
+ * / (посылается, если отказ произошел за пределами запроса-ответа об удалении чата)
+ **/
 GPB_FINAL @interface UpdateDeleteChatError : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Дата отправки запроса об удалении чата в миллисекундах от unix epoch */
 @property(nonatomic, readwrite) int64_t date;
 
+/** / Название подсистемы, отказавшей в запросе об удалении чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *hookId;
 
+/** / Причина отказа в запросе об удалении чата */
 @property(nonatomic, readwrite, strong, null_resettable) UpdateErrorCause *cause;
 /** Test to see if @c cause has been set. */
 @property(nonatomic, readwrite) BOOL hasCause;
@@ -2679,16 +2936,24 @@ typedef GPB_ENUM(UpdateFavouriteDialogError_FieldNumber) {
   UpdateFavouriteDialogError_FieldNumber_Cause = 4,
 };
 
+/**
+ * / Структура уведомления об отказе в добавлении чата в избранное
+ * / (посылается, если отказ произошел за пределами запроса-ответа о добавлении чата в избранное)
+ **/
 GPB_FINAL @interface UpdateFavouriteDialogError : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Дата отправки запроса о добавлении чата избранное в миллисекундах от unix epoch */
 @property(nonatomic, readwrite) int64_t date;
 
+/** / Название подсистемы, отказавшей в запросе на добавление чата в избранное */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *hookId;
 
+/** / Причина отказа в запросе на добавление чата в избранное */
 @property(nonatomic, readwrite, strong, null_resettable) UpdateErrorCause *cause;
 /** Test to see if @c cause has been set. */
 @property(nonatomic, readwrite) BOOL hasCause;
@@ -2704,16 +2969,24 @@ typedef GPB_ENUM(UpdateUnfavouriteDialogError_FieldNumber) {
   UpdateUnfavouriteDialogError_FieldNumber_Cause = 4,
 };
 
+/**
+ * / Структура уведомления об отказе в удалении чата из избранного
+ * / (посылается, если отказ произошел за пределами запроса-ответа об удалении чата из избранного)
+ **/
 GPB_FINAL @interface UpdateUnfavouriteDialogError : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Дата отправки запроса об удалении чата из избранного в миллисекундах от unix epoch */
 @property(nonatomic, readwrite) int64_t date;
 
+/** / Название подсистемы, отказавшей в запросе на удаление чата из избранного */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *hookId;
 
+/** / Причина отказа в запросе на удаление чата из избранного */
 @property(nonatomic, readwrite, strong, null_resettable) UpdateErrorCause *cause;
 /** Test to see if @c cause has been set. */
 @property(nonatomic, readwrite) BOOL hasCause;
@@ -2729,16 +3002,24 @@ typedef GPB_ENUM(UpdateReadDialogLaterError_FieldNumber) {
   UpdateReadDialogLaterError_FieldNumber_Cause = 4,
 };
 
+/**
+ * / Структура уведомления об отказе в отправке отложенной прочитки
+ * / (посылается, если отказ произошел за пределами запроса-ответа отложенной прочитки)
+ **/
 GPB_FINAL @interface UpdateReadDialogLaterError : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Дата отправки запроса об отложенной прочитке в миллисекундах от unix epoch */
 @property(nonatomic, readwrite) int64_t date;
 
+/** / Название подсистемы, отказавшей в отложенной прочитке */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *hookId;
 
+/** / Причина отказа в запросе на отложеннную прочитку */
 @property(nonatomic, readwrite, strong, null_resettable) UpdateErrorCause *cause;
 /** Test to see if @c cause has been set. */
 @property(nonatomic, readwrite) BOOL hasCause;
@@ -2752,7 +3033,7 @@ typedef GPB_ENUM(ReferencedMessages_FieldNumber) {
 };
 
 /**
- * mids Referenced message ids
+ * Структура с упоминанием сообщений
  **/
 GPB_FINAL @interface ReferencedMessages : GPBMessage
 
@@ -2772,23 +3053,24 @@ typedef GPB_ENUM(ForwardSource_FieldNumber) {
 };
 
 /**
- * pointer to source of forwarded message
+ * / Структура с источником сообщения
  **/
 GPB_FINAL @interface ForwardSource : GPBMessage
 
-/** empty if viewer has no access to this peer */
+/** / Внешний пир чата из которого было переслано сообщение */
 @property(nonatomic, readwrite, strong, null_resettable) OutPeer *hostPeer;
 /** Test to see if @c hostPeer has been set. */
 @property(nonatomic, readwrite) BOOL hasHostPeer;
 
-/** empty if viewer has no access to this peer */
+/** / Внешний пир отправителя пересланного сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) OutPeer *senderPeer;
 /** Test to see if @c senderPeer has been set. */
 @property(nonatomic, readwrite) BOOL hasSenderPeer;
 
-/** used to avoid host_peer/sender_peer resolution */
+/** / Название чата из которого было переслано сообщение */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *hostPeerName;
 
+/** / Идентификатор оригинала сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
@@ -2820,51 +3102,63 @@ typedef GPB_ENUM(HistoryMessage_Attach_OneOfCase) {
 };
 
 /**
- * Message from history
+ * / Структура сообщения из ленты чата
  **/
 GPB_FINAL @interface HistoryMessage : GPBMessage
 
+/** / Идентификатор учетной записи пользователя автора сообщения */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *senderUserId;
 
+/** / Внешний пир чата, ленте которого принадлежит сообщение */
 @property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/** / Message id generated by server */
+/** / Идентификатор сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
 
+/** / Идентификатор предыдущего сообщения в ленте чата */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *prevMid;
 /** Test to see if @c prevMid has been set. */
 @property(nonatomic, readwrite) BOOL hasPrevMid;
 
+/** / Дата создания сообщения в миллисекндах от unix epoch */
 @property(nonatomic, readwrite) int64_t createdAt;
 
+/** / Содержание сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) MessageContent *message;
 /** Test to see if @c message has been set. */
 @property(nonatomic, readwrite) BOOL hasMessage;
 
+/** / Аттрибуты сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) MessageAttributes *attribute;
 /** Test to see if @c attribute has been set. */
 @property(nonatomic, readwrite) BOOL hasAttribute;
 
 @property(nonatomic, readonly) HistoryMessage_Attach_OneOfCase attachOneOfCase;
 
+/** / Ссылка на сообщения, ответом на которые является это сообщение */
 @property(nonatomic, readwrite, strong, null_resettable) ReferencedMessages *reply;
 
+/** / Ссылка на сообщение-оригинал, если данное сообщение было переслано из другого чата */
 @property(nonatomic, readwrite, strong, null_resettable) ForwardSource *forwardSource;
 
+/** / Дата последнего изменения сообщения в миллисекундах от unix epoch */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *editedAt;
 /** Test to see if @c editedAt has been set. */
 @property(nonatomic, readwrite) BOOL hasEditedAt;
 
+/** / Дедуплицирующий идентификатор */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *randomId;
 
+/** / Список реакций сообещния */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Reaction*> *reactionsArray;
 /** The number of items in @c reactionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger reactionsArray_Count;
 
+/** / Информация о треде под сообщением */
 @property(nonatomic, readwrite, strong, null_resettable) ThreadInfo *threadInfo;
 /** Test to see if @c threadInfo has been set. */
 @property(nonatomic, readwrite) BOOL hasThreadInfo;
@@ -2886,21 +3180,24 @@ typedef GPB_ENUM(RequestLoadMessageHistory_FieldNumber) {
 };
 
 /**
- * Loading history of chat
+ * / Запрос на загрузку истории сообщений
  **/
 GPB_FINAL @interface RequestLoadMessageHistory : GPBMessage
 
+/** / Внешний пир чата, историю сообщений которого требуется получить */
 @property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Отправная точка поиска сообщений */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *fromMid;
 /** Test to see if @c fromMid has been set. */
 @property(nonatomic, readwrite) BOOL hasFromMid;
 
-/** / forward, backward or both */
+/** / Режим загрузки истории сообщения */
 @property(nonatomic, readwrite) ListLoadMode loadMode;
 
+/** / Максимальное количество сообщений в ответе */
 @property(nonatomic, readwrite) int32_t limit;
 
 @end
@@ -2926,20 +3223,31 @@ typedef GPB_ENUM(ResponseLoadHistory_FieldNumber) {
   ResponseLoadHistory_FieldNumber_UnreadCount = 8,
 };
 
+/**
+ * / Ответ на запрос на загрузку истории сообщений
+ **/
 GPB_FINAL @interface ResponseLoadHistory : GPBMessage
 
+/** / Список сообщений */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<HistoryMessage*> *historyArray;
 /** The number of items in @c historyArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger historyArray_Count;
 
+/** / Список упомянутых в сообщении внешних пиров пользователей */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *userPeersArray;
 /** The number of items in @c userPeersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userPeersArray_Count;
 
-/** / counter of unread messages */
+/**
+ * / Количество непрочитанных сообщений в ленте чата
+ * / [нужно ли это здесь?]
+ **/
 @property(nonatomic, readwrite) int32_t unreadCount;
 
-/** / last conversation message date */
+/**
+ * / Дата отправки последнего сообщения в ленте чата
+ * / [нужно ли это здесь?]
+ **/
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *lastConversationMessageDate;
 /** Test to see if @c lastConversationMessageDate has been set. */
 @property(nonatomic, readwrite) BOOL hasLastConversationMessageDate;
@@ -2964,55 +3272,59 @@ typedef GPB_ENUM(Dialog_FieldNumber) {
 };
 
 /**
- * Conversation from history
- * peer
- * unreadCount
- * sortDate date of conversation for sorting
- * senderUid Sender of top message (may be zero)
- * isFavourite Is dialog favourite
- * rid Random ID of top message (may be zero)
- * mid Message id
- * date Date of top message (can't be zero)
- * message Content of message
- * firstUnreadDate Date of first unread message
- * attributes Optional top message attributes
- * pinnedMessages Optional pinned messages
- * historyMessage Optional last messages
+ * / Данные о диалоге
  **/
 GPB_FINAL @interface Dialog : GPBMessage
 
-/** / Peer of conversation */
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/** / counter of unread messages */
+/** / Количство непрочитанных сообщений в чате */
 @property(nonatomic, readwrite) int32_t unreadCount;
 
-/** / last dialog modification date */
+/** / Дата последнего изменения в чате */
 @property(nonatomic, readwrite) int64_t modifiedAt;
 
+/** / Список закреплённых в чате сообщений */
 @property(nonatomic, readwrite, strong, null_resettable) PinnedMessages *pinnedMessages;
 /** Test to see if @c pinnedMessages has been set. */
 @property(nonatomic, readwrite) BOOL hasPinnedMessages;
 
-/** / last message in this dialog */
+/** / Последнее сообщение в чате */
 @property(nonatomic, readwrite, strong, null_resettable) HistoryMessage *historyMessage;
 /** Test to see if @c historyMessage has been set. */
 @property(nonatomic, readwrite) BOOL hasHistoryMessage;
 
+/**
+ * / Дата последнего полученного кем-либо (кроме текущего пользователя) сообщения в этом чате
+ * / (в миллисекундах от unix epoch)
+ **/
 @property(nonatomic, readwrite) int64_t lastReceive;
 
+/**
+ * / Дата последней прочитки кем-либо (кроме текущего пользователя) сообщения в этом чате
+ * / (в миллисекундах от unix epoch)
+ **/
 @property(nonatomic, readwrite) int64_t lastRead;
 
+/**
+ * / Дата последней проставленной или изменённой реакции в это чате
+ * / (в миллисекундах от unix epoch)
+ **/
 @property(nonatomic, readwrite) int64_t lastReactionAt;
 
+/** / Помечен ли диалог модификатором "отложенной прочитки" */
 @property(nonatomic, readwrite) BOOL readLater;
 
+/** / Флаг глушения уведомлений в этом чате */
 @property(nonatomic, readwrite) BOOL isMuted;
 
+/** / Флаг избранности этого чата */
 @property(nonatomic, readwrite) BOOL isFavourite;
 
+/** / Флаг архивированности этого чата */
 @property(nonatomic, readwrite) BOOL isArchived;
 
 @end
@@ -3027,19 +3339,29 @@ typedef GPB_ENUM(RequestLoadDialogs_FieldNumber) {
 };
 
 /**
- * Loading conversation history
+ * / Запрос на получение списка диалогов
  **/
 GPB_FINAL @interface RequestLoadDialogs : GPBMessage
 
+/**
+ * / Минимальная дата модификации диалога для попадания в выдачу
+ * / (в миллисекундах от unix epoch)
+ **/
 @property(nonatomic, readwrite) int64_t fromDate;
 
+/** / Максимальное количество диалогов в выдаче */
 @property(nonatomic, readwrite) int32_t limit;
 
+/** / Список фильтров */
 // |filtersArray| contains |DialogsFilter|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *filtersArray;
 /** The number of items in @c filtersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger filtersArray_Count;
 
+/**
+ * / Включать в выдачу только диалоги с этими пирами
+ * / (фильтр не применяется, если этот список пуст)
+ **/
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Peer*> *peersToLoadArray;
 /** The number of items in @c peersToLoadArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger peersToLoadArray_Count;
@@ -3056,22 +3378,32 @@ typedef GPB_ENUM(ResponseLoadDialogs_FieldNumber) {
 };
 
 /**
- * / Contains dialogs and related peers and entities
+ * / Ответ на запрос на получение списка диалогов
  **/
 GPB_FINAL @interface ResponseLoadDialogs : GPBMessage
 
+/** / Список диалогов */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Dialog*> *dialogsArray;
 /** The number of items in @c dialogsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger dialogsArray_Count;
 
+/** / Список внешних пиров пользователей упомянутых в списке диалогов */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *userPeersArray;
 /** The number of items in @c userPeersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userPeersArray_Count;
 
+/**
+ * / Список внешних пиров групп упомянутых в списке диалогов
+ * / [нужно ли это?]
+ **/
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupPeersArray;
 /** The number of items in @c groupPeersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger groupPeersArray_Count;
 
+/**
+ * / Общее количество диалогов
+ * / deprecated
+ **/
 @property(nonatomic, readwrite) int32_t totalDialogsCount;
 
 @end
@@ -3083,10 +3415,11 @@ typedef GPB_ENUM(RequestFavouriteDialog_FieldNumber) {
 };
 
 /**
- * Marking dialog as favourite
+ * / Запрос на добавление чата в изрбанное
  **/
 GPB_FINAL @interface RequestFavouriteDialog : GPBMessage
 
+/** / Внешний пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
@@ -3100,10 +3433,11 @@ typedef GPB_ENUM(RequestUnfavouriteDialog_FieldNumber) {
 };
 
 /**
- * Making dialog as unfavourite
+ * / Запрос на удаление чата из изрбанное
  **/
 GPB_FINAL @interface RequestUnfavouriteDialog : GPBMessage
 
+/** / Внешний пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
@@ -3118,14 +3452,16 @@ typedef GPB_ENUM(UpdateDialogFavouriteChanged_FieldNumber) {
 };
 
 /**
- * Update about dialog favourite changed
+ * / Структура уведомления об изменении флага избранности чата
  **/
 GPB_FINAL @interface UpdateDialogFavouriteChanged : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Флаг избранности */
 @property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isFavourite;
 /** Test to see if @c isFavourite has been set. */
 @property(nonatomic, readwrite) BOOL hasIsFavourite;
@@ -3139,12 +3475,17 @@ typedef GPB_ENUM(UpdateDialogMuteChanged_FieldNumber) {
   UpdateDialogMuteChanged_FieldNumber_IsMuted = 2,
 };
 
+/**
+ * / Структура уведомления об изменении флага глушения чата
+ **/
 GPB_FINAL @interface UpdateDialogMuteChanged : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Флаг глушения чата */
 @property(nonatomic, readwrite) BOOL isMuted;
 
 @end
@@ -3156,11 +3497,11 @@ typedef GPB_ENUM(PinnedMessages_FieldNumber) {
 };
 
 /**
- * Pinned messages
+ * / Закрепленные сообщения
  **/
 GPB_FINAL @interface PinnedMessages : GPBMessage
 
-/** / Messages ids */
+/** / Список идентификаторов сообщений */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UUIDValue*> *midsArray;
 /** The number of items in @c midsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger midsArray_Count;
@@ -3176,19 +3517,21 @@ typedef GPB_ENUM(RequestPinMessage_FieldNumber) {
 };
 
 /**
- * Pin message in conversation
+ * / Запрос на добавление сообщения в закрепленные
  **/
 GPB_FINAL @interface RequestPinMessage : GPBMessage
 
+/** / Внешний пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/** / Message id */
+/** / Идентификатор сообщения для добавления в закрепленные */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
 
+/** / Дата последнего добавления в закрепленные сообщения в этом чате */
 @property(nonatomic, readwrite) int64_t lastPinDate;
 
 @end
@@ -3202,19 +3545,21 @@ typedef GPB_ENUM(RequestUnpinMessage_FieldNumber) {
 };
 
 /**
- * Unpin message in conversation
+ * / Запрос на удаления сообщения из закрепленных
  **/
 GPB_FINAL @interface RequestUnpinMessage : GPBMessage
 
+/** / Внешний пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/** / Message id */
+/** / Идентификатор сообщения для добавления в закрепленные */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
 
+/** / Дата последнего добавления в закрепленные сообщения в этом чате */
 @property(nonatomic, readwrite) int64_t lastPinDate;
 
 @end
@@ -3228,18 +3573,21 @@ typedef GPB_ENUM(UpdatePinnedMessagesChanged_FieldNumber) {
 };
 
 /**
- * Update about pinned messages changed in conversation
+ * / Структура уведомления об изменении списка закрепленных сообщений
  **/
 GPB_FINAL @interface UpdatePinnedMessagesChanged : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Список закрепленных сообщений */
 @property(nonatomic, readwrite, strong, null_resettable) PinnedMessages *pinnedMessages;
 /** Test to see if @c pinnedMessages has been set. */
 @property(nonatomic, readwrite) BOOL hasPinnedMessages;
 
+/** / Дата последнего добавления в закрепленные сообщения в этом чате */
 @property(nonatomic, readwrite) int64_t lastPinDate;
 
 @end
@@ -3252,13 +3600,14 @@ typedef GPB_ENUM(MessageStatus_FieldNumber) {
 };
 
 /**
- * The model describing when a user received or read a message
+ * / Структура соответствия пользователя и даты последней прочитки или получения сообщения
  **/
 GPB_FINAL @interface MessageStatus : GPBMessage
 
-/** time when message was read or received */
+/** // Время (в миллисекундах от unix epoch) последней полученной пользователем прочитки/получения сообщения */
 @property(nonatomic, readwrite) int64_t clock;
 
+/** / Идентификатор учетной записи пользователя */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @end
@@ -3273,24 +3622,25 @@ typedef GPB_ENUM(RequestGetMessageReads_FieldNumber) {
 };
 
 /**
- * Load message statuses for every user in conversation reads
+ * / Запрос на загрузку списка прочиток сообщения
  **/
 GPB_FINAL @interface RequestGetMessageReads : GPBMessage
 
-/** / Message id */
+/** / Внешний пир чата */
+@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
+
+/** / Идентификатор сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
 
-/** limit of selection */
+/** / Максимальное количество структур в ответе */
 @property(nonatomic, readwrite) int32_t limit;
 
-/** time selection starts from */
+/** / Дата (в миллисекундах от unix epoch) начиная с которой извлекать данные */
 @property(nonatomic, readwrite) int64_t timestampFrom;
-
-@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
 
 @end
 
@@ -3304,24 +3654,25 @@ typedef GPB_ENUM(RequestGetMessageReceives_FieldNumber) {
 };
 
 /**
- * Load message statuses for every user in conversation receives
+ * / Запрос на загрузку списка дат получений сообщения
  **/
 GPB_FINAL @interface RequestGetMessageReceives : GPBMessage
 
-/** / Message id */
+/** / Внешний пир чата */
+@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
+
+/** / Идентификатор сообщения */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
 
-/** limit of selection */
+/** / Максимальное количество структур в ответе */
 @property(nonatomic, readwrite) int32_t limit;
 
-/** time selection starts from */
+/** / Дата (в миллисекундах от unix epoch) начиная с которой извлекать данные */
 @property(nonatomic, readwrite) int64_t timestampFrom;
-
-@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
 
 @end
 
@@ -3333,15 +3684,16 @@ typedef GPB_ENUM(ResponseGetMessageReads_FieldNumber) {
 };
 
 /**
- * Response with the list of message statuses reads
+ * / Ответ на запрос на получение списка прочиток сообщения
  **/
 GPB_FINAL @interface ResponseGetMessageReads : GPBMessage
 
+/** / Список соответствий дат и пользователей */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MessageStatus*> *statusArray;
 /** The number of items in @c statusArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger statusArray_Count;
 
-/** max time of returned entries, or requested time if empty */
+/** / Максимальное время по статусам (или timestamp_from из запроса, если статусы пустые) */
 @property(nonatomic, readwrite) int64_t timestampTill;
 
 @end
@@ -3354,15 +3706,16 @@ typedef GPB_ENUM(ResponseGetMessageReceives_FieldNumber) {
 };
 
 /**
- * Response with the list of message statuses receives
+ * / Ответ на запрос о получении списка получателей сообщения
  **/
 GPB_FINAL @interface ResponseGetMessageReceives : GPBMessage
 
+/** / Список соответствий дат и пользователей */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MessageStatus*> *statusArray;
 /** The number of items in @c statusArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger statusArray_Count;
 
-/** max time of returned entries, or requested time if empty */
+/** / Максимальное время по статусам (или timestamp_from из запроса, если статусы пустые) */
 @property(nonatomic, readwrite) int64_t timestampTill;
 
 @end
@@ -3374,12 +3727,17 @@ typedef GPB_ENUM(RequestReadDialogLater_FieldNumber) {
   RequestReadDialogLater_FieldNumber_ReadLater = 2,
 };
 
+/**
+ * / Запрос на изменение флага отложенности прочитки
+ **/
 GPB_FINAL @interface RequestReadDialogLater : GPBMessage
 
+/** / Внешний пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Флаг отложенности прочитки */
 @property(nonatomic, readwrite) BOOL readLater;
 
 @end
@@ -3392,14 +3750,16 @@ typedef GPB_ENUM(UpdateDialogReadLaterChanged_FieldNumber) {
 };
 
 /**
- * Update about dialog read later changed
+ * / Структура уведомления об изменении флага отложенности прочитки
  **/
 GPB_FINAL @interface UpdateDialogReadLaterChanged : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Флаг отложенности прочитки */
 @property(nonatomic, readwrite) BOOL readLater;
 
 @end
@@ -3411,12 +3771,17 @@ typedef GPB_ENUM(RequestMuteChat_FieldNumber) {
   RequestMuteChat_FieldNumber_Duration = 2,
 };
 
+/**
+ * / Запрос на включение флага глушения уведомлений
+ **/
 GPB_FINAL @interface RequestMuteChat : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
+/** / Длительность действия флага глушения */
 @property(nonatomic, readwrite, strong, null_resettable) GPBDuration *duration;
 /** Test to see if @c duration has been set. */
 @property(nonatomic, readwrite) BOOL hasDuration;
@@ -3429,8 +3794,12 @@ typedef GPB_ENUM(RequestUnmuteChat_FieldNumber) {
   RequestUnmuteChat_FieldNumber_Peer = 1,
 };
 
+/**
+ * / Запрос на выключение флага глушения уведомлений
+ **/
 GPB_FINAL @interface RequestUnmuteChat : GPBMessage
 
+/** / Пир чата */
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;

@@ -68,105 +68,141 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark DoInteractiveMediaAction(RequestDoInteractiveMediaAction) returns (Empty)
 
 /**
- * / Interact with a message media (click on button for example)
+ * / Метод посылки действия с интерактивным виджетом 
  */
 - (GRPCUnaryProtoCall *)doInteractiveMediaActionWithMessage:(RequestDoInteractiveMediaAction *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark SendMessage(RequestSendMessage) returns (ResponseSendMessage)
 
+/**
+ * / Метод посылки сообщения
+ */
 - (GRPCUnaryProtoCall *)sendMessageWithMessage:(RequestSendMessage *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark SendMessageAsync(RequestSendMessageAsync) returns (Empty)
 
+/**
+ * / Метод асинхронной посылки сообщения
+ */
 - (GRPCUnaryProtoCall *)sendMessageAsyncWithMessage:(RequestSendMessageAsync *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark UpdateMessage(RequestUpdateMessage) returns (Empty)
 
+/**
+ * / Метод изменения сообщения
+ */
 - (GRPCUnaryProtoCall *)updateMessageWithMessage:(RequestUpdateMessage *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark MessageReceived(RequestMessageReceived) returns (Empty)
 
 /**
- * / Mark message as received by self
+ * / Метод уведомления о получении сообщений
  */
 - (GRPCUnaryProtoCall *)messageReceivedWithMessage:(RequestMessageReceived *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark MessageRead(RequestMessageRead) returns (Empty)
 
 /**
- * / Mark message as read by self
+ * / Метод уведомления о прочитке сообщений
  */
 - (GRPCUnaryProtoCall *)messageReadWithMessage:(RequestMessageRead *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark DeleteMessage(RequestDeleteMessage) returns (Empty)
 
+/**
+ * / Метод удаления сообщения
+ */
 - (GRPCUnaryProtoCall *)deleteMessageWithMessage:(RequestDeleteMessage *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark ClearChat(RequestClearChat) returns (Empty)
 
 /**
- * / Clear chat history
+ * / Метод очистки чата
  */
 - (GRPCUnaryProtoCall *)clearChatWithMessage:(RequestClearChat *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark DeleteChat(RequestDeleteChat) returns (Empty)
 
+/**
+ * / Метод удаления чата
+ */
 - (GRPCUnaryProtoCall *)deleteChatWithMessage:(RequestDeleteChat *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark LoadMessageHistory(RequestLoadMessageHistory) returns (ResponseLoadHistory)
 
 /**
- * / Load conversation history
+ * / Метод загрузки ленты чата
  */
 - (GRPCUnaryProtoCall *)loadMessageHistoryWithMessage:(RequestLoadMessageHistory *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark LoadDialogs(RequestLoadDialogs) returns (ResponseLoadDialogs)
 
 /**
- * / Load user's dialogs
+ * / Метод загрузки списка диалогов
  */
 - (GRPCUnaryProtoCall *)loadDialogsWithMessage:(RequestLoadDialogs *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark FavouriteDialog(RequestFavouriteDialog) returns (Empty)
 
+/**
+ * / Метод добавления чата в избранное
+ */
 - (GRPCUnaryProtoCall *)favouriteDialogWithMessage:(RequestFavouriteDialog *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark UnfavouriteDialog(RequestUnfavouriteDialog) returns (Empty)
 
+/**
+ * / Метод удаления чата из избранного
+ */
 - (GRPCUnaryProtoCall *)unfavouriteDialogWithMessage:(RequestUnfavouriteDialog *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark PinMessage(RequestPinMessage) returns (Empty)
 
+/**
+ * / Метод закрепления сообщения в чате
+ */
 - (GRPCUnaryProtoCall *)pinMessageWithMessage:(RequestPinMessage *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark UnpinMessage(RequestUnpinMessage) returns (Empty)
 
+/**
+ * / Метод удаления закрепленного сообщения в чате
+ */
 - (GRPCUnaryProtoCall *)unpinMessageWithMessage:(RequestUnpinMessage *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark MuteChat(RequestMuteChat) returns (Empty)
 
+/**
+ * / Метод включения глушения уведомлений в чате
+ */
 - (GRPCUnaryProtoCall *)muteChatWithMessage:(RequestMuteChat *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark UnmuteChat(RequestUnmuteChat) returns (Empty)
 
+/**
+ * / Метод выключения глушения уведомлений в чате
+ */
 - (GRPCUnaryProtoCall *)unmuteChatWithMessage:(RequestUnmuteChat *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetMessageReads(RequestGetMessageReads) returns (ResponseGetMessageReads)
 
 /**
- * Returns read status of the message per user
+ * / Метод загрузки списка прочиток сообщения
  */
 - (GRPCUnaryProtoCall *)getMessageReadsWithMessage:(RequestGetMessageReads *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetMessageReceives(RequestGetMessageReceives) returns (ResponseGetMessageReceives)
 
 /**
- * Returns receive status of the message per user
+ * / Мтод загрузки списка получивших сообщение
  */
 - (GRPCUnaryProtoCall *)getMessageReceivesWithMessage:(RequestGetMessageReceives *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark ReadDialogLater(RequestReadDialogLater) returns (Empty)
 
+/**
+ * / Метод изменения флага отложенности прочитки
+ */
 - (GRPCUnaryProtoCall *)readDialogLaterWithMessage:(RequestReadDialogLater *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 @end
@@ -180,14 +216,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark DoInteractiveMediaAction(RequestDoInteractiveMediaAction) returns (Empty)
 
 /**
- * / Interact with a message media (click on button for example)
+ * / Метод посылки действия с интерактивным виджетом 
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)doInteractiveMediaActionWithRequest:(RequestDoInteractiveMediaAction *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Interact with a message media (click on button for example)
+ * / Метод посылки действия с интерактивным виджетом 
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -196,36 +232,66 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark SendMessage(RequestSendMessage) returns (ResponseSendMessage)
 
+/**
+ * / Метод посылки сообщения
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)sendMessageWithRequest:(RequestSendMessage *)request handler:(void(^)(ResponseSendMessage *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод посылки сообщения
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToSendMessageWithRequest:(RequestSendMessage *)request handler:(void(^)(ResponseSendMessage *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark SendMessageAsync(RequestSendMessageAsync) returns (Empty)
 
+/**
+ * / Метод асинхронной посылки сообщения
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)sendMessageAsyncWithRequest:(RequestSendMessageAsync *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод асинхронной посылки сообщения
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToSendMessageAsyncWithRequest:(RequestSendMessageAsync *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark UpdateMessage(RequestUpdateMessage) returns (Empty)
 
+/**
+ * / Метод изменения сообщения
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)updateMessageWithRequest:(RequestUpdateMessage *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод изменения сообщения
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToUpdateMessageWithRequest:(RequestUpdateMessage *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark MessageReceived(RequestMessageReceived) returns (Empty)
 
 /**
- * / Mark message as received by self
+ * / Метод уведомления о получении сообщений
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)messageReceivedWithRequest:(RequestMessageReceived *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Mark message as received by self
+ * / Метод уведомления о получении сообщений
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -235,14 +301,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark MessageRead(RequestMessageRead) returns (Empty)
 
 /**
- * / Mark message as read by self
+ * / Метод уведомления о прочитке сообщений
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)messageReadWithRequest:(RequestMessageRead *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Mark message as read by self
+ * / Метод уведомления о прочитке сообщений
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -251,22 +317,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark DeleteMessage(RequestDeleteMessage) returns (Empty)
 
+/**
+ * / Метод удаления сообщения
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)deleteMessageWithRequest:(RequestDeleteMessage *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод удаления сообщения
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToDeleteMessageWithRequest:(RequestDeleteMessage *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark ClearChat(RequestClearChat) returns (Empty)
 
 /**
- * / Clear chat history
+ * / Метод очистки чата
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)clearChatWithRequest:(RequestClearChat *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Clear chat history
+ * / Метод очистки чата
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -275,22 +351,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark DeleteChat(RequestDeleteChat) returns (Empty)
 
+/**
+ * / Метод удаления чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)deleteChatWithRequest:(RequestDeleteChat *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод удаления чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToDeleteChatWithRequest:(RequestDeleteChat *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark LoadMessageHistory(RequestLoadMessageHistory) returns (ResponseLoadHistory)
 
 /**
- * / Load conversation history
+ * / Метод загрузки ленты чата
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)loadMessageHistoryWithRequest:(RequestLoadMessageHistory *)request handler:(void(^)(ResponseLoadHistory *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Load conversation history
+ * / Метод загрузки ленты чата
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -300,14 +386,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark LoadDialogs(RequestLoadDialogs) returns (ResponseLoadDialogs)
 
 /**
- * / Load user's dialogs
+ * / Метод загрузки списка диалогов
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)loadDialogsWithRequest:(RequestLoadDialogs *)request handler:(void(^)(ResponseLoadDialogs *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Load user's dialogs
+ * / Метод загрузки списка диалогов
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -316,57 +402,117 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark FavouriteDialog(RequestFavouriteDialog) returns (Empty)
 
+/**
+ * / Метод добавления чата в избранное
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)favouriteDialogWithRequest:(RequestFavouriteDialog *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод добавления чата в избранное
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToFavouriteDialogWithRequest:(RequestFavouriteDialog *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark UnfavouriteDialog(RequestUnfavouriteDialog) returns (Empty)
 
+/**
+ * / Метод удаления чата из избранного
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)unfavouriteDialogWithRequest:(RequestUnfavouriteDialog *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод удаления чата из избранного
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToUnfavouriteDialogWithRequest:(RequestUnfavouriteDialog *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark PinMessage(RequestPinMessage) returns (Empty)
 
+/**
+ * / Метод закрепления сообщения в чате
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)pinMessageWithRequest:(RequestPinMessage *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод закрепления сообщения в чате
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToPinMessageWithRequest:(RequestPinMessage *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark UnpinMessage(RequestUnpinMessage) returns (Empty)
 
+/**
+ * / Метод удаления закрепленного сообщения в чате
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)unpinMessageWithRequest:(RequestUnpinMessage *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод удаления закрепленного сообщения в чате
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToUnpinMessageWithRequest:(RequestUnpinMessage *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark MuteChat(RequestMuteChat) returns (Empty)
 
+/**
+ * / Метод включения глушения уведомлений в чате
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)muteChatWithRequest:(RequestMuteChat *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод включения глушения уведомлений в чате
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToMuteChatWithRequest:(RequestMuteChat *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark UnmuteChat(RequestUnmuteChat) returns (Empty)
 
+/**
+ * / Метод выключения глушения уведомлений в чате
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)unmuteChatWithRequest:(RequestUnmuteChat *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод выключения глушения уведомлений в чате
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToUnmuteChatWithRequest:(RequestUnmuteChat *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetMessageReads(RequestGetMessageReads) returns (ResponseGetMessageReads)
 
 /**
- * Returns read status of the message per user
+ * / Метод загрузки списка прочиток сообщения
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getMessageReadsWithRequest:(RequestGetMessageReads *)request handler:(void(^)(ResponseGetMessageReads *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * Returns read status of the message per user
+ * / Метод загрузки списка прочиток сообщения
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -376,14 +522,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark GetMessageReceives(RequestGetMessageReceives) returns (ResponseGetMessageReceives)
 
 /**
- * Returns receive status of the message per user
+ * / Мтод загрузки списка получивших сообщение
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getMessageReceivesWithRequest:(RequestGetMessageReceives *)request handler:(void(^)(ResponseGetMessageReceives *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * Returns receive status of the message per user
+ * / Мтод загрузки списка получивших сообщение
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -392,8 +538,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark ReadDialogLater(RequestReadDialogLater) returns (Empty)
 
+/**
+ * / Метод изменения флага отложенности прочитки
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)readDialogLaterWithRequest:(RequestReadDialogLater *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод изменения флага отложенности прочитки
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToReadDialogLaterWithRequest:(RequestReadDialogLater *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 

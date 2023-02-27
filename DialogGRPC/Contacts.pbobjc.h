@@ -59,14 +59,14 @@ typedef GPB_ENUM(PhoneToImport_FieldNumber) {
 };
 
 /**
- * Phone for import
+ * / Структура задачи на импорт телефона контакта
  **/
 GPB_FINAL @interface PhoneToImport : GPBMessage
 
-/** / phone number for import in international format */
+/** / Номер телефона для импорта (в международном формате) */
 @property(nonatomic, readwrite) int64_t phoneNumber;
 
-/** / optional name for contact */
+/** / Имя контакта, связанного с этим телефонным номером */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *name;
 /** Test to see if @c name has been set. */
 @property(nonatomic, readwrite) BOOL hasName;
@@ -81,14 +81,14 @@ typedef GPB_ENUM(EmailToImport_FieldNumber) {
 };
 
 /**
- * Email for import
+ * / Структура задачи на импорт электронной почты контакта
  **/
 GPB_FINAL @interface EmailToImport : GPBMessage
 
-/** / email for importing */
+/** / Электронная почта для импорта */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *email;
 
-/** / optional name for contact */
+/** / Имя контакта, связанного с этой электронной почтой */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *name;
 /** Test to see if @c name has been set. */
 @property(nonatomic, readwrite) BOOL hasName;
@@ -103,12 +103,18 @@ typedef GPB_ENUM(UserPhoneHashContact_FieldNumber) {
   UserPhoneHashContact_FieldNumber_Name = 3,
 };
 
+/**
+ * / Структура связи учетной записи пользователя с номером телефона
+ **/
 GPB_FINAL @interface UserPhoneHashContact : GPBMessage
 
+/** / Идентификатор учетной записи пользователя */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
+/** / Номер телефона пользвателя */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *phoneHash;
 
+/** / Имя пользователя в рамках привязки по номеру телефона */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
 @end
@@ -121,15 +127,16 @@ typedef GPB_ENUM(RequestImportContacts_FieldNumber) {
 };
 
 /**
- * Importing phones and emails for building contact list
- * Maximum amount of items for import per method call equals to 100.
+ * / Запрос на импорт контактов
  **/
 GPB_FINAL @interface RequestImportContacts : GPBMessage
 
+/** / Список задач на импорт телефонных контактов */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<PhoneToImport*> *phonesArray;
 /** The number of items in @c phonesArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger phonesArray_Count;
 
+/** / Список задач на импорта контактов по электронной почте */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<EmailToImport*> *emailsArray;
 /** The number of items in @c emailsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger emailsArray_Count;
@@ -142,9 +149,12 @@ typedef GPB_ENUM(ResponseImportContacts_FieldNumber) {
   ResponseImportContacts_FieldNumber_UserPeersArray = 1,
 };
 
+/**
+ * / Ответ на запрос на импорт контактов
+ **/
 GPB_FINAL @interface ResponseImportContacts : GPBMessage
 
-/** / Optimizations drop some info from response to decrease traffic and latency */
+/** / Список внешних пиров пользователей, отвечающих импортированных контактам */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *userPeersArray;
 /** The number of items in @c userPeersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userPeersArray_Count;
@@ -159,16 +169,14 @@ typedef GPB_ENUM(RequestDeferredImportContacts_FieldNumber) {
 };
 
 /**
- * Importing hashed phones and contact names for building contact list
- * Import evaluated lazily, response does not contain any info
- * Maximum amount of items for import per method call equals to 100.
+ * / Запрос на отложенный импорт контактов
  **/
 GPB_FINAL @interface RequestDeferredImportContacts : GPBMessage
 
-/** some stable device identifier */
+/** / Идентификатор устройства, с которого производится импорт */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *deviceId;
 
-/** list of hashed phone contacts from the device */
+/** / Список телефонных контактов для импорта */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<RequestDeferredImportContacts_PhoneContact*> *phoneContactsArray;
 /** The number of items in @c phoneContactsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger phoneContactsArray_Count;
@@ -182,15 +190,15 @@ typedef GPB_ENUM(RequestDeferredImportContacts_PhoneContact_FieldNumber) {
   RequestDeferredImportContacts_PhoneContact_FieldNumber_ContactName = 2,
 };
 
+/**
+ * / Структура телефонного контакта
+ **/
 GPB_FINAL @interface RequestDeferredImportContacts_PhoneContact : GPBMessage
 
-/**
- * hash of phone number in format: name-of-hash-function:hashed-phone-number
- * name of the hash function is optional (if not present, the default function will be used)
- **/
+/** / Номер телефона контакта */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *phoneHash;
 
-/** name of contact as is on the device */
+/** / Локальное имя контакта */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *contactName;
 
 @end
@@ -201,8 +209,12 @@ typedef GPB_ENUM(ResponseDeferredImportContacts_FieldNumber) {
   ResponseDeferredImportContacts_FieldNumber_TaskId = 1,
 };
 
+/**
+ * / Ответ на запрос на отложенный импорт контактов
+ **/
 GPB_FINAL @interface ResponseDeferredImportContacts : GPBMessage
 
+/** / Идентификатор задачи на импорт */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *taskId;
 
 @end
@@ -214,13 +226,11 @@ typedef GPB_ENUM(RequestGetContacts_FieldNumber) {
 };
 
 /**
- * Getting current contact list
- * SHA256 hash of list of a comma-separated list of contact UIDs in ascending
- * order may be passed in contactsHash parameter.
- * If the contact list was not changed, isNotChanged will be true.
+ * / Запрос на получение списка контактов пользователя
  **/
 GPB_FINAL @interface RequestGetContacts : GPBMessage
 
+/** / Хэш списка контактов, известных на устройстве */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *contactsHash;
 
 @end
@@ -233,14 +243,20 @@ typedef GPB_ENUM(ResponseGetContacts_FieldNumber) {
   ResponseGetContacts_FieldNumber_PhoneContactsArray = 3,
 };
 
+/**
+ * / Ответ на запрос на получение списка контактов пользователя
+ **/
 GPB_FINAL @interface ResponseGetContacts : GPBMessage
 
+/** / Флаг о соответствии хэша списка контактов из запроса и хэша списка контактов на сервере */
 @property(nonatomic, readwrite) BOOL isNotChanged;
 
+/** / Список внешних пиров пользователей для контактов на сервере */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *userPeersArray;
 /** The number of items in @c userPeersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userPeersArray_Count;
 
+/** / Список телефонных контактов пользователя на сервере */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserPhoneHashContact*> *phoneContactsArray;
 /** The number of items in @c phoneContactsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger phoneContactsArray_Count;
@@ -255,12 +271,14 @@ typedef GPB_ENUM(RequestRemoveContact_FieldNumber) {
 };
 
 /**
- * Removing contact from contact list
+ * / Запрос на удаление из контактов
  **/
 GPB_FINAL @interface RequestRemoveContact : GPBMessage
 
+/** / Идентификатор учетной записи пользователя, удаляемого из контактов */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
+/** / Ключ доступа к учетной записи пользователя, удаляемого из контактов */
 @property(nonatomic, readwrite) int64_t accessHash;
 
 @end
@@ -273,12 +291,14 @@ typedef GPB_ENUM(RequestAddContact_FieldNumber) {
 };
 
 /**
- * Adding contact to contact list
+ * / Запрос на добавление в контакты
  **/
 GPB_FINAL @interface RequestAddContact : GPBMessage
 
+/** / Идентификатор учетной записи пользователя, добавляемого в контакты */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
+/** / Ключ доступа к учетной записи пользователя, добавляемого в контакты */
 @property(nonatomic, readwrite) int64_t accessHash;
 
 @end
@@ -290,10 +310,11 @@ typedef GPB_ENUM(RequestSearchContacts_FieldNumber) {
 };
 
 /**
- * Searching contacts by user's query
+ * / Запрос на поиск среди контактов на сервере
  **/
 GPB_FINAL @interface RequestSearchContacts : GPBMessage
 
+/** / Поисковый запрос (уточнить алгоритм поиска) */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *request;
 
 @end
@@ -304,8 +325,12 @@ typedef GPB_ENUM(ResponseSearchContacts_FieldNumber) {
   ResponseSearchContacts_FieldNumber_UserPeersArray = 1,
 };
 
+/**
+ * / Ответ на запрос на поиск среди контактов на сервере
+ **/
 GPB_FINAL @interface ResponseSearchContacts : GPBMessage
 
+/** / Список внешних пиров пользователей, найденных по поисковому запросу */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *userPeersArray;
 /** The number of items in @c userPeersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userPeersArray_Count;
@@ -319,11 +344,11 @@ typedef GPB_ENUM(UpdateContactRegistered_FieldNumber) {
 };
 
 /**
- * Update about contact registration
+ * / Структура оповещения о регистрации контакта в системе
  **/
 GPB_FINAL @interface UpdateContactRegistered : GPBMessage
 
-/** / User id of a registered contact */
+/** / Идентификатор учетной записи пользователя, зарегистрировавшегося в системе */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @end
@@ -337,20 +362,21 @@ typedef GPB_ENUM(UpdateContactsAdded_FieldNumber) {
 };
 
 /**
- * Update about contacts added
+ * / Структура оповещения о добавлении пользователей в контакты
  **/
 GPB_FINAL @interface UpdateContactsAdded : GPBMessage
 
-/** / User ids of the registered contacts */
+/** / Список идентификаторов учетных записей пользователей, добавленных в контакты */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *userIdsArray;
 /** The number of items in @c userIdsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userIdsArray_Count;
 
-/** / Id of the task that finished */
+/** / Идентификатор задачи на импорт, в рамках которой было произведено добавление в контакты */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *taskId;
 /** Test to see if @c taskId has been set. */
 @property(nonatomic, readwrite) BOOL hasTaskId;
 
+/** / Спиок добавленных связок пользователей и телефонных контактов */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserPhoneHashContact*> *phoneContactsArray;
 /** The number of items in @c phoneContactsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger phoneContactsArray_Count;
@@ -364,10 +390,11 @@ typedef GPB_ENUM(UpdateContactsAddTaskSuspended_FieldNumber) {
 };
 
 /**
- * Update about suspending task - normally it should be ignored
+ * / Структура уведомления о приостановке задачи на импорт контактов
  **/
 GPB_FINAL @interface UpdateContactsAddTaskSuspended : GPBMessage
 
+/** / Идентификатор задачи на импорт контактов */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *taskId;
 
 @end
@@ -379,10 +406,11 @@ typedef GPB_ENUM(UpdateContactsRemoved_FieldNumber) {
 };
 
 /**
- * Update about contacts removed
+ * / Структура уведомления об удалении пользователей из контактов
  **/
 GPB_FINAL @interface UpdateContactsRemoved : GPBMessage
 
+/** / Список идентификаторов учетных записей пользователей, удаленных из контактов */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *userIdsArray;
 /** The number of items in @c userIdsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userIdsArray_Count;

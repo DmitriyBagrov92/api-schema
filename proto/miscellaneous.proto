@@ -22,7 +22,6 @@ message ResponseBool {
     bool value = 1;
 }
 
-
 enum SupportedServerMethodsType {
     SUPPORTED_SERVER_METHODS_TYPE_NONE = 0;
     SUPPORTED_SERVER_METHODS_TYPE_CHANGE_PASSWORD = 1;

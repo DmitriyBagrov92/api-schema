@@ -8,21 +8,29 @@ import "wrappers.proto";
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
 
+/// Структура UUID
 message UUIDValue {
+  /// Старшие биты UUID
   int64 msb = 1;
+
+  /// Младшие биты UUID
   int64 lsb = 2;
 }
 
+/// Структура обобщенного оповещения об ошибке
 message UpdateErrorCause {
+  /// Вид ошибки
   oneof value  {
     Rejected rejected = 1;
     Failed failed = 2;
   }
 
+  /// Структура, описывающая мотивированный отказ от выполнения какого-либо действия
   message Rejected {
     google.protobuf.StringValue reason = 1;
   }
 
+  /// Структура, описывающая сбой при выполнении какого-либо действия
   message Failed {
     google.protobuf.StringValue description = 1;
     google.protobuf.StringValue tag = 2;

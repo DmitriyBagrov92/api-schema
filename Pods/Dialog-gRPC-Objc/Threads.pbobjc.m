@@ -24,13 +24,13 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-#pragma clang diagnostic ignored "-Wdirect-ivar-access"
 #pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
 
 #pragma mark - Objective C Class declarations
 // Forward declarations of Objective C classes that we can use as
 // static values in struct initializers.
 // We don't use [Foo class] because it is not a static value.
+GPBObjCClassDeclaration(GPBBoolValue);
 GPBObjCClassDeclaration(Peer);
 GPBObjCClassDeclaration(PeerThread);
 GPBObjCClassDeclaration(ThreadInfo);
@@ -78,11 +78,13 @@ static GPBFileDescriptor *ThreadsRoot_FileDescriptor(void) {
 @dynamic messagesCount;
 @dynamic latestActiveUserIdsArray, latestActiveUserIdsArray_Count;
 @dynamic lastActivityDate;
+@dynamic hasIsFollowing, isFollowing;
 
 typedef struct ThreadInfo__storage_ {
   uint32_t _has_storage_[1];
   uint32_t messagesCount;
   NSMutableArray *latestActiveUserIdsArray;
+  GPBBoolValue *isFollowing;
   uint64_t lastActivityDate;
 } ThreadInfo__storage_;
 
@@ -119,6 +121,15 @@ typedef struct ThreadInfo__storage_ {
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeUInt64,
       },
+      {
+        .name = "isFollowing",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
+        .number = ThreadInfo_FieldNumber_IsFollowing,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(ThreadInfo__storage_, isFollowing),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[ThreadInfo class]
@@ -138,23 +149,18 @@ typedef struct ThreadInfo__storage_ {
 
 @end
 
-#pragma mark - RequestLoadPeerThreads
+#pragma mark - RequestGetThreadInfos
 
-@implementation RequestLoadPeerThreads
+@implementation RequestGetThreadInfos
 
-@dynamic directionOneOfCase;
+@dynamic fromClock;
 @dynamic hasPeer, peer;
-@dynamic fromMid;
-@dynamic uptoMid;
-@dynamic limit;
 
-typedef struct RequestLoadPeerThreads__storage_ {
-  uint32_t _has_storage_[2];
-  int32_t limit;
+typedef struct RequestGetThreadInfos__storage_ {
+  uint32_t _has_storage_[1];
   Peer *peer;
-  UUIDValue *fromMid;
-  UUIDValue *uptoMid;
-} RequestLoadPeerThreads__storage_;
+  int64_t fromClock;
+} RequestGetThreadInfos__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -163,56 +169,32 @@ typedef struct RequestLoadPeerThreads__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
+        .name = "fromClock",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestGetThreadInfos_FieldNumber_FromClock,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(RequestGetThreadInfos__storage_, fromClock),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt64,
+      },
+      {
         .name = "peer",
         .dataTypeSpecific.clazz = GPBObjCClass(Peer),
-        .number = RequestLoadPeerThreads_FieldNumber_Peer,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestLoadPeerThreads__storage_, peer),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "fromMid",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestLoadPeerThreads_FieldNumber_FromMid,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(RequestLoadPeerThreads__storage_, fromMid),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "uptoMid",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestLoadPeerThreads_FieldNumber_UptoMid,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(RequestLoadPeerThreads__storage_, uptoMid),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "limit",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestLoadPeerThreads_FieldNumber_Limit,
+        .number = RequestGetThreadInfos_FieldNumber_Peer,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestLoadPeerThreads__storage_, limit),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt32,
+        .offset = (uint32_t)offsetof(RequestGetThreadInfos__storage_, peer),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestLoadPeerThreads class]
+        [GPBDescriptor allocDescriptorForClass:[RequestGetThreadInfos class]
                                      rootClass:[ThreadsRoot class]
                                           file:ThreadsRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestLoadPeerThreads__storage_)
+                                   storageSize:sizeof(RequestGetThreadInfos__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    static const char *oneofs[] = {
-      "direction",
-    };
-    [localDescriptor setupOneofs:oneofs
-                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
-                   firstHasIndex:-1];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -223,11 +205,6 @@ typedef struct RequestLoadPeerThreads__storage_ {
 
 @end
 
-void RequestLoadPeerThreads_ClearDirectionOneOfCase(RequestLoadPeerThreads *message) {
-  GPBDescriptor *descriptor = [RequestLoadPeerThreads descriptor];
-  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
-  GPBClearOneof(message, oneof);
-}
 #pragma mark - PeerThread
 
 @implementation PeerThread
@@ -284,16 +261,19 @@ typedef struct PeerThread__storage_ {
 
 @end
 
-#pragma mark - ResponseLoadPeerThreads
+#pragma mark - ResponseGetThreadInfos
 
-@implementation ResponseLoadPeerThreads
+@implementation ResponseGetThreadInfos
 
 @dynamic threadsArray, threadsArray_Count;
+@dynamic peerClock;
+@dynamic nextAvailable;
 
-typedef struct ResponseLoadPeerThreads__storage_ {
+typedef struct ResponseGetThreadInfos__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *threadsArray;
-} ResponseLoadPeerThreads__storage_;
+  int64_t peerClock;
+} ResponseGetThreadInfos__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -304,20 +284,38 @@ typedef struct ResponseLoadPeerThreads__storage_ {
       {
         .name = "threadsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(PeerThread),
-        .number = ResponseLoadPeerThreads_FieldNumber_ThreadsArray,
+        .number = ResponseGetThreadInfos_FieldNumber_ThreadsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponseLoadPeerThreads__storage_, threadsArray),
+        .offset = (uint32_t)offsetof(ResponseGetThreadInfos__storage_, threadsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
+      {
+        .name = "peerClock",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ResponseGetThreadInfos_FieldNumber_PeerClock,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(ResponseGetThreadInfos__storage_, peerClock),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "nextAvailable",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ResponseGetThreadInfos_FieldNumber_NextAvailable,
+        .hasIndex = 1,
+        .offset = 2,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[ResponseLoadPeerThreads class]
+        [GPBDescriptor allocDescriptorForClass:[ResponseGetThreadInfos class]
                                      rootClass:[ThreadsRoot class]
                                           file:ThreadsRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(ResponseLoadPeerThreads__storage_)
+                                   storageSize:sizeof(ResponseGetThreadInfos__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -423,11 +421,17 @@ typedef struct RequestUnfollowThread__storage_ {
 
 @implementation UpdateThreadInfos
 
+@dynamic hasPeer, peer;
 @dynamic infosArray, infosArray_Count;
+@dynamic peerClock;
+@dynamic prevPeerClock;
 
 typedef struct UpdateThreadInfos__storage_ {
   uint32_t _has_storage_[1];
+  Peer *peer;
   NSMutableArray *infosArray;
+  int64_t peerClock;
+  int64_t prevPeerClock;
 } UpdateThreadInfos__storage_;
 
 // This method is threadsafe because it is initially called
@@ -437,6 +441,15 @@ typedef struct UpdateThreadInfos__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
+        .name = "peer",
+        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
+        .number = UpdateThreadInfos_FieldNumber_Peer,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(UpdateThreadInfos__storage_, peer),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
         .name = "infosArray",
         .dataTypeSpecific.clazz = GPBObjCClass(PeerThread),
         .number = UpdateThreadInfos_FieldNumber_InfosArray,
@@ -444,6 +457,24 @@ typedef struct UpdateThreadInfos__storage_ {
         .offset = (uint32_t)offsetof(UpdateThreadInfos__storage_, infosArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "peerClock",
+        .dataTypeSpecific.clazz = Nil,
+        .number = UpdateThreadInfos_FieldNumber_PeerClock,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(UpdateThreadInfos__storage_, peerClock),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "prevPeerClock",
+        .dataTypeSpecific.clazz = Nil,
+        .number = UpdateThreadInfos_FieldNumber_PrevPeerClock,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(UpdateThreadInfos__storage_, prevPeerClock),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =

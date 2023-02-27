@@ -80,7 +80,7 @@
 #pragma mark GetState(RequestGetState) returns (ResponseGetState)
 
 /**
- * / Get last sequence number
+ * / Метод получения текущего состояния потока seq-апдейтов пользователя
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -89,7 +89,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Get last sequence number
+ * / Метод получения текущего состояния потока seq-апдейтов пользователя
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -100,7 +100,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Get last sequence number
+ * / Метод получения текущего состояния потока seq-апдейтов пользователя
  */
 - (GRPCUnaryProtoCall *)getStateWithMessage:(RequestGetState *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetState"
@@ -113,7 +113,7 @@
 #pragma mark GetDifference(RequestGetDifference) returns (ResponseGetDifference)
 
 /**
- * / Get all update that happens after given seq number
+ * / Метод полчения разницы в сек-апдейтах между клиентом и сервером
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -122,7 +122,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Get all update that happens after given seq number
+ * / Метод полчения разницы в сек-апдейтах между клиентом и сервером
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -133,7 +133,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Get all update that happens after given seq number
+ * / Метод полчения разницы в сек-апдейтах между клиентом и сервером
  */
 - (GRPCUnaryProtoCall *)getDifferenceWithMessage:(RequestGetDifference *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetDifference"
@@ -146,7 +146,7 @@
 #pragma mark GetReferencedEntities(RequestGetReferencedEntities) returns (ResponseGetReferencedEntities)
 
 /**
- * / Load some required entities
+ * / Метод загрузки дополнительных сущностей
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -155,7 +155,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Load some required entities
+ * / Метод загрузки дополнительных сущностей
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -166,7 +166,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Load some required entities
+ * / Метод загрузки дополнительных сущностей
  */
 - (GRPCUnaryProtoCall *)getReferencedEntitiesWithMessage:(RequestGetReferencedEntities *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetReferencedEntities"
@@ -178,16 +178,29 @@
 
 #pragma mark GetPartialPeerInfo(RequestGetPartialPeerInfo) returns (ResponseGetPartialPeerInfo)
 
+/**
+ * / deprecated
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)getPartialPeerInfoWithRequest:(RequestGetPartialPeerInfo *)request handler:(void(^)(ResponseGetPartialPeerInfo *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToGetPartialPeerInfoWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / deprecated
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToGetPartialPeerInfoWithRequest:(RequestGetPartialPeerInfo *)request handler:(void(^)(ResponseGetPartialPeerInfo *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"GetPartialPeerInfo"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseGetPartialPeerInfo class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / deprecated
+ */
 - (GRPCUnaryProtoCall *)getPartialPeerInfoWithMessage:(RequestGetPartialPeerInfo *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetPartialPeerInfo"
                    message:message
@@ -199,7 +212,7 @@
 #pragma mark SeqUpdates(Empty) returns (stream SeqUpdate)
 
 /**
- * / Get stream of the user's updates
+ * / Метод открытия подписки на поток сек-апдейтов пользователя
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -208,7 +221,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Get stream of the user's updates
+ * / Метод открытия подписки на поток сек-апдейтов пользователя
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -219,7 +232,7 @@
         responsesWriteable:[GRXWriteable writeableWithEventHandler:eventHandler]];
 }
 /**
- * / Get stream of the user's updates
+ * / Метод открытия подписки на поток сек-апдейтов пользователя
  */
 - (GRPCUnaryProtoCall *)seqUpdatesWithMessage:(GPBEmpty *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"SeqUpdates"
@@ -231,16 +244,29 @@
 
 #pragma mark WeakUpdates(stream WeakUpdateCommand) returns (stream WeakUpdate)
 
+/**
+ * / Метод открытия подписки на поток weak-апдейтов пользователя
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)weakUpdatesWithRequestsWriter:(GRXWriter *)requestWriter eventHandler:(void(^)(BOOL done, WeakUpdate *_Nullable response, NSError *_Nullable error))eventHandler{
   [[self RPCToWeakUpdatesWithRequestsWriter:requestWriter eventHandler:eventHandler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Метод открытия подписки на поток weak-апдейтов пользователя
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToWeakUpdatesWithRequestsWriter:(GRXWriter *)requestWriter eventHandler:(void(^)(BOOL done, WeakUpdate *_Nullable response, NSError *_Nullable error))eventHandler{
   return [self RPCToMethod:@"WeakUpdates"
             requestsWriter:requestWriter
              responseClass:[WeakUpdate class]
         responsesWriteable:[GRXWriteable writeableWithEventHandler:eventHandler]];
 }
+/**
+ * / Метод открытия подписки на поток weak-апдейтов пользователя
+ */
 - (GRPCStreamingProtoCall *)weakUpdatesWithResponseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"WeakUpdates"
            responseHandler:handler

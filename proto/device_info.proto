@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package dialog;
 
-// Submiting various information about device for providing better experience.
-// For example, getting timezone or preffered languages
-
 import "wrappers.proto";
 import "empty.proto";
 import "annotations.proto";

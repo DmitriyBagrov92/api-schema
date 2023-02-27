@@ -11,60 +11,97 @@ import "scalapb.proto";
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
 
-// Location of file on server
+/// Координаты файла
 message FileLocation {
-    string file_id = 1; /// Unique Id of file
-    int64 access_hash = 2 [(dlg).log=log_confidential]; /// Access hash of file
+    /// Идентификатор файла
+    string file_id = 1;
+
+    /// Ключ доступа к файлу
+    int64 access_hash = 2 [(dlg).log=log_confidential];
 }
 
-// Image location
+/// Координаты изображения
 message ImageLocation {
-    FileLocation file_location = 1; /// Location of file
-    int32 width = 2; /// Width of avatar image
-    int32 height = 3; /// Height of avatar image
-    int32 file_size = 4; /// Size of file
+    /// Координаты файла с изображением
+    FileLocation file_location = 1;
+
+    /// Ширина изображения в пикселях
+    int32 width = 2;
+
+    /// Высота изображения в пикселях
+    int32 height = 3;
+
+    /// Размер файла с изображением в байтах
+    int32 file_size = 4;
 }
 
-// Audio location
+/// Координаты аудио-файла
 message AudioLocation {
-    FileLocation file_location = 1; /// File location
-    int32 duration_seconds = 2; /// audio duration in seconds
-    string mime_type = 3; /// mime type
-    int32 file_size_bytes = 4; /// file size
+    /// Координаты файла с аудио
+    FileLocation file_location = 1;
+
+    /// Длительность аудио-файла в секундах
+    int32 duration_seconds = 2;
+
+    /// MIME-тип аудио-файла
+    string mime_type = 3;
+
+    /// Размер аудио-файла в байтах
+    int32 file_size_bytes = 4;
 }
 
-// Avatar Image
+/// Структура изображения-аватара
 message AvatarImage {
-    FileLocation file_location = 1; /// Location of file
-    int32 width = 2; /// Width of avatar image
-    int32 height = 3; /// Height of avatar image
-    int32 file_size_bytes = 4; /// Size of file
+    /// Координаты файла с аватаром
+    FileLocation file_location = 1;
+
+    /// Ширина изображения в пикселях
+    int32 width = 2;
+
+    /// Высота изображения в пикселях
+    int32 height = 3;
+
+    /// Размер изображения в байтах
+    int32 file_size_bytes = 4;
 }
 
-// Avatar of User or Group
+/// Структура автара
 message Avatar {
-    /// Optional small image of avatar box in 100x100
+    /// Изображение-аватар в размере 100x100
     AvatarImage small_image = 1;
-    /// Optional large image of avatar box in 200x200
+    /// Изображение-аватар в размере 200x200
     AvatarImage large_image = 2;
-    /// Optional full screen image of avatar
+    /// Оригинальное изображение-аватар
     AvatarImage full_image = 3;
 }
 
-// Fast thumb of media messages. Less than 90x90 and compressed by JPEG with low quality
+/// Структура для быстрого предпросмотра изображений, должна содержать изображние размером не более 90x90 пикселей и быть сжатой в JPEG с минимальным качеством
 message FastThumb {
-    int32 w = 1; /// Width of thumb
-    int32 h = 2; /// Height of thump
-    bytes thumb = 3; /// compressed image data
+    /// Ширина изображения-предпросмотра в пикселях
+    int32 w = 1;
+
+    /// Высота изображения-предпросмотра в пикселях
+    int32 h = 2;
+
+    /// Байты, представляющие собой изображение в формате JPEG
+    bytes thumb = 3;
 }
 
+/// Набор вариантов цветов
 enum Colors {
     COLORS_UNKNOWN = 0;
+
+    // Красный
     COLORS_RED = 1;
+
+    // Желтый
     COLORS_YELLOW = 2;
+
+    // Зелёный
     COLORS_GREEN = 3;
 }
 
+/// Структура цвета
 message Color {
     oneof body {
         RgbColor rgb = 1;
@@ -72,83 +109,120 @@ message Color {
     }
 }
 
-// RGB Color
+/// Структура цвета в формате RGB
 message RgbColor {
-    int32 rgb = 1; /// RGB color value
+    /// Представление цвета в 8-битном формате RGBa (по 8 бит на цвет + альфа канал)
+    int32 rgb = 1;
 }
 
-// Predefined color
+/// Структура предпоределенного цвета
 message PredefinedColor {
-    Colors color = 1; /// Predefined color value
+    /// Цвет
+    Colors color = 1;
 }
 
-// HTTP Header record
+/// HTTP-заголовок
 message HTTPHeader {
-    string key = 1; /// HTTP Header name
-    string value = 2; /// HTTP Header value
+    /// Наименование заголовка
+    string key = 1;
+
+    /// Значение заголовка
+    string value = 2;
 }
 
-// File url description
+/// Структура URL файла
 message FileUrlDescription {
-    string file_id = 1; /// File id of url
-    string url = 2; /// Url for downloading
-    int32 timeout = 3; /// Timeout of url
-    /// Unsigned URL (used to honor web caches)
+    /// Идентификатор файла
+    string file_id = 1;
+
+    /// URL по котором файл доступен для скачивания
+    string url = 2;
+
+    /// Время жизни URL в секундах с момента получения этой структуры
+    int32 timeout = 3;
+
+    /// Неподписанный URL файла
     google.protobuf.StringValue unsigned_url = 4 [(dlg).log=log_sensitive];
-    /// Headers that is required to download files with unsigned url
+
+    /// HTTP-заголовки, которые необходимо предоставить для скачивания файла по неподписанному URL
     repeated HTTPHeader unsigned_url_headers = 5;
+
+    /// MD5-хэш содержимого файла
     bytes md5_hash = 6;
 }
 
+/// Набор ошибок при операциях с файловым URL
 enum FileUrlErrorTag {
     FILE_URL_ERROR_TAG_UNKNOWN = 0;
+
+    /// Ошибка хранилища
     FILE_URL_ERROR_TAG_STORAGE_ERROR = 1;
+
+    /// Ошибка доступа в хранилище
     FILE_URL_ERROR_TAG_STORAGE_FORBIDDEN_ERROR = 2;
 }
 
-// Error, that describes failure of specific file
+/// Ошибка операции с файлом по URL
 message FileUrlError {
-    int64 file_id = 1; /// the id of file
-    FileUrlErrorTag tag = 2; /// error to handle on client
-    string reason = 3; /// text fallback
-    bool retryable = 4; /// client should retry or not
+    /// Идентификатор файла
+    int64 file_id = 1;
+
+    /// Предпопределенная ошибка
+    FileUrlErrorTag tag = 2;
+
+    /// Расширенное описание ошибки
+    string reason = 3;
+
+    /// Флаг возможности повторение запроса приведшего к данной ошибке
+    bool retryable = 4;
 }
 
-// Requesting file URL for downloading
+/// Запрос на получение URL файла
 message RequestGetFileUrl {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Координаты файла
     FileLocation file = 1;
 }
 
+/// Ответ на запрос на получение URL файла
 message ResponseGetFileUrl {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
+    /// URL файла
     string url = 1;
+
+    /// Время жизни URL в секундах с момента получения URL
     int32 timeout_seconds = 2;
+
+    /// Неподписанный URL файла
     google.protobuf.StringValue unsigned_url = 3;
+
+    /// HTTP-заголовки, которые необходимо предоставить для скачивания файла по неподписанному URL
     repeated HTTPHeader unsigned_url_headers = 4;
+
+    /// MD5-хэш файла
     bytes md5_hash = 5;
 }
 
-// Requesting multiple fle URL for downloading
+/// Запрос на получение URL набора файлов
 message RequestGetFileUrls {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Список координат файлов
     repeated FileLocation files = 1;
 }
 
+/// Ответ на запрос на получение URL набора файлов
 message ResponseGetFileUrls {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
+    /// Список структур с URL файлов
     repeated FileUrlDescription file_urls = 1;
+
+    /// Список ошибок получения URL
     repeated FileUrlError errors = 2;
 }
 
-// Get File URL Builder that allows to build file urls from client side
+/// deprecated
 message RequestGetFileUrlBuilder {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     repeated string supported_signature_algorithms = 1;
 }
 
+/// deprecated
 message ResponseGetFileUrlBuilder {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     string base_url = 1;
     string algo = 2;
     string seed = 5;
@@ -156,80 +230,96 @@ message ResponseGetFileUrlBuilder {
     int32 timeout = 4;
 }
 
-// Requesting pload url
+/// Запрос на получение URL для загрузки файла
 message RequestGetFileUploadUrl {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Ожидаемый размер файла в байтах
     int32 expected_size = 1;
 }
 
+/// Ответ на запрос на получение URL для загрузки файла
 message ResponseGetFileUploadUrl {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
+    /// Ключ загрузки
     bytes upload_key = 2;
 }
 
-// Comminting uploaded file to storage
+/// Запрос на завершение загрузки файла
 message RequestCommitFileUpload {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Ключ загрузки
     bytes upload_key = 1;
+
+    /// Имя файла
     string file_name = 2;
+
+    /// MD5-хэш файла
     bytes md5_hash = 3;
 }
 
+/// Ответ на запрос на завершение загрузки файла
 message ResponseCommitFileUpload {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
+    /// Координаты загруженного файла
     FileLocation uploaded_file_location = 1;
 }
 
-// Upload file part
+/// Запрос на загрузку части файла
 message RequestGetFileUploadPartUrl {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Порядковый номер части файла
     int32 part_number = 1;
+
+    /// Размер части файла в байтах
     int32 part_size = 2;
+
+    /// Ключ загрузки
     bytes upload_key = 3;
 }
 
+/// Ответ на запрос на загрузку части файла
 message ResponseGetFileUploadPartUrl {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
+    /// URL для загрузки
     string url = 1;
 }
 
 service MediaAndFiles {
-    /// Get link to file for downloading
+    /// Метод получения ссылки для скачивания файла
     rpc GetFileUrl (RequestGetFileUrl) returns (ResponseGetFileUrl) {
         option (google.api.http) = {
             post: "/v1/grpc/MediaAndFiles/GetFileUrl"
             body: "*"
         };
     }
-    /// Get link to files for downloading
+
+    /// Метод получения ссылок для скачивания файлов
     rpc GetFileUrls (RequestGetFileUrls) returns (ResponseGetFileUrls) {
         option (google.api.http) = {
             post: "/v1/grpc/MediaAndFiles/GetFileUrls"
             body: "*"
         };
     }
-    /// Create builder for file url
+
+    /// deprecated
     rpc GetFileUrlBuilder (RequestGetFileUrlBuilder) returns (ResponseGetFileUrlBuilder) {
         option (google.api.http) = {
             post: "/v1/grpc/MediaAndFiles/GetFileUrlBuilder"
             body: "*"
         };
     }
-    /// Get url for uploading
+
+    /// Метод получения ссылки для загрузки файла
     rpc GetFileUploadUrl (RequestGetFileUploadUrl) returns (ResponseGetFileUploadUrl) {
         option (google.api.http) = {
             post: "/v1/grpc/MediaAndFiles/GetFileUploadUrl"
             body: "*"
         };
     }
-    /// Finish uploading a file
+
+    /// Метод завершения загрузки файла
     rpc CommitFileUpload (RequestCommitFileUpload) returns (ResponseCommitFileUpload) {
         option (google.api.http) = {
             post: "/v1/grpc/MediaAndFiles/CommitFileUpload"
             body: "*"
         };
     }
-    /// Get url for uploading chunk of file
+
+    /// Метод получения ссылки для загрузки части файла
     rpc GetFileUploadPartUrl (RequestGetFileUploadPartUrl) returns (ResponseGetFileUploadPartUrl) {
         option (google.api.http) = {
             post: "/v1/grpc/MediaAndFiles/GetFileUploadPartUrl"

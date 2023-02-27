@@ -12,18 +12,20 @@ import "scalapb.proto";
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
 
-// Exchange public keys
+/// Запрос на обмен публичными ключами
 message RequestKeyExchange {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Публичный ключ клиента
     google.protobuf.BytesValue client_key = 1;
 }
 
+/// Ответ на запрос на обмен публичными ключами
 message ResponseKeyExchange {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
+    /// Публичный ключ сервера
     google.protobuf.BytesValue server_key = 1;
 }
 
 service Crypto {
+    /// Метод обмена ключами
     rpc KeyExchange (RequestKeyExchange) returns (ResponseKeyExchange) {
         option (google.api.http) = {
             post: "/v1/grpc/Crypto/KeyExchange"

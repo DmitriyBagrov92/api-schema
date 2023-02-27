@@ -71,98 +71,170 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark LoadMembers(RequestLoadMembers) returns (ResponseLoadMembers)
 
+/**
+ * / Запрос на загрузку списка членов группового чата
+ */
 - (GRPCUnaryProtoCall *)loadMembersWithMessage:(RequestLoadMembers *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark CreateGroup(RequestCreateGroup) returns (ResponseCreateGroup)
 
+/**
+ * / Запрос на создание группового чата
+ */
 - (GRPCUnaryProtoCall *)createGroupWithMessage:(RequestCreateGroup *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark EditGroupTitle(RequestEditGroupTitle) returns (Empty)
 
+/**
+ * / Запрос на изменение названия группового чата
+ */
 - (GRPCUnaryProtoCall *)editGroupTitleWithMessage:(RequestEditGroupTitle *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark EditGroupAvatar(RequestEditGroupAvatar) returns (Empty)
 
+/**
+ * / Запрос на изменение аватара группового чата
+ */
 - (GRPCUnaryProtoCall *)editGroupAvatarWithMessage:(RequestEditGroupAvatar *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark RemoveGroupAvatar(RequestRemoveGroupAvatar) returns (Empty)
 
+/**
+ * / Запрос на удаление аватара группового чата
+ */
 - (GRPCUnaryProtoCall *)removeGroupAvatarWithMessage:(RequestRemoveGroupAvatar *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark EditGroupAbout(RequestEditGroupAbout) returns (Empty)
 
+/**
+ * / Запрос на изменение описания группового чата
+ */
 - (GRPCUnaryProtoCall *)editGroupAboutWithMessage:(RequestEditGroupAbout *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark EditGroupBasePermissions(RequestEditGroupBasePermissions) returns (Empty)
 
+/**
+ * / Запрос на изменение базовых прав новых членов группового чата
+ */
 - (GRPCUnaryProtoCall *)editGroupBasePermissionsWithMessage:(RequestEditGroupBasePermissions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark InviteUser(RequestInviteUser) returns (Empty)
 
+/**
+ * / Запрос на приглашение пользователей в групповой чат
+ */
 - (GRPCUnaryProtoCall *)inviteUserWithMessage:(RequestInviteUser *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark LeaveGroup(RequestLeaveGroup) returns (Empty)
 
+/**
+ * / Запрос на выход из группового чата
+ */
 - (GRPCUnaryProtoCall *)leaveGroupWithMessage:(RequestLeaveGroup *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark CloseGroup(RequestCloseGroup) returns (Empty)
 
+/**
+ * / Запрос на закрытие группового чата
+ */
 - (GRPCUnaryProtoCall *)closeGroupWithMessage:(RequestCloseGroup *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark OpenGroup(RequestOpenGroup) returns (Empty)
 
+/**
+ * / Запрос на открытие ранее закрытого группового чата
+ */
 - (GRPCUnaryProtoCall *)openGroupWithMessage:(RequestOpenGroup *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark KickUser(RequestKickUser) returns (Empty)
 
+/**
+ * / Запрос на исключение члена группового чата
+ */
 - (GRPCUnaryProtoCall *)kickUserWithMessage:(RequestKickUser *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark MakeUserAdmin(RequestMakeUserAdmin) returns (Empty)
 
+/**
+ * / Запрос на передачу члену группового чата прав администратора
+ */
 - (GRPCUnaryProtoCall *)makeUserAdminWithMessage:(RequestMakeUserAdmin *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetGroupMemberPermissions(RequestGetGroupMemberPermissions) returns (ResponseGetGroupMemberPermissions)
 
+/**
+ * / Запрос на получение списка соответствий членов группового чата и их прав
+ */
 - (GRPCUnaryProtoCall *)getGroupMemberPermissionsWithMessage:(RequestGetGroupMemberPermissions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark EditMemberPermissions(RequestEditMemberPermissions) returns (ResponseMember)
 
+/**
+ * / Запрос на изменение прав члена группового чата
+ */
 - (GRPCUnaryProtoCall *)editMemberPermissionsWithMessage:(RequestEditMemberPermissions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark TransferOwnership(RequestTransferOwnership) returns (Empty)
 
+/**
+ * / Запрос на перенос владения групповым чатом
+ */
 - (GRPCUnaryProtoCall *)transferOwnershipWithMessage:(RequestTransferOwnership *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetGroupInviteUrl(RequestGetGroupInviteUrl) returns (ResponseInviteUrl)
 
+/**
+ * / Запрос на получение ссылки-приглашения в групповой чат
+ */
 - (GRPCUnaryProtoCall *)getGroupInviteUrlWithMessage:(RequestGetGroupInviteUrl *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetGroupInviteUrlBase(RequestGetGroupInviteUrlBase) returns (ResponseGetGroupInviteUrlBase)
 
+/**
+ * / Запрос на получение базового URL ссылок-приглашений в групповые чаты
+ */
 - (GRPCUnaryProtoCall *)getGroupInviteUrlBaseWithMessage:(RequestGetGroupInviteUrlBase *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark RevokeInviteUrl(RequestRevokeInviteUrl) returns (ResponseInviteUrl)
 
+/**
+ * / Запрос на отзыв ссылки-приглашения в групповой чат
+ */
 - (GRPCUnaryProtoCall *)revokeInviteUrlWithMessage:(RequestRevokeInviteUrl *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark JoinGroup(RequestJoinGroup) returns (ResponseJoinGroup)
 
+/**
+ * / Запрос на получение присоединение к групповому чату по токену
+ */
 - (GRPCUnaryProtoCall *)joinGroupWithMessage:(RequestJoinGroup *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark JoinGroupByPeer(RequestJoinGroupByPeer) returns (Empty)
 
+/**
+ * / Запрос на получение присоединение к групповому чату по идентификатору
+ */
 - (GRPCUnaryProtoCall *)joinGroupByPeerWithMessage:(RequestJoinGroupByPeer *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark DeleteGroup(RequestDeleteGroup) returns (Empty)
 
+/**
+ * / Запрос на удаление группового чата
+ */
 - (GRPCUnaryProtoCall *)deleteGroupWithMessage:(RequestDeleteGroup *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetGroupPartialInfo(RequestGetGroupPartialInfo) returns (GroupPartialInfo)
 
+/**
+ * / Запрос на получение частичных данных о групповом чате
+ */
 - (GRPCUnaryProtoCall *)getGroupPartialInfoWithMessage:(RequestGetGroupPartialInfo *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark ChangeGroupPublicity(RequestChangeGroupPublicity) returns (Empty)
 
+/**
+ * / Запрос на изменение публичности группового чата
+ */
 - (GRPCUnaryProtoCall *)changeGroupPublicityWithMessage:(RequestChangeGroupPublicity *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 @end
@@ -239,169 +311,409 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark LoadMembers(RequestLoadMembers) returns (ResponseLoadMembers)
 
+/**
+ * / Запрос на загрузку списка членов группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)loadMembersWithRequest:(RequestLoadMembers *)request handler:(void(^)(ResponseLoadMembers *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на загрузку списка членов группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToLoadMembersWithRequest:(RequestLoadMembers *)request handler:(void(^)(ResponseLoadMembers *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark CreateGroup(RequestCreateGroup) returns (ResponseCreateGroup)
 
+/**
+ * / Запрос на создание группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)createGroupWithRequest:(RequestCreateGroup *)request handler:(void(^)(ResponseCreateGroup *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на создание группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToCreateGroupWithRequest:(RequestCreateGroup *)request handler:(void(^)(ResponseCreateGroup *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark EditGroupTitle(RequestEditGroupTitle) returns (Empty)
 
+/**
+ * / Запрос на изменение названия группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)editGroupTitleWithRequest:(RequestEditGroupTitle *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на изменение названия группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToEditGroupTitleWithRequest:(RequestEditGroupTitle *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark EditGroupAvatar(RequestEditGroupAvatar) returns (Empty)
 
+/**
+ * / Запрос на изменение аватара группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)editGroupAvatarWithRequest:(RequestEditGroupAvatar *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на изменение аватара группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToEditGroupAvatarWithRequest:(RequestEditGroupAvatar *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark RemoveGroupAvatar(RequestRemoveGroupAvatar) returns (Empty)
 
+/**
+ * / Запрос на удаление аватара группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)removeGroupAvatarWithRequest:(RequestRemoveGroupAvatar *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на удаление аватара группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToRemoveGroupAvatarWithRequest:(RequestRemoveGroupAvatar *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark EditGroupAbout(RequestEditGroupAbout) returns (Empty)
 
+/**
+ * / Запрос на изменение описания группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)editGroupAboutWithRequest:(RequestEditGroupAbout *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на изменение описания группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToEditGroupAboutWithRequest:(RequestEditGroupAbout *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark EditGroupBasePermissions(RequestEditGroupBasePermissions) returns (Empty)
 
+/**
+ * / Запрос на изменение базовых прав новых членов группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)editGroupBasePermissionsWithRequest:(RequestEditGroupBasePermissions *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на изменение базовых прав новых членов группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToEditGroupBasePermissionsWithRequest:(RequestEditGroupBasePermissions *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark InviteUser(RequestInviteUser) returns (Empty)
 
+/**
+ * / Запрос на приглашение пользователей в групповой чат
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)inviteUserWithRequest:(RequestInviteUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на приглашение пользователей в групповой чат
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToInviteUserWithRequest:(RequestInviteUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark LeaveGroup(RequestLeaveGroup) returns (Empty)
 
+/**
+ * / Запрос на выход из группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)leaveGroupWithRequest:(RequestLeaveGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на выход из группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToLeaveGroupWithRequest:(RequestLeaveGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark CloseGroup(RequestCloseGroup) returns (Empty)
 
+/**
+ * / Запрос на закрытие группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)closeGroupWithRequest:(RequestCloseGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на закрытие группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToCloseGroupWithRequest:(RequestCloseGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark OpenGroup(RequestOpenGroup) returns (Empty)
 
+/**
+ * / Запрос на открытие ранее закрытого группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)openGroupWithRequest:(RequestOpenGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на открытие ранее закрытого группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToOpenGroupWithRequest:(RequestOpenGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark KickUser(RequestKickUser) returns (Empty)
 
+/**
+ * / Запрос на исключение члена группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)kickUserWithRequest:(RequestKickUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на исключение члена группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToKickUserWithRequest:(RequestKickUser *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark MakeUserAdmin(RequestMakeUserAdmin) returns (Empty)
 
+/**
+ * / Запрос на передачу члену группового чата прав администратора
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)makeUserAdminWithRequest:(RequestMakeUserAdmin *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на передачу члену группового чата прав администратора
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToMakeUserAdminWithRequest:(RequestMakeUserAdmin *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetGroupMemberPermissions(RequestGetGroupMemberPermissions) returns (ResponseGetGroupMemberPermissions)
 
+/**
+ * / Запрос на получение списка соответствий членов группового чата и их прав
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)getGroupMemberPermissionsWithRequest:(RequestGetGroupMemberPermissions *)request handler:(void(^)(ResponseGetGroupMemberPermissions *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на получение списка соответствий членов группового чата и их прав
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToGetGroupMemberPermissionsWithRequest:(RequestGetGroupMemberPermissions *)request handler:(void(^)(ResponseGetGroupMemberPermissions *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark EditMemberPermissions(RequestEditMemberPermissions) returns (ResponseMember)
 
+/**
+ * / Запрос на изменение прав члена группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)editMemberPermissionsWithRequest:(RequestEditMemberPermissions *)request handler:(void(^)(ResponseMember *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на изменение прав члена группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToEditMemberPermissionsWithRequest:(RequestEditMemberPermissions *)request handler:(void(^)(ResponseMember *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark TransferOwnership(RequestTransferOwnership) returns (Empty)
 
+/**
+ * / Запрос на перенос владения групповым чатом
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)transferOwnershipWithRequest:(RequestTransferOwnership *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на перенос владения групповым чатом
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToTransferOwnershipWithRequest:(RequestTransferOwnership *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetGroupInviteUrl(RequestGetGroupInviteUrl) returns (ResponseInviteUrl)
 
+/**
+ * / Запрос на получение ссылки-приглашения в групповой чат
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)getGroupInviteUrlWithRequest:(RequestGetGroupInviteUrl *)request handler:(void(^)(ResponseInviteUrl *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на получение ссылки-приглашения в групповой чат
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToGetGroupInviteUrlWithRequest:(RequestGetGroupInviteUrl *)request handler:(void(^)(ResponseInviteUrl *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetGroupInviteUrlBase(RequestGetGroupInviteUrlBase) returns (ResponseGetGroupInviteUrlBase)
 
+/**
+ * / Запрос на получение базового URL ссылок-приглашений в групповые чаты
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)getGroupInviteUrlBaseWithRequest:(RequestGetGroupInviteUrlBase *)request handler:(void(^)(ResponseGetGroupInviteUrlBase *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на получение базового URL ссылок-приглашений в групповые чаты
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToGetGroupInviteUrlBaseWithRequest:(RequestGetGroupInviteUrlBase *)request handler:(void(^)(ResponseGetGroupInviteUrlBase *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark RevokeInviteUrl(RequestRevokeInviteUrl) returns (ResponseInviteUrl)
 
+/**
+ * / Запрос на отзыв ссылки-приглашения в групповой чат
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)revokeInviteUrlWithRequest:(RequestRevokeInviteUrl *)request handler:(void(^)(ResponseInviteUrl *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на отзыв ссылки-приглашения в групповой чат
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToRevokeInviteUrlWithRequest:(RequestRevokeInviteUrl *)request handler:(void(^)(ResponseInviteUrl *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark JoinGroup(RequestJoinGroup) returns (ResponseJoinGroup)
 
+/**
+ * / Запрос на получение присоединение к групповому чату по токену
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)joinGroupWithRequest:(RequestJoinGroup *)request handler:(void(^)(ResponseJoinGroup *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на получение присоединение к групповому чату по токену
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToJoinGroupWithRequest:(RequestJoinGroup *)request handler:(void(^)(ResponseJoinGroup *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark JoinGroupByPeer(RequestJoinGroupByPeer) returns (Empty)
 
+/**
+ * / Запрос на получение присоединение к групповому чату по идентификатору
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)joinGroupByPeerWithRequest:(RequestJoinGroupByPeer *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на получение присоединение к групповому чату по идентификатору
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToJoinGroupByPeerWithRequest:(RequestJoinGroupByPeer *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark DeleteGroup(RequestDeleteGroup) returns (Empty)
 
+/**
+ * / Запрос на удаление группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)deleteGroupWithRequest:(RequestDeleteGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на удаление группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToDeleteGroupWithRequest:(RequestDeleteGroup *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetGroupPartialInfo(RequestGetGroupPartialInfo) returns (GroupPartialInfo)
 
+/**
+ * / Запрос на получение частичных данных о групповом чате
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)getGroupPartialInfoWithRequest:(RequestGetGroupPartialInfo *)request handler:(void(^)(GroupPartialInfo *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на получение частичных данных о групповом чате
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToGetGroupPartialInfoWithRequest:(RequestGetGroupPartialInfo *)request handler:(void(^)(GroupPartialInfo *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark ChangeGroupPublicity(RequestChangeGroupPublicity) returns (Empty)
 
+/**
+ * / Запрос на изменение публичности группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)changeGroupPublicityWithRequest:(RequestChangeGroupPublicity *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Запрос на изменение публичности группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToChangeGroupPublicityWithRequest:(RequestChangeGroupPublicity *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 

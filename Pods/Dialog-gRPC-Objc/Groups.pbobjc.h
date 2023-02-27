@@ -45,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Enum GroupType
 
+/** / Набор типов групповых чатов */
 typedef GPB_ENUM(GroupType) {
   /**
    * Value used if any message's field encounters a value that is not defined
@@ -53,8 +54,14 @@ typedef GPB_ENUM(GroupType) {
    **/
   GroupType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   GroupType_GroupTypeUnknown = 0,
+
+  /** / Групповой чат типа "группа" */
   GroupType_GroupTypeGroup = 1,
+
+  /** / Групповой чат типа "канал" */
   GroupType_GroupTypeChannel = 2,
+
+  /** / Групповой чат типа "важная тема" */
   GroupType_GroupTypeImportantTopic = 4,
 };
 
@@ -68,7 +75,7 @@ BOOL GroupType_IsValidValue(int32_t value);
 
 #pragma mark - Enum GroupAdminPermission
 
-/** / Possible permissions on a group */
+/** / Набор прав пользователей в групповых чатах */
 typedef GPB_ENUM(GroupAdminPermission) {
   /**
    * Value used if any message's field encounters a value that is not defined
@@ -77,24 +84,50 @@ typedef GPB_ENUM(GroupAdminPermission) {
    **/
   GroupAdminPermission_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   GroupAdminPermission_GroupAdminPermissionUnknown = 0,
+
+  /** / Право на приглашение пользователей в групповой чат */
   GroupAdminPermission_GroupAdminPermissionInvite = 2,
+
+  /** / Право на исключение пользователей из группового чата */
   GroupAdminPermission_GroupAdminPermissionKick = 3,
+
+  /** / Право на изменение информации о групповом чате */
   GroupAdminPermission_GroupAdminPermissionUpdateinfo = 4,
+
+  /** / Право на изменение прав других участников группового чата */
   GroupAdminPermission_GroupAdminPermissionSetpermissions = 5,
+
+  /** / Право на редактирование сообщений других участников группового чата */
   GroupAdminPermission_GroupAdminPermissionEditmessage = 6,
+
+  /** / Право на удаление сообщений других участников группового чата */
   GroupAdminPermission_GroupAdminPermissionDeletemessage = 7,
+
+  /** / Право на генерацию ссылки-приглашения в групповой чат */
   GroupAdminPermission_GroupAdminPermissionGetintegrationtoken = 8,
+
+  /** / Право на отправку сообщений в групповой чат */
   GroupAdminPermission_GroupAdminPermissionSendmessage = 9,
+
+  /** / Право на закрепление сообщений в групповом чате */
   GroupAdminPermission_GroupAdminPermissionPinmessage = 10,
+
+  /** / Право на просмотр членов группового чата */
   GroupAdminPermission_GroupAdminPermissionViewmembers = 11,
 
-  /** / read only permission */
+  /** / Право на выход из группового чата */
   GroupAdminPermission_GroupAdminPermissionLeave = 12,
+
+  /** / Право на использование механизма таргетирования при отправке сообщений в групповой чат */
   GroupAdminPermission_GroupAdminPermissionTargeting = 13,
+
+  /** / Право на удаление группового чата */
   GroupAdminPermission_GroupAdminPermissionDelete = 14,
+
+  /** / Право на управление конференцией, связанной с групповым чатом */
   GroupAdminPermission_GroupAdminPermissionManageConference = 15,
 
-  /** _FROZEN ? */
+  /** / Право на изменение открытости/закрытости группового чата */
   GroupAdminPermission_GroupAdminPermissionOpenAndClose = 16,
 };
 
@@ -132,22 +165,26 @@ typedef GPB_ENUM(Member_FieldNumber) {
 };
 
 /**
- * Member information
+ * / Структура описывающая члена группового чата
  **/
 GPB_FINAL @interface Member : GPBMessage
 
+/** / Идентификатор учетной записи пользователя */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
+/** / Время (в миллисекундах от Unix epoch), когда пользователь был добавлен в групповой чат */
 @property(nonatomic, readwrite) int64_t invitedAt;
 
-/** List of member permissions */
+/** / Список прав */
 // |permissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *permissionsArray;
 /** The number of items in @c permissionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger permissionsArray_Count;
 
+/** / Версия структуры */
 @property(nonatomic, readwrite) int64_t clock;
 
+/** / Время (в миллисекундах от Unix epoch), когда пользователь был исключен из группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) GPBTimestamp *deletedAt;
 /** Test to see if @c deletedAt has been set. */
 @property(nonatomic, readwrite) BOOL hasDeletedAt;
@@ -164,20 +201,22 @@ typedef GPB_ENUM(Group_FieldNumber) {
 };
 
 /**
- * Group information
+ * / Структура группового чата
  **/
 GPB_FINAL @interface Group : GPBMessage
 
-/** / group id */
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
-/** / Access hash of group */
+/** / Ключ доступа к группового чата (всегда равен нулю) */
 @property(nonatomic, readwrite) int64_t accessHash;
 
+/** / Данные о групповом чате */
 @property(nonatomic, readwrite, strong, null_resettable) GroupData *data_p;
 /** Test to see if @c data_p has been set. */
 @property(nonatomic, readwrite) BOOL hasData_p;
 
+/** / Структура члена группового чата, представляющая запрашивающего информацию пользователя в группе */
 @property(nonatomic, readwrite, strong, null_resettable) Member *selfMember;
 /** Test to see if @c selfMember has been set. */
 @property(nonatomic, readwrite) BOOL hasSelfMember;
@@ -205,65 +244,74 @@ typedef GPB_ENUM(GroupData_FieldNumber) {
   GroupData_FieldNumber_DueDate = 19,
 };
 
+/**
+ * / Структура полных данных о групповом чате
+ **/
 GPB_FINAL @interface GroupData : GPBMessage
 
-/** / Title of group */
+/** / Название группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *title;
 
-/** / Avatar of group */
+/** / Аватар группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) Avatar *avatar;
 /** Test to see if @c avatar has been set. */
 @property(nonatomic, readwrite) BOOL hasAvatar;
 
-/** / Number of members */
+/** / Количество членов группового чата */
 @property(nonatomic, readwrite) int32_t membersAmount;
 
-/** / Group Type. Used only for displaying information. Default is GROUP. */
+/** / Тип группового чата */
 @property(nonatomic, readwrite) GroupType groupType;
 
-/** / Group creator */
+/** / Идентификатор учетной записи пользователя-владельца группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *ownerUserId;
 
-/** / Date of creation */
+/** / Дата создания группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) GPBTimestamp *createdAt;
 /** Test to see if @c createdAt has been set. */
 @property(nonatomic, readwrite) BOOL hasCreatedAt;
 
-/** / About of group */
+/** / Описание группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *about;
 /** Test to see if @c about has been set. */
 @property(nonatomic, readwrite) BOOL hasAbout;
 
+/** / Список базовых прав для новых членов группового чата */
 // |basePermissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *basePermissionsArray;
 /** The number of items in @c basePermissionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger basePermissionsArray_Count;
 
+/** / Версия состояния группового чата */
 @property(nonatomic, readwrite) int64_t clock;
 
+/** / Время (в миллисекундах от Unix epoch) последнего изменения состава закрепленных сообщений в групповом чате */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *pinnedAt;
 /** Test to see if @c pinnedAt has been set. */
 @property(nonatomic, readwrite) BOOL hasPinnedAt;
 
+/** / Максимальное количество участников группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *membersCountLimit;
 /** Test to see if @c membersCountLimit has been set. */
 @property(nonatomic, readwrite) BOOL hasMembersCountLimit;
 
+/** / Время (в миллисекундах от Unix epoch) удаления группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *deletedAt;
 /** Test to see if @c deletedAt has been set. */
 @property(nonatomic, readwrite) BOOL hasDeletedAt;
 
+/** / Флаг публичности группового чата */
 @property(nonatomic, readwrite) BOOL isPublic;
 
-/** closure of group is more like freezing -- everything (including history) becomes immutable */
+/** / Флаг закрытости группового чата */
 @property(nonatomic, readwrite) BOOL isClosed;
 
-/** source peer&message for this group (will be first message in history after service message about group creation) */
+/** / Ссылка на источник группового чата (связанный чат или сообщение в чате) */
 @property(nonatomic, readwrite, strong, null_resettable) ConversationLink *source;
 /** Test to see if @c source has been set. */
 @property(nonatomic, readwrite) BOOL hasSource;
 
-/** if set this group will be "closed" after specified date */
+/** / Ожидаемое время закрытия группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) GPBTimestamp *dueDate;
 /** Test to see if @c dueDate has been set. */
 @property(nonatomic, readwrite) BOOL hasDueDate;
@@ -296,30 +344,43 @@ typedef GPB_ENUM(GroupPartialInfo_FieldNumber) {
   GroupPartialInfo_FieldNumber_IsPublic = 10,
 };
 
+/**
+ * / Структура частичный данных о групповом чате
+ * / deprecated
+ **/
 GPB_FINAL @interface GroupPartialInfo : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
+/** / Ключ доступа к группового чата (всегда равен нулю) */
 @property(nonatomic, readwrite) int64_t accessHash;
 
+/** / Версия состояния группового чата */
 @property(nonatomic, readwrite) int64_t clock;
 
+/** / Тип группового чата */
 @property(nonatomic, readwrite) GroupType type;
 
+/** / Название группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *title;
 
+/** / Аватар группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) Avatar *avatar;
 /** Test to see if @c avatar has been set. */
 @property(nonatomic, readwrite) BOOL hasAvatar;
 
+/** / Структура члена группового чата, представляющая запрашивающего информацию пользователя в группе */
 @property(nonatomic, readwrite, strong, null_resettable) Member *selfMember;
 /** Test to see if @c selfMember has been set. */
 @property(nonatomic, readwrite) BOOL hasSelfMember;
 
+/** / Время (в миллисекундах от Unix epoch) последнего изменения состава закрепленных сообщений в групповом чате */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *pinnedAt;
 /** Test to see if @c pinnedAt has been set. */
 @property(nonatomic, readwrite) BOOL hasPinnedAt;
 
+/** / Флаг публичности группового чата */
 @property(nonatomic, readwrite) BOOL isPublic;
 
 @end
@@ -344,12 +405,14 @@ typedef GPB_ENUM(UpdateGroup_FieldNumber) {
 };
 
 /**
- * Update about group data changed
+ * / Структура уведомления об изменении состояния группового чата
  **/
 GPB_FINAL @interface UpdateGroup : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
+/** / Данные о групповом чате */
 @property(nonatomic, readwrite, strong, null_resettable) GroupData *data_p;
 /** Test to see if @c data_p has been set. */
 @property(nonatomic, readwrite) BOOL hasData_p;
@@ -365,15 +428,17 @@ typedef GPB_ENUM(RequestLoadMembers_FieldNumber) {
 };
 
 /**
- * Loading group members
+ * / Запрос на получение членов группового чата
  **/
 GPB_FINAL @interface RequestLoadMembers : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
+/** / Ожидаемое количество записей в ответе */
 @property(nonatomic, readwrite) int32_t limit;
 
-/** / cursor */
+/** / Курсор для продолжения загрузки, полученный в ответе на предыдуший аналогичный запрос */
 @property(nonatomic, readwrite, strong, null_resettable) GPBBytesValue *next;
 /** Test to see if @c next has been set. */
 @property(nonatomic, readwrite) BOOL hasNext;
@@ -387,12 +452,17 @@ typedef GPB_ENUM(ResponseLoadMembers_FieldNumber) {
   ResponseLoadMembers_FieldNumber_MembersArray = 2,
 };
 
+/**
+ * / Ответ на запрос на получение членов группового чата
+ **/
 GPB_FINAL @interface ResponseLoadMembers : GPBMessage
 
+/** / Курсор для продолжения загрузки */
 @property(nonatomic, readwrite, strong, null_resettable) GPBBytesValue *cursor;
 /** Test to see if @c cursor has been set. */
 @property(nonatomic, readwrite) BOOL hasCursor;
 
+/** / Список членов группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Member*> *membersArray;
 /** The number of items in @c membersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger membersArray_Count;
@@ -407,12 +477,14 @@ typedef GPB_ENUM(UpdateGroupTitleChanged_FieldNumber) {
 };
 
 /**
- * Update about title changed
+ * / Структура уведомления об измениии названия группового чата
  **/
 GPB_FINAL @interface UpdateGroupTitleChanged : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
+/** / Новое название группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *title;
 
 @end
@@ -425,12 +497,14 @@ typedef GPB_ENUM(UpdateGroupAvatarChanged_FieldNumber) {
 };
 
 /**
- * Update about avatar changed
+ * / Структура уведомления об изменении аватара группового чата
  **/
 GPB_FINAL @interface UpdateGroupAvatarChanged : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
+/** / Новый аватар группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) Avatar *avatar;
 /** Test to see if @c avatar has been set. */
 @property(nonatomic, readwrite) BOOL hasAvatar;
@@ -445,12 +519,14 @@ typedef GPB_ENUM(UpdateGroupAboutChanged_FieldNumber) {
 };
 
 /**
- * Update about about changed
+ * / Структура уведомления об изменении описания группового чата
  **/
 GPB_FINAL @interface UpdateGroupAboutChanged : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
+/** / Новое описание группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *about;
 /** Test to see if @c about has been set. */
 @property(nonatomic, readwrite) BOOL hasAbout;
@@ -465,13 +541,14 @@ typedef GPB_ENUM(UpdateGroupOwnerChanged_FieldNumber) {
 };
 
 /**
- * Update about owner changed
+ * / Структура уведомления об изменении владельца группового чата
  **/
 GPB_FINAL @interface UpdateGroupOwnerChanged : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
-/** / new owner */
+/** / Идентификатор учетной записи нового владельца группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @end
@@ -484,13 +561,14 @@ typedef GPB_ENUM(UpdateGroupBasePermissionsChanged_FieldNumber) {
 };
 
 /**
- * Update about base group permissions changed
+ * / Струкура уведомления об изменении базовых прав для новых членов группового чата
  **/
 GPB_FINAL @interface UpdateGroupBasePermissionsChanged : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
-/** / new base permissions */
+/** / Измененный список базовых прав для новых членов группового чата */
 // |basePermissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *basePermissionsArray;
 /** The number of items in @c basePermissionsArray without causing the array to be created. */
@@ -506,12 +584,14 @@ typedef GPB_ENUM(UpdateGroupMembersUpdated_FieldNumber) {
 };
 
 /**
- * Update about members updated
+ * / Структура уведомления о приглашении пользователя в групповой чат
  **/
 GPB_FINAL @interface UpdateGroupMembersUpdated : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
+/** / Список новых членов группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Member*> *membersArray;
 /** The number of items in @c membersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger membersArray_Count;
@@ -528,20 +608,24 @@ typedef GPB_ENUM(UpdateGroupMemberDiff_FieldNumber) {
 };
 
 /**
- * Update about members changed
+ * / Структура уведомления об изменении состава участников группового чата
  **/
 GPB_FINAL @interface UpdateGroupMemberDiff : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
+/** / Список идентификаторов учетных записей удаленных из группового чата пользователей */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *removedUsersArray;
 /** The number of items in @c removedUsersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger removedUsersArray_Count;
 
+/** / Список идентификаторов учетных записей добавленных в групповой чат пользователей */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Member*> *addedMembersArray;
 /** The number of items in @c addedMembersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger addedMembersArray_Count;
 
+/** / Новое количество участников группового чата */
 @property(nonatomic, readwrite) int32_t membersCount;
 
 @end
@@ -554,12 +638,14 @@ typedef GPB_ENUM(UpdateGroupMembersCountChanged_FieldNumber) {
 };
 
 /**
- * Update about members count changed
+ * / Структура уведомления об изменении количества участников группового чата (используется для каналов и сверхбольших групп)
  **/
 GPB_FINAL @interface UpdateGroupMembersCountChanged : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
+/** / Новое количество участников группового чата */
 @property(nonatomic, readwrite) int32_t membersCount;
 
 @end
@@ -578,35 +664,39 @@ typedef GPB_ENUM(RequestCreateGroup_FieldNumber) {
 };
 
 /**
- * Creating group chat
+ * / Запрос на создание группового чата
  **/
 GPB_FINAL @interface RequestCreateGroup : GPBMessage
 
-/** / Id for query deduplication */
+/** / Дедуплицирующий параметр ("временный" / "клиентский" идентификатор группового чата) */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
+/** / Название создаваемого группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *title;
 
-/** / members */
+/** / Список внешних пиров пользователей для добавления в групповой чат */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *usersArray;
 /** The number of items in @c usersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger usersArray_Count;
 
-/** / group or channel */
+/** / Тип создаваемого группового чата */
 @property(nonatomic, readwrite) GroupType groupType;
 
-/** / Base permissions for invited members */
+/** / Список базовых прав новых членов группового чата */
 // |basePermissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *basePermissionsArray;
 /** The number of items in @c basePermissionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger basePermissionsArray_Count;
 
+/** / Флаг публичности группового чата */
 @property(nonatomic, readwrite) BOOL isPublic;
 
+/** / Ссылка на источник группового чата (связанный чат или сообщение в чате) */
 @property(nonatomic, readwrite, strong, null_resettable) ConversationLink *source;
 /** Test to see if @c source has been set. */
 @property(nonatomic, readwrite) BOOL hasSource;
 
+/** / Ожидаемое время закрытия группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) GPBTimestamp *dueDate;
 /** Test to see if @c dueDate has been set. */
 @property(nonatomic, readwrite) BOOL hasDueDate;
@@ -632,14 +722,20 @@ typedef GPB_ENUM(ResponseCreateGroup_FieldNumber) {
   ResponseCreateGroup_FieldNumber_UserPeersArray = 2,
 };
 
+/**
+ * / Ответ на запрос на создание группового чата
+ **/
 GPB_FINAL @interface ResponseCreateGroup : GPBMessage
 
-/** / created group */
+/** / Данные о созданном групповом чате */
 @property(nonatomic, readwrite, strong, null_resettable) Group *group;
 /** Test to see if @c group has been set. */
 @property(nonatomic, readwrite) BOOL hasGroup;
 
-/** / empty if dropped by optimizations */
+/**
+ * / Список внешних пиров пользователей членов группового чата (не используется)
+ * / deprecated
+ **/
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *userPeersArray;
 /** The number of items in @c userPeersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userPeersArray_Count;
@@ -655,15 +751,17 @@ typedef GPB_ENUM(RequestEditGroupTitle_FieldNumber) {
 };
 
 /**
- * Changing group title
+ * / Запрос на изменение названия группового чата
  **/
 GPB_FINAL @interface RequestEditGroupTitle : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
-/** / Id for query deduplication */
+/** / Дедуплицирющий параметр запроса */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
+/** / Новое название группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *title;
 
 @end
@@ -677,15 +775,17 @@ typedef GPB_ENUM(RequestEditGroupAvatar_FieldNumber) {
 };
 
 /**
- * Changing group avatar
+ * / Запрос на изменение аватара группового чата
  **/
 GPB_FINAL @interface RequestEditGroupAvatar : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
-/** / Id for query deduplication */
+/** / Дедуплицирющий параметр запроса */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
+/** / Координаты нового аватара группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) FileLocation *fileLocation;
 /** Test to see if @c fileLocation has been set. */
 @property(nonatomic, readwrite) BOOL hasFileLocation;
@@ -700,13 +800,14 @@ typedef GPB_ENUM(RequestRemoveGroupAvatar_FieldNumber) {
 };
 
 /**
- * Removing group avatar
+ * / Запрос на удаление аватара группового чата
  **/
 GPB_FINAL @interface RequestRemoveGroupAvatar : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
-/** / Id for query deduplication */
+/** / Дедуплицирющий параметр запроса */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
 @end
@@ -720,15 +821,17 @@ typedef GPB_ENUM(RequestEditGroupAbout_FieldNumber) {
 };
 
 /**
- * Edit Group About
+ * / Запрос на изменение описания группового чата
  **/
 GPB_FINAL @interface RequestEditGroupAbout : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
-/** / Id for query deduplication */
+/** / Дедуплицирющий параметр запроса */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
+/** / Новое описание группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *about;
 /** Test to see if @c about has been set. */
 @property(nonatomic, readwrite) BOOL hasAbout;
@@ -744,18 +847,24 @@ typedef GPB_ENUM(RequestEditGroupBasePermissions_FieldNumber) {
   RequestEditGroupBasePermissions_FieldNumber_GroupId = 5,
 };
 
+/**
+ * / Запрос на изменение базовых прав новых членов группового чата
+ **/
 GPB_FINAL @interface RequestEditGroupBasePermissions : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
-/** / Id for query deduplication */
+/** / Дедуплицирющий параметр запроса */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *randomId;
 
+/** / Список добавляемых прав */
 // |grantedPermissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *grantedPermissionsArray;
 /** The number of items in @c grantedPermissionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger grantedPermissionsArray_Count;
 
+/** / Список отзываемых прав */
 // |revokedPermissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *revokedPermissionsArray;
 /** The number of items in @c revokedPermissionsArray without causing the array to be created. */
@@ -772,17 +881,24 @@ typedef GPB_ENUM(RequestEditMemberPermissions_FieldNumber) {
   RequestEditMemberPermissions_FieldNumber_UserId = 6,
 };
 
+/**
+ * / Запрос на изменение прав члена группового чата
+ **/
 GPB_FINAL @interface RequestEditMemberPermissions : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
+/** / Идентификатор учетной записи пользователя, права которого требуется изменить */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
+/** / Список добавляемых прав */
 // |grantedPermissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *grantedPermissionsArray;
 /** The number of items in @c grantedPermissionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger grantedPermissionsArray_Count;
 
+/** / Список отзываемых прав */
 // |revokedPermissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *revokedPermissionsArray;
 /** The number of items in @c revokedPermissionsArray without causing the array to be created. */
@@ -813,15 +929,17 @@ typedef GPB_ENUM(RequestInviteUser_FieldNumber) {
 };
 
 /**
- * Inviting user to group
+ * / Запрос на приглашение пользователя в групповой чат
  **/
 GPB_FINAL @interface RequestInviteUser : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
-/** / Id for query deduplication */
+/** / Дедуплицирющий параметр запроса */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
+/** / Внешний пир приглашаемого пользователя */
 @property(nonatomic, readwrite, strong, null_resettable) UserOutPeer *user;
 /** Test to see if @c user has been set. */
 @property(nonatomic, readwrite) BOOL hasUser;
@@ -836,13 +954,14 @@ typedef GPB_ENUM(RequestLeaveGroup_FieldNumber) {
 };
 
 /**
- * Leaving group
+ * / Запрос на выход из группового чата
  **/
 GPB_FINAL @interface RequestLeaveGroup : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
-/** / Id for query deduplication */
+/** / Дедуплицирющий параметр запроса */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
 @end
@@ -855,14 +974,18 @@ typedef GPB_ENUM(RequestCloseGroup_FieldNumber) {
   RequestCloseGroup_FieldNumber_Reason = 3,
 };
 
+/**
+ * / Запрос на закрытие группового чата
+ **/
 GPB_FINAL @interface RequestCloseGroup : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
-/** / Id for query deduplication */
+/** / Дедуплицирющий параметр запроса */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
-/** will be sent as text message on behalf of closing user right before the service message */
+/** / Текст, который будет содержать сервисное сообщение о закрытии группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *reason;
 /** Test to see if @c reason has been set. */
 @property(nonatomic, readwrite) BOOL hasReason;
@@ -877,14 +1000,18 @@ typedef GPB_ENUM(RequestOpenGroup_FieldNumber) {
   RequestOpenGroup_FieldNumber_Reason = 3,
 };
 
+/**
+ * / Запрос на открытие ранее закрытого группового чата
+ **/
 GPB_FINAL @interface RequestOpenGroup : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
-/** / Id for query deduplication */
+/** / Дедуплицирющий параметр запроса */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
-/** will be sent as text message on behaolf of opening user right after the service message */
+/** / Текст, который будет содержать сервисное сообщение об открытии группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *reason;
 /** Test to see if @c reason has been set. */
 @property(nonatomic, readwrite) BOOL hasReason;
@@ -900,15 +1027,17 @@ typedef GPB_ENUM(RequestKickUser_FieldNumber) {
 };
 
 /**
- * Kicking user from group
+ * / Запрос на исключение пользователя из группового чата
  **/
 GPB_FINAL @interface RequestKickUser : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
-/** / Id for query deduplication */
+/** / Дедуплицирющий параметр запроса */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *rid;
 
+/** / Идентификатор учетной записи исключаемого из группового чата пользователя */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
 @end
@@ -922,14 +1051,17 @@ typedef GPB_ENUM(RequestMakeUserAdmin_FieldNumber) {
 };
 
 /**
- * Make user admin
+ * / Запрос на перевод члена группового чата в список администраторов группового чата
  **/
 GPB_FINAL @interface RequestMakeUserAdmin : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
+/** / Идентификатор учетной записи пользователя члена группового чата, которого предполагается сделать администратором */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
+/** / Список прав, которые необходимо предоставить администратору */
 // |permissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *permissionsArray;
 /** The number of items in @c permissionsArray without causing the array to be created. */
@@ -945,14 +1077,14 @@ typedef GPB_ENUM(GroupMemberPermission_FieldNumber) {
 };
 
 /**
- * A struct mapping a group member to their permissions
- * userId the id of the group member
- * permissions a list of permissions that user has
+ * / Структура, содержащее соответствие члена группового чата его правам
  **/
 GPB_FINAL @interface GroupMemberPermission : GPBMessage
 
+/** / Идентификатор учетной записи пользователя члена группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
+/** / Список прав */
 // |permissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *permissionsArray;
 /** The number of items in @c permissionsArray without causing the array to be created. */
@@ -968,12 +1100,14 @@ typedef GPB_ENUM(RequestGetGroupMemberPermissions_FieldNumber) {
 };
 
 /**
- * Fetches the group administration permissions for each of the users from the list
+ * / Запрос на получение списка членов группового чата с их правами
  **/
 GPB_FINAL @interface RequestGetGroupMemberPermissions : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
+/** / Список идентификаторов учетных записей членов группового чата, которых необходимо включить в ответ */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *userIdsArray;
 /** The number of items in @c userIdsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userIdsArray_Count;
@@ -986,8 +1120,12 @@ typedef GPB_ENUM(ResponseGetGroupMemberPermissions_FieldNumber) {
   ResponseGetGroupMemberPermissions_FieldNumber_PermissionsArray = 1,
 };
 
+/**
+ * / Ответ на запрос на получение списка членов группового чата с их правами
+ **/
 GPB_FINAL @interface ResponseGetGroupMemberPermissions : GPBMessage
 
+/** / Список соответствий членов группового чата их правам */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupMemberPermission*> *permissionsArray;
 /** The number of items in @c permissionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger permissionsArray_Count;
@@ -1003,14 +1141,17 @@ typedef GPB_ENUM(UpdateGroupMemberPermissionsChanged_FieldNumber) {
 };
 
 /**
- * Update about the user's permissions
+ * / Структура уведомления об изменении прав члена группового чата
  **/
 GPB_FINAL @interface UpdateGroupMemberPermissionsChanged : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
+/** / Идентификатор учетной записи пользователя члена группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
+/** / Список прав */
 // |permissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *permissionsArray;
 /** The number of items in @c permissionsArray without causing the array to be created. */
@@ -1026,28 +1167,15 @@ typedef GPB_ENUM(RequestTransferOwnership_FieldNumber) {
 };
 
 /**
- * Transfer ownership of group
+ * / Запрос на перенос владения групповым чатом от пользователя к пользователю
  **/
 GPB_FINAL @interface RequestTransferOwnership : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
+/** / Идентификатор учетной записи пользователя члена группового чата, которому следует передать владение групповым чатом */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *newOwner NS_RETURNS_NOT_RETAINED;
-
-@end
-
-#pragma mark - ResponseInviteUrl
-
-typedef GPB_ENUM(ResponseInviteUrl_FieldNumber) {
-  ResponseInviteUrl_FieldNumber_URL = 1,
-};
-
-/**
- * Response for invite url methods
- **/
-GPB_FINAL @interface ResponseInviteUrl : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *URL;
 
 @end
 
@@ -1058,18 +1186,35 @@ typedef GPB_ENUM(RequestGetGroupInviteUrl_FieldNumber) {
 };
 
 /**
- * Building invite url
+ * / Запрос на получение ссылки-приглашения в групповой чат
  **/
 GPB_FINAL @interface RequestGetGroupInviteUrl : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
+
+@end
+
+#pragma mark - ResponseInviteUrl
+
+typedef GPB_ENUM(ResponseInviteUrl_FieldNumber) {
+  ResponseInviteUrl_FieldNumber_URL = 1,
+};
+
+/**
+ * / Ответ на запрос на получение ссылки-приглашения в групповой чат
+ **/
+GPB_FINAL @interface ResponseInviteUrl : GPBMessage
+
+/** / Ссылка-приглашение */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *URL;
 
 @end
 
 #pragma mark - RequestGetGroupInviteUrlBase
 
 /**
- * Get group invite url base
+ * / Запрос на получение базового URL для ссылкок-приглашений в групповые чаты
  **/
 GPB_FINAL @interface RequestGetGroupInviteUrlBase : GPBMessage
 
@@ -1081,8 +1226,12 @@ typedef GPB_ENUM(ResponseGetGroupInviteUrlBase_FieldNumber) {
   ResponseGetGroupInviteUrlBase_FieldNumber_URL = 1,
 };
 
+/**
+ * / Ответ на запрос на получение базового URL для ссылкок-приглашений в групповые чаты
+ **/
 GPB_FINAL @interface ResponseGetGroupInviteUrlBase : GPBMessage
 
+/** / Базовый URL */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *URL;
 
 @end
@@ -1094,10 +1243,11 @@ typedef GPB_ENUM(RequestRevokeInviteUrl_FieldNumber) {
 };
 
 /**
- * Revoking invite urls
+ * / Запрос на отзыв ссылки-приглашения в групповой чат
  **/
 GPB_FINAL @interface RequestRevokeInviteUrl : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @end
@@ -1109,10 +1259,11 @@ typedef GPB_ENUM(RequestJoinGroup_FieldNumber) {
 };
 
 /**
- * Join group method
+ * / Запрос на присоединение к групповому чату по токену
  **/
 GPB_FINAL @interface RequestJoinGroup : GPBMessage
 
+/** / Токен, удостоверяющий право на доступ к групповому чату */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *token;
 
 @end
@@ -1124,13 +1275,20 @@ typedef GPB_ENUM(ResponseJoinGroup_FieldNumber) {
   ResponseJoinGroup_FieldNumber_UserPeersArray = 2,
 };
 
+/**
+ * / Ответ на запрос на присоединение к групповому чату
+ **/
 GPB_FINAL @interface ResponseJoinGroup : GPBMessage
 
+/** / Данные о групповом чате */
 @property(nonatomic, readwrite, strong, null_resettable) Group *group;
 /** Test to see if @c group has been set. */
 @property(nonatomic, readwrite) BOOL hasGroup;
 
-/** / empty if dropped by optimizations */
+/**
+ * / Список внешних пиров пользователей, присоединившихся к чату (не используется)
+ * / deprecated
+ **/
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *userPeersArray;
 /** The number of items in @c userPeersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userPeersArray_Count;
@@ -1144,10 +1302,11 @@ typedef GPB_ENUM(RequestJoinGroupByPeer_FieldNumber) {
 };
 
 /**
- * Join group by peer
+ * / Запрос на присоединение к групповому чату по идентификатору группового чата
  **/
 GPB_FINAL @interface RequestJoinGroupByPeer : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @end
@@ -1158,8 +1317,12 @@ typedef GPB_ENUM(RequestDeleteGroup_FieldNumber) {
   RequestDeleteGroup_FieldNumber_GroupId = 1,
 };
 
+/**
+ * / Запрос на удаление группового чата
+ **/
 GPB_FINAL @interface RequestDeleteGroup : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @end
@@ -1171,10 +1334,12 @@ typedef GPB_ENUM(RequestGetGroupPartialInfo_FieldNumber) {
 };
 
 /**
- * get group info by invite token
+ * / Запрос на получение частичных данных о групповом чате
+ * / deprecated
  **/
 GPB_FINAL @interface RequestGetGroupPartialInfo : GPBMessage
 
+/** / Токен, удостоверяющий право на доступ к групповому чату */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *token;
 
 @end
@@ -1186,10 +1351,15 @@ typedef GPB_ENUM(RequestChangeGroupPublicity_FieldNumber) {
   RequestChangeGroupPublicity_FieldNumber_IsPublic = 2,
 };
 
+/**
+ * / Запрос на изменение публичности группового чата
+ **/
 GPB_FINAL @interface RequestChangeGroupPublicity : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
+/** / Флаг публичности группового чата */
 @property(nonatomic, readwrite) BOOL isPublic;
 
 @end
@@ -1202,13 +1372,15 @@ typedef GPB_ENUM(UpdateGroupMemberInvited_FieldNumber) {
 };
 
 /**
- * *
- * Update notifies that some user got invited to the group
+ * / Структура уведомления о приглашении члена группового чата
+ * / deprecated
  **/
 GPB_FINAL @interface UpdateGroupMemberInvited : GPBMessage
 
+/** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
+/** / Информация о приглашенном участнике */
 @property(nonatomic, readwrite, strong, null_resettable) Member *member;
 /** Test to see if @c member has been set. */
 @property(nonatomic, readwrite) BOOL hasMember;

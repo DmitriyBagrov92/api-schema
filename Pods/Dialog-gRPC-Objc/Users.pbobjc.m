@@ -41,11 +41,10 @@ GPBObjCClassDeclaration(ContactRecord);
 GPBObjCClassDeclaration(GPBBoolValue);
 GPBObjCClassDeclaration(GPBInt64Value);
 GPBObjCClassDeclaration(GPBStringValue);
-GPBObjCClassDeclaration(Peer);
 GPBObjCClassDeclaration(RecursiveMapValue);
 GPBObjCClassDeclaration(RequestLoadUserData);
 GPBObjCClassDeclaration(RequestLoadUserData_Claim);
-GPBObjCClassDeclaration(UUIDValue);
+GPBObjCClassDeclaration(RequestLoadUserData_Claim_MessengerConnection);
 GPBObjCClassDeclaration(User);
 GPBObjCClassDeclaration(UserData);
 GPBObjCClassDeclaration(UserData_Ext);
@@ -1289,18 +1288,11 @@ typedef struct RequestLoadUserData__storage_ {
 @implementation RequestLoadUserData_Claim
 
 @dynamic kindOneOfCase;
-@dynamic hasUserPeer, userPeer;
-@dynamic p2P;
-@dynamic groupMember;
-@dynamic contact;
-@dynamic messageSender;
-@dynamic bot;
+@dynamic messengerConnection;
 
 typedef struct RequestLoadUserData_Claim__storage_ {
   uint32_t _has_storage_[2];
-  Peer *userPeer;
-  Peer *groupMember;
-  UUIDValue *messageSender;
+  RequestLoadUserData_Claim_MessengerConnection *messengerConnection;
 } RequestLoadUserData_Claim__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1310,58 +1302,13 @@ typedef struct RequestLoadUserData_Claim__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "userPeer",
-        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
-        .number = RequestLoadUserData_Claim_FieldNumber_UserPeer,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestLoadUserData_Claim__storage_, userPeer),
+        .name = "messengerConnection",
+        .dataTypeSpecific.clazz = GPBObjCClass(RequestLoadUserData_Claim_MessengerConnection),
+        .number = RequestLoadUserData_Claim_FieldNumber_MessengerConnection,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(RequestLoadUserData_Claim__storage_, messengerConnection),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "p2P",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestLoadUserData_Claim_FieldNumber_P2P,
-        .hasIndex = -1,
-        .offset = 1,  // Stored in _has_storage_ to save space.
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
-        .dataType = GPBDataTypeBool,
-      },
-      {
-        .name = "groupMember",
-        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
-        .number = RequestLoadUserData_Claim_FieldNumber_GroupMember,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(RequestLoadUserData_Claim__storage_, groupMember),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "contact",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestLoadUserData_Claim_FieldNumber_Contact,
-        .hasIndex = -1,
-        .offset = 2,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeBool,
-      },
-      {
-        .name = "messageSender",
-        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestLoadUserData_Claim_FieldNumber_MessageSender,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(RequestLoadUserData_Claim__storage_, messageSender),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "bot",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestLoadUserData_Claim_FieldNumber_Bot,
-        .hasIndex = -1,
-        .offset = 3,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeBool,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1378,11 +1325,6 @@ typedef struct RequestLoadUserData_Claim__storage_ {
     [localDescriptor setupOneofs:oneofs
                            count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
                    firstHasIndex:-1];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\001\002\002!\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
     [localDescriptor setupContainingMessageClass:GPBObjCClass(RequestLoadUserData)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -1399,6 +1341,52 @@ void RequestLoadUserData_Claim_ClearKindOneOfCase(RequestLoadUserData_Claim *mes
   GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
   GPBClearOneof(message, oneof);
 }
+#pragma mark - RequestLoadUserData_Claim_MessengerConnection
+
+@implementation RequestLoadUserData_Claim_MessengerConnection
+
+@dynamic userIdsArray, userIdsArray_Count;
+
+typedef struct RequestLoadUserData_Claim_MessengerConnection__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *userIdsArray;
+} RequestLoadUserData_Claim_MessengerConnection__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "userIdsArray",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestLoadUserData_Claim_MessengerConnection_FieldNumber_UserIdsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(RequestLoadUserData_Claim_MessengerConnection__storage_, userIdsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestLoadUserData_Claim_MessengerConnection class]
+                                     rootClass:[UsersRoot class]
+                                          file:UsersRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RequestLoadUserData_Claim_MessengerConnection__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(RequestLoadUserData_Claim)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - ResponseLoadUserData
 
 @implementation ResponseLoadUserData

@@ -18,53 +18,74 @@ import "threads.proto";
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
 
-// Message Attributes
+/// Атрибуты сообщения
 message MessageAttributes {
-    /// Is mentioned. If set overrides built-in value.
+    /// Признак упоминания пользователя в сообщении
     google.protobuf.BoolValue is_mentioned = 1;
-    /// Is message highlighted. Default is false.
+    /// Признак подсвеченности сообщения
     google.protobuf.BoolValue is_highlighted = 2;
-    /// Is notified. If set overrides built-in settings.
+    /// Признак того, что пользователь уведомлён о сообщении
     google.protobuf.BoolValue is_notified = 3;
-    /// If this message is only for you. Default is false
+    /// Признак того, что сообщение предназначено только для данного пользователя
     google.protobuf.BoolValue is_only_for_you = 4;
+
+    /// Дополнительные признаки
     map<string, string> unclassified = 5;
+    /// Чаты, связанные с этим сообщением
+    repeated OutPeer linked_peers = 6;
 }
 
-// Message media
+/// Медиа-содержимое сообщения
 message MessageMedia {
+    /// Веб-страница
     WebpageMedia webpage = 1;
+
+    /// Изображение
     ImageMedia image = 2;
+
+    /// Аудио-файл
     AudioMedia audio = 3;
+
+    /// Набор интерактивных элементов
     repeated InteractiveMediaGroup actions = 6;
 }
 
-// Webpage media
+/// Веб-страница
 message WebpageMedia {
+    /// URL старницы
     google.protobuf.StringValue url = 1 [(dlg).log=log_sensitive];
+    
+    /// Заголовок страницы
     google.protobuf.StringValue title = 2 [(dlg).log=log_sensitive];
+
+    /// Описание страницы
     google.protobuf.StringValue description = 3 [(dlg).log=log_sensitive];
+
+    /// Краткое превью страницы
     ImageLocation image = 4;
 }
 
-// Image media
-// image image
+/// Изображение
 message ImageMedia {
+    /// Координаты изображения
     ImageLocation image = 1;
 }
 
-// Audio media
+/// Аудио-файл
 message AudioMedia {
+    /// Координаты аудио-файла
     AudioLocation audio = 1;
 }
 
+/// Стиль интерактивного элемента
 enum InteractiveMediaStyle {
     INTERACTIVE_MEDIA_STYLE_UNKNOWN = 0;
     INTERACTIVE_MEDIA_STYLE_DEFAULT = 1;
     INTERACTIVE_MEDIA_STYLE_PRIMARY = 2;
     INTERACTIVE_MEDIA_STYLE_DANGER = 3;
 }
-/// Some interactive element inside a message
+
+/// Интерактивный виджет
 message InteractiveMediaWidget {
     oneof body {
         InteractiveMediaButton interactive_media_button = 1;
@@ -72,108 +93,140 @@ message InteractiveMediaWidget {
     }
 }
 
-// A 'Button' widget
+/// Интерактивная кнопка
 message InteractiveMediaButton {
-    string value = 1; /// A value for this button
-    /// A user-visible description of this button
+    /// Значение, уникально идентифицирующее кнопку для отправки на сервер
+    string value = 1;
+
+    /// Видимый пользователю текст на кнопке
     google.protobuf.StringValue label = 2;
 }
 
-// A select from multiple values widget
+/// Виджет многовариантного выбора
 message InteractiveMediaSelect {
-    /// list of values to present to user
+    /// Список доступных вариантов выбора
     repeated InteractiveMediaSelectOption options = 1;
-    /// A user-visible descripton of this select
+
+    /// Видимое пользователю название виджета
     google.protobuf.StringValue label = 2;
-    /// A value that will be selected by default
+
+    /// Выбранное по-умолчанию значение
     google.protobuf.StringValue default_value = 3;
 }
 
-// A row in the select widget
+/// Вариант выбора в виджете многовариантного выбора
 message InteractiveMediaSelectOption {
-    string value = 1; /// id of the row
-    string label = 2; /// a user visible text for this row
+    /// Идентификатор вариант выбора
+    string value = 1;
+
+    /// Видимое пользователю описание вариант выбора
+    string label = 2;
 }
 
-// A text message extension representing an interactive action.
-// Can be used to add widgets (such as buttons, selects, etc) to messages.
+/// Интерактивный виджет
 message InteractiveMedia {
-    string id = 1; /// identifier of the media action
-    /// a widget to be shown to user
+    /// Идентификатор группы
+    string id = 1;
+
+    /// Корневой виджет
     InteractiveMediaWidget widget = 2;
-    /// a style of the widget, which is interpreted by the client
+
+    /// Стиль корневого виджета
     InteractiveMediaStyle style = 3;
-    /**
-     * A content of the alert dialog that will be show to user
-     * when they perform the media action
-     */
+    
+    /// Диалог подтверждения, который необходимо показать пользователю после действия в корневом виджете
     InteractiveMediaConfirm confirm = 4;
 }
 
+/// Соответствие перевода
 message InteractiveMediaTranslation {
+    /// Идентификатор переводимого элемента
     string id = 1;
+
+    /// Перевод
     string value = 2;
 }
 
+/// Группа элементов перевода виджета
 message InteractiveMediaTranslationGroup {
-    /// a translation group language
+    /// Язык перевода
     string language = 1;
-    /// a list of translation mesages
+    /// Соответствия перевода
     repeated InteractiveMediaTranslation messages = 2;
 }
 
-// A group of interactive media actions
+/// Группа виджетов
 message InteractiveMediaGroup {
-    /// the list of actions
+    /// Список интерактивных виджетов
     repeated InteractiveMedia actions = 1;
-    /// an optional title of the group
+
+    /// Название группы виджетов
     google.protobuf.StringValue title = 2 [(dlg).log=log_sensitive];
-    /// an optional description of the group
+    
+    /// Описание группы виджетов
     google.protobuf.StringValue description = 3 [(dlg).log=log_sensitive];
-    /// a media content translations
+    
+    /// Список переводов для данной группы виджетов
     repeated InteractiveMediaTranslationGroup translations = 4;
 }
 
-// An alert dialog content to show to user
+/// Диалог подтверждения
 message InteractiveMediaConfirm {
-    /// the optional alert dialog prompt
+    /// Текст подтверждения
     google.protobuf.StringValue text = 1;
-    /// the optional alert dialog title
+
+    /// Заголовок диалога
     google.protobuf.StringValue title = 2;
-    /// the optional confirm button text
+    
+    /// Текст кнопки подтверждения
     google.protobuf.StringValue ok = 3;
-    /// the optional cancel button text
+    
+    /// Текст кнопки отмены
     google.protobuf.StringValue dismiss = 4;
 }
 
-// The update which will be received when the action is performed. Duplicated on all clients.
+/// Структура уведомления о действии с интерактивным виджетом
 message UpdateInteractiveMediaEvent {
-    /// Message id of the message that contains interactive media
+    /// Идетификатор сообщения, содрежащего интерактивный виджет
     UUIDValue mid = 1;
-    /// identifier of the media action
+    
+    /// Идентификатор медиа-виджета, в котором произведено действие
     string id = 2;
-    /// selected value of that action
+    
+    /// Выбранное в действии значение
     string value = 3;
-    /// who interacted with that media
+
+    /// Идентификатор учетной записи пользователя, совершившего действие
     string user_id = 4;
 }
 
-// Sends a request to do interactive media message
+/// Запрос на посылку действия с интерактивным виджетом 
 message RequestDoInteractiveMediaAction {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    /// Message id of the enclosed message
+    /// Идетификатор сообщения, содержащего интерактивный виджет
     UUIDValue mid = 1;
-    string id = 2; /// Media id
-    string value = 3; /// selected value
+
+    /// Идетификатор медиа-виджета, в котором производится действие
+    string id = 2;
+
+    /// Выбранное в действии значение
+    string value = 3;
 }
 
+/// Переопределения свойств сообщения
 message MessageOverrides {
+    /// Замена имени отправителя
     google.protobuf.StringValue sender_name_override = 1;
+
+    /// Замена аватара отправителя
     Avatar sender_photo_override = 2;
+
+    /// Замена аватара отправителя на проивзольный URL
     google.protobuf.StringValue sender_photo_url_override = 3;
 }
 
+/// Содержимое сообщения
 message MessageContent {
+    /// Вид содержимого
     oneof body {
         TextMessage text_message = 1;
         ServiceMessage service_message = 2;
@@ -186,27 +239,44 @@ message MessageContent {
         DeletedMessage deleted_message = 9;
     }
 
+    /// Переопределенные свойства сообщения
     MessageOverrides overrides = 10;
+
+    /// Дополнительные расширения сообщения
     repeated Any extensions = 11;
+
+    /// Флаг отключения уведомлений о сообщении
     bool disable_notifications = 12;
 }
 
-// Text message
+/// Текстовое сообщение
 message TextMessage {
+    /// Текст сообщения
     string text = 1 [(dlg).log=log_confidential];
-    /// Optional bytes of extension
+    
+    /// Дополнительные свойства текстового сообщения
     TextMessageEx ext = 2;
+
+    /// Список медиа-вложений
     repeated MessageMedia media = 3;
+
+    /// Дополнительные расширения текстового сообщения
     repeated Any extensions = 4;
-    /// Mentions in message
+    
+    /// Список упоминаний пиров в сообщении
     repeated Mention mentions = 5;
 }
 
+/// Структура упоминания
 message Mention {
+    /// Пир упомянутого чата (пользователя, группового чата)
     Peer peer = 1;
+
+    /// Упоминание относится ко всем участникам пира
     bool all = 2;
 }
 
+/// Дополнительное свойство текстового сообщения
 message TextMessageEx {
     oneof body {
         TextExMarkdown text_ex_markdown = 1;
@@ -215,59 +285,87 @@ message TextMessageEx {
     }
 }
 
-// Markdown extension
+/// Текст в формате markdown
 message TextExMarkdown {
-    string markdown = 1 [(dlg).log=log_confidential]; /// Markdown text
+    string markdown = 1 [(dlg).log=log_confidential];
 }
 
-// Modern text message
+/// Стилизованный текст
 message TextModernMessage {
+    /// Текст для стилизации
     google.protobuf.StringValue text = 1 [(dlg).log=log_confidential];
+
+    /// Стиль параграфа текста
     ParagraphStyle style = 2;
+
+    /// Приложенния к стилизованному тексту
     repeated TextModernAttach attaches = 3;
 }
 
-// Paragraph style
+/// Стиль параграфа
 message ParagraphStyle {
-    /// Show quote-like paragraph?
+    /// Флаг наличия значка параграфа
     google.protobuf.BoolValue show_paragraph = 1;
-    /// Override paragraph color
+    
+    /// Цвет текста параграфа
     Color paragraph_color = 2;
-    /// Override background color
+
+    /// Цвета фона текста параграфа
     Color bg_color = 3;
 }
 
-// Attaches to message
+/// Вложение в текстовое сообщение
 message TextModernAttach {
+    /// Заголовок вложения
     google.protobuf.StringValue title = 1 [(dlg).log=log_confidential];
+    
+    /// URL для заголовка
     google.protobuf.StringValue title_url = 2;
+
+    /// Иконка для заголовка
     ImageLocation title_icon = 3;
+
+    /// Текст вложения текстового сообщения
     google.protobuf.StringValue text = 4 [(dlg).log=log_confidential];
+
+    /// Стиль вложения текстового сообщения
     ParagraphStyle style = 5;
+
+    /// Список полей вложения текстового сообщения
     repeated TextModernField fields = 6;
 }
 
-// Modern message fields
+/// Поле вложения текстового сообщения
 message TextModernField {
+    /// Заголовок поля
     string title = 1;
+
+    /// Текст поля
     string value = 2;
-    /// Is field can be shown in compact way (default is TRUE)
+
+    /// Поле должно быть показано в компактном (свернутом) виде
     google.protobuf.BoolValue is_short = 3;
 }
 
-// Text Command Message for bots
+/// Текстовая команда боту
 message TextCommand {
-    /// Slash-Command For execution
+    /// Название команды
     string command = 1;
+
+    // Аргумент команды
     string args = 2;
 }
 
-// Service message
+/// Служебное сообщение
 message ServiceMessage {
+    /// Текст служебного сообщения
     string text = 1 [(dlg).log=log_sensitive];
+
+    /// Тип служебного сообщения
     ServiceEx ext = 2;
 }
 
+/// Типы служебных сообщений
 message ServiceEx {
     reserved 6;
     oneof body {
@@ -294,116 +392,155 @@ message ServiceEx {
     }
 }
 
-// Service message about adding user to group
+/// Сервисное сообщение о добавлении пользователей в групповой чат
 message ServiceExUserInvited {
-    repeated string invited_user_ids = 1; /// added user ids
+    /// Список идентификаторов учетных записей пользователей добавленных в групповой чат
+    repeated string invited_user_ids = 1;
 }
 
-// Service message about user join to group
+/// Сервисное сообщение о присоединении пользователей к групповому чату
 message ServiceExUserJoined {
+    /// Список идентификаторов учетных записей пользователей присоединившихся к групповому чату
     repeated string joined_user_ids = 1;
 }
 
-// Service message about kicking user from group
+/// Сервисное сообщение об исключении пользователей из группового чата
 message ServiceExUserKicked {
+    /// Список идентификаторов учетных записей пользователей исключенных из группового чата
     repeated string kicked_user_ids = 1;
 }
 
-// Service message about user left group
+/// Сервисное сообщение о выходе пользователей из группового чата
 message ServiceExUserLeft {
+    /// Список идентификаторов учетных записей пользователей вышедших из группового чата
     repeated string left_user_ids = 1;
 }
 
-// Service message about group creating
+/// Сервисное сообщение о создании группового чата
 message ServiceExGroupCreated {
 }
 
-// Service message about group title change
+/// Сервисное сообщение об изменении названия группового чата
 message ServiceExChangedTitle {
-    string title = 1 [(dlg).log=log_sensitive]; /// New group title
+    /// Новое название группового чата
+    string title = 1 [(dlg).log=log_sensitive];
 }
 
-// Service message on group topic change
+/// Сервисное сообщение об изменении тематики группового чата
 message ServiceExChangedTopic {
-    /// New group topic
+    /// Новая тематика
     google.protobuf.StringValue topic = 1 [(dlg).log=log_sensitive];
 }
 
-// Service message on group about change
+/// Сервисное сообщение об изменении описания группового чата
 message ServiceExChangedAbout {
-    /// New group about
+    /// Новое описание
     google.protobuf.StringValue about = 1 [(dlg).log=log_sensitive];
 }
 
-// Service message about avatar change
+/// Сервисное сообщение об изменении аватара группового чата
 message ServiceExChangedAvatar {
-    Avatar avatar = 1; /// Updated avatar
+    /// Новый аватар
+    Avatar avatar = 1;
 }
 
-// Service message about user registration
+/// Сервисное сообщение о регистрации контакта
 message ServiceExContactRegistered {
-    string user_id = 1; /// User Id
+    /// Идентификатор учетной записи зарегистрировавшегося пользователя
+    string user_id = 1;
 }
 
-// Update about missing phone call
+/// Сервисное сообщение о пропущенном звонке
 message ServiceExPhoneMissed {
 }
 
-// Update about phone call
+/// Сервисное сообщение о завершенном звонке
 message ServiceExPhoneCall {
-    int32 duration_seconds = 1; /// Duration of a phone call
+    /// Длительность звонка в секундах
+    int32 duration_seconds = 1;
 }
 
-// Update about phone call rejected
+/// Сервисное сообщение о сброшенном звонке
 message ServiceExPhoneRejected {
 }
 
-// Message about chat archived
+/// Сервисное сообщение об архивации чата
+/// deprecated
 message ServiceExChatArchived {
 }
 
-// Message about chat restored
+/// Сервисное сообщение о разархивации чата
+/// deprecated
 message ServiceExChatRestored {
 }
 
-// Message about conference call state
+/// Сервисное сообщение о состоянии конференции
 message ServiceExConferenceStatus {
+    /// Идентификатор конференции
     string conference_id = 1;
+
+    /// Текстовое представление состояния конференции
     string conference_status = 2;
 }
 
-// Message about group becoming private or public
+/// Сервисное сообщение об изменении публичности группового чата
 message ServiceExGroupPublicityChanged {
+    /// Флаг предыдущей публичности
     bool previous_publicity = 1;
+
+    /// Флаг текущей публичности
     bool current_publicity = 2;
 }
 
+/// Сервисное сообщение о создании из данного чата другого группового чата (путём указания ссылки на данный чат)
 message ServiceExImportantTopicForked {
+    /// Данные о созданном групповом чате
     dialog.GroupData topic_group = 1;
 }
 
+/// Сервисное сообщение о закрытии группового чата
 message ServiceExImportantTopicClosed {
+    /// Идентификатор учетной записи пользователя, закрывшего групповой чат
     string closed_by_user_id = 1;
 }
 
+/// Сервисное сообщение об открытии группового чата
 message ServiceExImportantTopicReopened {
+    /// Идентификатор учетной записи пользователя, открывшего групповой чат
     string reopened_by_user_id = 1;
 }
 
-// File message
+/// Сообщение содержащее документ (файл)
 message DocumentMessage {
+    /// Идентификатор файла
     string file_id = 1;
+
+    /// Ключ доступа к файлу
     int64 access_hash = 2 [(dlg).log=log_confidential];
+
+    /// Размер файла в байтах
     int32 file_size = 3;
+
+    /// Имя файла
     string name = 4 [(dlg).log=log_confidential];
+
+    /// MIME-тип файла
     string mime_type = 5;
-    /// optional thumb of file. JPEG less that 90x90 with 60-70 quality.
+
+    /// Миниатюра изображения, JPEG 90x90 пикселей с минимальным качеством
     FastThumb thumb = 6;
+
+    /// Дополнительные свойства документа
     DocumentEx ext = 7;
+
+    /// Заголовок документа
     google.protobuf.StringValue caption = 8 [(dlg).log=log_confidential];
+
+    /// Список упоминаний пиров в сообщении
     repeated Mention mentions = 9;
 }
 
+/// Дополнительное свойство сообщения
 message DocumentEx {
     oneof body {
         DocumentExPhoto photo = 1;
@@ -412,638 +549,1037 @@ message DocumentEx {
     }
 }
 
-// File photo extension
+/// Сведения об изображении
 message DocumentExPhoto {
-    int32 w = 1; /// image width
-    int32 h = 2; /// image height
+    /// Ширина изображения в пикселях
+    int32 w = 1;
+
+    /// Высота изображения в пикселях
+    int32 h = 2;
 }
 
-// File video extension
+/// Сведения о видео
 message DocumentExVideo {
-    int32 w = 1; /// video width
-    int32 h = 2; /// video height
+    /// Ширина видео в пикселях
+    int32 w = 1;
+
+    /// Высота видео в пикселях
+    int32 h = 2;
+
+    /// Длительность видео в секундах
     int32 duration = 3;
 }
 
-// File voice extension
+/// Сведения об аудио-файле
 message DocumentExVoice {
+    /// Длительность аудио в секундах
     int32 duration = 1;
 }
 
-// Custom-data JsonMessage
+/// Сообщение содержащее JSON
 message JsonMessage {
+    /// JSON-тело сообщения
     string raw_json = 1 [(dlg).log=log_confidential];
 }
 
-// Explicit type for unsupported message
+/// Неподдерживаемое сообщение
 message UnsupportedMessage {
 }
 
-// Sticker message
+/// Сообщение содержащее стикер
 message StickerMessage {
-    /// Optional Unique ID of sticker
+    /// Идентификатор стикера
     google.protobuf.StringValue sticker_id = 1;
-    /// Optional Fast preview of sticker in webp format
+    
+    /// Превью стикера в формате WEBP
     google.protobuf.BytesValue fast_preview = 2;
-    /// Optional 512x512 sticker image in webp format
+    
+    /// Стикер в формате 512x512 пикселей
     ImageLocation image_512 = 3;
-    /// Optional 256x256 sticker image in webp format
+
+    /// Стикер в формате 256x256 пикселей
     ImageLocation image_256 = 4;
-    /// Optional Collection ID
+    
+    /// Идентификатор стикерпака
     google.protobuf.StringValue sticker_collection_id = 5;
-    /// Optional Collection Access Hash
+    
+    /// Ключ доступа к стикерпаку
     google.protobuf.Int64Value sticker_collection_access_hash = 6;
-    /// Sticker emoji
+    
+    /// Эмодзи стикера
     google.protobuf.StringValue emoji = 7 [(dlg).log=log_confidential];
-    /// Animated sticker json payload
+    
+    /// Анимационный JSON
     google.protobuf.StringValue animated_sticker_json = 8 [(dlg).log=log_confidential];
 }
 
-// Binary Message. Useful for implementing your own content types
+/// Двоичное сообщение
 message BinaryMessage {
+    /// Тэг контента
     string content_tag = 1;
+
+    /// Тело двоичного сообщения
     bytes msg = 2;
 }
 
-// Empty Message
+/// Пустое сообщение
 message EmptyMessage {
 }
 
-// Deleted message
+/// Удаленное сообщение
 message DeletedMessage {
-    /// Deleted locally message
+    /// Флаг локальности удаления
     google.protobuf.BoolValue is_local = 1;
 }
 
-// Short Dialog from grouped conversation list
+/// deprecated
 message DialogShort {
-    Peer peer = 1; /// Peer of conversation
-    int32 counter = 2; /// Conversation unread count
-    int64 date = 3; /// Conversation top message date
+    Peer peer = 1;
+    int32 counter = 2;
+    int64 date = 3;
 }
 
-// Grouped dialog list
+/// deprecated
 message DialogGroup {
     string title = 1 [(dlg).log=log_sensitive];
     string key = 2;
     repeated DialogShort dialogs = 3;
 }
 
-// Predicate for searching in custom profile
+/// deprecated
 message SearchPredicate {
     string key = 1;
     repeated string values = 2;
 }
 
-// Forwarding messages list item
+/// Описание элемента списка пересылаемых сообщений
 message ForwardItem {
-    string deduplication_id = 1; /// Id for message deduplication
-    UUIDValue mid = 2; /// Original message id
+    /// Дедуплицирующий идентификатор (клиентский идентификатор)
+    string deduplication_id = 1;
+    
+    /// Идентификатор пересылаемого сообщения
+    UUIDValue mid = 2;
 }
 
-// Sending plain message
+/// Запрос на посылку сообщения
 message RequestSendMessage {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Внешний пир чата, в который отправляется сообщение
     OutPeer peer = 1;
-    string deduplication_id = 2; /// Id for message deduplication
+
+    /// Дедуплицирующий идентификатор
+    string deduplication_id = 2;
+
+    /// Содержимое сообщения (может быть пустым при наличии непустого списка сообщений для пересылки)
     MessageContent message = 3;
-    /// if not empty, then message will be send to this user only
+    
+    /// Ограничение на получателя -- при указании значения, сообщение в рамках чата-приемника будет направлено только указанному пользователю
+    /// deprecated
     google.protobuf.StringValue is_only_for_user = 4;
-    /// If current message forwards some other
+
+    /// Список сообщений для пересылки совместно с отправкой этого сообщения
     repeated ForwardItem forwards = 5;
-    /// If current message is a reply on some other
+
+    /// Ссылка на сообщения, ответом на которые является это сообщение
     ReferencedMessages reply = 6;
+    
+    /// deprecated
     repeated SearchPredicate predicates = 7;
+    
+    /// deprecated
     repeated string white_list = 8;
+
+    /// deprecated
     repeated string black_list = 9;
 }
 
+/// Запрос на асинхронную отправку сообщения
 message RequestSendMessageAsync {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Внешний пир чата, в который отправляется сообщение
     OutPeer peer = 1;
-    string deduplication_id = 2; /// Id for message deduplication
+
+    /// Дедуплицирующий идентификатор
+    string deduplication_id = 2;
+
+    /// Содержимое сообщения (может быть пустым при наличии непустого списка сообщений для пересылки)
     MessageContent message = 3;
-    /// if not empty, then message will be send to this user only
+
+    /// Ограничение на получателя -- при указании значения, сообщение в рамках чата-приемника будет направлено только указанному пользователю
+    /// deprecated
     google.protobuf.StringValue is_only_for_user = 4;
-    /// If current message forwards some other
-    ReferencedMessages forward = 5;
-    /// If current message is a reply on some other
+    
+    /// Список сообщений для пересылки совместно с отправкой этого сообщения
+    repeated ForwardItem forwards = 5;
+    
+    /// Ссылка на сообщения, ответом на которые является это сообщение
     ReferencedMessages reply = 6;
+
+    /// deprecated
     repeated SearchPredicate predicates = 7;
+
+    /// deprecated
     repeated string white_list = 8;
+
+    /// deprecated
     repeated string black_list = 9;
 }
 
-// Changing Message content
+/// Запрос на изменение сообщения
 message RequestUpdateMessage {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    UUIDValue mid = 1; /// Message id
-    MessageContent updated_message = 2;
-    /// Date from this message when it was changed last time
-    int64 last_edited_at = 3;
+    /// Пир чата, который содержит редактируемое сообщение
     Peer peer = 4;
+
+    /// Идентификатор изменяемого сообщения
+    UUIDValue mid = 1;
+
+    /// Обновленное содержимое сообщения
+    MessageContent updated_message = 2;
+
+    /// Дата последней известной клиенту даты модификации изменяемого сообщения 
+    /// (используется для упорядочивания совместных редактур)
+    int64 last_edited_at = 3;
 }
 
-// Confirmation of plain message receive by device
+/// Запрос на уведомление о получении сообщений в чате
 message RequestMessageReceived {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Внешний пир чата
     OutPeer peer = 1;
+
+    /// Дата, до которой включительно получены сообщения из лента сообщений пира 
+    /// (извлекается из даты отправки сообщений в ленте)
     int64 date = 2;
 }
 
-// Marking plain messages as read
+/// Запрос на уведомление о прочтении сообщений в чате
 message RequestMessageRead {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Внешний пир чата
     OutPeer peer = 1;
+
+    /// Дата, до которой включительно дочитаны сообщения из лента сообщений пира 
+    /// (извлекается из даты отправки сообщений в ленте)
     int64 date = 2;
 }
 
-// Deleting message
+/// Запрос на удаление сообщения
 message RequestDeleteMessage {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Пир чата содержащего сообщение для удаления
     Peer peer = 1;
-    UUIDValue message_id = 2; /// Message id
+    
+    /// Идентификатор сообщения для удаления
+    UUIDValue message_id = 2;
+
+    /// Флаг локальности удаления
     bool delete_for_user_only = 3;
 }
 
-// Clearing of conversation (without removing dialog from dialogs list)
+/// Запрос на очистку ленты чата
 message RequestClearChat {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Внешний пир чата
     OutPeer peer = 1;
+
+    /// Дата последнего известного на клиенте сообщения из ленты чата
     int64 last_message_date = 2;
 }
 
-// Deleting of conversation (also leave group for group conversations)
+/// Запрос на удаление чата
+/// deprecated
 message RequestDeleteChat {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Внешний пир чата
     OutPeer peer = 1;
+
+    /// Дата последнего известного на клиенте сообщения из ленты чата
     int64 last_message_date = 2;
 }
 
-// Archiving chat
+/// Запрос на архивирование чата
 message RequestArchiveChat {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Внешний пир чата
     OutPeer peer = 1;
 }
 
+/// Ответ на запрос на посылку сообщения в чат
 message ResponseSendMessage {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    UUIDValue message_id = 1; /// Message id
-    int64 message_date = 2; /// Message creation date from server
-    UUIDValue previous_message_id = 3; /// Previous message id
-    string creator_user_id = 4; // Message creator
-    int64 clock = 5; // Clock of this message (initially equals the message_date field)
+    /// deprecated
+    UUIDValue message_id = 1;
+
+    /// deprecated
+    int64 message_date = 2;
+
+    /// deprecated
+    UUIDValue previous_message_id = 3;
+
+    /// deprecated
+    string creator_user_id = 4;
+
+    /// deprecated
+    int64 clock = 5;
 }
 
-// Update about plain message
+/// Структура уведомления о получении нового сообщения
 message UpdateMessage {
+    /// Пир чата, в который добавлено сообщение
     Peer peer = 1;
+
+    /// Идентификатор учетной записи пользователя-отправителя сообщения
     string sender_user_id = 2;
-    int64 date = 3; // message creation date (interval end)
-    UUIDValue mid = 4; /// Message id
+
+    /// Дата создания сообщения (в миллисекундах от unix epoch)
+    int64 date = 3;
+
+    /// Идентификатор сообщения
+    UUIDValue mid = 4;
+
+    /// Содержание сообщения
     MessageContent message = 5;
-    /// attributes to help reasoning about message
+
+    /// Атрибуты сообщения
     MessageAttributes attributes = 6;
+    
     reserved 7;
+    
     oneof attach {
+        /// Ссылка на сообщения, ответом на которые является это сообщение
         ReferencedMessages reply = 8;
+
+        /// Ссылка на сообщение-оригинал, если данное сообщение было переслано из другого чата
         ForwardSource forward_source = 17;
     }
-    /// Message id of previos message from current conversation
+
+    /// Идентификатор предыдущего сообщения в этом чате
     UUIDValue previous_mid = 9;
-    google.protobuf.Int64Value prev_message_date = 10; // interval start
-    /// counter clock of the unread messages
+
+    /// Дата создания предыдущего сообщения
+    google.protobuf.Int64Value prev_message_date = 10;
+
+    /// Версия (дата) последнего изменения чата
     int64 unread_counter_clock = 11;
-    /// counter of the unread messages
+    
+    /// Количество непрочитанных сообщений в чате
     google.protobuf.Int32Value counter = 12;
-    /// date of my own read
+
+    /// Дата последней прочитки, посланной пользователем-получателем уведомления, в этот чат 
+    /// (в миллисекундах от unix epoch)
     google.protobuf.Int64Value my_read_date = 13;
+
+    /// Дедуплицирующий идентификатор сообщения 
+    /// [тут его слать не нужно, он имеет смысл только в UpdateMessageSent, может запутать клиентских разработчиков]
     string random_id = 14;
-    // when greater than date, then message is edited
+
+    /// Дата последней модификации сообщения
     int64 modified_at = 15;
-    // make sense for edited message only (modified_at > date)
+
+    /// deprecated
     google.protobuf.Int64Value prev_edit_in_peer_at = 16;
 }
 
-// Update about message change
+/// Структура уведомления об изменении сообщения
 message UpdateMessageContentChanged {
+    /// Пир чата, в котором изменилось сообщение
     Peer peer = 1;
-    UUIDValue mid = 2; /// Message id
+
+    /// Идентификатор измененного сообщения
+    UUIDValue mid = 2;
+
+    /// Содржание измененного сообщения
     MessageContent message = 3;
+
+    /// Дата последней модификации измененного сообщения
     int64 edited_at = 4;
+
+    /// deprecated
     int64 prev_edit_in_peer_at = 5;
-    // Update on behalf of a system, should not be displayed as edited.
+    
+    /// Сообщение не должно содержать признаков редактирования на клиенте (edited и других приписок)
     google.protobuf.BoolValue is_silent = 6;
+    /// Аттрибуты сообщения
+    MessageAttributes attributes = 7;
 }
 
-// Update about message sent
+/// Уведомление о доставке сообщения на сервер (посылается только отправителю сообщения)
 message UpdateMessageSent {
+    /// Пир чата, в который добавилось сообщение
     Peer peer = 1;
+
+    /// Дедуплицирующий идентификатор
     string rid = 2;
+
+    /// Дата отправки сообщения
     int64 date = 3;
-    /// Message id
+
+    /// Идентификатор сообщения
     UUIDValue mid = 4;
-    /// Previous message id in current conversation
+
+    /// Идентификатор предыдущего сообщения в чате
     UUIDValue prev_mid = 5;
-    /// counter of unread messages
+
+    /// Версия (дата) последнего изменения чата
     int64 unread_counter_clock = 6;
+
+    /// Число непрочитанных сообщений в чате
     google.protobuf.Int32Value unread_counter = 7;
+
+    /// Дата последней присланной текущим пользователем прочитки сообщений в ленте чата
     google.protobuf.Int64Value my_read_date = 8;
     
     reserved 9;
     oneof attach {
+        /// Ссылка на сообщения, ответом на которые является это сообщение
         ReferencedMessages reply = 10;
+
+        /// Ссылка на сообщение-оригинал, если данное сообщение было переслано из другого чата
         ForwardSource forward_source = 11;
     }
+    /// Аттрибуты сообщения
+    MessageAttributes attributes = 12;
 }
 
-// Update about message received
+/// Структура уведомления о получении сообщения
 message UpdateMessageReceived {
+    /// Пир чата
     Peer peer = 1;
-    /// when message was receive
+
+    /// Дата в миллисекундах от unix epoch, до которой все сообщения считаются полученными
+    /// [переименовать]
     int64 start_date = 2;
-    int64 received_date = 3; /// deprecated
+
+    /// deprecated
+    int64 received_date = 3;
 }
 
-// Update about message read
+/// Структура уведомления о прочитке сообщения
 message UpdateMessageRead {
+    /// Пир чата
     Peer peer = 1;
-    /// when message was read
+    
+    /// Дата в миллисекундах от unix epoch, до которой все сообщения считаются прочитанными 
+    /// [переименовать]
     int64 start_date = 2;
-    int64 read_date = 3; /// deprecated
+
+    /// deprecated
+    int64 read_date = 3;
 }
 
-// Update about message read by me
+/// Структура уведомления о прочитке сообщения текущим пользователем
 message UpdateMessageReadByMe {
+    /// Пир чата
     Peer peer = 1;
-    /// date of the read message
+    
+    /// Дата в миллисекундах от unix epoch, до которой все сообщения считаются прочитанными текущим пользователем 
+    /// [переименовать]
     int64 start_date = 2;
 
-    /// when message was read
+    /// Дата последнего изменения чата
     int64 unread_counter_clock = 3;
-    /// counter of unread messages
+
+    /// Количество непрочитанных сообщений
     google.protobuf.Int32Value unread_counter = 4;
 }
 
-// Update about message delete
+/// Структура уведомления об удаленном сообщении
+/// deprecated
 message UpdateMessageDelete {
     Peer peer = 1;
-    repeated UUIDValue mids = 2; /// Deleted messages
-    /// counter of unread messages
+    repeated UUIDValue mids = 2;
     google.protobuf.Int32Value counter = 3;
-    /// date? related for this unread counter
     int64 action_date = 4;
 }
 
-// Update about chat clear
+/// Структура уведомления об очистке ленты чата
 message UpdateChatClear {
+    /// Пир чата
     Peer peer = 1;
+
+    /// Дата очистки в миллисекундах от unix epoch
     int64 action_date = 2;
 }
 
-// Update about chat delete
+/// Структура уведомления об далении чата
 message UpdateChatDelete {
+    /// Пир чата
     Peer peer = 1;
+
+    // Дата удаления в миллисекундах от unix epoch
     int64 action_date = 2;
 }
 
-// Update about chat archive
+/// Структура уведомлени об архивировании чата
 message UpdateChatArchive {
+    /// Пир чата
     Peer peer = 1;
 }
 
-// Update about chat groups changed. Called only when adding, removing and reordering of grouped dialog.
+/// deprecated
 message UpdateChatGroupsChanged {
     repeated DialogGroup dialogs = 1;
 }
 
-// Update about rejection of message send request
+/// Структура уведомления об отказе в отправке сообщения 
+/// (посылается, если отказ произошел за пределами запроса-ответа на отправку)
 message UpdateSendMessageError {
     reserved 5;
+    /// Пир чата
     Peer peer = 1;
+
+    /// Дедуплицирующий идентификатор
     string rid = 2;
+
+    /// Дата отправки сообщения в миллисекундах от unix epoch
     int64 date = 3;
+
+    /// Название подсистемы, отказавшей в отправке сообщения
     string hook_id = 4;
+
+    /// Причина отказа в отправке сообщения
     UpdateErrorCause cause = 6;
 }
 
-// Update about rejection of message update request
+/// Структура уведомления об отказе в редактировании сообщения 
+/// (посылается, если отказ произошел за пределами запроса-ответа на редактирование)
 message UpdateEditMessageError {
     reserved 5;
+    /// Пир чата
     Peer peer = 1;
-    UUIDValue mid = 2; // related message id
+
+    /// Идентификатор сообщения
+    UUIDValue mid = 2;
+
+    /// Дата отправки события на изменение сообщения в миллисекундах от unix epoch
     int64 date = 3;
+
+    /// Название подсистемы, отказавшей в редактировании сообщения
     string hook_id = 4;
+
+    /// Причина отказа в редакировании сообщения
     UpdateErrorCause cause = 6;
 }
 
+/// Структура уведомления об отказе в удалении сообщения 
+/// (посылается, если отказ произошел за пределами запроса-ответа на удаление)
 message UpdateDeleteMessageError {
+    /// Пир чата
     Peer peer = 1;
-    UUIDValue mid = 2; // related message id
+
+    /// Идентификатор сообщения
+    UUIDValue mid = 2;
+
+    /// Дата отправки запроса на удаление в миллисекундах от unix epoch
     int64 date = 3;
+
+    /// Название подсистемы, отказавшей в удалении сообщения
     string hook_id = 4;
+
+    /// Причина отказа в удалении сообщения
     UpdateErrorCause cause = 5;
 }
 
+/// Структура уведомления об отказе в прочитке ленты сообщений 
+/// (посылается, если отказ произошел за пределами запроса-ответа о прочитке)
 message UpdateMessageReadError {
+    /// Пир чата
     Peer peer = 1;
-    UUIDValue mid = 2; // related message id
+
+    /// Идентификатор сообщения
+    UUIDValue mid = 2;
+
+    /// Дата отправки запроса на прочитку в миллисекундах от unix epoch
     int64 date = 3;
+
+    /// Название подсистемы, отказавшей в прочитке
     string hook_id = 4;
+
+    /// Причина отказа в прочитке
     UpdateErrorCause cause = 5;
 }
 
+/// Структура уведомления об отказе в получении сообщений 
+/// (посылается, если отказ произошел за пределами запроса-ответа о получении сообщений)
 message UpdateMessageReceivedError {
+    /// Пир чата
     Peer peer = 1;
-    UUIDValue mid = 2; // related message id
+    
+    /// Идентификатор сообщения
+    UUIDValue mid = 2;
+
+    /// Дата отправки запроса о получении сообщений в миллисекундах от unix epoch
     int64 date = 3;
+
+    /// Название подсистемы, отказавшей в запросе о получении сообщений
     string hook_id = 4;
+
+    /// Причина отказа в запросе о получении сообщений
     UpdateErrorCause cause = 5;
 }
 
+/// Структура уведомления об отказе в очистке чата 
+/// (посылается, если отказ произошел за пределами запроса-ответа об очистке чата)
 message UpdateClearChatError {
+    /// Пир чата
     Peer peer = 1;
+
+    /// Дата отправки запроса об очистке чата в миллисекундах от unix epoch
     int64 date = 2;
+
+    /// Название подсистемы, отказавшей в запросе об очистке чата
     string hook_id = 3;
+
+    /// Причина отказа в запросе об очистке чата
     UpdateErrorCause cause = 4;
 }
 
+/// Структура уведомления об отказе в удалении чата 
+/// (посылается, если отказ произошел за пределами запроса-ответа об удалении чата)
 message UpdateDeleteChatError {
+    /// Пир чата
     Peer peer = 1;
+
+    /// Дата отправки запроса об удалении чата в миллисекундах от unix epoch
     int64 date = 2;
+
+    /// Название подсистемы, отказавшей в запросе об удалении чата
     string hook_id = 3;
+
+    /// Причина отказа в запросе об удалении чата
     UpdateErrorCause cause = 4;
 }
 
+/// Структура уведомления об отказе в добавлении чата в избранное 
+/// (посылается, если отказ произошел за пределами запроса-ответа о добавлении чата в избранное)
 message UpdateFavouriteDialogError {
+    /// Пир чата
     Peer peer = 1;
+
+    /// Дата отправки запроса о добавлении чата избранное в миллисекундах от unix epoch
     int64 date = 2;
+
+    /// Название подсистемы, отказавшей в запросе на добавление чата в избранное
     string hook_id = 3;
+
+    /// Причина отказа в запросе на добавление чата в избранное
     UpdateErrorCause cause = 4;
 }
 
+/// Структура уведомления об отказе в удалении чата из избранного
+/// (посылается, если отказ произошел за пределами запроса-ответа об удалении чата из избранного)
 message UpdateUnfavouriteDialogError {
+    /// Пир чата
     Peer peer = 1;
+
+    /// Дата отправки запроса об удалении чата из избранного в миллисекундах от unix epoch
     int64 date = 2;
+
+    /// Название подсистемы, отказавшей в запросе на удаление чата из избранного
     string hook_id = 3;
+
+    /// Причина отказа в запросе на удаление чата из избранного
     UpdateErrorCause cause = 4;
 }
 
+/// Структура уведомления об отказе в отправке отложенной прочитки
+/// (посылается, если отказ произошел за пределами запроса-ответа отложенной прочитки)
 message UpdateReadDialogLaterError {
+    /// Пир чата
     Peer peer = 1;
+
+    /// Дата отправки запроса об отложенной прочитке в миллисекундах от unix epoch
     int64 date = 2;
+
+    /// Название подсистемы, отказавшей в отложенной прочитке
     string hook_id = 3;
+
+    /// Причина отказа в запросе на отложеннную прочитку
     UpdateErrorCause cause = 4;
 }
 
-// mids Referenced message ids
+// Структура с упоминанием сообщений
 message ReferencedMessages {
     repeated UUIDValue mids = 1;
 }
 
-// pointer to source of forwarded message
+/// Структура с источником сообщения
 message ForwardSource {
-    OutPeer host_peer = 1; // empty if viewer has no access to this peer
-    OutPeer sender_peer = 2; // empty if viewer has no access to this peer
-    string host_peer_name = 3; // used to avoid host_peer/sender_peer resolution
+    /// Внешний пир чата из которого было переслано сообщение
+    OutPeer host_peer = 1;
+
+    /// Внешний пир отправителя пересланного сообщения
+    OutPeer sender_peer = 2;
+
+    /// Название чата из которого было переслано сообщение
+    string host_peer_name = 3;
+
+    /// Идентификатор оригинала сообщения
     UUIDValue mid = 4;
 }
 
-// Message from history
+/// Структура сообщения из ленты чата
 message HistoryMessage {
+    /// Идентификатор учетной записи пользователя автора сообщения
     string sender_user_id = 1;
+
+    /// Внешний пир чата, ленте которого принадлежит сообщение
     OutPeer peer = 17;
+    
     reserved 2;
     reserved 3;
-    /// Message id generated by server
+    
+    /// Идентификатор сообщения
     UUIDValue mid = 4;
+
+    /// Идентификатор предыдущего сообщения в ленте чата
     UUIDValue prev_mid = 5;
+
+    /// Дата создания сообщения в миллисекндах от unix epoch
     int64 created_at = 6;
+
+    /// Содержание сообщения
     MessageContent message = 7;
+
     reserved 8, 9;
+    
+    /// Аттрибуты сообщения
     MessageAttributes attribute = 10;
+    
     reserved 11; 
+    
     oneof attach {
+        /// Ссылка на сообщения, ответом на которые является это сообщение
         ReferencedMessages reply = 12;
+
+        /// Ссылка на сообщение-оригинал, если данное сообщение было переслано из другого чата
         ForwardSource forward_source = 15;
     }
+
+    /// Дата последнего изменения сообщения в миллисекундах от unix epoch
     google.protobuf.Int64Value edited_at = 13;
+
+    /// Дедуплицирующий идентификатор
     string random_id = 14;
+
+    /// Список реакций сообещния
     repeated Reaction reactions = 16;
+
+    /// Информация о треде под сообщением
     ThreadInfo thread_info = 18;
 }
 
+/// Набор параметров режима загрузки истории сообощений
 enum ListLoadMode {
     LIST_LOAD_MODE_UNKNOWN = 0;
+    
+    /// режим загрузки вперед во времени НАЧИНАЯ ОТ сообщения (не включая отправную точку поиска)
     LIST_LOAD_MODE_FORWARD = 1;
+
+    /// режим загрузки назад во времени ДОХОДЯ ДО сообщения (включая отправную точку поиска)
     LIST_LOAD_MODE_BACKWARD = 2;
+
+    /// режим загрузки совмещающий оба предыдущих способа в одном 
+    /// эквивалентно двум запросам: с LIST_LOAD_MODE_FORWARD и с LIST_LOAD_MODE_BACKWARD с одинаковыми точками поиска
     LIST_LOAD_MODE_BOTH = 3;
 }
 
-// Loading history of chat
+/// Запрос на загрузку истории сообщений
 message RequestLoadMessageHistory {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Внешний пир чата, историю сообщений которого требуется получить
     OutPeer peer = 1 [(dlg).required=true];
+
+    /// Отправная точка поиска сообщений
     UUIDValue from_mid = 2 [(dlg).required=true];
-    /// forward, backward or both
+
+    /// Режим загрузки истории сообщения
     ListLoadMode load_mode = 3;
+
+    /// Максимальное количество сообщений в ответе
     int32 limit = 4;
 }
 
+/// Ответ на запрос на загрузку истории сообщений
 message ResponseLoadHistory {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
+    /// Список сообщений
     repeated HistoryMessage history = 1;
+
+    /// Список упомянутых в сообщении внешних пиров пользователей
     repeated UserOutPeer user_peers = 2;
     reserved 3, 4, 5, 7;
-    /// counter of unread messages
+    
+    /// Количество непрочитанных сообщений в ленте чата
+    /// [нужно ли это здесь?]
     int32 unread_count = 8;
 
-    /// last conversation message date
+    /// Дата отправки последнего сообщения в ленте чата
+    /// [нужно ли это здесь?]
     google.protobuf.Int64Value last_conversation_message_date = 6;
 }
 
-// Conversation from history
-// peer
-// unreadCount
-// sortDate date of conversation for sorting
-// senderUid Sender of top message (may be zero)
-// isFavourite Is dialog favourite
-// rid Random ID of top message (may be zero)
-// mid Message id
-// date Date of top message (can't be zero)
-// message Content of message
-// firstUnreadDate Date of first unread message
-// attributes Optional top message attributes
-// pinnedMessages Optional pinned messages
-// historyMessage Optional last messages
+/// Данные о диалоге
 message Dialog {
-    Peer peer = 1; /// Peer of conversation
-    int32 unread_count = 2; /// counter of unread messages
+    /// Пир чата
+    Peer peer = 1;
+
+    /// Количство непрочитанных сообщений в чате
+    int32 unread_count = 2;
     reserved 3, 4, 5, 6, 8, 9, 10, 11, 18;
-    /// last dialog modification date
+    
+    /// Дата последнего изменения в чате
     int64 modified_at = 7;
+
+    /// Список закреплённых в чате сообщений
     PinnedMessages pinned_messages = 12;
-    /// last message in this dialog
+
+    /// Последнее сообщение в чате
     HistoryMessage history_message = 13;
+
+    /// Дата последнего полученного кем-либо (кроме текущего пользователя) сообщения в этом чате
+    /// (в миллисекундах от unix epoch)
     int64 last_receive = 14;
+
+    /// Дата последней прочитки кем-либо (кроме текущего пользователя) сообщения в этом чате
+    /// (в миллисекундах от unix epoch)
     int64 last_read = 15;
+
+    /// Дата последней проставленной или изменённой реакции в это чате
+    /// (в миллисекундах от unix epoch)
     int64 last_reaction_at = 16;
+
+    /// Помечен ли диалог модификатором "отложенной прочитки"
     bool read_later = 17;
+
+    /// Флаг глушения уведомлений в этом чате
     bool is_muted = 19;
+
+    /// Флаг избранности этого чата
     bool is_favourite = 20;
+
+    /// Флаг архивированности этого чата
     bool is_archived = 21;
 }
 
+
+/// Набор фильтров для загрузки чатов
 enum DialogsFilter {
     DIALOGS_FILTER_UNKNOWN = 0;
+
+    /// Не включать избранные чаты в выдачу
     DIALOGS_FILTER_EXCLUDE_FAVOURITES = 1;
+
+    /// Не включать архивированные чаты в выдачу
     DIALOGS_FILTER_EXCLUDE_ARCHIVED = 2;
+
+    /// Не включать треды в выдачу
     DIALOGS_FILTER_EXCLUDE_THREADS = 3;
 }
 
-// Loading conversation history
+/// Запрос на получение списка диалогов
 message RequestLoadDialogs {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Минимальная дата модификации диалога для попадания в выдачу
+    /// (в миллисекундах от unix epoch)
     int64 from_date = 1;
+    
+    /// Максимальное количество диалогов в выдаче
     int32 limit = 2;
+
+    /// Список фильтров
     repeated DialogsFilter filters = 3;
+
+    /// Включать в выдачу только диалоги с этими пирами
+    /// (фильтр не применяется, если этот список пуст)
     repeated Peer peers_to_load = 4;
 }
 
-/// Contains dialogs and related peers and entities
+/// Ответ на запрос на получение списка диалогов
 message ResponseLoadDialogs {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
+    /// Список диалогов
     repeated Dialog dialogs = 1;
+
+    /// Список внешних пиров пользователей упомянутых в списке диалогов
     repeated UserOutPeer user_peers = 2;
+
+    /// Список внешних пиров групп упомянутых в списке диалогов
+    /// [нужно ли это?]
     repeated GroupOutPeer group_peers = 3;
+
+    /// Общее количество диалогов
+    /// deprecated
     int32 total_dialogs_count = 4;
 }
 
-// Marking dialog as favourite
+/// Запрос на добавление чата в изрбанное
 message RequestFavouriteDialog {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Внешний пир чата
     OutPeer peer = 1;
 }
 
-// Making dialog as unfavourite
+/// Запрос на удаление чата из изрбанное
 message RequestUnfavouriteDialog {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Внешний пир чата
     OutPeer peer = 1;
 }
 
-// Update about dialog favourite changed
+/// Структура уведомления об изменении флага избранности чата
 message UpdateDialogFavouriteChanged {
+    /// Пир чата
     Peer peer = 1;
+
+    /// Флаг избранности
     google.protobuf.BoolValue is_favourite = 2;
 }
 
+/// Структура уведомления об изменении флага глушения чата
 message UpdateDialogMuteChanged {
+    /// Пир чата
     Peer peer = 1;
+
+    /// Флаг глушения чата
     bool is_muted = 2;
 }
 
-// Pinned messages
+/// Закрепленные сообщения
 message PinnedMessages {
-    /// Messages ids
+    /// Список идентификаторов сообщений
     repeated UUIDValue mids = 1;
 }
 
-// Pin message in conversation
+/// Запрос на добавление сообщения в закрепленные
 message RequestPinMessage {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Внешний пир чата
     OutPeer peer = 1;
-    UUIDValue mid = 2; /// Message id
+
+    /// Идентификатор сообщения для добавления в закрепленные
+    UUIDValue mid = 2;
+
+    /// Дата последнего добавления в закрепленные сообщения в этом чате
     int64 last_pin_date = 3;
 }
 
-// Unpin message in conversation
+/// Запрос на удаления сообщения из закрепленных
 message RequestUnpinMessage {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Внешний пир чата
     OutPeer peer = 1;
-    UUIDValue mid = 2; /// Message id
+
+    /// Идентификатор сообщения для добавления в закрепленные
+    UUIDValue mid = 2;
+
+    /// Дата последнего добавления в закрепленные сообщения в этом чате
     int64 last_pin_date = 3;
 }
 
-// Update about pinned messages changed in conversation
+/// Структура уведомления об изменении списка закрепленных сообщений
 message UpdatePinnedMessagesChanged {
+    /// Пир чата
     Peer peer = 1;
+
+    /// Список закрепленных сообщений
     PinnedMessages pinned_messages = 2;
+
+    /// Дата последнего добавления в закрепленные сообщения в этом чате
     int64 last_pin_date = 3;
 }
 
-// The model describing when a user received or read a message
+/// Структура соответствия пользователя и даты последней прочитки или получения сообщения
 message MessageStatus {
-    int64 clock = 1; // time when message was read or received
+    //// Время (в миллисекундах от unix epoch) последней полученной пользователем прочитки/получения сообщения
+    int64 clock = 1;
+
+    /// Идентификатор учетной записи пользователя
     string user_id = 2;
 }
 
-// Load message statuses for every user in conversation reads
+/// Запрос на загрузку списка прочиток сообщения
 message RequestGetMessageReads {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    UUIDValue mid = 1; /// Message id
-    int32 limit = 2; // limit of selection
-    int64 timestamp_from = 3; // time selection starts from
+    /// Внешний пир чата
     OutPeer peer = 4;
+
+    /// Идентификатор сообщения
+    UUIDValue mid = 1;
+
+    /// Максимальное количество структур в ответе
+    int32 limit = 2;
+    
+    /// Дата (в миллисекундах от unix epoch) начиная с которой извлекать данные
+    int64 timestamp_from = 3;
 }
 
-// Load message statuses for every user in conversation receives
+/// Запрос на загрузку списка дат получений сообщения
 message RequestGetMessageReceives {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    UUIDValue mid = 1; /// Message id
-    int32 limit = 2; // limit of selection
-    int64 timestamp_from = 3; // time selection starts from
+    /// Внешний пир чата
     OutPeer peer = 4;
+
+    /// Идентификатор сообщения
+    UUIDValue mid = 1;
+
+    /// Максимальное количество структур в ответе
+    int32 limit = 2;
+    
+    /// Дата (в миллисекундах от unix epoch) начиная с которой извлекать данные
+    int64 timestamp_from = 3;
 }
 
-// Response with the list of message statuses reads
+/// Ответ на запрос на получение списка прочиток сообщения
 message ResponseGetMessageReads {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Список соответствий дат и пользователей
     repeated MessageStatus status = 1;
-    int64 timestamp_till = 2; // max time of returned entries, or requested time if empty
+
+    /// Максимальное время по статусам (или timestamp_from из запроса, если статусы пустые)
+    int64 timestamp_till = 2;
 }
 
-// Response with the list of message statuses receives
+/// Ответ на запрос о получении списка получателей сообщения
 message ResponseGetMessageReceives {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Список соответствий дат и пользователей
     repeated MessageStatus status = 1;
-    int64 timestamp_till = 2; // max time of returned entries, or requested time if empty
+
+    /// Максимальное время по статусам (или timestamp_from из запроса, если статусы пустые)
+    int64 timestamp_till = 2;
 }
 
+/// Запрос на изменение флага отложенности прочитки
 message RequestReadDialogLater {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Внешний пир чата
     OutPeer peer = 1;
+
+    /// Флаг отложенности прочитки
     bool read_later = 2;
 }
 
-// Update about dialog read later changed
+/// Структура уведомления об изменении флага отложенности прочитки
 message UpdateDialogReadLaterChanged {
+    /// Пир чата
     Peer peer = 1;
+
+    /// Флаг отложенности прочитки
     bool read_later = 2;
 }
 
+/// Запрос на включение флага глушения уведомлений
 message RequestMuteChat {
+    /// Пир чата
     Peer peer = 1;
+
+    /// Длительность действия флага глушения
     google.protobuf.Duration duration = 2;
 }
 
+/// Запрос на выключение флага глушения уведомлений
 message RequestUnmuteChat {
+    /// Пир чата
     Peer peer = 1;
 }
 
 service Messaging {
-    /// Interact with a message media (click on button for example)
+    /// Метод посылки действия с интерактивным виджетом 
     rpc DoInteractiveMediaAction (RequestDoInteractiveMediaAction) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/DoInteractiveMediaAction"
             body: "*"
         };
     }
+
+    /// Метод посылки сообщения
     rpc SendMessage (RequestSendMessage) returns (ResponseSendMessage) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/SendMessage"
             body: "*"
         };
     }
+
+    /// Метод асинхронной посылки сообщения
     rpc SendMessageAsync (RequestSendMessageAsync) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/SendMessageAsync"
@@ -1051,20 +1587,23 @@ service Messaging {
         };
     }
 
+    /// Метод изменения сообщения
     rpc UpdateMessage (RequestUpdateMessage) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/UpdateMessage"
             body: "*"
         };
     }
-    /// Mark message as received by self
+
+    /// Метод уведомления о получении сообщений
     rpc MessageReceived (RequestMessageReceived) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/MessageReceived"
             body: "*"
         };
     }
-    /// Mark message as read by self
+
+    /// Метод уведомления о прочитке сообщений
     rpc MessageRead (RequestMessageRead) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/MessageRead"
@@ -1072,69 +1611,87 @@ service Messaging {
         };
     }
 
+    /// Метод удаления сообщения
     rpc DeleteMessage (RequestDeleteMessage) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/DeleteMessage"
             body: "*"
         };
     }
-    /// Clear chat history
+
+    /// Метод очистки чата
     rpc ClearChat (RequestClearChat) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/ClearChat"
             body: "*"
         };
     }
+
+    /// Метод удаления чата
     rpc DeleteChat (RequestDeleteChat) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/DeleteChat"
             body: "*"
         };
     }
-    /// Load conversation history
+
+    /// Метод загрузки ленты чата
     rpc LoadMessageHistory (RequestLoadMessageHistory) returns (ResponseLoadHistory) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/LoadMessageHistory"
             body: "*"
         };
     }
-    /// Load user's dialogs
+
+    /// Метод загрузки списка диалогов
     rpc LoadDialogs (RequestLoadDialogs) returns (ResponseLoadDialogs) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/LoadDialogs"
             body: "*"
         };
     }
+
+    /// Метод добавления чата в избранное
     rpc FavouriteDialog (RequestFavouriteDialog) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/FavouriteDialog"
             body: "*"
         };
     }
+
+    /// Метод удаления чата из избранного
     rpc UnfavouriteDialog (RequestUnfavouriteDialog) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/UnfavouriteDialog"
             body: "*"
         };
     }
+
+    /// Метод закрепления сообщения в чате
     rpc PinMessage (RequestPinMessage) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/PinMessage"
             body: "*"
         };
     }
+
+    /// Метод удаления закрепленного сообщения в чате
     rpc UnpinMessage (RequestUnpinMessage) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/UnpinMessage"
             body: "*"
         };
     }
+
+    /// Метод включения глушения уведомлений в чате
     rpc MuteChat (RequestMuteChat) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/MuteChat"
             body: "*"
         };
     }
+
+    /// Метод выключения глушения уведомлений в чате
     rpc UnmuteChat (RequestUnmuteChat) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/UnmuteChat"
@@ -1142,7 +1699,7 @@ service Messaging {
         };
     }
 
-    // Returns read status of the message per user
+    /// Метод загрузки списка прочиток сообщения
     rpc GetMessageReads (RequestGetMessageReads) returns (ResponseGetMessageReads) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/GetMessageReads"
@@ -1150,7 +1707,7 @@ service Messaging {
         };
     }
 
-    // Returns receive status of the message per user
+    /// Мтод загрузки списка получивших сообщение
     rpc GetMessageReceives (RequestGetMessageReceives) returns (ResponseGetMessageReceives) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/GetMessageReceives"
@@ -1158,6 +1715,7 @@ service Messaging {
         };
     }
 
+    /// Метод изменения флага отложенности прочитки
     rpc ReadDialogLater (RequestReadDialogLater) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/ReadDialogLater"

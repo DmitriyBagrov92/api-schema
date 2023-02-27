@@ -27,6 +27,7 @@
 
 CF_EXTERN_C_BEGIN
 
+@class GPBBoolValue;
 @class Peer;
 @class PeerThread;
 @class ThreadInfo;
@@ -55,6 +56,7 @@ typedef GPB_ENUM(ThreadInfo_FieldNumber) {
   ThreadInfo_FieldNumber_MessagesCount = 1,
   ThreadInfo_FieldNumber_LatestActiveUserIdsArray = 2,
   ThreadInfo_FieldNumber_LastActivityDate = 3,
+  ThreadInfo_FieldNumber_IsFollowing = 5,
 };
 
 GPB_FINAL @interface ThreadInfo : GPBMessage
@@ -67,43 +69,32 @@ GPB_FINAL @interface ThreadInfo : GPBMessage
 
 @property(nonatomic, readwrite) uint64_t lastActivityDate;
 
+/**
+ * Если поле пустое, значит информации о фолловинге треда в данный момент нет, и её надо получить другими способами (загрузкой тредов GetThreadInfos, загрузкой истории и тп)
+ * Пустым в данный момент будет приходить при получении вик-апдейта UpdateThreadInfos
+ **/
+@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isFollowing;
+/** Test to see if @c isFollowing has been set. */
+@property(nonatomic, readwrite) BOOL hasIsFollowing;
+
 @end
 
-#pragma mark - RequestLoadPeerThreads
+#pragma mark - RequestGetThreadInfos
 
-typedef GPB_ENUM(RequestLoadPeerThreads_FieldNumber) {
-  RequestLoadPeerThreads_FieldNumber_Peer = 1,
-  RequestLoadPeerThreads_FieldNumber_FromMid = 2,
-  RequestLoadPeerThreads_FieldNumber_UptoMid = 3,
-  RequestLoadPeerThreads_FieldNumber_Limit = 4,
+typedef GPB_ENUM(RequestGetThreadInfos_FieldNumber) {
+  RequestGetThreadInfos_FieldNumber_FromClock = 1,
+  RequestGetThreadInfos_FieldNumber_Peer = 2,
 };
 
-typedef GPB_ENUM(RequestLoadPeerThreads_Direction_OneOfCase) {
-  RequestLoadPeerThreads_Direction_OneOfCase_GPBUnsetOneOfCase = 0,
-  RequestLoadPeerThreads_Direction_OneOfCase_FromMid = 2,
-  RequestLoadPeerThreads_Direction_OneOfCase_UptoMid = 3,
-};
+GPB_FINAL @interface RequestGetThreadInfos : GPBMessage
 
-GPB_FINAL @interface RequestLoadPeerThreads : GPBMessage
+@property(nonatomic, readwrite) int64_t fromClock;
 
 @property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-@property(nonatomic, readonly) RequestLoadPeerThreads_Direction_OneOfCase directionOneOfCase;
-
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *fromMid;
-
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *uptoMid;
-
-@property(nonatomic, readwrite) int32_t limit;
-
 @end
-
-/**
- * Clears whatever value was set for the oneof 'direction'.
- **/
-void RequestLoadPeerThreads_ClearDirectionOneOfCase(RequestLoadPeerThreads *message);
 
 #pragma mark - PeerThread
 
@@ -124,17 +115,23 @@ GPB_FINAL @interface PeerThread : GPBMessage
 
 @end
 
-#pragma mark - ResponseLoadPeerThreads
+#pragma mark - ResponseGetThreadInfos
 
-typedef GPB_ENUM(ResponseLoadPeerThreads_FieldNumber) {
-  ResponseLoadPeerThreads_FieldNumber_ThreadsArray = 1,
+typedef GPB_ENUM(ResponseGetThreadInfos_FieldNumber) {
+  ResponseGetThreadInfos_FieldNumber_ThreadsArray = 1,
+  ResponseGetThreadInfos_FieldNumber_PeerClock = 2,
+  ResponseGetThreadInfos_FieldNumber_NextAvailable = 3,
 };
 
-GPB_FINAL @interface ResponseLoadPeerThreads : GPBMessage
+GPB_FINAL @interface ResponseGetThreadInfos : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<PeerThread*> *threadsArray;
 /** The number of items in @c threadsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger threadsArray_Count;
+
+@property(nonatomic, readwrite) int64_t peerClock;
+
+@property(nonatomic, readwrite) BOOL nextAvailable;
 
 @end
 
@@ -169,14 +166,25 @@ GPB_FINAL @interface RequestUnfollowThread : GPBMessage
 #pragma mark - UpdateThreadInfos
 
 typedef GPB_ENUM(UpdateThreadInfos_FieldNumber) {
-  UpdateThreadInfos_FieldNumber_InfosArray = 1,
+  UpdateThreadInfos_FieldNumber_Peer = 1,
+  UpdateThreadInfos_FieldNumber_InfosArray = 2,
+  UpdateThreadInfos_FieldNumber_PeerClock = 3,
+  UpdateThreadInfos_FieldNumber_PrevPeerClock = 4,
 };
 
 GPB_FINAL @interface UpdateThreadInfos : GPBMessage
 
+@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
+
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<PeerThread*> *infosArray;
 /** The number of items in @c infosArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger infosArray_Count;
+
+@property(nonatomic, readwrite) int64_t peerClock;
+
+@property(nonatomic, readwrite) int64_t prevPeerClock;
 
 @end
 

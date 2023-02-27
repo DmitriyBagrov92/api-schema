@@ -14,101 +14,149 @@ import "scalapb.proto";
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
 
-// Syncing Parameter
+/// Пользовательский параметр
 message Parameter {
-    string key = 1; /// Key of parameter
-    string value = 2 [(dlg).log=log_confidential]; /// Value of parameter
-    int64 clock = 3; /// last modification date
-}
-
-// Getting Parameters
-message RequestGetParameters {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    int64 from_clock = 1;
-}
-
-message ResponseGetParameters {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    repeated Parameter parameters = 1;
-}
-
-// Change parameter value
-message RequestEditParameter {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Ключ параметра
     string key = 1;
-    google.protobuf.StringValue value = 2 [(dlg).log=log_confidential];
-    int64 clock = 3; /// current known clock
-}
 
-message FeatureFlag {
-    string key = 1;
-    string value = 2;
+    /// Значение параметра
+    string value = 2 [(dlg).log=log_confidential];
+
+    /// Номер версии последнего изменения параметра
     int64 clock = 3;
 }
 
-message RequestFeatureFlags {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+/// Запрос на получение пользовательских параметров
+message RequestGetParameters {
+    /// Минимальная версия последнего изменения параметров, необходимых в ответе
     int64 from_clock = 1;
 }
 
+/// Ответ на запрос на получение пользовательских параметров
+message ResponseGetParameters {
+    /// Список параметров
+    repeated Parameter parameters = 1;
+}
+
+/// Запрос на изменение пользовательского параметра
+message RequestEditParameter {
+    /// Ключ параметра
+    string key = 1;
+
+    /// Требуемое значение -- в случае отсутствия такового ключ помечается удалённым
+    google.protobuf.StringValue value = 2 [(dlg).log=log_confidential];
+
+    /// Последняя известная версия параметра
+    int64 clock = 3;
+}
+
+/// Флаг конфиграции сервера
+message FeatureFlag {
+    /// Ключ флага конфигурации сервера
+    string key = 1;
+
+    /// Значение флага конфигурации сервера
+    string value = 2;
+
+    /// Версия флага конфигурации сервера
+    int64 clock = 3;
+}
+
+/// Запрос на получение флагов конфигурации сервера
+message RequestFeatureFlags {
+    /// Минимальная версия последнего изменения флагов конфигурации сервера, необходимых в ответе
+    int64 from_clock = 1;
+}
+
+/// Ответ на запрос на получение флагов конфигурации сервера
 message ResponseFeatureFlags {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
+    /// Список флагов конфигурации сервера
     repeated FeatureFlag feature_config = 1;
 }
 
+/// Структура оповещения об изменении флага конфигурации сервера
 message UpdateFeatureFlagChanged {
+    /// Изменившийся флаг конфигурации сервера
     FeatureFlag feature = 1;
 }
 
-// Update about parameter change
+/// Структура оповещения об изменении пользовательского параметра
 message UpdateParameterChanged {
-    Parameter parameter = 1; /// changed parameter
+    /// Изменившийся пользовательский параметр
+    Parameter parameter = 1;
 }
 
+/// Структура настроек клиентских приложений
 message Settings {
+    /// Структура настроек уведомлений
     message NotificationsSettings {
+        /// Структура настроек глушения уведомлений
         message MuteSettings {
+            /// Флаг включения глушения уведомлений о сообщениях в личных чатах
             bool mute_privates = 1;
+
+            /// Флаг включения глушения уведомлений о сообщениях в групповых чатах
             bool mute_groups = 2;
+
+            /// Флаг включения глушения уведомлений о сообщениях в каналах
             bool mute_channels = 3;
         }
 
+        /// Флаг пробития глушения уведомлений при наличии в сообщении явного упоминания пользователя
         bool pierce_mute_on_mention = 1;
+
+        /// Флаг показа текста сообщения в уведомлении о новом сообщении
         bool show_text = 2;
+
+        /// Флага показа имени отправителя в уведомлении о новом сообщении
         bool show_names = 3;
+
+        /// Настройки глушения уведомлений
         MuteSettings mutes = 4;
     }
 
+    /// Настройки уведомлений
     NotificationsSettings notifications = 1;
 }
 
+/// Структура оповещение об измении настроек клиентских приложений
 message UpdateSettingsChanged {
+    /// Обновлённые настройки клиентских приложений
     Settings settings = 1;
 }
 
+/// Запрос на получение настроек клиентских приложений
 message RequestGetSettings {}
 
+/// Ответ на запрос на получение настроек клиентских приложений
 message ResponseGetSettings {
+    /// Настройки клиентских приложений
     Settings settings = 1;
 }
 
+/// Запрос на изменение настроек клиентских приложений
 message RequestChangeSettings {
     Settings settings = 1;
 }
 
 service ConfigSync {
+    /// Метод получения настроек клиентских приложений
     rpc GetSettings (RequestGetSettings) returns (ResponseGetSettings) {
         option (google.api.http) = {
             post: "/v1/grpc/ConfigSync/GetSettings"
             body: "*"
         };
     }
+
+    /// Метод изменения настроек клиентских приложений
     rpc ChangeSettings (RequestChangeSettings) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/ConfigSync/ChangeSettings"
             body: "*"
         };
     }
+
+    /// Метод получения списка пользовательских параметров
     rpc GetParameters (RequestGetParameters) returns (ResponseGetParameters) {
         option deprecated = true;
         option (google.api.http) = {
@@ -116,6 +164,8 @@ service ConfigSync {
             body: "*"
         };
     }
+
+    /// Метод изменения пользовательских параметров
     rpc EditParameter (RequestEditParameter) returns (google.protobuf.Empty) {
         option deprecated = true;
         option (google.api.http) = {
@@ -123,6 +173,8 @@ service ConfigSync {
             body: "*"
         };
     }
+
+    /// Метод получения флагов конфигурации сервера
     rpc FeatureFlags (RequestFeatureFlags) returns (ResponseFeatureFlags) {
         option (google.api.http) = {
             post: "/v1/grpc/ConfigSync/FeatureFlags"

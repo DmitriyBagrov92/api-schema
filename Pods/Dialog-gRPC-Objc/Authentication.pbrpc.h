@@ -69,131 +69,148 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark StartPhoneAuth(RequestStartPhoneAuth) returns (ResponseStartPhoneAuth)
 
 /**
- * / Start authorization by phone
+ * / Метод начала авторизации по телефону
  */
 - (GRPCUnaryProtoCall *)startPhoneAuthWithMessage:(RequestStartPhoneAuth *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark SendCodeByPhoneCall(RequestSendCodeByPhoneCall) returns (Empty)
 
 /**
- * / Resend code by transaction hash
+ * / Метод посылки телефонного кода активации с помощью звонка
  */
 - (GRPCUnaryProtoCall *)sendCodeByPhoneCallWithMessage:(RequestSendCodeByPhoneCall *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark StartEmailAuth(RequestStartEmailAuth) returns (ResponseStartEmailAuth)
 
 /**
- * / Start email authorization process
+ * / Метод начала авторизации по электронной почте
  */
 - (GRPCUnaryProtoCall *)startEmailAuthWithMessage:(RequestStartEmailAuth *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark StartCertificateAuth(RequestStartCertificateAuth) returns (ResponseAuth)
 
+/**
+ * / Метод начала авторизации по сертификату
+ */
 - (GRPCUnaryProtoCall *)startCertificateAuthWithMessage:(RequestStartCertificateAuth *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark StartTokenAuth(RequestStartTokenAuth) returns (ResponseAuth)
 
 /**
- * / Start token auth authorization (actual for bots)
+ * / Метод начала авторизации по токену (для ботов)
  */
 - (GRPCUnaryProtoCall *)startTokenAuthWithMessage:(RequestStartTokenAuth *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark StartUsernameAuth(RequestStartUsernameAuth) returns (ResponseStartUsernameAuth)
 
 /**
- * / Start login/password authorization process
+ * / Метод начала авторизации по паре логин-пароль
  */
 - (GRPCUnaryProtoCall *)startUsernameAuthWithMessage:(RequestStartUsernameAuth *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark ApplyExternalSessionAuth(RequestApplyExternalSessionAuth) returns (ResponseAuth)
 
+/**
+ * / Метод начала авторизации переносом авторизованной сессии с внешней доверенной системы
+ */
 - (GRPCUnaryProtoCall *)applyExternalSessionAuthWithMessage:(RequestApplyExternalSessionAuth *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetIdToken(RequestGetIdToken) returns (ResponseGetIdToken)
 
 /**
- * Get Id Token for external system
+ * / Метод получения токена сессии для внешней системы
  */
 - (GRPCUnaryProtoCall *)getIdTokenWithMessage:(RequestGetIdToken *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark StartAuthTransaction(RequestStartAuthTransaction) returns (ResponseStartAuthTransaction)
 
+/**
+ * / Метод начала обобщенной авторизации
+ */
 - (GRPCUnaryProtoCall *)startAuthTransactionWithMessage:(RequestStartAuthTransaction *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark ValidateCode(RequestValidateCode) returns (ResponseAuth)
 
 /**
- * * Validate code received by phone or email
- * Returns error if user does not exist
+ * / Методя валидации активационного кода
  */
 - (GRPCUnaryProtoCall *)validateCodeWithMessage:(RequestValidateCode *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark ResendCode(RequestResendCode) returns (Empty)
 
 /**
- * / Resend code if you don't receive it with first attempt
+ * / Метод перепосылки активационного кода
  */
 - (GRPCUnaryProtoCall *)resendCodeWithMessage:(RequestResendCode *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark ValidatePassword(RequestValidatePassword) returns (ResponseAuth)
 
 /**
- * / Validate your passwword
+ * / Метод валидации пароля
  */
 - (GRPCUnaryProtoCall *)validatePasswordWithMessage:(RequestValidatePassword *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetOAuth2Params(RequestGetOAuth2Params) returns (ResponseGetOAuth2Params)
 
 /**
- * / Get redirect url
+ * / Метод получения параметров OAuth2-платформы
  */
 - (GRPCUnaryProtoCall *)getOAuth2ParamsWithMessage:(RequestGetOAuth2Params *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark CompleteOAuth2(RequestCompleteOAuth2) returns (ResponseAuth)
 
 /**
- * / Complete OAuth2 Authentication
+ * / Метод финализации аутентификации на OAuth2-платформе
  */
 - (GRPCUnaryProtoCall *)completeOAuth2WithMessage:(RequestCompleteOAuth2 *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark SignUp(RequestSignUp) returns (ResponseAuth)
 
 /**
- * / Sign up existed user
+ * / Метод регистрации пользователя
  */
 - (GRPCUnaryProtoCall *)signUpWithMessage:(RequestSignUp *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetAuthSessions(RequestGetAuthSessions) returns (ResponseGetAuthSessions)
 
 /**
- * / Returns all authorized user's sessions
+ * / Метод получения авторизованных сессий
  */
 - (GRPCUnaryProtoCall *)getAuthSessionsWithMessage:(RequestGetAuthSessions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark TerminateSession(RequestTerminateSession) returns (Empty)
 
+/**
+ * / Метод завершения сессии
+ */
 - (GRPCUnaryProtoCall *)terminateSessionWithMessage:(RequestTerminateSession *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark TerminateAllSessions(RequestTerminateAllSessions) returns (Empty)
 
 /**
- * / Log out user
+ * / Метод завершения всех сессий пользователя кроме текущей
  */
 - (GRPCUnaryProtoCall *)terminateAllSessionsWithMessage:(RequestTerminateAllSessions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark SignOut(RequestSignOut) returns (Empty)
 
 /**
- * / Log out current session
+ * / Метод завершения текущей сессии
  */
 - (GRPCUnaryProtoCall *)signOutWithMessage:(RequestSignOut *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark ChangePassword(RequestChangePassword) returns (Empty)
 
+/**
+ * / Мтеод изменения пароля пользователя
+ */
 - (GRPCUnaryProtoCall *)changePasswordWithMessage:(RequestChangePassword *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark GetSelf(RequestGetSelf) returns (ResponseGetSelf)
 
+/**
+ * / Метод получения структуры текущего пользователя
+ */
 - (GRPCUnaryProtoCall *)getSelfWithMessage:(RequestGetSelf *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 @end
@@ -207,14 +224,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark StartPhoneAuth(RequestStartPhoneAuth) returns (ResponseStartPhoneAuth)
 
 /**
- * / Start authorization by phone
+ * / Метод начала авторизации по телефону
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)startPhoneAuthWithRequest:(RequestStartPhoneAuth *)request handler:(void(^)(ResponseStartPhoneAuth *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Start authorization by phone
+ * / Метод начала авторизации по телефону
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -224,14 +241,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark SendCodeByPhoneCall(RequestSendCodeByPhoneCall) returns (Empty)
 
 /**
- * / Resend code by transaction hash
+ * / Метод посылки телефонного кода активации с помощью звонка
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)sendCodeByPhoneCallWithRequest:(RequestSendCodeByPhoneCall *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Resend code by transaction hash
+ * / Метод посылки телефонного кода активации с помощью звонка
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -241,14 +258,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark StartEmailAuth(RequestStartEmailAuth) returns (ResponseStartEmailAuth)
 
 /**
- * / Start email authorization process
+ * / Метод начала авторизации по электронной почте
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)startEmailAuthWithRequest:(RequestStartEmailAuth *)request handler:(void(^)(ResponseStartEmailAuth *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Start email authorization process
+ * / Метод начала авторизации по электронной почте
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -257,22 +274,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark StartCertificateAuth(RequestStartCertificateAuth) returns (ResponseAuth)
 
+/**
+ * / Метод начала авторизации по сертификату
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)startCertificateAuthWithRequest:(RequestStartCertificateAuth *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод начала авторизации по сертификату
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToStartCertificateAuthWithRequest:(RequestStartCertificateAuth *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark StartTokenAuth(RequestStartTokenAuth) returns (ResponseAuth)
 
 /**
- * / Start token auth authorization (actual for bots)
+ * / Метод начала авторизации по токену (для ботов)
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)startTokenAuthWithRequest:(RequestStartTokenAuth *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Start token auth authorization (actual for bots)
+ * / Метод начала авторизации по токену (для ботов)
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -282,14 +309,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark StartUsernameAuth(RequestStartUsernameAuth) returns (ResponseStartUsernameAuth)
 
 /**
- * / Start login/password authorization process
+ * / Метод начала авторизации по паре логин-пароль
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)startUsernameAuthWithRequest:(RequestStartUsernameAuth *)request handler:(void(^)(ResponseStartUsernameAuth *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Start login/password authorization process
+ * / Метод начала авторизации по паре логин-пароль
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -298,22 +325,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark ApplyExternalSessionAuth(RequestApplyExternalSessionAuth) returns (ResponseAuth)
 
+/**
+ * / Метод начала авторизации переносом авторизованной сессии с внешней доверенной системы
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)applyExternalSessionAuthWithRequest:(RequestApplyExternalSessionAuth *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод начала авторизации переносом авторизованной сессии с внешней доверенной системы
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToApplyExternalSessionAuthWithRequest:(RequestApplyExternalSessionAuth *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetIdToken(RequestGetIdToken) returns (ResponseGetIdToken)
 
 /**
- * Get Id Token for external system
+ * / Метод получения токена сессии для внешней системы
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getIdTokenWithRequest:(RequestGetIdToken *)request handler:(void(^)(ResponseGetIdToken *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * Get Id Token for external system
+ * / Метод получения токена сессии для внешней системы
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -322,24 +359,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark StartAuthTransaction(RequestStartAuthTransaction) returns (ResponseStartAuthTransaction)
 
+/**
+ * / Метод начала обобщенной авторизации
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)startAuthTransactionWithRequest:(RequestStartAuthTransaction *)request handler:(void(^)(ResponseStartAuthTransaction *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод начала обобщенной авторизации
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToStartAuthTransactionWithRequest:(RequestStartAuthTransaction *)request handler:(void(^)(ResponseStartAuthTransaction *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark ValidateCode(RequestValidateCode) returns (ResponseAuth)
 
 /**
- * * Validate code received by phone or email
- * Returns error if user does not exist
+ * / Методя валидации активационного кода
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)validateCodeWithRequest:(RequestValidateCode *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * * Validate code received by phone or email
- * Returns error if user does not exist
+ * / Методя валидации активационного кода
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -349,14 +394,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark ResendCode(RequestResendCode) returns (Empty)
 
 /**
- * / Resend code if you don't receive it with first attempt
+ * / Метод перепосылки активационного кода
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)resendCodeWithRequest:(RequestResendCode *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Resend code if you don't receive it with first attempt
+ * / Метод перепосылки активационного кода
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -366,14 +411,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark ValidatePassword(RequestValidatePassword) returns (ResponseAuth)
 
 /**
- * / Validate your passwword
+ * / Метод валидации пароля
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)validatePasswordWithRequest:(RequestValidatePassword *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Validate your passwword
+ * / Метод валидации пароля
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -383,14 +428,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark GetOAuth2Params(RequestGetOAuth2Params) returns (ResponseGetOAuth2Params)
 
 /**
- * / Get redirect url
+ * / Метод получения параметров OAuth2-платформы
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getOAuth2ParamsWithRequest:(RequestGetOAuth2Params *)request handler:(void(^)(ResponseGetOAuth2Params *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Get redirect url
+ * / Метод получения параметров OAuth2-платформы
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -400,14 +445,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark CompleteOAuth2(RequestCompleteOAuth2) returns (ResponseAuth)
 
 /**
- * / Complete OAuth2 Authentication
+ * / Метод финализации аутентификации на OAuth2-платформе
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)completeOAuth2WithRequest:(RequestCompleteOAuth2 *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Complete OAuth2 Authentication
+ * / Метод финализации аутентификации на OAuth2-платформе
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -417,14 +462,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark SignUp(RequestSignUp) returns (ResponseAuth)
 
 /**
- * / Sign up existed user
+ * / Метод регистрации пользователя
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)signUpWithRequest:(RequestSignUp *)request handler:(void(^)(ResponseAuth *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Sign up existed user
+ * / Метод регистрации пользователя
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -434,14 +479,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark GetAuthSessions(RequestGetAuthSessions) returns (ResponseGetAuthSessions)
 
 /**
- * / Returns all authorized user's sessions
+ * / Метод получения авторизованных сессий
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getAuthSessionsWithRequest:(RequestGetAuthSessions *)request handler:(void(^)(ResponseGetAuthSessions *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Returns all authorized user's sessions
+ * / Метод получения авторизованных сессий
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -450,22 +495,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark TerminateSession(RequestTerminateSession) returns (Empty)
 
+/**
+ * / Метод завершения сессии
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)terminateSessionWithRequest:(RequestTerminateSession *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод завершения сессии
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToTerminateSessionWithRequest:(RequestTerminateSession *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark TerminateAllSessions(RequestTerminateAllSessions) returns (Empty)
 
 /**
- * / Log out user
+ * / Метод завершения всех сессий пользователя кроме текущей
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)terminateAllSessionsWithRequest:(RequestTerminateAllSessions *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Log out user
+ * / Метод завершения всех сессий пользователя кроме текущей
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -475,14 +530,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark SignOut(RequestSignOut) returns (Empty)
 
 /**
- * / Log out current session
+ * / Метод завершения текущей сессии
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)signOutWithRequest:(RequestSignOut *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Log out current session
+ * / Метод завершения текущей сессии
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -491,15 +546,35 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark ChangePassword(RequestChangePassword) returns (Empty)
 
+/**
+ * / Мтеод изменения пароля пользователя
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)changePasswordWithRequest:(RequestChangePassword *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Мтеод изменения пароля пользователя
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToChangePasswordWithRequest:(RequestChangePassword *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark GetSelf(RequestGetSelf) returns (ResponseGetSelf)
 
+/**
+ * / Метод получения структуры текущего пользователя
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)getSelfWithRequest:(RequestGetSelf *)request handler:(void(^)(ResponseGetSelf *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод получения структуры текущего пользователя
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToGetSelfWithRequest:(RequestGetSelf *)request handler:(void(^)(ResponseGetSelf *_Nullable response, NSError *_Nullable error))handler;
 
 

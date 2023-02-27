@@ -61,24 +61,24 @@
 
 #pragma mark - Method Implementations
 
-#pragma mark LoadPeerThreads(RequestLoadPeerThreads) returns (ResponseLoadPeerThreads)
+#pragma mark GetThreadInfos(RequestGetThreadInfos) returns (ResponseGetThreadInfos)
 
-- (void)loadPeerThreadsWithRequest:(RequestLoadPeerThreads *)request handler:(void(^)(ResponseLoadPeerThreads *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToLoadPeerThreadsWithRequest:request handler:handler] start];
+- (void)getThreadInfosWithRequest:(RequestGetThreadInfos *)request handler:(void(^)(ResponseGetThreadInfos *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToGetThreadInfosWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToLoadPeerThreadsWithRequest:(RequestLoadPeerThreads *)request handler:(void(^)(ResponseLoadPeerThreads *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"LoadPeerThreads"
+- (GRPCProtoCall *)RPCToGetThreadInfosWithRequest:(RequestGetThreadInfos *)request handler:(void(^)(ResponseGetThreadInfos *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"GetThreadInfos"
             requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[ResponseLoadPeerThreads class]
+             responseClass:[ResponseGetThreadInfos class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-- (GRPCUnaryProtoCall *)loadPeerThreadsWithMessage:(RequestLoadPeerThreads *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"LoadPeerThreads"
+- (GRPCUnaryProtoCall *)getThreadInfosWithMessage:(RequestGetThreadInfos *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"GetThreadInfos"
                    message:message
            responseHandler:handler
                callOptions:callOptions
-             responseClass:[ResponseLoadPeerThreads class]];
+             responseClass:[ResponseGetThreadInfos class]];
 }
 
 #pragma mark FollowThread(RequestFollowThread) returns (Empty)

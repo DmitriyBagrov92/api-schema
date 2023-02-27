@@ -15,549 +15,825 @@ import "miscellaneous.proto";
 option go_package = "dialog";
 option java_package = "im.dlg.grpc.services";
 
-// Member information
+/// Структура описывающая члена группового чата
 message Member {
+    /// Идентификатор учетной записи пользователя
     string user_id = 1;
+
+    /// Время (в миллисекундах от Unix epoch), когда пользователь был добавлен в групповой чат
     int64 invited_at = 2;
-    repeated GroupAdminPermission permissions = 3; // List of member permissions
+
+    /// Список прав
+    repeated GroupAdminPermission permissions = 3;
+
+    /// Версия структуры
     int64 clock = 4;
+
+    /// Время (в миллисекундах от Unix epoch), когда пользователь был исключен из группового чата
     google.protobuf.Timestamp deleted_at = 5;
 }
 
+/// Набор типов групповых чатов
 enum GroupType {
     GROUP_TYPE_UNKNOWN = 0;
+
+    /// Групповой чат типа "группа"
     GROUP_TYPE_GROUP = 1;
+
+    /// Групповой чат типа "канал"
     GROUP_TYPE_CHANNEL = 2;
     reserved 3;
+
+    /// Групповой чат типа "важная тема"
     GROUP_TYPE_IMPORTANT_TOPIC = 4;
 }
 
-// Group information
+/// Структура группового чата
 message Group {
-    string id = 1; /// group id
-    int64 access_hash = 2 [(dlg).log=log_confidential]; /// Access hash of group
+    /// Идентификатор группового чата
+    string id = 1;
+
+    /// Ключ доступа к группового чата (всегда равен нулю)
+    int64 access_hash = 2 [(dlg).log=log_confidential];
+
+    /// Данные о групповом чате
     GroupData data = 29;
+
+    /// Структура члена группового чата, представляющая запрашивающего информацию пользователя в группе
     Member self_member = 30;
 }
 
+/// Структура полных данных о групповом чате
 message GroupData {
     reserved 1, 9, 13;
-    string title = 2 [(dlg).log=log_sensitive]; /// Title of group
-    Avatar avatar = 3; /// Avatar of group
-    /// Number of members
+
+    /// Название группового чата
+    string title = 2 [(dlg).log=log_sensitive];
+
+    /// Аватар группового чата
+    Avatar avatar = 3;
+
+    /// Количество членов группового чата
     int32 members_amount = 4;
-    /// Group Type. Used only for displaying information. Default is GROUP.
+
+    /// Тип группового чата
     GroupType group_type = 5;
-    string owner_user_id = 6; /// Group creator
-    google.protobuf.Timestamp created_at = 7; /// Date of creation
-    /// About of group
+
+    /// Идентификатор учетной записи пользователя-владельца группового чата
+    string owner_user_id = 6;
+
+    /// Дата создания группового чата
+    google.protobuf.Timestamp created_at = 7;
+
+    /// Описание группового чата
     google.protobuf.StringValue about = 8 [(dlg).log=log_sensitive];
+
+    /// Список базовых прав для новых членов группового чата
     repeated GroupAdminPermission base_permissions = 10;
+
+    /// Версия состояния группового чата
     int64 clock = 11;
+
+    /// Время (в миллисекундах от Unix epoch) последнего изменения состава закрепленных сообщений в групповом чате
     google.protobuf.Int64Value pinned_at = 12;
+
+    /// Максимальное количество участников группового чата
     google.protobuf.Int32Value members_count_limit = 14;
+
+    /// Время (в миллисекундах от Unix epoch) удаления группового чата
     google.protobuf.Int64Value deleted_at = 15;
+
+    /// Флаг публичности группового чата
     bool is_public = 16;
-    bool is_closed = 17; // closure of group is more like freezing -- everything (including history) becomes immutable
-    ConversationLink source = 18; // source peer&message for this group (will be first message in history after service message about group creation)
-    google.protobuf.Timestamp due_date = 19; // if set this group will be "closed" after specified date
+
+    /// Флаг закрытости группового чата
+    bool is_closed = 17;
+
+    /// Ссылка на источник группового чата (связанный чат или сообщение в чате)
+    ConversationLink source = 18;
+
+    /// Ожидаемое время закрытия группового чата
+    google.protobuf.Timestamp due_date = 19;
 }
 
+/// Структура частичный данных о групповом чате
+/// deprecated
 message GroupPartialInfo {
     reserved 6;
+    /// Идентификатор группового чата
     string group_id = 1;
+
+    /// Ключ доступа к группового чата (всегда равен нулю)
     int64 access_hash = 2 [(dlg).log=log_confidential];
+
+    /// Версия состояния группового чата
     int64 clock = 3;
+
+    /// Тип группового чата
     GroupType type = 4;
+
+    /// Название группового чата
     string title = 5;
+
+    /// Аватар группового чата
     Avatar avatar = 7;
+
+    /// Структура члена группового чата, представляющая запрашивающего информацию пользователя в группе
     Member self_member = 8;
+
+    /// Время (в миллисекундах от Unix epoch) последнего изменения состава закрепленных сообщений в групповом чате
     google.protobuf.Int64Value pinned_at = 9;
+
+    /// Флаг публичности группового чата
     bool is_public = 10;
 }
 
-// Update about group data changed
+/// Структура уведомления об изменении состояния группового чата
 message UpdateGroup {
+    /// Идентификатор группового чата
     string group_id = 1;
+
+    /// Данные о групповом чате
     GroupData data = 2;
 }
 
-// Loading group members
+/// Запрос на получение членов группового чата
 message RequestLoadMembers {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     reserved 1;
+
+    /// Идентификатор группового чата
     string group_id = 4;
+
+    /// Ожидаемое количество записей в ответе
     int32 limit = 2;
-    google.protobuf.BytesValue next = 3; /// cursor
+
+    /// Курсор для продолжения загрузки, полученный в ответе на предыдуший аналогичный запрос
+    google.protobuf.BytesValue next = 3;
 }
 
+/// Ответ на запрос на получение членов группового чата
 message ResponseLoadMembers {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
+    /// Курсор для продолжения загрузки
     google.protobuf.BytesValue cursor = 1;
+
+    /// Список членов группового чата
     repeated Member members = 2;
 }
 
-// Update about title changed
+/// Структура уведомления об измениии названия группового чата
 message UpdateGroupTitleChanged {
+    /// Идентификатор группового чата
     string group_id = 1;
+
+    /// Новое название группового чата
     string title = 2 [(dlg).log=log_sensitive];
 }
 
-// Update about avatar changed
+/// Структура уведомления об изменении аватара группового чата
 message UpdateGroupAvatarChanged {
+    /// Идентификатор группового чата
     string group_id = 1;
+
+    /// Новый аватар группового чата
     Avatar avatar = 2;
 }
 
-// Update about about changed
+/// Структура уведомления об изменении описания группового чата
 message UpdateGroupAboutChanged {
+    /// Идентификатор группового чата
     string group_id = 1;
+
+    /// Новое описание группового чата
     google.protobuf.StringValue about = 2 [(dlg).log=log_sensitive];
 }
 
-// Update about owner changed
+/// Структура уведомления об изменении владельца группового чата
 message UpdateGroupOwnerChanged {
+    /// Идентификатор группового чата
     string group_id = 1;
-    string user_id = 2; /// new owner
+
+    /// Идентификатор учетной записи нового владельца группового чата
+    string user_id = 2;
 }
 
-// Update about base group permissions changed
+/// Струкура уведомления об изменении базовых прав для новых членов группового чата
 message UpdateGroupBasePermissionsChanged {
+    /// Идентификатор группового чата
     string group_id = 1;
-    /// new base permissions
+
+    /// Измененный список базовых прав для новых членов группового чата
     repeated GroupAdminPermission base_permissions = 2;
 }
 
-// Update about members updated
+/// Структура уведомления о приглашении пользователя в групповой чат
 message UpdateGroupMembersUpdated {
+    /// Идентификатор группового чата
     string group_id = 1;
+
+    /// Список новых членов группового чата
     repeated Member members = 2;
 }
 
-// Update about members changed
+/// Структура уведомления об изменении состава участников группового чата
 message UpdateGroupMemberDiff {
+    /// Идентификатор группового чата
     string group_id = 1;
+
+    /// Список идентификаторов учетных записей удаленных из группового чата пользователей
     repeated string removed_users = 2;
+
+    /// Список идентификаторов учетных записей добавленных в групповой чат пользователей
     repeated Member added_members = 3;
+
+    /// Новое количество участников группового чата
     int32 members_count = 4;
 }
 
-// Update about members count changed
+/// Структура уведомления об изменении количества участников группового чата (используется для каналов и сверхбольших групп)
 message UpdateGroupMembersCountChanged {
+    /// Идентификатор группового чата
     string group_id = 1;
+
+    /// Новое количество участников группового чата
     int32 members_count = 2;
 }
 
-// Creating group chat
+/// Запрос на создание группового чата
 message RequestCreateGroup {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-    string rid = 1; /// Id for query deduplication
-    reserved 2, 6;
-    string title = 3 [(dlg).log=log_sensitive];
-    repeated UserOutPeer users = 4; /// members
-    GroupType group_type = 5; /// group or channel
+    /// Дедуплицирующий параметр ("временный" / "клиентский" идентификатор группового чата)
+    string rid = 1;
 
-    /// Base permissions for invited members
+    reserved 2, 6;
+
+    /// Название создаваемого группового чата
+    string title = 3 [(dlg).log=log_sensitive];
+
+    /// Список внешних пиров пользователей для добавления в групповой чат
+    repeated UserOutPeer users = 4;
+
+    /// Тип создаваемого группового чата
+    GroupType group_type = 5;
+
+    /// Список базовых прав новых членов группового чата
     repeated GroupAdminPermission base_permissions = 7;
+
+    /// Флаг публичности группового чата
     bool is_public = 8;
+
+    /// Ссылка на источник группового чата (связанный чат или сообщение в чате)
     ConversationLink source = 9;
+
+    /// Ожидаемое время закрытия группового чата
     google.protobuf.Timestamp due_date = 10;
 }
 
+/// Ответ на запрос на создание группового чата
 message ResponseCreateGroup {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    Group group = 1; /// created group
-    repeated UserOutPeer user_peers = 2; /// empty if dropped by optimizations
+    /// Данные о созданном групповом чате
+    Group group = 1;
+
+    /// Список внешних пиров пользователей членов группового чата (не используется)
+    /// deprecated
+    repeated UserOutPeer user_peers = 2;
 }
 
-// Changing group title
+/// Запрос на изменение названия группового чата
 message RequestEditGroupTitle {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     reserved 1;
 
+    /// Идентификатор группового чата
     string group_id = 4;
-    string rid = 2; /// Id for query deduplication
+
+    /// Дедуплицирющий параметр запроса
+    string rid = 2;
+
+    /// Новое название группового чата
     string title = 3 [(dlg).log=log_sensitive];
 }
 
-// Changing group avatar
+/// Запрос на изменение аватара группового чата
 message RequestEditGroupAvatar {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     reserved 1;
 
+    /// Идентификатор группового чата
     string group_id = 4;
-    string rid = 2; /// Id for query deduplication
+
+    /// Дедуплицирющий параметр запроса
+    string rid = 2;
+
+    /// Координаты нового аватара группового чата
     FileLocation file_location = 3;
 }
 
-// Removing group avatar
+/// Запрос на удаление аватара группового чата
 message RequestRemoveGroupAvatar {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     reserved 1;
 
+    /// Идентификатор группового чата
     string group_id = 3;
-    string rid = 2; /// Id for query deduplication
+
+    /// Дедуплицирющий параметр запроса
+    string rid = 2;
 }
 
-// Edit Group About
+/// Запрос на изменение описания группового чата
 message RequestEditGroupAbout {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     reserved 1;
 
+    /// Идентификатор группового чата
     string group_id = 4;
-    string rid = 2; /// Id for query deduplication
+
+    /// Дедуплицирющий параметр запроса
+    string rid = 2;
+
+    /// Новое описание группового чата
     google.protobuf.StringValue about = 3 [(dlg).log=log_sensitive];
 }
 
+/// Запрос на изменение базовых прав новых членов группового чата
 message RequestEditGroupBasePermissions {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     reserved 1;
 
+    /// Идентификатор группового чата
     string group_id = 5;
-    string random_id = 2; /// Id for query deduplication
+
+    /// Дедуплицирющий параметр запроса
+    string random_id = 2;
+
+    /// Список добавляемых прав
     repeated GroupAdminPermission granted_permissions = 3;
+
+    /// Список отзываемых прав
     repeated GroupAdminPermission revoked_permissions = 4;
 }
 
+/// Запрос на изменение прав члена группового чата
 message RequestEditMemberPermissions {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-
+    /// Идентификатор группового чата
     string group_id = 5;
+
+    /// Идентификатор учетной записи пользователя, права которого требуется изменить
     string user_id = 6;
+
+    /// Список добавляемых прав
     repeated GroupAdminPermission granted_permissions = 3;
+
+    /// Список отзываемых прав
     repeated GroupAdminPermission revoked_permissions = 4;
 }
 
 message ResponseMember {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     Member member = 1;
 }
 
-// Inviting user to group
+/// Запрос на приглашение пользователя в групповой чат
 message RequestInviteUser {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     reserved 1;
 
+    /// Идентификатор группового чата
     string group_id = 4;
-    string rid = 2; /// Id for query deduplication
+
+    /// Дедуплицирющий параметр запроса
+    string rid = 2;
+
+    /// Внешний пир приглашаемого пользователя
     UserOutPeer user = 3;
 }
 
-// Leaving group
+/// Запрос на выход из группового чата
 message RequestLeaveGroup {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     reserved 1;
 
+    /// Идентификатор группового чата
     string group_id = 3;
-    string rid = 2; /// Id for query deduplication
+
+    /// Дедуплицирющий параметр запроса
+    string rid = 2;
 }
 
+/// Запрос на закрытие группового чата
 message RequestCloseGroup {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Идентификатор группового чата
     string group_id = 1;
-    string rid = 2; /// Id for query deduplication
-    google.protobuf.StringValue reason = 3; // will be sent as text message on behalf of closing user right before the service message
+
+    /// Дедуплицирющий параметр запроса
+    string rid = 2;
+
+    /// Текст, который будет содержать сервисное сообщение о закрытии группового чата
+    google.protobuf.StringValue reason = 3;
 }
 
+/// Запрос на открытие ранее закрытого группового чата
 message RequestOpenGroup {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Идентификатор группового чата
     string group_id = 1;
-    string rid = 2; /// Id for query deduplication
-    google.protobuf.StringValue reason = 3; // will be sent as text message on behaolf of opening user right after the service message
+
+    /// Дедуплицирющий параметр запроса
+    string rid = 2;
+
+    /// Текст, который будет содержать сервисное сообщение об открытии группового чата
+    google.protobuf.StringValue reason = 3;
 }
 
-// Kicking user from group
+/// Запрос на исключение пользователя из группового чата
 message RequestKickUser {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     reserved 1, 3;
 
+    /// Идентификатор группового чата
     string group_id = 4;
-    string rid = 2; /// Id for query deduplication
+
+    /// Дедуплицирющий параметр запроса
+    string rid = 2;
+
+    /// Идентификатор учетной записи исключаемого из группового чата пользователя
     string user_id = 5;
 }
 
-/// Possible permissions on a group
+/// Набор прав пользователей в групповых чатах
 enum GroupAdminPermission {
     GROUP_ADMIN_PERMISSION_UNKNOWN = 0;
     reserved 1;
+    /// Право на приглашение пользователей в групповой чат
     GROUP_ADMIN_PERMISSION_INVITE = 2;
+
+    /// Право на исключение пользователей из группового чата
     GROUP_ADMIN_PERMISSION_KICK = 3;
+
+    /// Право на изменение информации о групповом чате
     GROUP_ADMIN_PERMISSION_UPDATEINFO = 4;
+
+    /// Право на изменение прав других участников группового чата
     GROUP_ADMIN_PERMISSION_SETPERMISSIONS = 5;
+
+    /// Право на редактирование сообщений других участников группового чата
     GROUP_ADMIN_PERMISSION_EDITMESSAGE = 6;
+
+    /// Право на удаление сообщений других участников группового чата
     GROUP_ADMIN_PERMISSION_DELETEMESSAGE = 7;
+
+    /// Право на генерацию ссылки-приглашения в групповой чат
     GROUP_ADMIN_PERMISSION_GETINTEGRATIONTOKEN = 8;
+
+    /// Право на отправку сообщений в групповой чат
     GROUP_ADMIN_PERMISSION_SENDMESSAGE = 9;
+
+    /// Право на закрепление сообщений в групповом чате
     GROUP_ADMIN_PERMISSION_PINMESSAGE = 10;
+
+    /// Право на просмотр членов группового чата
     GROUP_ADMIN_PERMISSION_VIEWMEMBERS = 11;
-    GROUP_ADMIN_PERMISSION_LEAVE = 12; /// read only permission
+
+    /// Право на выход из группового чата
+    GROUP_ADMIN_PERMISSION_LEAVE = 12;
+
+    /// Право на использование механизма таргетирования при отправке сообщений в групповой чат
     GROUP_ADMIN_PERMISSION_TARGETING = 13;
+
+    /// Право на удаление группового чата
     GROUP_ADMIN_PERMISSION_DELETE = 14;
+
+    /// Право на управление конференцией, связанной с групповым чатом
     GROUP_ADMIN_PERMISSION_MANAGE_CONFERENCE = 15;
-    GROUP_ADMIN_PERMISSION_OPEN_AND_CLOSE = 16; // _FROZEN ?
+
+    /// Право на изменение открытости/закрытости группового чата
+    GROUP_ADMIN_PERMISSION_OPEN_AND_CLOSE = 16;
 }
 
-// Make user admin
+/// Запрос на перевод члена группового чата в список администраторов группового чата
 message RequestMakeUserAdmin {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     reserved 1, 2;
 
+    /// Идентификатор группового чата
     string group_id = 4;
+
+    /// Идентификатор учетной записи пользователя члена группового чата, которого предполагается сделать администратором
     string user_id = 5;
+
+    /// Список прав, которые необходимо предоставить администратору
     repeated GroupAdminPermission permissions = 3;
 }
 
-// A struct mapping a group member to their permissions
-// userId the id of the group member
-// permissions a list of permissions that user has
+/// Структура, содержащее соответствие члена группового чата его правам
 message GroupMemberPermission {
+    /// Идентификатор учетной записи пользователя члена группового чата
     string user_id = 1;
+
+    /// Список прав
     repeated GroupAdminPermission permissions = 2;
 }
 
-// Fetches the group administration permissions for each of the users from the list
+/// Запрос на получение списка членов группового чата с их правами
 message RequestGetGroupMemberPermissions {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Идентификатор группового чата
     string group_id = 1;
+
+    /// Список идентификаторов учетных записей членов группового чата, которых необходимо включить в ответ
     repeated string user_ids = 2;
 }
 
+/// Ответ на запрос на получение списка членов группового чата с их правами
 message ResponseGetGroupMemberPermissions {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
+    /// Список соответствий членов группового чата их правам
     repeated GroupMemberPermission permissions = 1;
 }
 
-// Update about the user's permissions
+/// Структура уведомления об изменении прав члена группового чата
 message UpdateGroupMemberPermissionsChanged {
+    /// Идентификатор группового чата
     string group_id = 1;
+
+    /// Идентификатор учетной записи пользователя члена группового чата
     string user_id = 2;
+
+    /// Список прав
     repeated GroupAdminPermission permissions = 3;
 }
 
-// Transfer ownership of group
+/// Запрос на перенос владения групповым чатом от пользователя к пользователю
 message RequestTransferOwnership {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     reserved 1;
 
+    /// Идентификатор группового чата
     string group_id = 3;
+
+    /// Идентификатор учетной записи пользователя члена группового чата, которому следует передать владение групповым чатом
     string new_owner = 2;
 }
 
-// Response for invite url methods
-message ResponseInviteUrl {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-    string url = 1;
-}
-
-// Building invite url
+/// Запрос на получение ссылки-приглашения в групповой чат
 message RequestGetGroupInviteUrl {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     reserved 1;
 
+    /// Идентификатор группового чата
     string group_id = 2;
 }
 
-// Get group invite url base
-message RequestGetGroupInviteUrlBase {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
-}
-
-message ResponseGetGroupInviteUrlBase {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
+/// Ответ на запрос на получение ссылки-приглашения в групповой чат
+message ResponseInviteUrl {
+    /// Ссылка-приглашение
     string url = 1;
 }
 
-// Revoking invite urls
+/// Запрос на получение базового URL для ссылкок-приглашений в групповые чаты
+message RequestGetGroupInviteUrlBase {
+}
+
+/// Ответ на запрос на получение базового URL для ссылкок-приглашений в групповые чаты
+message ResponseGetGroupInviteUrlBase {
+    /// Базовый URL
+    string url = 1;
+}
+
+/// Запрос на отзыв ссылки-приглашения в групповой чат
 message RequestRevokeInviteUrl {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     reserved 1;
+
+    /// Идентификатор группового чата
     string group_id = 2;
 }
 
-// Join group method
+/// Запрос на присоединение к групповому чату по токену
 message RequestJoinGroup {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Токен, удостоверяющий право на доступ к групповому чату
     string token = 1;
 }
 
+/// Ответ на запрос на присоединение к групповому чату
 message ResponseJoinGroup {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-
+    /// Данные о групповом чате
     Group group = 1;
-    repeated UserOutPeer user_peers = 2; /// empty if dropped by optimizations
+
+    /// Список внешних пиров пользователей, присоединившихся к чату (не используется)
+    /// deprecated
+    repeated UserOutPeer user_peers = 2;
 }
 
-// Join group by peer
+/// Запрос на присоединение к групповому чату по идентификатору группового чата
 message RequestJoinGroupByPeer {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     reserved 1;
+
+    /// Идентификатор группового чата
     string group_id = 2;
 }
 
+/// Запрос на удаление группового чата
 message RequestDeleteGroup {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Идентификатор группового чата
     string group_id = 1;
 }
 
-// get group info by invite token
+/// Запрос на получение частичных данных о групповом чате
+/// deprecated
 message RequestGetGroupPartialInfo {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Токен, удостоверяющий право на доступ к групповому чату
     string token = 1;
 }
 
+/// Запрос на изменение публичности группового чата
 message RequestChangeGroupPublicity {
-    option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
+    /// Идентификатор группового чата
     string group_id = 1;
+
+    /// Флаг публичности группового чата
     bool is_public = 2;
 }
 
-/**
- * Update notifies that some user got invited to the group
- */
- message UpdateGroupMemberInvited {
+/// Структура уведомления о приглашении члена группового чата
+/// deprecated
+message UpdateGroupMemberInvited {
+    /// Идентификатор группового чата
     string group_id = 1;
+
+    /// Информация о приглашенном участнике
     Member member = 2;
 }
 
 service Groups {
+    /// Запрос на загрузку списка членов группового чата
     rpc LoadMembers (RequestLoadMembers) returns (ResponseLoadMembers) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/LoadMembers"
             body: "*"
         };
     }
+
+    /// Запрос на создание группового чата
     rpc CreateGroup (RequestCreateGroup) returns (ResponseCreateGroup) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/CreateGroup"
             body: "*"
         };
     }
+
+    /// Запрос на изменение названия группового чата
     rpc EditGroupTitle (RequestEditGroupTitle) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/EditGroupTitle"
             body: "*"
         };
     }
+
+    /// Запрос на изменение аватара группового чата
     rpc EditGroupAvatar (RequestEditGroupAvatar) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/EditGroupAvatar"
             body: "*"
         };
     }
+
+    /// Запрос на удаление аватара группового чата
     rpc RemoveGroupAvatar (RequestRemoveGroupAvatar) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/RemoveGroupAvatar"
             body: "*"
         };
     }
+
+    /// Запрос на изменение описания группового чата
     rpc EditGroupAbout (RequestEditGroupAbout) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/EditGroupAbout"
             body: "*"
         };
     }
+
+    /// Запрос на изменение базовых прав новых членов группового чата
     rpc EditGroupBasePermissions (RequestEditGroupBasePermissions) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/EditGroupBasePermissions"
             body: "*"
         };
     }
+
+    /// Запрос на приглашение пользователей в групповой чат
     rpc InviteUser (RequestInviteUser) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/InviteUser"
             body: "*"
         };
     }
+
+    /// Запрос на выход из группового чата
     rpc LeaveGroup (RequestLeaveGroup) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/LeaveGroup"
             body: "*"
         };
     }
+
+    /// Запрос на закрытие группового чата
     rpc CloseGroup (RequestCloseGroup) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/CloseGroup"
             body: "*"
         };
     }
+
+    /// Запрос на открытие ранее закрытого группового чата
     rpc OpenGroup (RequestOpenGroup) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/OpenGroup"
             body: "*"
         };
     }
+
+    /// Запрос на исключение члена группового чата
     rpc KickUser (RequestKickUser) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/KickUser"
             body: "*"
         };
     }
+
+    /// Запрос на передачу члену группового чата прав администратора
     rpc MakeUserAdmin (RequestMakeUserAdmin) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/MakeUserAdmin"
             body: "*"
         };
     }
+
+    /// Запрос на получение списка соответствий членов группового чата и их прав
     rpc GetGroupMemberPermissions (RequestGetGroupMemberPermissions) returns (ResponseGetGroupMemberPermissions) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/GetGroupMemberPermissions"
             body: "*"
         };
     }
+
+    /// Запрос на изменение прав члена группового чата
     rpc EditMemberPermissions (RequestEditMemberPermissions) returns (ResponseMember) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/EditMemberPermissions"
             body: "*"
         };
     }
+
+    /// Запрос на перенос владения групповым чатом
     rpc TransferOwnership (RequestTransferOwnership) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/TransferOwnership"
             body: "*"
         };
     }
+
+    /// Запрос на получение ссылки-приглашения в групповой чат
     rpc GetGroupInviteUrl (RequestGetGroupInviteUrl) returns (ResponseInviteUrl) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/GetGroupInviteUrl"
             body: "*"
         };
     }
+
+    /// Запрос на получение базового URL ссылок-приглашений в групповые чаты
     rpc GetGroupInviteUrlBase (RequestGetGroupInviteUrlBase) returns (ResponseGetGroupInviteUrlBase) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/GetGroupInviteUrlBase"
             body: "*"
         };
     }
+
+    /// Запрос на отзыв ссылки-приглашения в групповой чат
     rpc RevokeInviteUrl (RequestRevokeInviteUrl) returns (ResponseInviteUrl) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/RevokeInviteUrl"
             body: "*"
         };
     }
+
+    /// Запрос на получение присоединение к групповому чату по токену
     rpc JoinGroup (RequestJoinGroup) returns (ResponseJoinGroup) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/JoinGroup"
             body: "*"
         };
     }
+
+    /// Запрос на получение присоединение к групповому чату по идентификатору
     rpc JoinGroupByPeer (RequestJoinGroupByPeer) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/JoinGroupByPeer"
             body: "*"
         };
     }
+
+    /// Запрос на удаление группового чата
     rpc DeleteGroup (RequestDeleteGroup) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/DeleteGroup"
             body: "*"
         };
     }
+
+    /// Запрос на получение частичных данных о групповом чате
     rpc GetGroupPartialInfo (RequestGetGroupPartialInfo) returns (GroupPartialInfo) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/GetGrpoupPartialInfo"
             body: "*"
         };
     }
+
+    /// Запрос на изменение публичности группового чата
     rpc ChangeGroupPublicity (RequestChangeGroupPublicity) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/ChangeGroupPublicity"

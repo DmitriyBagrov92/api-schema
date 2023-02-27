@@ -61,16 +61,29 @@
 
 #pragma mark KeyExchange(RequestKeyExchange) returns (ResponseKeyExchange)
 
+/**
+ * / Метод обмена ключами
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)keyExchangeWithRequest:(RequestKeyExchange *)request handler:(void(^)(ResponseKeyExchange *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToKeyExchangeWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
+/**
+ * / Метод обмена ключами
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToKeyExchangeWithRequest:(RequestKeyExchange *)request handler:(void(^)(ResponseKeyExchange *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"KeyExchange"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[ResponseKeyExchange class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
+/**
+ * / Метод обмена ключами
+ */
 - (GRPCUnaryProtoCall *)keyExchangeWithMessage:(RequestKeyExchange *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"KeyExchange"
                    message:message

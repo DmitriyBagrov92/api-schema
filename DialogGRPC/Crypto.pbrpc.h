@@ -35,6 +35,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark KeyExchange(RequestKeyExchange) returns (ResponseKeyExchange)
 
+/**
+ * / Метод обмена ключами
+ */
 - (GRPCUnaryProtoCall *)keyExchangeWithMessage:(RequestKeyExchange *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 @end
@@ -47,8 +50,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark KeyExchange(RequestKeyExchange) returns (ResponseKeyExchange)
 
+/**
+ * / Метод обмена ключами
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (void)keyExchangeWithRequest:(RequestKeyExchange *)request handler:(void(^)(ResponseKeyExchange *_Nullable response, NSError *_Nullable error))handler;
 
+/**
+ * / Метод обмена ключами
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
 - (GRPCProtoCall *)RPCToKeyExchangeWithRequest:(RequestKeyExchange *)request handler:(void(^)(ResponseKeyExchange *_Nullable response, NSError *_Nullable error))handler;
 
 

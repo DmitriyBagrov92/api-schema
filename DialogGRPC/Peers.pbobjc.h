@@ -33,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Enum PeerType
 
+/** / Тип пира */
 typedef GPB_ENUM(PeerType) {
   /**
    * Value used if any message's field encounters a value that is not defined
@@ -41,7 +42,11 @@ typedef GPB_ENUM(PeerType) {
    **/
   PeerType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
   PeerType_PeerTypeUnknown = 0,
+
+  /** / Пир личного чата */
   PeerType_PeerTypePrivate = 1,
+
+  /** / Пир группового чата */
   PeerType_PeerTypeGroup = 2,
 };
 
@@ -77,15 +82,17 @@ typedef GPB_ENUM(Peer_FieldNumber) {
 };
 
 /**
- * Peer
+ * Структура пира
  **/
 GPB_FINAL @interface Peer : GPBMessage
 
+/** / Тип  пира */
 @property(nonatomic, readwrite) PeerType type;
 
+/** / Идентификатор пира */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
-/** if set, Peer is treated as ThreadPeer */
+/** / Сообщение в рамках родительского пира Peer(type, id), указывающее что данный пир это тред в родительском пире */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *parentMid;
 /** Test to see if @c parentMid has been set. */
 @property(nonatomic, readwrite) BOOL hasParentMid;
@@ -114,17 +121,20 @@ typedef GPB_ENUM(OutPeer_FieldNumber) {
 };
 
 /**
- * Out peer with access hash
+ * / Внешний пир
  **/
 GPB_FINAL @interface OutPeer : GPBMessage
 
+/** / Тип  пира */
 @property(nonatomic, readwrite) PeerType type;
 
+/** / Идентификатор пира */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
 
+/** / Ключ доступа к пиру */
 @property(nonatomic, readwrite) int64_t accessHash;
 
-/** if set, Peer is treated as ThreadPeer */
+/** / Сообщение в рамках родительского пира Peer(type, id), указывающее что данный пир это тред в родительском пире */
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *parentMid;
 /** Test to see if @c parentMid has been set. */
 @property(nonatomic, readwrite) BOOL hasParentMid;
@@ -155,9 +165,10 @@ typedef GPB_ENUM(UserOutPeer_FieldNumber) {
  **/
 GPB_FINAL @interface UserOutPeer : GPBMessage
 
-/** / User's id */
+/** / Идентификатор учетной записи пользователя */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
+/** / Ключ доступа к пользователю */
 @property(nonatomic, readwrite) int64_t accessHash;
 
 @end
@@ -171,6 +182,7 @@ typedef GPB_ENUM(GroupOutPeer_FieldNumber) {
 
 /**
  * Group's out peer
+ * / deprecated
  **/
 GPB_FINAL @interface GroupOutPeer : GPBMessage
 

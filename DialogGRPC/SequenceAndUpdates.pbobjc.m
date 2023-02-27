@@ -1096,8 +1096,8 @@ typedef struct RequestGetDifference__storage_ {
 
 @dynamic seq;
 @dynamic updatesArray, updatesArray_Count;
-@dynamic messagesArray, messagesArray_Count;
 @dynamic needMore;
+@dynamic messagesArray, messagesArray_Count;
 @dynamic usersRefsArray, usersRefsArray_Count;
 @dynamic groupsRefsArray, groupsRefsArray_Count;
 @dynamic hasConfig, config;

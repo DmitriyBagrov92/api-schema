@@ -295,6 +295,7 @@ BOOL DialogsFilter_IsValidValue(int32_t value__) {
 @dynamic hasIsNotified, isNotified;
 @dynamic hasIsOnlyForYou, isOnlyForYou;
 @dynamic unclassified, unclassified_Count;
+@dynamic linkedPeersArray, linkedPeersArray_Count;
 
 typedef struct MessageAttributes__storage_ {
   uint32_t _has_storage_[1];
@@ -303,6 +304,7 @@ typedef struct MessageAttributes__storage_ {
   GPBBoolValue *isNotified;
   GPBBoolValue *isOnlyForYou;
   NSMutableDictionary *unclassified;
+  NSMutableArray *linkedPeersArray;
 } MessageAttributes__storage_;
 
 // This method is threadsafe because it is initially called
@@ -355,6 +357,15 @@ typedef struct MessageAttributes__storage_ {
         .offset = (uint32_t)offsetof(MessageAttributes__storage_, unclassified),
         .flags = GPBFieldMapKeyString,
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "linkedPeersArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(OutPeer),
+        .number = MessageAttributes_FieldNumber_LinkedPeersArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(MessageAttributes__storage_, linkedPeersArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -4536,7 +4547,7 @@ typedef struct RequestSendMessage__storage_ {
 @dynamic deduplicationId;
 @dynamic hasMessage, message;
 @dynamic hasIsOnlyForUser, isOnlyForUser;
-@dynamic hasForward, forward;
+@dynamic forwardsArray, forwardsArray_Count;
 @dynamic hasReply, reply;
 @dynamic predicatesArray, predicatesArray_Count;
 @dynamic whiteListArray, whiteListArray_Count;
@@ -4548,7 +4559,7 @@ typedef struct RequestSendMessageAsync__storage_ {
   NSString *deduplicationId;
   MessageContent *message;
   GPBStringValue *isOnlyForUser;
-  ReferencedMessages *forward;
+  NSMutableArray *forwardsArray;
   ReferencedMessages *reply;
   NSMutableArray *predicatesArray;
   NSMutableArray *whiteListArray;
@@ -4598,19 +4609,19 @@ typedef struct RequestSendMessageAsync__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "forward",
-        .dataTypeSpecific.clazz = GPBObjCClass(ReferencedMessages),
-        .number = RequestSendMessageAsync_FieldNumber_Forward,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(RequestSendMessageAsync__storage_, forward),
-        .flags = GPBFieldOptional,
+        .name = "forwardsArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(ForwardItem),
+        .number = RequestSendMessageAsync_FieldNumber_ForwardsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(RequestSendMessageAsync__storage_, forwardsArray),
+        .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
       {
         .name = "reply",
         .dataTypeSpecific.clazz = GPBObjCClass(ReferencedMessages),
         .number = RequestSendMessageAsync_FieldNumber_Reply,
-        .hasIndex = 5,
+        .hasIndex = 4,
         .offset = (uint32_t)offsetof(RequestSendMessageAsync__storage_, reply),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -4665,10 +4676,10 @@ typedef struct RequestSendMessageAsync__storage_ {
 
 @implementation RequestUpdateMessage
 
+@dynamic hasPeer, peer;
 @dynamic hasMid, mid;
 @dynamic hasUpdatedMessage, updatedMessage;
 @dynamic lastEditedAt;
-@dynamic hasPeer, peer;
 
 typedef struct RequestUpdateMessage__storage_ {
   uint32_t _has_storage_[1];
@@ -4688,7 +4699,7 @@ typedef struct RequestUpdateMessage__storage_ {
         .name = "mid",
         .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
         .number = RequestUpdateMessage_FieldNumber_Mid,
-        .hasIndex = 0,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(RequestUpdateMessage__storage_, mid),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -4697,7 +4708,7 @@ typedef struct RequestUpdateMessage__storage_ {
         .name = "updatedMessage",
         .dataTypeSpecific.clazz = GPBObjCClass(MessageContent),
         .number = RequestUpdateMessage_FieldNumber_UpdatedMessage,
-        .hasIndex = 1,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(RequestUpdateMessage__storage_, updatedMessage),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -4706,7 +4717,7 @@ typedef struct RequestUpdateMessage__storage_ {
         .name = "lastEditedAt",
         .dataTypeSpecific.clazz = Nil,
         .number = RequestUpdateMessage_FieldNumber_LastEditedAt,
-        .hasIndex = 2,
+        .hasIndex = 3,
         .offset = (uint32_t)offsetof(RequestUpdateMessage__storage_, lastEditedAt),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
@@ -4715,7 +4726,7 @@ typedef struct RequestUpdateMessage__storage_ {
         .name = "peer",
         .dataTypeSpecific.clazz = GPBObjCClass(Peer),
         .number = RequestUpdateMessage_FieldNumber_Peer,
-        .hasIndex = 3,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestUpdateMessage__storage_, peer),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -5395,6 +5406,7 @@ void UpdateMessage_ClearAttachOneOfCase(UpdateMessage *message) {
 @dynamic editedAt;
 @dynamic prevEditInPeerAt;
 @dynamic hasIsSilent, isSilent;
+@dynamic hasAttributes, attributes;
 
 typedef struct UpdateMessageContentChanged__storage_ {
   uint32_t _has_storage_[1];
@@ -5402,6 +5414,7 @@ typedef struct UpdateMessageContentChanged__storage_ {
   UUIDValue *mid;
   MessageContent *message;
   GPBBoolValue *isSilent;
+  MessageAttributes *attributes;
   int64_t editedAt;
   int64_t prevEditInPeerAt;
 } UpdateMessageContentChanged__storage_;
@@ -5466,6 +5479,15 @@ typedef struct UpdateMessageContentChanged__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
+      {
+        .name = "attributes",
+        .dataTypeSpecific.clazz = GPBObjCClass(MessageAttributes),
+        .number = UpdateMessageContentChanged_FieldNumber_Attributes,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(UpdateMessageContentChanged__storage_, attributes),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[UpdateMessageContentChanged class]
@@ -5500,6 +5522,7 @@ typedef struct UpdateMessageContentChanged__storage_ {
 @dynamic hasMyReadDate, myReadDate;
 @dynamic reply;
 @dynamic forwardSource;
+@dynamic hasAttributes, attributes;
 
 typedef struct UpdateMessageSent__storage_ {
   uint32_t _has_storage_[2];
@@ -5511,6 +5534,7 @@ typedef struct UpdateMessageSent__storage_ {
   GPBInt64Value *myReadDate;
   ReferencedMessages *reply;
   ForwardSource *forwardSource;
+  MessageAttributes *attributes;
   int64_t date;
   int64_t unreadCounterClock;
 } UpdateMessageSent__storage_;
@@ -5608,6 +5632,15 @@ typedef struct UpdateMessageSent__storage_ {
         .number = UpdateMessageSent_FieldNumber_ForwardSource,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(UpdateMessageSent__storage_, forwardSource),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "attributes",
+        .dataTypeSpecific.clazz = GPBObjCClass(MessageAttributes),
+        .number = UpdateMessageSent_FieldNumber_Attributes,
+        .hasIndex = 8,
+        .offset = (uint32_t)offsetof(UpdateMessageSent__storage_, attributes),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -8273,10 +8306,10 @@ typedef struct MessageStatus__storage_ {
 
 @implementation RequestGetMessageReads
 
+@dynamic hasPeer, peer;
 @dynamic hasMid, mid;
 @dynamic limit;
 @dynamic timestampFrom;
-@dynamic hasPeer, peer;
 
 typedef struct RequestGetMessageReads__storage_ {
   uint32_t _has_storage_[1];
@@ -8296,7 +8329,7 @@ typedef struct RequestGetMessageReads__storage_ {
         .name = "mid",
         .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
         .number = RequestGetMessageReads_FieldNumber_Mid,
-        .hasIndex = 0,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(RequestGetMessageReads__storage_, mid),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -8305,7 +8338,7 @@ typedef struct RequestGetMessageReads__storage_ {
         .name = "limit",
         .dataTypeSpecific.clazz = Nil,
         .number = RequestGetMessageReads_FieldNumber_Limit,
-        .hasIndex = 1,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(RequestGetMessageReads__storage_, limit),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
@@ -8314,7 +8347,7 @@ typedef struct RequestGetMessageReads__storage_ {
         .name = "timestampFrom",
         .dataTypeSpecific.clazz = Nil,
         .number = RequestGetMessageReads_FieldNumber_TimestampFrom,
-        .hasIndex = 2,
+        .hasIndex = 3,
         .offset = (uint32_t)offsetof(RequestGetMessageReads__storage_, timestampFrom),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
@@ -8323,7 +8356,7 @@ typedef struct RequestGetMessageReads__storage_ {
         .name = "peer",
         .dataTypeSpecific.clazz = GPBObjCClass(OutPeer),
         .number = RequestGetMessageReads_FieldNumber_Peer,
-        .hasIndex = 3,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestGetMessageReads__storage_, peer),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -8351,10 +8384,10 @@ typedef struct RequestGetMessageReads__storage_ {
 
 @implementation RequestGetMessageReceives
 
+@dynamic hasPeer, peer;
 @dynamic hasMid, mid;
 @dynamic limit;
 @dynamic timestampFrom;
-@dynamic hasPeer, peer;
 
 typedef struct RequestGetMessageReceives__storage_ {
   uint32_t _has_storage_[1];
@@ -8374,7 +8407,7 @@ typedef struct RequestGetMessageReceives__storage_ {
         .name = "mid",
         .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
         .number = RequestGetMessageReceives_FieldNumber_Mid,
-        .hasIndex = 0,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(RequestGetMessageReceives__storage_, mid),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -8383,7 +8416,7 @@ typedef struct RequestGetMessageReceives__storage_ {
         .name = "limit",
         .dataTypeSpecific.clazz = Nil,
         .number = RequestGetMessageReceives_FieldNumber_Limit,
-        .hasIndex = 1,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(RequestGetMessageReceives__storage_, limit),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
@@ -8392,7 +8425,7 @@ typedef struct RequestGetMessageReceives__storage_ {
         .name = "timestampFrom",
         .dataTypeSpecific.clazz = Nil,
         .number = RequestGetMessageReceives_FieldNumber_TimestampFrom,
-        .hasIndex = 2,
+        .hasIndex = 3,
         .offset = (uint32_t)offsetof(RequestGetMessageReceives__storage_, timestampFrom),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
@@ -8401,7 +8434,7 @@ typedef struct RequestGetMessageReceives__storage_ {
         .name = "peer",
         .dataTypeSpecific.clazz = GPBObjCClass(OutPeer),
         .number = RequestGetMessageReceives_FieldNumber_Peer,
-        .hasIndex = 3,
+        .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestGetMessageReceives__storage_, peer),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,

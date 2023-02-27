@@ -157,20 +157,12 @@ message RequestEditUserLocalName {
 message RequestLoadUserData {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     message Claim {
-        Peer user_peer = 1;
+        message MessengerConnection {
+            repeated string user_ids = 1;
+        }
+
         oneof kind {
-            // load data about user in p2p conversation
-            bool p2p = 2;
-            // load data about group member by group peer
-            // if requested user and client are both group members
-            Peer group_member = 3;
-            // load data about user if this user is in the client's contacts
-            bool contact = 4;
-            // load data about group message sender by messageId
-            // if this message is accessible for the client
-            UUIDValue message_sender = 5;
-            // load data about bot
-            bool bot = 6;
+            MessengerConnection messenger_connection = 1;
         }
     }
     repeated Claim claims = 1;

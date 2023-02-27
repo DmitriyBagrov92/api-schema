@@ -33,10 +33,9 @@ CF_EXTERN_C_BEGIN
 @class GPBBoolValue;
 @class GPBInt64Value;
 @class GPBStringValue;
-@class Peer;
 @class RecursiveMapValue;
 @class RequestLoadUserData_Claim;
-@class UUIDValue;
+@class RequestLoadUserData_Claim_MessengerConnection;
 @class User;
 @class UserData;
 @class UserData_Ext;
@@ -586,51 +585,19 @@ GPB_FINAL @interface RequestLoadUserData : GPBMessage
 #pragma mark - RequestLoadUserData_Claim
 
 typedef GPB_ENUM(RequestLoadUserData_Claim_FieldNumber) {
-  RequestLoadUserData_Claim_FieldNumber_UserPeer = 1,
-  RequestLoadUserData_Claim_FieldNumber_P2P = 2,
-  RequestLoadUserData_Claim_FieldNumber_GroupMember = 3,
-  RequestLoadUserData_Claim_FieldNumber_Contact = 4,
-  RequestLoadUserData_Claim_FieldNumber_MessageSender = 5,
-  RequestLoadUserData_Claim_FieldNumber_Bot = 6,
+  RequestLoadUserData_Claim_FieldNumber_MessengerConnection = 1,
 };
 
 typedef GPB_ENUM(RequestLoadUserData_Claim_Kind_OneOfCase) {
   RequestLoadUserData_Claim_Kind_OneOfCase_GPBUnsetOneOfCase = 0,
-  RequestLoadUserData_Claim_Kind_OneOfCase_P2P = 2,
-  RequestLoadUserData_Claim_Kind_OneOfCase_GroupMember = 3,
-  RequestLoadUserData_Claim_Kind_OneOfCase_Contact = 4,
-  RequestLoadUserData_Claim_Kind_OneOfCase_MessageSender = 5,
-  RequestLoadUserData_Claim_Kind_OneOfCase_Bot = 6,
+  RequestLoadUserData_Claim_Kind_OneOfCase_MessengerConnection = 1,
 };
 
 GPB_FINAL @interface RequestLoadUserData_Claim : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) Peer *userPeer;
-/** Test to see if @c userPeer has been set. */
-@property(nonatomic, readwrite) BOOL hasUserPeer;
-
 @property(nonatomic, readonly) RequestLoadUserData_Claim_Kind_OneOfCase kindOneOfCase;
 
-/** load data about user in p2p conversation */
-@property(nonatomic, readwrite) BOOL p2P;
-
-/**
- * load data about group member by group peer
- * if requested user and client are both group members
- **/
-@property(nonatomic, readwrite, strong, null_resettable) Peer *groupMember;
-
-/** load data about user if this user is in the client's contacts */
-@property(nonatomic, readwrite) BOOL contact;
-
-/**
- * load data about group message sender by messageId
- * if this message is accessible for the client
- **/
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *messageSender;
-
-/** load data about bot */
-@property(nonatomic, readwrite) BOOL bot;
+@property(nonatomic, readwrite, strong, null_resettable) RequestLoadUserData_Claim_MessengerConnection *messengerConnection;
 
 @end
 
@@ -638,6 +605,20 @@ GPB_FINAL @interface RequestLoadUserData_Claim : GPBMessage
  * Clears whatever value was set for the oneof 'kind'.
  **/
 void RequestLoadUserData_Claim_ClearKindOneOfCase(RequestLoadUserData_Claim *message);
+
+#pragma mark - RequestLoadUserData_Claim_MessengerConnection
+
+typedef GPB_ENUM(RequestLoadUserData_Claim_MessengerConnection_FieldNumber) {
+  RequestLoadUserData_Claim_MessengerConnection_FieldNumber_UserIdsArray = 1,
+};
+
+GPB_FINAL @interface RequestLoadUserData_Claim_MessengerConnection : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *userIdsArray;
+/** The number of items in @c userIdsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger userIdsArray_Count;
+
+@end
 
 #pragma mark - ResponseLoadUserData
 
