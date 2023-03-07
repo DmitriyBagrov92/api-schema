@@ -1351,19 +1351,25 @@ message Dialog {
     bool is_archived = 21;
 }
 
-
 /// Набор фильтров для загрузки чатов
-enum DialogsFilter {
-    DIALOGS_FILTER_UNKNOWN = 0;
+message DialogFilter {
+    enum DialogType {
+        /// Не фильтровать диалоги по типу
+        DIALOG_FILTER_TYPE_ANY = 0;
 
-    /// Не включать избранные чаты в выдачу
-    DIALOGS_FILTER_EXCLUDE_FAVOURITES = 1;
+        /// Включить только корневые диалоги (не треды)
+        DIALOG_FILTER_TYPE_ROOT = 1;
+
+        /// Включить только треды
+        DIALOG_FILTER_TYPE_THREAD = 2;
+    }
+    DialogType dialog_type = 1;
 
     /// Не включать архивированные чаты в выдачу
-    DIALOGS_FILTER_EXCLUDE_ARCHIVED = 2;
+    google.protobuf.BoolValue is_archived = 2;
 
-    /// Не включать треды в выдачу
-    DIALOGS_FILTER_EXCLUDE_THREADS = 3;
+    /// Не включать избранные чаты в выдачу
+    google.protobuf.BoolValue is_favourited = 3;
 }
 
 /// Запрос на получение списка диалогов
@@ -1375,8 +1381,8 @@ message RequestLoadDialogs {
     /// Максимальное количество диалогов в выдаче
     int32 limit = 2;
 
-    /// Список фильтров
-    repeated DialogsFilter filters = 3;
+    /// Фильтр диалогов
+    DialogFilter filter = 3;
 
     /// Включать в выдачу только диалоги с этими пирами
     /// (фильтр не применяется, если этот список пуст)

@@ -47,6 +47,7 @@ GPBObjCClassDeclaration(BinaryMessage);
 GPBObjCClassDeclaration(Color);
 GPBObjCClassDeclaration(DeletedMessage);
 GPBObjCClassDeclaration(Dialog);
+GPBObjCClassDeclaration(DialogFilter);
 GPBObjCClassDeclaration(DialogGroup);
 GPBObjCClassDeclaration(DialogShort);
 GPBObjCClassDeclaration(DocumentEx);
@@ -239,47 +240,6 @@ BOOL ListLoadMode_IsValidValue(int32_t value__) {
     case ListLoadMode_ListLoadModeForward:
     case ListLoadMode_ListLoadModeBackward:
     case ListLoadMode_ListLoadModeBoth:
-      return YES;
-    default:
-      return NO;
-  }
-}
-
-#pragma mark - Enum DialogsFilter
-
-GPBEnumDescriptor *DialogsFilter_EnumDescriptor(void) {
-  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
-  if (!descriptor) {
-    static const char *valueNames =
-        "DialogsFilterUnknown\000DialogsFilterExclud"
-        "eFavourites\000DialogsFilterExcludeArchived"
-        "\000DialogsFilterExcludeThreads\000";
-    static const int32_t values[] = {
-        DialogsFilter_DialogsFilterUnknown,
-        DialogsFilter_DialogsFilterExcludeFavourites,
-        DialogsFilter_DialogsFilterExcludeArchived,
-        DialogsFilter_DialogsFilterExcludeThreads,
-    };
-    GPBEnumDescriptor *worker =
-        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(DialogsFilter)
-                                       valueNames:valueNames
-                                           values:values
-                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
-                                     enumVerifier:DialogsFilter_IsValidValue];
-    GPBEnumDescriptor *expected = nil;
-    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
-      [worker release];
-    }
-  }
-  return descriptor;
-}
-
-BOOL DialogsFilter_IsValidValue(int32_t value__) {
-  switch (value__) {
-    case DialogsFilter_DialogsFilterUnknown:
-    case DialogsFilter_DialogsFilterExcludeFavourites:
-    case DialogsFilter_DialogsFilterExcludeArchived:
-    case DialogsFilter_DialogsFilterExcludeThreads:
       return YES;
     default:
       return NO;
@@ -7643,19 +7603,136 @@ typedef struct Dialog__storage_ {
 
 @end
 
+#pragma mark - DialogFilter
+
+@implementation DialogFilter
+
+@dynamic dialogType;
+@dynamic hasIsArchived, isArchived;
+@dynamic hasIsFavourited, isFavourited;
+
+typedef struct DialogFilter__storage_ {
+  uint32_t _has_storage_[1];
+  DialogFilter_DialogType dialogType;
+  GPBBoolValue *isArchived;
+  GPBBoolValue *isFavourited;
+} DialogFilter__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "dialogType",
+        .dataTypeSpecific.enumDescFunc = DialogFilter_DialogType_EnumDescriptor,
+        .number = DialogFilter_FieldNumber_DialogType,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(DialogFilter__storage_, dialogType),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "isArchived",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
+        .number = DialogFilter_FieldNumber_IsArchived,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(DialogFilter__storage_, isArchived),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "isFavourited",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
+        .number = DialogFilter_FieldNumber_IsFavourited,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(DialogFilter__storage_, isFavourited),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[DialogFilter class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(DialogFilter__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t DialogFilter_DialogType_RawValue(DialogFilter *message) {
+  GPBDescriptor *descriptor = [DialogFilter descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:DialogFilter_FieldNumber_DialogType];
+  return GPBGetMessageRawEnumField(message, field);
+}
+
+void SetDialogFilter_DialogType_RawValue(DialogFilter *message, int32_t value) {
+  GPBDescriptor *descriptor = [DialogFilter descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:DialogFilter_FieldNumber_DialogType];
+  GPBSetMessageRawEnumField(message, field, value);
+}
+
+#pragma mark - Enum DialogFilter_DialogType
+
+GPBEnumDescriptor *DialogFilter_DialogType_EnumDescriptor(void) {
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
+  if (!descriptor) {
+    static const char *valueNames =
+        "DialogFilterTypeAny\000DialogFilterTypeRoot"
+        "\000DialogFilterTypeThread\000";
+    static const int32_t values[] = {
+        DialogFilter_DialogType_DialogFilterTypeAny,
+        DialogFilter_DialogType_DialogFilterTypeRoot,
+        DialogFilter_DialogType_DialogFilterTypeThread,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(DialogFilter_DialogType)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:DialogFilter_DialogType_IsValidValue];
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL DialogFilter_DialogType_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case DialogFilter_DialogType_DialogFilterTypeAny:
+    case DialogFilter_DialogType_DialogFilterTypeRoot:
+    case DialogFilter_DialogType_DialogFilterTypeThread:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
 #pragma mark - RequestLoadDialogs
 
 @implementation RequestLoadDialogs
 
 @dynamic fromDate;
 @dynamic limit;
-@dynamic filtersArray, filtersArray_Count;
+@dynamic hasFilter, filter;
 @dynamic peersToLoadArray, peersToLoadArray_Count;
 
 typedef struct RequestLoadDialogs__storage_ {
   uint32_t _has_storage_[1];
   int32_t limit;
-  GPBEnumArray *filtersArray;
+  DialogFilter *filter;
   NSMutableArray *peersToLoadArray;
   int64_t fromDate;
 } RequestLoadDialogs__storage_;
@@ -7685,13 +7762,13 @@ typedef struct RequestLoadDialogs__storage_ {
         .dataType = GPBDataTypeInt32,
       },
       {
-        .name = "filtersArray",
-        .dataTypeSpecific.enumDescFunc = DialogsFilter_EnumDescriptor,
-        .number = RequestLoadDialogs_FieldNumber_FiltersArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestLoadDialogs__storage_, filtersArray),
-        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
-        .dataType = GPBDataTypeEnum,
+        .name = "filter",
+        .dataTypeSpecific.clazz = GPBObjCClass(DialogFilter),
+        .number = RequestLoadDialogs_FieldNumber_Filter,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(RequestLoadDialogs__storage_, filter),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
       {
         .name = "peersToLoadArray",

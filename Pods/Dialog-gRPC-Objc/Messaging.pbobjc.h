@@ -35,6 +35,7 @@ CF_EXTERN_C_BEGIN
 @class Color;
 @class DeletedMessage;
 @class Dialog;
+@class DialogFilter;
 @class DialogGroup;
 @class DialogShort;
 @class DocumentEx;
@@ -176,35 +177,32 @@ GPBEnumDescriptor *ListLoadMode_EnumDescriptor(void);
  **/
 BOOL ListLoadMode_IsValidValue(int32_t value);
 
-#pragma mark - Enum DialogsFilter
+#pragma mark - Enum DialogFilter_DialogType
 
-/** / Набор фильтров для загрузки чатов */
-typedef GPB_ENUM(DialogsFilter) {
+typedef GPB_ENUM(DialogFilter_DialogType) {
   /**
    * Value used if any message's field encounters a value that is not defined
    * by this enum. The message will also have C functions to get/set the rawValue
    * of the field.
    **/
-  DialogsFilter_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  DialogsFilter_DialogsFilterUnknown = 0,
+  DialogFilter_DialogType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  /** / Не фильтровать диалоги по типу */
+  DialogFilter_DialogType_DialogFilterTypeAny = 0,
 
-  /** / Не включать избранные чаты в выдачу */
-  DialogsFilter_DialogsFilterExcludeFavourites = 1,
+  /** / Включить только корневые диалоги (не треды) */
+  DialogFilter_DialogType_DialogFilterTypeRoot = 1,
 
-  /** / Не включать архивированные чаты в выдачу */
-  DialogsFilter_DialogsFilterExcludeArchived = 2,
-
-  /** / Не включать треды в выдачу */
-  DialogsFilter_DialogsFilterExcludeThreads = 3,
+  /** / Включить только треды */
+  DialogFilter_DialogType_DialogFilterTypeThread = 2,
 };
 
-GPBEnumDescriptor *DialogsFilter_EnumDescriptor(void);
+GPBEnumDescriptor *DialogFilter_DialogType_EnumDescriptor(void);
 
 /**
  * Checks to see if the given value is defined by the enum or was not known at
  * the time this source was generated.
  **/
-BOOL DialogsFilter_IsValidValue(int32_t value);
+BOOL DialogFilter_DialogType_IsValidValue(int32_t value);
 
 #pragma mark - MessagingRoot
 
@@ -3329,12 +3327,51 @@ GPB_FINAL @interface Dialog : GPBMessage
 
 @end
 
+#pragma mark - DialogFilter
+
+typedef GPB_ENUM(DialogFilter_FieldNumber) {
+  DialogFilter_FieldNumber_DialogType = 1,
+  DialogFilter_FieldNumber_IsArchived = 2,
+  DialogFilter_FieldNumber_IsFavourited = 3,
+};
+
+/**
+ * / Набор фильтров для загрузки чатов
+ **/
+GPB_FINAL @interface DialogFilter : GPBMessage
+
+@property(nonatomic, readwrite) DialogFilter_DialogType dialogType;
+
+/** / Не включать архивированные чаты в выдачу */
+@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isArchived;
+/** Test to see if @c isArchived has been set. */
+@property(nonatomic, readwrite) BOOL hasIsArchived;
+
+/** / Не включать избранные чаты в выдачу */
+@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isFavourited;
+/** Test to see if @c isFavourited has been set. */
+@property(nonatomic, readwrite) BOOL hasIsFavourited;
+
+@end
+
+/**
+ * Fetches the raw value of a @c DialogFilter's @c dialogType property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t DialogFilter_DialogType_RawValue(DialogFilter *message);
+/**
+ * Sets the raw value of an @c DialogFilter's @c dialogType property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetDialogFilter_DialogType_RawValue(DialogFilter *message, int32_t value);
+
 #pragma mark - RequestLoadDialogs
 
 typedef GPB_ENUM(RequestLoadDialogs_FieldNumber) {
   RequestLoadDialogs_FieldNumber_FromDate = 1,
   RequestLoadDialogs_FieldNumber_Limit = 2,
-  RequestLoadDialogs_FieldNumber_FiltersArray = 3,
+  RequestLoadDialogs_FieldNumber_Filter = 3,
   RequestLoadDialogs_FieldNumber_PeersToLoadArray = 4,
 };
 
@@ -3352,11 +3389,10 @@ GPB_FINAL @interface RequestLoadDialogs : GPBMessage
 /** / Максимальное количество диалогов в выдаче */
 @property(nonatomic, readwrite) int32_t limit;
 
-/** / Список фильтров */
-// |filtersArray| contains |DialogsFilter|
-@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *filtersArray;
-/** The number of items in @c filtersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger filtersArray_Count;
+/** / Фильтр диалогов */
+@property(nonatomic, readwrite, strong, null_resettable) DialogFilter *filter;
+/** Test to see if @c filter has been set. */
+@property(nonatomic, readwrite) BOOL hasFilter;
 
 /**
  * / Включать в выдачу только диалоги с этими пирами
