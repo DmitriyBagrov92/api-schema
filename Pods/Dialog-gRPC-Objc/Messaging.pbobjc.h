@@ -3083,7 +3083,7 @@ typedef GPB_ENUM(HistoryMessage_FieldNumber) {
   HistoryMessage_FieldNumber_PrevMid = 5,
   HistoryMessage_FieldNumber_CreatedAt = 6,
   HistoryMessage_FieldNumber_Message = 7,
-  HistoryMessage_FieldNumber_Attribute = 10,
+  HistoryMessage_FieldNumber_Attributes = 10,
   HistoryMessage_FieldNumber_Reply = 12,
   HistoryMessage_FieldNumber_EditedAt = 13,
   HistoryMessage_FieldNumber_RandomId = 14,
@@ -3131,9 +3131,9 @@ GPB_FINAL @interface HistoryMessage : GPBMessage
 @property(nonatomic, readwrite) BOOL hasMessage;
 
 /** / Аттрибуты сообщения */
-@property(nonatomic, readwrite, strong, null_resettable) MessageAttributes *attribute;
-/** Test to see if @c attribute has been set. */
-@property(nonatomic, readwrite) BOOL hasAttribute;
+@property(nonatomic, readwrite, strong, null_resettable) MessageAttributes *attributes;
+/** Test to see if @c attributes has been set. */
+@property(nonatomic, readwrite) BOOL hasAttributes;
 
 @property(nonatomic, readonly) HistoryMessage_Attach_OneOfCase attachOneOfCase;
 
@@ -3267,6 +3267,7 @@ typedef GPB_ENUM(Dialog_FieldNumber) {
   Dialog_FieldNumber_IsMuted = 19,
   Dialog_FieldNumber_IsFavourite = 20,
   Dialog_FieldNumber_IsArchived = 21,
+  Dialog_FieldNumber_LastThreadInfoAt = 22,
 };
 
 /**
@@ -3312,6 +3313,12 @@ GPB_FINAL @interface Dialog : GPBMessage
  * / (в миллисекундах от unix epoch)
  **/
 @property(nonatomic, readwrite) int64_t lastReactionAt;
+
+/**
+ * / Дата последнего изменения в тредах в этом чате
+ * / (в миллисекундах от unix epoch)
+ **/
+@property(nonatomic, readwrite) int64_t lastThreadInfoAt;
 
 /** / Помечен ли диалог модификатором "отложенной прочитки" */
 @property(nonatomic, readwrite) BOOL readLater;

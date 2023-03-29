@@ -7095,7 +7095,7 @@ typedef struct ForwardSource__storage_ {
 @dynamic hasPrevMid, prevMid;
 @dynamic createdAt;
 @dynamic hasMessage, message;
-@dynamic hasAttribute, attribute;
+@dynamic hasAttributes, attributes;
 @dynamic reply;
 @dynamic forwardSource;
 @dynamic hasEditedAt, editedAt;
@@ -7109,7 +7109,7 @@ typedef struct HistoryMessage__storage_ {
   UUIDValue *mid;
   UUIDValue *prevMid;
   MessageContent *message;
-  MessageAttributes *attribute;
+  MessageAttributes *attributes;
   ReferencedMessages *reply;
   GPBInt64Value *editedAt;
   NSString *randomId;
@@ -7172,11 +7172,11 @@ typedef struct HistoryMessage__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "attribute",
+        .name = "attributes",
         .dataTypeSpecific.clazz = GPBObjCClass(MessageAttributes),
-        .number = HistoryMessage_FieldNumber_Attribute,
+        .number = HistoryMessage_FieldNumber_Attributes,
         .hasIndex = 6,
-        .offset = (uint32_t)offsetof(HistoryMessage__storage_, attribute),
+        .offset = (uint32_t)offsetof(HistoryMessage__storage_, attributes),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -7453,6 +7453,7 @@ typedef struct ResponseLoadHistory__storage_ {
 @dynamic lastReceive;
 @dynamic lastRead;
 @dynamic lastReactionAt;
+@dynamic lastThreadInfoAt;
 @dynamic readLater;
 @dynamic isMuted;
 @dynamic isFavourite;
@@ -7468,6 +7469,7 @@ typedef struct Dialog__storage_ {
   int64_t lastReceive;
   int64_t lastRead;
   int64_t lastReactionAt;
+  int64_t lastThreadInfoAt;
 } Dialog__storage_;
 
 // This method is threadsafe because it is initially called
@@ -7552,8 +7554,8 @@ typedef struct Dialog__storage_ {
         .name = "readLater",
         .dataTypeSpecific.clazz = Nil,
         .number = Dialog_FieldNumber_ReadLater,
-        .hasIndex = 8,
-        .offset = 9,  // Stored in _has_storage_ to save space.
+        .hasIndex = 9,
+        .offset = 10,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
@@ -7561,8 +7563,8 @@ typedef struct Dialog__storage_ {
         .name = "isMuted",
         .dataTypeSpecific.clazz = Nil,
         .number = Dialog_FieldNumber_IsMuted,
-        .hasIndex = 10,
-        .offset = 11,  // Stored in _has_storage_ to save space.
+        .hasIndex = 11,
+        .offset = 12,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
@@ -7570,8 +7572,8 @@ typedef struct Dialog__storage_ {
         .name = "isFavourite",
         .dataTypeSpecific.clazz = Nil,
         .number = Dialog_FieldNumber_IsFavourite,
-        .hasIndex = 12,
-        .offset = 13,  // Stored in _has_storage_ to save space.
+        .hasIndex = 13,
+        .offset = 14,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
@@ -7579,10 +7581,19 @@ typedef struct Dialog__storage_ {
         .name = "isArchived",
         .dataTypeSpecific.clazz = Nil,
         .number = Dialog_FieldNumber_IsArchived,
-        .hasIndex = 14,
-        .offset = 15,  // Stored in _has_storage_ to save space.
+        .hasIndex = 15,
+        .offset = 16,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "lastThreadInfoAt",
+        .dataTypeSpecific.clazz = Nil,
+        .number = Dialog_FieldNumber_LastThreadInfoAt,
+        .hasIndex = 8,
+        .offset = (uint32_t)offsetof(Dialog__storage_, lastThreadInfoAt),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =

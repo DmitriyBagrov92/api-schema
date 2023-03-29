@@ -275,6 +275,7 @@ typedef GPB_ENUM(UpdateUserLastSeen_FieldNumber) {
   UpdateUserLastSeen_FieldNumber_LastSeenAt = 2,
   UpdateUserLastSeen_FieldNumber_DeviceType = 3,
   UpdateUserLastSeen_FieldNumber_CurrentServerTime = 4,
+  UpdateUserLastSeen_FieldNumber_ExpiredAt = 5,
 };
 
 /**
@@ -289,6 +290,8 @@ GPB_FINAL @interface UpdateUserLastSeen : GPBMessage
 @property(nonatomic, readwrite) DeviceType deviceType;
 
 @property(nonatomic, readwrite) int64_t currentServerTime;
+
+@property(nonatomic, readwrite) int64_t expiredAt;
 
 @end
 

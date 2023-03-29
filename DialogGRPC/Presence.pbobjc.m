@@ -544,6 +544,7 @@ void SetUpdateTypingStop_TypingType_RawValue(UpdateTypingStop *message, int32_t 
 @dynamic lastSeenAt;
 @dynamic deviceType;
 @dynamic currentServerTime;
+@dynamic expiredAt;
 
 typedef struct UpdateUserLastSeen__storage_ {
   uint32_t _has_storage_[1];
@@ -551,6 +552,7 @@ typedef struct UpdateUserLastSeen__storage_ {
   NSString *userId;
   int64_t lastSeenAt;
   int64_t currentServerTime;
+  int64_t expiredAt;
 } UpdateUserLastSeen__storage_;
 
 // This method is threadsafe because it is initially called
@@ -592,6 +594,15 @@ typedef struct UpdateUserLastSeen__storage_ {
         .number = UpdateUserLastSeen_FieldNumber_CurrentServerTime,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(UpdateUserLastSeen__storage_, currentServerTime),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "expiredAt",
+        .dataTypeSpecific.clazz = Nil,
+        .number = UpdateUserLastSeen_FieldNumber_ExpiredAt,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(UpdateUserLastSeen__storage_, expiredAt),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
       },

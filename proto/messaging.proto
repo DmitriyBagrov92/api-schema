@@ -1235,7 +1235,7 @@ message HistoryMessage {
     reserved 8, 9;
     
     /// Аттрибуты сообщения
-    MessageAttributes attribute = 10;
+    MessageAttributes attributes = 10;
     
     reserved 11; 
     
@@ -1337,6 +1337,10 @@ message Dialog {
     /// Дата последней проставленной или изменённой реакции в это чате
     /// (в миллисекундах от unix epoch)
     int64 last_reaction_at = 16;
+
+    /// Дата последнего изменения в тредах в этом чате
+    /// (в миллисекундах от unix epoch)
+    int64 last_thread_info_at = 22;
 
     /// Помечен ли диалог модификатором "отложенной прочитки"
     bool read_later = 17;

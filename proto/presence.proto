@@ -73,6 +73,7 @@ message UpdateUserLastSeen {
     int64 last_seen_at = 2;
     DeviceType device_type = 3;
     int64 current_server_time = 4;
+    int64 expired_at = 5;
 }
 
 // Update about group online change
