@@ -31,7 +31,7 @@ option java_package = "im.dlg.grpc.services";
 
 /// Структура тела сек-апдейта
 message SeqUpdateBody {
-    reserved 33, 44, 50, 52, 53, 58, 59, 62, 71, 72;
+    reserved 28, 33, 44, 50, 52, 53, 58, 59, 62, 71, 72;
     /// Вид сек-апдейта
     oneof update {
         UpdateUserAvatarChanged update_user_avatar_changed = 1;
@@ -61,7 +61,6 @@ message SeqUpdateBody {
         UpdateMessageReceived update_message_received = 25;
         UpdateMessageRead update_message_read = 26;
         UpdateMessageReadByMe update_message_read_by_me = 27;
-        UpdateMessageDelete update_message_delete = 28;
         UpdateChatClear update_chat_clear = 29;
         UpdateChatDelete update_chat_delete = 30;
         UpdateChatArchive update_chat_archive = 31;
@@ -166,6 +165,7 @@ message RequestGetReferencedEntities {
     repeated UserOutPeer users = 1;
     
     /// Список идфентификаторов сообщений для загрузки
+    /// deprecated
     repeated UUIDValue mids = 2;
     
     /// Список подмножеств членов групповых чатов 
@@ -173,6 +173,9 @@ message RequestGetReferencedEntities {
     
     /// Список внешний приов групп [тут достаточно group_id]
     repeated GroupOutPeer groups = 4;
+
+    /// Список идфентификаторов сообщений для загрузки
+    repeated ReferencedMessages referenced_mids = 5;
 }
 
 /// Ответ на запрос на дополнительных загрузку сущностей

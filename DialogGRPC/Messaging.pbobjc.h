@@ -1854,6 +1854,7 @@ GPB_FINAL @interface SearchPredicate : GPBMessage
 typedef GPB_ENUM(ForwardItem_FieldNumber) {
   ForwardItem_FieldNumber_DeduplicationId = 1,
   ForwardItem_FieldNumber_Mid = 2,
+  ForwardItem_FieldNumber_Peer = 3,
 };
 
 /**
@@ -1868,6 +1869,11 @@ GPB_FINAL @interface ForwardItem : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
+
+/** / Внешний пир чата, из которого пересылается сообщение */
+@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
 
 @end
 
@@ -2187,10 +2193,6 @@ GPB_FINAL @interface RequestArchiveChat : GPBMessage
 
 typedef GPB_ENUM(ResponseSendMessage_FieldNumber) {
   ResponseSendMessage_FieldNumber_MessageId = 1,
-  ResponseSendMessage_FieldNumber_MessageDate = 2,
-  ResponseSendMessage_FieldNumber_PreviousMessageId = 3,
-  ResponseSendMessage_FieldNumber_CreatorUserId = 4,
-  ResponseSendMessage_FieldNumber_Clock = 5,
 };
 
 /**
@@ -2202,20 +2204,6 @@ GPB_FINAL @interface ResponseSendMessage : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *messageId;
 /** Test to see if @c messageId has been set. */
 @property(nonatomic, readwrite) BOOL hasMessageId;
-
-/** / deprecated */
-@property(nonatomic, readwrite) int64_t messageDate;
-
-/** / deprecated */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *previousMessageId;
-/** Test to see if @c previousMessageId has been set. */
-@property(nonatomic, readwrite) BOOL hasPreviousMessageId;
-
-/** / deprecated */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *creatorUserId;
-
-/** / deprecated */
-@property(nonatomic, readwrite) int64_t clock;
 
 @end
 
@@ -2231,13 +2219,12 @@ typedef GPB_ENUM(UpdateMessage_FieldNumber) {
   UpdateMessage_FieldNumber_Reply = 8,
   UpdateMessage_FieldNumber_PreviousMid = 9,
   UpdateMessage_FieldNumber_PrevMessageDate = 10,
-  UpdateMessage_FieldNumber_UnreadCounterClock = 11,
   UpdateMessage_FieldNumber_Counter = 12,
   UpdateMessage_FieldNumber_MyReadDate = 13,
   UpdateMessage_FieldNumber_RandomId = 14,
   UpdateMessage_FieldNumber_ModifiedAt = 15,
-  UpdateMessage_FieldNumber_PrevEditInPeerAt = 16,
   UpdateMessage_FieldNumber_ForwardSource = 17,
+  UpdateMessage_FieldNumber_MentionsCounter = 18,
 };
 
 typedef GPB_ENUM(UpdateMessage_Attach_OneOfCase) {
@@ -2295,13 +2282,15 @@ GPB_FINAL @interface UpdateMessage : GPBMessage
 /** Test to see if @c prevMessageDate has been set. */
 @property(nonatomic, readwrite) BOOL hasPrevMessageDate;
 
-/** / Версия (дата) последнего изменения чата */
-@property(nonatomic, readwrite) int64_t unreadCounterClock;
-
 /** / Количество непрочитанных сообщений в чате */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *counter;
 /** Test to see if @c counter has been set. */
 @property(nonatomic, readwrite) BOOL hasCounter;
+
+/** / Количество непрочитанных сообщений с упоминанием в чате */
+@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *mentionsCounter;
+/** Test to see if @c mentionsCounter has been set. */
+@property(nonatomic, readwrite) BOOL hasMentionsCounter;
 
 /**
  * / Дата последней прочитки, посланной пользователем-получателем уведомления, в этот чат
@@ -2320,11 +2309,6 @@ GPB_FINAL @interface UpdateMessage : GPBMessage
 /** / Дата последней модификации сообщения */
 @property(nonatomic, readwrite) int64_t modifiedAt;
 
-/** / deprecated */
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *prevEditInPeerAt;
-/** Test to see if @c prevEditInPeerAt has been set. */
-@property(nonatomic, readwrite) BOOL hasPrevEditInPeerAt;
-
 @end
 
 /**
@@ -2339,7 +2323,6 @@ typedef GPB_ENUM(UpdateMessageContentChanged_FieldNumber) {
   UpdateMessageContentChanged_FieldNumber_Mid = 2,
   UpdateMessageContentChanged_FieldNumber_Message = 3,
   UpdateMessageContentChanged_FieldNumber_EditedAt = 4,
-  UpdateMessageContentChanged_FieldNumber_PrevEditInPeerAt = 5,
   UpdateMessageContentChanged_FieldNumber_IsSilent = 6,
   UpdateMessageContentChanged_FieldNumber_Attributes = 7,
 };
@@ -2367,9 +2350,6 @@ GPB_FINAL @interface UpdateMessageContentChanged : GPBMessage
 /** / Дата последней модификации измененного сообщения */
 @property(nonatomic, readwrite) int64_t editedAt;
 
-/** / deprecated */
-@property(nonatomic, readwrite) int64_t prevEditInPeerAt;
-
 /** / Сообщение не должно содержать признаков редактирования на клиенте (edited и других приписок) */
 @property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isSilent;
 /** Test to see if @c isSilent has been set. */
@@ -2390,12 +2370,12 @@ typedef GPB_ENUM(UpdateMessageSent_FieldNumber) {
   UpdateMessageSent_FieldNumber_Date = 3,
   UpdateMessageSent_FieldNumber_Mid = 4,
   UpdateMessageSent_FieldNumber_PrevMid = 5,
-  UpdateMessageSent_FieldNumber_UnreadCounterClock = 6,
   UpdateMessageSent_FieldNumber_UnreadCounter = 7,
   UpdateMessageSent_FieldNumber_MyReadDate = 8,
   UpdateMessageSent_FieldNumber_Reply = 10,
   UpdateMessageSent_FieldNumber_ForwardSource = 11,
   UpdateMessageSent_FieldNumber_Attributes = 12,
+  UpdateMessageSent_FieldNumber_UnreadMentionsCounter = 13,
 };
 
 typedef GPB_ENUM(UpdateMessageSent_Attach_OneOfCase) {
@@ -2430,13 +2410,15 @@ GPB_FINAL @interface UpdateMessageSent : GPBMessage
 /** Test to see if @c prevMid has been set. */
 @property(nonatomic, readwrite) BOOL hasPrevMid;
 
-/** / Версия (дата) последнего изменения чата */
-@property(nonatomic, readwrite) int64_t unreadCounterClock;
-
 /** / Число непрочитанных сообщений в чате */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *unreadCounter;
 /** Test to see if @c unreadCounter has been set. */
 @property(nonatomic, readwrite) BOOL hasUnreadCounter;
+
+/** / Число непрочитанных сообщений с упоминанием в чате */
+@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *unreadMentionsCounter;
+/** Test to see if @c unreadMentionsCounter has been set. */
+@property(nonatomic, readwrite) BOOL hasUnreadMentionsCounter;
 
 /** / Дата последней присланной текущим пользователем прочитки сообщений в ленте чата */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *myReadDate;
@@ -2467,8 +2449,7 @@ void UpdateMessageSent_ClearAttachOneOfCase(UpdateMessageSent *message);
 
 typedef GPB_ENUM(UpdateMessageReceived_FieldNumber) {
   UpdateMessageReceived_FieldNumber_Peer = 1,
-  UpdateMessageReceived_FieldNumber_StartDate = 2,
-  UpdateMessageReceived_FieldNumber_ReceivedDate = 3,
+  UpdateMessageReceived_FieldNumber_Date = 2,
 };
 
 /**
@@ -2481,14 +2462,8 @@ GPB_FINAL @interface UpdateMessageReceived : GPBMessage
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/**
- * / Дата в миллисекундах от unix epoch, до которой все сообщения считаются полученными
- * / [переименовать]
- **/
-@property(nonatomic, readwrite) int64_t startDate;
-
-/** / deprecated */
-@property(nonatomic, readwrite) int64_t receivedDate;
+/** / Дата в миллисекундах от unix epoch, до которой все сообщения считаются полученными */
+@property(nonatomic, readwrite) int64_t date;
 
 @end
 
@@ -2496,8 +2471,7 @@ GPB_FINAL @interface UpdateMessageReceived : GPBMessage
 
 typedef GPB_ENUM(UpdateMessageRead_FieldNumber) {
   UpdateMessageRead_FieldNumber_Peer = 1,
-  UpdateMessageRead_FieldNumber_StartDate = 2,
-  UpdateMessageRead_FieldNumber_ReadDate = 3,
+  UpdateMessageRead_FieldNumber_Date = 2,
 };
 
 /**
@@ -2510,14 +2484,8 @@ GPB_FINAL @interface UpdateMessageRead : GPBMessage
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/**
- * / Дата в миллисекундах от unix epoch, до которой все сообщения считаются прочитанными
- * / [переименовать]
- **/
-@property(nonatomic, readwrite) int64_t startDate;
-
-/** / deprecated */
-@property(nonatomic, readwrite) int64_t readDate;
+/** / Дата в миллисекундах от unix epoch, до которой все сообщения считаются прочитанными */
+@property(nonatomic, readwrite) int64_t date;
 
 @end
 
@@ -2525,9 +2493,9 @@ GPB_FINAL @interface UpdateMessageRead : GPBMessage
 
 typedef GPB_ENUM(UpdateMessageReadByMe_FieldNumber) {
   UpdateMessageReadByMe_FieldNumber_Peer = 1,
-  UpdateMessageReadByMe_FieldNumber_StartDate = 2,
-  UpdateMessageReadByMe_FieldNumber_UnreadCounterClock = 3,
+  UpdateMessageReadByMe_FieldNumber_Date = 2,
   UpdateMessageReadByMe_FieldNumber_UnreadCounter = 4,
+  UpdateMessageReadByMe_FieldNumber_UnreadMentionsCounter = 5,
 };
 
 /**
@@ -2540,50 +2508,18 @@ GPB_FINAL @interface UpdateMessageReadByMe : GPBMessage
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/**
- * / Дата в миллисекундах от unix epoch, до которой все сообщения считаются прочитанными текущим пользователем
- * / [переименовать]
- **/
-@property(nonatomic, readwrite) int64_t startDate;
-
-/** / Дата последнего изменения чата */
-@property(nonatomic, readwrite) int64_t unreadCounterClock;
+/** / Дата в миллисекундах от unix epoch, до которой все сообщения считаются прочитанными текущим пользователем */
+@property(nonatomic, readwrite) int64_t date;
 
 /** / Количество непрочитанных сообщений */
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *unreadCounter;
 /** Test to see if @c unreadCounter has been set. */
 @property(nonatomic, readwrite) BOOL hasUnreadCounter;
 
-@end
-
-#pragma mark - UpdateMessageDelete
-
-typedef GPB_ENUM(UpdateMessageDelete_FieldNumber) {
-  UpdateMessageDelete_FieldNumber_Peer = 1,
-  UpdateMessageDelete_FieldNumber_MidsArray = 2,
-  UpdateMessageDelete_FieldNumber_Counter = 3,
-  UpdateMessageDelete_FieldNumber_ActionDate = 4,
-};
-
-/**
- * / Структура уведомления об удаленном сообщении
- * / deprecated
- **/
-GPB_FINAL @interface UpdateMessageDelete : GPBMessage
-
-@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UUIDValue*> *midsArray;
-/** The number of items in @c midsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger midsArray_Count;
-
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *counter;
-/** Test to see if @c counter has been set. */
-@property(nonatomic, readwrite) BOOL hasCounter;
-
-@property(nonatomic, readwrite) int64_t actionDate;
+/** / Количество непрочитанных меншинов */
+@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *unreadMentionsCounter;
+/** Test to see if @c unreadMentionsCounter has been set. */
+@property(nonatomic, readwrite) BOOL hasUnreadMentionsCounter;
 
 @end
 
@@ -2591,7 +2527,7 @@ GPB_FINAL @interface UpdateMessageDelete : GPBMessage
 
 typedef GPB_ENUM(UpdateChatClear_FieldNumber) {
   UpdateChatClear_FieldNumber_Peer = 1,
-  UpdateChatClear_FieldNumber_ActionDate = 2,
+  UpdateChatClear_FieldNumber_Date = 2,
 };
 
 /**
@@ -2605,7 +2541,7 @@ GPB_FINAL @interface UpdateChatClear : GPBMessage
 @property(nonatomic, readwrite) BOOL hasPeer;
 
 /** / Дата очистки в миллисекундах от unix epoch */
-@property(nonatomic, readwrite) int64_t actionDate;
+@property(nonatomic, readwrite) int64_t date;
 
 @end
 
@@ -2613,7 +2549,7 @@ GPB_FINAL @interface UpdateChatClear : GPBMessage
 
 typedef GPB_ENUM(UpdateChatDelete_FieldNumber) {
   UpdateChatDelete_FieldNumber_Peer = 1,
-  UpdateChatDelete_FieldNumber_ActionDate = 2,
+  UpdateChatDelete_FieldNumber_Date = 2,
 };
 
 /**
@@ -2627,7 +2563,7 @@ GPB_FINAL @interface UpdateChatDelete : GPBMessage
 @property(nonatomic, readwrite) BOOL hasPeer;
 
 /** Дата удаления в миллисекундах от unix epoch */
-@property(nonatomic, readwrite) int64_t actionDate;
+@property(nonatomic, readwrite) int64_t date;
 
 @end
 
@@ -3028,6 +2964,7 @@ GPB_FINAL @interface UpdateReadDialogLaterError : GPBMessage
 
 typedef GPB_ENUM(ReferencedMessages_FieldNumber) {
   ReferencedMessages_FieldNumber_MidsArray = 1,
+  ReferencedMessages_FieldNumber_Peer = 2,
 };
 
 /**
@@ -3035,9 +2972,15 @@ typedef GPB_ENUM(ReferencedMessages_FieldNumber) {
  **/
 GPB_FINAL @interface ReferencedMessages : GPBMessage
 
+/** / Список идентификаторов упоминаемых сообщений */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UUIDValue*> *midsArray;
 /** The number of items in @c midsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger midsArray_Count;
+
+/** / Внешний пир чата, в котором находятся упоминаеммые сообщения */
+@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
 
 @end
 
@@ -3218,7 +3161,8 @@ typedef GPB_ENUM(ResponseLoadHistory_FieldNumber) {
   ResponseLoadHistory_FieldNumber_HistoryArray = 1,
   ResponseLoadHistory_FieldNumber_UserPeersArray = 2,
   ResponseLoadHistory_FieldNumber_LastConversationMessageDate = 6,
-  ResponseLoadHistory_FieldNumber_UnreadCount = 8,
+  ResponseLoadHistory_FieldNumber_UnreadCounter = 8,
+  ResponseLoadHistory_FieldNumber_UnreadMentionsCounter = 9,
 };
 
 /**
@@ -3236,11 +3180,11 @@ GPB_FINAL @interface ResponseLoadHistory : GPBMessage
 /** The number of items in @c userPeersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userPeersArray_Count;
 
-/**
- * / Количество непрочитанных сообщений в ленте чата
- * / [нужно ли это здесь?]
- **/
-@property(nonatomic, readwrite) int32_t unreadCount;
+/** / Количество непрочитанных сообщений в ленте чата */
+@property(nonatomic, readwrite) int32_t unreadCounter;
+
+/** / Количество непрочитанных меншинов в ленте чата */
+@property(nonatomic, readwrite) int32_t unreadMentionsCounter;
 
 /**
  * / Дата отправки последнего сообщения в ленте чата
@@ -3256,7 +3200,7 @@ GPB_FINAL @interface ResponseLoadHistory : GPBMessage
 
 typedef GPB_ENUM(Dialog_FieldNumber) {
   Dialog_FieldNumber_Peer = 1,
-  Dialog_FieldNumber_UnreadCount = 2,
+  Dialog_FieldNumber_UnreadCounter = 2,
   Dialog_FieldNumber_ModifiedAt = 7,
   Dialog_FieldNumber_PinnedMessages = 12,
   Dialog_FieldNumber_HistoryMessage = 13,
@@ -3268,6 +3212,9 @@ typedef GPB_ENUM(Dialog_FieldNumber) {
   Dialog_FieldNumber_IsFavourite = 20,
   Dialog_FieldNumber_IsArchived = 21,
   Dialog_FieldNumber_LastThreadInfoAt = 22,
+  Dialog_FieldNumber_UnreadMentionsCounter = 23,
+  Dialog_FieldNumber_LastOwnRead = 24,
+  Dialog_FieldNumber_LastOwnReceive = 25,
 };
 
 /**
@@ -3281,7 +3228,10 @@ GPB_FINAL @interface Dialog : GPBMessage
 @property(nonatomic, readwrite) BOOL hasPeer;
 
 /** / Количство непрочитанных сообщений в чате */
-@property(nonatomic, readwrite) int32_t unreadCount;
+@property(nonatomic, readwrite) int32_t unreadCounter;
+
+/** / Количство непрочитанных сообщений с упоминаниями текущего пользователя в чате */
+@property(nonatomic, readwrite) int32_t unreadMentionsCounter;
 
 /** / Дата последнего изменения в чате */
 @property(nonatomic, readwrite) int64_t modifiedAt;
@@ -3331,6 +3281,18 @@ GPB_FINAL @interface Dialog : GPBMessage
 
 /** / Флаг архивированности этого чата */
 @property(nonatomic, readwrite) BOOL isArchived;
+
+/**
+ * / Дата последней прочитки текущим пользователем в этом чате
+ * / (в миллисекундах от unix epoch)
+ **/
+@property(nonatomic, readwrite) int64_t lastOwnRead;
+
+/**
+ * / Дата последнего полученного сообщения текущим пользователем в этом чате
+ * / (в миллисекундах от unix epoch)
+ **/
+@property(nonatomic, readwrite) int64_t lastOwnReceive;
 
 @end
 

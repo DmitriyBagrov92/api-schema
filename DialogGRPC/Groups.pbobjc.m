@@ -1391,6 +1391,7 @@ typedef struct UpdateGroupMembersCountChanged__storage_ {
 @dynamic isPublic;
 @dynamic hasSource, source;
 @dynamic hasDueDate, dueDate;
+@dynamic hasAbout, about;
 
 typedef struct RequestCreateGroup__storage_ {
   uint32_t _has_storage_[1];
@@ -1401,6 +1402,7 @@ typedef struct RequestCreateGroup__storage_ {
   GPBEnumArray *basePermissionsArray;
   ConversationLink *source;
   GPBTimestamp *dueDate;
+  GPBStringValue *about;
 } RequestCreateGroup__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1478,6 +1480,15 @@ typedef struct RequestCreateGroup__storage_ {
         .number = RequestCreateGroup_FieldNumber_DueDate,
         .hasIndex = 6,
         .offset = (uint32_t)offsetof(RequestCreateGroup__storage_, dueDate),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "about",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
+        .number = RequestCreateGroup_FieldNumber_About,
+        .hasIndex = 7,
+        .offset = (uint32_t)offsetof(RequestCreateGroup__storage_, about),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

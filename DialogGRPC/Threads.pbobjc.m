@@ -79,10 +79,12 @@ static GPBFileDescriptor *ThreadsRoot_FileDescriptor(void) {
 @dynamic latestActiveUserIdsArray, latestActiveUserIdsArray_Count;
 @dynamic lastActivityDate;
 @dynamic hasIsFollowing, isFollowing;
+@dynamic membersCount;
 
 typedef struct ThreadInfo__storage_ {
   uint32_t _has_storage_[1];
   uint32_t messagesCount;
+  uint32_t membersCount;
   NSMutableArray *latestActiveUserIdsArray;
   GPBBoolValue *isFollowing;
   uint64_t lastActivityDate;
@@ -129,6 +131,15 @@ typedef struct ThreadInfo__storage_ {
         .offset = (uint32_t)offsetof(ThreadInfo__storage_, isFollowing),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "membersCount",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ThreadInfo_FieldNumber_MembersCount,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(ThreadInfo__storage_, membersCount),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeUInt32,
       },
     };
     GPBDescriptor *localDescriptor =

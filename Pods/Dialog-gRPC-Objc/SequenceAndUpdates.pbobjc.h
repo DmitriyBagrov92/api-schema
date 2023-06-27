@@ -38,6 +38,7 @@ CF_EXTERN_C_BEGIN
 @class HistoryMessage;
 @class Peer;
 @class PeersList;
+@class ReferencedMessages;
 @class SeqUpdate;
 @class SeqUpdateBody;
 @class UUIDValue;
@@ -75,7 +76,6 @@ CF_EXTERN_C_BEGIN
 @class UpdateInteractiveMediaEvent;
 @class UpdateMessage;
 @class UpdateMessageContentChanged;
-@class UpdateMessageDelete;
 @class UpdateMessageReactions;
 @class UpdateMessageRead;
 @class UpdateMessageReadByMe;
@@ -176,7 +176,6 @@ typedef GPB_ENUM(SeqUpdateBody_FieldNumber) {
   SeqUpdateBody_FieldNumber_UpdateMessageReceived = 25,
   SeqUpdateBody_FieldNumber_UpdateMessageRead = 26,
   SeqUpdateBody_FieldNumber_UpdateMessageReadByMe = 27,
-  SeqUpdateBody_FieldNumber_UpdateMessageDelete = 28,
   SeqUpdateBody_FieldNumber_UpdateChatClear = 29,
   SeqUpdateBody_FieldNumber_UpdateChatDelete = 30,
   SeqUpdateBody_FieldNumber_UpdateChatArchive = 31,
@@ -248,7 +247,6 @@ typedef GPB_ENUM(SeqUpdateBody_Update_OneOfCase) {
   SeqUpdateBody_Update_OneOfCase_UpdateMessageReceived = 25,
   SeqUpdateBody_Update_OneOfCase_UpdateMessageRead = 26,
   SeqUpdateBody_Update_OneOfCase_UpdateMessageReadByMe = 27,
-  SeqUpdateBody_Update_OneOfCase_UpdateMessageDelete = 28,
   SeqUpdateBody_Update_OneOfCase_UpdateChatClear = 29,
   SeqUpdateBody_Update_OneOfCase_UpdateChatDelete = 30,
   SeqUpdateBody_Update_OneOfCase_UpdateChatArchive = 31,
@@ -352,8 +350,6 @@ GPB_FINAL @interface SeqUpdateBody : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UpdateMessageRead *updateMessageRead;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateMessageReadByMe *updateMessageReadByMe;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateMessageDelete *updateMessageDelete;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateChatClear *updateChatClear;
 
@@ -576,6 +572,7 @@ typedef GPB_ENUM(RequestGetReferencedEntities_FieldNumber) {
   RequestGetReferencedEntities_FieldNumber_MidsArray = 2,
   RequestGetReferencedEntities_FieldNumber_GroupMembersArray = 3,
   RequestGetReferencedEntities_FieldNumber_GroupsArray = 4,
+  RequestGetReferencedEntities_FieldNumber_ReferencedMidsArray = 5,
 };
 
 /**
@@ -588,7 +585,10 @@ GPB_FINAL @interface RequestGetReferencedEntities : GPBMessage
 /** The number of items in @c usersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger usersArray_Count;
 
-/** / Список идфентификаторов сообщений для загрузки */
+/**
+ * / Список идфентификаторов сообщений для загрузки
+ * / deprecated
+ **/
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UUIDValue*> *midsArray;
 /** The number of items in @c midsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger midsArray_Count;
@@ -602,6 +602,11 @@ GPB_FINAL @interface RequestGetReferencedEntities : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupsArray;
 /** The number of items in @c groupsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger groupsArray_Count;
+
+/** / Список идфентификаторов сообщений для загрузки */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<ReferencedMessages*> *referencedMidsArray;
+/** The number of items in @c referencedMidsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger referencedMidsArray_Count;
 
 @end
 

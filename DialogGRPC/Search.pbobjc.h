@@ -38,6 +38,9 @@ CF_EXTERN_C_BEGIN
 @class GroupData;
 @class GroupOutPeer;
 @class GroupSearchResult;
+@class GroupSearchResultItem;
+@class HighlightResult;
+@class HighlightToken;
 @class MessageContent;
 @class MessageSearchItem;
 @class MessageSearchResult;
@@ -67,6 +70,7 @@ CF_EXTERN_C_BEGIN
 @class UserMatch;
 @class UserOutPeer;
 @class UserSearchResult;
+@class UserSearchResultItem;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -148,6 +152,29 @@ GPBEnumDescriptor *SearchDirection_EnumDescriptor(void);
  * the time this source was generated.
  **/
 BOOL SearchDirection_IsValidValue(int32_t value);
+
+#pragma mark - Enum SearchEntityType
+
+typedef GPB_ENUM(SearchEntityType) {
+  /**
+   * Value used if any message's field encounters a value that is not defined
+   * by this enum. The message will also have C functions to get/set the rawValue
+   * of the field.
+   **/
+  SearchEntityType_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  SearchEntityType_SearchEntityUnknown = 0,
+  SearchEntityType_SearchEntityMessage = 1,
+  SearchEntityType_SearchEntityGroup = 2,
+  SearchEntityType_SearchEntityProfile = 3,
+};
+
+GPBEnumDescriptor *SearchEntityType_EnumDescriptor(void);
+
+/**
+ * Checks to see if the given value is defined by the enum or was not known at
+ * the time this source was generated.
+ **/
+BOOL SearchEntityType_IsValidValue(int32_t value);
 
 #pragma mark - SearchRoot
 
@@ -292,12 +319,6 @@ typedef GPB_ENUM(SimpleGroupSearchCondition_FieldNumber) {
 GPB_FINAL @interface SimpleGroupSearchCondition : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *queryString;
-
-@end
-
-#pragma mark - criterion
-
-GPB_FINAL @interface criterion : GPBMessage
 
 @end
 
@@ -928,6 +949,120 @@ GPB_FINAL @interface ResponseMessageSearch : GPBMessage
 
 @end
 
+#pragma mark - ResponseSimpleSearch
+
+typedef GPB_ENUM(ResponseSimpleSearch_FieldNumber) {
+  ResponseSimpleSearch_FieldNumber_LoadMoreState = 2,
+  ResponseSimpleSearch_FieldNumber_UsersArray = 3,
+  ResponseSimpleSearch_FieldNumber_GroupsArray = 4,
+  ResponseSimpleSearch_FieldNumber_TotalCount = 5,
+};
+
+/**
+ * Search Result with related user and group entities
+ **/
+GPB_FINAL @interface ResponseSimpleSearch : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) GPBBytesValue *loadMoreState;
+/** Test to see if @c loadMoreState has been set. */
+@property(nonatomic, readwrite) BOOL hasLoadMoreState;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserSearchResultItem*> *usersArray;
+/** The number of items in @c usersArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger usersArray_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupSearchResultItem*> *groupsArray;
+/** The number of items in @c groupsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger groupsArray_Count;
+
+@property(nonatomic, readwrite) int64_t totalCount;
+
+@end
+
+#pragma mark - UserSearchResultItem
+
+typedef GPB_ENUM(UserSearchResultItem_FieldNumber) {
+  UserSearchResultItem_FieldNumber_Peer = 1,
+  UserSearchResultItem_FieldNumber_Name = 2,
+  UserSearchResultItem_FieldNumber_AvatarURL = 3,
+  UserSearchResultItem_FieldNumber_Highlights = 4,
+};
+
+GPB_FINAL @interface UserSearchResultItem : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) UserOutPeer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
+
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *avatarURL;
+/** Test to see if @c avatarURL has been set. */
+@property(nonatomic, readwrite) BOOL hasAvatarURL;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, HighlightResult*> *highlights;
+/** The number of items in @c highlights without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger highlights_Count;
+
+@end
+
+#pragma mark - GroupSearchResultItem
+
+typedef GPB_ENUM(GroupSearchResultItem_FieldNumber) {
+  GroupSearchResultItem_FieldNumber_Id_p = 1,
+  GroupSearchResultItem_FieldNumber_Title = 2,
+  GroupSearchResultItem_FieldNumber_AvatarURL = 3,
+  GroupSearchResultItem_FieldNumber_IsMember = 4,
+  GroupSearchResultItem_FieldNumber_MemberCount = 5,
+  GroupSearchResultItem_FieldNumber_Highlights = 6,
+};
+
+GPB_FINAL @interface GroupSearchResultItem : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *title;
+
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *avatarURL;
+/** Test to see if @c avatarURL has been set. */
+@property(nonatomic, readwrite) BOOL hasAvatarURL;
+
+@property(nonatomic, readwrite) BOOL isMember;
+
+@property(nonatomic, readwrite) int32_t memberCount;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, HighlightResult*> *highlights;
+/** The number of items in @c highlights without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger highlights_Count;
+
+@end
+
+#pragma mark - HighlightToken
+
+typedef GPB_ENUM(HighlightToken_FieldNumber) {
+  HighlightToken_FieldNumber_Value = 1,
+};
+
+GPB_FINAL @interface HighlightToken : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *value;
+
+@end
+
+#pragma mark - HighlightResult
+
+typedef GPB_ENUM(HighlightResult_FieldNumber) {
+  HighlightResult_FieldNumber_TokensArray = 1,
+};
+
+GPB_FINAL @interface HighlightResult : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<HighlightToken*> *tokensArray;
+/** The number of items in @c tokensArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger tokensArray_Count;
+
+@end
+
 #pragma mark - RequestMessageSearch
 
 typedef GPB_ENUM(RequestMessageSearch_FieldNumber) {
@@ -965,6 +1100,7 @@ GPB_FINAL @interface RequestMessageSearchMore : GPBMessage
 
 typedef GPB_ENUM(RequestSimpleSearch_FieldNumber) {
   RequestSimpleSearch_FieldNumber_CriteriaArray = 1,
+  RequestSimpleSearch_FieldNumber_Limit = 2,
 };
 
 GPB_FINAL @interface RequestSimpleSearch : GPBMessage
@@ -973,18 +1109,27 @@ GPB_FINAL @interface RequestSimpleSearch : GPBMessage
 /** The number of items in @c criteriaArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger criteriaArray_Count;
 
+@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *limit;
+/** Test to see if @c limit has been set. */
+@property(nonatomic, readwrite) BOOL hasLimit;
+
 @end
 
 #pragma mark - RequestSimpleSearchMore
 
 typedef GPB_ENUM(RequestSimpleSearchMore_FieldNumber) {
   RequestSimpleSearchMore_FieldNumber_LoadMoreState = 1,
+  RequestSimpleSearchMore_FieldNumber_Limit = 2,
 };
 
 GPB_FINAL @interface RequestSimpleSearchMore : GPBMessage
 
 /** / Cursor */
 @property(nonatomic, readwrite, copy, null_resettable) NSData *loadMoreState;
+
+@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *limit;
+/** Test to see if @c limit has been set. */
+@property(nonatomic, readwrite) BOOL hasLimit;
 
 @end
 

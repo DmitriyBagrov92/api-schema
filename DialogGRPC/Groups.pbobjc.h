@@ -661,6 +661,7 @@ typedef GPB_ENUM(RequestCreateGroup_FieldNumber) {
   RequestCreateGroup_FieldNumber_IsPublic = 8,
   RequestCreateGroup_FieldNumber_Source = 9,
   RequestCreateGroup_FieldNumber_DueDate = 10,
+  RequestCreateGroup_FieldNumber_About = 11,
 };
 
 /**
@@ -700,6 +701,11 @@ GPB_FINAL @interface RequestCreateGroup : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) GPBTimestamp *dueDate;
 /** Test to see if @c dueDate has been set. */
 @property(nonatomic, readwrite) BOOL hasDueDate;
+
+/** / Описание группы */
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *about;
+/** Test to see if @c about has been set. */
+@property(nonatomic, readwrite) BOOL hasAbout;
 
 @end
 

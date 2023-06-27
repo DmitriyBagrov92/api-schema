@@ -47,6 +47,9 @@ GPBObjCClassDeclaration(GPBTimestamp);
 GPBObjCClassDeclaration(GroupData);
 GPBObjCClassDeclaration(GroupOutPeer);
 GPBObjCClassDeclaration(GroupSearchResult);
+GPBObjCClassDeclaration(GroupSearchResultItem);
+GPBObjCClassDeclaration(HighlightResult);
+GPBObjCClassDeclaration(HighlightToken);
 GPBObjCClassDeclaration(MessageContent);
 GPBObjCClassDeclaration(MessageSearchItem);
 GPBObjCClassDeclaration(MessageSearchResult);
@@ -77,6 +80,7 @@ GPBObjCClassDeclaration(UserData);
 GPBObjCClassDeclaration(UserMatch);
 GPBObjCClassDeclaration(UserOutPeer);
 GPBObjCClassDeclaration(UserSearchResult);
+GPBObjCClassDeclaration(UserSearchResultItem);
 
 #pragma mark - SearchRoot
 
@@ -235,6 +239,46 @@ BOOL SearchDirection_IsValidValue(int32_t value__) {
     case SearchDirection_SearchDirectionUnknown:
     case SearchDirection_SearchDirectionForward:
     case SearchDirection_SearchDirectionBackward:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
+#pragma mark - Enum SearchEntityType
+
+GPBEnumDescriptor *SearchEntityType_EnumDescriptor(void) {
+  static _Atomic(GPBEnumDescriptor*) descriptor = nil;
+  if (!descriptor) {
+    static const char *valueNames =
+        "SearchEntityUnknown\000SearchEntityMessage\000"
+        "SearchEntityGroup\000SearchEntityProfile\000";
+    static const int32_t values[] = {
+        SearchEntityType_SearchEntityUnknown,
+        SearchEntityType_SearchEntityMessage,
+        SearchEntityType_SearchEntityGroup,
+        SearchEntityType_SearchEntityProfile,
+    };
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(SearchEntityType)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:SearchEntityType_IsValidValue];
+    GPBEnumDescriptor *expected = nil;
+    if (!atomic_compare_exchange_strong(&descriptor, &expected, worker)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL SearchEntityType_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case SearchEntityType_SearchEntityUnknown:
+    case SearchEntityType_SearchEntityMessage:
+    case SearchEntityType_SearchEntityGroup:
+    case SearchEntityType_SearchEntityProfile:
       return YES;
     default:
       return NO;
@@ -557,38 +601,6 @@ typedef struct SimpleGroupSearchCondition__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(SimpleGroupSearchCondition__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - criterion
-
-@implementation criterion
-
-
-typedef struct criterion__storage_ {
-  uint32_t _has_storage_[1];
-} criterion__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[criterion class]
-                                     rootClass:[SearchRoot class]
-                                          file:SearchRoot_FileDescriptor()
-                                        fields:NULL
-                                    fieldCount:0
-                                   storageSize:sizeof(criterion__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -2245,6 +2257,361 @@ typedef struct ResponseMessageSearch__storage_ {
 
 @end
 
+#pragma mark - ResponseSimpleSearch
+
+@implementation ResponseSimpleSearch
+
+@dynamic hasLoadMoreState, loadMoreState;
+@dynamic usersArray, usersArray_Count;
+@dynamic groupsArray, groupsArray_Count;
+@dynamic totalCount;
+
+typedef struct ResponseSimpleSearch__storage_ {
+  uint32_t _has_storage_[1];
+  GPBBytesValue *loadMoreState;
+  NSMutableArray *usersArray;
+  NSMutableArray *groupsArray;
+  int64_t totalCount;
+} ResponseSimpleSearch__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "loadMoreState",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBBytesValue),
+        .number = ResponseSimpleSearch_FieldNumber_LoadMoreState,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(ResponseSimpleSearch__storage_, loadMoreState),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "usersArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(UserSearchResultItem),
+        .number = ResponseSimpleSearch_FieldNumber_UsersArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(ResponseSimpleSearch__storage_, usersArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "groupsArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(GroupSearchResultItem),
+        .number = ResponseSimpleSearch_FieldNumber_GroupsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(ResponseSimpleSearch__storage_, groupsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "totalCount",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ResponseSimpleSearch_FieldNumber_TotalCount,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(ResponseSimpleSearch__storage_, totalCount),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt64,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ResponseSimpleSearch class]
+                                     rootClass:[SearchRoot class]
+                                          file:SearchRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ResponseSimpleSearch__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - UserSearchResultItem
+
+@implementation UserSearchResultItem
+
+@dynamic hasPeer, peer;
+@dynamic name;
+@dynamic hasAvatarURL, avatarURL;
+@dynamic highlights, highlights_Count;
+
+typedef struct UserSearchResultItem__storage_ {
+  uint32_t _has_storage_[1];
+  UserOutPeer *peer;
+  NSString *name;
+  GPBStringValue *avatarURL;
+  NSMutableDictionary *highlights;
+} UserSearchResultItem__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "peer",
+        .dataTypeSpecific.clazz = GPBObjCClass(UserOutPeer),
+        .number = UserSearchResultItem_FieldNumber_Peer,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(UserSearchResultItem__storage_, peer),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "name",
+        .dataTypeSpecific.clazz = Nil,
+        .number = UserSearchResultItem_FieldNumber_Name,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(UserSearchResultItem__storage_, name),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "avatarURL",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
+        .number = UserSearchResultItem_FieldNumber_AvatarURL,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(UserSearchResultItem__storage_, avatarURL),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "highlights",
+        .dataTypeSpecific.clazz = GPBObjCClass(HighlightResult),
+        .number = UserSearchResultItem_FieldNumber_Highlights,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(UserSearchResultItem__storage_, highlights),
+        .flags = GPBFieldMapKeyString,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[UserSearchResultItem class]
+                                     rootClass:[SearchRoot class]
+                                          file:SearchRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(UserSearchResultItem__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\003\006\241!!\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - GroupSearchResultItem
+
+@implementation GroupSearchResultItem
+
+@dynamic id_p;
+@dynamic title;
+@dynamic hasAvatarURL, avatarURL;
+@dynamic isMember;
+@dynamic memberCount;
+@dynamic highlights, highlights_Count;
+
+typedef struct GroupSearchResultItem__storage_ {
+  uint32_t _has_storage_[1];
+  int32_t memberCount;
+  NSString *id_p;
+  NSString *title;
+  GPBStringValue *avatarURL;
+  NSMutableDictionary *highlights;
+} GroupSearchResultItem__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "id_p",
+        .dataTypeSpecific.clazz = Nil,
+        .number = GroupSearchResultItem_FieldNumber_Id_p,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GroupSearchResultItem__storage_, id_p),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "title",
+        .dataTypeSpecific.clazz = Nil,
+        .number = GroupSearchResultItem_FieldNumber_Title,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(GroupSearchResultItem__storage_, title),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "avatarURL",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
+        .number = GroupSearchResultItem_FieldNumber_AvatarURL,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(GroupSearchResultItem__storage_, avatarURL),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom),
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "isMember",
+        .dataTypeSpecific.clazz = Nil,
+        .number = GroupSearchResultItem_FieldNumber_IsMember,
+        .hasIndex = 3,
+        .offset = 4,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "memberCount",
+        .dataTypeSpecific.clazz = Nil,
+        .number = GroupSearchResultItem_FieldNumber_MemberCount,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(GroupSearchResultItem__storage_, memberCount),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "highlights",
+        .dataTypeSpecific.clazz = GPBObjCClass(HighlightResult),
+        .number = GroupSearchResultItem_FieldNumber_Highlights,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(GroupSearchResultItem__storage_, highlights),
+        .flags = GPBFieldMapKeyString,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GroupSearchResultItem class]
+                                     rootClass:[SearchRoot class]
+                                          file:SearchRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GroupSearchResultItem__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\001\003\006\241!!\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - HighlightToken
+
+@implementation HighlightToken
+
+@dynamic value;
+
+typedef struct HighlightToken__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *value;
+} HighlightToken__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "value",
+        .dataTypeSpecific.clazz = Nil,
+        .number = HighlightToken_FieldNumber_Value,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(HighlightToken__storage_, value),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[HighlightToken class]
+                                     rootClass:[SearchRoot class]
+                                          file:SearchRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(HighlightToken__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - HighlightResult
+
+@implementation HighlightResult
+
+@dynamic tokensArray, tokensArray_Count;
+
+typedef struct HighlightResult__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *tokensArray;
+} HighlightResult__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "tokensArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(HighlightToken),
+        .number = HighlightResult_FieldNumber_TokensArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(HighlightResult__storage_, tokensArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[HighlightResult class]
+                                     rootClass:[SearchRoot class]
+                                          file:SearchRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(HighlightResult__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - RequestMessageSearch
 
 @implementation RequestMessageSearch
@@ -2340,10 +2707,12 @@ typedef struct RequestMessageSearchMore__storage_ {
 @implementation RequestSimpleSearch
 
 @dynamic criteriaArray, criteriaArray_Count;
+@dynamic hasLimit, limit;
 
 typedef struct RequestSimpleSearch__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *criteriaArray;
+  GPBInt32Value *limit;
 } RequestSimpleSearch__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2359,6 +2728,15 @@ typedef struct RequestSimpleSearch__storage_ {
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(RequestSimpleSearch__storage_, criteriaArray),
         .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "limit",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBInt32Value),
+        .number = RequestSimpleSearch_FieldNumber_Limit,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(RequestSimpleSearch__storage_, limit),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
@@ -2385,10 +2763,12 @@ typedef struct RequestSimpleSearch__storage_ {
 @implementation RequestSimpleSearchMore
 
 @dynamic loadMoreState;
+@dynamic hasLimit, limit;
 
 typedef struct RequestSimpleSearchMore__storage_ {
   uint32_t _has_storage_[1];
   NSData *loadMoreState;
+  GPBInt32Value *limit;
 } RequestSimpleSearchMore__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2405,6 +2785,15 @@ typedef struct RequestSimpleSearchMore__storage_ {
         .offset = (uint32_t)offsetof(RequestSimpleSearchMore__storage_, loadMoreState),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBytes,
+      },
+      {
+        .name = "limit",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBInt32Value),
+        .number = RequestSimpleSearchMore_FieldNumber_Limit,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(RequestSimpleSearchMore__storage_, limit),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =

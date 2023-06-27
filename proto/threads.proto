@@ -19,6 +19,8 @@ message ThreadInfo {
     // Если поле пустое, значит информации о фолловинге треда в данный момент нет, и её надо получить другими способами (загрузкой тредов GetThreadInfos, загрузкой истории и тп)
     // Пустым в данный момент будет приходить при получении вик-апдейта UpdateThreadInfos
     google.protobuf.BoolValue is_following = 5;
+    // Общее количество активных участников треда за всё время его существования
+    uint32 members_count = 6;
 }
 
 message RequestGetThreadInfos {

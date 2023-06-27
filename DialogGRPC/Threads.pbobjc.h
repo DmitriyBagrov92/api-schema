@@ -57,6 +57,7 @@ typedef GPB_ENUM(ThreadInfo_FieldNumber) {
   ThreadInfo_FieldNumber_LatestActiveUserIdsArray = 2,
   ThreadInfo_FieldNumber_LastActivityDate = 3,
   ThreadInfo_FieldNumber_IsFollowing = 5,
+  ThreadInfo_FieldNumber_MembersCount = 6,
 };
 
 GPB_FINAL @interface ThreadInfo : GPBMessage
@@ -76,6 +77,9 @@ GPB_FINAL @interface ThreadInfo : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isFollowing;
 /** Test to see if @c isFollowing has been set. */
 @property(nonatomic, readwrite) BOOL hasIsFollowing;
+
+/** Общее количество активных участников треда за всё время его существования */
+@property(nonatomic, readwrite) uint32_t membersCount;
 
 @end
 

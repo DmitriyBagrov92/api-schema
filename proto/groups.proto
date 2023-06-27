@@ -285,6 +285,9 @@ message RequestCreateGroup {
 
     /// Ожидаемое время закрытия группового чата
     google.protobuf.Timestamp due_date = 10;
+
+    /// Описание группы
+    google.protobuf.StringValue about = 11;
 }
 
 /// Ответ на запрос на создание группового чата

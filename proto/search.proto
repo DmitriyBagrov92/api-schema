@@ -40,6 +40,13 @@ enum SearchDirection {
     SEARCH_DIRECTION_BACKWARD = 2; // lt
 }
 
+enum SearchEntityType {
+    SEARCH_ENTITY_UNKNOWN = 0;
+    SEARCH_ENTITY_MESSAGE = 1;
+    SEARCH_ENTITY_GROUP = 2;
+    SEARCH_ENTITY_PROFILE = 3;
+}
+
 message SimpleContactSearchCondition {
     string text = 1;
 }
@@ -65,9 +72,6 @@ message SimpleUserProfileSearchCondition {
 
 message SimpleGroupSearchCondition {
     string query_string = 1;
-}
-
-message criterion {
 }
 
 message SimpleSearchCondition {
@@ -237,12 +241,45 @@ message MessageSearchItem {
 // Search Result with related peers and entities
 message ResponseMessageSearch {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
-
     repeated MessageSearchItem search_results = 1;
     google.protobuf.BytesValue load_more_state = 2;
     repeated UserOutPeer user_out_peers = 3;
     repeated GroupOutPeer group_out_peers = 4;
     int64 total_count = 5;
+}
+
+// Search Result with related user and group entities
+message ResponseSimpleSearch {
+    option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
+    reserved 1;
+    google.protobuf.BytesValue load_more_state = 2;
+    repeated UserSearchResultItem users = 3;
+    repeated GroupSearchResultItem groups = 4;
+    int64 total_count = 5;
+}
+
+message UserSearchResultItem {
+    UserOutPeer peer = 1;
+    string name = 2;
+    google.protobuf.StringValue avatar_url = 3;
+    map<string, HighlightResult> highlights = 4;
+}
+
+message GroupSearchResultItem {
+    string id = 1;
+    string title = 2;
+    google.protobuf.StringValue avatar_url = 3;
+    bool is_member = 4;
+    int32 member_count = 5;
+    map<string, HighlightResult> highlights = 6;
+}
+
+message HighlightToken {
+    string value = 1;
+}
+
+message HighlightResult {
+    repeated HighlightToken tokens = 1;
 }
 
 // Performing message search
@@ -260,13 +297,14 @@ message RequestMessageSearchMore {
 message RequestSimpleSearch {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     repeated SimpleSearchCondition criteria = 1;
+    google.protobuf.Int32Value limit = 2;
 }
 
 message RequestSimpleSearchMore {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     bytes load_more_state = 1; /// Cursor
+    google.protobuf.Int32Value limit = 2;
 }
-
 
 message RequestAutocompleteSuggestions {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
@@ -355,12 +393,14 @@ service Search {
             body: "*"
         };
     }
+
     rpc ResolvePeer (RequestResolvePeer) returns (ResponseResolvePeer) {
         option (google.api.http) = {
             post: "/v1/grpc/Search/ResolvePeer"
             body: "*"
         };
     }
+
     /// Search by messages
     rpc MessageSearch (RequestMessageSearch) returns (ResponseMessageSearch) {
         option (google.api.http) = {
@@ -368,25 +408,28 @@ service Search {
             body: "*"
         };
     }
+
     rpc MessageSearchMore (RequestMessageSearchMore) returns (ResponseMessageSearch) {
         option (google.api.http) = {
             post: "/v1/grpc/Search/MessageSearchMore"
             body: "*"
         };
     }
+
     /// Custom search by conditions
-    rpc SimpleSearch (RequestSimpleSearch) returns (ResponseMessageSearch) {
+    rpc SimpleSearch (RequestSimpleSearch) returns (ResponseSimpleSearch) {
         option (google.api.http) = {
             post: "/v1/grpc/Search/SimpleSearch"
             body: "*"
         };
     }
-    rpc SimpleSearchMore (RequestSimpleSearchMore) returns (ResponseMessageSearch) {
+    rpc SimpleSearchMore (RequestSimpleSearchMore) returns (ResponseSimpleSearch) {
         option (google.api.http) = {
             post: "/v1/grpc/Search/SimpleSearchMore"
             body: "*"
         };
     }
+
     /// Search for autocomplete suggestions among custom user profile
     rpc AutocompleteSuggestions (RequestAutocompleteSuggestions) returns (ResponseAutocompleteSuggestions) {
         option (google.api.http) = {

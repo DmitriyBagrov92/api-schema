@@ -659,6 +659,9 @@ message ForwardItem {
     
     /// Идентификатор пересылаемого сообщения
     UUIDValue mid = 2;
+
+    /// Внешний пир чата, из которого пересылается сообщение
+    OutPeer peer = 3;
 }
 
 /// Запрос на посылку сообщения
@@ -800,18 +803,7 @@ message RequestArchiveChat {
 message ResponseSendMessage {
     /// deprecated
     UUIDValue message_id = 1;
-
-    /// deprecated
-    int64 message_date = 2;
-
-    /// deprecated
-    UUIDValue previous_message_id = 3;
-
-    /// deprecated
-    string creator_user_id = 4;
-
-    /// deprecated
-    int64 clock = 5;
+    reserved 2, 3, 4, 5;
 }
 
 /// Структура уведомления о получении нового сообщения
@@ -850,11 +842,13 @@ message UpdateMessage {
     /// Дата создания предыдущего сообщения
     google.protobuf.Int64Value prev_message_date = 10;
 
-    /// Версия (дата) последнего изменения чата
-    int64 unread_counter_clock = 11;
+    reserved 11;
     
     /// Количество непрочитанных сообщений в чате
     google.protobuf.Int32Value counter = 12;
+
+    /// Количество непрочитанных сообщений с упоминанием в чате
+    google.protobuf.Int32Value mentions_counter = 18;
 
     /// Дата последней прочитки, посланной пользователем-получателем уведомления, в этот чат 
     /// (в миллисекундах от unix epoch)
@@ -867,8 +861,7 @@ message UpdateMessage {
     /// Дата последней модификации сообщения
     int64 modified_at = 15;
 
-    /// deprecated
-    google.protobuf.Int64Value prev_edit_in_peer_at = 16;
+    reserved 16;
 }
 
 /// Структура уведомления об изменении сообщения
@@ -885,11 +878,11 @@ message UpdateMessageContentChanged {
     /// Дата последней модификации измененного сообщения
     int64 edited_at = 4;
 
-    /// deprecated
-    int64 prev_edit_in_peer_at = 5;
+    reserved 5;
     
     /// Сообщение не должно содержать признаков редактирования на клиенте (edited и других приписок)
     google.protobuf.BoolValue is_silent = 6;
+   
     /// Аттрибуты сообщения
     MessageAttributes attributes = 7;
 }
@@ -911,16 +904,19 @@ message UpdateMessageSent {
     /// Идентификатор предыдущего сообщения в чате
     UUIDValue prev_mid = 5;
 
-    /// Версия (дата) последнего изменения чата
-    int64 unread_counter_clock = 6;
+    reserved 6;
 
     /// Число непрочитанных сообщений в чате
     google.protobuf.Int32Value unread_counter = 7;
+
+    /// Число непрочитанных сообщений с упоминанием в чате
+    google.protobuf.Int32Value unread_mentions_counter = 13;
 
     /// Дата последней присланной текущим пользователем прочитки сообщений в ленте чата
     google.protobuf.Int64Value my_read_date = 8;
     
     reserved 9;
+    
     oneof attach {
         /// Ссылка на сообщения, ответом на которые является это сообщение
         ReferencedMessages reply = 10;
@@ -928,6 +924,7 @@ message UpdateMessageSent {
         /// Ссылка на сообщение-оригинал, если данное сообщение было переслано из другого чата
         ForwardSource forward_source = 11;
     }
+    
     /// Аттрибуты сообщения
     MessageAttributes attributes = 12;
 }
@@ -938,11 +935,9 @@ message UpdateMessageReceived {
     Peer peer = 1;
 
     /// Дата в миллисекундах от unix epoch, до которой все сообщения считаются полученными
-    /// [переименовать]
-    int64 start_date = 2;
+    int64 date = 2;
 
-    /// deprecated
-    int64 received_date = 3;
+    reserved 3;
 }
 
 /// Структура уведомления о прочитке сообщения
@@ -951,11 +946,9 @@ message UpdateMessageRead {
     Peer peer = 1;
     
     /// Дата в миллисекундах от unix epoch, до которой все сообщения считаются прочитанными 
-    /// [переименовать]
-    int64 start_date = 2;
+    int64 date = 2;
 
-    /// deprecated
-    int64 read_date = 3;
+    reserved 3;
 }
 
 /// Структура уведомления о прочитке сообщения текущим пользователем
@@ -964,23 +957,15 @@ message UpdateMessageReadByMe {
     Peer peer = 1;
     
     /// Дата в миллисекундах от unix epoch, до которой все сообщения считаются прочитанными текущим пользователем 
-    /// [переименовать]
-    int64 start_date = 2;
+    int64 date = 2;
 
-    /// Дата последнего изменения чата
-    int64 unread_counter_clock = 3;
+    reserved 3;
 
     /// Количество непрочитанных сообщений
     google.protobuf.Int32Value unread_counter = 4;
-}
 
-/// Структура уведомления об удаленном сообщении
-/// deprecated
-message UpdateMessageDelete {
-    Peer peer = 1;
-    repeated UUIDValue mids = 2;
-    google.protobuf.Int32Value counter = 3;
-    int64 action_date = 4;
+    /// Количество непрочитанных меншинов
+    google.protobuf.Int32Value unread_mentions_counter = 5;    
 }
 
 /// Структура уведомления об очистке ленты чата
@@ -989,7 +974,7 @@ message UpdateChatClear {
     Peer peer = 1;
 
     /// Дата очистки в миллисекундах от unix epoch
-    int64 action_date = 2;
+    int64 date = 2;
 }
 
 /// Структура уведомления об далении чата
@@ -998,7 +983,7 @@ message UpdateChatDelete {
     Peer peer = 1;
 
     // Дата удаления в миллисекундах от unix epoch
-    int64 action_date = 2;
+    int64 date = 2;
 }
 
 /// Структура уведомлени об архивировании чата
@@ -1191,7 +1176,11 @@ message UpdateReadDialogLaterError {
 
 // Структура с упоминанием сообщений
 message ReferencedMessages {
+    /// Список идентификаторов упоминаемых сообщений
     repeated UUIDValue mids = 1;
+
+    /// Внешний пир чата, в котором находятся упоминаеммые сообщения
+    OutPeer peer = 2;
 }
 
 /// Структура с источником сообщения
@@ -1300,8 +1289,10 @@ message ResponseLoadHistory {
     reserved 3, 4, 5, 7;
     
     /// Количество непрочитанных сообщений в ленте чата
-    /// [нужно ли это здесь?]
-    int32 unread_count = 8;
+    int32 unread_counter = 8;
+
+    /// Количество непрочитанных меншинов в ленте чата
+    int32 unread_mentions_counter = 9;
 
     /// Дата отправки последнего сообщения в ленте чата
     /// [нужно ли это здесь?]
@@ -1314,7 +1305,11 @@ message Dialog {
     Peer peer = 1;
 
     /// Количство непрочитанных сообщений в чате
-    int32 unread_count = 2;
+    int32 unread_counter = 2;
+
+    /// Количство непрочитанных сообщений с упоминаниями текущего пользователя в чате
+    int32 unread_mentions_counter = 23;
+
     reserved 3, 4, 5, 6, 8, 9, 10, 11, 18;
     
     /// Дата последнего изменения в чате
@@ -1353,6 +1348,14 @@ message Dialog {
 
     /// Флаг архивированности этого чата
     bool is_archived = 21;
+
+    /// Дата последней прочитки текущим пользователем в этом чате
+    /// (в миллисекундах от unix epoch)
+    int64 last_own_read = 24;
+
+    /// Дата последнего полученного сообщения текущим пользователем в этом чате
+    /// (в миллисекундах от unix epoch)
+    int64 last_own_receive = 25;
 }
 
 /// Набор фильтров для загрузки чатов

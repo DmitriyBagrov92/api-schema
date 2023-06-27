@@ -33,6 +33,7 @@
 @class ResponsePeerSearch;
 @class ResponseResolvePeer;
 @class ResponseSearch;
+@class ResponseSimpleSearch;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Timestamp.pbobjc.h"
@@ -79,14 +80,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (GRPCUnaryProtoCall *)messageSearchMoreWithMessage:(RequestMessageSearchMore *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark SimpleSearch(RequestSimpleSearch) returns (ResponseMessageSearch)
+#pragma mark SimpleSearch(RequestSimpleSearch) returns (ResponseSimpleSearch)
 
 /**
  * / Custom search by conditions
  */
 - (GRPCUnaryProtoCall *)simpleSearchWithMessage:(RequestSimpleSearch *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark SimpleSearchMore(RequestSimpleSearchMore) returns (ResponseMessageSearch)
+#pragma mark SimpleSearchMore(RequestSimpleSearchMore) returns (ResponseSimpleSearch)
 
 - (GRPCUnaryProtoCall *)simpleSearchMoreWithMessage:(RequestSimpleSearchMore *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
@@ -173,28 +174,28 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToMessageSearchMoreWithRequest:(RequestMessageSearchMore *)request handler:(void(^)(ResponseMessageSearch *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark SimpleSearch(RequestSimpleSearch) returns (ResponseMessageSearch)
+#pragma mark SimpleSearch(RequestSimpleSearch) returns (ResponseSimpleSearch)
 
 /**
  * / Custom search by conditions
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)simpleSearchWithRequest:(RequestSimpleSearch *)request handler:(void(^)(ResponseMessageSearch *_Nullable response, NSError *_Nullable error))handler;
+- (void)simpleSearchWithRequest:(RequestSimpleSearch *)request handler:(void(^)(ResponseSimpleSearch *_Nullable response, NSError *_Nullable error))handler;
 
 /**
  * / Custom search by conditions
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToSimpleSearchWithRequest:(RequestSimpleSearch *)request handler:(void(^)(ResponseMessageSearch *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToSimpleSearchWithRequest:(RequestSimpleSearch *)request handler:(void(^)(ResponseSimpleSearch *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark SimpleSearchMore(RequestSimpleSearchMore) returns (ResponseMessageSearch)
+#pragma mark SimpleSearchMore(RequestSimpleSearchMore) returns (ResponseSimpleSearch)
 
-- (void)simpleSearchMoreWithRequest:(RequestSimpleSearchMore *)request handler:(void(^)(ResponseMessageSearch *_Nullable response, NSError *_Nullable error))handler;
+- (void)simpleSearchMoreWithRequest:(RequestSimpleSearchMore *)request handler:(void(^)(ResponseSimpleSearch *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToSimpleSearchMoreWithRequest:(RequestSimpleSearchMore *)request handler:(void(^)(ResponseMessageSearch *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToSimpleSearchMoreWithRequest:(RequestSimpleSearchMore *)request handler:(void(^)(ResponseSimpleSearch *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark AutocompleteSuggestions(RequestAutocompleteSuggestions) returns (ResponseAutocompleteSuggestions)

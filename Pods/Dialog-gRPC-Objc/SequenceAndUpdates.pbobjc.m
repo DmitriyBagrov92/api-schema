@@ -58,6 +58,7 @@ GPBObjCClassDeclaration(GroupPartialInfo);
 GPBObjCClassDeclaration(HistoryMessage);
 GPBObjCClassDeclaration(Peer);
 GPBObjCClassDeclaration(PeersList);
+GPBObjCClassDeclaration(ReferencedMessages);
 GPBObjCClassDeclaration(SeqUpdate);
 GPBObjCClassDeclaration(SeqUpdateBody);
 GPBObjCClassDeclaration(UUIDValue);
@@ -95,7 +96,6 @@ GPBObjCClassDeclaration(UpdateGroupTyping);
 GPBObjCClassDeclaration(UpdateInteractiveMediaEvent);
 GPBObjCClassDeclaration(UpdateMessage);
 GPBObjCClassDeclaration(UpdateMessageContentChanged);
-GPBObjCClassDeclaration(UpdateMessageDelete);
 GPBObjCClassDeclaration(UpdateMessageReactions);
 GPBObjCClassDeclaration(UpdateMessageRead);
 GPBObjCClassDeclaration(UpdateMessageReadByMe);
@@ -216,7 +216,6 @@ static GPBFileDescriptor *SequenceAndUpdatesRoot_FileDescriptor(void) {
 @dynamic updateMessageReceived;
 @dynamic updateMessageRead;
 @dynamic updateMessageReadByMe;
-@dynamic updateMessageDelete;
 @dynamic updateChatClear;
 @dynamic updateChatDelete;
 @dynamic updateChatArchive;
@@ -287,7 +286,6 @@ typedef struct SeqUpdateBody__storage_ {
   UpdateMessageReceived *updateMessageReceived;
   UpdateMessageRead *updateMessageRead;
   UpdateMessageReadByMe *updateMessageReadByMe;
-  UpdateMessageDelete *updateMessageDelete;
   UpdateChatClear *updateChatClear;
   UpdateChatDelete *updateChatDelete;
   UpdateChatArchive *updateChatArchive;
@@ -576,15 +574,6 @@ typedef struct SeqUpdateBody__storage_ {
         .number = SeqUpdateBody_FieldNumber_UpdateMessageReadByMe,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateMessageReadByMe),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateMessageDelete",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateMessageDelete),
-        .number = SeqUpdateBody_FieldNumber_UpdateMessageDelete,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateMessageDelete),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -1275,6 +1264,7 @@ typedef struct GroupMembersSubset__storage_ {
 @dynamic midsArray, midsArray_Count;
 @dynamic groupMembersArray, groupMembersArray_Count;
 @dynamic groupsArray, groupsArray_Count;
+@dynamic referencedMidsArray, referencedMidsArray_Count;
 
 typedef struct RequestGetReferencedEntities__storage_ {
   uint32_t _has_storage_[1];
@@ -1282,6 +1272,7 @@ typedef struct RequestGetReferencedEntities__storage_ {
   NSMutableArray *midsArray;
   NSMutableArray *groupMembersArray;
   NSMutableArray *groupsArray;
+  NSMutableArray *referencedMidsArray;
 } RequestGetReferencedEntities__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1323,6 +1314,15 @@ typedef struct RequestGetReferencedEntities__storage_ {
         .number = RequestGetReferencedEntities_FieldNumber_GroupsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(RequestGetReferencedEntities__storage_, groupsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "referencedMidsArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(ReferencedMessages),
+        .number = RequestGetReferencedEntities_FieldNumber_ReferencedMidsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(RequestGetReferencedEntities__storage_, referencedMidsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
