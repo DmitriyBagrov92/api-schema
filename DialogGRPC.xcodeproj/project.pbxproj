@@ -125,6 +125,10 @@
 		A51D4F682951CA0E00E22584 /* Threads.pbrpc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5BA43225CB1B3E00755F7D /* Threads.pbrpc.m */; };
 		A51D4F6B2951CA9600E22584 /* Threads.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D5BA41925CB1B3C00755F7D /* Threads.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A51D4F6C2951CA9600E22584 /* Threads.pbrpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D5BA46125CB1B4000755F7D /* Threads.pbrpc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A52910BF2A938F03009DC309 /* Errors.pbrpc.m in Sources */ = {isa = PBXBuildFile; fileRef = A52910BB2A938F03009DC309 /* Errors.pbrpc.m */; };
+		A52910C02A938F03009DC309 /* Errors.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = A52910BC2A938F03009DC309 /* Errors.pbobjc.m */; };
+		A52910C32A939F2F009DC309 /* Errors.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = A52910BE2A938F03009DC309 /* Errors.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A52910C42A939F2F009DC309 /* Errors.pbrpc.h in Headers */ = {isa = PBXBuildFile; fileRef = A52910BD2A938F03009DC309 /* Errors.pbrpc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -255,6 +259,10 @@
 		8D5BA46425CB1B4100755F7D /* Users.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Users.pbobjc.h; sourceTree = "<group>"; };
 		8D5BA46525CB1B4100755F7D /* HTTP.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTP.pbobjc.m; sourceTree = "<group>"; };
 		8D5BA46625CB1B4100755F7D /* Crypto.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crypto.pbobjc.h; sourceTree = "<group>"; };
+		A52910BB2A938F03009DC309 /* Errors.pbrpc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Errors.pbrpc.m; sourceTree = "<group>"; };
+		A52910BC2A938F03009DC309 /* Errors.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Errors.pbobjc.m; sourceTree = "<group>"; };
+		A52910BD2A938F03009DC309 /* Errors.pbrpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Errors.pbrpc.h; sourceTree = "<group>"; };
+		A52910BE2A938F03009DC309 /* Errors.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Errors.pbobjc.h; sourceTree = "<group>"; };
 		BA79644B5313ECB40F83C754 /* Pods-DialogGRPC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialogGRPC.debug.xcconfig"; path = "Target Support Files/Pods-DialogGRPC/Pods-DialogGRPC.debug.xcconfig"; sourceTree = "<group>"; };
 		E1B771A7D9852EACD3183446 /* Pods-DialogGRPC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialogGRPC.release.xcconfig"; path = "Target Support Files/Pods-DialogGRPC/Pods-DialogGRPC.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -312,6 +320,10 @@
 				80D2832527F59BD700B1B2C4 /* Drafts.pbrpc.h */,
 				80D2832427F59BD700B1B2C4 /* Drafts.pbrpc.m */,
 				808B53BE26B1678100DDA58B /* Suggests.pbobjc.h */,
+				A52910BE2A938F03009DC309 /* Errors.pbobjc.h */,
+				A52910BC2A938F03009DC309 /* Errors.pbobjc.m */,
+				A52910BD2A938F03009DC309 /* Errors.pbrpc.h */,
+				A52910BB2A938F03009DC309 /* Errors.pbrpc.m */,
 				808B53C026B1678100DDA58B /* Suggests.pbobjc.m */,
 				808B53BF26B1678100DDA58B /* Suggests.pbrpc.h */,
 				808B53BD26B1678100DDA58B /* Suggests.pbrpc.m */,
@@ -504,6 +516,8 @@
 				8D5BA49B25CB1B4100755F7D /* Contacts.pbobjc.h in Headers */,
 				A51D4F6B2951CA9600E22584 /* Threads.pbobjc.h in Headers */,
 				A51D4F6C2951CA9600E22584 /* Threads.pbrpc.h in Headers */,
+				A52910C32A939F2F009DC309 /* Errors.pbobjc.h in Headers */,
+				A52910C42A939F2F009DC309 /* Errors.pbrpc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -612,6 +626,7 @@
 				8D5BA4BA25CB1B4100755F7D /* Integrations.pbobjc.m in Sources */,
 				80D2832727F59BD700B1B2C4 /* Drafts.pbobjc.m in Sources */,
 				8D5BA4BE25CB1B4100755F7D /* Miniappsregistry.pbrpc.m in Sources */,
+				A52910BF2A938F03009DC309 /* Errors.pbrpc.m in Sources */,
 				8D5BA48E25CB1B4100755F7D /* Registration.pbrpc.m in Sources */,
 				8D5BA4AD25CB1B4100755F7D /* Contacts.pbrpc.m in Sources */,
 				8D5BA4BB25CB1B4100755F7D /* Push.pbobjc.m in Sources */,
@@ -641,6 +656,7 @@
 				8D5BA48725CB1B4100755F7D /* Permissions.pbobjc.m in Sources */,
 				8D5BA4DB25CB1B4100755F7D /* Profile.pbrpc.m in Sources */,
 				8D5BA4A925CB1B4100755F7D /* Stickers.pbobjc.m in Sources */,
+				A52910C02A938F03009DC309 /* Errors.pbobjc.m in Sources */,
 				8D5BA48625CB1B4100755F7D /* Push.pbrpc.m in Sources */,
 				8D5BA4E225CB1B4100755F7D /* Groups.pbobjc.m in Sources */,
 				8D5BA4B825CB1B4100755F7D /* Descriptor.pbobjc.m in Sources */,

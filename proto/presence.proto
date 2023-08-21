@@ -91,8 +91,9 @@ message UpdateGroupTyping {
         TypingType typing_type = 2;
     }
 
-    string group_id = 1;
+    reserved  1;
     repeated UserTyping users_typing = 2;
+    Peer peer = 3;
 }
 
 // Request for last user online timestamp

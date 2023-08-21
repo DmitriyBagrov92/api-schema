@@ -64,6 +64,8 @@
 #import <DialogGRPC/Drafts.pbrpc.h>
 #import <DialogGRPC/Threads.pbobjc.h>
 #import <DialogGRPC/Threads.pbrpc.h>
+#import <DialogGRPC/Errors.pbrpc.h>
+#import <DialogGRPC/Errors.pbobjc.h>
 
 //! Project version number for DialogGRPC.
 FOUNDATION_EXPORT double DialogGRPCVersionNumber;

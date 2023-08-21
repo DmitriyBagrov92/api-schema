@@ -335,17 +335,19 @@ GPB_FINAL @interface UpdateGroupOnline : GPBMessage
 #pragma mark - UpdateGroupTyping
 
 typedef GPB_ENUM(UpdateGroupTyping_FieldNumber) {
-  UpdateGroupTyping_FieldNumber_GroupId = 1,
   UpdateGroupTyping_FieldNumber_UsersTypingArray = 2,
+  UpdateGroupTyping_FieldNumber_Peer = 3,
 };
 
 GPB_FINAL @interface UpdateGroupTyping : GPBMessage
 
-@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
-
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UpdateGroupTyping_UserTyping*> *usersTypingArray;
 /** The number of items in @c usersTypingArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger usersTypingArray_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
 
 @end
 

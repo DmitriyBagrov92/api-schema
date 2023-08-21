@@ -7328,6 +7328,7 @@ typedef struct ResponseLoadHistory__storage_ {
 @dynamic isArchived;
 @dynamic lastOwnRead;
 @dynamic lastOwnReceive;
+@dynamic isFollowing;
 
 typedef struct Dialog__storage_ {
   uint32_t _has_storage_[1];
@@ -7494,6 +7495,15 @@ typedef struct Dialog__storage_ {
         .offset = (uint32_t)offsetof(Dialog__storage_, lastOwnReceive),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "isFollowing",
+        .dataTypeSpecific.clazz = Nil,
+        .number = Dialog_FieldNumber_IsFollowing,
+        .hasIndex = 20,
+        .offset = 21,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
       },
     };
     GPBDescriptor *localDescriptor =

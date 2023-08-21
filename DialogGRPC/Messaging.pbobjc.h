@@ -3215,6 +3215,7 @@ typedef GPB_ENUM(Dialog_FieldNumber) {
   Dialog_FieldNumber_UnreadMentionsCounter = 23,
   Dialog_FieldNumber_LastOwnRead = 24,
   Dialog_FieldNumber_LastOwnReceive = 25,
+  Dialog_FieldNumber_IsFollowing = 26,
 };
 
 /**
@@ -3293,6 +3294,9 @@ GPB_FINAL @interface Dialog : GPBMessage
  * / (в миллисекундах от unix epoch)
  **/
 @property(nonatomic, readwrite) int64_t lastOwnReceive;
+
+/** / Флаг, подписан ли пользователь на тред. Для нетредов он всегда false */
+@property(nonatomic, readwrite) BOOL isFollowing;
 
 @end
 

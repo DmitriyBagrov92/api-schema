@@ -708,13 +708,13 @@ typedef struct UpdateGroupOnline__storage_ {
 
 @implementation UpdateGroupTyping
 
-@dynamic groupId;
 @dynamic usersTypingArray, usersTypingArray_Count;
+@dynamic hasPeer, peer;
 
 typedef struct UpdateGroupTyping__storage_ {
   uint32_t _has_storage_[1];
-  NSString *groupId;
   NSMutableArray *usersTypingArray;
+  Peer *peer;
 } UpdateGroupTyping__storage_;
 
 // This method is threadsafe because it is initially called
@@ -724,21 +724,21 @@ typedef struct UpdateGroupTyping__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "groupId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupTyping_FieldNumber_GroupId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateGroupTyping__storage_, groupId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
         .name = "usersTypingArray",
         .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupTyping_UserTyping),
         .number = UpdateGroupTyping_FieldNumber_UsersTypingArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(UpdateGroupTyping__storage_, usersTypingArray),
         .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "peer",
+        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
+        .number = UpdateGroupTyping_FieldNumber_Peer,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(UpdateGroupTyping__storage_, peer),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };

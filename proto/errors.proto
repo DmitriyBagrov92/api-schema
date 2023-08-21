@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package dialog;
+
+option go_package = "dialog";
+option java_package = "im.dlg.grpc.errors";
+
+/// Ошибки связанные с загрузкой и обработкой файлов
+message MediaError {
+  /// Ошибка загрузки файла по причине превышения маскимального размера
+  message FileSizeExceededError {
+    /// Максимальный допустимый размер файла исходя из конфигурации бэкенда
+    uint32 max_file_size = 1;
+  }
+
+  oneof error {
+    FileSizeExceededError file_size_exceeded = 1;
+  }
+}
+
+/// Ошибки связанные с общим функционированием системы
+message OperationalError {
+
+  /// Ошибка конфигурационного флага бекенда
+  message FlagViolationError {
+    /// Название флага, значение которого не соответствует ожидаемому
+    string flag_name = 1;
+
+    /// Текущее значение флага
+    bool value = 2;
+
+    /// Ожидаемое значение флага
+    bool expected_value = 3;
+  }
+
+  oneof error {
+    FlagViolationError flag_violation = 1;
+  }
+}
+
+/// Детали ошибки, прикладывается к некоторым не-OK ответам сервера в трейлер x-error-details в виде сериализованной
+/// протобаф-структуры, уточняя специфику ошибки
+message Error {
+  /// Название бэкенд-подсистемы, которая сгенерировала ошибку (предназначено для ускорения дебага)
+  string domain = 1;
+
+  oneof kind {
+    OperationalError operational_error = 2;
+    MediaError media_error = 3;
+  }
+}
+
+/// Тестовый ответ на запрос об ошибке (если в запросе code != 0 -- не будет возвращен)
+message ErrorResponse {}
+
+/// Запрос на генерацию ошибки
+message ErrorRequest {
+  /// Предполагаемый gRPC-код ошибки (https://grpc.github.io/grpc/core/md_doc_statuscodes.html), если == 0, ошибка не будет
+  /// сгенерирована
+  uint32 code = 1;
+
+  /// Желаемое содержимое деталей об ошибке в трейлерах ответа
+  Error error = 2;
+}
+
+/// Тестовый сервис для генерации ошибок
+service ErrorTest {
+  /// Запрос на генерацию ошибки
+  rpc EmitError(ErrorRequest) returns (ErrorResponse);
+}
