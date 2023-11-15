@@ -20,19 +20,18 @@ option java_package = "im.dlg.grpc.services";
 
 /// Атрибуты сообщения
 message MessageAttributes {
+    reserved 2, 3, 4;
     /// Признак упоминания пользователя в сообщении
     google.protobuf.BoolValue is_mentioned = 1;
-    /// Признак подсвеченности сообщения
-    google.protobuf.BoolValue is_highlighted = 2;
-    /// Признак того, что пользователь уведомлён о сообщении
-    google.protobuf.BoolValue is_notified = 3;
-    /// Признак того, что сообщение предназначено только для данного пользователя
-    google.protobuf.BoolValue is_only_for_you = 4;
 
     /// Дополнительные признаки
     map<string, string> unclassified = 5;
+
     /// Чаты, связанные с этим сообщением
     repeated OutPeer linked_peers = 6;
+
+    /// Признак возможности ответа на сообщение у данного пользователя
+    google.protobuf.BoolValue is_respondable = 7;
 }
 
 /// Медиа-содержимое сообщения
@@ -808,6 +807,8 @@ message ResponseSendMessage {
 
 /// Структура уведомления о получении нового сообщения
 message UpdateMessage {
+    reserved 7, 11, 16;
+
     /// Пир чата, в который добавлено сообщение
     Peer peer = 1;
 
@@ -826,8 +827,6 @@ message UpdateMessage {
     /// Атрибуты сообщения
     MessageAttributes attributes = 6;
     
-    reserved 7;
-    
     oneof attach {
         /// Ссылка на сообщения, ответом на которые является это сообщение
         ReferencedMessages reply = 8;
@@ -841,8 +840,6 @@ message UpdateMessage {
 
     /// Дата создания предыдущего сообщения
     google.protobuf.Int64Value prev_message_date = 10;
-
-    reserved 11;
     
     /// Количество непрочитанных сообщений в чате
     google.protobuf.Int32Value counter = 12;
@@ -861,7 +858,8 @@ message UpdateMessage {
     /// Дата последней модификации сообщения
     int64 modified_at = 15;
 
-    reserved 16;
+    /// Суммарное количество непрочиток по всем диалогам, учитывая способ подсчета для P2P и групповых чатов
+    uint32 badge_counter = 19;
 }
 
 /// Структура уведомления об изменении сообщения
@@ -889,6 +887,8 @@ message UpdateMessageContentChanged {
 
 /// Уведомление о доставке сообщения на сервер (посылается только отправителю сообщения)
 message UpdateMessageSent {
+    reserved 6, 9;
+
     /// Пир чата, в который добавилось сообщение
     Peer peer = 1;
 
@@ -904,8 +904,6 @@ message UpdateMessageSent {
     /// Идентификатор предыдущего сообщения в чате
     UUIDValue prev_mid = 5;
 
-    reserved 6;
-
     /// Число непрочитанных сообщений в чате
     google.protobuf.Int32Value unread_counter = 7;
 
@@ -914,8 +912,6 @@ message UpdateMessageSent {
 
     /// Дата последней присланной текущим пользователем прочитки сообщений в ленте чата
     google.protobuf.Int64Value my_read_date = 8;
-    
-    reserved 9;
     
     oneof attach {
         /// Ссылка на сообщения, ответом на которые является это сообщение
@@ -927,6 +923,9 @@ message UpdateMessageSent {
     
     /// Аттрибуты сообщения
     MessageAttributes attributes = 12;
+
+    /// Суммарное количество непрочиток по всем диалогам, учитывая способ подсчета для P2P и групповых чатов
+    uint32 badge_counter = 14;
 }
 
 /// Структура уведомления о получении сообщения
@@ -953,19 +952,22 @@ message UpdateMessageRead {
 
 /// Структура уведомления о прочитке сообщения текущим пользователем
 message UpdateMessageReadByMe {
+    reserved 3;
+
     /// Пир чата
     Peer peer = 1;
     
     /// Дата в миллисекундах от unix epoch, до которой все сообщения считаются прочитанными текущим пользователем 
     int64 date = 2;
 
-    reserved 3;
-
     /// Количество непрочитанных сообщений
     google.protobuf.Int32Value unread_counter = 4;
 
     /// Количество непрочитанных меншинов
-    google.protobuf.Int32Value unread_mentions_counter = 5;    
+    google.protobuf.Int32Value unread_mentions_counter = 5;
+
+    /// Суммарное количество непрочиток по всем диалогам, учитывая способ подсчета для P2P и групповых чатов
+    uint32 badge_counter = 6;
 }
 
 /// Структура уведомления об очистке ленты чата
@@ -1297,6 +1299,24 @@ message ResponseLoadHistory {
     /// Дата отправки последнего сообщения в ленте чата
     /// [нужно ли это здесь?]
     google.protobuf.Int64Value last_conversation_message_date = 6;
+}
+
+/// Запрос на загрузку упоминаний текущего пользователя в чате
+message RequestLoadMentions {
+    /// Внешний пир чата, историю упоминаний текущего пользователя в котором требуется получить
+    OutPeer peer = 1 [(dlg).required=true];
+
+    /// Идентификатор сообщения после которого хронологически искать упоминания
+    UUIDValue from_mid = 2 [(dlg).required=true];
+
+    /// Лимит на количество сообщений в результате поиска
+    uint32 limit = 3;
+}
+
+/// Ответ на запрос на загрузку упоминаний текущего пользователя в чате
+message ResponseLoadMentions {
+    /// Список сообщений с упоминаниями в хронологическом порядке
+    repeated UUIDValue mids_with_mentions = 1;
 }
 
 /// Данные о диалоге
@@ -1655,6 +1675,14 @@ service Messaging {
     rpc LoadMessageHistory (RequestLoadMessageHistory) returns (ResponseLoadHistory) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/LoadMessageHistory"
+            body: "*"
+        };
+    }
+
+    /// Метод загрузки упоминаний
+    rpc LoadMentions (RequestLoadMentions) returns (ResponseLoadMentions) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Messaging/LoadMentions"
             body: "*"
         };
     }

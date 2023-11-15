@@ -397,6 +397,39 @@
              responseClass:[ResponseLoadHistory class]];
 }
 
+#pragma mark LoadMentions(RequestLoadMentions) returns (ResponseLoadMentions)
+
+/**
+ * / Метод загрузки упоминаний
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)loadMentionsWithRequest:(RequestLoadMentions *)request handler:(void(^)(ResponseLoadMentions *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToLoadMentionsWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * / Метод загрузки упоминаний
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToLoadMentionsWithRequest:(RequestLoadMentions *)request handler:(void(^)(ResponseLoadMentions *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"LoadMentions"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[ResponseLoadMentions class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * / Метод загрузки упоминаний
+ */
+- (GRPCUnaryProtoCall *)loadMentionsWithMessage:(RequestLoadMentions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"LoadMentions"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[ResponseLoadMentions class]];
+}
+
 #pragma mark LoadDialogs(RequestLoadDialogs) returns (ResponseLoadDialogs)
 
 /**

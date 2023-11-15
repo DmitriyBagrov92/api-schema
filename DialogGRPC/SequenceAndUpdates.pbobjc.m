@@ -88,7 +88,6 @@ GPBObjCClassDeclaration(UpdateGroupMemberDiff);
 GPBObjCClassDeclaration(UpdateGroupMemberInvited);
 GPBObjCClassDeclaration(UpdateGroupMemberPermissionsChanged);
 GPBObjCClassDeclaration(UpdateGroupMembersCountChanged);
-GPBObjCClassDeclaration(UpdateGroupMembersUpdated);
 GPBObjCClassDeclaration(UpdateGroupOnline);
 GPBObjCClassDeclaration(UpdateGroupOwnerChanged);
 GPBObjCClassDeclaration(UpdateGroupTitleChanged);
@@ -226,7 +225,6 @@ static GPBFileDescriptor *SequenceAndUpdatesRoot_FileDescriptor(void) {
 @dynamic updateGroupAvatarChanged;
 @dynamic updateGroupAboutChanged;
 @dynamic updateGroupOwnerChanged;
-@dynamic updateGroupMembersUpdated;
 @dynamic updateGroupMemberDiff;
 @dynamic updateGroupMembersCountChanged;
 @dynamic updateGroupMemberPermissionsChanged;
@@ -296,7 +294,6 @@ typedef struct SeqUpdateBody__storage_ {
   UpdateGroupAvatarChanged *updateGroupAvatarChanged;
   UpdateGroupAboutChanged *updateGroupAboutChanged;
   UpdateGroupOwnerChanged *updateGroupOwnerChanged;
-  UpdateGroupMembersUpdated *updateGroupMembersUpdated;
   UpdateGroupMemberDiff *updateGroupMemberDiff;
   UpdateGroupMembersCountChanged *updateGroupMembersCountChanged;
   UpdateGroupMemberPermissionsChanged *updateGroupMemberPermissionsChanged;
@@ -664,15 +661,6 @@ typedef struct SeqUpdateBody__storage_ {
         .number = SeqUpdateBody_FieldNumber_UpdateGroupOwnerChanged,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateGroupOwnerChanged),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateGroupMembersUpdated",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupMembersUpdated),
-        .number = SeqUpdateBody_FieldNumber_UpdateGroupMembersUpdated,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateGroupMembersUpdated),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

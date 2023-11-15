@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package dialog;
 
-// Peer is an identificator of specific conversation.
-
 import "wrappers.proto";
 import "definitions.proto";
 

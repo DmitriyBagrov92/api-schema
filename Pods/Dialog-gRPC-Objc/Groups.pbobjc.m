@@ -208,12 +208,14 @@ BOOL GroupAdminPermission_IsValidValue(int32_t value__) {
 @dynamic permissionsArray, permissionsArray_Count;
 @dynamic clock;
 @dynamic hasDeletedAt, deletedAt;
+@dynamic hasInvitedBy, invitedBy;
 
 typedef struct Member__storage_ {
   uint32_t _has_storage_[1];
   NSString *userId;
   GPBEnumArray *permissionsArray;
   GPBTimestamp *deletedAt;
+  GPBStringValue *invitedBy;
   int64_t invitedAt;
   int64_t clock;
 } Member__storage_;
@@ -266,6 +268,15 @@ typedef struct Member__storage_ {
         .number = Member_FieldNumber_DeletedAt,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(Member__storage_, deletedAt),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "invitedBy",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
+        .number = Member_FieldNumber_InvitedBy,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(Member__storage_, invitedBy),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -1178,62 +1189,6 @@ typedef struct UpdateGroupBasePermissionsChanged__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(UpdateGroupBasePermissionsChanged__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - UpdateGroupMembersUpdated
-
-@implementation UpdateGroupMembersUpdated
-
-@dynamic groupId;
-@dynamic membersArray, membersArray_Count;
-
-typedef struct UpdateGroupMembersUpdated__storage_ {
-  uint32_t _has_storage_[1];
-  NSString *groupId;
-  NSMutableArray *membersArray;
-} UpdateGroupMembersUpdated__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "groupId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateGroupMembersUpdated_FieldNumber_GroupId,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateGroupMembersUpdated__storage_, groupId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
-        .name = "membersArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(Member),
-        .number = UpdateGroupMembersUpdated_FieldNumber_MembersArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(UpdateGroupMembersUpdated__storage_, membersArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateGroupMembersUpdated class]
-                                     rootClass:[GroupsRoot class]
-                                          file:GroupsRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateGroupMembersUpdated__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");

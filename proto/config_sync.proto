@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package dialog;
 
-// Parameter Syncronization across devices. Can be used for simple sync
-// across devices without rewriting server side code.
-
 import "wrappers.proto";
 import "empty.proto";
 import "annotations.proto";

@@ -68,7 +68,6 @@ CF_EXTERN_C_BEGIN
 @class UpdateGroupMemberInvited;
 @class UpdateGroupMemberPermissionsChanged;
 @class UpdateGroupMembersCountChanged;
-@class UpdateGroupMembersUpdated;
 @class UpdateGroupOnline;
 @class UpdateGroupOwnerChanged;
 @class UpdateGroupTitleChanged;
@@ -186,7 +185,6 @@ typedef GPB_ENUM(SeqUpdateBody_FieldNumber) {
   SeqUpdateBody_FieldNumber_UpdateGroupAvatarChanged = 37,
   SeqUpdateBody_FieldNumber_UpdateGroupAboutChanged = 38,
   SeqUpdateBody_FieldNumber_UpdateGroupOwnerChanged = 39,
-  SeqUpdateBody_FieldNumber_UpdateGroupMembersUpdated = 40,
   SeqUpdateBody_FieldNumber_UpdateGroupMemberDiff = 41,
   SeqUpdateBody_FieldNumber_UpdateGroupMembersCountChanged = 42,
   SeqUpdateBody_FieldNumber_UpdateGroupMemberPermissionsChanged = 43,
@@ -257,7 +255,6 @@ typedef GPB_ENUM(SeqUpdateBody_Update_OneOfCase) {
   SeqUpdateBody_Update_OneOfCase_UpdateGroupAvatarChanged = 37,
   SeqUpdateBody_Update_OneOfCase_UpdateGroupAboutChanged = 38,
   SeqUpdateBody_Update_OneOfCase_UpdateGroupOwnerChanged = 39,
-  SeqUpdateBody_Update_OneOfCase_UpdateGroupMembersUpdated = 40,
   SeqUpdateBody_Update_OneOfCase_UpdateGroupMemberDiff = 41,
   SeqUpdateBody_Update_OneOfCase_UpdateGroupMembersCountChanged = 42,
   SeqUpdateBody_Update_OneOfCase_UpdateGroupMemberPermissionsChanged = 43,
@@ -370,8 +367,6 @@ GPB_FINAL @interface SeqUpdateBody : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UpdateGroupAboutChanged *updateGroupAboutChanged;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateGroupOwnerChanged *updateGroupOwnerChanged;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateGroupMembersUpdated *updateGroupMembersUpdated;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateGroupMemberDiff *updateGroupMemberDiff;
 

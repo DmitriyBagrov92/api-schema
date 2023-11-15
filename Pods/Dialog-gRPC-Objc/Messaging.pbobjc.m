@@ -251,20 +251,16 @@ BOOL ListLoadMode_IsValidValue(int32_t value__) {
 @implementation MessageAttributes
 
 @dynamic hasIsMentioned, isMentioned;
-@dynamic hasIsHighlighted, isHighlighted;
-@dynamic hasIsNotified, isNotified;
-@dynamic hasIsOnlyForYou, isOnlyForYou;
 @dynamic unclassified, unclassified_Count;
 @dynamic linkedPeersArray, linkedPeersArray_Count;
+@dynamic hasIsRespondable, isRespondable;
 
 typedef struct MessageAttributes__storage_ {
   uint32_t _has_storage_[1];
   GPBBoolValue *isMentioned;
-  GPBBoolValue *isHighlighted;
-  GPBBoolValue *isNotified;
-  GPBBoolValue *isOnlyForYou;
   NSMutableDictionary *unclassified;
   NSMutableArray *linkedPeersArray;
+  GPBBoolValue *isRespondable;
 } MessageAttributes__storage_;
 
 // This method is threadsafe because it is initially called
@@ -279,33 +275,6 @@ typedef struct MessageAttributes__storage_ {
         .number = MessageAttributes_FieldNumber_IsMentioned,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(MessageAttributes__storage_, isMentioned),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "isHighlighted",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
-        .number = MessageAttributes_FieldNumber_IsHighlighted,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(MessageAttributes__storage_, isHighlighted),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "isNotified",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
-        .number = MessageAttributes_FieldNumber_IsNotified,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(MessageAttributes__storage_, isNotified),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "isOnlyForYou",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
-        .number = MessageAttributes_FieldNumber_IsOnlyForYou,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(MessageAttributes__storage_, isOnlyForYou),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -325,6 +294,15 @@ typedef struct MessageAttributes__storage_ {
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(MessageAttributes__storage_, linkedPeersArray),
         .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "isRespondable",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBBoolValue),
+        .number = MessageAttributes_FieldNumber_IsRespondable,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(MessageAttributes__storage_, isRespondable),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
@@ -5121,9 +5099,11 @@ typedef struct ResponseSendMessage__storage_ {
 @dynamic hasMyReadDate, myReadDate;
 @dynamic randomId;
 @dynamic modifiedAt;
+@dynamic badgeCounter;
 
 typedef struct UpdateMessage__storage_ {
   uint32_t _has_storage_[2];
+  uint32_t badgeCounter;
   Peer *peer;
   NSString *senderUserId;
   UUIDValue *mid;
@@ -5282,6 +5262,15 @@ typedef struct UpdateMessage__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
+      {
+        .name = "badgeCounter",
+        .dataTypeSpecific.clazz = Nil,
+        .number = UpdateMessage_FieldNumber_BadgeCounter,
+        .hasIndex = 13,
+        .offset = (uint32_t)offsetof(UpdateMessage__storage_, badgeCounter),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeUInt32,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[UpdateMessage class]
@@ -5428,9 +5417,11 @@ typedef struct UpdateMessageContentChanged__storage_ {
 @dynamic reply;
 @dynamic forwardSource;
 @dynamic hasAttributes, attributes;
+@dynamic badgeCounter;
 
 typedef struct UpdateMessageSent__storage_ {
   uint32_t _has_storage_[2];
+  uint32_t badgeCounter;
   Peer *peer;
   NSString *rid;
   UUIDValue *mid;
@@ -5548,6 +5539,15 @@ typedef struct UpdateMessageSent__storage_ {
         .offset = (uint32_t)offsetof(UpdateMessageSent__storage_, unreadMentionsCounter),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "badgeCounter",
+        .dataTypeSpecific.clazz = Nil,
+        .number = UpdateMessageSent_FieldNumber_BadgeCounter,
+        .hasIndex = 9,
+        .offset = (uint32_t)offsetof(UpdateMessageSent__storage_, badgeCounter),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeUInt32,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -5699,9 +5699,11 @@ typedef struct UpdateMessageRead__storage_ {
 @dynamic date;
 @dynamic hasUnreadCounter, unreadCounter;
 @dynamic hasUnreadMentionsCounter, unreadMentionsCounter;
+@dynamic badgeCounter;
 
 typedef struct UpdateMessageReadByMe__storage_ {
   uint32_t _has_storage_[1];
+  uint32_t badgeCounter;
   Peer *peer;
   GPBInt32Value *unreadCounter;
   GPBInt32Value *unreadMentionsCounter;
@@ -5749,6 +5751,15 @@ typedef struct UpdateMessageReadByMe__storage_ {
         .offset = (uint32_t)offsetof(UpdateMessageReadByMe__storage_, unreadMentionsCounter),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "badgeCounter",
+        .dataTypeSpecific.clazz = Nil,
+        .number = UpdateMessageReadByMe_FieldNumber_BadgeCounter,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(UpdateMessageReadByMe__storage_, badgeCounter),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeUInt32,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -7297,6 +7308,118 @@ typedef struct ResponseLoadHistory__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(ResponseLoadHistory__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - RequestLoadMentions
+
+@implementation RequestLoadMentions
+
+@dynamic hasPeer, peer;
+@dynamic hasFromMid, fromMid;
+@dynamic limit;
+
+typedef struct RequestLoadMentions__storage_ {
+  uint32_t _has_storage_[1];
+  uint32_t limit;
+  OutPeer *peer;
+  UUIDValue *fromMid;
+} RequestLoadMentions__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "peer",
+        .dataTypeSpecific.clazz = GPBObjCClass(OutPeer),
+        .number = RequestLoadMentions_FieldNumber_Peer,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(RequestLoadMentions__storage_, peer),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "fromMid",
+        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
+        .number = RequestLoadMentions_FieldNumber_FromMid,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(RequestLoadMentions__storage_, fromMid),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "limit",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestLoadMentions_FieldNumber_Limit,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(RequestLoadMentions__storage_, limit),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeUInt32,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestLoadMentions class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RequestLoadMentions__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - ResponseLoadMentions
+
+@implementation ResponseLoadMentions
+
+@dynamic midsWithMentionsArray, midsWithMentionsArray_Count;
+
+typedef struct ResponseLoadMentions__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *midsWithMentionsArray;
+} ResponseLoadMentions__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "midsWithMentionsArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
+        .number = ResponseLoadMentions_FieldNumber_MidsWithMentionsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(ResponseLoadMentions__storage_, midsWithMentionsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ResponseLoadMentions class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ResponseLoadMentions__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");

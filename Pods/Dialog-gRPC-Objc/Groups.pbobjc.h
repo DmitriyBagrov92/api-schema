@@ -162,6 +162,7 @@ typedef GPB_ENUM(Member_FieldNumber) {
   Member_FieldNumber_PermissionsArray = 3,
   Member_FieldNumber_Clock = 4,
   Member_FieldNumber_DeletedAt = 5,
+  Member_FieldNumber_InvitedBy = 6,
 };
 
 /**
@@ -188,6 +189,15 @@ GPB_FINAL @interface Member : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) GPBTimestamp *deletedAt;
 /** Test to see if @c deletedAt has been set. */
 @property(nonatomic, readwrite) BOOL hasDeletedAt;
+
+/**
+ * / Идентификатор пользователя пригласившего данного пользователя в группу.
+ * / Может быть пустым, если пользователь присоединился к группе по пиру (методом JoinGroupByPeer).
+ * / Также может указывать на пользователя не состоящего в группе (если пригласивший покинул группу) или целиком удаленного.
+ **/
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *invitedBy;
+/** Test to see if @c invitedBy has been set. */
+@property(nonatomic, readwrite) BOOL hasInvitedBy;
 
 @end
 
@@ -573,28 +583,6 @@ GPB_FINAL @interface UpdateGroupBasePermissionsChanged : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *basePermissionsArray;
 /** The number of items in @c basePermissionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger basePermissionsArray_Count;
-
-@end
-
-#pragma mark - UpdateGroupMembersUpdated
-
-typedef GPB_ENUM(UpdateGroupMembersUpdated_FieldNumber) {
-  UpdateGroupMembersUpdated_FieldNumber_GroupId = 1,
-  UpdateGroupMembersUpdated_FieldNumber_MembersArray = 2,
-};
-
-/**
- * / Структура уведомления о приглашении пользователя в групповой чат
- **/
-GPB_FINAL @interface UpdateGroupMembersUpdated : GPBMessage
-
-/** / Идентификатор группового чата */
-@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
-
-/** / Список новых членов группового чата */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Member*> *membersArray;
-/** The number of items in @c membersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger membersArray_Count;
 
 @end
 

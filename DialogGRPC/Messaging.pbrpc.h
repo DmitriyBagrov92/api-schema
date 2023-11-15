@@ -21,6 +21,7 @@
 @class RequestGetMessageReads;
 @class RequestGetMessageReceives;
 @class RequestLoadDialogs;
+@class RequestLoadMentions;
 @class RequestLoadMessageHistory;
 @class RequestMessageRead;
 @class RequestMessageReceived;
@@ -37,6 +38,7 @@
 @class ResponseGetMessageReceives;
 @class ResponseLoadDialogs;
 @class ResponseLoadHistory;
+@class ResponseLoadMentions;
 @class ResponseSendMessage;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
@@ -134,6 +136,13 @@ NS_ASSUME_NONNULL_BEGIN
  * / Метод загрузки ленты чата
  */
 - (GRPCUnaryProtoCall *)loadMessageHistoryWithMessage:(RequestLoadMessageHistory *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark LoadMentions(RequestLoadMentions) returns (ResponseLoadMentions)
+
+/**
+ * / Метод загрузки упоминаний
+ */
+- (GRPCUnaryProtoCall *)loadMentionsWithMessage:(RequestLoadMentions *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 #pragma mark LoadDialogs(RequestLoadDialogs) returns (ResponseLoadDialogs)
 
@@ -381,6 +390,23 @@ NS_ASSUME_NONNULL_BEGIN
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToLoadMessageHistoryWithRequest:(RequestLoadMessageHistory *)request handler:(void(^)(ResponseLoadHistory *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark LoadMentions(RequestLoadMentions) returns (ResponseLoadMentions)
+
+/**
+ * / Метод загрузки упоминаний
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)loadMentionsWithRequest:(RequestLoadMentions *)request handler:(void(^)(ResponseLoadMentions *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * / Метод загрузки упоминаний
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToLoadMentionsWithRequest:(RequestLoadMentions *)request handler:(void(^)(ResponseLoadMentions *_Nullable response, NSError *_Nullable error))handler;
 
 
 #pragma mark LoadDialogs(RequestLoadDialogs) returns (ResponseLoadDialogs)

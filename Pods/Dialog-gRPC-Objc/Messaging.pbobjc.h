@@ -223,11 +223,9 @@ GPB_FINAL @interface MessagingRoot : GPBRootObject
 
 typedef GPB_ENUM(MessageAttributes_FieldNumber) {
   MessageAttributes_FieldNumber_IsMentioned = 1,
-  MessageAttributes_FieldNumber_IsHighlighted = 2,
-  MessageAttributes_FieldNumber_IsNotified = 3,
-  MessageAttributes_FieldNumber_IsOnlyForYou = 4,
   MessageAttributes_FieldNumber_Unclassified = 5,
   MessageAttributes_FieldNumber_LinkedPeersArray = 6,
+  MessageAttributes_FieldNumber_IsRespondable = 7,
 };
 
 /**
@@ -240,21 +238,6 @@ GPB_FINAL @interface MessageAttributes : GPBMessage
 /** Test to see if @c isMentioned has been set. */
 @property(nonatomic, readwrite) BOOL hasIsMentioned;
 
-/** / Признак подсвеченности сообщения */
-@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isHighlighted;
-/** Test to see if @c isHighlighted has been set. */
-@property(nonatomic, readwrite) BOOL hasIsHighlighted;
-
-/** / Признак того, что пользователь уведомлён о сообщении */
-@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isNotified;
-/** Test to see if @c isNotified has been set. */
-@property(nonatomic, readwrite) BOOL hasIsNotified;
-
-/** / Признак того, что сообщение предназначено только для данного пользователя */
-@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isOnlyForYou;
-/** Test to see if @c isOnlyForYou has been set. */
-@property(nonatomic, readwrite) BOOL hasIsOnlyForYou;
-
 /** / Дополнительные признаки */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *unclassified;
 /** The number of items in @c unclassified without causing the array to be created. */
@@ -264,6 +247,11 @@ GPB_FINAL @interface MessageAttributes : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<OutPeer*> *linkedPeersArray;
 /** The number of items in @c linkedPeersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger linkedPeersArray_Count;
+
+/** / Признак возможности ответа на сообщение у данного пользователя */
+@property(nonatomic, readwrite, strong, null_resettable) GPBBoolValue *isRespondable;
+/** Test to see if @c isRespondable has been set. */
+@property(nonatomic, readwrite) BOOL hasIsRespondable;
 
 @end
 
@@ -2225,6 +2213,7 @@ typedef GPB_ENUM(UpdateMessage_FieldNumber) {
   UpdateMessage_FieldNumber_ModifiedAt = 15,
   UpdateMessage_FieldNumber_ForwardSource = 17,
   UpdateMessage_FieldNumber_MentionsCounter = 18,
+  UpdateMessage_FieldNumber_BadgeCounter = 19,
 };
 
 typedef GPB_ENUM(UpdateMessage_Attach_OneOfCase) {
@@ -2309,6 +2298,9 @@ GPB_FINAL @interface UpdateMessage : GPBMessage
 /** / Дата последней модификации сообщения */
 @property(nonatomic, readwrite) int64_t modifiedAt;
 
+/** / Суммарное количество непрочиток по всем диалогам, учитывая способ подсчета для P2P и групповых чатов */
+@property(nonatomic, readwrite) uint32_t badgeCounter;
+
 @end
 
 /**
@@ -2376,6 +2368,7 @@ typedef GPB_ENUM(UpdateMessageSent_FieldNumber) {
   UpdateMessageSent_FieldNumber_ForwardSource = 11,
   UpdateMessageSent_FieldNumber_Attributes = 12,
   UpdateMessageSent_FieldNumber_UnreadMentionsCounter = 13,
+  UpdateMessageSent_FieldNumber_BadgeCounter = 14,
 };
 
 typedef GPB_ENUM(UpdateMessageSent_Attach_OneOfCase) {
@@ -2438,6 +2431,9 @@ GPB_FINAL @interface UpdateMessageSent : GPBMessage
 /** Test to see if @c attributes has been set. */
 @property(nonatomic, readwrite) BOOL hasAttributes;
 
+/** / Суммарное количество непрочиток по всем диалогам, учитывая способ подсчета для P2P и групповых чатов */
+@property(nonatomic, readwrite) uint32_t badgeCounter;
+
 @end
 
 /**
@@ -2496,6 +2492,7 @@ typedef GPB_ENUM(UpdateMessageReadByMe_FieldNumber) {
   UpdateMessageReadByMe_FieldNumber_Date = 2,
   UpdateMessageReadByMe_FieldNumber_UnreadCounter = 4,
   UpdateMessageReadByMe_FieldNumber_UnreadMentionsCounter = 5,
+  UpdateMessageReadByMe_FieldNumber_BadgeCounter = 6,
 };
 
 /**
@@ -2520,6 +2517,9 @@ GPB_FINAL @interface UpdateMessageReadByMe : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *unreadMentionsCounter;
 /** Test to see if @c unreadMentionsCounter has been set. */
 @property(nonatomic, readwrite) BOOL hasUnreadMentionsCounter;
+
+/** / Суммарное количество непрочиток по всем диалогам, учитывая способ подсчета для P2P и групповых чатов */
+@property(nonatomic, readwrite) uint32_t badgeCounter;
 
 @end
 
@@ -3193,6 +3193,52 @@ GPB_FINAL @interface ResponseLoadHistory : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *lastConversationMessageDate;
 /** Test to see if @c lastConversationMessageDate has been set. */
 @property(nonatomic, readwrite) BOOL hasLastConversationMessageDate;
+
+@end
+
+#pragma mark - RequestLoadMentions
+
+typedef GPB_ENUM(RequestLoadMentions_FieldNumber) {
+  RequestLoadMentions_FieldNumber_Peer = 1,
+  RequestLoadMentions_FieldNumber_FromMid = 2,
+  RequestLoadMentions_FieldNumber_Limit = 3,
+};
+
+/**
+ * / Запрос на загрузку упоминаний текущего пользователя в чате
+ **/
+GPB_FINAL @interface RequestLoadMentions : GPBMessage
+
+/** / Внешний пир чата, историю упоминаний текущего пользователя в котором требуется получить */
+@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
+
+/** / Идентификатор сообщения после которого хронологически искать упоминания */
+@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *fromMid;
+/** Test to see if @c fromMid has been set. */
+@property(nonatomic, readwrite) BOOL hasFromMid;
+
+/** / Лимит на количество сообщений в результате поиска */
+@property(nonatomic, readwrite) uint32_t limit;
+
+@end
+
+#pragma mark - ResponseLoadMentions
+
+typedef GPB_ENUM(ResponseLoadMentions_FieldNumber) {
+  ResponseLoadMentions_FieldNumber_MidsWithMentionsArray = 1,
+};
+
+/**
+ * / Ответ на запрос на загрузку упоминаний текущего пользователя в чате
+ **/
+GPB_FINAL @interface ResponseLoadMentions : GPBMessage
+
+/** / Список сообщений с упоминаниями в хронологическом порядке */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UUIDValue*> *midsWithMentionsArray;
+/** The number of items in @c midsWithMentionsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger midsWithMentionsArray_Count;
 
 @end
 
