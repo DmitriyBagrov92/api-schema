@@ -91,12 +91,14 @@ GPBEnumDescriptor *GroupType_EnumDescriptor(void) {
   if (!descriptor) {
     static const char *valueNames =
         "GroupTypeUnknown\000GroupTypeGroup\000GroupTyp"
-        "eChannel\000GroupTypeImportantTopic\000";
+        "eChannel\000GroupTypeImportantTopic\000GroupTy"
+        "peGeneral\000";
     static const int32_t values[] = {
         GroupType_GroupTypeUnknown,
         GroupType_GroupTypeGroup,
         GroupType_GroupTypeChannel,
         GroupType_GroupTypeImportantTopic,
+        GroupType_GroupTypeGeneral,
     };
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(GroupType)
@@ -118,6 +120,7 @@ BOOL GroupType_IsValidValue(int32_t value__) {
     case GroupType_GroupTypeGroup:
     case GroupType_GroupTypeChannel:
     case GroupType_GroupTypeImportantTopic:
+    case GroupType_GroupTypeGeneral:
       return YES;
     default:
       return NO;

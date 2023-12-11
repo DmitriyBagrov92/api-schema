@@ -108,6 +108,10 @@ message ResponseGetUserLastPresence {
     google.protobuf.Timestamp last_online_at = 1;
 }
 
+message PeerList {
+    repeated dialog.Peer peers = 1;
+}
+
 service Presence {
     rpc StartTyping (RequestStartTyping) returns (google.protobuf.Empty) {
         option (google.api.http) = {
@@ -130,6 +134,42 @@ service Presence {
     rpc GetUserLastPresence (RequestGetUserLastPresence) returns (ResponseGetUserLastPresence) {
         option (google.api.http) = {
             post: "/v1/grpc/Presence/GetUserLastPresence"
+            body: "*"
+        };
+    }
+    rpc SubscribeToOnlines(PeerList) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Presence/SubscribeToOnlines"
+            body: "*"
+        };
+    }
+    rpc SubscribeToTypings(PeerList) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Presence/SubscribeToTypings"
+            body: "*"
+        };
+    }
+    rpc UnsubscribeFromOnlines(PeerList) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Presence/UnsubscribeFromOnlines"
+            body: "*"
+        };
+    }
+    rpc UnsubscribeFromTypings(PeerList) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Presence/UnsubscribeFromTypings"
+            body: "*"
+        };
+    }
+    rpc UnsubscribeFromAllOnlines(google.protobuf.Empty) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Presence/UnsubscribeFromAllOnlines"
+            body: "*"
+        };
+    }
+    rpc UnsubscribeFromAllTypings(google.protobuf.Empty) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Presence/UnsubscribeFromAllTypings"
             body: "*"
         };
     }

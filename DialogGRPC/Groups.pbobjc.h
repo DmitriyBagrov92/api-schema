@@ -63,6 +63,9 @@ typedef GPB_ENUM(GroupType) {
 
   /** / Групповой чат типа "важная тема" */
   GroupType_GroupTypeImportantTopic = 4,
+
+  /** / Групповой чат типа General */
+  GroupType_GroupTypeGeneral = 5,
 };
 
 GPBEnumDescriptor *GroupType_EnumDescriptor(void);

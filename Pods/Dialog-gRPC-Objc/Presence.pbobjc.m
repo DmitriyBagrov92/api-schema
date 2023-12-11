@@ -919,6 +919,51 @@ typedef struct ResponseGetUserLastPresence__storage_ {
 
 @end
 
+#pragma mark - PeerList
+
+@implementation PeerList
+
+@dynamic peersArray, peersArray_Count;
+
+typedef struct PeerList__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *peersArray;
+} PeerList__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "peersArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
+        .number = PeerList_FieldNumber_PeersArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(PeerList__storage_, peersArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[PeerList class]
+                                     rootClass:[PresenceRoot class]
+                                          file:PresenceRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(PeerList__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 
 #pragma clang diagnostic pop
 

@@ -50,9 +50,11 @@ GPBObjCClassDeclaration(GroupSearchResult);
 GPBObjCClassDeclaration(GroupSearchResultItem);
 GPBObjCClassDeclaration(HighlightResult);
 GPBObjCClassDeclaration(HighlightToken);
-GPBObjCClassDeclaration(MessageContent);
 GPBObjCClassDeclaration(MessageSearchItem);
 GPBObjCClassDeclaration(MessageSearchResult);
+GPBObjCClassDeclaration(MessageSearchResultBody);
+GPBObjCClassDeclaration(MessageSearchResultBody_Document);
+GPBObjCClassDeclaration(MessageSearchResultBody_Text);
 GPBObjCClassDeclaration(OutPeer);
 GPBObjCClassDeclaration(Peer);
 GPBObjCClassDeclaration(PeerSearchResult);
@@ -1940,17 +1942,17 @@ typedef struct ContactSearchResult__storage_ {
 @dynamic hasPeer, peer;
 @dynamic date;
 @dynamic senderId;
-@dynamic hasContent, content;
 @dynamic hasMid, mid;
-@dynamic facetHighlightsArray, facetHighlightsArray_Count;
+@dynamic highlights, highlights_Count;
+@dynamic hasBody, body;
 
 typedef struct MessageSearchResult__storage_ {
   uint32_t _has_storage_[1];
   Peer *peer;
   NSString *senderId;
-  MessageContent *content;
   UUIDValue *mid;
-  NSMutableArray *facetHighlightsArray;
+  NSMutableDictionary *highlights;
+  MessageSearchResultBody *body;
   int64_t date;
 } MessageSearchResult__storage_;
 
@@ -1988,30 +1990,30 @@ typedef struct MessageSearchResult__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "content",
-        .dataTypeSpecific.clazz = GPBObjCClass(MessageContent),
-        .number = MessageSearchResult_FieldNumber_Content,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(MessageSearchResult__storage_, content),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "mid",
         .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
         .number = MessageSearchResult_FieldNumber_Mid,
-        .hasIndex = 4,
+        .hasIndex = 3,
         .offset = (uint32_t)offsetof(MessageSearchResult__storage_, mid),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "facetHighlightsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(FacetHighlight),
-        .number = MessageSearchResult_FieldNumber_FacetHighlightsArray,
+        .name = "highlights",
+        .dataTypeSpecific.clazz = GPBObjCClass(HighlightResult),
+        .number = MessageSearchResult_FieldNumber_Highlights,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(MessageSearchResult__storage_, facetHighlightsArray),
-        .flags = GPBFieldRepeated,
+        .offset = (uint32_t)offsetof(MessageSearchResult__storage_, highlights),
+        .flags = GPBFieldMapKeyString,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "body",
+        .dataTypeSpecific.clazz = GPBObjCClass(MessageSearchResultBody),
+        .number = MessageSearchResult_FieldNumber_Body,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(MessageSearchResult__storage_, body),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
@@ -2023,6 +2025,166 @@ typedef struct MessageSearchResult__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MessageSearchResult__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - MessageSearchResultBody
+
+@implementation MessageSearchResultBody
+
+@dynamic bodyOneOfCase;
+@dynamic textMessage;
+@dynamic documentMessage;
+
+typedef struct MessageSearchResultBody__storage_ {
+  uint32_t _has_storage_[2];
+  MessageSearchResultBody_Text *textMessage;
+  MessageSearchResultBody_Document *documentMessage;
+} MessageSearchResultBody__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "textMessage",
+        .dataTypeSpecific.clazz = GPBObjCClass(MessageSearchResultBody_Text),
+        .number = MessageSearchResultBody_FieldNumber_TextMessage,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(MessageSearchResultBody__storage_, textMessage),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "documentMessage",
+        .dataTypeSpecific.clazz = GPBObjCClass(MessageSearchResultBody_Document),
+        .number = MessageSearchResultBody_FieldNumber_DocumentMessage,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(MessageSearchResultBody__storage_, documentMessage),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[MessageSearchResultBody class]
+                                     rootClass:[SearchRoot class]
+                                          file:SearchRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(MessageSearchResultBody__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    static const char *oneofs[] = {
+      "body",
+    };
+    [localDescriptor setupOneofs:oneofs
+                           count:(uint32_t)(sizeof(oneofs) / sizeof(char*))
+                   firstHasIndex:-1];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+void MessageSearchResultBody_ClearBodyOneOfCase(MessageSearchResultBody *message) {
+  GPBDescriptor *descriptor = [MessageSearchResultBody descriptor];
+  GPBOneofDescriptor *oneof = [descriptor.oneofs objectAtIndex:0];
+  GPBClearOneof(message, oneof);
+}
+#pragma mark - MessageSearchResultBody_Text
+
+@implementation MessageSearchResultBody_Text
+
+@dynamic text;
+
+typedef struct MessageSearchResultBody_Text__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *text;
+} MessageSearchResultBody_Text__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "text",
+        .dataTypeSpecific.clazz = Nil,
+        .number = MessageSearchResultBody_Text_FieldNumber_Text,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(MessageSearchResultBody_Text__storage_, text),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[MessageSearchResultBody_Text class]
+                                     rootClass:[SearchRoot class]
+                                          file:SearchRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(MessageSearchResultBody_Text__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(MessageSearchResultBody)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - MessageSearchResultBody_Document
+
+@implementation MessageSearchResultBody_Document
+
+@dynamic name;
+
+typedef struct MessageSearchResultBody_Document__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *name;
+} MessageSearchResultBody_Document__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "name",
+        .dataTypeSpecific.clazz = Nil,
+        .number = MessageSearchResultBody_Document_FieldNumber_Name,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(MessageSearchResultBody_Document__storage_, name),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[MessageSearchResultBody_Document class]
+                                     rootClass:[SearchRoot class]
+                                          file:SearchRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(MessageSearchResultBody_Document__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(MessageSearchResultBody)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG
@@ -2265,12 +2427,14 @@ typedef struct ResponseMessageSearch__storage_ {
 @dynamic usersArray, usersArray_Count;
 @dynamic groupsArray, groupsArray_Count;
 @dynamic totalCount;
+@dynamic messagesArray, messagesArray_Count;
 
 typedef struct ResponseSimpleSearch__storage_ {
   uint32_t _has_storage_[1];
   GPBBytesValue *loadMoreState;
   NSMutableArray *usersArray;
   NSMutableArray *groupsArray;
+  NSMutableArray *messagesArray;
   int64_t totalCount;
 } ResponseSimpleSearch__storage_;
 
@@ -2315,6 +2479,15 @@ typedef struct ResponseSimpleSearch__storage_ {
         .offset = (uint32_t)offsetof(ResponseSimpleSearch__storage_, totalCount),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "messagesArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(MessageSearchResult),
+        .number = ResponseSimpleSearch_FieldNumber_MessagesArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(ResponseSimpleSearch__storage_, messagesArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =

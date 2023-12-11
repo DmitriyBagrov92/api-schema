@@ -51,13 +51,16 @@ enum GroupType {
 
     /// Групповой чат типа "важная тема"
     GROUP_TYPE_IMPORTANT_TOPIC = 4;
+
+    /// Групповой чат типа General
+    GROUP_TYPE_GENERAL = 5;
 }
 
 /// Структура группового чата
 message Group {
     /// Идентификатор группового чата
     string id = 1;
-
+    
     /// Ключ доступа к группового чата (всегда равен нулю)
     int64 access_hash = 2 [(dlg).log=log_confidential];
 

@@ -412,6 +412,20 @@ GPB_FINAL @interface ResponseGetUserLastPresence : GPBMessage
 
 @end
 
+#pragma mark - PeerList
+
+typedef GPB_ENUM(PeerList_FieldNumber) {
+  PeerList_FieldNumber_PeersArray = 1,
+};
+
+GPB_FINAL @interface PeerList : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Peer*> *peersArray;
+/** The number of items in @c peersArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger peersArray_Count;
+
+@end
+
 NS_ASSUME_NONNULL_END
 
 CF_EXTERN_C_END

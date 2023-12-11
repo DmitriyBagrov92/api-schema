@@ -41,9 +41,11 @@ CF_EXTERN_C_BEGIN
 @class GroupSearchResultItem;
 @class HighlightResult;
 @class HighlightToken;
-@class MessageContent;
 @class MessageSearchItem;
 @class MessageSearchResult;
+@class MessageSearchResultBody;
+@class MessageSearchResultBody_Document;
+@class MessageSearchResultBody_Text;
 @class OutPeer;
 @class Peer;
 @class PeerSearchResult;
@@ -829,9 +831,9 @@ typedef GPB_ENUM(MessageSearchResult_FieldNumber) {
   MessageSearchResult_FieldNumber_Peer = 1,
   MessageSearchResult_FieldNumber_Date = 3,
   MessageSearchResult_FieldNumber_SenderId = 4,
-  MessageSearchResult_FieldNumber_Content = 5,
   MessageSearchResult_FieldNumber_Mid = 6,
-  MessageSearchResult_FieldNumber_FacetHighlightsArray = 8,
+  MessageSearchResult_FieldNumber_Highlights = 8,
+  MessageSearchResult_FieldNumber_Body = 9,
 };
 
 /**
@@ -847,17 +849,69 @@ GPB_FINAL @interface MessageSearchResult : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *senderId;
 
-@property(nonatomic, readwrite, strong, null_resettable) MessageContent *content;
-/** Test to see if @c content has been set. */
-@property(nonatomic, readwrite) BOOL hasContent;
-
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FacetHighlight*> *facetHighlightsArray;
-/** The number of items in @c facetHighlightsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger facetHighlightsArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableDictionary<NSString*, HighlightResult*> *highlights;
+/** The number of items in @c highlights without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger highlights_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) MessageSearchResultBody *body;
+/** Test to see if @c body has been set. */
+@property(nonatomic, readwrite) BOOL hasBody;
+
+@end
+
+#pragma mark - MessageSearchResultBody
+
+typedef GPB_ENUM(MessageSearchResultBody_FieldNumber) {
+  MessageSearchResultBody_FieldNumber_TextMessage = 1,
+  MessageSearchResultBody_FieldNumber_DocumentMessage = 2,
+};
+
+typedef GPB_ENUM(MessageSearchResultBody_Body_OneOfCase) {
+  MessageSearchResultBody_Body_OneOfCase_GPBUnsetOneOfCase = 0,
+  MessageSearchResultBody_Body_OneOfCase_TextMessage = 1,
+  MessageSearchResultBody_Body_OneOfCase_DocumentMessage = 2,
+};
+
+GPB_FINAL @interface MessageSearchResultBody : GPBMessage
+
+@property(nonatomic, readonly) MessageSearchResultBody_Body_OneOfCase bodyOneOfCase;
+
+@property(nonatomic, readwrite, strong, null_resettable) MessageSearchResultBody_Text *textMessage;
+
+@property(nonatomic, readwrite, strong, null_resettable) MessageSearchResultBody_Document *documentMessage;
+
+@end
+
+/**
+ * Clears whatever value was set for the oneof 'body'.
+ **/
+void MessageSearchResultBody_ClearBodyOneOfCase(MessageSearchResultBody *message);
+
+#pragma mark - MessageSearchResultBody_Text
+
+typedef GPB_ENUM(MessageSearchResultBody_Text_FieldNumber) {
+  MessageSearchResultBody_Text_FieldNumber_Text = 1,
+};
+
+GPB_FINAL @interface MessageSearchResultBody_Text : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *text;
+
+@end
+
+#pragma mark - MessageSearchResultBody_Document
+
+typedef GPB_ENUM(MessageSearchResultBody_Document_FieldNumber) {
+  MessageSearchResultBody_Document_FieldNumber_Name = 1,
+};
+
+GPB_FINAL @interface MessageSearchResultBody_Document : GPBMessage
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
 
 @end
 
@@ -956,6 +1010,7 @@ typedef GPB_ENUM(ResponseSimpleSearch_FieldNumber) {
   ResponseSimpleSearch_FieldNumber_UsersArray = 3,
   ResponseSimpleSearch_FieldNumber_GroupsArray = 4,
   ResponseSimpleSearch_FieldNumber_TotalCount = 5,
+  ResponseSimpleSearch_FieldNumber_MessagesArray = 6,
 };
 
 /**
@@ -976,6 +1031,10 @@ GPB_FINAL @interface ResponseSimpleSearch : GPBMessage
 @property(nonatomic, readonly) NSUInteger groupsArray_Count;
 
 @property(nonatomic, readwrite) int64_t totalCount;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<MessageSearchResult*> *messagesArray;
+/** The number of items in @c messagesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger messagesArray_Count;
 
 @end
 

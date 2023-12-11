@@ -218,10 +218,25 @@ message MessageSearchResult {
     reserved 2; reserved "rid";
     int64 date = 3;
     string sender_id = 4;
-    MessageContent content = 5;
+    reserved 5;
     UUIDValue mid = 6;
     reserved 7; reserved "highlight_tokens";
-    repeated FacetHighlight facet_highlights = 8;
+    map<string, HighlightResult> highlights = 8;
+    MessageSearchResultBody body = 9;
+
+}
+
+message MessageSearchResultBody {
+    oneof body {
+        Text text_message = 1;
+        Document document_message = 2;
+    }
+    message Text {
+        string text = 1 [(dlg).log=log_confidential];
+    }
+    message Document {
+        string name = 1 [(dlg).log=log_confidential];
+    }
 }
 
 message SearchResult {
@@ -256,6 +271,7 @@ message ResponseSimpleSearch {
     repeated UserSearchResultItem users = 3;
     repeated GroupSearchResultItem groups = 4;
     int64 total_count = 5;
+    repeated MessageSearchResult messages = 6;
 }
 
 message UserSearchResultItem {
