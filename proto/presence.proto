@@ -108,8 +108,32 @@ message ResponseGetUserLastPresence {
     google.protobuf.Timestamp last_online_at = 1;
 }
 
-message PeerList {
+// Запрос для подписки на онлайны пиров
+message RequestSubscribeToOnlines {
     repeated dialog.Peer peers = 1;
+}
+
+// Запрос для подписки на тайпинги пиров
+message RequestSubscribeToTypings {
+    repeated dialog.Peer peers = 1;
+}
+
+// Запрос для отписки от онлайнов
+message RequestUnsubscribeFromOnlines {
+    repeated dialog.Peer peers = 1;
+}
+
+// Запрос для отписки от тайпингов
+message RequestUnsubscribeFromTypings {
+    repeated dialog.Peer peers = 1;
+}
+
+// Запрос для отписки от всех онлайнов
+message RequestUnsubscribeFromAllOnlines {
+}
+
+// Запрос для отписки от всех тайпингов
+message RequestUnsubscribeFromAllTypings {
 }
 
 service Presence {
@@ -137,37 +161,37 @@ service Presence {
             body: "*"
         };
     }
-    rpc SubscribeToOnlines(PeerList) returns (google.protobuf.Empty) {
+    rpc SubscribeToOnlines(RequestSubscribeToOnlines) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Presence/SubscribeToOnlines"
             body: "*"
         };
     }
-    rpc SubscribeToTypings(PeerList) returns (google.protobuf.Empty) {
+    rpc SubscribeToTypings(RequestSubscribeToTypings) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Presence/SubscribeToTypings"
             body: "*"
         };
     }
-    rpc UnsubscribeFromOnlines(PeerList) returns (google.protobuf.Empty) {
+    rpc UnsubscribeFromOnlines(RequestUnsubscribeFromOnlines) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Presence/UnsubscribeFromOnlines"
             body: "*"
         };
     }
-    rpc UnsubscribeFromTypings(PeerList) returns (google.protobuf.Empty) {
+    rpc UnsubscribeFromTypings(RequestUnsubscribeFromTypings) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Presence/UnsubscribeFromTypings"
             body: "*"
         };
     }
-    rpc UnsubscribeFromAllOnlines(google.protobuf.Empty) returns (google.protobuf.Empty) {
+    rpc UnsubscribeFromAllOnlines(RequestUnsubscribeFromAllOnlines) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Presence/UnsubscribeFromAllOnlines"
             body: "*"
         };
     }
-    rpc UnsubscribeFromAllTypings(google.protobuf.Empty) returns (google.protobuf.Empty) {
+    rpc UnsubscribeFromAllTypings(RequestUnsubscribeFromAllTypings) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Presence/UnsubscribeFromAllTypings"
             body: "*"

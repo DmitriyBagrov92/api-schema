@@ -13,11 +13,16 @@
 #endif
 
 @class GPBEmpty;
-@class PeerList;
 @class RequestGetUserLastPresence;
 @class RequestSetOnline;
 @class RequestStartTyping;
 @class RequestStopTyping;
+@class RequestSubscribeToOnlines;
+@class RequestSubscribeToTypings;
+@class RequestUnsubscribeFromAllOnlines;
+@class RequestUnsubscribeFromAllTypings;
+@class RequestUnsubscribeFromOnlines;
+@class RequestUnsubscribeFromTypings;
 @class ResponseGetUserLastPresence;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
@@ -56,29 +61,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (GRPCUnaryProtoCall *)getUserLastPresenceWithMessage:(RequestGetUserLastPresence *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark SubscribeToOnlines(PeerList) returns (Empty)
+#pragma mark SubscribeToOnlines(RequestSubscribeToOnlines) returns (Empty)
 
-- (GRPCUnaryProtoCall *)subscribeToOnlinesWithMessage:(PeerList *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)subscribeToOnlinesWithMessage:(RequestSubscribeToOnlines *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark SubscribeToTypings(PeerList) returns (Empty)
+#pragma mark SubscribeToTypings(RequestSubscribeToTypings) returns (Empty)
 
-- (GRPCUnaryProtoCall *)subscribeToTypingsWithMessage:(PeerList *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)subscribeToTypingsWithMessage:(RequestSubscribeToTypings *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark UnsubscribeFromOnlines(PeerList) returns (Empty)
+#pragma mark UnsubscribeFromOnlines(RequestUnsubscribeFromOnlines) returns (Empty)
 
-- (GRPCUnaryProtoCall *)unsubscribeFromOnlinesWithMessage:(PeerList *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)unsubscribeFromOnlinesWithMessage:(RequestUnsubscribeFromOnlines *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark UnsubscribeFromTypings(PeerList) returns (Empty)
+#pragma mark UnsubscribeFromTypings(RequestUnsubscribeFromTypings) returns (Empty)
 
-- (GRPCUnaryProtoCall *)unsubscribeFromTypingsWithMessage:(PeerList *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)unsubscribeFromTypingsWithMessage:(RequestUnsubscribeFromTypings *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark UnsubscribeFromAllOnlines(Empty) returns (Empty)
+#pragma mark UnsubscribeFromAllOnlines(RequestUnsubscribeFromAllOnlines) returns (Empty)
 
-- (GRPCUnaryProtoCall *)unsubscribeFromAllOnlinesWithMessage:(GPBEmpty *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)unsubscribeFromAllOnlinesWithMessage:(RequestUnsubscribeFromAllOnlines *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark UnsubscribeFromAllTypings(Empty) returns (Empty)
+#pragma mark UnsubscribeFromAllTypings(RequestUnsubscribeFromAllTypings) returns (Empty)
 
-- (GRPCUnaryProtoCall *)unsubscribeFromAllTypingsWithMessage:(GPBEmpty *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)unsubscribeFromAllTypingsWithMessage:(RequestUnsubscribeFromAllTypings *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 @end
 
@@ -116,46 +121,46 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToGetUserLastPresenceWithRequest:(RequestGetUserLastPresence *)request handler:(void(^)(ResponseGetUserLastPresence *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark SubscribeToOnlines(PeerList) returns (Empty)
+#pragma mark SubscribeToOnlines(RequestSubscribeToOnlines) returns (Empty)
 
-- (void)subscribeToOnlinesWithRequest:(PeerList *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+- (void)subscribeToOnlinesWithRequest:(RequestSubscribeToOnlines *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToSubscribeToOnlinesWithRequest:(PeerList *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark SubscribeToTypings(PeerList) returns (Empty)
-
-- (void)subscribeToTypingsWithRequest:(PeerList *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToSubscribeToTypingsWithRequest:(PeerList *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToSubscribeToOnlinesWithRequest:(RequestSubscribeToOnlines *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark UnsubscribeFromOnlines(PeerList) returns (Empty)
+#pragma mark SubscribeToTypings(RequestSubscribeToTypings) returns (Empty)
 
-- (void)unsubscribeFromOnlinesWithRequest:(PeerList *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+- (void)subscribeToTypingsWithRequest:(RequestSubscribeToTypings *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToUnsubscribeFromOnlinesWithRequest:(PeerList *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark UnsubscribeFromTypings(PeerList) returns (Empty)
-
-- (void)unsubscribeFromTypingsWithRequest:(PeerList *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
-
-- (GRPCProtoCall *)RPCToUnsubscribeFromTypingsWithRequest:(PeerList *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToSubscribeToTypingsWithRequest:(RequestSubscribeToTypings *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark UnsubscribeFromAllOnlines(Empty) returns (Empty)
+#pragma mark UnsubscribeFromOnlines(RequestUnsubscribeFromOnlines) returns (Empty)
 
-- (void)unsubscribeFromAllOnlinesWithRequest:(GPBEmpty *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+- (void)unsubscribeFromOnlinesWithRequest:(RequestUnsubscribeFromOnlines *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToUnsubscribeFromAllOnlinesWithRequest:(GPBEmpty *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToUnsubscribeFromOnlinesWithRequest:(RequestUnsubscribeFromOnlines *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
-#pragma mark UnsubscribeFromAllTypings(Empty) returns (Empty)
+#pragma mark UnsubscribeFromTypings(RequestUnsubscribeFromTypings) returns (Empty)
 
-- (void)unsubscribeFromAllTypingsWithRequest:(GPBEmpty *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+- (void)unsubscribeFromTypingsWithRequest:(RequestUnsubscribeFromTypings *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
-- (GRPCProtoCall *)RPCToUnsubscribeFromAllTypingsWithRequest:(GPBEmpty *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+- (GRPCProtoCall *)RPCToUnsubscribeFromTypingsWithRequest:(RequestUnsubscribeFromTypings *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark UnsubscribeFromAllOnlines(RequestUnsubscribeFromAllOnlines) returns (Empty)
+
+- (void)unsubscribeFromAllOnlinesWithRequest:(RequestUnsubscribeFromAllOnlines *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToUnsubscribeFromAllOnlinesWithRequest:(RequestUnsubscribeFromAllOnlines *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark UnsubscribeFromAllTypings(RequestUnsubscribeFromAllTypings) returns (Empty)
+
+- (void)unsubscribeFromAllTypingsWithRequest:(RequestUnsubscribeFromAllTypings *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+- (GRPCProtoCall *)RPCToUnsubscribeFromAllTypingsWithRequest:(RequestUnsubscribeFromAllTypings *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end

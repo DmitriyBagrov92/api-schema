@@ -141,19 +141,19 @@
              responseClass:[ResponseGetUserLastPresence class]];
 }
 
-#pragma mark SubscribeToOnlines(PeerList) returns (Empty)
+#pragma mark SubscribeToOnlines(RequestSubscribeToOnlines) returns (Empty)
 
-- (void)subscribeToOnlinesWithRequest:(PeerList *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+- (void)subscribeToOnlinesWithRequest:(RequestSubscribeToOnlines *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToSubscribeToOnlinesWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToSubscribeToOnlinesWithRequest:(PeerList *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToSubscribeToOnlinesWithRequest:(RequestSubscribeToOnlines *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"SubscribeToOnlines"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-- (GRPCUnaryProtoCall *)subscribeToOnlinesWithMessage:(PeerList *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+- (GRPCUnaryProtoCall *)subscribeToOnlinesWithMessage:(RequestSubscribeToOnlines *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"SubscribeToOnlines"
                    message:message
            responseHandler:handler
@@ -161,19 +161,19 @@
              responseClass:[GPBEmpty class]];
 }
 
-#pragma mark SubscribeToTypings(PeerList) returns (Empty)
+#pragma mark SubscribeToTypings(RequestSubscribeToTypings) returns (Empty)
 
-- (void)subscribeToTypingsWithRequest:(PeerList *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+- (void)subscribeToTypingsWithRequest:(RequestSubscribeToTypings *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToSubscribeToTypingsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToSubscribeToTypingsWithRequest:(PeerList *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToSubscribeToTypingsWithRequest:(RequestSubscribeToTypings *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"SubscribeToTypings"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-- (GRPCUnaryProtoCall *)subscribeToTypingsWithMessage:(PeerList *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+- (GRPCUnaryProtoCall *)subscribeToTypingsWithMessage:(RequestSubscribeToTypings *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"SubscribeToTypings"
                    message:message
            responseHandler:handler
@@ -181,19 +181,19 @@
              responseClass:[GPBEmpty class]];
 }
 
-#pragma mark UnsubscribeFromOnlines(PeerList) returns (Empty)
+#pragma mark UnsubscribeFromOnlines(RequestUnsubscribeFromOnlines) returns (Empty)
 
-- (void)unsubscribeFromOnlinesWithRequest:(PeerList *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+- (void)unsubscribeFromOnlinesWithRequest:(RequestUnsubscribeFromOnlines *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToUnsubscribeFromOnlinesWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToUnsubscribeFromOnlinesWithRequest:(PeerList *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToUnsubscribeFromOnlinesWithRequest:(RequestUnsubscribeFromOnlines *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"UnsubscribeFromOnlines"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-- (GRPCUnaryProtoCall *)unsubscribeFromOnlinesWithMessage:(PeerList *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+- (GRPCUnaryProtoCall *)unsubscribeFromOnlinesWithMessage:(RequestUnsubscribeFromOnlines *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"UnsubscribeFromOnlines"
                    message:message
            responseHandler:handler
@@ -201,19 +201,19 @@
              responseClass:[GPBEmpty class]];
 }
 
-#pragma mark UnsubscribeFromTypings(PeerList) returns (Empty)
+#pragma mark UnsubscribeFromTypings(RequestUnsubscribeFromTypings) returns (Empty)
 
-- (void)unsubscribeFromTypingsWithRequest:(PeerList *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+- (void)unsubscribeFromTypingsWithRequest:(RequestUnsubscribeFromTypings *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToUnsubscribeFromTypingsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToUnsubscribeFromTypingsWithRequest:(PeerList *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToUnsubscribeFromTypingsWithRequest:(RequestUnsubscribeFromTypings *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"UnsubscribeFromTypings"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-- (GRPCUnaryProtoCall *)unsubscribeFromTypingsWithMessage:(PeerList *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+- (GRPCUnaryProtoCall *)unsubscribeFromTypingsWithMessage:(RequestUnsubscribeFromTypings *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"UnsubscribeFromTypings"
                    message:message
            responseHandler:handler
@@ -221,19 +221,19 @@
              responseClass:[GPBEmpty class]];
 }
 
-#pragma mark UnsubscribeFromAllOnlines(Empty) returns (Empty)
+#pragma mark UnsubscribeFromAllOnlines(RequestUnsubscribeFromAllOnlines) returns (Empty)
 
-- (void)unsubscribeFromAllOnlinesWithRequest:(GPBEmpty *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+- (void)unsubscribeFromAllOnlinesWithRequest:(RequestUnsubscribeFromAllOnlines *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToUnsubscribeFromAllOnlinesWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToUnsubscribeFromAllOnlinesWithRequest:(GPBEmpty *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToUnsubscribeFromAllOnlinesWithRequest:(RequestUnsubscribeFromAllOnlines *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"UnsubscribeFromAllOnlines"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-- (GRPCUnaryProtoCall *)unsubscribeFromAllOnlinesWithMessage:(GPBEmpty *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+- (GRPCUnaryProtoCall *)unsubscribeFromAllOnlinesWithMessage:(RequestUnsubscribeFromAllOnlines *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"UnsubscribeFromAllOnlines"
                    message:message
            responseHandler:handler
@@ -241,19 +241,19 @@
              responseClass:[GPBEmpty class]];
 }
 
-#pragma mark UnsubscribeFromAllTypings(Empty) returns (Empty)
+#pragma mark UnsubscribeFromAllTypings(RequestUnsubscribeFromAllTypings) returns (Empty)
 
-- (void)unsubscribeFromAllTypingsWithRequest:(GPBEmpty *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+- (void)unsubscribeFromAllTypingsWithRequest:(RequestUnsubscribeFromAllTypings *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   [[self RPCToUnsubscribeFromAllTypingsWithRequest:request handler:handler] start];
 }
 // Returns a not-yet-started RPC object.
-- (GRPCProtoCall *)RPCToUnsubscribeFromAllTypingsWithRequest:(GPBEmpty *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+- (GRPCProtoCall *)RPCToUnsubscribeFromAllTypingsWithRequest:(RequestUnsubscribeFromAllTypings *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
   return [self RPCToMethod:@"UnsubscribeFromAllTypings"
             requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[GPBEmpty class]
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
-- (GRPCUnaryProtoCall *)unsubscribeFromAllTypingsWithMessage:(GPBEmpty *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+- (GRPCUnaryProtoCall *)unsubscribeFromAllTypingsWithMessage:(RequestUnsubscribeFromAllTypings *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"UnsubscribeFromAllTypings"
                    message:message
            responseHandler:handler

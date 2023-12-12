@@ -412,17 +412,89 @@ GPB_FINAL @interface ResponseGetUserLastPresence : GPBMessage
 
 @end
 
-#pragma mark - PeerList
+#pragma mark - RequestSubscribeToOnlines
 
-typedef GPB_ENUM(PeerList_FieldNumber) {
-  PeerList_FieldNumber_PeersArray = 1,
+typedef GPB_ENUM(RequestSubscribeToOnlines_FieldNumber) {
+  RequestSubscribeToOnlines_FieldNumber_PeersArray = 1,
 };
 
-GPB_FINAL @interface PeerList : GPBMessage
+/**
+ * Запрос для подписки на онлайны пиров
+ **/
+GPB_FINAL @interface RequestSubscribeToOnlines : GPBMessage
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Peer*> *peersArray;
 /** The number of items in @c peersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger peersArray_Count;
+
+@end
+
+#pragma mark - RequestSubscribeToTypings
+
+typedef GPB_ENUM(RequestSubscribeToTypings_FieldNumber) {
+  RequestSubscribeToTypings_FieldNumber_PeersArray = 1,
+};
+
+/**
+ * Запрос для подписки на тайпинги пиров
+ **/
+GPB_FINAL @interface RequestSubscribeToTypings : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Peer*> *peersArray;
+/** The number of items in @c peersArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger peersArray_Count;
+
+@end
+
+#pragma mark - RequestUnsubscribeFromOnlines
+
+typedef GPB_ENUM(RequestUnsubscribeFromOnlines_FieldNumber) {
+  RequestUnsubscribeFromOnlines_FieldNumber_PeersArray = 1,
+};
+
+/**
+ * Запрос для отписки от онлайнов
+ **/
+GPB_FINAL @interface RequestUnsubscribeFromOnlines : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Peer*> *peersArray;
+/** The number of items in @c peersArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger peersArray_Count;
+
+@end
+
+#pragma mark - RequestUnsubscribeFromTypings
+
+typedef GPB_ENUM(RequestUnsubscribeFromTypings_FieldNumber) {
+  RequestUnsubscribeFromTypings_FieldNumber_PeersArray = 1,
+};
+
+/**
+ * Запрос для отписки от тайпингов
+ **/
+GPB_FINAL @interface RequestUnsubscribeFromTypings : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Peer*> *peersArray;
+/** The number of items in @c peersArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger peersArray_Count;
+
+@end
+
+#pragma mark - RequestUnsubscribeFromAllOnlines
+
+/**
+ * Запрос для отписки от всех онлайнов
+ **/
+GPB_FINAL @interface RequestUnsubscribeFromAllOnlines : GPBMessage
+
+@end
+
+#pragma mark - RequestUnsubscribeFromAllTypings
+
+/**
+ * Запрос для отписки от всех тайпингов
+ **/
+GPB_FINAL @interface RequestUnsubscribeFromAllTypings : GPBMessage
 
 @end
 

@@ -919,16 +919,16 @@ typedef struct ResponseGetUserLastPresence__storage_ {
 
 @end
 
-#pragma mark - PeerList
+#pragma mark - RequestSubscribeToOnlines
 
-@implementation PeerList
+@implementation RequestSubscribeToOnlines
 
 @dynamic peersArray, peersArray_Count;
 
-typedef struct PeerList__storage_ {
+typedef struct RequestSubscribeToOnlines__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *peersArray;
-} PeerList__storage_;
+} RequestSubscribeToOnlines__storage_;
 
 // This method is threadsafe because it is initially called
 // in +initialize for each subclass.
@@ -939,20 +939,219 @@ typedef struct PeerList__storage_ {
       {
         .name = "peersArray",
         .dataTypeSpecific.clazz = GPBObjCClass(Peer),
-        .number = PeerList_FieldNumber_PeersArray,
+        .number = RequestSubscribeToOnlines_FieldNumber_PeersArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(PeerList__storage_, peersArray),
+        .offset = (uint32_t)offsetof(RequestSubscribeToOnlines__storage_, peersArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[PeerList class]
+        [GPBDescriptor allocDescriptorForClass:[RequestSubscribeToOnlines class]
                                      rootClass:[PresenceRoot class]
                                           file:PresenceRoot_FileDescriptor()
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(PeerList__storage_)
+                                   storageSize:sizeof(RequestSubscribeToOnlines__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - RequestSubscribeToTypings
+
+@implementation RequestSubscribeToTypings
+
+@dynamic peersArray, peersArray_Count;
+
+typedef struct RequestSubscribeToTypings__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *peersArray;
+} RequestSubscribeToTypings__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "peersArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
+        .number = RequestSubscribeToTypings_FieldNumber_PeersArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(RequestSubscribeToTypings__storage_, peersArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestSubscribeToTypings class]
+                                     rootClass:[PresenceRoot class]
+                                          file:PresenceRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RequestSubscribeToTypings__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - RequestUnsubscribeFromOnlines
+
+@implementation RequestUnsubscribeFromOnlines
+
+@dynamic peersArray, peersArray_Count;
+
+typedef struct RequestUnsubscribeFromOnlines__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *peersArray;
+} RequestUnsubscribeFromOnlines__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "peersArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
+        .number = RequestUnsubscribeFromOnlines_FieldNumber_PeersArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(RequestUnsubscribeFromOnlines__storage_, peersArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestUnsubscribeFromOnlines class]
+                                     rootClass:[PresenceRoot class]
+                                          file:PresenceRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RequestUnsubscribeFromOnlines__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - RequestUnsubscribeFromTypings
+
+@implementation RequestUnsubscribeFromTypings
+
+@dynamic peersArray, peersArray_Count;
+
+typedef struct RequestUnsubscribeFromTypings__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *peersArray;
+} RequestUnsubscribeFromTypings__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "peersArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
+        .number = RequestUnsubscribeFromTypings_FieldNumber_PeersArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(RequestUnsubscribeFromTypings__storage_, peersArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestUnsubscribeFromTypings class]
+                                     rootClass:[PresenceRoot class]
+                                          file:PresenceRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RequestUnsubscribeFromTypings__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - RequestUnsubscribeFromAllOnlines
+
+@implementation RequestUnsubscribeFromAllOnlines
+
+
+typedef struct RequestUnsubscribeFromAllOnlines__storage_ {
+  uint32_t _has_storage_[1];
+} RequestUnsubscribeFromAllOnlines__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestUnsubscribeFromAllOnlines class]
+                                     rootClass:[PresenceRoot class]
+                                          file:PresenceRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(RequestUnsubscribeFromAllOnlines__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - RequestUnsubscribeFromAllTypings
+
+@implementation RequestUnsubscribeFromAllTypings
+
+
+typedef struct RequestUnsubscribeFromAllTypings__storage_ {
+  uint32_t _has_storage_[1];
+} RequestUnsubscribeFromAllTypings__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestUnsubscribeFromAllTypings class]
+                                     rootClass:[PresenceRoot class]
+                                          file:PresenceRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(RequestUnsubscribeFromAllTypings__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
