@@ -45,7 +45,6 @@ GPBObjCClassDeclaration(GPBInt64Value);
 GPBObjCClassDeclaration(GPBStringValue);
 GPBObjCClassDeclaration(GPBTimestamp);
 GPBObjCClassDeclaration(GroupData);
-GPBObjCClassDeclaration(GroupOutPeer);
 GPBObjCClassDeclaration(GroupSearchResult);
 GPBObjCClassDeclaration(GroupSearchResultItem);
 GPBObjCClassDeclaration(HighlightResult);
@@ -1583,13 +1582,13 @@ typedef struct RequestPeerSearch__storage_ {
 
 @dynamic searchResultsArray, searchResultsArray_Count;
 @dynamic userPeersArray, userPeersArray_Count;
-@dynamic groupPeersArray, groupPeersArray_Count;
+@dynamic groupIdsArray, groupIdsArray_Count;
 
 typedef struct ResponsePeerSearch__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *searchResultsArray;
   NSMutableArray *userPeersArray;
-  NSMutableArray *groupPeersArray;
+  NSMutableArray *groupIdsArray;
 } ResponsePeerSearch__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1617,13 +1616,13 @@ typedef struct ResponsePeerSearch__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "groupPeersArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(GroupOutPeer),
-        .number = ResponsePeerSearch_FieldNumber_GroupPeersArray,
+        .name = "groupIdsArray",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ResponsePeerSearch_FieldNumber_GroupIdsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponsePeerSearch__storage_, groupPeersArray),
+        .offset = (uint32_t)offsetof(ResponsePeerSearch__storage_, groupIdsArray),
         .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1883,13 +1882,13 @@ typedef struct UserSearchResult__storage_ {
 
 @implementation GroupSearchResult
 
-@dynamic hasPeer, peer;
+@dynamic groupId;
 @dynamic facetHighlightsArray, facetHighlightsArray_Count;
 
 typedef struct GroupSearchResult__storage_ {
   uint32_t _has_storage_[1];
-  GroupOutPeer *peer;
   NSMutableArray *facetHighlightsArray;
+  NSString *groupId;
 } GroupSearchResult__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1899,15 +1898,6 @@ typedef struct GroupSearchResult__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "peer",
-        .dataTypeSpecific.clazz = GPBObjCClass(GroupOutPeer),
-        .number = GroupSearchResult_FieldNumber_Peer,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GroupSearchResult__storage_, peer),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "facetHighlightsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(FacetHighlight),
         .number = GroupSearchResult_FieldNumber_FacetHighlightsArray,
@@ -1915,6 +1905,15 @@ typedef struct GroupSearchResult__storage_ {
         .offset = (uint32_t)offsetof(GroupSearchResult__storage_, facetHighlightsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "groupId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = GroupSearchResult_FieldNumber_GroupId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GroupSearchResult__storage_, groupId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -2404,7 +2403,7 @@ typedef struct MessageSearchItem__storage_ {
 @dynamic searchResultsArray, searchResultsArray_Count;
 @dynamic hasLoadMoreState, loadMoreState;
 @dynamic userOutPeersArray, userOutPeersArray_Count;
-@dynamic groupOutPeersArray, groupOutPeersArray_Count;
+@dynamic groupIdsArray, groupIdsArray_Count;
 @dynamic totalCount;
 
 typedef struct ResponseMessageSearch__storage_ {
@@ -2412,7 +2411,7 @@ typedef struct ResponseMessageSearch__storage_ {
   NSMutableArray *searchResultsArray;
   GPBBytesValue *loadMoreState;
   NSMutableArray *userOutPeersArray;
-  NSMutableArray *groupOutPeersArray;
+  NSMutableArray *groupIdsArray;
   int64_t totalCount;
 } ResponseMessageSearch__storage_;
 
@@ -2450,15 +2449,6 @@ typedef struct ResponseMessageSearch__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "groupOutPeersArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(GroupOutPeer),
-        .number = ResponseMessageSearch_FieldNumber_GroupOutPeersArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponseMessageSearch__storage_, groupOutPeersArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "totalCount",
         .dataTypeSpecific.clazz = Nil,
         .number = ResponseMessageSearch_FieldNumber_TotalCount,
@@ -2466,6 +2456,15 @@ typedef struct ResponseMessageSearch__storage_ {
         .offset = (uint32_t)offsetof(ResponseMessageSearch__storage_, totalCount),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "groupIdsArray",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ResponseMessageSearch_FieldNumber_GroupIdsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(ResponseMessageSearch__storage_, groupIdsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -3581,12 +3580,12 @@ typedef struct RequestGetPromotedPeers__storage_ {
 @implementation ResponseGetPromotedPeers
 
 @dynamic userPeersArray, userPeersArray_Count;
-@dynamic groupPeersArray, groupPeersArray_Count;
+@dynamic groupIdsArray, groupIdsArray_Count;
 
 typedef struct ResponseGetPromotedPeers__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *userPeersArray;
-  NSMutableArray *groupPeersArray;
+  NSMutableArray *groupIdsArray;
 } ResponseGetPromotedPeers__storage_;
 
 // This method is threadsafe because it is initially called
@@ -3605,13 +3604,13 @@ typedef struct ResponseGetPromotedPeers__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "groupPeersArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(GroupOutPeer),
-        .number = ResponseGetPromotedPeers_FieldNumber_GroupPeersArray,
+        .name = "groupIdsArray",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ResponseGetPromotedPeers_FieldNumber_GroupIdsArray,
         .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponseGetPromotedPeers__storage_, groupPeersArray),
+        .offset = (uint32_t)offsetof(ResponseGetPromotedPeers__storage_, groupIdsArray),
         .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

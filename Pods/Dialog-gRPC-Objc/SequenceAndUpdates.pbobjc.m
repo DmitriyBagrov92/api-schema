@@ -47,13 +47,11 @@
 // Forward declarations of Objective C classes that we can use as
 // static values in struct initializers.
 // We don't use [Foo class] because it is not a static value.
-GPBObjCClassDeclaration(Config);
 GPBObjCClassDeclaration(GPBEmpty);
 GPBObjCClassDeclaration(GPBInt64Value);
 GPBObjCClassDeclaration(GPBStringValue);
 GPBObjCClassDeclaration(Group);
 GPBObjCClassDeclaration(GroupMembersSubset);
-GPBObjCClassDeclaration(GroupOutPeer);
 GPBObjCClassDeclaration(GroupPartialInfo);
 GPBObjCClassDeclaration(HistoryMessage);
 GPBObjCClassDeclaration(Peer);
@@ -1062,20 +1060,10 @@ typedef struct RequestGetDifference__storage_ {
 @dynamic seq;
 @dynamic updatesArray, updatesArray_Count;
 @dynamic needMore;
-@dynamic messagesArray, messagesArray_Count;
-@dynamic usersRefsArray, usersRefsArray_Count;
-@dynamic groupsRefsArray, groupsRefsArray_Count;
-@dynamic hasConfig, config;
-@dynamic hasConfigHash, configHash;
 
 typedef struct ResponseGetDifference__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *updatesArray;
-  NSMutableArray *messagesArray;
-  NSMutableArray *usersRefsArray;
-  NSMutableArray *groupsRefsArray;
-  Config *config;
-  GPBInt64Value *configHash;
   uint64_t seq;
 } ResponseGetDifference__storage_;
 
@@ -1104,15 +1092,6 @@ typedef struct ResponseGetDifference__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "messagesArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(HistoryMessage),
-        .number = ResponseGetDifference_FieldNumber_MessagesArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponseGetDifference__storage_, messagesArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "needMore",
         .dataTypeSpecific.clazz = Nil,
         .number = ResponseGetDifference_FieldNumber_NeedMore,
@@ -1120,42 +1099,6 @@ typedef struct ResponseGetDifference__storage_ {
         .offset = 2,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
-      },
-      {
-        .name = "usersRefsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(UserOutPeer),
-        .number = ResponseGetDifference_FieldNumber_UsersRefsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponseGetDifference__storage_, usersRefsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "groupsRefsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(GroupOutPeer),
-        .number = ResponseGetDifference_FieldNumber_GroupsRefsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponseGetDifference__storage_, groupsRefsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "config",
-        .dataTypeSpecific.clazz = GPBObjCClass(Config),
-        .number = ResponseGetDifference_FieldNumber_Config,
-        .hasIndex = 3,
-        .offset = (uint32_t)offsetof(ResponseGetDifference__storage_, config),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "configHash",
-        .dataTypeSpecific.clazz = GPBObjCClass(GPBInt64Value),
-        .number = ResponseGetDifference_FieldNumber_ConfigHash,
-        .hasIndex = 4,
-        .offset = (uint32_t)offsetof(ResponseGetDifference__storage_, configHash),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1180,13 +1123,13 @@ typedef struct ResponseGetDifference__storage_ {
 
 @implementation GroupMembersSubset
 
-@dynamic hasGroupPeer, groupPeer;
+@dynamic groupId;
 @dynamic memberIdsArray, memberIdsArray_Count;
 
 typedef struct GroupMembersSubset__storage_ {
   uint32_t _has_storage_[1];
-  GroupOutPeer *groupPeer;
   NSMutableArray *memberIdsArray;
+  NSString *groupId;
 } GroupMembersSubset__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1196,21 +1139,21 @@ typedef struct GroupMembersSubset__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "groupPeer",
-        .dataTypeSpecific.clazz = GPBObjCClass(GroupOutPeer),
-        .number = GroupMembersSubset_FieldNumber_GroupPeer,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(GroupMembersSubset__storage_, groupPeer),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "memberIdsArray",
         .dataTypeSpecific.clazz = Nil,
         .number = GroupMembersSubset_FieldNumber_MemberIdsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(GroupMembersSubset__storage_, memberIdsArray),
         .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "groupId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = GroupMembersSubset_FieldNumber_GroupId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GroupMembersSubset__storage_, groupId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
     };
@@ -1239,7 +1182,7 @@ typedef struct GroupMembersSubset__storage_ {
 @dynamic usersArray, usersArray_Count;
 @dynamic midsArray, midsArray_Count;
 @dynamic groupMembersArray, groupMembersArray_Count;
-@dynamic groupsArray, groupsArray_Count;
+@dynamic groupIdsArray, groupIdsArray_Count;
 @dynamic referencedMidsArray, referencedMidsArray_Count;
 
 typedef struct RequestGetReferencedEntities__storage_ {
@@ -1247,8 +1190,8 @@ typedef struct RequestGetReferencedEntities__storage_ {
   NSMutableArray *usersArray;
   NSMutableArray *midsArray;
   NSMutableArray *groupMembersArray;
-  NSMutableArray *groupsArray;
   NSMutableArray *referencedMidsArray;
+  NSMutableArray *groupIdsArray;
 } RequestGetReferencedEntities__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1285,15 +1228,6 @@ typedef struct RequestGetReferencedEntities__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "groupsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(GroupOutPeer),
-        .number = RequestGetReferencedEntities_FieldNumber_GroupsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestGetReferencedEntities__storage_, groupsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "referencedMidsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(ReferencedMessages),
         .number = RequestGetReferencedEntities_FieldNumber_ReferencedMidsArray,
@@ -1301,6 +1235,15 @@ typedef struct RequestGetReferencedEntities__storage_ {
         .offset = (uint32_t)offsetof(RequestGetReferencedEntities__storage_, referencedMidsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "groupIdsArray",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestGetReferencedEntities_FieldNumber_GroupIdsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(RequestGetReferencedEntities__storage_, groupIdsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1393,14 +1336,14 @@ typedef struct ResponseGetReferencedEntities__storage_ {
 @implementation RequestGetPartialPeerInfo
 
 @dynamic usersArray, usersArray_Count;
-@dynamic groupsArray, groupsArray_Count;
+@dynamic groupIdsArray, groupIdsArray_Count;
 @dynamic groupMembersArray, groupMembersArray_Count;
 
 typedef struct RequestGetPartialPeerInfo__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *usersArray;
-  NSMutableArray *groupsArray;
   NSMutableArray *groupMembersArray;
+  NSMutableArray *groupIdsArray;
 } RequestGetPartialPeerInfo__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1419,15 +1362,6 @@ typedef struct RequestGetPartialPeerInfo__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "groupsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(GroupOutPeer),
-        .number = RequestGetPartialPeerInfo_FieldNumber_GroupsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(RequestGetPartialPeerInfo__storage_, groupsArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
         .name = "groupMembersArray",
         .dataTypeSpecific.clazz = GPBObjCClass(GroupMembersSubset),
         .number = RequestGetPartialPeerInfo_FieldNumber_GroupMembersArray,
@@ -1435,6 +1369,15 @@ typedef struct RequestGetPartialPeerInfo__storage_ {
         .offset = (uint32_t)offsetof(RequestGetPartialPeerInfo__storage_, groupMembersArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "groupIdsArray",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestGetPartialPeerInfo_FieldNumber_GroupIdsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(RequestGetPartialPeerInfo__storage_, groupIdsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
       },
     };
     GPBDescriptor *localDescriptor =

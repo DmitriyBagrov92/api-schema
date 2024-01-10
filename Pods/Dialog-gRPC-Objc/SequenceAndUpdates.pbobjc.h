@@ -27,13 +27,11 @@
 
 CF_EXTERN_C_BEGIN
 
-@class Config;
 @class GPBEmpty;
 @class GPBInt64Value;
 @class GPBStringValue;
 @class Group;
 @class GroupMembersSubset;
-@class GroupOutPeer;
 @class GroupPartialInfo;
 @class HistoryMessage;
 @class Peer;
@@ -477,12 +475,7 @@ GPB_FINAL @interface RequestGetDifference : GPBMessage
 typedef GPB_ENUM(ResponseGetDifference_FieldNumber) {
   ResponseGetDifference_FieldNumber_Seq = 1,
   ResponseGetDifference_FieldNumber_UpdatesArray = 2,
-  ResponseGetDifference_FieldNumber_MessagesArray = 3,
   ResponseGetDifference_FieldNumber_NeedMore = 4,
-  ResponseGetDifference_FieldNumber_UsersRefsArray = 5,
-  ResponseGetDifference_FieldNumber_GroupsRefsArray = 6,
-  ResponseGetDifference_FieldNumber_Config = 7,
-  ResponseGetDifference_FieldNumber_ConfigHash = 8,
 };
 
 /**
@@ -504,38 +497,13 @@ GPB_FINAL @interface ResponseGetDifference : GPBMessage
  **/
 @property(nonatomic, readwrite) BOOL needMore;
 
-/** / deprecated */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<HistoryMessage*> *messagesArray GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.messages is deprecated (see sequence_and_updates.proto).");
-/** The number of items in @c messagesArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger messagesArray_Count GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.messages is deprecated (see sequence_and_updates.proto).");
-
-/** / deprecated */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *usersRefsArray GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.users_refs is deprecated (see sequence_and_updates.proto).");
-/** The number of items in @c usersRefsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger usersRefsArray_Count GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.users_refs is deprecated (see sequence_and_updates.proto).");
-
-/** / deprecated */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupsRefsArray GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.groups_refs is deprecated (see sequence_and_updates.proto).");
-/** The number of items in @c groupsRefsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger groupsRefsArray_Count GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.groups_refs is deprecated (see sequence_and_updates.proto).");
-
-/** / deprecated */
-@property(nonatomic, readwrite, strong, null_resettable) Config *config GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.config is deprecated (see sequence_and_updates.proto).");
-/** Test to see if @c config has been set. */
-@property(nonatomic, readwrite) BOOL hasConfig GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.config is deprecated (see sequence_and_updates.proto).");
-
-/** / deprecated */
-@property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *configHash GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.config_hash is deprecated (see sequence_and_updates.proto).");
-/** Test to see if @c configHash has been set. */
-@property(nonatomic, readwrite) BOOL hasConfigHash GPB_DEPRECATED_MSG("dialog.ResponseGetDifference.config_hash is deprecated (see sequence_and_updates.proto).");
-
 @end
 
 #pragma mark - GroupMembersSubset
 
 typedef GPB_ENUM(GroupMembersSubset_FieldNumber) {
-  GroupMembersSubset_FieldNumber_GroupPeer = 1,
   GroupMembersSubset_FieldNumber_MemberIdsArray = 2,
+  GroupMembersSubset_FieldNumber_GroupId = 3,
 };
 
 /**
@@ -543,10 +511,7 @@ typedef GPB_ENUM(GroupMembersSubset_FieldNumber) {
  **/
 GPB_FINAL @interface GroupMembersSubset : GPBMessage
 
-/** / Внешний пир группового чата [здесь достаточно group_id] */
-@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *groupPeer;
-/** Test to see if @c groupPeer has been set. */
-@property(nonatomic, readwrite) BOOL hasGroupPeer;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 /** / Список идентификаторов учетных записей пользователей-членов группового чата */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *memberIdsArray;
@@ -561,8 +526,8 @@ typedef GPB_ENUM(RequestGetReferencedEntities_FieldNumber) {
   RequestGetReferencedEntities_FieldNumber_UsersArray = 1,
   RequestGetReferencedEntities_FieldNumber_MidsArray = 2,
   RequestGetReferencedEntities_FieldNumber_GroupMembersArray = 3,
-  RequestGetReferencedEntities_FieldNumber_GroupsArray = 4,
   RequestGetReferencedEntities_FieldNumber_ReferencedMidsArray = 5,
+  RequestGetReferencedEntities_FieldNumber_GroupIdsArray = 6,
 };
 
 /**
@@ -588,10 +553,9 @@ GPB_FINAL @interface RequestGetReferencedEntities : GPBMessage
 /** The number of items in @c groupMembersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger groupMembersArray_Count;
 
-/** / Список внешний приов групп [тут достаточно group_id] */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupsArray;
-/** The number of items in @c groupsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger groupsArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *groupIdsArray;
+/** The number of items in @c groupIdsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger groupIdsArray_Count;
 
 /** / Список идфентификаторов сообщений для загрузки */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<ReferencedMessages*> *referencedMidsArray;
@@ -634,8 +598,8 @@ GPB_FINAL @interface ResponseGetReferencedEntities : GPBMessage
 
 typedef GPB_ENUM(RequestGetPartialPeerInfo_FieldNumber) {
   RequestGetPartialPeerInfo_FieldNumber_UsersArray = 1,
-  RequestGetPartialPeerInfo_FieldNumber_GroupsArray = 2,
   RequestGetPartialPeerInfo_FieldNumber_GroupMembersArray = 3,
+  RequestGetPartialPeerInfo_FieldNumber_GroupIdsArray = 4,
 };
 
 /**
@@ -647,9 +611,9 @@ GPB_FINAL @interface RequestGetPartialPeerInfo : GPBMessage
 /** The number of items in @c usersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger usersArray_Count;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupsArray;
-/** The number of items in @c groupsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger groupsArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *groupIdsArray;
+/** The number of items in @c groupIdsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger groupIdsArray_Count;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupMembersSubset*> *groupMembersArray;
 /** The number of items in @c groupMembersArray without causing the array to be created. */

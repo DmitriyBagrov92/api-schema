@@ -57,10 +57,3 @@ message UserOutPeer {
     /// Ключ доступа к пользователю
     int64 access_hash = 2 [(dlg).log=log_confidential];
 }
-
-// Group's out peer
-/// deprecated
-message GroupOutPeer {
-    string group_id = 1;
-    int64 access_hash = 2 [(dlg).log=log_confidential];
-}

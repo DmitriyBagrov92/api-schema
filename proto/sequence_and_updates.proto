@@ -132,26 +132,14 @@ message ResponseGetDifference {
     /// и необходимо сделать повторный запрос на получение разницы после применения полученного списка (уже с новым seq-номером в запросе)
     bool need_more = 4;
 
-    /// deprecated
-    repeated HistoryMessage messages = 3 [deprecated = true];
-    
-    /// deprecated
-    repeated UserOutPeer users_refs = 5 [deprecated = true];
-    
-    /// deprecated
-    repeated GroupOutPeer groups_refs = 6 [deprecated = true];
-    
-    /// deprecated
-    Config config = 7 [deprecated = true];
-
-    /// deprecated
-    google.protobuf.Int64Value config_hash = 8 [deprecated = true];
+    reserved 3,5,6,7,8;
 }
 
 /// Подмножетсво членов группового чата
 message GroupMembersSubset {
     /// Внешний пир группового чата [здесь достаточно group_id]
-    GroupOutPeer group_peer = 1;
+    reserved 1;
+    string group_id = 3;
 
     /// Список идентификаторов учетных записей пользователей-членов группового чата
     repeated string member_ids = 2;
@@ -170,7 +158,8 @@ message RequestGetReferencedEntities {
     repeated GroupMembersSubset group_members = 3;
     
     /// Список внешний приов групп [тут достаточно group_id]
-    repeated GroupOutPeer groups = 4;
+    reserved 4;
+    repeated string group_ids = 6;
 
     /// Список идфентификаторов сообщений для загрузки
     repeated ReferencedMessages referenced_mids = 5;
@@ -192,7 +181,8 @@ message ResponseGetReferencedEntities {
 message RequestGetPartialPeerInfo {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcRequest";
     repeated UserOutPeer users = 1;
-    repeated GroupOutPeer groups = 2;
+    reserved 2;
+    repeated string group_ids = 4;
     repeated GroupMembersSubset group_members = 3;
 }
 

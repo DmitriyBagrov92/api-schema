@@ -36,7 +36,6 @@ CF_EXTERN_C_BEGIN
 @class GPBStringValue;
 @class GPBTimestamp;
 @class GroupData;
-@class GroupOutPeer;
 @class GroupSearchResult;
 @class GroupSearchResultItem;
 @class HighlightResult;
@@ -709,7 +708,7 @@ GPB_FINAL @interface RequestPeerSearch : GPBMessage
 typedef GPB_ENUM(ResponsePeerSearch_FieldNumber) {
   ResponsePeerSearch_FieldNumber_SearchResultsArray = 1,
   ResponsePeerSearch_FieldNumber_UserPeersArray = 2,
-  ResponsePeerSearch_FieldNumber_GroupPeersArray = 3,
+  ResponsePeerSearch_FieldNumber_GroupIdsArray = 4,
 };
 
 /**
@@ -725,9 +724,9 @@ GPB_FINAL @interface ResponsePeerSearch : GPBMessage
 /** The number of items in @c userPeersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userPeersArray_Count;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupPeersArray;
-/** The number of items in @c groupPeersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger groupPeersArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *groupIdsArray;
+/** The number of items in @c groupIdsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger groupIdsArray_Count;
 
 @end
 
@@ -810,15 +809,13 @@ GPB_FINAL @interface UserSearchResult : GPBMessage
 #pragma mark - GroupSearchResult
 
 typedef GPB_ENUM(GroupSearchResult_FieldNumber) {
-  GroupSearchResult_FieldNumber_Peer = 1,
   GroupSearchResult_FieldNumber_FacetHighlightsArray = 2,
+  GroupSearchResult_FieldNumber_GroupId = 3,
 };
 
 GPB_FINAL @interface GroupSearchResult : GPBMessage
 
-@property(nonatomic, readwrite, strong, null_resettable) GroupOutPeer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
 
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FacetHighlight*> *facetHighlightsArray;
 /** The number of items in @c facetHighlightsArray without causing the array to be created. */
@@ -997,8 +994,8 @@ typedef GPB_ENUM(ResponseMessageSearch_FieldNumber) {
   ResponseMessageSearch_FieldNumber_SearchResultsArray = 1,
   ResponseMessageSearch_FieldNumber_LoadMoreState = 2,
   ResponseMessageSearch_FieldNumber_UserOutPeersArray = 3,
-  ResponseMessageSearch_FieldNumber_GroupOutPeersArray = 4,
   ResponseMessageSearch_FieldNumber_TotalCount = 5,
+  ResponseMessageSearch_FieldNumber_GroupIdsArray = 6,
 };
 
 /**
@@ -1018,9 +1015,9 @@ GPB_FINAL @interface ResponseMessageSearch : GPBMessage
 /** The number of items in @c userOutPeersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userOutPeersArray_Count;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupOutPeersArray;
-/** The number of items in @c groupOutPeersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger groupOutPeersArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *groupIdsArray;
+/** The number of items in @c groupIdsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger groupIdsArray_Count;
 
 @property(nonatomic, readwrite) int64_t totalCount;
 
@@ -1368,7 +1365,7 @@ GPB_FINAL @interface RequestGetPromotedPeers : GPBMessage
 
 typedef GPB_ENUM(ResponseGetPromotedPeers_FieldNumber) {
   ResponseGetPromotedPeers_FieldNumber_UserPeersArray = 1,
-  ResponseGetPromotedPeers_FieldNumber_GroupPeersArray = 2,
+  ResponseGetPromotedPeers_FieldNumber_GroupIdsArray = 3,
 };
 
 GPB_FINAL @interface ResponseGetPromotedPeers : GPBMessage
@@ -1377,9 +1374,9 @@ GPB_FINAL @interface ResponseGetPromotedPeers : GPBMessage
 /** The number of items in @c userPeersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userPeersArray_Count;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupPeersArray;
-/** The number of items in @c groupPeersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger groupPeersArray_Count;
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *groupIdsArray;
+/** The number of items in @c groupIdsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger groupIdsArray_Count;
 
 @end
 

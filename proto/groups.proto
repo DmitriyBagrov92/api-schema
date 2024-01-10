@@ -60,9 +60,8 @@ enum GroupType {
 message Group {
     /// Идентификатор группового чата
     string id = 1;
-    
-    /// Ключ доступа к группового чата (всегда равен нулю)
-    int64 access_hash = 2 [(dlg).log=log_confidential];
+
+    reserved 2;
 
     /// Данные о групповом чате
     GroupData data = 29;
@@ -127,13 +126,10 @@ message GroupData {
 /// Структура частичный данных о групповом чате
 /// deprecated
 message GroupPartialInfo {
-    reserved 6;
+    reserved 2, 6;
     /// Идентификатор группового чата
     string group_id = 1;
-
-    /// Ключ доступа к группового чата (всегда равен нулю)
-    int64 access_hash = 2 [(dlg).log=log_confidential];
-
+    
     /// Версия состояния группового чата
     int64 clock = 3;
 

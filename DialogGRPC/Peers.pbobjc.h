@@ -173,25 +173,6 @@ GPB_FINAL @interface UserOutPeer : GPBMessage
 
 @end
 
-#pragma mark - GroupOutPeer
-
-typedef GPB_ENUM(GroupOutPeer_FieldNumber) {
-  GroupOutPeer_FieldNumber_GroupId = 1,
-  GroupOutPeer_FieldNumber_AccessHash = 2,
-};
-
-/**
- * Group's out peer
- * / deprecated
- **/
-GPB_FINAL @interface GroupOutPeer : GPBMessage
-
-@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
-
-@property(nonatomic, readwrite) int64_t accessHash;
-
-@end
-
 NS_ASSUME_NONNULL_END
 
 CF_EXTERN_C_END

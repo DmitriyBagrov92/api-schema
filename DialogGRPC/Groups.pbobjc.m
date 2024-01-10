@@ -304,7 +304,6 @@ typedef struct Member__storage_ {
 @implementation Group
 
 @dynamic id_p;
-@dynamic accessHash;
 @dynamic hasData_p, data_p;
 @dynamic hasSelfMember, selfMember;
 
@@ -313,7 +312,6 @@ typedef struct Group__storage_ {
   NSString *id_p;
   GroupData *data_p;
   Member *selfMember;
-  int64_t accessHash;
 } Group__storage_;
 
 // This method is threadsafe because it is initially called
@@ -332,19 +330,10 @@ typedef struct Group__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "accessHash",
-        .dataTypeSpecific.clazz = Nil,
-        .number = Group_FieldNumber_AccessHash,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(Group__storage_, accessHash),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
         .name = "data_p",
         .dataTypeSpecific.clazz = GPBObjCClass(GroupData),
         .number = Group_FieldNumber_Data_p,
-        .hasIndex = 2,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(Group__storage_, data_p),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -353,7 +342,7 @@ typedef struct Group__storage_ {
         .name = "selfMember",
         .dataTypeSpecific.clazz = GPBObjCClass(Member),
         .number = Group_FieldNumber_SelfMember,
-        .hasIndex = 3,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(Group__storage_, selfMember),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -602,7 +591,6 @@ void SetGroupData_GroupType_RawValue(GroupData *message, int32_t value) {
 @implementation GroupPartialInfo
 
 @dynamic groupId;
-@dynamic accessHash;
 @dynamic clock;
 @dynamic type;
 @dynamic title;
@@ -619,7 +607,6 @@ typedef struct GroupPartialInfo__storage_ {
   Avatar *avatar;
   Member *selfMember;
   GPBInt64Value *pinnedAt;
-  int64_t accessHash;
   int64_t clock;
 } GroupPartialInfo__storage_;
 
@@ -639,19 +626,10 @@ typedef struct GroupPartialInfo__storage_ {
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "accessHash",
-        .dataTypeSpecific.clazz = Nil,
-        .number = GroupPartialInfo_FieldNumber_AccessHash,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(GroupPartialInfo__storage_, accessHash),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
-      },
-      {
         .name = "clock",
         .dataTypeSpecific.clazz = Nil,
         .number = GroupPartialInfo_FieldNumber_Clock,
-        .hasIndex = 2,
+        .hasIndex = 1,
         .offset = (uint32_t)offsetof(GroupPartialInfo__storage_, clock),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
@@ -660,7 +638,7 @@ typedef struct GroupPartialInfo__storage_ {
         .name = "type",
         .dataTypeSpecific.enumDescFunc = GroupType_EnumDescriptor,
         .number = GroupPartialInfo_FieldNumber_Type,
-        .hasIndex = 3,
+        .hasIndex = 2,
         .offset = (uint32_t)offsetof(GroupPartialInfo__storage_, type),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeEnum,
@@ -669,7 +647,7 @@ typedef struct GroupPartialInfo__storage_ {
         .name = "title",
         .dataTypeSpecific.clazz = Nil,
         .number = GroupPartialInfo_FieldNumber_Title,
-        .hasIndex = 4,
+        .hasIndex = 3,
         .offset = (uint32_t)offsetof(GroupPartialInfo__storage_, title),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
@@ -678,7 +656,7 @@ typedef struct GroupPartialInfo__storage_ {
         .name = "avatar",
         .dataTypeSpecific.clazz = GPBObjCClass(Avatar),
         .number = GroupPartialInfo_FieldNumber_Avatar,
-        .hasIndex = 5,
+        .hasIndex = 4,
         .offset = (uint32_t)offsetof(GroupPartialInfo__storage_, avatar),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -687,7 +665,7 @@ typedef struct GroupPartialInfo__storage_ {
         .name = "selfMember",
         .dataTypeSpecific.clazz = GPBObjCClass(Member),
         .number = GroupPartialInfo_FieldNumber_SelfMember,
-        .hasIndex = 6,
+        .hasIndex = 5,
         .offset = (uint32_t)offsetof(GroupPartialInfo__storage_, selfMember),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -696,7 +674,7 @@ typedef struct GroupPartialInfo__storage_ {
         .name = "pinnedAt",
         .dataTypeSpecific.clazz = GPBObjCClass(GPBInt64Value),
         .number = GroupPartialInfo_FieldNumber_PinnedAt,
-        .hasIndex = 7,
+        .hasIndex = 6,
         .offset = (uint32_t)offsetof(GroupPartialInfo__storage_, pinnedAt),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
@@ -705,8 +683,8 @@ typedef struct GroupPartialInfo__storage_ {
         .name = "isPublic",
         .dataTypeSpecific.clazz = Nil,
         .number = GroupPartialInfo_FieldNumber_IsPublic,
-        .hasIndex = 8,
-        .offset = 9,  // Stored in _has_storage_ to save space.
+        .hasIndex = 7,
+        .offset = 8,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },

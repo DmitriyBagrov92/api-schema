@@ -66,7 +66,6 @@ GPBObjCClassDeclaration(GPBInt32Value);
 GPBObjCClassDeclaration(GPBInt64Value);
 GPBObjCClassDeclaration(GPBStringValue);
 GPBObjCClassDeclaration(GroupData);
-GPBObjCClassDeclaration(GroupOutPeer);
 GPBObjCClassDeclaration(HistoryMessage);
 GPBObjCClassDeclaration(ImageLocation);
 GPBObjCClassDeclaration(ImageMedia);
@@ -5107,7 +5106,6 @@ typedef struct ResponseSendMessage__storage_ {
 @dynamic hasCounter, counter;
 @dynamic hasMentionsCounter, mentionsCounter;
 @dynamic hasMyReadDate, myReadDate;
-@dynamic randomId;
 @dynamic modifiedAt;
 @dynamic badgeCounter;
 
@@ -5124,7 +5122,6 @@ typedef struct UpdateMessage__storage_ {
   GPBInt64Value *prevMessageDate;
   GPBInt32Value *counter;
   GPBInt64Value *myReadDate;
-  NSString *randomId;
   ForwardSource *forwardSource;
   GPBInt32Value *mentionsCounter;
   int64_t date;
@@ -5237,19 +5234,10 @@ typedef struct UpdateMessage__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "randomId",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateMessage_FieldNumber_RandomId,
-        .hasIndex = 11,
-        .offset = (uint32_t)offsetof(UpdateMessage__storage_, randomId),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeString,
-      },
-      {
         .name = "modifiedAt",
         .dataTypeSpecific.clazz = Nil,
         .number = UpdateMessage_FieldNumber_ModifiedAt,
-        .hasIndex = 12,
+        .hasIndex = 11,
         .offset = (uint32_t)offsetof(UpdateMessage__storage_, modifiedAt),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
@@ -5276,7 +5264,7 @@ typedef struct UpdateMessage__storage_ {
         .name = "badgeCounter",
         .dataTypeSpecific.clazz = Nil,
         .number = UpdateMessage_FieldNumber_BadgeCounter,
-        .hasIndex = 13,
+        .hasIndex = 12,
         .offset = (uint32_t)offsetof(UpdateMessage__storage_, badgeCounter),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeUInt32,
@@ -5428,6 +5416,7 @@ typedef struct UpdateMessageContentChanged__storage_ {
 @dynamic forwardSource;
 @dynamic hasAttributes, attributes;
 @dynamic badgeCounter;
+@dynamic hasMessage, message;
 
 typedef struct UpdateMessageSent__storage_ {
   uint32_t _has_storage_[2];
@@ -5442,6 +5431,7 @@ typedef struct UpdateMessageSent__storage_ {
   ForwardSource *forwardSource;
   MessageAttributes *attributes;
   GPBInt32Value *unreadMentionsCounter;
+  MessageContent *message;
   int64_t date;
 } UpdateMessageSent__storage_;
 
@@ -5558,6 +5548,15 @@ typedef struct UpdateMessageSent__storage_ {
         .offset = (uint32_t)offsetof(UpdateMessageSent__storage_, badgeCounter),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "message",
+        .dataTypeSpecific.clazz = GPBObjCClass(MessageContent),
+        .number = UpdateMessageSent_FieldNumber_Message,
+        .hasIndex = 10,
+        .offset = (uint32_t)offsetof(UpdateMessageSent__storage_, message),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -7949,7 +7948,6 @@ typedef struct RequestLoadDialogs__storage_ {
 
 @dynamic dialogsArray, dialogsArray_Count;
 @dynamic userPeersArray, userPeersArray_Count;
-@dynamic groupPeersArray, groupPeersArray_Count;
 @dynamic totalDialogsCount;
 
 typedef struct ResponseLoadDialogs__storage_ {
@@ -7957,7 +7955,6 @@ typedef struct ResponseLoadDialogs__storage_ {
   int32_t totalDialogsCount;
   NSMutableArray *dialogsArray;
   NSMutableArray *userPeersArray;
-  NSMutableArray *groupPeersArray;
 } ResponseLoadDialogs__storage_;
 
 // This method is threadsafe because it is initially called
@@ -7981,15 +7978,6 @@ typedef struct ResponseLoadDialogs__storage_ {
         .number = ResponseLoadDialogs_FieldNumber_UserPeersArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(ResponseLoadDialogs__storage_, userPeersArray),
-        .flags = GPBFieldRepeated,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "groupPeersArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(GroupOutPeer),
-        .number = ResponseLoadDialogs_FieldNumber_GroupPeersArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(ResponseLoadDialogs__storage_, groupPeersArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },

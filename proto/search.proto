@@ -180,7 +180,8 @@ message ResponsePeerSearch {
 
     repeated PeerSearchResult search_results = 1;
     repeated UserOutPeer user_peers = 2;
-    repeated GroupOutPeer group_peers = 3;
+    reserved 3;
+    repeated string group_ids = 4;
 }
 
 // Resolve peer by shortname
@@ -208,7 +209,8 @@ message UserSearchResult {
 }
 
 message GroupSearchResult {
-    GroupOutPeer peer = 1;
+    reserved 1;
+    string group_id = 3;
     repeated FacetHighlight facet_highlights = 2;
 }
 
@@ -265,7 +267,8 @@ message ResponseMessageSearch {
     repeated MessageSearchItem search_results = 1;
     google.protobuf.BytesValue load_more_state = 2;
     repeated UserOutPeer user_out_peers = 3;
-    repeated GroupOutPeer group_out_peers = 4;
+    reserved 4;
+    repeated string group_ids = 6;
     int64 total_count = 5;
 }
 
@@ -388,7 +391,8 @@ message RequestGetPromotedPeers {
 message ResponseGetPromotedPeers {
     option (scalapb.message).extends = "im.dlg.grpc.GrpcResponse";
     repeated UserOutPeer user_peers = 1;
-    repeated GroupOutPeer group_peers = 2;
+    reserved 2;
+    repeated string group_ids = 3;
 }
 
 message RequestSearch {

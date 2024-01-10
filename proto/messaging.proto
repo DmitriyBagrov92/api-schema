@@ -812,7 +812,7 @@ message ResponseSendMessage {
 
 /// Структура уведомления о получении нового сообщения
 message UpdateMessage {
-    reserved 7, 11, 16;
+    reserved 7, 11, 14, 16;
 
     /// Пир чата, в который добавлено сообщение
     Peer peer = 1;
@@ -844,21 +844,20 @@ message UpdateMessage {
     UUIDValue previous_mid = 9;
 
     /// Дата создания предыдущего сообщения
+    /// [кажется лишним, дата извлекабельна из previuos_mid]
     google.protobuf.Int64Value prev_message_date = 10;
     
     /// Количество непрочитанных сообщений в чате
+    /// [хорошо бы заменить на просто int32 counter]
     google.protobuf.Int32Value counter = 12;
 
     /// Количество непрочитанных сообщений с упоминанием в чате
+    /// [хорошо бы заменить на просто int32 mentions_counter]
     google.protobuf.Int32Value mentions_counter = 18;
 
     /// Дата последней прочитки, посланной пользователем-получателем уведомления, в этот чат 
     /// (в миллисекундах от unix epoch)
     google.protobuf.Int64Value my_read_date = 13;
-
-    /// Дедуплицирующий идентификатор сообщения 
-    /// [тут его слать не нужно, он имеет смысл только в UpdateMessageSent, может запутать клиентских разработчиков]
-    string random_id = 14;
 
     /// Дата последней модификации сообщения
     int64 modified_at = 15;
@@ -890,7 +889,6 @@ message UpdateMessageContentChanged {
     MessageAttributes attributes = 7;
 }
 
-/// Уведомление о доставке сообщения на сервер (посылается только отправителю сообщения)
 message UpdateMessageSent {
     reserved 6, 9;
 
@@ -917,7 +915,7 @@ message UpdateMessageSent {
 
     /// Дата последней присланной текущим пользователем прочитки сообщений в ленте чата
     google.protobuf.Int64Value my_read_date = 8;
-    
+
     oneof attach {
         /// Ссылка на сообщения, ответом на которые является это сообщение
         ReferencedMessages reply = 10;
@@ -925,12 +923,16 @@ message UpdateMessageSent {
         /// Ссылка на сообщение-оригинал, если данное сообщение было переслано из другого чата
         ForwardSource forward_source = 11;
     }
-    
+
     /// Аттрибуты сообщения
     MessageAttributes attributes = 12;
 
     /// Суммарное количество непрочиток по всем диалогам, учитывая способ подсчета для P2P и групповых чатов
     uint32 badge_counter = 14;
+
+    /// Содержание сообщения
+    MessageContent message = 15;
+
 }
 
 /// Структура уведомления о получении сообщения
@@ -1444,12 +1446,7 @@ message ResponseLoadDialogs {
     /// Список внешних пиров пользователей упомянутых в списке диалогов
     repeated UserOutPeer user_peers = 2;
 
-    /// Список внешних пиров групп упомянутых в списке диалогов
-    /// [нужно ли это?]
-    repeated GroupOutPeer group_peers = 3;
-
     /// Общее количество диалогов
-    /// deprecated
     int32 total_dialogs_count = 4;
 }
 

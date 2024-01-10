@@ -54,7 +54,6 @@ CF_EXTERN_C_BEGIN
 @class GPBInt64Value;
 @class GPBStringValue;
 @class GroupData;
-@class GroupOutPeer;
 @class HistoryMessage;
 @class ImageLocation;
 @class ImageMedia;
@@ -2217,7 +2216,6 @@ typedef GPB_ENUM(UpdateMessage_FieldNumber) {
   UpdateMessage_FieldNumber_PrevMessageDate = 10,
   UpdateMessage_FieldNumber_Counter = 12,
   UpdateMessage_FieldNumber_MyReadDate = 13,
-  UpdateMessage_FieldNumber_RandomId = 14,
   UpdateMessage_FieldNumber_ModifiedAt = 15,
   UpdateMessage_FieldNumber_ForwardSource = 17,
   UpdateMessage_FieldNumber_MentionsCounter = 18,
@@ -2274,17 +2272,26 @@ GPB_FINAL @interface UpdateMessage : GPBMessage
 /** Test to see if @c previousMid has been set. */
 @property(nonatomic, readwrite) BOOL hasPreviousMid;
 
-/** / Дата создания предыдущего сообщения */
+/**
+ * / Дата создания предыдущего сообщения
+ * / [кажется лишним, дата извлекабельна из previuos_mid]
+ **/
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *prevMessageDate;
 /** Test to see if @c prevMessageDate has been set. */
 @property(nonatomic, readwrite) BOOL hasPrevMessageDate;
 
-/** / Количество непрочитанных сообщений в чате */
+/**
+ * / Количество непрочитанных сообщений в чате
+ * / [хорошо бы заменить на просто int32 counter]
+ **/
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *counter;
 /** Test to see if @c counter has been set. */
 @property(nonatomic, readwrite) BOOL hasCounter;
 
-/** / Количество непрочитанных сообщений с упоминанием в чате */
+/**
+ * / Количество непрочитанных сообщений с упоминанием в чате
+ * / [хорошо бы заменить на просто int32 mentions_counter]
+ **/
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *mentionsCounter;
 /** Test to see if @c mentionsCounter has been set. */
 @property(nonatomic, readwrite) BOOL hasMentionsCounter;
@@ -2296,12 +2303,6 @@ GPB_FINAL @interface UpdateMessage : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) GPBInt64Value *myReadDate;
 /** Test to see if @c myReadDate has been set. */
 @property(nonatomic, readwrite) BOOL hasMyReadDate;
-
-/**
- * / Дедуплицирующий идентификатор сообщения
- * / [тут его слать не нужно, он имеет смысл только в UpdateMessageSent, может запутать клиентских разработчиков]
- **/
-@property(nonatomic, readwrite, copy, null_resettable) NSString *randomId;
 
 /** / Дата последней модификации сообщения */
 @property(nonatomic, readwrite) int64_t modifiedAt;
@@ -2377,6 +2378,7 @@ typedef GPB_ENUM(UpdateMessageSent_FieldNumber) {
   UpdateMessageSent_FieldNumber_Attributes = 12,
   UpdateMessageSent_FieldNumber_UnreadMentionsCounter = 13,
   UpdateMessageSent_FieldNumber_BadgeCounter = 14,
+  UpdateMessageSent_FieldNumber_Message = 15,
 };
 
 typedef GPB_ENUM(UpdateMessageSent_Attach_OneOfCase) {
@@ -2385,9 +2387,6 @@ typedef GPB_ENUM(UpdateMessageSent_Attach_OneOfCase) {
   UpdateMessageSent_Attach_OneOfCase_ForwardSource = 11,
 };
 
-/**
- * / Уведомление о доставке сообщения на сервер (посылается только отправителю сообщения)
- **/
 GPB_FINAL @interface UpdateMessageSent : GPBMessage
 
 /** / Пир чата, в который добавилось сообщение */
@@ -2441,6 +2440,11 @@ GPB_FINAL @interface UpdateMessageSent : GPBMessage
 
 /** / Суммарное количество непрочиток по всем диалогам, учитывая способ подсчета для P2P и групповых чатов */
 @property(nonatomic, readwrite) uint32_t badgeCounter;
+
+/** / Содержание сообщения */
+@property(nonatomic, readwrite, strong, null_resettable) MessageContent *message;
+/** Test to see if @c message has been set. */
+@property(nonatomic, readwrite) BOOL hasMessage;
 
 @end
 
@@ -3474,7 +3478,6 @@ GPB_FINAL @interface RequestLoadDialogs : GPBMessage
 typedef GPB_ENUM(ResponseLoadDialogs_FieldNumber) {
   ResponseLoadDialogs_FieldNumber_DialogsArray = 1,
   ResponseLoadDialogs_FieldNumber_UserPeersArray = 2,
-  ResponseLoadDialogs_FieldNumber_GroupPeersArray = 3,
   ResponseLoadDialogs_FieldNumber_TotalDialogsCount = 4,
 };
 
@@ -3493,18 +3496,7 @@ GPB_FINAL @interface ResponseLoadDialogs : GPBMessage
 /** The number of items in @c userPeersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userPeersArray_Count;
 
-/**
- * / Список внешних пиров групп упомянутых в списке диалогов
- * / [нужно ли это?]
- **/
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupPeersArray;
-/** The number of items in @c groupPeersArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger groupPeersArray_Count;
-
-/**
- * / Общее количество диалогов
- * / deprecated
- **/
+/** / Общее количество диалогов */
 @property(nonatomic, readwrite) int32_t totalDialogsCount;
 
 @end

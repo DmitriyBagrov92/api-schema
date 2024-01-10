@@ -205,7 +205,6 @@ GPB_FINAL @interface Member : GPBMessage
 
 typedef GPB_ENUM(Group_FieldNumber) {
   Group_FieldNumber_Id_p = 1,
-  Group_FieldNumber_AccessHash = 2,
   Group_FieldNumber_Data_p = 29,
   Group_FieldNumber_SelfMember = 30,
 };
@@ -217,9 +216,6 @@ GPB_FINAL @interface Group : GPBMessage
 
 /** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
-
-/** / Ключ доступа к группового чата (всегда равен нулю) */
-@property(nonatomic, readwrite) int64_t accessHash;
 
 /** / Данные о групповом чате */
 @property(nonatomic, readwrite, strong, null_resettable) GroupData *data_p;
@@ -344,7 +340,6 @@ void SetGroupData_GroupType_RawValue(GroupData *message, int32_t value);
 
 typedef GPB_ENUM(GroupPartialInfo_FieldNumber) {
   GroupPartialInfo_FieldNumber_GroupId = 1,
-  GroupPartialInfo_FieldNumber_AccessHash = 2,
   GroupPartialInfo_FieldNumber_Clock = 3,
   GroupPartialInfo_FieldNumber_Type = 4,
   GroupPartialInfo_FieldNumber_Title = 5,
@@ -362,9 +357,6 @@ GPB_FINAL @interface GroupPartialInfo : GPBMessage
 
 /** / Идентификатор группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
-
-/** / Ключ доступа к группового чата (всегда равен нулю) */
-@property(nonatomic, readwrite) int64_t accessHash;
 
 /** / Версия состояния группового чата */
 @property(nonatomic, readwrite) int64_t clock;
