@@ -48,6 +48,7 @@ CF_EXTERN_C_BEGIN
 @class MessageSearchResultBody_Text;
 @class OutPeer;
 @class Peer;
+@class PeerMemberCondition;
 @class PeerSearchResult;
 @class SearchAndCondition;
 @class SearchCondition;
@@ -304,11 +305,16 @@ void SetSimplePeerSearchCondition_PeerType_RawValue(SimplePeerSearchCondition *m
 
 typedef GPB_ENUM(SimpleUserProfileSearchCondition_FieldNumber) {
   SimpleUserProfileSearchCondition_FieldNumber_QueryString = 1,
+  SimpleUserProfileSearchCondition_FieldNumber_MemberOf = 2,
 };
 
 GPB_FINAL @interface SimpleUserProfileSearchCondition : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *queryString;
+
+@property(nonatomic, readwrite, strong, null_resettable) PeerMemberCondition *memberOf;
+/** Test to see if @c memberOf has been set. */
+@property(nonatomic, readwrite) BOOL hasMemberOf;
 
 @end
 
@@ -321,6 +327,23 @@ typedef GPB_ENUM(SimpleGroupSearchCondition_FieldNumber) {
 GPB_FINAL @interface SimpleGroupSearchCondition : GPBMessage
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *queryString;
+
+@end
+
+#pragma mark - PeerMemberCondition
+
+typedef GPB_ENUM(PeerMemberCondition_FieldNumber) {
+  PeerMemberCondition_FieldNumber_GroupId = 1,
+  PeerMemberCondition_FieldNumber_IsMember = 3,
+};
+
+GPB_FINAL @interface PeerMemberCondition : GPBMessage
+
+/** where to search */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
+
+/** include or exclude members of thereof */
+@property(nonatomic, readwrite) BOOL isMember;
 
 @end
 

@@ -31,7 +31,7 @@ option java_package = "im.dlg.grpc.services";
 
 /// Структура тела сек-апдейта
 message SeqUpdateBody {
-    reserved 28, 33, 40, 44, 50, 52, 53, 58, 59, 62, 71, 72;
+    reserved 28, 33, 40, 44, 50, 52, 53, 58, 59, 62, 65, 71, 72;
     /// Вид сек-апдейта
     oneof update {
         UpdateUserAvatarChanged update_user_avatar_changed = 1;
@@ -88,7 +88,6 @@ message SeqUpdateBody {
         UpdateGroupMemberInvited update_group_member_invited = 61;
         UpdatePermissionsChange update_permissions_change = 63;
         UpdateGroupTyping update_group_typing = 64;
-        UpdateDialogReadLaterChanged update_dialog_read_later_changed = 65;
         UpdateDialogMuteChanged update_dialog_mute_changed = 66;
         UpdateSettingsChanged update_settings_changed = 67;
         UpdateDeleteMessageError update_delete_message_error = 68;

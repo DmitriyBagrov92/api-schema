@@ -112,9 +112,6 @@ typedef GPB_ENUM(GroupAdminPermission) {
   /** / Право на отправку сообщений в групповой чат */
   GroupAdminPermission_GroupAdminPermissionSendmessage = 9,
 
-  /** / Право на закрепление сообщений в групповом чате */
-  GroupAdminPermission_GroupAdminPermissionPinmessage = 10,
-
   /** / Право на просмотр членов группового чата */
   GroupAdminPermission_GroupAdminPermissionViewmembers = 11,
 

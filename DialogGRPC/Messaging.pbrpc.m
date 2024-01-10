@@ -397,6 +397,39 @@
              responseClass:[ResponseLoadHistory class]];
 }
 
+#pragma mark LoadChatMessages(RequestLoadChatMessages) returns (ResponseLoadChatMessages)
+
+/**
+ * / Метод подгрузки индвидуальных сообщений в чате
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)loadChatMessagesWithRequest:(RequestLoadChatMessages *)request handler:(void(^)(ResponseLoadChatMessages *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToLoadChatMessagesWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * / Метод подгрузки индвидуальных сообщений в чате
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToLoadChatMessagesWithRequest:(RequestLoadChatMessages *)request handler:(void(^)(ResponseLoadChatMessages *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"LoadChatMessages"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[ResponseLoadChatMessages class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * / Метод подгрузки индвидуальных сообщений в чате
+ */
+- (GRPCUnaryProtoCall *)loadChatMessagesWithMessage:(RequestLoadChatMessages *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"LoadChatMessages"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[ResponseLoadChatMessages class]];
+}
+
 #pragma mark LoadMentions(RequestLoadMentions) returns (ResponseLoadMentions)
 
 /**
@@ -725,39 +758,6 @@
            responseHandler:handler
                callOptions:callOptions
              responseClass:[ResponseGetMessageReceives class]];
-}
-
-#pragma mark ReadDialogLater(RequestReadDialogLater) returns (Empty)
-
-/**
- * / Метод изменения флага отложенности прочитки
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)readDialogLaterWithRequest:(RequestReadDialogLater *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
-  [[self RPCToReadDialogLaterWithRequest:request handler:handler] start];
-}
-// Returns a not-yet-started RPC object.
-/**
- * / Метод изменения флага отложенности прочитки
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToReadDialogLaterWithRequest:(RequestReadDialogLater *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
-  return [self RPCToMethod:@"ReadDialogLater"
-            requestsWriter:[GRXWriter writerWithValue:request]
-             responseClass:[GPBEmpty class]
-        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
-}
-/**
- * / Метод изменения флага отложенности прочитки
- */
-- (GRPCUnaryProtoCall *)readDialogLaterWithMessage:(RequestReadDialogLater *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
-  return [self RPCToMethod:@"ReadDialogLater"
-                   message:message
-           responseHandler:handler
-               callOptions:callOptions
-             responseClass:[GPBEmpty class]];
 }
 
 @end

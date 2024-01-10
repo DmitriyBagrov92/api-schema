@@ -2066,6 +2066,7 @@ GPB_FINAL @interface RequestMessageReceived : GPBMessage
 typedef GPB_ENUM(RequestMessageRead_FieldNumber) {
   RequestMessageRead_FieldNumber_Peer = 1,
   RequestMessageRead_FieldNumber_Date = 2,
+  RequestMessageRead_FieldNumber_Force = 3,
 };
 
 /**
@@ -2083,6 +2084,13 @@ GPB_FINAL @interface RequestMessageRead : GPBMessage
  * / (извлекается из даты отправки сообщений в ленте)
  **/
 @property(nonatomic, readwrite) int64_t date;
+
+/**
+ * / Использовать дату "как есть", не учитывая предыдущие прочитки клиента. Единственное ограничение, которое будет
+ * / наложено на дату -- выбор минимума из присылаемой даты и даты последнего сообщения в ленте чата (т. е. запрет
+ * / на прочитки в будущее)
+ **/
+@property(nonatomic, readwrite) BOOL force;
 
 @end
 
@@ -3196,6 +3204,48 @@ GPB_FINAL @interface ResponseLoadHistory : GPBMessage
 
 @end
 
+#pragma mark - RequestLoadChatMessages
+
+typedef GPB_ENUM(RequestLoadChatMessages_FieldNumber) {
+  RequestLoadChatMessages_FieldNumber_Peer = 1,
+  RequestLoadChatMessages_FieldNumber_MidsArray = 2,
+};
+
+/**
+ * / Запрос на загрузку сообщений в чате
+ **/
+GPB_FINAL @interface RequestLoadChatMessages : GPBMessage
+
+/** / Пир чата, в рамках которого происходит загрузка сообщений */
+@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
+
+/** / Список идентификаторов сообщений подлежащих загрузке */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UUIDValue*> *midsArray;
+/** The number of items in @c midsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger midsArray_Count;
+
+@end
+
+#pragma mark - ResponseLoadChatMessages
+
+typedef GPB_ENUM(ResponseLoadChatMessages_FieldNumber) {
+  ResponseLoadChatMessages_FieldNumber_HistoryArray = 1,
+};
+
+/**
+ * / Ответ на запрос на загрузку сообщений в чате
+ **/
+GPB_FINAL @interface ResponseLoadChatMessages : GPBMessage
+
+/** / Список сообщений */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<HistoryMessage*> *historyArray;
+/** The number of items in @c historyArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger historyArray_Count;
+
+@end
+
 #pragma mark - RequestLoadMentions
 
 typedef GPB_ENUM(RequestLoadMentions_FieldNumber) {
@@ -3253,7 +3303,6 @@ typedef GPB_ENUM(Dialog_FieldNumber) {
   Dialog_FieldNumber_LastReceive = 14,
   Dialog_FieldNumber_LastRead = 15,
   Dialog_FieldNumber_LastReactionAt = 16,
-  Dialog_FieldNumber_ReadLater = 17,
   Dialog_FieldNumber_IsMuted = 19,
   Dialog_FieldNumber_IsFavourite = 20,
   Dialog_FieldNumber_IsArchived = 21,
@@ -3316,9 +3365,6 @@ GPB_FINAL @interface Dialog : GPBMessage
  * / (в миллисекундах от unix epoch)
  **/
 @property(nonatomic, readwrite) int64_t lastThreadInfoAt;
-
-/** / Помечен ли диалог модификатором "отложенной прочитки" */
-@property(nonatomic, readwrite) BOOL readLater;
 
 /** / Флаг глушения уведомлений в этом чате */
 @property(nonatomic, readwrite) BOOL isMuted;
@@ -3568,7 +3614,6 @@ GPB_FINAL @interface PinnedMessages : GPBMessage
 typedef GPB_ENUM(RequestPinMessage_FieldNumber) {
   RequestPinMessage_FieldNumber_Peer = 1,
   RequestPinMessage_FieldNumber_Mid = 2,
-  RequestPinMessage_FieldNumber_LastPinDate = 3,
 };
 
 /**
@@ -3576,8 +3621,8 @@ typedef GPB_ENUM(RequestPinMessage_FieldNumber) {
  **/
 GPB_FINAL @interface RequestPinMessage : GPBMessage
 
-/** / Внешний пир чата */
-@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
+/** / Пир чата */
+@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
@@ -3585,9 +3630,6 @@ GPB_FINAL @interface RequestPinMessage : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
-
-/** / Дата последнего добавления в закрепленные сообщения в этом чате */
-@property(nonatomic, readwrite) int64_t lastPinDate;
 
 @end
 
@@ -3596,7 +3638,6 @@ GPB_FINAL @interface RequestPinMessage : GPBMessage
 typedef GPB_ENUM(RequestUnpinMessage_FieldNumber) {
   RequestUnpinMessage_FieldNumber_Peer = 1,
   RequestUnpinMessage_FieldNumber_Mid = 2,
-  RequestUnpinMessage_FieldNumber_LastPinDate = 3,
 };
 
 /**
@@ -3604,8 +3645,8 @@ typedef GPB_ENUM(RequestUnpinMessage_FieldNumber) {
  **/
 GPB_FINAL @interface RequestUnpinMessage : GPBMessage
 
-/** / Внешний пир чата */
-@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
+/** / Пир чата */
+@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
@@ -3614,9 +3655,6 @@ GPB_FINAL @interface RequestUnpinMessage : GPBMessage
 /** Test to see if @c mid has been set. */
 @property(nonatomic, readwrite) BOOL hasMid;
 
-/** / Дата последнего добавления в закрепленные сообщения в этом чате */
-@property(nonatomic, readwrite) int64_t lastPinDate;
-
 @end
 
 #pragma mark - UpdatePinnedMessagesChanged
@@ -3624,7 +3662,6 @@ GPB_FINAL @interface RequestUnpinMessage : GPBMessage
 typedef GPB_ENUM(UpdatePinnedMessagesChanged_FieldNumber) {
   UpdatePinnedMessagesChanged_FieldNumber_Peer = 1,
   UpdatePinnedMessagesChanged_FieldNumber_PinnedMessages = 2,
-  UpdatePinnedMessagesChanged_FieldNumber_LastPinDate = 3,
 };
 
 /**
@@ -3641,9 +3678,6 @@ GPB_FINAL @interface UpdatePinnedMessagesChanged : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) PinnedMessages *pinnedMessages;
 /** Test to see if @c pinnedMessages has been set. */
 @property(nonatomic, readwrite) BOOL hasPinnedMessages;
-
-/** / Дата последнего добавления в закрепленные сообщения в этом чате */
-@property(nonatomic, readwrite) int64_t lastPinDate;
 
 @end
 
@@ -3772,50 +3806,6 @@ GPB_FINAL @interface ResponseGetMessageReceives : GPBMessage
 
 /** / Максимальное время по статусам (или timestamp_from из запроса, если статусы пустые) */
 @property(nonatomic, readwrite) int64_t timestampTill;
-
-@end
-
-#pragma mark - RequestReadDialogLater
-
-typedef GPB_ENUM(RequestReadDialogLater_FieldNumber) {
-  RequestReadDialogLater_FieldNumber_Peer = 1,
-  RequestReadDialogLater_FieldNumber_ReadLater = 2,
-};
-
-/**
- * / Запрос на изменение флага отложенности прочитки
- **/
-GPB_FINAL @interface RequestReadDialogLater : GPBMessage
-
-/** / Внешний пир чата */
-@property(nonatomic, readwrite, strong, null_resettable) OutPeer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-/** / Флаг отложенности прочитки */
-@property(nonatomic, readwrite) BOOL readLater;
-
-@end
-
-#pragma mark - UpdateDialogReadLaterChanged
-
-typedef GPB_ENUM(UpdateDialogReadLaterChanged_FieldNumber) {
-  UpdateDialogReadLaterChanged_FieldNumber_Peer = 1,
-  UpdateDialogReadLaterChanged_FieldNumber_ReadLater = 2,
-};
-
-/**
- * / Структура уведомления об изменении флага отложенности прочитки
- **/
-GPB_FINAL @interface UpdateDialogReadLaterChanged : GPBMessage
-
-/** / Пир чата */
-@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
-/** Test to see if @c peer has been set. */
-@property(nonatomic, readwrite) BOOL hasPeer;
-
-/** / Флаг отложенности прочитки */
-@property(nonatomic, readwrite) BOOL readLater;
 
 @end
 

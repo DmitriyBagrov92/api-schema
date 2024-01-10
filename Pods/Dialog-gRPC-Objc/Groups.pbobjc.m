@@ -140,12 +140,11 @@ GPBEnumDescriptor *GroupAdminPermission_EnumDescriptor(void) {
         "issionEditmessage\000GroupAdminPermissionDe"
         "letemessage\000GroupAdminPermissionGetinteg"
         "rationtoken\000GroupAdminPermissionSendmess"
-        "age\000GroupAdminPermissionPinmessage\000Group"
-        "AdminPermissionViewmembers\000GroupAdminPer"
-        "missionLeave\000GroupAdminPermissionTargeti"
-        "ng\000GroupAdminPermissionDelete\000GroupAdmin"
-        "PermissionManageConference\000GroupAdminPer"
-        "missionOpenAndClose\000";
+        "age\000GroupAdminPermissionViewmembers\000Grou"
+        "pAdminPermissionLeave\000GroupAdminPermissi"
+        "onTargeting\000GroupAdminPermissionDelete\000G"
+        "roupAdminPermissionManageConference\000Grou"
+        "pAdminPermissionOpenAndClose\000";
     static const int32_t values[] = {
         GroupAdminPermission_GroupAdminPermissionUnknown,
         GroupAdminPermission_GroupAdminPermissionInvite,
@@ -156,7 +155,6 @@ GPBEnumDescriptor *GroupAdminPermission_EnumDescriptor(void) {
         GroupAdminPermission_GroupAdminPermissionDeletemessage,
         GroupAdminPermission_GroupAdminPermissionGetintegrationtoken,
         GroupAdminPermission_GroupAdminPermissionSendmessage,
-        GroupAdminPermission_GroupAdminPermissionPinmessage,
         GroupAdminPermission_GroupAdminPermissionViewmembers,
         GroupAdminPermission_GroupAdminPermissionLeave,
         GroupAdminPermission_GroupAdminPermissionTargeting,
@@ -189,7 +187,6 @@ BOOL GroupAdminPermission_IsValidValue(int32_t value__) {
     case GroupAdminPermission_GroupAdminPermissionDeletemessage:
     case GroupAdminPermission_GroupAdminPermissionGetintegrationtoken:
     case GroupAdminPermission_GroupAdminPermissionSendmessage:
-    case GroupAdminPermission_GroupAdminPermissionPinmessage:
     case GroupAdminPermission_GroupAdminPermissionViewmembers:
     case GroupAdminPermission_GroupAdminPermissionLeave:
     case GroupAdminPermission_GroupAdminPermissionTargeting:

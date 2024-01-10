@@ -759,6 +759,11 @@ message RequestMessageRead {
     /// Дата, до которой включительно дочитаны сообщения из лента сообщений пира 
     /// (извлекается из даты отправки сообщений в ленте)
     int64 date = 2;
+
+    /// Использовать дату "как есть", не учитывая предыдущие прочитки клиента. Единственное ограничение, которое будет
+    /// наложено на дату -- выбор минимума из присылаемой даты и даты последнего сообщения в ленте чата (т. е. запрет
+    /// на прочитки в будущее)
+    bool force = 3;
 }
 
 /// Запрос на удаление сообщения
@@ -1301,6 +1306,21 @@ message ResponseLoadHistory {
     google.protobuf.Int64Value last_conversation_message_date = 6;
 }
 
+/// Запрос на загрузку сообщений в чате
+message RequestLoadChatMessages {
+    /// Пир чата, в рамках которого происходит загрузка сообщений
+    Peer peer = 1;
+
+    /// Список идентификаторов сообщений подлежащих загрузке
+    repeated UUIDValue mids = 2;
+}
+
+/// Ответ на запрос на загрузку сообщений в чате
+message ResponseLoadChatMessages {
+    /// Список сообщений
+    repeated HistoryMessage history = 1;
+}
+
 /// Запрос на загрузку упоминаний текущего пользователя в чате
 message RequestLoadMentions {
     /// Внешний пир чата, историю упоминаний текущего пользователя в котором требуется получить
@@ -1330,7 +1350,7 @@ message Dialog {
     /// Количство непрочитанных сообщений с упоминаниями текущего пользователя в чате
     int32 unread_mentions_counter = 23;
 
-    reserved 3, 4, 5, 6, 8, 9, 10, 11, 18;
+    reserved 3, 4, 5, 6, 8, 9, 10, 11, 17, 18;
     
     /// Дата последнего изменения в чате
     int64 modified_at = 7;
@@ -1356,9 +1376,6 @@ message Dialog {
     /// Дата последнего изменения в тредах в этом чате
     /// (в миллисекундах от unix epoch)
     int64 last_thread_info_at = 22;
-
-    /// Помечен ли диалог модификатором "отложенной прочитки"
-    bool read_later = 17;
 
     /// Флаг глушения уведомлений в этом чате
     bool is_muted = 19;
@@ -1474,26 +1491,24 @@ message PinnedMessages {
 
 /// Запрос на добавление сообщения в закрепленные
 message RequestPinMessage {
-    /// Внешний пир чата
-    OutPeer peer = 1;
+    /// Пир чата
+    Peer peer = 1;
 
     /// Идентификатор сообщения для добавления в закрепленные
     UUIDValue mid = 2;
 
-    /// Дата последнего добавления в закрепленные сообщения в этом чате
-    int64 last_pin_date = 3;
+    reserved 3;
 }
 
 /// Запрос на удаления сообщения из закрепленных
 message RequestUnpinMessage {
-    /// Внешний пир чата
-    OutPeer peer = 1;
+    /// Пир чата
+    Peer peer = 1;
 
     /// Идентификатор сообщения для добавления в закрепленные
     UUIDValue mid = 2;
 
-    /// Дата последнего добавления в закрепленные сообщения в этом чате
-    int64 last_pin_date = 3;
+    reserved 3;
 }
 
 /// Структура уведомления об изменении списка закрепленных сообщений
@@ -1504,8 +1519,7 @@ message UpdatePinnedMessagesChanged {
     /// Список закрепленных сообщений
     PinnedMessages pinned_messages = 2;
 
-    /// Дата последнего добавления в закрепленные сообщения в этом чате
-    int64 last_pin_date = 3;
+    reserved 3;
 }
 
 /// Структура соответствия пользователя и даты последней прочитки или получения сообщения
@@ -1563,24 +1577,6 @@ message ResponseGetMessageReceives {
 
     /// Максимальное время по статусам (или timestamp_from из запроса, если статусы пустые)
     int64 timestamp_till = 2;
-}
-
-/// Запрос на изменение флага отложенности прочитки
-message RequestReadDialogLater {
-    /// Внешний пир чата
-    OutPeer peer = 1;
-
-    /// Флаг отложенности прочитки
-    bool read_later = 2;
-}
-
-/// Структура уведомления об изменении флага отложенности прочитки
-message UpdateDialogReadLaterChanged {
-    /// Пир чата
-    Peer peer = 1;
-
-    /// Флаг отложенности прочитки
-    bool read_later = 2;
 }
 
 /// Запрос на включение флага глушения уведомлений
@@ -1679,6 +1675,14 @@ service Messaging {
         };
     }
 
+    /// Метод подгрузки индвидуальных сообщений в чате
+    rpc LoadChatMessages (RequestLoadChatMessages) returns (ResponseLoadChatMessages) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Messaging/LoadChatMessages"
+            body: "*"
+        };
+    }
+
     /// Метод загрузки упоминаний
     rpc LoadMentions (RequestLoadMentions) returns (ResponseLoadMentions) {
         option (google.api.http) = {
@@ -1755,14 +1759,6 @@ service Messaging {
     rpc GetMessageReceives (RequestGetMessageReceives) returns (ResponseGetMessageReceives) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/GetMessageReceives"
-            body: "*"
-        };
-    }
-
-    /// Метод изменения флага отложенности прочитки
-    rpc ReadDialogLater (RequestReadDialogLater) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/grpc/Messaging/ReadDialogLater"
             body: "*"
         };
     }

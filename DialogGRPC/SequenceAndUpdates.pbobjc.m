@@ -76,7 +76,6 @@ GPBObjCClassDeclaration(UpdateDeleteChatError);
 GPBObjCClassDeclaration(UpdateDeleteMessageError);
 GPBObjCClassDeclaration(UpdateDialogFavouriteChanged);
 GPBObjCClassDeclaration(UpdateDialogMuteChanged);
-GPBObjCClassDeclaration(UpdateDialogReadLaterChanged);
 GPBObjCClassDeclaration(UpdateDraftsChanged);
 GPBObjCClassDeclaration(UpdateEditMessageError);
 GPBObjCClassDeclaration(UpdateFavouriteDialogError);
@@ -242,7 +241,6 @@ static GPBFileDescriptor *SequenceAndUpdatesRoot_FileDescriptor(void) {
 @dynamic updateGroupMemberInvited;
 @dynamic updatePermissionsChange;
 @dynamic updateGroupTyping;
-@dynamic updateDialogReadLaterChanged;
 @dynamic updateDialogMuteChanged;
 @dynamic updateSettingsChanged;
 @dynamic updateDeleteMessageError;
@@ -311,7 +309,6 @@ typedef struct SeqUpdateBody__storage_ {
   UpdateGroupMemberInvited *updateGroupMemberInvited;
   UpdatePermissionsChange *updatePermissionsChange;
   UpdateGroupTyping *updateGroupTyping;
-  UpdateDialogReadLaterChanged *updateDialogReadLaterChanged;
   UpdateDialogMuteChanged *updateDialogMuteChanged;
   UpdateSettingsChanged *updateSettingsChanged;
   UpdateDeleteMessageError *updateDeleteMessageError;
@@ -814,15 +811,6 @@ typedef struct SeqUpdateBody__storage_ {
         .number = SeqUpdateBody_FieldNumber_UpdateGroupTyping,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateGroupTyping),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "updateDialogReadLaterChanged",
-        .dataTypeSpecific.clazz = GPBObjCClass(UpdateDialogReadLaterChanged),
-        .number = SeqUpdateBody_FieldNumber_UpdateDialogReadLaterChanged,
-        .hasIndex = -1,
-        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateDialogReadLaterChanged),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

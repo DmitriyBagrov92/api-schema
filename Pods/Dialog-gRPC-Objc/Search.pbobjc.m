@@ -57,6 +57,7 @@ GPBObjCClassDeclaration(MessageSearchResultBody_Document);
 GPBObjCClassDeclaration(MessageSearchResultBody_Text);
 GPBObjCClassDeclaration(OutPeer);
 GPBObjCClassDeclaration(Peer);
+GPBObjCClassDeclaration(PeerMemberCondition);
 GPBObjCClassDeclaration(PeerSearchResult);
 GPBObjCClassDeclaration(ResponseSearch);
 GPBObjCClassDeclaration(SearchAndCondition);
@@ -529,10 +530,12 @@ void SetSimplePeerSearchCondition_PeerType_RawValue(SimplePeerSearchCondition *m
 @implementation SimpleUserProfileSearchCondition
 
 @dynamic queryString;
+@dynamic hasMemberOf, memberOf;
 
 typedef struct SimpleUserProfileSearchCondition__storage_ {
   uint32_t _has_storage_[1];
   NSString *queryString;
+  PeerMemberCondition *memberOf;
 } SimpleUserProfileSearchCondition__storage_;
 
 // This method is threadsafe because it is initially called
@@ -549,6 +552,15 @@ typedef struct SimpleUserProfileSearchCondition__storage_ {
         .offset = (uint32_t)offsetof(SimpleUserProfileSearchCondition__storage_, queryString),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "memberOf",
+        .dataTypeSpecific.clazz = GPBObjCClass(PeerMemberCondition),
+        .number = SimpleUserProfileSearchCondition_FieldNumber_MemberOf,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(SimpleUserProfileSearchCondition__storage_, memberOf),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -603,6 +615,61 @@ typedef struct SimpleGroupSearchCondition__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(SimpleGroupSearchCondition__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - PeerMemberCondition
+
+@implementation PeerMemberCondition
+
+@dynamic groupId;
+@dynamic isMember;
+
+typedef struct PeerMemberCondition__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *groupId;
+} PeerMemberCondition__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "groupId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = PeerMemberCondition_FieldNumber_GroupId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(PeerMemberCondition__storage_, groupId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "isMember",
+        .dataTypeSpecific.clazz = Nil,
+        .number = PeerMemberCondition_FieldNumber_IsMember,
+        .hasIndex = 1,
+        .offset = 2,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[PeerMemberCondition class]
+                                     rootClass:[SearchRoot class]
+                                          file:SearchRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(PeerMemberCondition__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");

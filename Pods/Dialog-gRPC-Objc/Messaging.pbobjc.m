@@ -4761,6 +4761,7 @@ typedef struct RequestMessageReceived__storage_ {
 
 @dynamic hasPeer, peer;
 @dynamic date;
+@dynamic force;
 
 typedef struct RequestMessageRead__storage_ {
   uint32_t _has_storage_[1];
@@ -4791,6 +4792,15 @@ typedef struct RequestMessageRead__storage_ {
         .offset = (uint32_t)offsetof(RequestMessageRead__storage_, date),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "force",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestMessageRead_FieldNumber_Force,
+        .hasIndex = 2,
+        .offset = 3,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -7319,6 +7329,107 @@ typedef struct ResponseLoadHistory__storage_ {
 
 @end
 
+#pragma mark - RequestLoadChatMessages
+
+@implementation RequestLoadChatMessages
+
+@dynamic hasPeer, peer;
+@dynamic midsArray, midsArray_Count;
+
+typedef struct RequestLoadChatMessages__storage_ {
+  uint32_t _has_storage_[1];
+  Peer *peer;
+  NSMutableArray *midsArray;
+} RequestLoadChatMessages__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "peer",
+        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
+        .number = RequestLoadChatMessages_FieldNumber_Peer,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(RequestLoadChatMessages__storage_, peer),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "midsArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
+        .number = RequestLoadChatMessages_FieldNumber_MidsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(RequestLoadChatMessages__storage_, midsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestLoadChatMessages class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RequestLoadChatMessages__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - ResponseLoadChatMessages
+
+@implementation ResponseLoadChatMessages
+
+@dynamic historyArray, historyArray_Count;
+
+typedef struct ResponseLoadChatMessages__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *historyArray;
+} ResponseLoadChatMessages__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "historyArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(HistoryMessage),
+        .number = ResponseLoadChatMessages_FieldNumber_HistoryArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(ResponseLoadChatMessages__storage_, historyArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ResponseLoadChatMessages class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ResponseLoadChatMessages__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - RequestLoadMentions
 
 @implementation RequestLoadMentions
@@ -7445,7 +7556,6 @@ typedef struct ResponseLoadMentions__storage_ {
 @dynamic lastRead;
 @dynamic lastReactionAt;
 @dynamic lastThreadInfoAt;
-@dynamic readLater;
 @dynamic isMuted;
 @dynamic isFavourite;
 @dynamic isArchived;
@@ -7548,20 +7658,11 @@ typedef struct Dialog__storage_ {
         .dataType = GPBDataTypeInt64,
       },
       {
-        .name = "readLater",
-        .dataTypeSpecific.clazz = Nil,
-        .number = Dialog_FieldNumber_ReadLater,
-        .hasIndex = 10,
-        .offset = 11,  // Stored in _has_storage_ to save space.
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBool,
-      },
-      {
         .name = "isMuted",
         .dataTypeSpecific.clazz = Nil,
         .number = Dialog_FieldNumber_IsMuted,
-        .hasIndex = 12,
-        .offset = 13,  // Stored in _has_storage_ to save space.
+        .hasIndex = 10,
+        .offset = 11,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
@@ -7569,8 +7670,8 @@ typedef struct Dialog__storage_ {
         .name = "isFavourite",
         .dataTypeSpecific.clazz = Nil,
         .number = Dialog_FieldNumber_IsFavourite,
-        .hasIndex = 14,
-        .offset = 15,  // Stored in _has_storage_ to save space.
+        .hasIndex = 12,
+        .offset = 13,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
@@ -7578,8 +7679,8 @@ typedef struct Dialog__storage_ {
         .name = "isArchived",
         .dataTypeSpecific.clazz = Nil,
         .number = Dialog_FieldNumber_IsArchived,
-        .hasIndex = 16,
-        .offset = 17,  // Stored in _has_storage_ to save space.
+        .hasIndex = 14,
+        .offset = 15,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
@@ -7605,7 +7706,7 @@ typedef struct Dialog__storage_ {
         .name = "lastOwnRead",
         .dataTypeSpecific.clazz = Nil,
         .number = Dialog_FieldNumber_LastOwnRead,
-        .hasIndex = 18,
+        .hasIndex = 16,
         .offset = (uint32_t)offsetof(Dialog__storage_, lastOwnRead),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
@@ -7614,7 +7715,7 @@ typedef struct Dialog__storage_ {
         .name = "lastOwnReceive",
         .dataTypeSpecific.clazz = Nil,
         .number = Dialog_FieldNumber_LastOwnReceive,
-        .hasIndex = 19,
+        .hasIndex = 17,
         .offset = (uint32_t)offsetof(Dialog__storage_, lastOwnReceive),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
@@ -7623,8 +7724,8 @@ typedef struct Dialog__storage_ {
         .name = "isFollowing",
         .dataTypeSpecific.clazz = Nil,
         .number = Dialog_FieldNumber_IsFollowing,
-        .hasIndex = 20,
-        .offset = 21,  // Stored in _has_storage_ to save space.
+        .hasIndex = 18,
+        .offset = 19,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
@@ -8172,13 +8273,11 @@ typedef struct PinnedMessages__storage_ {
 
 @dynamic hasPeer, peer;
 @dynamic hasMid, mid;
-@dynamic lastPinDate;
 
 typedef struct RequestPinMessage__storage_ {
   uint32_t _has_storage_[1];
-  OutPeer *peer;
+  Peer *peer;
   UUIDValue *mid;
-  int64_t lastPinDate;
 } RequestPinMessage__storage_;
 
 // This method is threadsafe because it is initially called
@@ -8189,7 +8288,7 @@ typedef struct RequestPinMessage__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "peer",
-        .dataTypeSpecific.clazz = GPBObjCClass(OutPeer),
+        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
         .number = RequestPinMessage_FieldNumber_Peer,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestPinMessage__storage_, peer),
@@ -8204,15 +8303,6 @@ typedef struct RequestPinMessage__storage_ {
         .offset = (uint32_t)offsetof(RequestPinMessage__storage_, mid),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "lastPinDate",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestPinMessage_FieldNumber_LastPinDate,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(RequestPinMessage__storage_, lastPinDate),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -8239,13 +8329,11 @@ typedef struct RequestPinMessage__storage_ {
 
 @dynamic hasPeer, peer;
 @dynamic hasMid, mid;
-@dynamic lastPinDate;
 
 typedef struct RequestUnpinMessage__storage_ {
   uint32_t _has_storage_[1];
-  OutPeer *peer;
+  Peer *peer;
   UUIDValue *mid;
-  int64_t lastPinDate;
 } RequestUnpinMessage__storage_;
 
 // This method is threadsafe because it is initially called
@@ -8256,7 +8344,7 @@ typedef struct RequestUnpinMessage__storage_ {
     static GPBMessageFieldDescription fields[] = {
       {
         .name = "peer",
-        .dataTypeSpecific.clazz = GPBObjCClass(OutPeer),
+        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
         .number = RequestUnpinMessage_FieldNumber_Peer,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(RequestUnpinMessage__storage_, peer),
@@ -8271,15 +8359,6 @@ typedef struct RequestUnpinMessage__storage_ {
         .offset = (uint32_t)offsetof(RequestUnpinMessage__storage_, mid),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "lastPinDate",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestUnpinMessage_FieldNumber_LastPinDate,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(RequestUnpinMessage__storage_, lastPinDate),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -8306,13 +8385,11 @@ typedef struct RequestUnpinMessage__storage_ {
 
 @dynamic hasPeer, peer;
 @dynamic hasPinnedMessages, pinnedMessages;
-@dynamic lastPinDate;
 
 typedef struct UpdatePinnedMessagesChanged__storage_ {
   uint32_t _has_storage_[1];
   Peer *peer;
   PinnedMessages *pinnedMessages;
-  int64_t lastPinDate;
 } UpdatePinnedMessagesChanged__storage_;
 
 // This method is threadsafe because it is initially called
@@ -8338,15 +8415,6 @@ typedef struct UpdatePinnedMessagesChanged__storage_ {
         .offset = (uint32_t)offsetof(UpdatePinnedMessagesChanged__storage_, pinnedMessages),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "lastPinDate",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdatePinnedMessagesChanged_FieldNumber_LastPinDate,
-        .hasIndex = 2,
-        .offset = (uint32_t)offsetof(UpdatePinnedMessagesChanged__storage_, lastPinDate),
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeInt64,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -8680,116 +8748,6 @@ typedef struct ResponseGetMessageReceives__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(ResponseGetMessageReceives__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - RequestReadDialogLater
-
-@implementation RequestReadDialogLater
-
-@dynamic hasPeer, peer;
-@dynamic readLater;
-
-typedef struct RequestReadDialogLater__storage_ {
-  uint32_t _has_storage_[1];
-  OutPeer *peer;
-} RequestReadDialogLater__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "peer",
-        .dataTypeSpecific.clazz = GPBObjCClass(OutPeer),
-        .number = RequestReadDialogLater_FieldNumber_Peer,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(RequestReadDialogLater__storage_, peer),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "readLater",
-        .dataTypeSpecific.clazz = Nil,
-        .number = RequestReadDialogLater_FieldNumber_ReadLater,
-        .hasIndex = 1,
-        .offset = 2,  // Stored in _has_storage_ to save space.
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBool,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[RequestReadDialogLater class]
-                                     rootClass:[MessagingRoot class]
-                                          file:MessagingRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(RequestReadDialogLater__storage_)
-                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
-    #if defined(DEBUG) && DEBUG
-      NSAssert(descriptor == nil, @"Startup recursed!");
-    #endif  // DEBUG
-    descriptor = localDescriptor;
-  }
-  return descriptor;
-}
-
-@end
-
-#pragma mark - UpdateDialogReadLaterChanged
-
-@implementation UpdateDialogReadLaterChanged
-
-@dynamic hasPeer, peer;
-@dynamic readLater;
-
-typedef struct UpdateDialogReadLaterChanged__storage_ {
-  uint32_t _has_storage_[1];
-  Peer *peer;
-} UpdateDialogReadLaterChanged__storage_;
-
-// This method is threadsafe because it is initially called
-// in +initialize for each subclass.
-+ (GPBDescriptor *)descriptor {
-  static GPBDescriptor *descriptor = nil;
-  if (!descriptor) {
-    static GPBMessageFieldDescription fields[] = {
-      {
-        .name = "peer",
-        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
-        .number = UpdateDialogReadLaterChanged_FieldNumber_Peer,
-        .hasIndex = 0,
-        .offset = (uint32_t)offsetof(UpdateDialogReadLaterChanged__storage_, peer),
-        .flags = GPBFieldOptional,
-        .dataType = GPBDataTypeMessage,
-      },
-      {
-        .name = "readLater",
-        .dataTypeSpecific.clazz = Nil,
-        .number = UpdateDialogReadLaterChanged_FieldNumber_ReadLater,
-        .hasIndex = 1,
-        .offset = 2,  // Stored in _has_storage_ to save space.
-        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
-        .dataType = GPBDataTypeBool,
-      },
-    };
-    GPBDescriptor *localDescriptor =
-        [GPBDescriptor allocDescriptorForClass:[UpdateDialogReadLaterChanged class]
-                                     rootClass:[MessagingRoot class]
-                                          file:MessagingRoot_FileDescriptor()
-                                        fields:fields
-                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
-                                   storageSize:sizeof(UpdateDialogReadLaterChanged__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");

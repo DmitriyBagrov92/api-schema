@@ -20,6 +20,7 @@
 @class RequestFavouriteDialog;
 @class RequestGetMessageReads;
 @class RequestGetMessageReceives;
+@class RequestLoadChatMessages;
 @class RequestLoadDialogs;
 @class RequestLoadMentions;
 @class RequestLoadMessageHistory;
@@ -27,7 +28,6 @@
 @class RequestMessageReceived;
 @class RequestMuteChat;
 @class RequestPinMessage;
-@class RequestReadDialogLater;
 @class RequestSendMessage;
 @class RequestSendMessageAsync;
 @class RequestUnfavouriteDialog;
@@ -36,6 +36,7 @@
 @class RequestUpdateMessage;
 @class ResponseGetMessageReads;
 @class ResponseGetMessageReceives;
+@class ResponseLoadChatMessages;
 @class ResponseLoadDialogs;
 @class ResponseLoadHistory;
 @class ResponseLoadMentions;
@@ -137,6 +138,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (GRPCUnaryProtoCall *)loadMessageHistoryWithMessage:(RequestLoadMessageHistory *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
+#pragma mark LoadChatMessages(RequestLoadChatMessages) returns (ResponseLoadChatMessages)
+
+/**
+ * / Метод подгрузки индвидуальных сообщений в чате
+ */
+- (GRPCUnaryProtoCall *)loadChatMessagesWithMessage:(RequestLoadChatMessages *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
 #pragma mark LoadMentions(RequestLoadMentions) returns (ResponseLoadMentions)
 
 /**
@@ -206,13 +214,6 @@ NS_ASSUME_NONNULL_BEGIN
  * / Мтод загрузки списка получивших сообщение
  */
 - (GRPCUnaryProtoCall *)getMessageReceivesWithMessage:(RequestGetMessageReceives *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
-
-#pragma mark ReadDialogLater(RequestReadDialogLater) returns (Empty)
-
-/**
- * / Метод изменения флага отложенности прочитки
- */
-- (GRPCUnaryProtoCall *)readDialogLaterWithMessage:(RequestReadDialogLater *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 @end
 
@@ -392,6 +393,23 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToLoadMessageHistoryWithRequest:(RequestLoadMessageHistory *)request handler:(void(^)(ResponseLoadHistory *_Nullable response, NSError *_Nullable error))handler;
 
 
+#pragma mark LoadChatMessages(RequestLoadChatMessages) returns (ResponseLoadChatMessages)
+
+/**
+ * / Метод подгрузки индвидуальных сообщений в чате
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)loadChatMessagesWithRequest:(RequestLoadChatMessages *)request handler:(void(^)(ResponseLoadChatMessages *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * / Метод подгрузки индвидуальных сообщений в чате
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToLoadChatMessagesWithRequest:(RequestLoadChatMessages *)request handler:(void(^)(ResponseLoadChatMessages *_Nullable response, NSError *_Nullable error))handler;
+
+
 #pragma mark LoadMentions(RequestLoadMentions) returns (ResponseLoadMentions)
 
 /**
@@ -560,23 +578,6 @@ NS_ASSUME_NONNULL_BEGIN
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetMessageReceivesWithRequest:(RequestGetMessageReceives *)request handler:(void(^)(ResponseGetMessageReceives *_Nullable response, NSError *_Nullable error))handler;
-
-
-#pragma mark ReadDialogLater(RequestReadDialogLater) returns (Empty)
-
-/**
- * / Метод изменения флага отложенности прочитки
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (void)readDialogLaterWithRequest:(RequestReadDialogLater *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
-
-/**
- * / Метод изменения флага отложенности прочитки
- *
- * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
- */
-- (GRPCProtoCall *)RPCToReadDialogLaterWithRequest:(RequestReadDialogLater *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end

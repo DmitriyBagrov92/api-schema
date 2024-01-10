@@ -68,10 +68,16 @@ message SimplePeerSearchCondition {
 
 message SimpleUserProfileSearchCondition {
     string query_string = 1;
+    PeerMemberCondition member_of = 2;
 }
 
 message SimpleGroupSearchCondition {
     string query_string = 1;
+}
+
+message PeerMemberCondition {
+    string group_id = 1; // where to search
+    bool is_member = 3; // include or exclude members of thereof
 }
 
 message SimpleSearchCondition {

@@ -56,7 +56,6 @@ CF_EXTERN_C_BEGIN
 @class UpdateDeleteMessageError;
 @class UpdateDialogFavouriteChanged;
 @class UpdateDialogMuteChanged;
-@class UpdateDialogReadLaterChanged;
 @class UpdateDraftsChanged;
 @class UpdateEditMessageError;
 @class UpdateFavouriteDialogError;
@@ -202,7 +201,6 @@ typedef GPB_ENUM(SeqUpdateBody_FieldNumber) {
   SeqUpdateBody_FieldNumber_UpdateGroupMemberInvited = 61,
   SeqUpdateBody_FieldNumber_UpdatePermissionsChange = 63,
   SeqUpdateBody_FieldNumber_UpdateGroupTyping = 64,
-  SeqUpdateBody_FieldNumber_UpdateDialogReadLaterChanged = 65,
   SeqUpdateBody_FieldNumber_UpdateDialogMuteChanged = 66,
   SeqUpdateBody_FieldNumber_UpdateSettingsChanged = 67,
   SeqUpdateBody_FieldNumber_UpdateDeleteMessageError = 68,
@@ -272,7 +270,6 @@ typedef GPB_ENUM(SeqUpdateBody_Update_OneOfCase) {
   SeqUpdateBody_Update_OneOfCase_UpdateGroupMemberInvited = 61,
   SeqUpdateBody_Update_OneOfCase_UpdatePermissionsChange = 63,
   SeqUpdateBody_Update_OneOfCase_UpdateGroupTyping = 64,
-  SeqUpdateBody_Update_OneOfCase_UpdateDialogReadLaterChanged = 65,
   SeqUpdateBody_Update_OneOfCase_UpdateDialogMuteChanged = 66,
   SeqUpdateBody_Update_OneOfCase_UpdateSettingsChanged = 67,
   SeqUpdateBody_Update_OneOfCase_UpdateDeleteMessageError = 68,
@@ -401,8 +398,6 @@ GPB_FINAL @interface SeqUpdateBody : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UpdatePermissionsChange *updatePermissionsChange;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateGroupTyping *updateGroupTyping;
-
-@property(nonatomic, readwrite, strong, null_resettable) UpdateDialogReadLaterChanged *updateDialogReadLaterChanged;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateDialogMuteChanged *updateDialogMuteChanged;
 

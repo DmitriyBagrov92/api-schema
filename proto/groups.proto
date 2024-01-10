@@ -479,8 +479,7 @@ enum GroupAdminPermission {
     /// Право на отправку сообщений в групповой чат
     GROUP_ADMIN_PERMISSION_SENDMESSAGE = 9;
 
-    /// Право на закрепление сообщений в групповом чате
-    GROUP_ADMIN_PERMISSION_PINMESSAGE = 10;
+    reserved 10;
 
     /// Право на просмотр членов группового чата
     GROUP_ADMIN_PERMISSION_VIEWMEMBERS = 11;
