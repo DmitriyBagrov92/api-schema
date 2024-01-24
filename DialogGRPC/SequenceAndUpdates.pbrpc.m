@@ -242,15 +242,15 @@
              responseClass:[SeqUpdate class]];
 }
 
-#pragma mark WeakUpdates(stream WeakUpdateCommand) returns (stream WeakUpdate)
+#pragma mark WeakUpdates(Empty) returns (stream WeakUpdate)
 
 /**
  * / Метод открытия подписки на поток weak-апдейтов пользователя
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)weakUpdatesWithRequestsWriter:(GRXWriter *)requestWriter eventHandler:(void(^)(BOOL done, WeakUpdate *_Nullable response, NSError *_Nullable error))eventHandler{
-  [[self RPCToWeakUpdatesWithRequestsWriter:requestWriter eventHandler:eventHandler] start];
+- (void)weakUpdatesWithRequest:(GPBEmpty *)request eventHandler:(void(^)(BOOL done, WeakUpdate *_Nullable response, NSError *_Nullable error))eventHandler{
+  [[self RPCToWeakUpdatesWithRequest:request eventHandler:eventHandler] start];
 }
 // Returns a not-yet-started RPC object.
 /**
@@ -258,17 +258,18 @@
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToWeakUpdatesWithRequestsWriter:(GRXWriter *)requestWriter eventHandler:(void(^)(BOOL done, WeakUpdate *_Nullable response, NSError *_Nullable error))eventHandler{
+- (GRPCProtoCall *)RPCToWeakUpdatesWithRequest:(GPBEmpty *)request eventHandler:(void(^)(BOOL done, WeakUpdate *_Nullable response, NSError *_Nullable error))eventHandler{
   return [self RPCToMethod:@"WeakUpdates"
-            requestsWriter:requestWriter
+            requestsWriter:[GRXWriter writerWithValue:request]
              responseClass:[WeakUpdate class]
         responsesWriteable:[GRXWriteable writeableWithEventHandler:eventHandler]];
 }
 /**
  * / Метод открытия подписки на поток weak-апдейтов пользователя
  */
-- (GRPCStreamingProtoCall *)weakUpdatesWithResponseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+- (GRPCUnaryProtoCall *)weakUpdatesWithMessage:(GPBEmpty *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"WeakUpdates"
+                   message:message
            responseHandler:handler
                callOptions:callOptions
              responseClass:[WeakUpdate class]];
