@@ -326,6 +326,62 @@ typedef struct UserOutPeer__storage_ {
 
 @end
 
+#pragma mark - GroupOutPeer
+
+@implementation GroupOutPeer
+
+@dynamic groupId;
+@dynamic accessHash;
+
+typedef struct GroupOutPeer__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *groupId;
+  int64_t accessHash;
+} GroupOutPeer__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "groupId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = GroupOutPeer_FieldNumber_GroupId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(GroupOutPeer__storage_, groupId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "accessHash",
+        .dataTypeSpecific.clazz = Nil,
+        .number = GroupOutPeer_FieldNumber_AccessHash,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(GroupOutPeer__storage_, accessHash),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt64,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[GroupOutPeer class]
+                                     rootClass:[PeersRoot class]
+                                          file:PeersRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(GroupOutPeer__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 
 #pragma clang diagnostic pop
 

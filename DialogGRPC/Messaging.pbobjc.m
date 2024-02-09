@@ -5106,8 +5106,10 @@ typedef struct ResponseSendMessage__storage_ {
 @dynamic hasCounter, counter;
 @dynamic hasMentionsCounter, mentionsCounter;
 @dynamic hasMyReadDate, myReadDate;
+@dynamic randomId;
 @dynamic modifiedAt;
 @dynamic badgeCounter;
+@dynamic isForcedOwnRead;
 
 typedef struct UpdateMessage__storage_ {
   uint32_t _has_storage_[2];
@@ -5122,6 +5124,7 @@ typedef struct UpdateMessage__storage_ {
   GPBInt64Value *prevMessageDate;
   GPBInt32Value *counter;
   GPBInt64Value *myReadDate;
+  NSString *randomId;
   ForwardSource *forwardSource;
   GPBInt32Value *mentionsCounter;
   int64_t date;
@@ -5234,10 +5237,19 @@ typedef struct UpdateMessage__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
+        .name = "randomId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = UpdateMessage_FieldNumber_RandomId,
+        .hasIndex = 11,
+        .offset = (uint32_t)offsetof(UpdateMessage__storage_, randomId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
         .name = "modifiedAt",
         .dataTypeSpecific.clazz = Nil,
         .number = UpdateMessage_FieldNumber_ModifiedAt,
-        .hasIndex = 11,
+        .hasIndex = 12,
         .offset = (uint32_t)offsetof(UpdateMessage__storage_, modifiedAt),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt64,
@@ -5264,10 +5276,19 @@ typedef struct UpdateMessage__storage_ {
         .name = "badgeCounter",
         .dataTypeSpecific.clazz = Nil,
         .number = UpdateMessage_FieldNumber_BadgeCounter,
-        .hasIndex = 12,
+        .hasIndex = 13,
         .offset = (uint32_t)offsetof(UpdateMessage__storage_, badgeCounter),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "isForcedOwnRead",
+        .dataTypeSpecific.clazz = Nil,
+        .number = UpdateMessage_FieldNumber_IsForcedOwnRead,
+        .hasIndex = 14,
+        .offset = 15,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -5417,6 +5438,7 @@ typedef struct UpdateMessageContentChanged__storage_ {
 @dynamic hasAttributes, attributes;
 @dynamic badgeCounter;
 @dynamic hasMessage, message;
+@dynamic isForcedOwnRead;
 
 typedef struct UpdateMessageSent__storage_ {
   uint32_t _has_storage_[2];
@@ -5557,6 +5579,15 @@ typedef struct UpdateMessageSent__storage_ {
         .offset = (uint32_t)offsetof(UpdateMessageSent__storage_, message),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "isForcedOwnRead",
+        .dataTypeSpecific.clazz = Nil,
+        .number = UpdateMessageSent_FieldNumber_IsForcedOwnRead,
+        .hasIndex = 11,
+        .offset = 12,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -5709,6 +5740,7 @@ typedef struct UpdateMessageRead__storage_ {
 @dynamic hasUnreadCounter, unreadCounter;
 @dynamic hasUnreadMentionsCounter, unreadMentionsCounter;
 @dynamic badgeCounter;
+@dynamic isForcedOwnRead;
 
 typedef struct UpdateMessageReadByMe__storage_ {
   uint32_t _has_storage_[1];
@@ -5769,6 +5801,15 @@ typedef struct UpdateMessageReadByMe__storage_ {
         .offset = (uint32_t)offsetof(UpdateMessageReadByMe__storage_, badgeCounter),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "isForcedOwnRead",
+        .dataTypeSpecific.clazz = Nil,
+        .number = UpdateMessageReadByMe_FieldNumber_IsForcedOwnRead,
+        .hasIndex = 5,
+        .offset = 6,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -7561,6 +7602,7 @@ typedef struct ResponseLoadMentions__storage_ {
 @dynamic lastOwnRead;
 @dynamic lastOwnReceive;
 @dynamic isFollowing;
+@dynamic isForcedOwnRead;
 
 typedef struct Dialog__storage_ {
   uint32_t _has_storage_[1];
@@ -7725,6 +7767,15 @@ typedef struct Dialog__storage_ {
         .number = Dialog_FieldNumber_IsFollowing,
         .hasIndex = 18,
         .offset = 19,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "isForcedOwnRead",
+        .dataTypeSpecific.clazz = Nil,
+        .number = Dialog_FieldNumber_IsForcedOwnRead,
+        .hasIndex = 20,
+        .offset = 21,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
       },
@@ -8372,12 +8423,14 @@ typedef struct RequestUnpinMessage__storage_ {
 @implementation UpdatePinnedMessagesChanged
 
 @dynamic hasPeer, peer;
-@dynamic hasPinnedMessages, pinnedMessages;
+@dynamic addedArray, addedArray_Count;
+@dynamic removedArray, removedArray_Count;
 
 typedef struct UpdatePinnedMessagesChanged__storage_ {
   uint32_t _has_storage_[1];
   Peer *peer;
-  PinnedMessages *pinnedMessages;
+  NSMutableArray *addedArray;
+  NSMutableArray *removedArray;
 } UpdatePinnedMessagesChanged__storage_;
 
 // This method is threadsafe because it is initially called
@@ -8396,12 +8449,21 @@ typedef struct UpdatePinnedMessagesChanged__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "pinnedMessages",
-        .dataTypeSpecific.clazz = GPBObjCClass(PinnedMessages),
-        .number = UpdatePinnedMessagesChanged_FieldNumber_PinnedMessages,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(UpdatePinnedMessagesChanged__storage_, pinnedMessages),
-        .flags = GPBFieldOptional,
+        .name = "addedArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
+        .number = UpdatePinnedMessagesChanged_FieldNumber_AddedArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(UpdatePinnedMessagesChanged__storage_, addedArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "removedArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
+        .number = UpdatePinnedMessagesChanged_FieldNumber_RemovedArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(UpdatePinnedMessagesChanged__storage_, removedArray),
+        .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
     };

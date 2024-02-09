@@ -32,6 +32,7 @@ CF_EXTERN_C_BEGIN
 @class GPBStringValue;
 @class Group;
 @class GroupMembersSubset;
+@class GroupOutPeer;
 @class GroupPartialInfo;
 @class HistoryMessage;
 @class Peer;
@@ -476,6 +477,7 @@ typedef GPB_ENUM(ResponseGetDifference_FieldNumber) {
   ResponseGetDifference_FieldNumber_Seq = 1,
   ResponseGetDifference_FieldNumber_UpdatesArray = 2,
   ResponseGetDifference_FieldNumber_NeedMore = 4,
+  ResponseGetDifference_FieldNumber_MinSeq = 9,
 };
 
 /**
@@ -496,6 +498,9 @@ GPB_FINAL @interface ResponseGetDifference : GPBMessage
  * / и необходимо сделать повторный запрос на получение разницы после применения полученного списка (уже с новым seq-номером в запросе)
  **/
 @property(nonatomic, readwrite) BOOL needMore;
+
+/** / Текущий минимальный сек-номер апдейта на момент запроса */
+@property(nonatomic, readwrite) uint64_t minSeq;
 
 @end
 
@@ -526,6 +531,7 @@ typedef GPB_ENUM(RequestGetReferencedEntities_FieldNumber) {
   RequestGetReferencedEntities_FieldNumber_UsersArray = 1,
   RequestGetReferencedEntities_FieldNumber_MidsArray = 2,
   RequestGetReferencedEntities_FieldNumber_GroupMembersArray = 3,
+  RequestGetReferencedEntities_FieldNumber_GroupsArray = 4,
   RequestGetReferencedEntities_FieldNumber_ReferencedMidsArray = 5,
   RequestGetReferencedEntities_FieldNumber_GroupIdsArray = 6,
 };
@@ -553,14 +559,22 @@ GPB_FINAL @interface RequestGetReferencedEntities : GPBMessage
 /** The number of items in @c groupMembersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger groupMembersArray_Count;
 
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *groupIdsArray;
-/** The number of items in @c groupIdsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger groupIdsArray_Count;
+/**
+ * / Список внешний пиров групп [тут достаточно group_id]
+ * / deprecated
+ **/
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupsArray GPB_DEPRECATED_MSG("dialog.RequestGetReferencedEntities.groups is deprecated (see sequence_and_updates.proto).");
+/** The number of items in @c groupsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger groupsArray_Count GPB_DEPRECATED_MSG("dialog.RequestGetReferencedEntities.groups is deprecated (see sequence_and_updates.proto).");
 
 /** / Список идфентификаторов сообщений для загрузки */
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<ReferencedMessages*> *referencedMidsArray;
 /** The number of items in @c referencedMidsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger referencedMidsArray_Count;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *groupIdsArray;
+/** The number of items in @c groupIdsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger groupIdsArray_Count;
 
 @end
 

@@ -133,6 +133,9 @@ message ResponseGetDifference {
     bool need_more = 4;
 
     reserved 3,5,6,7,8;
+
+    /// Текущий минимальный сек-номер апдейта на момент запроса
+    uint64 min_seq = 9;
 }
 
 /// Подмножетсво членов группового чата
@@ -157,12 +160,14 @@ message RequestGetReferencedEntities {
     /// Список подмножеств членов групповых чатов 
     repeated GroupMembersSubset group_members = 3;
     
-    /// Список внешний приов групп [тут достаточно group_id]
-    reserved 4;
-    repeated string group_ids = 6;
+    /// Список внешний пиров групп [тут достаточно group_id]
+    /// deprecated
+    repeated GroupOutPeer groups = 4 [deprecated = true];
 
     /// Список идфентификаторов сообщений для загрузки
     repeated ReferencedMessages referenced_mids = 5;
+
+    repeated string group_ids = 6;
 }
 
 /// Ответ на запрос на дополнительных загрузку сущностей

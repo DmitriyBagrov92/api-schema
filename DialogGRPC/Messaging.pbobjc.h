@@ -2216,10 +2216,12 @@ typedef GPB_ENUM(UpdateMessage_FieldNumber) {
   UpdateMessage_FieldNumber_PrevMessageDate = 10,
   UpdateMessage_FieldNumber_Counter = 12,
   UpdateMessage_FieldNumber_MyReadDate = 13,
+  UpdateMessage_FieldNumber_RandomId = 14,
   UpdateMessage_FieldNumber_ModifiedAt = 15,
   UpdateMessage_FieldNumber_ForwardSource = 17,
   UpdateMessage_FieldNumber_MentionsCounter = 18,
   UpdateMessage_FieldNumber_BadgeCounter = 19,
+  UpdateMessage_FieldNumber_IsForcedOwnRead = 20,
 };
 
 typedef GPB_ENUM(UpdateMessage_Attach_OneOfCase) {
@@ -2304,11 +2306,21 @@ GPB_FINAL @interface UpdateMessage : GPBMessage
 /** Test to see if @c myReadDate has been set. */
 @property(nonatomic, readwrite) BOOL hasMyReadDate;
 
+/**
+ * / Дедуплицирующий идентификатор сообщения
+ * / [тут его слать не нужно, он имеет смысл только в UpdateMessageSent, может запутать клиентских разработчиков]
+ * / deprecated
+ **/
+@property(nonatomic, readwrite, copy, null_resettable) NSString *randomId GPB_DEPRECATED_MSG("dialog.UpdateMessage.random_id is deprecated (see messaging.proto).");
+
 /** / Дата последней модификации сообщения */
 @property(nonatomic, readwrite) int64_t modifiedAt;
 
 /** / Суммарное количество непрочиток по всем диалогам, учитывая способ подсчета для P2P и групповых чатов */
 @property(nonatomic, readwrite) uint32_t badgeCounter;
+
+/** / Прочитка текущим пользователем была установлена с использованием флага force = true */
+@property(nonatomic, readwrite) BOOL isForcedOwnRead;
 
 @end
 
@@ -2379,6 +2391,7 @@ typedef GPB_ENUM(UpdateMessageSent_FieldNumber) {
   UpdateMessageSent_FieldNumber_UnreadMentionsCounter = 13,
   UpdateMessageSent_FieldNumber_BadgeCounter = 14,
   UpdateMessageSent_FieldNumber_Message = 15,
+  UpdateMessageSent_FieldNumber_IsForcedOwnRead = 16,
 };
 
 typedef GPB_ENUM(UpdateMessageSent_Attach_OneOfCase) {
@@ -2446,6 +2459,9 @@ GPB_FINAL @interface UpdateMessageSent : GPBMessage
 /** Test to see if @c message has been set. */
 @property(nonatomic, readwrite) BOOL hasMessage;
 
+/** / Прочитка текущим пользователем была установлена с использованием флага force = true */
+@property(nonatomic, readwrite) BOOL isForcedOwnRead;
+
 @end
 
 /**
@@ -2505,6 +2521,7 @@ typedef GPB_ENUM(UpdateMessageReadByMe_FieldNumber) {
   UpdateMessageReadByMe_FieldNumber_UnreadCounter = 4,
   UpdateMessageReadByMe_FieldNumber_UnreadMentionsCounter = 5,
   UpdateMessageReadByMe_FieldNumber_BadgeCounter = 6,
+  UpdateMessageReadByMe_FieldNumber_IsForcedOwnRead = 7,
 };
 
 /**
@@ -2532,6 +2549,9 @@ GPB_FINAL @interface UpdateMessageReadByMe : GPBMessage
 
 /** / Суммарное количество непрочиток по всем диалогам, учитывая способ подсчета для P2P и групповых чатов */
 @property(nonatomic, readwrite) uint32_t badgeCounter;
+
+/** / Прочитка текущим пользователем была установлена с использованием флага force = true */
+@property(nonatomic, readwrite) BOOL isForcedOwnRead;
 
 @end
 
@@ -3315,6 +3335,7 @@ typedef GPB_ENUM(Dialog_FieldNumber) {
   Dialog_FieldNumber_LastOwnRead = 24,
   Dialog_FieldNumber_LastOwnReceive = 25,
   Dialog_FieldNumber_IsFollowing = 26,
+  Dialog_FieldNumber_IsForcedOwnRead = 27,
 };
 
 /**
@@ -3393,6 +3414,9 @@ GPB_FINAL @interface Dialog : GPBMessage
 
 /** / Флаг, подписан ли пользователь на тред. Для нетредов он всегда false */
 @property(nonatomic, readwrite) BOOL isFollowing;
+
+/** / Прочитка текущим пользователем была установлена с использованием флага force = true */
+@property(nonatomic, readwrite) BOOL isForcedOwnRead;
 
 @end
 
@@ -3653,7 +3677,8 @@ GPB_FINAL @interface RequestUnpinMessage : GPBMessage
 
 typedef GPB_ENUM(UpdatePinnedMessagesChanged_FieldNumber) {
   UpdatePinnedMessagesChanged_FieldNumber_Peer = 1,
-  UpdatePinnedMessagesChanged_FieldNumber_PinnedMessages = 2,
+  UpdatePinnedMessagesChanged_FieldNumber_AddedArray = 2,
+  UpdatePinnedMessagesChanged_FieldNumber_RemovedArray = 4,
 };
 
 /**
@@ -3666,10 +3691,15 @@ GPB_FINAL @interface UpdatePinnedMessagesChanged : GPBMessage
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/** / Список закрепленных сообщений */
-@property(nonatomic, readwrite, strong, null_resettable) PinnedMessages *pinnedMessages;
-/** Test to see if @c pinnedMessages has been set. */
-@property(nonatomic, readwrite) BOOL hasPinnedMessages;
+/** / Список добавленных закрепленных сообщений */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UUIDValue*> *addedArray;
+/** The number of items in @c addedArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger addedArray_Count;
+
+/** / Список открепленных сообщений */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UUIDValue*> *removedArray;
+/** The number of items in @c removedArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger removedArray_Count;
 
 @end
 

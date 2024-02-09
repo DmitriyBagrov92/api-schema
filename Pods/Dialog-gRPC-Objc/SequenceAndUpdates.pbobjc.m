@@ -52,6 +52,7 @@ GPBObjCClassDeclaration(GPBInt64Value);
 GPBObjCClassDeclaration(GPBStringValue);
 GPBObjCClassDeclaration(Group);
 GPBObjCClassDeclaration(GroupMembersSubset);
+GPBObjCClassDeclaration(GroupOutPeer);
 GPBObjCClassDeclaration(GroupPartialInfo);
 GPBObjCClassDeclaration(HistoryMessage);
 GPBObjCClassDeclaration(Peer);
@@ -1060,11 +1061,13 @@ typedef struct RequestGetDifference__storage_ {
 @dynamic seq;
 @dynamic updatesArray, updatesArray_Count;
 @dynamic needMore;
+@dynamic minSeq;
 
 typedef struct ResponseGetDifference__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *updatesArray;
   uint64_t seq;
+  uint64_t minSeq;
 } ResponseGetDifference__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1099,6 +1102,15 @@ typedef struct ResponseGetDifference__storage_ {
         .offset = 2,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "minSeq",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ResponseGetDifference_FieldNumber_MinSeq,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(ResponseGetDifference__storage_, minSeq),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeUInt64,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -1182,14 +1194,16 @@ typedef struct GroupMembersSubset__storage_ {
 @dynamic usersArray, usersArray_Count;
 @dynamic midsArray, midsArray_Count;
 @dynamic groupMembersArray, groupMembersArray_Count;
-@dynamic groupIdsArray, groupIdsArray_Count;
+@dynamic groupsArray, groupsArray_Count;
 @dynamic referencedMidsArray, referencedMidsArray_Count;
+@dynamic groupIdsArray, groupIdsArray_Count;
 
 typedef struct RequestGetReferencedEntities__storage_ {
   uint32_t _has_storage_[1];
   NSMutableArray *usersArray;
   NSMutableArray *midsArray;
   NSMutableArray *groupMembersArray;
+  NSMutableArray *groupsArray;
   NSMutableArray *referencedMidsArray;
   NSMutableArray *groupIdsArray;
 } RequestGetReferencedEntities__storage_;
@@ -1224,6 +1238,15 @@ typedef struct RequestGetReferencedEntities__storage_ {
         .number = RequestGetReferencedEntities_FieldNumber_GroupMembersArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(RequestGetReferencedEntities__storage_, groupMembersArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "groupsArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(GroupOutPeer),
+        .number = RequestGetReferencedEntities_FieldNumber_GroupsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(RequestGetReferencedEntities__storage_, groupsArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
