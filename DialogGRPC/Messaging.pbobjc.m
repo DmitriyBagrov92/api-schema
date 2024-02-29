@@ -66,6 +66,7 @@ GPBObjCClassDeclaration(GPBInt32Value);
 GPBObjCClassDeclaration(GPBInt64Value);
 GPBObjCClassDeclaration(GPBStringValue);
 GPBObjCClassDeclaration(GroupData);
+GPBObjCClassDeclaration(GroupOutPeer);
 GPBObjCClassDeclaration(HistoryMessage);
 GPBObjCClassDeclaration(ImageLocation);
 GPBObjCClassDeclaration(ImageMedia);
@@ -7999,6 +8000,7 @@ typedef struct RequestLoadDialogs__storage_ {
 
 @dynamic dialogsArray, dialogsArray_Count;
 @dynamic userPeersArray, userPeersArray_Count;
+@dynamic groupPeersArray, groupPeersArray_Count;
 @dynamic totalDialogsCount;
 
 typedef struct ResponseLoadDialogs__storage_ {
@@ -8006,6 +8008,7 @@ typedef struct ResponseLoadDialogs__storage_ {
   int32_t totalDialogsCount;
   NSMutableArray *dialogsArray;
   NSMutableArray *userPeersArray;
+  NSMutableArray *groupPeersArray;
 } ResponseLoadDialogs__storage_;
 
 // This method is threadsafe because it is initially called
@@ -8029,6 +8032,15 @@ typedef struct ResponseLoadDialogs__storage_ {
         .number = ResponseLoadDialogs_FieldNumber_UserPeersArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(ResponseLoadDialogs__storage_, userPeersArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "groupPeersArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(GroupOutPeer),
+        .number = ResponseLoadDialogs_FieldNumber_GroupPeersArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(ResponseLoadDialogs__storage_, groupPeersArray),
         .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
@@ -8311,12 +8323,12 @@ typedef struct PinnedMessages__storage_ {
 @implementation RequestPinMessage
 
 @dynamic hasPeer, peer;
-@dynamic hasMid, mid;
+@dynamic midsArray, midsArray_Count;
 
 typedef struct RequestPinMessage__storage_ {
   uint32_t _has_storage_[1];
   Peer *peer;
-  UUIDValue *mid;
+  NSMutableArray *midsArray;
 } RequestPinMessage__storage_;
 
 // This method is threadsafe because it is initially called
@@ -8335,12 +8347,12 @@ typedef struct RequestPinMessage__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "mid",
+        .name = "midsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestPinMessage_FieldNumber_Mid,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestPinMessage__storage_, mid),
-        .flags = GPBFieldOptional,
+        .number = RequestPinMessage_FieldNumber_MidsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(RequestPinMessage__storage_, midsArray),
+        .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
     };
@@ -8367,12 +8379,12 @@ typedef struct RequestPinMessage__storage_ {
 @implementation RequestUnpinMessage
 
 @dynamic hasPeer, peer;
-@dynamic hasMid, mid;
+@dynamic midsArray, midsArray_Count;
 
 typedef struct RequestUnpinMessage__storage_ {
   uint32_t _has_storage_[1];
   Peer *peer;
-  UUIDValue *mid;
+  NSMutableArray *midsArray;
 } RequestUnpinMessage__storage_;
 
 // This method is threadsafe because it is initially called
@@ -8391,12 +8403,12 @@ typedef struct RequestUnpinMessage__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "mid",
+        .name = "midsArray",
         .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
-        .number = RequestUnpinMessage_FieldNumber_Mid,
-        .hasIndex = 1,
-        .offset = (uint32_t)offsetof(RequestUnpinMessage__storage_, mid),
-        .flags = GPBFieldOptional,
+        .number = RequestUnpinMessage_FieldNumber_MidsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(RequestUnpinMessage__storage_, midsArray),
+        .flags = GPBFieldRepeated,
         .dataType = GPBDataTypeMessage,
       },
     };

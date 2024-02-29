@@ -54,6 +54,7 @@ CF_EXTERN_C_BEGIN
 @class GPBInt64Value;
 @class GPBStringValue;
 @class GroupData;
+@class GroupOutPeer;
 @class HistoryMessage;
 @class ImageLocation;
 @class ImageMedia;
@@ -3502,6 +3503,7 @@ GPB_FINAL @interface RequestLoadDialogs : GPBMessage
 typedef GPB_ENUM(ResponseLoadDialogs_FieldNumber) {
   ResponseLoadDialogs_FieldNumber_DialogsArray = 1,
   ResponseLoadDialogs_FieldNumber_UserPeersArray = 2,
+  ResponseLoadDialogs_FieldNumber_GroupPeersArray = 3,
   ResponseLoadDialogs_FieldNumber_TotalDialogsCount = 4,
 };
 
@@ -3519,6 +3521,14 @@ GPB_FINAL @interface ResponseLoadDialogs : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UserOutPeer*> *userPeersArray;
 /** The number of items in @c userPeersArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger userPeersArray_Count;
+
+/**
+ * / Список внешних пиров групп упомянутых в списке диалогов
+ * / DEPRECATE
+ **/
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<GroupOutPeer*> *groupPeersArray;
+/** The number of items in @c groupPeersArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger groupPeersArray_Count;
 
 /** / Общее количество диалогов */
 @property(nonatomic, readwrite) int32_t totalDialogsCount;
@@ -3629,11 +3639,11 @@ GPB_FINAL @interface PinnedMessages : GPBMessage
 
 typedef GPB_ENUM(RequestPinMessage_FieldNumber) {
   RequestPinMessage_FieldNumber_Peer = 1,
-  RequestPinMessage_FieldNumber_Mid = 2,
+  RequestPinMessage_FieldNumber_MidsArray = 2,
 };
 
 /**
- * / Запрос на добавление сообщения в закрепленные
+ * / Запрос на добавление сообщений в закрепленные
  **/
 GPB_FINAL @interface RequestPinMessage : GPBMessage
 
@@ -3642,10 +3652,10 @@ GPB_FINAL @interface RequestPinMessage : GPBMessage
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/** / Идентификатор сообщения для добавления в закрепленные */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
+/** / Идентификаторы сообщений для добавления в закрепленные */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UUIDValue*> *midsArray;
+/** The number of items in @c midsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger midsArray_Count;
 
 @end
 
@@ -3653,11 +3663,11 @@ GPB_FINAL @interface RequestPinMessage : GPBMessage
 
 typedef GPB_ENUM(RequestUnpinMessage_FieldNumber) {
   RequestUnpinMessage_FieldNumber_Peer = 1,
-  RequestUnpinMessage_FieldNumber_Mid = 2,
+  RequestUnpinMessage_FieldNumber_MidsArray = 2,
 };
 
 /**
- * / Запрос на удаления сообщения из закрепленных
+ * / Запрос на удаления сообщений из закрепленных
  **/
 GPB_FINAL @interface RequestUnpinMessage : GPBMessage
 
@@ -3666,10 +3676,10 @@ GPB_FINAL @interface RequestUnpinMessage : GPBMessage
 /** Test to see if @c peer has been set. */
 @property(nonatomic, readwrite) BOOL hasPeer;
 
-/** / Идентификатор сообщения для добавления в закрепленные */
-@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
-/** Test to see if @c mid has been set. */
-@property(nonatomic, readwrite) BOOL hasMid;
+/** / Идентификаторы сообщений для добавления в закрепленные */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<UUIDValue*> *midsArray;
+/** The number of items in @c midsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger midsArray_Count;
 
 @end
 

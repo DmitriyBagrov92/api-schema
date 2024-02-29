@@ -1462,6 +1462,10 @@ message ResponseLoadDialogs {
     /// Список внешних пиров пользователей упомянутых в списке диалогов
     repeated UserOutPeer user_peers = 2;
 
+    /// Список внешних пиров групп упомянутых в списке диалогов
+    /// DEPRECATE
+    repeated GroupOutPeer group_peers = 3;
+
     /// Общее количество диалогов
     int32 total_dialogs_count = 4;
 }
@@ -1502,24 +1506,24 @@ message PinnedMessages {
     repeated UUIDValue mids = 1;
 }
 
-/// Запрос на добавление сообщения в закрепленные
+/// Запрос на добавление сообщений в закрепленные
 message RequestPinMessage {
     /// Пир чата
     Peer peer = 1;
 
-    /// Идентификатор сообщения для добавления в закрепленные
-    UUIDValue mid = 2;
+    /// Идентификаторы сообщений для добавления в закрепленные
+    repeated UUIDValue mids = 2;
 
     reserved 3;
 }
 
-/// Запрос на удаления сообщения из закрепленных
+/// Запрос на удаления сообщений из закрепленных
 message RequestUnpinMessage {
     /// Пир чата
     Peer peer = 1;
 
-    /// Идентификатор сообщения для добавления в закрепленные
-    UUIDValue mid = 2;
+    /// Идентификаторы сообщений для добавления в закрепленные
+    repeated UUIDValue mids = 2;
 
     reserved 3;
 }
