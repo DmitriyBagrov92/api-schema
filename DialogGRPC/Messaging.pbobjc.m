@@ -5331,15 +5331,24 @@ void UpdateMessage_ClearAttachOneOfCase(UpdateMessage *message) {
 @dynamic editedAt;
 @dynamic hasIsSilent, isSilent;
 @dynamic hasAttributes, attributes;
+@dynamic counter;
+@dynamic mentionsCounter;
+@dynamic myReadDate;
+@dynamic badgeCounter;
+@dynamic isForcedOwnRead;
 
 typedef struct UpdateMessageContentChanged__storage_ {
   uint32_t _has_storage_[1];
+  uint32_t counter;
+  uint32_t mentionsCounter;
+  uint32_t badgeCounter;
   Peer *peer;
   UUIDValue *mid;
   MessageContent *message;
   GPBBoolValue *isSilent;
   MessageAttributes *attributes;
   int64_t editedAt;
+  uint64_t myReadDate;
 } UpdateMessageContentChanged__storage_;
 
 // This method is threadsafe because it is initially called
@@ -5401,6 +5410,51 @@ typedef struct UpdateMessageContentChanged__storage_ {
         .offset = (uint32_t)offsetof(UpdateMessageContentChanged__storage_, attributes),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "counter",
+        .dataTypeSpecific.clazz = Nil,
+        .number = UpdateMessageContentChanged_FieldNumber_Counter,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(UpdateMessageContentChanged__storage_, counter),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "mentionsCounter",
+        .dataTypeSpecific.clazz = Nil,
+        .number = UpdateMessageContentChanged_FieldNumber_MentionsCounter,
+        .hasIndex = 7,
+        .offset = (uint32_t)offsetof(UpdateMessageContentChanged__storage_, mentionsCounter),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "myReadDate",
+        .dataTypeSpecific.clazz = Nil,
+        .number = UpdateMessageContentChanged_FieldNumber_MyReadDate,
+        .hasIndex = 8,
+        .offset = (uint32_t)offsetof(UpdateMessageContentChanged__storage_, myReadDate),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeUInt64,
+      },
+      {
+        .name = "badgeCounter",
+        .dataTypeSpecific.clazz = Nil,
+        .number = UpdateMessageContentChanged_FieldNumber_BadgeCounter,
+        .hasIndex = 9,
+        .offset = (uint32_t)offsetof(UpdateMessageContentChanged__storage_, badgeCounter),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "isForcedOwnRead",
+        .dataTypeSpecific.clazz = Nil,
+        .number = UpdateMessageContentChanged_FieldNumber_IsForcedOwnRead,
+        .hasIndex = 10,
+        .offset = 11,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
       },
     };
     GPBDescriptor *localDescriptor =

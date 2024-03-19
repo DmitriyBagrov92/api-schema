@@ -356,7 +356,7 @@ service SequenceAndUpdates {
     }
 
     /// Метод открытия подписки на поток weak-апдейтов пользователя
-    rpc WeakUpdates (stream WeakUpdateCommand) returns (stream WeakUpdate) {
+    rpc WeakUpdates (google.protobuf.Empty) returns (stream WeakUpdate) {
         option (google.api.http) = {
             post: "/v1/grpc/SequenceAndUpdates/WeakUpdates"
             body: "*"

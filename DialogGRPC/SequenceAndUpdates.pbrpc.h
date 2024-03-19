@@ -23,7 +23,6 @@
 @class ResponseGetState;
 @class SeqUpdate;
 @class WeakUpdate;
-@class WeakUpdateCommand;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Wrappers.pbobjc.h"
@@ -96,12 +95,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (GRPCUnaryProtoCall *)seqUpdatesWithMessage:(GPBEmpty *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
-#pragma mark WeakUpdates(stream WeakUpdateCommand) returns (stream WeakUpdate)
+#pragma mark WeakUpdates(Empty) returns (stream WeakUpdate)
 
 /**
  * / Метод открытия подписки на поток weak-апдейтов пользователя
  */
-- (GRPCStreamingProtoCall *)weakUpdatesWithResponseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+- (GRPCUnaryProtoCall *)weakUpdatesWithMessage:(GPBEmpty *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 @end
 
@@ -196,21 +195,21 @@ NS_ASSUME_NONNULL_BEGIN
 - (GRPCProtoCall *)RPCToSeqUpdatesWithRequest:(GPBEmpty *)request eventHandler:(void(^)(BOOL done, SeqUpdate *_Nullable response, NSError *_Nullable error))eventHandler;
 
 
-#pragma mark WeakUpdates(stream WeakUpdateCommand) returns (stream WeakUpdate)
+#pragma mark WeakUpdates(Empty) returns (stream WeakUpdate)
 
 /**
  * / Метод открытия подписки на поток weak-апдейтов пользователя
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (void)weakUpdatesWithRequestsWriter:(GRXWriter *)requestWriter eventHandler:(void(^)(BOOL done, WeakUpdate *_Nullable response, NSError *_Nullable error))eventHandler;
+- (void)weakUpdatesWithRequest:(GPBEmpty *)request eventHandler:(void(^)(BOOL done, WeakUpdate *_Nullable response, NSError *_Nullable error))eventHandler;
 
 /**
  * / Метод открытия подписки на поток weak-апдейтов пользователя
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
-- (GRPCProtoCall *)RPCToWeakUpdatesWithRequestsWriter:(GRXWriter *)requestWriter eventHandler:(void(^)(BOOL done, WeakUpdate *_Nullable response, NSError *_Nullable error))eventHandler;
+- (GRPCProtoCall *)RPCToWeakUpdatesWithRequest:(GPBEmpty *)request eventHandler:(void(^)(BOOL done, WeakUpdate *_Nullable response, NSError *_Nullable error))eventHandler;
 
 
 @end

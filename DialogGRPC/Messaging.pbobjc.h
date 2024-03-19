@@ -2339,6 +2339,11 @@ typedef GPB_ENUM(UpdateMessageContentChanged_FieldNumber) {
   UpdateMessageContentChanged_FieldNumber_EditedAt = 4,
   UpdateMessageContentChanged_FieldNumber_IsSilent = 6,
   UpdateMessageContentChanged_FieldNumber_Attributes = 7,
+  UpdateMessageContentChanged_FieldNumber_Counter = 8,
+  UpdateMessageContentChanged_FieldNumber_MentionsCounter = 9,
+  UpdateMessageContentChanged_FieldNumber_MyReadDate = 10,
+  UpdateMessageContentChanged_FieldNumber_BadgeCounter = 11,
+  UpdateMessageContentChanged_FieldNumber_IsForcedOwnRead = 12,
 };
 
 /**
@@ -2373,6 +2378,24 @@ GPB_FINAL @interface UpdateMessageContentChanged : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) MessageAttributes *attributes;
 /** Test to see if @c attributes has been set. */
 @property(nonatomic, readwrite) BOOL hasAttributes;
+
+/** / Количество непрочитанных сообщений в чате */
+@property(nonatomic, readwrite) uint32_t counter;
+
+/** / Количество непрочитанных сообщений с упоминанием в чате */
+@property(nonatomic, readwrite) uint32_t mentionsCounter;
+
+/**
+ * / Дата последней прочитки, посланной пользователем-получателем уведомления, в этот чат
+ * / (в миллисекундах от unix epoch)
+ **/
+@property(nonatomic, readwrite) uint64_t myReadDate;
+
+/** / Суммарное количество непрочиток по всем диалогам, учитывая способ подсчета для P2P и групповых чатов */
+@property(nonatomic, readwrite) uint32_t badgeCounter;
+
+/** / Прочитка текущим пользователем была установлена с использованием флага force = true */
+@property(nonatomic, readwrite) BOOL isForcedOwnRead;
 
 @end
 
