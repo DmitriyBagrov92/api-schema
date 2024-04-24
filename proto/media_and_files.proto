@@ -50,6 +50,21 @@ message AudioLocation {
     int32 file_size_bytes = 4;
 }
 
+/// Координаты видео-файла
+message VideoLocation {
+    /// Координаты файла с видео
+    FileLocation file_location = 1;
+
+    /// Длительность видео-файла в секундах
+    int32 duration_seconds = 2;
+
+    /// MIME-тип видео-файла
+    string mime_type = 3;
+
+    /// Размер видео-файла в байтах
+    int32 file_size_bytes = 4;
+}
+
 /// Структура изображения-аватара
 message AvatarImage {
     /// Координаты файла с аватаром

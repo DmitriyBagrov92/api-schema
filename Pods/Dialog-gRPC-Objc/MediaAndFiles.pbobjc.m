@@ -368,6 +368,84 @@ typedef struct AudioLocation__storage_ {
 
 @end
 
+#pragma mark - VideoLocation
+
+@implementation VideoLocation
+
+@dynamic hasFileLocation, fileLocation;
+@dynamic durationSeconds;
+@dynamic mimeType;
+@dynamic fileSizeBytes;
+
+typedef struct VideoLocation__storage_ {
+  uint32_t _has_storage_[1];
+  int32_t durationSeconds;
+  int32_t fileSizeBytes;
+  FileLocation *fileLocation;
+  NSString *mimeType;
+} VideoLocation__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "fileLocation",
+        .dataTypeSpecific.clazz = GPBObjCClass(FileLocation),
+        .number = VideoLocation_FieldNumber_FileLocation,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(VideoLocation__storage_, fileLocation),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "durationSeconds",
+        .dataTypeSpecific.clazz = Nil,
+        .number = VideoLocation_FieldNumber_DurationSeconds,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(VideoLocation__storage_, durationSeconds),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "mimeType",
+        .dataTypeSpecific.clazz = Nil,
+        .number = VideoLocation_FieldNumber_MimeType,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(VideoLocation__storage_, mimeType),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "fileSizeBytes",
+        .dataTypeSpecific.clazz = Nil,
+        .number = VideoLocation_FieldNumber_FileSizeBytes,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(VideoLocation__storage_, fileSizeBytes),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[VideoLocation class]
+                                     rootClass:[MediaAndFilesRoot class]
+                                          file:MediaAndFilesRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(VideoLocation__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - AvatarImage
 
 @implementation AvatarImage

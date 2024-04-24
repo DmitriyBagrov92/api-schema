@@ -59,6 +59,8 @@ CF_EXTERN_C_BEGIN
 @class UpdateEditMessageError;
 @class UpdateFavouriteDialogError;
 @class UpdateFeatureFlagChanged;
+@class UpdateFolderAssignments;
+@class UpdateFoldersList;
 @class UpdateGroup;
 @class UpdateGroupAboutChanged;
 @class UpdateGroupAvatarChanged;
@@ -211,6 +213,8 @@ typedef GPB_ENUM(SeqUpdateBody_FieldNumber) {
   SeqUpdateBody_FieldNumber_UpdateUnfavouriteDialogError = 76,
   SeqUpdateBody_FieldNumber_UpdateReadDialogLaterError = 77,
   SeqUpdateBody_FieldNumber_UpdateThreadFollowing = 78,
+  SeqUpdateBody_FieldNumber_UpdateFoldersList = 79,
+  SeqUpdateBody_FieldNumber_UpdateFolderAssignment = 80,
 };
 
 typedef GPB_ENUM(SeqUpdateBody_Update_OneOfCase) {
@@ -280,6 +284,8 @@ typedef GPB_ENUM(SeqUpdateBody_Update_OneOfCase) {
   SeqUpdateBody_Update_OneOfCase_UpdateUnfavouriteDialogError = 76,
   SeqUpdateBody_Update_OneOfCase_UpdateReadDialogLaterError = 77,
   SeqUpdateBody_Update_OneOfCase_UpdateThreadFollowing = 78,
+  SeqUpdateBody_Update_OneOfCase_UpdateFoldersList = 79,
+  SeqUpdateBody_Update_OneOfCase_UpdateFolderAssignment = 80,
 };
 
 /**
@@ -419,6 +425,10 @@ GPB_FINAL @interface SeqUpdateBody : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UpdateReadDialogLaterError *updateReadDialogLaterError;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateThreadFollowing *updateThreadFollowing;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateFoldersList *updateFoldersList;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateFolderAssignments *updateFolderAssignment;
 
 @end
 

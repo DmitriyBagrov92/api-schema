@@ -190,6 +190,36 @@ GPB_FINAL @interface AudioLocation : GPBMessage
 
 @end
 
+#pragma mark - VideoLocation
+
+typedef GPB_ENUM(VideoLocation_FieldNumber) {
+  VideoLocation_FieldNumber_FileLocation = 1,
+  VideoLocation_FieldNumber_DurationSeconds = 2,
+  VideoLocation_FieldNumber_MimeType = 3,
+  VideoLocation_FieldNumber_FileSizeBytes = 4,
+};
+
+/**
+ * / Координаты видео-файла
+ **/
+GPB_FINAL @interface VideoLocation : GPBMessage
+
+/** / Координаты файла с видео */
+@property(nonatomic, readwrite, strong, null_resettable) FileLocation *fileLocation;
+/** Test to see if @c fileLocation has been set. */
+@property(nonatomic, readwrite) BOOL hasFileLocation;
+
+/** / Длительность видео-файла в секундах */
+@property(nonatomic, readwrite) int32_t durationSeconds;
+
+/** / MIME-тип видео-файла */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *mimeType;
+
+/** / Размер видео-файла в байтах */
+@property(nonatomic, readwrite) int32_t fileSizeBytes;
+
+@end
+
 #pragma mark - AvatarImage
 
 typedef GPB_ENUM(AvatarImage_FieldNumber) {

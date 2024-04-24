@@ -36,6 +36,7 @@ CF_EXTERN_C_BEGIN
 @class DeletedMessage;
 @class Dialog;
 @class DialogFilter;
+@class DialogFolder;
 @class DialogGroup;
 @class DialogShort;
 @class DocumentEx;
@@ -43,8 +44,12 @@ CF_EXTERN_C_BEGIN
 @class DocumentExVideo;
 @class DocumentExVoice;
 @class DocumentMessage;
+@class DocumentMessageItem;
 @class EmptyMessage;
 @class FastThumb;
+@class FileLocation;
+@class FileMedia;
+@class FolderAssignment;
 @class ForwardItem;
 @class ForwardSource;
 @class GPBBoolValue;
@@ -53,6 +58,7 @@ CF_EXTERN_C_BEGIN
 @class GPBInt32Value;
 @class GPBInt64Value;
 @class GPBStringValue;
+@class GPBUInt32Value;
 @class GroupData;
 @class GroupOutPeer;
 @class HistoryMessage;
@@ -61,7 +67,6 @@ CF_EXTERN_C_BEGIN
 @class InteractiveMedia;
 @class InteractiveMediaButton;
 @class InteractiveMediaConfirm;
-@class InteractiveMediaGroup;
 @class InteractiveMediaSelect;
 @class InteractiveMediaSelectOption;
 @class InteractiveMediaTranslation;
@@ -74,6 +79,7 @@ CF_EXTERN_C_BEGIN
 @class MessageMedia;
 @class MessageOverrides;
 @class MessageStatus;
+@class MultiDocumentMessage;
 @class OutPeer;
 @class ParagraphStyle;
 @class Peer;
@@ -116,7 +122,10 @@ CF_EXTERN_C_BEGIN
 @class UnsupportedMessage;
 @class UpdateErrorCause;
 @class UserOutPeer;
+@class VideoLocation;
+@class VideoMedia;
 @class WebpageMedia;
+GPB_ENUM_FWD_DECLARE(PeerType);
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -261,7 +270,8 @@ typedef GPB_ENUM(MessageMedia_FieldNumber) {
   MessageMedia_FieldNumber_Webpage = 1,
   MessageMedia_FieldNumber_Image = 2,
   MessageMedia_FieldNumber_Audio = 3,
-  MessageMedia_FieldNumber_ActionsArray = 6,
+  MessageMedia_FieldNumber_Video = 7,
+  MessageMedia_FieldNumber_File = 8,
 };
 
 /**
@@ -284,10 +294,40 @@ GPB_FINAL @interface MessageMedia : GPBMessage
 /** Test to see if @c audio has been set. */
 @property(nonatomic, readwrite) BOOL hasAudio;
 
-/** / Набор интерактивных элементов */
-@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<InteractiveMediaGroup*> *actionsArray;
-/** The number of items in @c actionsArray without causing the array to be created. */
-@property(nonatomic, readonly) NSUInteger actionsArray_Count;
+/** / Видео */
+@property(nonatomic, readwrite, strong, null_resettable) VideoMedia *video;
+/** Test to see if @c video has been set. */
+@property(nonatomic, readwrite) BOOL hasVideo;
+
+/** / Нетипизированный файл */
+@property(nonatomic, readwrite, strong, null_resettable) FileMedia *file;
+/** Test to see if @c file has been set. */
+@property(nonatomic, readwrite) BOOL hasFile;
+
+@end
+
+#pragma mark - FileMedia
+
+typedef GPB_ENUM(FileMedia_FieldNumber) {
+  FileMedia_FieldNumber_FileLocation = 1,
+  FileMedia_FieldNumber_FileName = 2,
+  FileMedia_FieldNumber_FileSize = 3,
+};
+
+GPB_FINAL @interface FileMedia : GPBMessage
+
+/** / Координаты файла */
+@property(nonatomic, readwrite, strong, null_resettable) FileLocation *fileLocation;
+/** Test to see if @c fileLocation has been set. */
+@property(nonatomic, readwrite) BOOL hasFileLocation;
+
+/** / Название файла */
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *fileName;
+/** Test to see if @c fileName has been set. */
+@property(nonatomic, readwrite) BOOL hasFileName;
+
+/** / Размер файла */
+@property(nonatomic, readwrite) uint32_t fileSize;
 
 @end
 
@@ -360,6 +400,24 @@ GPB_FINAL @interface AudioMedia : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) AudioLocation *audio;
 /** Test to see if @c audio has been set. */
 @property(nonatomic, readwrite) BOOL hasAudio;
+
+@end
+
+#pragma mark - VideoMedia
+
+typedef GPB_ENUM(VideoMedia_FieldNumber) {
+  VideoMedia_FieldNumber_Video = 1,
+};
+
+/**
+ * / Видео-файл
+ **/
+GPB_FINAL @interface VideoMedia : GPBMessage
+
+/** / Координаты видео-файла */
+@property(nonatomic, readwrite, strong, null_resettable) VideoLocation *video;
+/** Test to see if @c video has been set. */
+@property(nonatomic, readwrite) BOOL hasVideo;
 
 @end
 
@@ -725,6 +783,7 @@ typedef GPB_ENUM(MessageContent_FieldNumber) {
   MessageContent_FieldNumber_Overrides = 10,
   MessageContent_FieldNumber_ExtensionsArray = 11,
   MessageContent_FieldNumber_DisableNotifications = 12,
+  MessageContent_FieldNumber_MultiDocumentMessage = 13,
 };
 
 typedef GPB_ENUM(MessageContent_Body_OneOfCase) {
@@ -732,6 +791,7 @@ typedef GPB_ENUM(MessageContent_Body_OneOfCase) {
   MessageContent_Body_OneOfCase_TextMessage = 1,
   MessageContent_Body_OneOfCase_ServiceMessage = 2,
   MessageContent_Body_OneOfCase_DocumentMessage = 3,
+  MessageContent_Body_OneOfCase_MultiDocumentMessage = 13,
   MessageContent_Body_OneOfCase_JsonMessage = 4,
   MessageContent_Body_OneOfCase_UnsupportedMessage = 5,
   MessageContent_Body_OneOfCase_StickerMessage = 6,
@@ -753,6 +813,8 @@ GPB_FINAL @interface MessageContent : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) ServiceMessage *serviceMessage;
 
 @property(nonatomic, readwrite, strong, null_resettable) DocumentMessage *documentMessage;
+
+@property(nonatomic, readwrite, strong, null_resettable) MultiDocumentMessage *multiDocumentMessage;
 
 @property(nonatomic, readwrite, strong, null_resettable) JsonMessage *jsonMessage;
 
@@ -1636,6 +1698,68 @@ GPB_FINAL @interface DocumentExVoice : GPBMessage
 
 /** / Длительность аудио в секундах */
 @property(nonatomic, readwrite) int32_t duration;
+
+@end
+
+#pragma mark - MultiDocumentMessage
+
+typedef GPB_ENUM(MultiDocumentMessage_FieldNumber) {
+  MultiDocumentMessage_FieldNumber_DocumentMessagesArray = 1,
+  MultiDocumentMessage_FieldNumber_MentionsArray = 2,
+};
+
+GPB_FINAL @interface MultiDocumentMessage : GPBMessage
+
+/** / Список документов */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<DocumentMessageItem*> *documentMessagesArray;
+/** The number of items in @c documentMessagesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger documentMessagesArray_Count;
+
+/** / Список упоминаний пиров в сообщении */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<Mention*> *mentionsArray;
+/** The number of items in @c mentionsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger mentionsArray_Count;
+
+@end
+
+#pragma mark - DocumentMessageItem
+
+typedef GPB_ENUM(DocumentMessageItem_FieldNumber) {
+  DocumentMessageItem_FieldNumber_FileId = 1,
+  DocumentMessageItem_FieldNumber_AccessHash = 2,
+  DocumentMessageItem_FieldNumber_FileSize = 3,
+  DocumentMessageItem_FieldNumber_Name = 4,
+  DocumentMessageItem_FieldNumber_MimeType = 5,
+  DocumentMessageItem_FieldNumber_Thumb = 6,
+  DocumentMessageItem_FieldNumber_Ext = 7,
+};
+
+GPB_FINAL @interface DocumentMessageItem : GPBMessage
+
+/** / Идентификатор файла */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *fileId;
+
+/** / Ключ доступа к файлу */
+@property(nonatomic, readwrite) int64_t accessHash;
+
+/** / Размер файла в байтах */
+@property(nonatomic, readwrite) int32_t fileSize;
+
+/** / Имя файла */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
+
+/** / MIME-тип файла */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *mimeType;
+
+/** / Миниатюра изображения, JPEG 90x90 пикселей с минимальным качеством */
+@property(nonatomic, readwrite, strong, null_resettable) FastThumb *thumb;
+/** Test to see if @c thumb has been set. */
+@property(nonatomic, readwrite) BOOL hasThumb;
+
+/** / Дополнительные свойства документа */
+@property(nonatomic, readwrite, strong, null_resettable) DocumentEx *ext;
+/** Test to see if @c ext has been set. */
+@property(nonatomic, readwrite) BOOL hasExt;
 
 @end
 
@@ -3360,6 +3484,7 @@ typedef GPB_ENUM(Dialog_FieldNumber) {
   Dialog_FieldNumber_LastOwnReceive = 25,
   Dialog_FieldNumber_IsFollowing = 26,
   Dialog_FieldNumber_IsForcedOwnRead = 27,
+  Dialog_FieldNumber_FolderId = 28,
 };
 
 /**
@@ -3442,6 +3567,11 @@ GPB_FINAL @interface Dialog : GPBMessage
 /** / Прочитка текущим пользователем была установлена с использованием флага force = true */
 @property(nonatomic, readwrite) BOOL isForcedOwnRead;
 
+/** / Признак принадлежности диалога папке (пустой для тредов) */
+@property(nonatomic, readwrite, strong, null_resettable) GPBInt32Value *folderId;
+/** Test to see if @c folderId has been set. */
+@property(nonatomic, readwrite) BOOL hasFolderId;
+
 @end
 
 #pragma mark - DialogFilter
@@ -3521,6 +3651,73 @@ GPB_FINAL @interface RequestLoadDialogs : GPBMessage
 
 @end
 
+#pragma mark - DialogFolder
+
+typedef GPB_ENUM(DialogFolder_FieldNumber) {
+  DialogFolder_FieldNumber_Id_p = 1,
+  DialogFolder_FieldNumber_Name = 2,
+  DialogFolder_FieldNumber_LocName = 3,
+  DialogFolder_FieldNumber_Position = 4,
+  DialogFolder_FieldNumber_AcceptablePeerType = 5,
+  DialogFolder_FieldNumber_Renameable = 6,
+  DialogFolder_FieldNumber_Removeable = 7,
+};
+
+/**
+ * / Структура папки
+ **/
+GPB_FINAL @interface DialogFolder : GPBMessage
+
+/** / Идентификатор папки */
+@property(nonatomic, readwrite) uint32_t id_p;
+
+/** / Наименование папки */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *name;
+
+/**
+ * / Ключ локализации для предустановленного наименования папки
+ * / (не может быть изменено пользователем)
+ **/
+@property(nonatomic, readwrite, strong, null_resettable) GPBStringValue *locName;
+/** Test to see if @c locName has been set. */
+@property(nonatomic, readwrite) BOOL hasLocName;
+
+/** / Порядковый номер папки */
+@property(nonatomic, readwrite) uint32_t position;
+
+/**
+ * / Тип чатов, принимаемых этой папкой
+ * / в случае PEER_TYPE_UNKNOWN счтиается, что принимаются все возможные корневые чаты
+ * / (не может быть изменено пользователем)
+ **/
+@property(nonatomic, readwrite) enum PeerType acceptablePeerType;
+
+/**
+ * / Признак изменяемости названия папки
+ * / (не может быть изменено пользователем)
+ **/
+@property(nonatomic, readwrite) BOOL renameable;
+
+/**
+ * / Признак удаляемости папки
+ * / (не может быть изменено пользователем)
+ **/
+@property(nonatomic, readwrite) BOOL removeable;
+
+@end
+
+/**
+ * Fetches the raw value of a @c DialogFolder's @c acceptablePeerType property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t DialogFolder_AcceptablePeerType_RawValue(DialogFolder *message);
+/**
+ * Sets the raw value of an @c DialogFolder's @c acceptablePeerType property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetDialogFolder_AcceptablePeerType_RawValue(DialogFolder *message, int32_t value);
+
 #pragma mark - ResponseLoadDialogs
 
 typedef GPB_ENUM(ResponseLoadDialogs_FieldNumber) {
@@ -3528,6 +3725,7 @@ typedef GPB_ENUM(ResponseLoadDialogs_FieldNumber) {
   ResponseLoadDialogs_FieldNumber_UserPeersArray = 2,
   ResponseLoadDialogs_FieldNumber_GroupPeersArray = 3,
   ResponseLoadDialogs_FieldNumber_TotalDialogsCount = 4,
+  ResponseLoadDialogs_FieldNumber_FoldersArray = 5,
 };
 
 /**
@@ -3555,6 +3753,129 @@ GPB_FINAL @interface ResponseLoadDialogs : GPBMessage
 
 /** / Общее количество диалогов */
 @property(nonatomic, readwrite) int32_t totalDialogsCount;
+
+/** / Список папок */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<DialogFolder*> *foldersArray;
+/** The number of items in @c foldersArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger foldersArray_Count;
+
+@end
+
+#pragma mark - FolderAssignment
+
+typedef GPB_ENUM(FolderAssignment_FieldNumber) {
+  FolderAssignment_FieldNumber_Peer = 1,
+  FolderAssignment_FieldNumber_FolderId = 2,
+};
+
+GPB_FINAL @interface FolderAssignment : GPBMessage
+
+/** / Пир диалога помещаемого в папку */
+@property(nonatomic, readwrite, strong, null_resettable) Peer *peer;
+/** Test to see if @c peer has been set. */
+@property(nonatomic, readwrite) BOOL hasPeer;
+
+/**
+ * / Идентификатор папки, в котрой должен находится диалог
+ * / если диалог необходимо убрать из каких-либо пользовательских папок, это значение должно быть null
+ **/
+@property(nonatomic, readwrite, strong, null_resettable) GPBUInt32Value *folderId;
+/** Test to see if @c folderId has been set. */
+@property(nonatomic, readwrite) BOOL hasFolderId;
+
+@end
+
+#pragma mark - RequestAssignFolders
+
+typedef GPB_ENUM(RequestAssignFolders_FieldNumber) {
+  RequestAssignFolders_FieldNumber_AssignmentsArray = 1,
+};
+
+/**
+ * / Запрос на изменение привязки диалогов к папкам
+ **/
+GPB_FINAL @interface RequestAssignFolders : GPBMessage
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FolderAssignment*> *assignmentsArray;
+/** The number of items in @c assignmentsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger assignmentsArray_Count;
+
+@end
+
+#pragma mark - ResponseAssignFolders
+
+/**
+ * / Ответ на запрос на изменение привязки диалога к папке
+ **/
+GPB_FINAL @interface ResponseAssignFolders : GPBMessage
+
+@end
+
+#pragma mark - RequestUpdateFolders
+
+typedef GPB_ENUM(RequestUpdateFolders_FieldNumber) {
+  RequestUpdateFolders_FieldNumber_FoldersArray = 1,
+};
+
+/**
+ * / Запрос на изменение свойств папок
+ **/
+GPB_FINAL @interface RequestUpdateFolders : GPBMessage
+
+/**
+ * / Список папок в желаемом состоянии
+ * / Папки, в которых не нужны изменения также необходимо передавать в этом списке, без изменений
+ * / В случае, если папку надо удалить -- её не надо указывать в этом списке
+ * / Новая папка создается её указанием в этом списке с присвоением уникального (для пользователя) id
+ **/
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<DialogFolder*> *foldersArray;
+/** The number of items in @c foldersArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger foldersArray_Count;
+
+@end
+
+#pragma mark - ResponseUpdateFolders
+
+/**
+ * / Ответ на запрос на изменение свойств папок
+ **/
+GPB_FINAL @interface ResponseUpdateFolders : GPBMessage
+
+@end
+
+#pragma mark - UpdateFoldersList
+
+typedef GPB_ENUM(UpdateFoldersList_FieldNumber) {
+  UpdateFoldersList_FieldNumber_FoldersArray = 1,
+};
+
+/**
+ * / Уведомление об изменении списка папок
+ **/
+GPB_FINAL @interface UpdateFoldersList : GPBMessage
+
+/** / Список папок */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<DialogFolder*> *foldersArray;
+/** The number of items in @c foldersArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger foldersArray_Count;
+
+@end
+
+#pragma mark - UpdateFolderAssignments
+
+typedef GPB_ENUM(UpdateFolderAssignments_FieldNumber) {
+  UpdateFolderAssignments_FieldNumber_AssignmentsArray = 1,
+};
+
+/**
+ * / Уведомление об изменении привязок диалогов к папкам
+ **/
+GPB_FINAL @interface UpdateFolderAssignments : GPBMessage
+
+/** / Список измененных привязок */
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<FolderAssignment*> *assignmentsArray;
+/** The number of items in @c assignmentsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger assignmentsArray_Count;
 
 @end
 

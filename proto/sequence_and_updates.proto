@@ -99,6 +99,8 @@ message SeqUpdateBody {
         UpdateUnfavouriteDialogError update_unfavourite_dialog_error = 76;
         UpdateReadDialogLaterError update_read_dialog_later_error = 77;
         UpdateThreadFollowing update_thread_following = 78;
+        UpdateFoldersList update_folders_list = 79;
+        UpdateFolderAssignments update_folder_assignment = 80;
     }
 }
 

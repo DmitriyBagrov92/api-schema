@@ -45,8 +45,24 @@ message MessageMedia {
     /// Аудио-файл
     AudioMedia audio = 3;
 
-    /// Набор интерактивных элементов
-    repeated InteractiveMediaGroup actions = 6;
+    reserved 6;
+    
+    /// Видео
+    VideoMedia video = 7;
+
+    /// Нетипизированный файл
+    FileMedia file = 8;
+}
+
+message FileMedia {
+    /// Координаты файла
+    FileLocation file_location = 1;
+
+    /// Название файла
+    google.protobuf.StringValue file_name = 2;
+
+    /// Размер файла
+    uint32 file_size = 3;
 }
 
 /// Веб-страница
@@ -74,6 +90,12 @@ message ImageMedia {
 message AudioMedia {
     /// Координаты аудио-файла
     AudioLocation audio = 1;
+}
+
+/// Видео-файл
+message VideoMedia {
+    /// Координаты видео-файла
+    VideoLocation video = 1;
 }
 
 /// Стиль интерактивного элемента
@@ -230,6 +252,7 @@ message MessageContent {
         TextMessage text_message = 1;
         ServiceMessage service_message = 2;
         DocumentMessage document_message = 3;
+        MultiDocumentMessage multi_document_message = 13;
         JsonMessage json_message = 4;
         UnsupportedMessage unsupported_message = 5;
         StickerMessage sticker_message = 6;
@@ -573,6 +596,37 @@ message DocumentExVideo {
 message DocumentExVoice {
     /// Длительность аудио в секундах
     int32 duration = 1;
+}
+
+message MultiDocumentMessage {
+    /// Список документов
+    repeated DocumentMessageItem document_messages = 1;
+
+    /// Список упоминаний пиров в сообщении
+    repeated Mention mentions = 2;
+}
+
+message DocumentMessageItem {
+    /// Идентификатор файла
+    string file_id = 1;
+
+    /// Ключ доступа к файлу
+    int64 access_hash = 2 [(dlg).log=log_confidential];
+
+    /// Размер файла в байтах
+    int32 file_size = 3;
+
+    /// Имя файла
+    string name = 4 [(dlg).log=log_confidential];
+
+    /// MIME-тип файла
+    string mime_type = 5;
+
+    /// Миниатюра изображения, JPEG 90x90 пикселей с минимальным качеством
+    FastThumb thumb = 6;
+
+    /// Дополнительные свойства документа
+    DocumentEx ext = 7;
 }
 
 /// Сообщение содержащее JSON
@@ -1430,6 +1484,9 @@ message Dialog {
 
     /// Прочитка текущим пользователем была установлена с использованием флага force = true
     bool is_forced_own_read = 27;
+
+    /// Признак принадлежности диалога папке (пустой для тредов)
+    google.protobuf.Int32Value folder_id = 28;
 }
 
 /// Набор фильтров для загрузки чатов
@@ -1470,6 +1527,35 @@ message RequestLoadDialogs {
     repeated Peer peers_to_load = 4;
 }
 
+/// Структура папки
+message DialogFolder {
+    /// Идентификатор папки
+    uint32 id = 1;
+
+    /// Наименование папки
+    string name = 2;
+
+    /// Ключ локализации для предустановленного наименования папки
+    /// (не может быть изменено пользователем)
+    google.protobuf.StringValue loc_name = 3;
+
+    /// Порядковый номер папки
+    uint32 position = 4;
+
+    /// Тип чатов, принимаемых этой папкой
+    /// в случае PEER_TYPE_UNKNOWN счтиается, что принимаются все возможные корневые чаты
+    /// (не может быть изменено пользователем)
+    PeerType acceptable_peer_type = 5;
+
+    /// Признак изменяемости названия папки
+    /// (не может быть изменено пользователем)
+    bool renameable = 6;
+
+    /// Признак удаляемости папки
+    /// (не может быть изменено пользователем)
+    bool removeable = 7;
+}
+
 /// Ответ на запрос на получение списка диалогов
 message ResponseLoadDialogs {
     /// Список диалогов
@@ -1484,6 +1570,50 @@ message ResponseLoadDialogs {
 
     /// Общее количество диалогов
     int32 total_dialogs_count = 4;
+
+    /// Список папок
+    repeated DialogFolder folders = 5;
+}
+
+message FolderAssignment {
+    /// Пир диалога помещаемого в папку
+    Peer peer = 1;
+
+    /// Идентификатор папки, в котрой должен находится диалог
+    /// если диалог необходимо убрать из каких-либо пользовательских папок, это значение должно быть null
+    google.protobuf.UInt32Value folder_id = 2;
+}
+
+/// Запрос на изменение привязки диалогов к папкам
+message RequestAssignFolders {
+    repeated FolderAssignment assignments = 1;
+}
+
+/// Ответ на запрос на изменение привязки диалога к папке
+message ResponseAssignFolders {}
+
+/// Запрос на изменение свойств папок
+message RequestUpdateFolders {
+    /// Список папок в желаемом состоянии
+    /// Папки, в которых не нужны изменения также необходимо передавать в этом списке, без изменений
+    /// В случае, если папку надо удалить -- её не надо указывать в этом списке
+    /// Новая папка создается её указанием в этом списке с присвоением уникального (для пользователя) id
+    repeated DialogFolder folders = 1;
+}
+
+/// Ответ на запрос на изменение свойств папок
+message ResponseUpdateFolders {}
+
+/// Уведомление об изменении списка папок
+message UpdateFoldersList {
+    /// Список папок
+    repeated DialogFolder folders = 1;
+}
+
+/// Уведомление об изменении привязок диалогов к папкам
+message UpdateFolderAssignments {
+    /// Список измененных привязок
+    repeated FolderAssignment assignments = 1;
 }
 
 /// Запрос на добавление чата в изрбанное
@@ -1789,11 +1919,28 @@ service Messaging {
         };
     }
 
-    /// Мтод загрузки списка получивших сообщение
+    /// Метод загрузки списка получивших сообщение
     rpc GetMessageReceives (RequestGetMessageReceives) returns (ResponseGetMessageReceives) {
         option (google.api.http) = {
             post: "/v1/grpc/Messaging/GetMessageReceives"
             body: "*"
         };
     }
+
+    /// Метод изменения привязки диалогов к папкам
+    rpc AssignFolders (RequestAssignFolders) returns (ResponseAssignFolders) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Messaging/AssignFolders"
+            body: "*"
+        };
+    }
+
+    /// Метод изменения свойств папок
+    rpc UpdateFolders (RequestUpdateFolders) returns (ResponseUpdateFolders) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Messaging/UpdateFolders"
+            body: "*"
+        };
+    }
+
 }

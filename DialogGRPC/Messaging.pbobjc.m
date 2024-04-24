@@ -48,6 +48,7 @@ GPBObjCClassDeclaration(Color);
 GPBObjCClassDeclaration(DeletedMessage);
 GPBObjCClassDeclaration(Dialog);
 GPBObjCClassDeclaration(DialogFilter);
+GPBObjCClassDeclaration(DialogFolder);
 GPBObjCClassDeclaration(DialogGroup);
 GPBObjCClassDeclaration(DialogShort);
 GPBObjCClassDeclaration(DocumentEx);
@@ -55,8 +56,12 @@ GPBObjCClassDeclaration(DocumentExPhoto);
 GPBObjCClassDeclaration(DocumentExVideo);
 GPBObjCClassDeclaration(DocumentExVoice);
 GPBObjCClassDeclaration(DocumentMessage);
+GPBObjCClassDeclaration(DocumentMessageItem);
 GPBObjCClassDeclaration(EmptyMessage);
 GPBObjCClassDeclaration(FastThumb);
+GPBObjCClassDeclaration(FileLocation);
+GPBObjCClassDeclaration(FileMedia);
+GPBObjCClassDeclaration(FolderAssignment);
 GPBObjCClassDeclaration(ForwardItem);
 GPBObjCClassDeclaration(ForwardSource);
 GPBObjCClassDeclaration(GPBBoolValue);
@@ -65,6 +70,7 @@ GPBObjCClassDeclaration(GPBDuration);
 GPBObjCClassDeclaration(GPBInt32Value);
 GPBObjCClassDeclaration(GPBInt64Value);
 GPBObjCClassDeclaration(GPBStringValue);
+GPBObjCClassDeclaration(GPBUInt32Value);
 GPBObjCClassDeclaration(GroupData);
 GPBObjCClassDeclaration(GroupOutPeer);
 GPBObjCClassDeclaration(HistoryMessage);
@@ -73,7 +79,6 @@ GPBObjCClassDeclaration(ImageMedia);
 GPBObjCClassDeclaration(InteractiveMedia);
 GPBObjCClassDeclaration(InteractiveMediaButton);
 GPBObjCClassDeclaration(InteractiveMediaConfirm);
-GPBObjCClassDeclaration(InteractiveMediaGroup);
 GPBObjCClassDeclaration(InteractiveMediaSelect);
 GPBObjCClassDeclaration(InteractiveMediaSelectOption);
 GPBObjCClassDeclaration(InteractiveMediaTranslation);
@@ -86,6 +91,7 @@ GPBObjCClassDeclaration(MessageContent);
 GPBObjCClassDeclaration(MessageMedia);
 GPBObjCClassDeclaration(MessageOverrides);
 GPBObjCClassDeclaration(MessageStatus);
+GPBObjCClassDeclaration(MultiDocumentMessage);
 GPBObjCClassDeclaration(OutPeer);
 GPBObjCClassDeclaration(ParagraphStyle);
 GPBObjCClassDeclaration(Peer);
@@ -128,6 +134,8 @@ GPBObjCClassDeclaration(UUIDValue);
 GPBObjCClassDeclaration(UnsupportedMessage);
 GPBObjCClassDeclaration(UpdateErrorCause);
 GPBObjCClassDeclaration(UserOutPeer);
+GPBObjCClassDeclaration(VideoLocation);
+GPBObjCClassDeclaration(VideoMedia);
 GPBObjCClassDeclaration(WebpageMedia);
 
 #pragma mark - MessagingRoot
@@ -331,14 +339,16 @@ typedef struct MessageAttributes__storage_ {
 @dynamic hasWebpage, webpage;
 @dynamic hasImage, image;
 @dynamic hasAudio, audio;
-@dynamic actionsArray, actionsArray_Count;
+@dynamic hasVideo, video;
+@dynamic hasFile, file;
 
 typedef struct MessageMedia__storage_ {
   uint32_t _has_storage_[1];
   WebpageMedia *webpage;
   ImageMedia *image;
   AudioMedia *audio;
-  NSMutableArray *actionsArray;
+  VideoMedia *video;
+  FileMedia *file;
 } MessageMedia__storage_;
 
 // This method is threadsafe because it is initially called
@@ -375,12 +385,21 @@ typedef struct MessageMedia__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
-        .name = "actionsArray",
-        .dataTypeSpecific.clazz = GPBObjCClass(InteractiveMediaGroup),
-        .number = MessageMedia_FieldNumber_ActionsArray,
-        .hasIndex = GPBNoHasBit,
-        .offset = (uint32_t)offsetof(MessageMedia__storage_, actionsArray),
-        .flags = GPBFieldRepeated,
+        .name = "video",
+        .dataTypeSpecific.clazz = GPBObjCClass(VideoMedia),
+        .number = MessageMedia_FieldNumber_Video,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(MessageMedia__storage_, video),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "file",
+        .dataTypeSpecific.clazz = GPBObjCClass(FileMedia),
+        .number = MessageMedia_FieldNumber_File,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(MessageMedia__storage_, file),
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
     };
@@ -391,6 +410,73 @@ typedef struct MessageMedia__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(MessageMedia__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FileMedia
+
+@implementation FileMedia
+
+@dynamic hasFileLocation, fileLocation;
+@dynamic hasFileName, fileName;
+@dynamic fileSize;
+
+typedef struct FileMedia__storage_ {
+  uint32_t _has_storage_[1];
+  uint32_t fileSize;
+  FileLocation *fileLocation;
+  GPBStringValue *fileName;
+} FileMedia__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "fileLocation",
+        .dataTypeSpecific.clazz = GPBObjCClass(FileLocation),
+        .number = FileMedia_FieldNumber_FileLocation,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FileMedia__storage_, fileLocation),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "fileName",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
+        .number = FileMedia_FieldNumber_FileName,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FileMedia__storage_, fileName),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "fileSize",
+        .dataTypeSpecific.clazz = Nil,
+        .number = FileMedia_FieldNumber_FileSize,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(FileMedia__storage_, fileSize),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeUInt32,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FileMedia class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FileMedia__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -564,6 +650,51 @@ typedef struct AudioMedia__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(AudioMedia__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - VideoMedia
+
+@implementation VideoMedia
+
+@dynamic hasVideo, video;
+
+typedef struct VideoMedia__storage_ {
+  uint32_t _has_storage_[1];
+  VideoLocation *video;
+} VideoMedia__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "video",
+        .dataTypeSpecific.clazz = GPBObjCClass(VideoLocation),
+        .number = VideoMedia_FieldNumber_Video,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(VideoMedia__storage_, video),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[VideoMedia class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(VideoMedia__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -1405,6 +1536,7 @@ typedef struct MessageOverrides__storage_ {
 @dynamic textMessage;
 @dynamic serviceMessage;
 @dynamic documentMessage;
+@dynamic multiDocumentMessage;
 @dynamic jsonMessage;
 @dynamic unsupportedMessage;
 @dynamic stickerMessage;
@@ -1428,6 +1560,7 @@ typedef struct MessageContent__storage_ {
   DeletedMessage *deletedMessage;
   MessageOverrides *overrides;
   NSMutableArray *extensionsArray;
+  MultiDocumentMessage *multiDocumentMessage;
 } MessageContent__storage_;
 
 // This method is threadsafe because it is initially called
@@ -1543,6 +1676,15 @@ typedef struct MessageContent__storage_ {
         .offset = 2,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "multiDocumentMessage",
+        .dataTypeSpecific.clazz = GPBObjCClass(MultiDocumentMessage),
+        .number = MessageContent_FieldNumber_MultiDocumentMessage,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(MessageContent__storage_, multiDocumentMessage),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -3750,6 +3892,173 @@ typedef struct DocumentExVoice__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(DocumentExVoice__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - MultiDocumentMessage
+
+@implementation MultiDocumentMessage
+
+@dynamic documentMessagesArray, documentMessagesArray_Count;
+@dynamic mentionsArray, mentionsArray_Count;
+
+typedef struct MultiDocumentMessage__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *documentMessagesArray;
+  NSMutableArray *mentionsArray;
+} MultiDocumentMessage__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "documentMessagesArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(DocumentMessageItem),
+        .number = MultiDocumentMessage_FieldNumber_DocumentMessagesArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(MultiDocumentMessage__storage_, documentMessagesArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "mentionsArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(Mention),
+        .number = MultiDocumentMessage_FieldNumber_MentionsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(MultiDocumentMessage__storage_, mentionsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[MultiDocumentMessage class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(MultiDocumentMessage__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - DocumentMessageItem
+
+@implementation DocumentMessageItem
+
+@dynamic fileId;
+@dynamic accessHash;
+@dynamic fileSize;
+@dynamic name;
+@dynamic mimeType;
+@dynamic hasThumb, thumb;
+@dynamic hasExt, ext;
+
+typedef struct DocumentMessageItem__storage_ {
+  uint32_t _has_storage_[1];
+  int32_t fileSize;
+  NSString *fileId;
+  NSString *name;
+  NSString *mimeType;
+  FastThumb *thumb;
+  DocumentEx *ext;
+  int64_t accessHash;
+} DocumentMessageItem__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "fileId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = DocumentMessageItem_FieldNumber_FileId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(DocumentMessageItem__storage_, fileId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "accessHash",
+        .dataTypeSpecific.clazz = Nil,
+        .number = DocumentMessageItem_FieldNumber_AccessHash,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(DocumentMessageItem__storage_, accessHash),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "fileSize",
+        .dataTypeSpecific.clazz = Nil,
+        .number = DocumentMessageItem_FieldNumber_FileSize,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(DocumentMessageItem__storage_, fileSize),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "name",
+        .dataTypeSpecific.clazz = Nil,
+        .number = DocumentMessageItem_FieldNumber_Name,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(DocumentMessageItem__storage_, name),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "mimeType",
+        .dataTypeSpecific.clazz = Nil,
+        .number = DocumentMessageItem_FieldNumber_MimeType,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(DocumentMessageItem__storage_, mimeType),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "thumb",
+        .dataTypeSpecific.clazz = GPBObjCClass(FastThumb),
+        .number = DocumentMessageItem_FieldNumber_Thumb,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(DocumentMessageItem__storage_, thumb),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "ext",
+        .dataTypeSpecific.clazz = GPBObjCClass(DocumentEx),
+        .number = DocumentMessageItem_FieldNumber_Ext,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(DocumentMessageItem__storage_, ext),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[DocumentMessageItem class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(DocumentMessageItem__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
@@ -7658,6 +7967,7 @@ typedef struct ResponseLoadMentions__storage_ {
 @dynamic lastOwnReceive;
 @dynamic isFollowing;
 @dynamic isForcedOwnRead;
+@dynamic hasFolderId, folderId;
 
 typedef struct Dialog__storage_ {
   uint32_t _has_storage_[1];
@@ -7666,6 +7976,7 @@ typedef struct Dialog__storage_ {
   Peer *peer;
   PinnedMessages *pinnedMessages;
   HistoryMessage *historyMessage;
+  GPBInt32Value *folderId;
   int64_t modifiedAt;
   int64_t lastReceive;
   int64_t lastRead;
@@ -7833,6 +8144,15 @@ typedef struct Dialog__storage_ {
         .offset = 21,  // Stored in _has_storage_ to save space.
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "folderId",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBInt32Value),
+        .number = Dialog_FieldNumber_FolderId,
+        .hasIndex = 22,
+        .offset = (uint32_t)offsetof(Dialog__storage_, folderId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -8048,6 +8368,127 @@ typedef struct RequestLoadDialogs__storage_ {
 
 @end
 
+#pragma mark - DialogFolder
+
+@implementation DialogFolder
+
+@dynamic id_p;
+@dynamic name;
+@dynamic hasLocName, locName;
+@dynamic position;
+@dynamic acceptablePeerType;
+@dynamic renameable;
+@dynamic removeable;
+
+typedef struct DialogFolder__storage_ {
+  uint32_t _has_storage_[1];
+  uint32_t id_p;
+  uint32_t position;
+  PeerType acceptablePeerType;
+  NSString *name;
+  GPBStringValue *locName;
+} DialogFolder__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "id_p",
+        .dataTypeSpecific.clazz = Nil,
+        .number = DialogFolder_FieldNumber_Id_p,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(DialogFolder__storage_, id_p),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "name",
+        .dataTypeSpecific.clazz = Nil,
+        .number = DialogFolder_FieldNumber_Name,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(DialogFolder__storage_, name),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "locName",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBStringValue),
+        .number = DialogFolder_FieldNumber_LocName,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(DialogFolder__storage_, locName),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "position",
+        .dataTypeSpecific.clazz = Nil,
+        .number = DialogFolder_FieldNumber_Position,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(DialogFolder__storage_, position),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeUInt32,
+      },
+      {
+        .name = "acceptablePeerType",
+        .dataTypeSpecific.enumDescFunc = PeerType_EnumDescriptor,
+        .number = DialogFolder_FieldNumber_AcceptablePeerType,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(DialogFolder__storage_, acceptablePeerType),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "renameable",
+        .dataTypeSpecific.clazz = Nil,
+        .number = DialogFolder_FieldNumber_Renameable,
+        .hasIndex = 5,
+        .offset = 6,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "removeable",
+        .dataTypeSpecific.clazz = Nil,
+        .number = DialogFolder_FieldNumber_Removeable,
+        .hasIndex = 7,
+        .offset = 8,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[DialogFolder class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(DialogFolder__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t DialogFolder_AcceptablePeerType_RawValue(DialogFolder *message) {
+  GPBDescriptor *descriptor = [DialogFolder descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:DialogFolder_FieldNumber_AcceptablePeerType];
+  return GPBGetMessageRawEnumField(message, field);
+}
+
+void SetDialogFolder_AcceptablePeerType_RawValue(DialogFolder *message, int32_t value) {
+  GPBDescriptor *descriptor = [DialogFolder descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:DialogFolder_FieldNumber_AcceptablePeerType];
+  GPBSetMessageRawEnumField(message, field, value);
+}
+
 #pragma mark - ResponseLoadDialogs
 
 @implementation ResponseLoadDialogs
@@ -8056,6 +8497,7 @@ typedef struct RequestLoadDialogs__storage_ {
 @dynamic userPeersArray, userPeersArray_Count;
 @dynamic groupPeersArray, groupPeersArray_Count;
 @dynamic totalDialogsCount;
+@dynamic foldersArray, foldersArray_Count;
 
 typedef struct ResponseLoadDialogs__storage_ {
   uint32_t _has_storage_[1];
@@ -8063,6 +8505,7 @@ typedef struct ResponseLoadDialogs__storage_ {
   NSMutableArray *dialogsArray;
   NSMutableArray *userPeersArray;
   NSMutableArray *groupPeersArray;
+  NSMutableArray *foldersArray;
 } ResponseLoadDialogs__storage_;
 
 // This method is threadsafe because it is initially called
@@ -8107,6 +8550,15 @@ typedef struct ResponseLoadDialogs__storage_ {
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeInt32,
       },
+      {
+        .name = "foldersArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(DialogFolder),
+        .number = ResponseLoadDialogs_FieldNumber_FoldersArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(ResponseLoadDialogs__storage_, foldersArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[ResponseLoadDialogs class]
@@ -8115,6 +8567,306 @@ typedef struct ResponseLoadDialogs__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(ResponseLoadDialogs__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FolderAssignment
+
+@implementation FolderAssignment
+
+@dynamic hasPeer, peer;
+@dynamic hasFolderId, folderId;
+
+typedef struct FolderAssignment__storage_ {
+  uint32_t _has_storage_[1];
+  Peer *peer;
+  GPBUInt32Value *folderId;
+} FolderAssignment__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "peer",
+        .dataTypeSpecific.clazz = GPBObjCClass(Peer),
+        .number = FolderAssignment_FieldNumber_Peer,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FolderAssignment__storage_, peer),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "folderId",
+        .dataTypeSpecific.clazz = GPBObjCClass(GPBUInt32Value),
+        .number = FolderAssignment_FieldNumber_FolderId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FolderAssignment__storage_, folderId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FolderAssignment class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FolderAssignment__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - RequestAssignFolders
+
+@implementation RequestAssignFolders
+
+@dynamic assignmentsArray, assignmentsArray_Count;
+
+typedef struct RequestAssignFolders__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *assignmentsArray;
+} RequestAssignFolders__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "assignmentsArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(FolderAssignment),
+        .number = RequestAssignFolders_FieldNumber_AssignmentsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(RequestAssignFolders__storage_, assignmentsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestAssignFolders class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RequestAssignFolders__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - ResponseAssignFolders
+
+@implementation ResponseAssignFolders
+
+
+typedef struct ResponseAssignFolders__storage_ {
+  uint32_t _has_storage_[1];
+} ResponseAssignFolders__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ResponseAssignFolders class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(ResponseAssignFolders__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - RequestUpdateFolders
+
+@implementation RequestUpdateFolders
+
+@dynamic foldersArray, foldersArray_Count;
+
+typedef struct RequestUpdateFolders__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *foldersArray;
+} RequestUpdateFolders__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "foldersArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(DialogFolder),
+        .number = RequestUpdateFolders_FieldNumber_FoldersArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(RequestUpdateFolders__storage_, foldersArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestUpdateFolders class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RequestUpdateFolders__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - ResponseUpdateFolders
+
+@implementation ResponseUpdateFolders
+
+
+typedef struct ResponseUpdateFolders__storage_ {
+  uint32_t _has_storage_[1];
+} ResponseUpdateFolders__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ResponseUpdateFolders class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:NULL
+                                    fieldCount:0
+                                   storageSize:sizeof(ResponseUpdateFolders__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - UpdateFoldersList
+
+@implementation UpdateFoldersList
+
+@dynamic foldersArray, foldersArray_Count;
+
+typedef struct UpdateFoldersList__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *foldersArray;
+} UpdateFoldersList__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "foldersArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(DialogFolder),
+        .number = UpdateFoldersList_FieldNumber_FoldersArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(UpdateFoldersList__storage_, foldersArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[UpdateFoldersList class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(UpdateFoldersList__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - UpdateFolderAssignments
+
+@implementation UpdateFolderAssignments
+
+@dynamic assignmentsArray, assignmentsArray_Count;
+
+typedef struct UpdateFolderAssignments__storage_ {
+  uint32_t _has_storage_[1];
+  NSMutableArray *assignmentsArray;
+} UpdateFolderAssignments__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "assignmentsArray",
+        .dataTypeSpecific.clazz = GPBObjCClass(FolderAssignment),
+        .number = UpdateFolderAssignments_FieldNumber_AssignmentsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(UpdateFolderAssignments__storage_, assignmentsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[UpdateFolderAssignments class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(UpdateFolderAssignments__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");

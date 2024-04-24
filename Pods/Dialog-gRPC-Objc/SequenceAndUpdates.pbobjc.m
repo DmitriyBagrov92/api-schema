@@ -79,6 +79,8 @@ GPBObjCClassDeclaration(UpdateDraftsChanged);
 GPBObjCClassDeclaration(UpdateEditMessageError);
 GPBObjCClassDeclaration(UpdateFavouriteDialogError);
 GPBObjCClassDeclaration(UpdateFeatureFlagChanged);
+GPBObjCClassDeclaration(UpdateFolderAssignments);
+GPBObjCClassDeclaration(UpdateFoldersList);
 GPBObjCClassDeclaration(UpdateGroup);
 GPBObjCClassDeclaration(UpdateGroupAboutChanged);
 GPBObjCClassDeclaration(UpdateGroupAvatarChanged);
@@ -251,6 +253,8 @@ static GPBFileDescriptor *SequenceAndUpdatesRoot_FileDescriptor(void) {
 @dynamic updateUnfavouriteDialogError;
 @dynamic updateReadDialogLaterError;
 @dynamic updateThreadFollowing;
+@dynamic updateFoldersList;
+@dynamic updateFolderAssignment;
 
 typedef struct SeqUpdateBody__storage_ {
   uint32_t _has_storage_[2];
@@ -319,6 +323,8 @@ typedef struct SeqUpdateBody__storage_ {
   UpdateUnfavouriteDialogError *updateUnfavouriteDialogError;
   UpdateReadDialogLaterError *updateReadDialogLaterError;
   UpdateThreadFollowing *updateThreadFollowing;
+  UpdateFoldersList *updateFoldersList;
+  UpdateFolderAssignments *updateFolderAssignment;
 } SeqUpdateBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -909,6 +915,24 @@ typedef struct SeqUpdateBody__storage_ {
         .number = SeqUpdateBody_FieldNumber_UpdateThreadFollowing,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateThreadFollowing),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateFoldersList",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateFoldersList),
+        .number = SeqUpdateBody_FieldNumber_UpdateFoldersList,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateFoldersList),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateFolderAssignment",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateFolderAssignments),
+        .number = SeqUpdateBody_FieldNumber_UpdateFolderAssignment,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateFolderAssignment),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

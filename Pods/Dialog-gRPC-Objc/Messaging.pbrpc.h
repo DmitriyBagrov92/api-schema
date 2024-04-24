@@ -13,6 +13,7 @@
 #endif
 
 @class GPBEmpty;
+@class RequestAssignFolders;
 @class RequestClearChat;
 @class RequestDeleteChat;
 @class RequestDeleteMessage;
@@ -33,7 +34,9 @@
 @class RequestUnfavouriteDialog;
 @class RequestUnmuteChat;
 @class RequestUnpinMessage;
+@class RequestUpdateFolders;
 @class RequestUpdateMessage;
+@class ResponseAssignFolders;
 @class ResponseGetMessageReads;
 @class ResponseGetMessageReceives;
 @class ResponseLoadChatMessages;
@@ -41,6 +44,7 @@
 @class ResponseLoadHistory;
 @class ResponseLoadMentions;
 @class ResponseSendMessage;
+@class ResponseUpdateFolders;
 
 #if !defined(GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO) || !GPB_GRPC_FORWARD_DECLARE_MESSAGE_PROTO
   #import "Wrappers.pbobjc.h"
@@ -211,9 +215,23 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark GetMessageReceives(RequestGetMessageReceives) returns (ResponseGetMessageReceives)
 
 /**
- * / Мтод загрузки списка получивших сообщение
+ * / Метод загрузки списка получивших сообщение
  */
 - (GRPCUnaryProtoCall *)getMessageReceivesWithMessage:(RequestGetMessageReceives *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark AssignFolders(RequestAssignFolders) returns (ResponseAssignFolders)
+
+/**
+ * / Метод изменения привязки диалогов к папкам
+ */
+- (GRPCUnaryProtoCall *)assignFoldersWithMessage:(RequestAssignFolders *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark UpdateFolders(RequestUpdateFolders) returns (ResponseUpdateFolders)
+
+/**
+ * / Метод изменения свойств папок
+ */
+- (GRPCUnaryProtoCall *)updateFoldersWithMessage:(RequestUpdateFolders *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 @end
 
@@ -566,18 +584,52 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark GetMessageReceives(RequestGetMessageReceives) returns (ResponseGetMessageReceives)
 
 /**
- * / Мтод загрузки списка получивших сообщение
+ * / Метод загрузки списка получивших сообщение
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (void)getMessageReceivesWithRequest:(RequestGetMessageReceives *)request handler:(void(^)(ResponseGetMessageReceives *_Nullable response, NSError *_Nullable error))handler;
 
 /**
- * / Мтод загрузки списка получивших сообщение
+ * / Метод загрузки списка получивших сообщение
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToGetMessageReceivesWithRequest:(RequestGetMessageReceives *)request handler:(void(^)(ResponseGetMessageReceives *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark AssignFolders(RequestAssignFolders) returns (ResponseAssignFolders)
+
+/**
+ * / Метод изменения привязки диалогов к папкам
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)assignFoldersWithRequest:(RequestAssignFolders *)request handler:(void(^)(ResponseAssignFolders *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * / Метод изменения привязки диалогов к папкам
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToAssignFoldersWithRequest:(RequestAssignFolders *)request handler:(void(^)(ResponseAssignFolders *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark UpdateFolders(RequestUpdateFolders) returns (ResponseUpdateFolders)
+
+/**
+ * / Метод изменения свойств папок
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)updateFoldersWithRequest:(RequestUpdateFolders *)request handler:(void(^)(ResponseUpdateFolders *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * / Метод изменения свойств папок
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToUpdateFoldersWithRequest:(RequestUpdateFolders *)request handler:(void(^)(ResponseUpdateFolders *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end

@@ -730,7 +730,7 @@
 #pragma mark GetMessageReceives(RequestGetMessageReceives) returns (ResponseGetMessageReceives)
 
 /**
- * / Мтод загрузки списка получивших сообщение
+ * / Метод загрузки списка получивших сообщение
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -739,7 +739,7 @@
 }
 // Returns a not-yet-started RPC object.
 /**
- * / Мтод загрузки списка получивших сообщение
+ * / Метод загрузки списка получивших сообщение
  *
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
@@ -750,7 +750,7 @@
         responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
 }
 /**
- * / Мтод загрузки списка получивших сообщение
+ * / Метод загрузки списка получивших сообщение
  */
 - (GRPCUnaryProtoCall *)getMessageReceivesWithMessage:(RequestGetMessageReceives *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
   return [self RPCToMethod:@"GetMessageReceives"
@@ -758,6 +758,72 @@
            responseHandler:handler
                callOptions:callOptions
              responseClass:[ResponseGetMessageReceives class]];
+}
+
+#pragma mark AssignFolders(RequestAssignFolders) returns (ResponseAssignFolders)
+
+/**
+ * / Метод изменения привязки диалогов к папкам
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)assignFoldersWithRequest:(RequestAssignFolders *)request handler:(void(^)(ResponseAssignFolders *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToAssignFoldersWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * / Метод изменения привязки диалогов к папкам
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToAssignFoldersWithRequest:(RequestAssignFolders *)request handler:(void(^)(ResponseAssignFolders *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"AssignFolders"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[ResponseAssignFolders class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * / Метод изменения привязки диалогов к папкам
+ */
+- (GRPCUnaryProtoCall *)assignFoldersWithMessage:(RequestAssignFolders *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"AssignFolders"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[ResponseAssignFolders class]];
+}
+
+#pragma mark UpdateFolders(RequestUpdateFolders) returns (ResponseUpdateFolders)
+
+/**
+ * / Метод изменения свойств папок
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)updateFoldersWithRequest:(RequestUpdateFolders *)request handler:(void(^)(ResponseUpdateFolders *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToUpdateFoldersWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * / Метод изменения свойств папок
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToUpdateFoldersWithRequest:(RequestUpdateFolders *)request handler:(void(^)(ResponseUpdateFolders *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"UpdateFolders"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[ResponseUpdateFolders class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * / Метод изменения свойств папок
+ */
+- (GRPCUnaryProtoCall *)updateFoldersWithMessage:(RequestUpdateFolders *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"UpdateFolders"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[ResponseUpdateFolders class]];
 }
 
 @end
