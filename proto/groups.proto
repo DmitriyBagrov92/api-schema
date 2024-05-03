@@ -386,6 +386,14 @@ message ResponseMember {
 
 /// Запрос на приглашение пользователя в групповой чат
 message RequestInviteUser {
+    message MessagePointer {
+        /// Опциональный указатель на родительское сообщение треда
+        UUIDValue parent_mid = 1;
+
+        /// Идентификатор сообщения
+        UUIDValue mid = 2;
+    }
+
     reserved 1;
 
     /// Идентификатор группового чата
@@ -396,6 +404,9 @@ message RequestInviteUser {
 
     /// Внешний пир приглашаемого пользователя
     UserOutPeer user = 3;
+
+    /// Указатель на сообщение, которое будет первым непрочитанным для приглашенного пользователя
+    MessagePointer focus_at = 5;
 }
 
 /// Запрос на выход из группового чата

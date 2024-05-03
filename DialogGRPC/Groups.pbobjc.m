@@ -47,6 +47,9 @@ GPBObjCClassDeclaration(Group);
 GPBObjCClassDeclaration(GroupData);
 GPBObjCClassDeclaration(GroupMemberPermission);
 GPBObjCClassDeclaration(Member);
+GPBObjCClassDeclaration(RequestInviteUser);
+GPBObjCClassDeclaration(RequestInviteUser_MessagePointer);
+GPBObjCClassDeclaration(UUIDValue);
 GPBObjCClassDeclaration(UserOutPeer);
 
 #pragma mark - GroupsRoot
@@ -1977,12 +1980,14 @@ typedef struct ResponseMember__storage_ {
 @dynamic groupId;
 @dynamic rid;
 @dynamic hasUser, user;
+@dynamic hasFocusAt, focusAt;
 
 typedef struct RequestInviteUser__storage_ {
   uint32_t _has_storage_[1];
   NSString *rid;
   UserOutPeer *user;
   NSString *groupId;
+  RequestInviteUser_MessagePointer *focusAt;
 } RequestInviteUser__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2018,6 +2023,15 @@ typedef struct RequestInviteUser__storage_ {
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
         .dataType = GPBDataTypeString,
       },
+      {
+        .name = "focusAt",
+        .dataTypeSpecific.clazz = GPBObjCClass(RequestInviteUser_MessagePointer),
+        .number = RequestInviteUser_FieldNumber_FocusAt,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(RequestInviteUser__storage_, focusAt),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[RequestInviteUser class]
@@ -2027,6 +2041,63 @@ typedef struct RequestInviteUser__storage_ {
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(RequestInviteUser__storage_)
                                          flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - RequestInviteUser_MessagePointer
+
+@implementation RequestInviteUser_MessagePointer
+
+@dynamic hasParentMid, parentMid;
+@dynamic hasMid, mid;
+
+typedef struct RequestInviteUser_MessagePointer__storage_ {
+  uint32_t _has_storage_[1];
+  UUIDValue *parentMid;
+  UUIDValue *mid;
+} RequestInviteUser_MessagePointer__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "parentMid",
+        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
+        .number = RequestInviteUser_MessagePointer_FieldNumber_ParentMid,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(RequestInviteUser_MessagePointer__storage_, parentMid),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "mid",
+        .dataTypeSpecific.clazz = GPBObjCClass(UUIDValue),
+        .number = RequestInviteUser_MessagePointer_FieldNumber_Mid,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(RequestInviteUser_MessagePointer__storage_, mid),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestInviteUser_MessagePointer class]
+                                     rootClass:[GroupsRoot class]
+                                          file:GroupsRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RequestInviteUser_MessagePointer__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    [localDescriptor setupContainingMessageClass:GPBObjCClass(RequestInviteUser)];
     #if defined(DEBUG) && DEBUG
       NSAssert(descriptor == nil, @"Startup recursed!");
     #endif  // DEBUG

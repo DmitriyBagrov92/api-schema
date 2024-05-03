@@ -39,6 +39,8 @@ CF_EXTERN_C_BEGIN
 @class GroupData;
 @class GroupMemberPermission;
 @class Member;
+@class RequestInviteUser_MessagePointer;
+@class UUIDValue;
 @class UserOutPeer;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -912,6 +914,7 @@ typedef GPB_ENUM(RequestInviteUser_FieldNumber) {
   RequestInviteUser_FieldNumber_Rid = 2,
   RequestInviteUser_FieldNumber_User = 3,
   RequestInviteUser_FieldNumber_GroupId = 4,
+  RequestInviteUser_FieldNumber_FocusAt = 5,
 };
 
 /**
@@ -929,6 +932,32 @@ GPB_FINAL @interface RequestInviteUser : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UserOutPeer *user;
 /** Test to see if @c user has been set. */
 @property(nonatomic, readwrite) BOOL hasUser;
+
+/** / Указатель на сообщение, которое будет первым непрочитанным для приглашенного пользователя */
+@property(nonatomic, readwrite, strong, null_resettable) RequestInviteUser_MessagePointer *focusAt;
+/** Test to see if @c focusAt has been set. */
+@property(nonatomic, readwrite) BOOL hasFocusAt;
+
+@end
+
+#pragma mark - RequestInviteUser_MessagePointer
+
+typedef GPB_ENUM(RequestInviteUser_MessagePointer_FieldNumber) {
+  RequestInviteUser_MessagePointer_FieldNumber_ParentMid = 1,
+  RequestInviteUser_MessagePointer_FieldNumber_Mid = 2,
+};
+
+GPB_FINAL @interface RequestInviteUser_MessagePointer : GPBMessage
+
+/** / Опциональный указатель на родительское сообщение треда */
+@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *parentMid;
+/** Test to see if @c parentMid has been set. */
+@property(nonatomic, readwrite) BOOL hasParentMid;
+
+/** / Идентификатор сообщения */
+@property(nonatomic, readwrite, strong, null_resettable) UUIDValue *mid;
+/** Test to see if @c mid has been set. */
+@property(nonatomic, readwrite) BOOL hasMid;
 
 @end
 
