@@ -114,6 +114,9 @@ typedef GPB_ENUM(GroupAdminPermission) {
   /** / Право на отправку сообщений в групповой чат */
   GroupAdminPermission_GroupAdminPermissionSendmessage = 9,
 
+  /** / Право на отправку сообщений в групповой тред */
+  GroupAdminPermission_GroupAdminPermissionSendthreadmessage = 17,
+
   /** / Право на просмотр членов группового чата */
   GroupAdminPermission_GroupAdminPermissionViewmembers = 11,
 
@@ -165,6 +168,8 @@ typedef GPB_ENUM(Member_FieldNumber) {
   Member_FieldNumber_Clock = 4,
   Member_FieldNumber_DeletedAt = 5,
   Member_FieldNumber_InvitedBy = 6,
+  Member_FieldNumber_GrantedArray = 7,
+  Member_FieldNumber_RevokedArray = 8,
 };
 
 /**
@@ -178,11 +183,23 @@ GPB_FINAL @interface Member : GPBMessage
 /** / Время (в миллисекундах от Unix epoch), когда пользователь был добавлен в групповой чат */
 @property(nonatomic, readwrite) int64_t invitedAt;
 
-/** / Список прав */
+/** / Эффективный список прав. Deprecated */
 // |permissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *permissionsArray;
 /** The number of items in @c permissionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger permissionsArray_Count;
+
+/** / Список прав сверх базовых */
+// |grantedArray| contains |GroupAdminPermission|
+@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *grantedArray;
+/** The number of items in @c grantedArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger grantedArray_Count;
+
+/** / Список отозваанных прав относительно базовых */
+// |revokedArray| contains |GroupAdminPermission|
+@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *revokedArray;
+/** The number of items in @c revokedArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger revokedArray_Count;
 
 /** / Версия структуры */
 @property(nonatomic, readwrite) int64_t clock;
@@ -1089,6 +1106,8 @@ GPB_FINAL @interface RequestMakeUserAdmin : GPBMessage
 typedef GPB_ENUM(GroupMemberPermission_FieldNumber) {
   GroupMemberPermission_FieldNumber_UserId = 1,
   GroupMemberPermission_FieldNumber_PermissionsArray = 2,
+  GroupMemberPermission_FieldNumber_GrantedArray = 3,
+  GroupMemberPermission_FieldNumber_RevokedArray = 4,
 };
 
 /**
@@ -1099,11 +1118,23 @@ GPB_FINAL @interface GroupMemberPermission : GPBMessage
 /** / Идентификатор учетной записи пользователя члена группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
-/** / Список прав */
+/** / Эффективный список прав. Deprecated */
 // |permissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *permissionsArray;
 /** The number of items in @c permissionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger permissionsArray_Count;
+
+/** / Список прав сверх базовых */
+// |grantedArray| contains |GroupAdminPermission|
+@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *grantedArray;
+/** The number of items in @c grantedArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger grantedArray_Count;
+
+/** / Список отозваанных прав относительно базовых */
+// |revokedArray| contains |GroupAdminPermission|
+@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *revokedArray;
+/** The number of items in @c revokedArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger revokedArray_Count;
 
 @end
 
@@ -1153,6 +1184,8 @@ typedef GPB_ENUM(UpdateGroupMemberPermissionsChanged_FieldNumber) {
   UpdateGroupMemberPermissionsChanged_FieldNumber_GroupId = 1,
   UpdateGroupMemberPermissionsChanged_FieldNumber_UserId = 2,
   UpdateGroupMemberPermissionsChanged_FieldNumber_PermissionsArray = 3,
+  UpdateGroupMemberPermissionsChanged_FieldNumber_GrantedArray = 4,
+  UpdateGroupMemberPermissionsChanged_FieldNumber_RevokedArray = 5,
 };
 
 /**
@@ -1166,11 +1199,23 @@ GPB_FINAL @interface UpdateGroupMemberPermissionsChanged : GPBMessage
 /** / Идентификатор учетной записи пользователя члена группового чата */
 @property(nonatomic, readwrite, copy, null_resettable) NSString *userId;
 
-/** / Список прав */
+/** / Эффективный список прав. Deprecated */
 // |permissionsArray| contains |GroupAdminPermission|
 @property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *permissionsArray;
 /** The number of items in @c permissionsArray without causing the array to be created. */
 @property(nonatomic, readonly) NSUInteger permissionsArray_Count;
+
+/** / Список прав сверх базовых */
+// |grantedArray| contains |GroupAdminPermission|
+@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *grantedArray;
+/** The number of items in @c grantedArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger grantedArray_Count;
+
+/** / Список отозваанных прав относительно базовых */
+// |revokedArray| contains |GroupAdminPermission|
+@property(nonatomic, readwrite, strong, null_resettable) GPBEnumArray *revokedArray;
+/** The number of items in @c revokedArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger revokedArray_Count;
 
 @end
 
@@ -1378,6 +1423,38 @@ GPB_FINAL @interface RequestChangeGroupPublicity : GPBMessage
 @property(nonatomic, readwrite) BOOL isPublic;
 
 @end
+
+#pragma mark - RequestChangeGroupType
+
+typedef GPB_ENUM(RequestChangeGroupType_FieldNumber) {
+  RequestChangeGroupType_FieldNumber_GroupId = 1,
+  RequestChangeGroupType_FieldNumber_GroupType = 5,
+};
+
+/**
+ * / Запрос на изменение типа группового чата
+ **/
+GPB_FINAL @interface RequestChangeGroupType : GPBMessage
+
+/** / Идентификатор группового чата */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *groupId;
+
+/** / Тип группового чата */
+@property(nonatomic, readwrite) GroupType groupType;
+
+@end
+
+/**
+ * Fetches the raw value of a @c RequestChangeGroupType's @c groupType property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t RequestChangeGroupType_GroupType_RawValue(RequestChangeGroupType *message);
+/**
+ * Sets the raw value of an @c RequestChangeGroupType's @c groupType property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetRequestChangeGroupType_GroupType_RawValue(RequestChangeGroupType *message, int32_t value);
 
 #pragma mark - UpdateGroupMemberInvited
 

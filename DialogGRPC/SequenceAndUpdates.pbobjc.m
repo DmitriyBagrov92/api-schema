@@ -84,6 +84,7 @@ GPBObjCClassDeclaration(UpdateFoldersList);
 GPBObjCClassDeclaration(UpdateGroup);
 GPBObjCClassDeclaration(UpdateGroupAboutChanged);
 GPBObjCClassDeclaration(UpdateGroupAvatarChanged);
+GPBObjCClassDeclaration(UpdateGroupBasePermissionsChanged);
 GPBObjCClassDeclaration(UpdateGroupMemberDiff);
 GPBObjCClassDeclaration(UpdateGroupMemberInvited);
 GPBObjCClassDeclaration(UpdateGroupMemberPermissionsChanged);
@@ -255,6 +256,7 @@ static GPBFileDescriptor *SequenceAndUpdatesRoot_FileDescriptor(void) {
 @dynamic updateThreadFollowing;
 @dynamic updateFoldersList;
 @dynamic updateFolderAssignment;
+@dynamic updateGroupBasePermissionsChanged;
 
 typedef struct SeqUpdateBody__storage_ {
   uint32_t _has_storage_[2];
@@ -325,6 +327,7 @@ typedef struct SeqUpdateBody__storage_ {
   UpdateThreadFollowing *updateThreadFollowing;
   UpdateFoldersList *updateFoldersList;
   UpdateFolderAssignments *updateFolderAssignment;
+  UpdateGroupBasePermissionsChanged *updateGroupBasePermissionsChanged;
 } SeqUpdateBody__storage_;
 
 // This method is threadsafe because it is initially called
@@ -933,6 +936,15 @@ typedef struct SeqUpdateBody__storage_ {
         .number = SeqUpdateBody_FieldNumber_UpdateFolderAssignment,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateFolderAssignment),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "updateGroupBasePermissionsChanged",
+        .dataTypeSpecific.clazz = GPBObjCClass(UpdateGroupBasePermissionsChanged),
+        .number = SeqUpdateBody_FieldNumber_UpdateGroupBasePermissionsChanged,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(SeqUpdateBody__storage_, updateGroupBasePermissionsChanged),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },

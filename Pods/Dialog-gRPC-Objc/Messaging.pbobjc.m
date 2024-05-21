@@ -110,6 +110,7 @@ GPBObjCClassDeclaration(ServiceExConferenceStatus);
 GPBObjCClassDeclaration(ServiceExContactRegistered);
 GPBObjCClassDeclaration(ServiceExGroupCreated);
 GPBObjCClassDeclaration(ServiceExGroupPublicityChanged);
+GPBObjCClassDeclaration(ServiceExGroupTypeChanged);
 GPBObjCClassDeclaration(ServiceExImportantTopicClosed);
 GPBObjCClassDeclaration(ServiceExImportantTopicForked);
 GPBObjCClassDeclaration(ServiceExImportantTopicReopened);
@@ -2427,6 +2428,7 @@ typedef struct ServiceMessage__storage_ {
 @dynamic importantTopicForked;
 @dynamic importantTopicClosed;
 @dynamic importantTopicReopened;
+@dynamic groupTypeChanged;
 
 typedef struct ServiceEx__storage_ {
   uint32_t _has_storage_[2];
@@ -2450,6 +2452,7 @@ typedef struct ServiceEx__storage_ {
   ServiceExImportantTopicForked *importantTopicForked;
   ServiceExImportantTopicClosed *importantTopicClosed;
   ServiceExImportantTopicReopened *importantTopicReopened;
+  ServiceExGroupTypeChanged *groupTypeChanged;
 } ServiceEx__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2635,6 +2638,15 @@ typedef struct ServiceEx__storage_ {
         .number = ServiceEx_FieldNumber_ImportantTopicReopened,
         .hasIndex = -1,
         .offset = (uint32_t)offsetof(ServiceEx__storage_, importantTopicReopened),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "groupTypeChanged",
+        .dataTypeSpecific.clazz = GPBObjCClass(ServiceExGroupTypeChanged),
+        .number = ServiceEx_FieldNumber_GroupTypeChanged,
+        .hasIndex = -1,
+        .offset = (uint32_t)offsetof(ServiceEx__storage_, groupTypeChanged),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
       },
@@ -3522,6 +3534,63 @@ typedef struct ServiceExImportantTopicReopened__storage_ {
 }
 
 @end
+
+#pragma mark - ServiceExGroupTypeChanged
+
+@implementation ServiceExGroupTypeChanged
+
+@dynamic groupType;
+
+typedef struct ServiceExGroupTypeChanged__storage_ {
+  uint32_t _has_storage_[1];
+  GroupType groupType;
+} ServiceExGroupTypeChanged__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "groupType",
+        .dataTypeSpecific.enumDescFunc = GroupType_EnumDescriptor,
+        .number = ServiceExGroupTypeChanged_FieldNumber_GroupType,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(ServiceExGroupTypeChanged__storage_, groupType),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeEnum,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ServiceExGroupTypeChanged class]
+                                     rootClass:[MessagingRoot class]
+                                          file:MessagingRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ServiceExGroupTypeChanged__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t ServiceExGroupTypeChanged_GroupType_RawValue(ServiceExGroupTypeChanged *message) {
+  GPBDescriptor *descriptor = [ServiceExGroupTypeChanged descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:ServiceExGroupTypeChanged_FieldNumber_GroupType];
+  return GPBGetMessageRawEnumField(message, field);
+}
+
+void SetServiceExGroupTypeChanged_GroupType_RawValue(ServiceExGroupTypeChanged *message, int32_t value) {
+  GPBDescriptor *descriptor = [ServiceExGroupTypeChanged descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:ServiceExGroupTypeChanged_FieldNumber_GroupType];
+  GPBSetMessageRawEnumField(message, field, value);
+}
 
 #pragma mark - DocumentMessage
 

@@ -411,6 +411,7 @@ message ServiceEx {
         ServiceExImportantTopicForked important_topic_forked = 19;
         ServiceExImportantTopicClosed important_topic_closed = 20;
         ServiceExImportantTopicReopened important_topic_reopened = 21;
+        ServiceExGroupTypeChanged group_type_changed = 22;
     }
 }
 
@@ -530,6 +531,12 @@ message ServiceExImportantTopicClosed {
 message ServiceExImportantTopicReopened {
     /// Идентификатор учетной записи пользователя, открывшего групповой чат
     string reopened_by_user_id = 1;
+}
+
+/// Сервисное сообщение об изменении типа группового чата
+message ServiceExGroupTypeChanged {
+    /// Новый тип группового чата
+    GroupType group_type = 1;
 }
 
 /// Сообщение содержащее документ (файл)

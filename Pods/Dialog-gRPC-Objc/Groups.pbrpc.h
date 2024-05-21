@@ -15,6 +15,7 @@
 @class GPBEmpty;
 @class GroupPartialInfo;
 @class RequestChangeGroupPublicity;
+@class RequestChangeGroupType;
 @class RequestCloseGroup;
 @class RequestCreateGroup;
 @class RequestDeleteGroup;
@@ -236,6 +237,13 @@ NS_ASSUME_NONNULL_BEGIN
  * / Запрос на изменение публичности группового чата
  */
 - (GRPCUnaryProtoCall *)changeGroupPublicityWithMessage:(RequestChangeGroupPublicity *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
+
+#pragma mark ChangeGroupType(RequestChangeGroupType) returns (Empty)
+
+/**
+ * / Запрос на изменение типа группового чата
+ */
+- (GRPCUnaryProtoCall *)changeGroupTypeWithMessage:(RequestChangeGroupType *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions;
 
 @end
 
@@ -715,6 +723,23 @@ NS_ASSUME_NONNULL_BEGIN
  * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
  */
 - (GRPCProtoCall *)RPCToChangeGroupPublicityWithRequest:(RequestChangeGroupPublicity *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+
+#pragma mark ChangeGroupType(RequestChangeGroupType) returns (Empty)
+
+/**
+ * / Запрос на изменение типа группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)changeGroupTypeWithRequest:(RequestChangeGroupType *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
+
+/**
+ * / Запрос на изменение типа группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToChangeGroupTypeWithRequest:(RequestChangeGroupType *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler;
 
 
 @end

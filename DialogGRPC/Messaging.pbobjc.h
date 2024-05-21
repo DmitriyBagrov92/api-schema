@@ -98,6 +98,7 @@ CF_EXTERN_C_BEGIN
 @class ServiceExContactRegistered;
 @class ServiceExGroupCreated;
 @class ServiceExGroupPublicityChanged;
+@class ServiceExGroupTypeChanged;
 @class ServiceExImportantTopicClosed;
 @class ServiceExImportantTopicForked;
 @class ServiceExImportantTopicReopened;
@@ -125,6 +126,7 @@ CF_EXTERN_C_BEGIN
 @class VideoLocation;
 @class VideoMedia;
 @class WebpageMedia;
+GPB_ENUM_FWD_DECLARE(GroupType);
 GPB_ENUM_FWD_DECLARE(PeerType);
 
 NS_ASSUME_NONNULL_BEGIN
@@ -1159,6 +1161,7 @@ typedef GPB_ENUM(ServiceEx_FieldNumber) {
   ServiceEx_FieldNumber_ImportantTopicForked = 19,
   ServiceEx_FieldNumber_ImportantTopicClosed = 20,
   ServiceEx_FieldNumber_ImportantTopicReopened = 21,
+  ServiceEx_FieldNumber_GroupTypeChanged = 22,
 };
 
 typedef GPB_ENUM(ServiceEx_Body_OneOfCase) {
@@ -1183,6 +1186,7 @@ typedef GPB_ENUM(ServiceEx_Body_OneOfCase) {
   ServiceEx_Body_OneOfCase_ImportantTopicForked = 19,
   ServiceEx_Body_OneOfCase_ImportantTopicClosed = 20,
   ServiceEx_Body_OneOfCase_ImportantTopicReopened = 21,
+  ServiceEx_Body_OneOfCase_GroupTypeChanged = 22,
 };
 
 /**
@@ -1231,6 +1235,8 @@ GPB_FINAL @interface ServiceEx : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) ServiceExImportantTopicClosed *importantTopicClosed;
 
 @property(nonatomic, readwrite, strong, null_resettable) ServiceExImportantTopicReopened *importantTopicReopened;
+
+@property(nonatomic, readwrite, strong, null_resettable) ServiceExGroupTypeChanged *groupTypeChanged;
 
 @end
 
@@ -1549,6 +1555,34 @@ GPB_FINAL @interface ServiceExImportantTopicReopened : GPBMessage
 @property(nonatomic, readwrite, copy, null_resettable) NSString *reopenedByUserId;
 
 @end
+
+#pragma mark - ServiceExGroupTypeChanged
+
+typedef GPB_ENUM(ServiceExGroupTypeChanged_FieldNumber) {
+  ServiceExGroupTypeChanged_FieldNumber_GroupType = 1,
+};
+
+/**
+ * / Сервисное сообщение об изменении типа группового чата
+ **/
+GPB_FINAL @interface ServiceExGroupTypeChanged : GPBMessage
+
+/** / Новый тип группового чата */
+@property(nonatomic, readwrite) enum GroupType groupType;
+
+@end
+
+/**
+ * Fetches the raw value of a @c ServiceExGroupTypeChanged's @c groupType property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t ServiceExGroupTypeChanged_GroupType_RawValue(ServiceExGroupTypeChanged *message);
+/**
+ * Sets the raw value of an @c ServiceExGroupTypeChanged's @c groupType property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetServiceExGroupTypeChanged_GroupType_RawValue(ServiceExGroupTypeChanged *message, int32_t value);
 
 #pragma mark - DocumentMessage
 

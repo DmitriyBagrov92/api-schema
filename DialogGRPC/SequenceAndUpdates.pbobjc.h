@@ -64,6 +64,7 @@ CF_EXTERN_C_BEGIN
 @class UpdateGroup;
 @class UpdateGroupAboutChanged;
 @class UpdateGroupAvatarChanged;
+@class UpdateGroupBasePermissionsChanged;
 @class UpdateGroupMemberDiff;
 @class UpdateGroupMemberInvited;
 @class UpdateGroupMemberPermissionsChanged;
@@ -215,6 +216,7 @@ typedef GPB_ENUM(SeqUpdateBody_FieldNumber) {
   SeqUpdateBody_FieldNumber_UpdateThreadFollowing = 78,
   SeqUpdateBody_FieldNumber_UpdateFoldersList = 79,
   SeqUpdateBody_FieldNumber_UpdateFolderAssignment = 80,
+  SeqUpdateBody_FieldNumber_UpdateGroupBasePermissionsChanged = 81,
 };
 
 typedef GPB_ENUM(SeqUpdateBody_Update_OneOfCase) {
@@ -286,6 +288,7 @@ typedef GPB_ENUM(SeqUpdateBody_Update_OneOfCase) {
   SeqUpdateBody_Update_OneOfCase_UpdateThreadFollowing = 78,
   SeqUpdateBody_Update_OneOfCase_UpdateFoldersList = 79,
   SeqUpdateBody_Update_OneOfCase_UpdateFolderAssignment = 80,
+  SeqUpdateBody_Update_OneOfCase_UpdateGroupBasePermissionsChanged = 81,
 };
 
 /**
@@ -429,6 +432,8 @@ GPB_FINAL @interface SeqUpdateBody : GPBMessage
 @property(nonatomic, readwrite, strong, null_resettable) UpdateFoldersList *updateFoldersList;
 
 @property(nonatomic, readwrite, strong, null_resettable) UpdateFolderAssignments *updateFolderAssignment;
+
+@property(nonatomic, readwrite, strong, null_resettable) UpdateGroupBasePermissionsChanged *updateGroupBasePermissionsChanged;
 
 @end
 

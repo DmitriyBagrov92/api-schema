@@ -101,6 +101,7 @@ message SeqUpdateBody {
         UpdateThreadFollowing update_thread_following = 78;
         UpdateFoldersList update_folders_list = 79;
         UpdateFolderAssignments update_folder_assignment = 80;
+        UpdateGroupBasePermissionsChanged update_group_base_permissions_changed = 81;
     }
 }
 

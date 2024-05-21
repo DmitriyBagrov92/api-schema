@@ -143,11 +143,12 @@ GPBEnumDescriptor *GroupAdminPermission_EnumDescriptor(void) {
         "issionEditmessage\000GroupAdminPermissionDe"
         "letemessage\000GroupAdminPermissionGetinteg"
         "rationtoken\000GroupAdminPermissionSendmess"
-        "age\000GroupAdminPermissionViewmembers\000Grou"
-        "pAdminPermissionLeave\000GroupAdminPermissi"
-        "onTargeting\000GroupAdminPermissionDelete\000G"
-        "roupAdminPermissionManageConference\000Grou"
-        "pAdminPermissionOpenAndClose\000";
+        "age\000GroupAdminPermissionSendthreadmessag"
+        "e\000GroupAdminPermissionViewmembers\000GroupA"
+        "dminPermissionLeave\000GroupAdminPermission"
+        "Targeting\000GroupAdminPermissionDelete\000Gro"
+        "upAdminPermissionManageConference\000GroupA"
+        "dminPermissionOpenAndClose\000";
     static const int32_t values[] = {
         GroupAdminPermission_GroupAdminPermissionUnknown,
         GroupAdminPermission_GroupAdminPermissionInvite,
@@ -158,6 +159,7 @@ GPBEnumDescriptor *GroupAdminPermission_EnumDescriptor(void) {
         GroupAdminPermission_GroupAdminPermissionDeletemessage,
         GroupAdminPermission_GroupAdminPermissionGetintegrationtoken,
         GroupAdminPermission_GroupAdminPermissionSendmessage,
+        GroupAdminPermission_GroupAdminPermissionSendthreadmessage,
         GroupAdminPermission_GroupAdminPermissionViewmembers,
         GroupAdminPermission_GroupAdminPermissionLeave,
         GroupAdminPermission_GroupAdminPermissionTargeting,
@@ -190,6 +192,7 @@ BOOL GroupAdminPermission_IsValidValue(int32_t value__) {
     case GroupAdminPermission_GroupAdminPermissionDeletemessage:
     case GroupAdminPermission_GroupAdminPermissionGetintegrationtoken:
     case GroupAdminPermission_GroupAdminPermissionSendmessage:
+    case GroupAdminPermission_GroupAdminPermissionSendthreadmessage:
     case GroupAdminPermission_GroupAdminPermissionViewmembers:
     case GroupAdminPermission_GroupAdminPermissionLeave:
     case GroupAdminPermission_GroupAdminPermissionTargeting:
@@ -209,6 +212,8 @@ BOOL GroupAdminPermission_IsValidValue(int32_t value__) {
 @dynamic userId;
 @dynamic invitedAt;
 @dynamic permissionsArray, permissionsArray_Count;
+@dynamic grantedArray, grantedArray_Count;
+@dynamic revokedArray, revokedArray_Count;
 @dynamic clock;
 @dynamic hasDeletedAt, deletedAt;
 @dynamic hasInvitedBy, invitedBy;
@@ -219,6 +224,8 @@ typedef struct Member__storage_ {
   GPBEnumArray *permissionsArray;
   GPBTimestamp *deletedAt;
   GPBStringValue *invitedBy;
+  GPBEnumArray *grantedArray;
+  GPBEnumArray *revokedArray;
   int64_t invitedAt;
   int64_t clock;
 } Member__storage_;
@@ -282,6 +289,24 @@ typedef struct Member__storage_ {
         .offset = (uint32_t)offsetof(Member__storage_, invitedBy),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,
+      },
+      {
+        .name = "grantedArray",
+        .dataTypeSpecific.enumDescFunc = GroupAdminPermission_EnumDescriptor,
+        .number = Member_FieldNumber_GrantedArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(Member__storage_, grantedArray),
+        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "revokedArray",
+        .dataTypeSpecific.enumDescFunc = GroupAdminPermission_EnumDescriptor,
+        .number = Member_FieldNumber_RevokedArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(Member__storage_, revokedArray),
+        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
       },
     };
     GPBDescriptor *localDescriptor =
@@ -2438,11 +2463,15 @@ typedef struct RequestMakeUserAdmin__storage_ {
 
 @dynamic userId;
 @dynamic permissionsArray, permissionsArray_Count;
+@dynamic grantedArray, grantedArray_Count;
+@dynamic revokedArray, revokedArray_Count;
 
 typedef struct GroupMemberPermission__storage_ {
   uint32_t _has_storage_[1];
   NSString *userId;
   GPBEnumArray *permissionsArray;
+  GPBEnumArray *grantedArray;
+  GPBEnumArray *revokedArray;
 } GroupMemberPermission__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2466,6 +2495,24 @@ typedef struct GroupMemberPermission__storage_ {
         .number = GroupMemberPermission_FieldNumber_PermissionsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(GroupMemberPermission__storage_, permissionsArray),
+        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "grantedArray",
+        .dataTypeSpecific.enumDescFunc = GroupAdminPermission_EnumDescriptor,
+        .number = GroupMemberPermission_FieldNumber_GrantedArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(GroupMemberPermission__storage_, grantedArray),
+        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "revokedArray",
+        .dataTypeSpecific.enumDescFunc = GroupAdminPermission_EnumDescriptor,
+        .number = GroupMemberPermission_FieldNumber_RevokedArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(GroupMemberPermission__storage_, revokedArray),
         .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
       },
@@ -2596,12 +2643,16 @@ typedef struct ResponseGetGroupMemberPermissions__storage_ {
 @dynamic groupId;
 @dynamic userId;
 @dynamic permissionsArray, permissionsArray_Count;
+@dynamic grantedArray, grantedArray_Count;
+@dynamic revokedArray, revokedArray_Count;
 
 typedef struct UpdateGroupMemberPermissionsChanged__storage_ {
   uint32_t _has_storage_[1];
   NSString *groupId;
   NSString *userId;
   GPBEnumArray *permissionsArray;
+  GPBEnumArray *grantedArray;
+  GPBEnumArray *revokedArray;
 } UpdateGroupMemberPermissionsChanged__storage_;
 
 // This method is threadsafe because it is initially called
@@ -2634,6 +2685,24 @@ typedef struct UpdateGroupMemberPermissionsChanged__storage_ {
         .number = UpdateGroupMemberPermissionsChanged_FieldNumber_PermissionsArray,
         .hasIndex = GPBNoHasBit,
         .offset = (uint32_t)offsetof(UpdateGroupMemberPermissionsChanged__storage_, permissionsArray),
+        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "grantedArray",
+        .dataTypeSpecific.enumDescFunc = GroupAdminPermission_EnumDescriptor,
+        .number = UpdateGroupMemberPermissionsChanged_FieldNumber_GrantedArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(UpdateGroupMemberPermissionsChanged__storage_, grantedArray),
+        .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
+        .name = "revokedArray",
+        .dataTypeSpecific.enumDescFunc = GroupAdminPermission_EnumDescriptor,
+        .number = UpdateGroupMemberPermissionsChanged_FieldNumber_RevokedArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(UpdateGroupMemberPermissionsChanged__storage_, revokedArray),
         .flags = (GPBFieldFlags)(GPBFieldRepeated | GPBFieldPacked | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
       },
@@ -3224,6 +3293,74 @@ typedef struct RequestChangeGroupPublicity__storage_ {
 }
 
 @end
+
+#pragma mark - RequestChangeGroupType
+
+@implementation RequestChangeGroupType
+
+@dynamic groupId;
+@dynamic groupType;
+
+typedef struct RequestChangeGroupType__storage_ {
+  uint32_t _has_storage_[1];
+  GroupType groupType;
+  NSString *groupId;
+} RequestChangeGroupType__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "groupId",
+        .dataTypeSpecific.clazz = Nil,
+        .number = RequestChangeGroupType_FieldNumber_GroupId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(RequestChangeGroupType__storage_, groupId),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "groupType",
+        .dataTypeSpecific.enumDescFunc = GroupType_EnumDescriptor,
+        .number = RequestChangeGroupType_FieldNumber_GroupType,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(RequestChangeGroupType__storage_, groupType),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeEnum,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[RequestChangeGroupType class]
+                                     rootClass:[GroupsRoot class]
+                                          file:GroupsRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(RequestChangeGroupType__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+int32_t RequestChangeGroupType_GroupType_RawValue(RequestChangeGroupType *message) {
+  GPBDescriptor *descriptor = [RequestChangeGroupType descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:RequestChangeGroupType_FieldNumber_GroupType];
+  return GPBGetMessageRawEnumField(message, field);
+}
+
+void SetRequestChangeGroupType_GroupType_RawValue(RequestChangeGroupType *message, int32_t value) {
+  GPBDescriptor *descriptor = [RequestChangeGroupType descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:RequestChangeGroupType_FieldNumber_GroupType];
+  GPBSetMessageRawEnumField(message, field, value);
+}
 
 #pragma mark - UpdateGroupMemberInvited
 

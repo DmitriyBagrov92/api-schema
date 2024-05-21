@@ -23,8 +23,14 @@ message Member {
     /// Время (в миллисекундах от Unix epoch), когда пользователь был добавлен в групповой чат
     int64 invited_at = 2;
 
-    /// Список прав
+    /// Эффективный список прав. Deprecated
     repeated GroupAdminPermission permissions = 3;
+
+    /// Список прав сверх базовых
+    repeated GroupAdminPermission granted = 7;
+
+    /// Список отозваанных прав относительно базовых
+    repeated GroupAdminPermission revoked = 8;
 
     /// Версия структуры
     int64 clock = 4;
@@ -486,6 +492,9 @@ enum GroupAdminPermission {
     /// Право на отправку сообщений в групповой чат
     GROUP_ADMIN_PERMISSION_SENDMESSAGE = 9;
 
+    /// Право на отправку сообщений в групповой тред
+    GROUP_ADMIN_PERMISSION_SENDTHREADMESSAGE = 17;
+
     reserved 10;
 
     /// Право на просмотр членов группового чата
@@ -526,8 +535,14 @@ message GroupMemberPermission {
     /// Идентификатор учетной записи пользователя члена группового чата
     string user_id = 1;
 
-    /// Список прав
+    /// Эффективный список прав. Deprecated
     repeated GroupAdminPermission permissions = 2;
+
+    /// Список прав сверх базовых
+    repeated GroupAdminPermission granted  = 3;
+
+    /// Список отозваанных прав относительно базовых
+    repeated GroupAdminPermission revoked = 4;
 }
 
 /// Запрос на получение списка членов группового чата с их правами
@@ -553,8 +568,14 @@ message UpdateGroupMemberPermissionsChanged {
     /// Идентификатор учетной записи пользователя члена группового чата
     string user_id = 2;
 
-    /// Список прав
+    /// Эффективный список прав. Deprecated
     repeated GroupAdminPermission permissions = 3;
+
+    /// Список прав сверх базовых
+    repeated GroupAdminPermission granted  = 4;
+
+    /// Список отозваанных прав относительно базовых
+    repeated GroupAdminPermission revoked = 5;
 }
 
 /// Запрос на перенос владения групповым чатом от пользователя к пользователю
@@ -644,6 +665,15 @@ message RequestChangeGroupPublicity {
 
     /// Флаг публичности группового чата
     bool is_public = 2;
+}
+
+/// Запрос на изменение типа группового чата
+message RequestChangeGroupType {
+    /// Идентификатор группового чата
+    string group_id = 1;
+
+    /// Тип группового чата
+    GroupType group_type = 5;
 }
 
 /// Структура уведомления о приглашении члена группового чата
@@ -845,6 +875,14 @@ service Groups {
     rpc ChangeGroupPublicity (RequestChangeGroupPublicity) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/grpc/Groups/ChangeGroupPublicity"
+            body: "*"
+        };
+    }
+
+    /// Запрос на изменение типа группового чата
+    rpc ChangeGroupType (RequestChangeGroupType) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/grpc/Groups/ChangeGroupType"
             body: "*"
         };
     }

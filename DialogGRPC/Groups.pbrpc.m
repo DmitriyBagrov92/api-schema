@@ -856,6 +856,39 @@
              responseClass:[GPBEmpty class]];
 }
 
+#pragma mark ChangeGroupType(RequestChangeGroupType) returns (Empty)
+
+/**
+ * / Запрос на изменение типа группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (void)changeGroupTypeWithRequest:(RequestChangeGroupType *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+  [[self RPCToChangeGroupTypeWithRequest:request handler:handler] start];
+}
+// Returns a not-yet-started RPC object.
+/**
+ * / Запрос на изменение типа группового чата
+ *
+ * This method belongs to a set of APIs that have been deprecated. Using the v2 API is recommended.
+ */
+- (GRPCProtoCall *)RPCToChangeGroupTypeWithRequest:(RequestChangeGroupType *)request handler:(void(^)(GPBEmpty *_Nullable response, NSError *_Nullable error))handler{
+  return [self RPCToMethod:@"ChangeGroupType"
+            requestsWriter:[GRXWriter writerWithValue:request]
+             responseClass:[GPBEmpty class]
+        responsesWriteable:[GRXWriteable writeableWithSingleHandler:handler]];
+}
+/**
+ * / Запрос на изменение типа группового чата
+ */
+- (GRPCUnaryProtoCall *)changeGroupTypeWithMessage:(RequestChangeGroupType *)message responseHandler:(id<GRPCProtoResponseHandler>)handler callOptions:(GRPCCallOptions *_Nullable)callOptions {
+  return [self RPCToMethod:@"ChangeGroupType"
+                   message:message
+           responseHandler:handler
+               callOptions:callOptions
+             responseClass:[GPBEmpty class]];
+}
+
 @end
 @implementation GroupsAsync
 
