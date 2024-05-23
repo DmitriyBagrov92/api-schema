@@ -120,7 +120,6 @@
 		8D5BA4E825CB1B4100755F7D /* Users.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D5BA46425CB1B4100755F7D /* Users.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8D5BA4E925CB1B4100755F7D /* HTTP.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5BA46525CB1B4100755F7D /* HTTP.pbobjc.m */; };
 		8D5BA4EA25CB1B4100755F7D /* Crypto.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D5BA46625CB1B4100755F7D /* Crypto.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A05D92E1443AC674AEA194C6 /* Pods_DialogGRPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2FE4B8107371DDED54CE77 /* Pods_DialogGRPC.framework */; };
 		A51D4F672951CA0E00E22584 /* Threads.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5BA44725CB1B3F00755F7D /* Threads.pbobjc.m */; };
 		A51D4F682951CA0E00E22584 /* Threads.pbrpc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5BA43225CB1B3E00755F7D /* Threads.pbrpc.m */; };
 		A51D4F6B2951CA9600E22584 /* Threads.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D5BA41925CB1B3C00755F7D /* Threads.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -129,7 +128,23 @@
 		A52910C02A938F03009DC309 /* Errors.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = A52910BC2A938F03009DC309 /* Errors.pbobjc.m */; };
 		A52910C32A939F2F009DC309 /* Errors.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = A52910BE2A938F03009DC309 /* Errors.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A52910C42A939F2F009DC309 /* Errors.pbrpc.h in Headers */ = {isa = PBXBuildFile; fileRef = A52910BD2A938F03009DC309 /* Errors.pbrpc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A5FD7BCC2C0087C400D2902A /* Pods_DialogGRPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2FE4B8107371DDED54CE77 /* Pods_DialogGRPC.framework */; };
+		A5FD7BCD2C0087C400D2902A /* Pods_DialogGRPC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2FE4B8107371DDED54CE77 /* Pods_DialogGRPC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A5FD7BCB2C0086F900D2902A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A5FD7BCD2C0087C400D2902A /* Pods_DialogGRPC.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4B2FE4B8107371DDED54CE77 /* Pods_DialogGRPC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DialogGRPC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -263,6 +278,7 @@
 		A52910BC2A938F03009DC309 /* Errors.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Errors.pbobjc.m; sourceTree = "<group>"; };
 		A52910BD2A938F03009DC309 /* Errors.pbrpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Errors.pbrpc.h; sourceTree = "<group>"; };
 		A52910BE2A938F03009DC309 /* Errors.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Errors.pbobjc.h; sourceTree = "<group>"; };
+		A5FD7BC82C0086F900D2902A /* Protobuf.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Protobuf.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA79644B5313ECB40F83C754 /* Pods-DialogGRPC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialogGRPC.debug.xcconfig"; path = "Target Support Files/Pods-DialogGRPC/Pods-DialogGRPC.debug.xcconfig"; sourceTree = "<group>"; };
 		E1B771A7D9852EACD3183446 /* Pods-DialogGRPC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialogGRPC.release.xcconfig"; path = "Target Support Files/Pods-DialogGRPC/Pods-DialogGRPC.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -272,7 +288,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A05D92E1443AC674AEA194C6 /* Pods_DialogGRPC.framework in Frameworks */,
+				A5FD7BCC2C0087C400D2902A /* Pods_DialogGRPC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +298,7 @@
 		41572C0CCF368E287FF92C9C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A5FD7BC82C0086F900D2902A /* Protobuf.framework */,
 				8D5BA16E25CAF67800755F7D /* libabseil.a */,
 				8D5BA16F25CAF67800755F7D /* libBoringSSL-GRPC.a */,
 				8D5BA17025CAF67800755F7D /* libDialog-gRPC-Objc.a */,
@@ -533,6 +550,7 @@
 				8D5BA12125CADA8200755F7D /* Sources */,
 				8D5BA12225CADA8200755F7D /* Frameworks */,
 				8D5BA12325CADA8200755F7D /* Resources */,
+				A5FD7BCB2C0086F900D2902A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
