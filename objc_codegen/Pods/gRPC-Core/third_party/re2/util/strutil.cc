@@ -5,11 +5,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-#if COCOAPODS==1
-  #include  "third_party/re2/util/strutil.h"
-#else
-  #include  "util/strutil.h"
-#endif
+#include "util/strutil.h"
 
 #ifdef _WIN32
 #define snprintf _snprintf

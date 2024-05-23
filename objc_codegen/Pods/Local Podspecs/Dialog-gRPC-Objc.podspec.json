@@ -11,7 +11,7 @@
     "git": "https://github.com/grpc/grpc.git"
   },
   "platforms": {
-    "ios": "7.1",
+    "ios": "11.0",
     "osx": "10.9"
   },
   "prepare_command": "mkdir -p Pods/Dialog-gRPC-Objc\nobjc_dependency/protoc         --plugin=protoc-gen-grpc=objc_dependency/grpc_objective_c_plugin         --objc_out=Pods/Dialog-gRPC-Objc         --grpc_out=Client=true,Server=false:Pods/Dialog-gRPC-Objc         -I include         -I proto         -I objc_dependency         proto/*.proto include/descriptor.proto include/scalapb.proto include/annotations.proto include/http.proto",

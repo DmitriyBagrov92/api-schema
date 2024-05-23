@@ -102,11 +102,7 @@
 #include <memory>
 #include <utility>
 
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/pod_array.h"
-#else
-  #include  "re2/pod_array.h"
-#endif
+#include "re2/pod_array.h"
 
 namespace re2 {
 

@@ -131,13 +131,6 @@ typedef NS_ENUM(NSUInteger, GRPCCallSafety) {
    * state.
    */
   GRPCCallSafetyDefault = 0,
-  /** Signal that the call is idempotent. gRPC is free to use PUT verb. */
-  GRPCCallSafetyIdempotentRequest = 1,
-  /**
-   * Signal that the call is cacheable and will not affect server state. gRPC is
-   * free to use GET verb.
-   */
-  GRPCCallSafetyCacheableRequest = 2,
 };
 
 /**
@@ -178,7 +171,7 @@ extern NSString* _Nonnull const kGRPCHeadersKey;
 extern NSString* _Nonnull const kGRPCTrailersKey;
 
 /** The id of a transport implementation. */
-typedef char* _Nonnull GRPCTransportID;
+typedef const char* _Nonnull GRPCTransportID;
 
 /**
  * Implement this protocol to provide a token to gRPC when a call is initiated.
@@ -192,3 +185,6 @@ typedef char* _Nonnull GRPCTransportID;
 - (void)getTokenWithHandler:(void (^_Nonnull)(NSString* _Nullable token))handler;
 
 @end
+
+/** gRPC metadata dictionary typedef */
+typedef NSDictionary<NSString*, id> GRPCMetadataDictionary;

@@ -20,16 +20,8 @@
 
 #include <stdint.h>
 
-#if COCOAPODS==1
-  #include  "third_party/re2/util/util.h"
-#else
-  #include  "util/util.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/utf.h"
-#else
-  #include  "util/utf.h"
-#endif
+#include "util/util.h"
+#include "util/utf.h"
 
 namespace re2 {
 

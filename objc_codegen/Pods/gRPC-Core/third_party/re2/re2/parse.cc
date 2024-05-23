@@ -25,56 +25,16 @@
 #include <string>
 #include <vector>
 
-#if COCOAPODS==1
-  #include  "third_party/re2/util/util.h"
-#else
-  #include  "util/util.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/logging.h"
-#else
-  #include  "util/logging.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/strutil.h"
-#else
-  #include  "util/strutil.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/utf.h"
-#else
-  #include  "util/utf.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/pod_array.h"
-#else
-  #include  "re2/pod_array.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/regexp.h"
-#else
-  #include  "re2/regexp.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/stringpiece.h"
-#else
-  #include  "re2/stringpiece.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/unicode_casefold.h"
-#else
-  #include  "re2/unicode_casefold.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/unicode_groups.h"
-#else
-  #include  "re2/unicode_groups.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/walker-inl.h"
-#else
-  #include  "re2/walker-inl.h"
-#endif
+#include "util/util.h"
+#include "util/logging.h"
+#include "util/strutil.h"
+#include "util/utf.h"
+#include "re2/pod_array.h"
+#include "re2/regexp.h"
+#include "re2/stringpiece.h"
+#include "re2/unicode_casefold.h"
+#include "re2/unicode_groups.h"
+#include "re2/walker-inl.h"
 
 #if defined(RE2_USE_ICU)
 #include "unicode/uniset.h"
@@ -84,12 +44,12 @@
 
 namespace re2 {
 
-// Reduce the maximum repeat count by an order of magnitude when fuzzing.
-#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
-static const int kMaxRepeat = 100;
-#else
-static const int kMaxRepeat = 1000;
-#endif
+// Controls the maximum repeat count permitted by the parser.
+static int maximum_repeat_count = 1000;
+
+void Regexp::FUZZING_ONLY_set_maximum_repeat_count(int i) {
+  maximum_repeat_count = i;
+}
 
 // Regular expression parse state.
 // The list of parsed regexps so far is maintained as a vector of
@@ -608,7 +568,9 @@ int RepetitionWalker::ShortVisit(Regexp* re, int parent_arg) {
 bool Regexp::ParseState::PushRepetition(int min, int max,
                                         const StringPiece& s,
                                         bool nongreedy) {
-  if ((max != -1 && max < min) || min > kMaxRepeat || max > kMaxRepeat) {
+  if ((max != -1 && max < min) ||
+      min > maximum_repeat_count ||
+      max > maximum_repeat_count) {
     status_->set_code(kRegexpRepeatSize);
     status_->set_error_arg(s);
     return false;
@@ -631,7 +593,7 @@ bool Regexp::ParseState::PushRepetition(int min, int max,
   stacktop_ = re;
   if (min >= 2 || max >= 2) {
     RepetitionWalker w;
-    if (w.Walk(stacktop_, kMaxRepeat) == 0) {
+    if (w.Walk(stacktop_, maximum_repeat_count) == 0) {
       status_->set_code(kRegexpRepeatSize);
       status_->set_error_arg(s);
       return false;
@@ -725,7 +687,7 @@ bool Regexp::ParseState::DoRightParen() {
   if ((r1 = stacktop_) == NULL ||
       (r2 = r1->down_) == NULL ||
       r2->op() != kLeftParen) {
-    status_->set_code(kRegexpMissingParen);
+    status_->set_code(kRegexpUnexpectedParen);
     status_->set_error_arg(whole_regexp_);
     return false;
   }
@@ -1447,13 +1409,15 @@ static int StringPieceToRune(Rune *r, StringPiece *sp, RegexpStatus* status) {
     }
   }
 
-  status->set_code(kRegexpBadUTF8);
-  status->set_error_arg(StringPiece());
+  if (status != NULL) {
+    status->set_code(kRegexpBadUTF8);
+    status->set_error_arg(StringPiece());
+  }
   return -1;
 }
 
-// Return whether name is valid UTF-8.
-// If not, set status to kRegexpBadUTF8.
+// Returns whether name is valid UTF-8.
+// If not, sets status to kRegexpBadUTF8.
 static bool IsValidUTF8(const StringPiece& s, RegexpStatus* status) {
   StringPiece t = s;
   Rune r;
@@ -2051,19 +2015,34 @@ bool Regexp::ParseState::ParseCharClass(StringPiece* s,
   return true;
 }
 
-// Is this a valid capture name?  [A-Za-z0-9_]+
-// PCRE limits names to 32 bytes.
-// Python rejects names starting with digits.
-// We don't enforce either of those.
+// Returns whether name is a valid capture name.
 static bool IsValidCaptureName(const StringPiece& name) {
   if (name.empty())
     return false;
-  for (size_t i = 0; i < name.size(); i++) {
-    int c = name[i];
-    if (('0' <= c && c <= '9') ||
-        ('a' <= c && c <= 'z') ||
-        ('A' <= c && c <= 'Z') ||
-        c == '_')
+
+  // Historically, we effectively used [0-9A-Za-z_]+ to validate; that
+  // followed Python 2 except for not restricting the first character.
+  // As of Python 3, Unicode characters beyond ASCII are also allowed;
+  // accordingly, we permit the Lu, Ll, Lt, Lm, Lo, Nl, Mn, Mc, Nd and
+  // Pc categories, but again without restricting the first character.
+  // Also, Unicode normalization (e.g. NFKC) isn't performed: Python 3
+  // performs it for identifiers, but seemingly not for capture names;
+  // if they start doing that for capture names, we won't follow suit.
+  static const CharClass* const cc = []() {
+    CharClassBuilder ccb;
+    for (StringPiece group :
+         {"Lu", "Ll", "Lt", "Lm", "Lo", "Nl", "Mn", "Mc", "Nd", "Pc"})
+      AddUGroup(&ccb, LookupGroup(group, unicode_groups, num_unicode_groups),
+                +1, Regexp::NoParseFlags);
+    return ccb.GetCharClass();
+  }();
+
+  StringPiece t = name;
+  Rune r;
+  while (!t.empty()) {
+    if (StringPieceToRune(&r, &t, NULL) < 0)
+      return false;
+    if (cc->Contains(r))
       continue;
     return false;
   }

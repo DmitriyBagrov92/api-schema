@@ -436,6 +436,13 @@ PODS:
     - abseil/log/internal/vlog_config
     - abseil/strings/strings
     - abseil/xcprivacy
+  - abseil/log/check (1.20240116.2):
+    - abseil/log/internal/check_impl
+    - abseil/log/internal/check_op
+    - abseil/log/internal/conditions
+    - abseil/log/internal/log_message
+    - abseil/log/internal/strip
+    - abseil/xcprivacy
   - abseil/log/globals (1.20240116.2):
     - abseil/base/atomic_hook
     - abseil/base/config
@@ -450,6 +457,21 @@ PODS:
     - abseil/base/config
     - abseil/strings/strings
     - abseil/types/span
+    - abseil/xcprivacy
+  - abseil/log/internal/check_impl (1.20240116.2):
+    - abseil/base/core_headers
+    - abseil/log/internal/check_op
+    - abseil/log/internal/conditions
+    - abseil/log/internal/log_message
+    - abseil/log/internal/strip
+    - abseil/xcprivacy
+  - abseil/log/internal/check_op (1.20240116.2):
+    - abseil/base/config
+    - abseil/base/core_headers
+    - abseil/log/internal/nullguard
+    - abseil/log/internal/nullstream
+    - abseil/log/internal/strip
+    - abseil/strings/strings
     - abseil/xcprivacy
   - abseil/log/internal/conditions (1.20240116.2):
     - abseil/base/base
@@ -1048,16 +1070,16 @@ PODS:
     - abseil/meta/type_traits
     - abseil/xcprivacy
   - abseil/xcprivacy (1.20240116.2)
-  - BoringSSL-GRPC (0.0.33):
-    - BoringSSL-GRPC/Implementation (= 0.0.33)
-    - BoringSSL-GRPC/Interface (= 0.0.33)
-  - BoringSSL-GRPC/Implementation (0.0.33):
-    - BoringSSL-GRPC/Interface (= 0.0.33)
-  - BoringSSL-GRPC/Interface (0.0.33)
-  - gRPC-Core (1.63.0):
-    - gRPC-Core/Implementation (= 1.63.0)
-    - gRPC-Core/Interface (= 1.63.0)
-  - gRPC-Core/Implementation (1.63.0):
+  - BoringSSL-GRPC (0.0.34):
+    - BoringSSL-GRPC/Implementation (= 0.0.34)
+    - BoringSSL-GRPC/Interface (= 0.0.34)
+  - BoringSSL-GRPC/Implementation (0.0.34):
+    - BoringSSL-GRPC/Interface (= 0.0.34)
+  - BoringSSL-GRPC/Interface (0.0.34)
+  - gRPC-Core (1.64.0):
+    - gRPC-Core/Implementation (= 1.64.0)
+    - gRPC-Core/Interface (= 1.64.0)
+  - gRPC-Core/Implementation (1.64.0):
     - abseil/algorithm/container (~> 1.20240116.2)
     - abseil/base/base (~> 1.20240116.2)
     - abseil/base/config (~> 1.20240116.2)
@@ -1074,6 +1096,8 @@ PODS:
     - abseil/functional/bind_front (~> 1.20240116.2)
     - abseil/functional/function_ref (~> 1.20240116.2)
     - abseil/hash/hash (~> 1.20240116.2)
+    - abseil/log/check (~> 1.20240116.2)
+    - abseil/log/globals (~> 1.20240116.2)
     - abseil/log/log (~> 1.20240116.2)
     - abseil/memory/memory (~> 1.20240116.2)
     - abseil/meta/type_traits (~> 1.20240116.2)
@@ -1091,45 +1115,45 @@ PODS:
     - abseil/types/span (~> 1.20240116.2)
     - abseil/types/variant (~> 1.20240116.2)
     - abseil/utility/utility (~> 1.20240116.2)
-    - BoringSSL-GRPC (= 0.0.33)
-    - gRPC-Core/Interface (= 1.63.0)
-    - gRPC-Core/Privacy (= 1.63.0)
-  - gRPC-Core/Interface (1.63.0)
-  - gRPC-Core/Privacy (1.63.0)
-  - gRPC-ProtoRPC (1.63.0):
-    - gRPC-ProtoRPC/Legacy (= 1.63.0)
-    - gRPC-ProtoRPC/Legacy-Header (= 1.63.0)
-    - gRPC-ProtoRPC/Main (= 1.63.0)
-  - gRPC-ProtoRPC/Legacy (1.63.0):
-    - gRPC-ProtoRPC/Legacy-Header (= 1.63.0)
-    - gRPC-ProtoRPC/Main (= 1.63.0)
-    - gRPC-RxLibrary (= 1.63.0)
-    - gRPC/GRPCCore (= 1.63.0)
+    - BoringSSL-GRPC (= 0.0.34)
+    - gRPC-Core/Interface (= 1.64.0)
+    - gRPC-Core/Privacy (= 1.64.0)
+  - gRPC-Core/Interface (1.64.0)
+  - gRPC-Core/Privacy (1.64.0)
+  - gRPC-ProtoRPC (1.64.0):
+    - gRPC-ProtoRPC/Legacy (= 1.64.0)
+    - gRPC-ProtoRPC/Legacy-Header (= 1.64.0)
+    - gRPC-ProtoRPC/Main (= 1.64.0)
+  - gRPC-ProtoRPC/Legacy (1.64.0):
+    - gRPC-ProtoRPC/Legacy-Header (= 1.64.0)
+    - gRPC-ProtoRPC/Main (= 1.64.0)
+    - gRPC-RxLibrary (= 1.64.0)
+    - gRPC/GRPCCore (= 1.64.0)
     - Protobuf (~> 3.0)
-  - gRPC-ProtoRPC/Legacy-Header (1.63.0)
-  - gRPC-ProtoRPC/Main (1.63.0):
-    - gRPC-ProtoRPC/Legacy-Header (= 1.63.0)
-    - gRPC/Interface (= 1.63.0)
+  - gRPC-ProtoRPC/Legacy-Header (1.64.0)
+  - gRPC-ProtoRPC/Main (1.64.0):
+    - gRPC-ProtoRPC/Legacy-Header (= 1.64.0)
+    - gRPC/Interface (= 1.64.0)
     - Protobuf (~> 3.0)
-  - gRPC-RxLibrary (1.63.0):
-    - gRPC-RxLibrary/Implementation (= 1.63.0)
-    - gRPC-RxLibrary/Interface (= 1.63.0)
-  - gRPC-RxLibrary/Implementation (1.63.0):
+  - gRPC-RxLibrary (1.64.0):
+    - gRPC-RxLibrary/Implementation (= 1.64.0)
+    - gRPC-RxLibrary/Interface (= 1.64.0)
+  - gRPC-RxLibrary/Implementation (1.64.0):
     - gRPC-RxLibrary/Interface
-  - gRPC-RxLibrary/Interface (1.63.0)
-  - gRPC/GRPCCore (1.63.0):
-    - gRPC-Core (= 1.63.0)
-    - gRPC-RxLibrary (= 1.63.0)
-    - gRPC/Interface (= 1.63.0)
-    - gRPC/Interface-Legacy (= 1.63.0)
-    - gRPC/Privacy (= 1.63.0)
-  - gRPC/Interface (1.63.0):
-    - gRPC/Interface-Legacy (= 1.63.0)
-    - gRPC/Privacy (= 1.63.0)
-  - gRPC/Interface-Legacy (1.63.0):
-    - gRPC-RxLibrary/Interface (= 1.63.0)
-    - gRPC/Privacy (= 1.63.0)
-  - gRPC/Privacy (1.63.0)
+  - gRPC-RxLibrary/Interface (1.64.0)
+  - gRPC/GRPCCore (1.64.0):
+    - gRPC-Core (= 1.64.0)
+    - gRPC-RxLibrary (= 1.64.0)
+    - gRPC/Interface (= 1.64.0)
+    - gRPC/Interface-Legacy (= 1.64.0)
+    - gRPC/Privacy (= 1.64.0)
+  - gRPC/Interface (1.64.0):
+    - gRPC/Interface-Legacy (= 1.64.0)
+    - gRPC/Privacy (= 1.64.0)
+  - gRPC/Interface-Legacy (1.64.0):
+    - gRPC-RxLibrary/Interface (= 1.64.0)
+    - gRPC/Privacy (= 1.64.0)
+  - gRPC/Privacy (1.64.0)
   - Protobuf (3.26.1)
 
 DEPENDENCIES:
@@ -1148,11 +1172,11 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   abseil: d121da9ef7e2ff4cab7666e76c5a3e0915ae08c3
-  BoringSSL-GRPC: bf2dccbef83128ba9ffde4b49234a8e2a5a3a4f6
-  gRPC: 5bd2ced46d7222622149ae29af428e4b569d8bc9
-  gRPC-Core: d1a1098e34b8587431c4e78504618d0856b422c6
-  gRPC-ProtoRPC: 9f671e012df3acefd9846b91568d1cd973c17b9d
-  gRPC-RxLibrary: 7b17e741cc07581f1fba136d17d69e632bda778d
+  BoringSSL-GRPC: b64b2eeb69833f66e1d57f55fdcd314b8dea02e5
+  gRPC: 0fad4aac062fbae45b60b4c57de9b299b816b7e1
+  gRPC-Core: 0f28f022a08a69117c26584cedef7c348a1d26ad
+  gRPC-ProtoRPC: 0bf15a48c9745d077457d231103c2ac1009643fc
+  gRPC-RxLibrary: 639c0b2f9bbc92503a6121306f9e81680932f862
   Protobuf: a53f5173a603075b3522a5c50be63a67a5f3353a
 
 PODFILE CHECKSUM: 48e7fc0bef9a37c3e71fa461605b759acdf5bfc0

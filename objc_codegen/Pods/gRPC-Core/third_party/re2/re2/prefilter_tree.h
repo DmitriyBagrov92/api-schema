@@ -20,21 +20,9 @@
 #include <string>
 #include <vector>
 
-#if COCOAPODS==1
-  #include  "third_party/re2/util/util.h"
-#else
-  #include  "util/util.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/prefilter.h"
-#else
-  #include  "re2/prefilter.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/sparse_array.h"
-#else
-  #include  "re2/sparse_array.h"
-#endif
+#include "util/util.h"
+#include "re2/prefilter.h"
+#include "re2/sparse_array.h"
 
 namespace re2 {
 
@@ -71,7 +59,8 @@ class PrefilterTree {
 
  private:
   typedef SparseArray<int> IntMap;
-  typedef std::map<int, int> StdIntMap;
+  // TODO(junyer): Use std::unordered_set<Prefilter*> instead?
+  // It should be trivial to get rid of the stringification...
   typedef std::map<std::string, Prefilter*> NodeMap;
 
   // Each unique node has a corresponding Entry that helps in
@@ -89,7 +78,7 @@ class PrefilterTree {
     // are two different nodes, but they share the atom 'def'. So when
     // 'def' matches, it triggers two parents, corresponding to the two
     // different OR nodes.
-    StdIntMap* parents;
+    std::vector<int> parents;
 
     // When this node is ready to trigger the parent, what are the
     // regexps that are triggered.

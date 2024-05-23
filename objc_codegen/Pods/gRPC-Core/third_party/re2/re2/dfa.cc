@@ -36,51 +36,15 @@
 #include <utility>
 #include <vector>
 
-#if COCOAPODS==1
-  #include  "third_party/re2/util/logging.h"
-#else
-  #include  "util/logging.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/mix.h"
-#else
-  #include  "util/mix.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/mutex.h"
-#else
-  #include  "util/mutex.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/strutil.h"
-#else
-  #include  "util/strutil.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/pod_array.h"
-#else
-  #include  "re2/pod_array.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/prog.h"
-#else
-  #include  "re2/prog.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/re2.h"
-#else
-  #include  "re2/re2.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/sparse_set.h"
-#else
-  #include  "re2/sparse_set.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/stringpiece.h"
-#else
-  #include  "re2/stringpiece.h"
-#endif
+#include "util/logging.h"
+#include "util/mix.h"
+#include "util/mutex.h"
+#include "util/strutil.h"
+#include "re2/pod_array.h"
+#include "re2/prog.h"
+#include "re2/re2.h"
+#include "re2/sparse_set.h"
+#include "re2/stringpiece.h"
 
 // Silence "zero-sized array in struct/union" warning for DFA::State::next_.
 #ifdef _MSC_VER
@@ -91,6 +55,10 @@ namespace re2 {
 
 // Controls whether the DFA should bail out early if the NFA would be faster.
 static bool dfa_should_bail_when_slow = true;
+
+void Prog::TESTING_ONLY_set_dfa_should_bail_when_slow(bool b) {
+  dfa_should_bail_when_slow = b;
+}
 
 // Changing this to true compiles in prints that trace execution of the DFA.
 // Generates a lot of output -- only useful for debugging.
@@ -203,6 +171,9 @@ class DFA {
   typedef std::unordered_set<State*, StateHash, StateEqual> StateSet;
 
  private:
+  // Make it easier to swap in a scalable reader-writer mutex.
+  using CacheMutex = Mutex;
+
   enum {
     // Indices into start_ for unanchored searches.
     // Add kStartAnchored for anchored searches.
@@ -316,10 +287,10 @@ class DFA {
   // The generic search loop, inlined to create specialized versions.
   // cache_mutex_.r <= L < mutex_
   // Might unlock and relock cache_mutex_ via params->cache_lock.
-  inline bool InlinedSearchLoop(SearchParams* params,
-                                bool can_prefix_accel,
-                                bool want_earliest_match,
-                                bool run_forward);
+  template <bool can_prefix_accel,
+            bool want_earliest_match,
+            bool run_forward>
+  inline bool InlinedSearchLoop(SearchParams* params);
 
   // The specialized versions of InlinedSearchLoop.  The three letters
   // at the ends of the name denote the true/false values used as the
@@ -341,13 +312,6 @@ class DFA {
   // Might unlock and relock cache_mutex_ via params->cache_lock.
   bool FastSearchLoop(SearchParams* params);
 
-  // For debugging, a slow search loop that calls InlinedSearchLoop
-  // directly -- because the booleans passed are not constants, the
-  // loop is not specialized like the SearchFFF etc. versions, so it
-  // runs much more slowly.  Useful only for debugging.
-  // cache_mutex_.r <= L < mutex_
-  // Might unlock and relock cache_mutex_ via params->cache_lock.
-  bool SlowSearchLoop(SearchParams* params);
 
   // Looks up bytes in bytemap_ but handles case c == kByteEndText too.
   int ByteMap(int c) {
@@ -374,7 +338,7 @@ class DFA {
   // while holding cache_mutex_ for writing, to avoid interrupting other
   // readers.  Any State* pointers are only valid while cache_mutex_
   // is held.
-  Mutex cache_mutex_;
+  CacheMutex cache_mutex_;
   int64_t mem_budget_;     // Total memory budget for all States.
   int64_t state_budget_;   // Amount of memory remaining for new States.
   StateSet state_cache_;   // All States computed so far.
@@ -1149,7 +1113,7 @@ DFA::State* DFA::RunStateOnByte(State* state, int c) {
 
 class DFA::RWLocker {
  public:
-  explicit RWLocker(Mutex* mu);
+  explicit RWLocker(CacheMutex* mu);
   ~RWLocker();
 
   // If the lock is only held for reading right now,
@@ -1159,14 +1123,14 @@ class DFA::RWLocker {
   void LockForWriting();
 
  private:
-  Mutex* mu_;
+  CacheMutex* mu_;
   bool writing_;
 
   RWLocker(const RWLocker&) = delete;
   RWLocker& operator=(const RWLocker&) = delete;
 };
 
-DFA::RWLocker::RWLocker(Mutex* mu) : mu_(mu), writing_(false) {
+DFA::RWLocker::RWLocker(CacheMutex* mu) : mu_(mu), writing_(false) {
   mu_->ReaderLock();
 }
 
@@ -1357,10 +1321,10 @@ DFA::State* DFA::StateSaver::Restore() {
 // The bools are equal to the same-named variables in params, but
 // making them function arguments lets the inliner specialize
 // this function to each combination (see two paragraphs above).
-inline bool DFA::InlinedSearchLoop(SearchParams* params,
-                                   bool can_prefix_accel,
-                                   bool want_earliest_match,
-                                   bool run_forward) {
+template <bool can_prefix_accel,
+          bool want_earliest_match,
+          bool run_forward>
+inline bool DFA::InlinedSearchLoop(SearchParams* params) {
   State* start = params->start;
   const uint8_t* bp = BytePtr(params->text.data());  // start of text
   const uint8_t* p = bp;                             // text scanning point
@@ -1524,15 +1488,15 @@ inline bool DFA::InlinedSearchLoop(SearchParams* params,
 
   int lastbyte;
   if (run_forward) {
-    if (params->text.end() == params->context.end())
+    if (EndPtr(params->text) == EndPtr(params->context))
       lastbyte = kByteEndText;
     else
-      lastbyte = params->text.end()[0] & 0xFF;
+      lastbyte = EndPtr(params->text)[0] & 0xFF;
   } else {
-    if (params->text.begin() == params->context.begin())
+    if (BeginPtr(params->text) == BeginPtr(params->context))
       lastbyte = kByteEndText;
     else
-      lastbyte = params->text.begin()[-1] & 0xFF;
+      lastbyte = BeginPtr(params->text)[-1] & 0xFF;
   }
 
   State* ns = s->next_[ByteMap(lastbyte)].load(std::memory_order_acquire);
@@ -1585,36 +1549,28 @@ inline bool DFA::InlinedSearchLoop(SearchParams* params,
 
 // Inline specializations of the general loop.
 bool DFA::SearchFFF(SearchParams* params) {
-  return InlinedSearchLoop(params, 0, 0, 0);
+  return InlinedSearchLoop<false, false, false>(params);
 }
 bool DFA::SearchFFT(SearchParams* params) {
-  return InlinedSearchLoop(params, 0, 0, 1);
+  return InlinedSearchLoop<false, false, true>(params);
 }
 bool DFA::SearchFTF(SearchParams* params) {
-  return InlinedSearchLoop(params, 0, 1, 0);
+  return InlinedSearchLoop<false, true, false>(params);
 }
 bool DFA::SearchFTT(SearchParams* params) {
-  return InlinedSearchLoop(params, 0, 1, 1);
+  return InlinedSearchLoop<false, true, true>(params);
 }
 bool DFA::SearchTFF(SearchParams* params) {
-  return InlinedSearchLoop(params, 1, 0, 0);
+  return InlinedSearchLoop<true, false, false>(params);
 }
 bool DFA::SearchTFT(SearchParams* params) {
-  return InlinedSearchLoop(params, 1, 0, 1);
+  return InlinedSearchLoop<true, false, true>(params);
 }
 bool DFA::SearchTTF(SearchParams* params) {
-  return InlinedSearchLoop(params, 1, 1, 0);
+  return InlinedSearchLoop<true, true, false>(params);
 }
 bool DFA::SearchTTT(SearchParams* params) {
-  return InlinedSearchLoop(params, 1, 1, 1);
-}
-
-// For debugging, calls the general code directly.
-bool DFA::SlowSearchLoop(SearchParams* params) {
-  return InlinedSearchLoop(params,
-                           params->can_prefix_accel,
-                           params->want_earliest_match,
-                           params->run_forward);
+  return InlinedSearchLoop<true, true, true>(params);
 }
 
 // For performance, calls the appropriate specialized version
@@ -1671,7 +1627,7 @@ bool DFA::AnalyzeSearch(SearchParams* params) {
   const StringPiece& context = params->context;
 
   // Sanity check: make sure that text lies within context.
-  if (text.begin() < context.begin() || text.end() > context.end()) {
+  if (BeginPtr(text) < BeginPtr(context) || EndPtr(text) > EndPtr(context)) {
     LOG(DFATAL) << "context does not contain text";
     params->start = DeadState;
     return true;
@@ -1681,13 +1637,13 @@ bool DFA::AnalyzeSearch(SearchParams* params) {
   int start;
   uint32_t flags;
   if (params->run_forward) {
-    if (text.begin() == context.begin()) {
+    if (BeginPtr(text) == BeginPtr(context)) {
       start = kStartBeginText;
       flags = kEmptyBeginText|kEmptyBeginLine;
-    } else if (text.begin()[-1] == '\n') {
+    } else if (BeginPtr(text)[-1] == '\n') {
       start = kStartBeginLine;
       flags = kEmptyBeginLine;
-    } else if (Prog::IsWordChar(text.begin()[-1] & 0xFF)) {
+    } else if (Prog::IsWordChar(BeginPtr(text)[-1] & 0xFF)) {
       start = kStartAfterWordChar;
       flags = kFlagLastWord;
     } else {
@@ -1695,13 +1651,13 @@ bool DFA::AnalyzeSearch(SearchParams* params) {
       flags = 0;
     }
   } else {
-    if (text.end() == context.end()) {
+    if (EndPtr(text) == EndPtr(context)) {
       start = kStartBeginText;
       flags = kEmptyBeginText|kEmptyBeginLine;
-    } else if (text.end()[0] == '\n') {
+    } else if (EndPtr(text)[0] == '\n') {
       start = kStartBeginLine;
       flags = kEmptyBeginLine;
-    } else if (Prog::IsWordChar(text.end()[0] & 0xFF)) {
+    } else if (Prog::IsWordChar(EndPtr(text)[0] & 0xFF)) {
       start = kStartAfterWordChar;
       flags = kFlagLastWord;
     } else {
@@ -1881,9 +1837,9 @@ bool Prog::SearchDFA(const StringPiece& text, const StringPiece& const_context,
     using std::swap;
     swap(caret, dollar);
   }
-  if (caret && context.begin() != text.begin())
+  if (caret && BeginPtr(context) != BeginPtr(text))
     return false;
-  if (dollar && context.end() != text.end())
+  if (dollar && EndPtr(context) != EndPtr(text))
     return false;
 
   // Handle full match by running an anchored longest match
@@ -2012,10 +1968,6 @@ int DFA::BuildAllStates(const Prog::DFAStateCallback& cb) {
 // Build out all states in DFA for kind.  Returns number of states.
 int Prog::BuildEntireDFA(MatchKind kind, const DFAStateCallback& cb) {
   return GetDFA(kind)->BuildAllStates(cb);
-}
-
-void Prog::TEST_dfa_should_bail_when_slow(bool b) {
-  dfa_should_bail_when_slow = b;
 }
 
 // Computes min and max for matching string.

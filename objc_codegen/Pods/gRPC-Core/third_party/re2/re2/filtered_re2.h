@@ -21,14 +21,11 @@
 // or AllMatches with a vector of indices of strings that were found
 // in the text to get the actual regexp matches.
 
+#include <memory>
 #include <string>
 #include <vector>
 
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/re2.h"
-#else
-  #include  "re2/re2.h"
-#endif
+#include "re2/re2.h"
 
 namespace re2 {
 
@@ -40,12 +37,19 @@ class FilteredRE2 {
   explicit FilteredRE2(int min_atom_len);
   ~FilteredRE2();
 
+  // Not copyable.
+  FilteredRE2(const FilteredRE2&) = delete;
+  FilteredRE2& operator=(const FilteredRE2&) = delete;
+  // Movable.
+  FilteredRE2(FilteredRE2&& other);
+  FilteredRE2& operator=(FilteredRE2&& other);
+
   // Uses RE2 constructor to create a RE2 object (re). Returns
   // re->error_code(). If error_code is other than NoError, then re is
   // deleted and not added to re2_vec_.
   RE2::ErrorCode Add(const StringPiece& pattern,
                      const RE2::Options& options,
-                     int *id);
+                     int* id);
 
   // Prepares the regexps added by Add for filtering.  Returns a set
   // of strings that the caller should check for in candidate texts.
@@ -102,10 +106,7 @@ class FilteredRE2 {
   bool compiled_;
 
   // An AND-OR tree of string atoms used for filtering regexps.
-  PrefilterTree* prefilter_tree_;
-
-  FilteredRE2(const FilteredRE2&) = delete;
-  FilteredRE2& operator=(const FilteredRE2&) = delete;
+  std::unique_ptr<PrefilterTree> prefilter_tree_;
 };
 
 }  // namespace re2

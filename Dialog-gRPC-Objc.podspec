@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.summary = "Dialog gRPC access library"
   s.source = { :git => 'https://github.com/grpc/grpc.git' }
 
-  s.ios.deployment_target = "7.1"
+  s.ios.deployment_target = "11.0"
   s.osx.deployment_target = "10.9"
 
   # Base directory where the .proto files are.

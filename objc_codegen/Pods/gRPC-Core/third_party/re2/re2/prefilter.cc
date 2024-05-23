@@ -2,52 +2,20 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/prefilter.h"
-#else
-  #include  "re2/prefilter.h"
-#endif
+#include "re2/prefilter.h"
 
 #include <stddef.h>
 #include <stdint.h>
 #include <string>
 #include <vector>
 
-#if COCOAPODS==1
-  #include  "third_party/re2/util/util.h"
-#else
-  #include  "util/util.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/logging.h"
-#else
-  #include  "util/logging.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/strutil.h"
-#else
-  #include  "util/strutil.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/utf.h"
-#else
-  #include  "util/utf.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/re2.h"
-#else
-  #include  "re2/re2.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/unicode_casefold.h"
-#else
-  #include  "re2/unicode_casefold.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/walker-inl.h"
-#else
-  #include  "re2/walker-inl.h"
-#endif
+#include "util/util.h"
+#include "util/logging.h"
+#include "util/strutil.h"
+#include "util/utf.h"
+#include "re2/re2.h"
+#include "re2/unicode_casefold.h"
+#include "re2/walker-inl.h"
 
 namespace re2 {
 
@@ -680,14 +648,15 @@ Prefilter* Prefilter::FromRegexp(Regexp* re) {
     return NULL;
 
   Regexp* simple = re->Simplify();
-  Prefilter::Info *info = BuildInfo(simple);
+  if (simple == NULL)
+    return NULL;
 
+  Prefilter::Info* info = BuildInfo(simple);
   simple->Decref();
   if (info == NULL)
     return NULL;
 
   Prefilter* m = info->TakeMatch();
-
   delete info;
   return m;
 }
