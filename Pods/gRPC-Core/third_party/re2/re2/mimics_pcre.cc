@@ -22,26 +22,10 @@
 //
 // Regexp::MimicsPCRE checks for any of these conditions.
 
-#if COCOAPODS==1
-  #include  "third_party/re2/util/util.h"
-#else
-  #include  "util/util.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/logging.h"
-#else
-  #include  "util/logging.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/regexp.h"
-#else
-  #include  "re2/regexp.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/walker-inl.h"
-#else
-  #include  "re2/walker-inl.h"
-#endif
+#include "util/util.h"
+#include "util/logging.h"
+#include "re2/regexp.h"
+#include "re2/walker-inl.h"
 
 namespace re2 {
 

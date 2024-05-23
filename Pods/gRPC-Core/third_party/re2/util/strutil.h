@@ -7,16 +7,8 @@
 
 #include <string>
 
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/stringpiece.h"
-#else
-  #include  "re2/stringpiece.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/util.h"
-#else
-  #include  "util/util.h"
-#endif
+#include "re2/stringpiece.h"
+#include "util/util.h"
 
 namespace re2 {
 

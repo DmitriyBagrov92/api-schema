@@ -5,15 +5,12 @@
 #ifndef RE2_SET_H_
 #define RE2_SET_H_
 
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
 
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/re2.h"
-#else
-  #include  "re2/re2.h"
-#endif
+#include "re2/re2.h"
 
 namespace re2 {
 class Prog;
@@ -39,6 +36,13 @@ class RE2::Set {
 
   Set(const RE2::Options& options, RE2::Anchor anchor);
   ~Set();
+
+  // Not copyable.
+  Set(const Set&) = delete;
+  Set& operator=(const Set&) = delete;
+  // Movable.
+  Set(Set&& other);
+  Set& operator=(Set&& other);
 
   // Adds pattern to the set using the options passed to the constructor.
   // Returns the index that will identify the regexp in the output of Match(),
@@ -71,12 +75,9 @@ class RE2::Set {
   RE2::Options options_;
   RE2::Anchor anchor_;
   std::vector<Elem> elem_;
-  re2::Prog* prog_;
   bool compiled_;
   int size_;
-
-  Set(const Set&) = delete;
-  Set& operator=(const Set&) = delete;
+  std::unique_ptr<re2::Prog> prog_;
 };
 
 }  // namespace re2

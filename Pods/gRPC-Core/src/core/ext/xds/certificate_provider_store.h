@@ -16,30 +16,46 @@
 //
 //
 
-#ifndef GRPC_CORE_EXT_XDS_CERTIFICATE_PROVIDER_STORE_H
-#define GRPC_CORE_EXT_XDS_CERTIFICATE_PROVIDER_STORE_H
+#ifndef GRPC_SRC_CORE_EXT_XDS_CERTIFICATE_PROVIDER_STORE_H
+#define GRPC_SRC_CORE_EXT_XDS_CERTIFICATE_PROVIDER_STORE_H
 
 #include <grpc/support/port_platform.h>
 
 #include <map>
+#include <string>
+#include <utility>
 
+#include "absl/base/thread_annotations.h"
 #include "absl/strings/string_view.h"
 
-#include "src/core/ext/xds/certificate_provider_factory.h"
+#include <grpc/grpc_security.h>
+
+#include "src/core/lib/gpr/useful.h"
 #include "src/core/lib/gprpp/orphanable.h"
 #include "src/core/lib/gprpp/ref_counted_ptr.h"
 #include "src/core/lib/gprpp/sync.h"
+#include "src/core/lib/gprpp/unique_type_name.h"
+#include "src/core/lib/gprpp/validation_errors.h"
+#include "src/core/lib/json/json.h"
+#include "src/core/lib/json/json_args.h"
+#include "src/core/lib/json/json_object_loader.h"
+#include "src/core/lib/security/certificate_provider/certificate_provider_factory.h"
+#include "src/core/lib/security/credentials/tls/grpc_tls_certificate_distributor.h"
 #include "src/core/lib/security/credentials/tls/grpc_tls_certificate_provider.h"
 
 namespace grpc_core {
 
 // Map for xDS based grpc_tls_certificate_provider instances.
-class CertificateProviderStore
+class CertificateProviderStore final
     : public InternallyRefCounted<CertificateProviderStore> {
  public:
   struct PluginDefinition {
     std::string plugin_name;
     RefCountedPtr<CertificateProviderFactory::Config> config;
+
+    static const JsonLoaderInterface* JsonLoader(const JsonArgs&);
+    void JsonPostLoad(const Json& json, const JsonArgs& args,
+                      ValidationErrors* errors);
   };
 
   // Maps plugin instance (opaque) name to plugin defition.
@@ -61,7 +77,8 @@ class CertificateProviderStore
  private:
   // A thin wrapper around `grpc_tls_certificate_provider` which allows removing
   // the entry from the CertificateProviderStore when the refcount reaches zero.
-  class CertificateProviderWrapper : public grpc_tls_certificate_provider {
+  class CertificateProviderWrapper final
+      : public grpc_tls_certificate_provider {
    public:
     CertificateProviderWrapper(
         RefCountedPtr<grpc_tls_certificate_provider> certificate_provider,
@@ -74,14 +91,19 @@ class CertificateProviderStore
       store_->ReleaseCertificateProvider(key_, this);
     }
 
-    grpc_core::RefCountedPtr<grpc_tls_certificate_distributor> distributor()
+    RefCountedPtr<grpc_tls_certificate_distributor> distributor()
         const override {
       return certificate_provider_->distributor();
     }
 
-    grpc_pollset_set* interested_parties() const override {
-      return certificate_provider_->interested_parties();
+    int CompareImpl(const grpc_tls_certificate_provider* other) const override {
+      // TODO(yashykt): This should probably delegate to the `Compare` method of
+      // the wrapped certificate_provider_ object.
+      return QsortCompare(
+          static_cast<const grpc_tls_certificate_provider*>(this), other);
     }
+
+    UniqueTypeName type() const override;
 
     absl::string_view key() const { return key_; }
 
@@ -92,7 +114,7 @@ class CertificateProviderStore
   };
 
   RefCountedPtr<CertificateProviderWrapper> CreateCertificateProviderLocked(
-      absl::string_view key);
+      absl::string_view key) ABSL_EXCLUSIVE_LOCKS_REQUIRED(mu_);
 
   // Releases a previously created certificate provider from the certificate
   // provider map if the value matches \a wrapper.
@@ -101,12 +123,12 @@ class CertificateProviderStore
 
   Mutex mu_;
   // Map of plugin configurations
-  PluginDefinitionMap plugin_config_map_;
+  const PluginDefinitionMap plugin_config_map_;
   // Underlying map for the providers.
   std::map<absl::string_view, CertificateProviderWrapper*>
-      certificate_providers_map_;
+      certificate_providers_map_ ABSL_GUARDED_BY(mu_);
 };
 
 }  // namespace grpc_core
 
-#endif  // GRPC_CORE_EXT_XDS_CERTIFICATE_PROVIDER_STORE_H
+#endif  // GRPC_SRC_CORE_EXT_XDS_CERTIFICATE_PROVIDER_STORE_H
