@@ -32,41 +32,13 @@
 #include <utility>
 #include <vector>
 
-#if COCOAPODS==1
-  #include  "third_party/re2/util/logging.h"
-#else
-  #include  "util/logging.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/strutil.h"
-#else
-  #include  "util/strutil.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/pod_array.h"
-#else
-  #include  "re2/pod_array.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/prog.h"
-#else
-  #include  "re2/prog.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/regexp.h"
-#else
-  #include  "re2/regexp.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/sparse_array.h"
-#else
-  #include  "re2/sparse_array.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/sparse_set.h"
-#else
-  #include  "re2/sparse_set.h"
-#endif
+#include "util/logging.h"
+#include "util/strutil.h"
+#include "re2/pod_array.h"
+#include "re2/prog.h"
+#include "re2/regexp.h"
+#include "re2/sparse_array.h"
+#include "re2/sparse_set.h"
 
 namespace re2 {
 
@@ -484,14 +456,14 @@ bool NFA::Search(const StringPiece& text, const StringPiece& const_context,
     context = text;
 
   // Sanity check: make sure that text lies within context.
-  if (text.begin() < context.begin() || text.end() > context.end()) {
+  if (BeginPtr(text) < BeginPtr(context) || EndPtr(text) > EndPtr(context)) {
     LOG(DFATAL) << "context does not contain text";
     return false;
   }
 
-  if (prog_->anchor_start() && context.begin() != text.begin())
+  if (prog_->anchor_start() && BeginPtr(context) != BeginPtr(text))
     return false;
-  if (prog_->anchor_end() && context.end() != text.end())
+  if (prog_->anchor_end() && EndPtr(context) != EndPtr(text))
     return false;
   anchored |= prog_->anchor_start();
   if (prog_->anchor_end()) {
@@ -628,7 +600,7 @@ bool NFA::Search(const StringPiece& text, const StringPiece& const_context,
     // by simply not continuing the loop.
     // This complements the special case in NFA::Step().
     if (p == NULL) {
-      (void)Step(runq, nextq, p < etext_ ? p[0] & 0xFF : -1, context, p);
+      (void) Step(runq, nextq, -1, context, p);
       DCHECK_EQ(runq->size(), 0);
       using std::swap;
       swap(nextq, runq);
@@ -674,7 +646,7 @@ Prog::SearchNFA(const StringPiece& text, const StringPiece& context,
   }
   if (!nfa.Search(text, context, anchor == kAnchored, kind != kFirstMatch, match, nmatch))
     return false;
-  if (kind == kFullMatch && match[0].end() != text.end())
+  if (kind == kFullMatch && EndPtr(match[0]) != EndPtr(text))
     return false;
   return true;
 }

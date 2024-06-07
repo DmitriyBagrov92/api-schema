@@ -57,46 +57,14 @@
 #include <string>
 #include <vector>
 
-#if COCOAPODS==1
-  #include  "third_party/re2/util/util.h"
-#else
-  #include  "util/util.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/logging.h"
-#else
-  #include  "util/logging.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/strutil.h"
-#else
-  #include  "util/strutil.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/utf.h"
-#else
-  #include  "util/utf.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/pod_array.h"
-#else
-  #include  "re2/pod_array.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/prog.h"
-#else
-  #include  "re2/prog.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/sparse_set.h"
-#else
-  #include  "re2/sparse_set.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/stringpiece.h"
-#else
-  #include  "re2/stringpiece.h"
-#endif
+#include "util/util.h"
+#include "util/logging.h"
+#include "util/strutil.h"
+#include "util/utf.h"
+#include "re2/pod_array.h"
+#include "re2/prog.h"
+#include "re2/sparse_set.h"
+#include "re2/stringpiece.h"
 
 // Silence "zero-sized array in struct/union" warning for OneState::action.
 #ifdef _MSC_VER
@@ -269,9 +237,9 @@ bool Prog::SearchOnePass(const StringPiece& text,
   StringPiece context = const_context;
   if (context.data() == NULL)
     context = text;
-  if (anchor_start() && context.begin() != text.begin())
+  if (anchor_start() && BeginPtr(context) != BeginPtr(text))
     return false;
-  if (anchor_end() && context.end() != text.end())
+  if (anchor_end() && EndPtr(context) != EndPtr(text))
     return false;
   if (anchor_end())
     kind = kFullMatch;

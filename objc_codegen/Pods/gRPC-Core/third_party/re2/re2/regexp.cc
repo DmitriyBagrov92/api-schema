@@ -5,11 +5,7 @@
 // Regular expression representation.
 // Tested by parse_test.cc
 
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/regexp.h"
-#else
-  #include  "re2/regexp.h"
-#endif
+#include "re2/regexp.h"
 
 #include <stddef.h>
 #include <stdint.h>
@@ -20,41 +16,13 @@
 #include <string>
 #include <vector>
 
-#if COCOAPODS==1
-  #include  "third_party/re2/util/util.h"
-#else
-  #include  "util/util.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/logging.h"
-#else
-  #include  "util/logging.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/mutex.h"
-#else
-  #include  "util/mutex.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/utf.h"
-#else
-  #include  "util/utf.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/pod_array.h"
-#else
-  #include  "re2/pod_array.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/stringpiece.h"
-#else
-  #include  "re2/stringpiece.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/walker-inl.h"
-#else
-  #include  "re2/walker-inl.h"
-#endif
+#include "util/util.h"
+#include "util/logging.h"
+#include "util/mutex.h"
+#include "util/utf.h"
+#include "re2/pod_array.h"
+#include "re2/stringpiece.h"
+#include "re2/walker-inl.h"
 
 namespace re2 {
 
@@ -530,6 +498,7 @@ static const char *kErrorStrings[] = {
   "invalid character class range",
   "missing ]",
   "missing )",
+  "unexpected )",
   "trailing \\",
   "no argument for repetition operator",
   "invalid repetition size",
@@ -616,8 +585,7 @@ class NamedCapturesWalker : public Regexp::Walker<Ignored> {
       // Record first occurrence of each name.
       // (The rule is that if you have the same name
       // multiple times, only the leftmost one counts.)
-      if (map_->find(*re->name()) == map_->end())
-        (*map_)[*re->name()] = re->cap();
+      map_->insert({*re->name(), re->cap()});
     }
     return ignored;
   }
@@ -753,8 +721,14 @@ bool Regexp::RequiredPrefixForAccel(std::string* prefix, bool* foldcase) {
   *foldcase = false;
 
   // No need for a walker: the regexp must either begin with or be
-  // a literal char or string.
+  // a literal char or string. We "see through" capturing groups,
+  // but make no effort to glue multiple prefix fragments together.
   Regexp* re = op_ == kRegexpConcat && nsub_ > 0 ? sub()[0] : this;
+  while (re->op_ == kRegexpCapture) {
+    re = re->sub()[0];
+    if (re->op_ == kRegexpConcat && re->nsub_ > 0)
+      re = re->sub()[0];
+  }
   if (re->op_ != kRegexpLiteral &&
       re->op_ != kRegexpLiteralString)
     return false;
@@ -944,7 +918,7 @@ void CharClassBuilder::Negate() {
 // The ranges are allocated in the same block as the header,
 // necessitating a special allocator and Delete method.
 
-CharClass* CharClass::New(int maxranges) {
+CharClass* CharClass::New(size_t maxranges) {
   CharClass* cc;
   uint8_t* data = new uint8_t[sizeof *cc + maxranges*sizeof cc->ranges_[0]];
   cc = reinterpret_cast<CharClass*>(data);
@@ -961,7 +935,7 @@ void CharClass::Delete() {
 }
 
 CharClass* CharClass::Negate() {
-  CharClass* cc = CharClass::New(nranges_+1);
+  CharClass* cc = CharClass::New(static_cast<size_t>(nranges_+1));
   cc->folds_ascii_ = folds_ascii_;
   cc->nrunes_ = Runemax + 1 - nrunes_;
   int n = 0;
@@ -980,7 +954,7 @@ CharClass* CharClass::Negate() {
   return cc;
 }
 
-bool CharClass::Contains(Rune r) {
+bool CharClass::Contains(Rune r) const {
   RuneRange* rr = ranges_;
   int n = nranges_;
   while (n > 0) {
@@ -998,7 +972,7 @@ bool CharClass::Contains(Rune r) {
 }
 
 CharClass* CharClassBuilder::GetCharClass() {
-  CharClass* cc = CharClass::New(static_cast<int>(ranges_.size()));
+  CharClass* cc = CharClass::New(ranges_.size());
   int n = 0;
   for (iterator it = begin(); it != end(); ++it)
     cc->ranges_[n++] = *it;

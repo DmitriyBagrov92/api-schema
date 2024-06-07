@@ -13,11 +13,7 @@
 #include <ostream>
 #include <sstream>
 
-#if COCOAPODS==1
-  #include  "third_party/re2/util/util.h"
-#else
-  #include  "util/util.h"
-#endif
+#include "util/util.h"
 
 // Debug-only checking.
 #define DCHECK(condition) assert(condition)

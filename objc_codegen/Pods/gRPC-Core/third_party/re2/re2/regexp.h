@@ -86,31 +86,16 @@
 // form accessible to clients, so that client code can analyze the
 // parsed regular expressions.
 
+#include <stddef.h>
 #include <stdint.h>
 #include <map>
 #include <set>
 #include <string>
 
-#if COCOAPODS==1
-  #include  "third_party/re2/util/util.h"
-#else
-  #include  "util/util.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/logging.h"
-#else
-  #include  "util/logging.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/utf.h"
-#else
-  #include  "util/utf.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/stringpiece.h"
-#else
-  #include  "re2/stringpiece.h"
-#endif
+#include "util/util.h"
+#include "util/logging.h"
+#include "util/utf.h"
+#include "re2/stringpiece.h"
 
 namespace re2 {
 
@@ -193,6 +178,7 @@ enum RegexpStatusCode {
   kRegexpBadCharRange,       // bad character class range
   kRegexpMissingBracket,     // missing closing ]
   kRegexpMissingParen,       // missing closing )
+  kRegexpUnexpectedParen,    // unexpected closing )
   kRegexpTrailingBackslash,  // at end of regexp
   kRegexpRepeatArgument,     // repeat argument missing, e.g. "*"
   kRegexpRepeatSize,         // bad repetition argument
@@ -268,13 +254,13 @@ class CharClass {
   bool full() { return nrunes_ == Runemax+1; }
   bool FoldsASCII() { return folds_ascii_; }
 
-  bool Contains(Rune r);
+  bool Contains(Rune r) const;
   CharClass* Negate();
 
  private:
   CharClass();  // not implemented
   ~CharClass();  // not implemented
-  static CharClass* New(int maxranges);
+  static CharClass* New(size_t maxranges);
 
   friend class CharClassBuilder;
 
@@ -462,6 +448,10 @@ class Regexp {
   // Callers should expect *prefix and *foldcase to be "zeroed"
   // regardless of the return value.
   bool RequiredPrefixForAccel(std::string* prefix, bool* foldcase);
+
+  // Controls the maximum repeat count permitted by the parser.
+  // FOR FUZZING ONLY.
+  static void FUZZING_ONLY_set_maximum_repeat_count(int i);
 
  private:
   // Constructor allocates vectors as appropriate for operator.

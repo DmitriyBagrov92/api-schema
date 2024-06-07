@@ -15,11 +15,7 @@
 #include <stdarg.h>
 #include <string.h>
 
-#if COCOAPODS==1
-  #include  "third_party/re2/util/utf.h"
-#else
-  #include  "util/utf.h"
-#endif
+#include "util/utf.h"
 
 namespace re2 {
 

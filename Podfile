@@ -1,11 +1,11 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '11.0'
+platform :ios, '13.0'
 
 target 'DialogGRPC' do
     use_frameworks!
 
-  pod 'gRPC-ProtoRPC'
-  pod 'Protobuf'
+  pod 'gRPC-ProtoRPC', '=1.64.1'
+  pod 'Protobuf', '=3.23.3'
 
 end
 

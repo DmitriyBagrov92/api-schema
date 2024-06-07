@@ -11,8 +11,7 @@
     "git": "https://github.com/grpc/grpc.git"
   },
   "platforms": {
-    "ios": "7.1",
-    "osx": "10.9"
+    "ios": "13.0"
   },
   "prepare_command": "mkdir -p Pods/Dialog-gRPC-Objc\nobjc_dependency/protoc         --plugin=protoc-gen-grpc=objc_dependency/grpc_objective_c_plugin         --objc_out=Pods/Dialog-gRPC-Objc         --grpc_out=Client=true,Server=false:Pods/Dialog-gRPC-Objc         -I include         -I proto         -I objc_dependency         proto/*.proto include/descriptor.proto include/scalapb.proto include/annotations.proto include/http.proto",
   "pod_target_xcconfig": {
@@ -30,7 +29,7 @@
       "requires_arc": false,
       "dependencies": {
         "Protobuf": [
-
+          "=3.23.3"
         ]
       }
     },
@@ -44,7 +43,7 @@
       "requires_arc": true,
       "dependencies": {
         "gRPC-ProtoRPC": [
-
+          "=1.64.1"
         ],
         "Dialog-gRPC-Objc/Messages": [
 

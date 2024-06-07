@@ -8,36 +8,12 @@
 
 #include <string>
 
-#if COCOAPODS==1
-  #include  "third_party/re2/util/util.h"
-#else
-  #include  "util/util.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/logging.h"
-#else
-  #include  "util/logging.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/utf.h"
-#else
-  #include  "util/utf.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/pod_array.h"
-#else
-  #include  "re2/pod_array.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/regexp.h"
-#else
-  #include  "re2/regexp.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/walker-inl.h"
-#else
-  #include  "re2/walker-inl.h"
-#endif
+#include "util/util.h"
+#include "util/logging.h"
+#include "util/utf.h"
+#include "re2/pod_array.h"
+#include "re2/regexp.h"
+#include "re2/walker-inl.h"
 
 namespace re2 {
 
@@ -52,8 +28,6 @@ bool Regexp::SimplifyRegexp(const StringPiece& src, ParseFlags flags,
   Regexp* sre = re->Simplify();
   re->Decref();
   if (sre == NULL) {
-    // Should not happen, since Simplify never fails.
-    LOG(ERROR) << "Simplify failed on " << src;
     if (status) {
       status->set_code(kRegexpInternalError);
       status->set_error_arg(src);
@@ -204,10 +178,20 @@ Regexp* Regexp::Simplify() {
   CoalesceWalker cw;
   Regexp* cre = cw.Walk(this, NULL);
   if (cre == NULL)
-    return cre;
+    return NULL;
+  if (cw.stopped_early()) {
+    cre->Decref();
+    return NULL;
+  }
   SimplifyWalker sw;
   Regexp* sre = sw.Walk(cre, NULL);
   cre->Decref();
+  if (sre == NULL)
+    return NULL;
+  if (sw.stopped_early()) {
+    sre->Decref();
+    return NULL;
+  }
   return sre;
 }
 

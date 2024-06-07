@@ -1,26 +1,26 @@
-/*
- *
- * Copyright 2020 gRPC authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
+//
+//
+// Copyright 2020 gRPC authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+//
 
 /// Event engine based on Apple's CFRunLoop API family. If the CFRunLoop engine
 /// is enabled (see iomgr_posix_cfstream.cc), a global thread is started to
 /// handle and trigger all the CFStream events. The CFStream streams register
 /// themselves with the run loop with functions grpc_apple_register_read_stream
-/// and grpc_apple_register_read_stream. Pollsets are dummy and block on a
+/// and grpc_apple_register_read_stream. Pollsets are phony and block on a
 /// condition variable in pollset_work().
 
 #include <grpc/support/port_platform.h>
@@ -33,7 +33,10 @@
 
 #include <list>
 
+#include "absl/time/time.h"
+
 #include "src/core/lib/gprpp/thd.h"
+#include "src/core/lib/gprpp/time_util.h"
 #include "src/core/lib/iomgr/ev_apple.h"
 
 grpc_core::DebugOnlyTraceFlag grpc_apple_polling_trace(false, "apple_polling");
@@ -115,7 +118,7 @@ static void grpc_apple_register_write_stream_queue(
 /// be issued to the run loop when a network event happens and will be driven by
 /// the global run loop thread gGlobalRunLoopThread.
 static void grpc_apple_register_read_stream_run_loop(
-    CFReadStreamRef read_stream, dispatch_queue_t dispatch_queue) {
+    CFReadStreamRef read_stream, dispatch_queue_t /*dispatch_queue*/) {
   GRPC_POLLING_TRACE("Register read stream: %p", read_stream);
   grpc_core::MutexLock lock(&gGlobalRunLoopContext->mu);
   CFReadStreamScheduleWithRunLoop(read_stream, gGlobalRunLoopContext->run_loop,
@@ -128,7 +131,7 @@ static void grpc_apple_register_read_stream_run_loop(
 /// be issued to the run loop when a network event happens, and will be driven
 /// by the global run loop thread gGlobalRunLoopThread.
 static void grpc_apple_register_write_stream_run_loop(
-    CFWriteStreamRef write_stream, dispatch_queue_t dispatch_queue) {
+    CFWriteStreamRef write_stream, dispatch_queue_t /*dispatch_queue*/) {
   GRPC_POLLING_TRACE("Register write stream: %p", write_stream);
   grpc_core::MutexLock lock(&gGlobalRunLoopContext->mu);
   CFWriteStreamScheduleWithRunLoop(
@@ -160,8 +163,8 @@ void grpc_apple_register_write_stream(CFWriteStreamRef write_stream,
 
 /// Drive the run loop in a global singleton thread until the global run loop is
 /// shutdown.
-static void GlobalRunLoopFunc(void* arg) {
-  grpc_core::ReleasableMutexLock lock(&gGlobalRunLoopContext->mu);
+static void GlobalRunLoopFunc(void* /*arg*/) {
+  grpc_core::LockableAndReleasableMutexLock lock(&gGlobalRunLoopContext->mu);
   gGlobalRunLoopContext->run_loop = CFRunLoopGetCurrent();
   gGlobalRunLoopContext->init_cv.Signal();
 
@@ -173,11 +176,11 @@ static void GlobalRunLoopFunc(void* arg) {
       gGlobalRunLoopContext->input_source_cv.Wait(&gGlobalRunLoopContext->mu);
     }
     gGlobalRunLoopContext->input_source_registered = false;
-    lock.Unlock();
+    lock.Release();
     CFRunLoopRun();
     lock.Lock();
   }
-  lock.Unlock();
+  lock.Release();
 }
 
 // pollset implementation
@@ -216,11 +219,12 @@ static void pollset_global_shutdown(void) {
 /// The Apple pollset simply waits on a condition variable until it is kicked.
 /// The network events are handled in the global run loop thread. Processing of
 /// these events will eventually trigger the kick.
-static grpc_error* pollset_work(grpc_pollset* pollset,
-                                grpc_pollset_worker** worker,
-                                grpc_millis deadline) {
+static grpc_error_handle pollset_work(grpc_pollset* pollset,
+                                      grpc_pollset_worker** worker,
+                                      grpc_core::Timestamp deadline) {
   GRPC_POLLING_TRACE("pollset work: %p, worker: %p, deadline: %" PRIu64,
-                     pollset, worker, deadline);
+                     pollset, worker,
+                     deadline.milliseconds_after_process_epoch());
   GrpcApplePollset* apple_pollset =
       reinterpret_cast<GrpcApplePollset*>(pollset);
   GrpcAppleWorker actual_worker;
@@ -237,9 +241,9 @@ static grpc_error* pollset_work(grpc_pollset* pollset,
     auto it = apple_pollset->workers.begin();
 
     while (!actual_worker.kicked && !apple_pollset->is_shutdown) {
-      if (actual_worker.cv.Wait(
-              &apple_pollset->mu,
-              grpc_millis_to_timespec(deadline, GPR_CLOCK_REALTIME))) {
+      if (actual_worker.cv.WaitWithDeadline(
+              &apple_pollset->mu, grpc_core::ToAbslTime(deadline.as_timespec(
+                                      GPR_CLOCK_REALTIME)))) {
         // timed out
         break;
       }
@@ -252,11 +256,11 @@ static grpc_error* pollset_work(grpc_pollset* pollset,
     // callback will be called.
     if (apple_pollset->is_shutdown && apple_pollset->workers.empty()) {
       grpc_core::ExecCtx::Run(DEBUG_LOCATION, apple_pollset->shutdown_closure,
-                              GRPC_ERROR_NONE);
+                              absl::OkStatus());
     }
   }
 
-  return GRPC_ERROR_NONE;
+  return absl::OkStatus();
 }
 
 /// Kick a specific worker. The caller must acquire the lock GrpcApplePollset.mu
@@ -269,8 +273,8 @@ static void kick_worker(GrpcAppleWorker* worker) {
 /// The caller must acquire the lock GrpcApplePollset.mu before calling this
 /// function. The kick action simply signals the condition variable of the
 /// worker.
-static grpc_error* pollset_kick(grpc_pollset* pollset,
-                                grpc_pollset_worker* specific_worker) {
+static grpc_error_handle pollset_kick(grpc_pollset* pollset,
+                                      grpc_pollset_worker* specific_worker) {
   GrpcApplePollset* apple_pollset =
       reinterpret_cast<GrpcApplePollset*>(pollset);
 
@@ -293,13 +297,13 @@ static grpc_error* pollset_kick(grpc_pollset* pollset,
     kick_worker(actual_worker);
   }
 
-  return GRPC_ERROR_NONE;
+  return absl::OkStatus();
 }
 
 static void pollset_init(grpc_pollset* pollset, gpr_mu** mu) {
   GRPC_POLLING_TRACE("pollset init: %p", pollset);
   GrpcApplePollset* apple_pollset = new (pollset) GrpcApplePollset();
-  *mu = apple_pollset->mu.get();
+  *mu = grpc_core::GetUnderlyingGprMu(&apple_pollset->mu);
 }
 
 /// The caller must acquire the lock GrpcApplePollset.mu before calling this
@@ -310,11 +314,11 @@ static void pollset_shutdown(grpc_pollset* pollset, grpc_closure* closure) {
   GrpcApplePollset* apple_pollset =
       reinterpret_cast<GrpcApplePollset*>(pollset);
   apple_pollset->is_shutdown = true;
-  pollset_kick(pollset, GRPC_POLLSET_KICK_BROADCAST);
+  (void)pollset_kick(pollset, GRPC_POLLSET_KICK_BROADCAST);
 
   // If there is any worker blocked, shutdown will be done asynchronously.
   if (apple_pollset->workers.empty()) {
-    grpc_core::ExecCtx::Run(DEBUG_LOCATION, closure, GRPC_ERROR_NONE);
+    grpc_core::ExecCtx::Run(DEBUG_LOCATION, closure, absl::OkStatus());
   } else {
     apple_pollset->shutdown_closure = closure;
   }
@@ -338,15 +342,15 @@ grpc_pollset_vtable grpc_apple_pollset_vtable = {
 // pollset_set implementation
 
 grpc_pollset_set* pollset_set_create(void) { return nullptr; }
-void pollset_set_destroy(grpc_pollset_set* pollset_set) {}
-void pollset_set_add_pollset(grpc_pollset_set* pollset_set,
-                             grpc_pollset* pollset) {}
-void pollset_set_del_pollset(grpc_pollset_set* pollset_set,
-                             grpc_pollset* pollset) {}
-void pollset_set_add_pollset_set(grpc_pollset_set* bag,
-                                 grpc_pollset_set* item) {}
-void pollset_set_del_pollset_set(grpc_pollset_set* bag,
-                                 grpc_pollset_set* item) {}
+void pollset_set_destroy(grpc_pollset_set* /*pollset_set*/) {}
+void pollset_set_add_pollset(grpc_pollset_set* /*pollset_set*/,
+                             grpc_pollset* /*pollset*/) {}
+void pollset_set_del_pollset(grpc_pollset_set* /*pollset_set*/,
+                             grpc_pollset* /*pollset*/) {}
+void pollset_set_add_pollset_set(grpc_pollset_set* /*bag*/,
+                                 grpc_pollset_set* /*item*/) {}
+void pollset_set_del_pollset_set(grpc_pollset_set* /*bag*/,
+                                 grpc_pollset_set* /*item*/) {}
 
 grpc_pollset_set_vtable grpc_apple_pollset_set_vtable = {
     pollset_set_create,          pollset_set_destroy,

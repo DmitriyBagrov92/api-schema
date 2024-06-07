@@ -1,37 +1,37 @@
-/*
- *
- * Copyright 2015 gRPC authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
+//
+//
+// Copyright 2015 gRPC authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+//
 
-#ifndef GRPC_CORE_LIB_TRANSPORT_CONNECTIVITY_STATE_H
-#define GRPC_CORE_LIB_TRANSPORT_CONNECTIVITY_STATE_H
+#ifndef GRPC_SRC_CORE_LIB_TRANSPORT_CONNECTIVITY_STATE_H
+#define GRPC_SRC_CORE_LIB_TRANSPORT_CONNECTIVITY_STATE_H
 
-#include <grpc/support/port_platform.h>
+#include <atomic>
+#include <map>
+#include <memory>
+#include <utility>
 
 #include "absl/status/status.h"
 
-#include <grpc/grpc.h>
+#include <grpc/impl/connectivity_state.h>
+#include <grpc/support/port_platform.h>
 
 #include "src/core/lib/debug/trace.h"
-#include "src/core/lib/gprpp/atomic.h"
-#include "src/core/lib/gprpp/map.h"
 #include "src/core/lib/gprpp/orphanable.h"
-#include "src/core/lib/iomgr/closure.h"
-#include "src/core/lib/iomgr/exec_ctx.h"
-#include "src/core/lib/iomgr/work_serializer.h"
+#include "src/core/lib/gprpp/work_serializer.h"
 
 namespace grpc_core {
 
@@ -48,7 +48,7 @@ const char* ConnectivityStateName(grpc_connectivity_state state);
 class ConnectivityStateWatcherInterface
     : public InternallyRefCounted<ConnectivityStateWatcherInterface> {
  public:
-  virtual ~ConnectivityStateWatcherInterface() = default;
+  ~ConnectivityStateWatcherInterface() override = default;
 
   // Notifies the watcher that the state has changed to new_state.
   virtual void Notify(grpc_connectivity_state new_state,
@@ -63,12 +63,12 @@ class ConnectivityStateWatcherInterface
 class AsyncConnectivityStateWatcherInterface
     : public ConnectivityStateWatcherInterface {
  public:
-  virtual ~AsyncConnectivityStateWatcherInterface() = default;
+  ~AsyncConnectivityStateWatcherInterface() override = default;
 
   // Schedules a closure on the ExecCtx to invoke
   // OnConnectivityStateChange() asynchronously.
   void Notify(grpc_connectivity_state new_state,
-              const absl::Status& status) override final;
+              const absl::Status& status) final;
 
  protected:
   class Notifier;
@@ -95,9 +95,9 @@ class AsyncConnectivityStateWatcherInterface
 // to be called).
 class ConnectivityStateTracker {
  public:
-  ConnectivityStateTracker(const char* name,
-                           grpc_connectivity_state state = GRPC_CHANNEL_IDLE,
-                           const absl::Status& status = absl::Status())
+  explicit ConnectivityStateTracker(
+      const char* name, grpc_connectivity_state state = GRPC_CHANNEL_IDLE,
+      const absl::Status& status = absl::Status())
       : name_(name), state_(state), status_(status) {}
 
   ~ConnectivityStateTracker();
@@ -127,9 +127,13 @@ class ConnectivityStateTracker {
   // Not thread safe; access must be serialized with an external lock.
   absl::Status status() const { return status_; }
 
+  // Returns the number of watchers.
+  // Not thread safe; access must be serialized with an external lock.
+  size_t NumWatchers() const { return watchers_.size(); }
+
  private:
   const char* name_;
-  Atomic<grpc_connectivity_state> state_;
+  std::atomic<grpc_connectivity_state> state_{grpc_connectivity_state()};
   absl::Status status_;
   // TODO(roth): Once we can use C++-14 heterogeneous lookups, this can
   // be a set instead of a map.
@@ -140,4 +144,4 @@ class ConnectivityStateTracker {
 
 }  // namespace grpc_core
 
-#endif /* GRPC_CORE_LIB_TRANSPORT_CONNECTIVITY_STATE_H */
+#endif  // GRPC_SRC_CORE_LIB_TRANSPORT_CONNECTIVITY_STATE_H

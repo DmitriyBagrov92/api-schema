@@ -97,10 +97,18 @@ EOM
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/BoringSSL-GRPC/openssl_grpc.bundle"
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/abseil/xcprivacy.bundle"
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/gRPC-Core/grpc.bundle"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/gRPC/gRPCCertificates.bundle"
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/gRPC/GRPCClient.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/BoringSSL-GRPC/openssl_grpc.bundle"
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/abseil/xcprivacy.bundle"
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/gRPC-Core/grpc.bundle"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/gRPC/gRPCCertificates.bundle"
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/gRPC/GRPCClient.bundle"
 fi
 
 mkdir -p "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

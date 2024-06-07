@@ -23,26 +23,10 @@
 #include <limits>
 #include <utility>
 
-#if COCOAPODS==1
-  #include  "third_party/re2/util/logging.h"
-#else
-  #include  "util/logging.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/pod_array.h"
-#else
-  #include  "re2/pod_array.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/prog.h"
-#else
-  #include  "re2/prog.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/re2/regexp.h"
-#else
-  #include  "re2/regexp.h"
-#endif
+#include "util/logging.h"
+#include "re2/pod_array.h"
+#include "re2/prog.h"
+#include "re2/regexp.h"
 
 namespace re2 {
 
@@ -309,9 +293,9 @@ bool BitState::Search(const StringPiece& text, const StringPiece& context,
   context_ = context;
   if (context_.data() == NULL)
     context_ = text;
-  if (prog_->anchor_start() && context_.begin() != text.begin())
+  if (prog_->anchor_start() && BeginPtr(context_) != BeginPtr(text))
     return false;
-  if (prog_->anchor_end() && context_.end() != text.end())
+  if (prog_->anchor_end() && EndPtr(context_) != EndPtr(text))
     return false;
   anchored_ = anchored || prog_->anchor_start();
   longest_ = longest || prog_->anchor_end();
@@ -393,7 +377,7 @@ bool Prog::SearchBitState(const StringPiece& text,
   bool longest = kind != kFirstMatch;
   if (!b.Search(text, context, anchored, longest, match, nmatch))
     return false;
-  if (kind == kFullMatch && match[0].end() != text.end())
+  if (kind == kFullMatch && EndPtr(match[0]) != EndPtr(text))
     return false;
   return true;
 }

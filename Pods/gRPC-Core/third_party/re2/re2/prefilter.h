@@ -13,16 +13,8 @@
 #include <string>
 #include <vector>
 
-#if COCOAPODS==1
-  #include  "third_party/re2/util/util.h"
-#else
-  #include  "util/util.h"
-#endif
-#if COCOAPODS==1
-  #include  "third_party/re2/util/logging.h"
-#else
-  #include  "util/logging.h"
-#endif
+#include "util/util.h"
+#include "util/logging.h"
 
 namespace re2 {
 
